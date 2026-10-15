@@ -371,6 +371,10 @@ h1 { font-family: var(--display); font-weight: 900; font-size: 1.6rem; line-heig
 .v-st.done { color: var(--good); }
 @media (max-width: 600px) { .v-bw { grid-template-columns: minmax(0, 1fr); } }
 .mq u.neg { text-decoration-thickness: 2px; text-underline-offset: 3px; font-weight: 700; }
+.opt.cursor { border-color: var(--accent); box-shadow: 0 0 0 3px var(--accent-soft); }
+.opt.cursor .key { background: var(--accent); color: var(--card); }
+.keys-note { font-size: .82rem; }
+@media (hover: none), (max-width: 819px) { .keys-note { display: none; } }
 </style>
 
 <div class="wrap">
@@ -394,6 +398,7 @@ h1 { font-family: var(--display); font-weight: 900; font-size: 1.6rem; line-heig
     <div class="main" id="main">
       <div class="progress" id="progress"><span class="set" id="pSet"></span><span id="pText"><label for="jumpInput">第</label> <input id="jumpInput" type="number" inputmode="numeric" min="1" step="1" aria-label="题号"> <span id="pTotal"></span> 题 <button type="button" id="jumpBtn" class="jump">跳转</button></span><label class="per" for="perSel">每组 <select id="perSel"><option value="5">5</option><option value="10">10</option><option value="15">15</option><option value="20">20</option><option value="30">30</option><option value="0">全部</option></select> 题</label><label class="study" for="studyChk"><input type="checkbox" id="studyChk"> 学习模式</label><div class="bar"><i id="pBar"></i></div><span id="pScore">得分 0</span></div>
       <main id="stage"></main>
+      <p class="sub keys-note">键盘：↑ ↓ 移动光标 · 回车 选择 · ← 上一题 · → 下一题 · Shift 提示</p>
       <p class="sub" id="saveNote">正在连接错题本…</p>
     </div>
   </div>
@@ -8554,6 +8559,43 @@ studyChk.addEventListener("change", () => {
   if (study && !rv && !started && idx === bStart) beginBatch();
 });
 
+// ---------- 键盘：↑↓ 移动光标，回车选择，← → 上一题 / 下一题，Shift 显示提示 ----------
+function goPrev() { if (idx > bStart) { idx--; renderQuestion(); } }
+document.addEventListener("keydown", e => {
+  if (view !== "quiz" || e.ctrlKey || e.metaKey || e.altKey) return;
+  const t = e.target;
+  if (t && /^(INPUT|SELECT|TEXTAREA)$/.test(t.tagName)) return;
+  const k = e.key, click = id => { const b = document.getElementById(id); if (b && !b.disabled) { e.preventDefault(); b.click(); return true; } return false; };
+  if (rv) {   // 正在复习知识点
+    if (k === "ArrowRight" || k === "Enter") click("kpNext");
+    else if (k === "ArrowLeft") click("kpPrev");
+    return;
+  }
+  const opts = [...stage.querySelectorAll(".opt")];
+  if (!opts.length) {   // 成绩页
+    if (k === "ArrowLeft") { e.preventDefault(); goPrev(); }
+    else if (k === "ArrowRight" || k === "Enter") click("moreBtn") || click("againBtn");
+    return;
+  }
+  const answered = answers[idx] !== undefined;
+  if (k === "ArrowDown" || k === "ArrowUp") {
+    e.preventDefault();
+    if (answered) return;
+    const cur = opts.findIndex(o => o.classList.contains("cursor")), down = k === "ArrowDown";
+    const n = cur < 0 ? (down ? 0 : opts.length - 1) : (cur + (down ? 1 : opts.length - 1)) % opts.length;
+    opts.forEach((o, j) => o.classList.toggle("cursor", j === n));
+    opts[n].scrollIntoView({ block: "nearest" });
+  } else if (k === "Enter") {
+    const c = opts.find(o => o.classList.contains("cursor"));
+    if (!answered && c) { e.preventDefault(); c.click(); }
+    else if (answered) click("nextBtn");
+  } else if (k === "ArrowRight") {   // 没答也可以跳到下一题
+    if (!click("nextBtn")) { e.preventDefault(); idx++; idx < bEnd() ? renderQuestion() : renderResult(); }
+  }
+  else if (k === "ArrowLeft") { e.preventDefault(); goPrev(); }
+  else if (k === "Shift" && !e.repeat) click("hintBtn");
+});
+
 // ---------- 目录 ----------
 function tocItem({ no, title, zh, badge, badgeCls, current, disabled, onClick }) {
   const li = el("li");
@@ -8775,6 +8817,12 @@ function renderQuestion() {
   if (item.audio && !tts) { exp.textContent = ""; exp.append(el("span", "transcript", item.audio)); }
   exp.id = "explain";
   const actions = el("div", "actions");
+  const prev = el("button", "btn ghost", "上一题");
+  prev.type = "button";
+  prev.id = "prevBtn";
+  prev.disabled = idx <= bStart;
+  prev.addEventListener("click", goPrev);
+  actions.append(prev);
   const next = el("button", "btn", idx === bEnd() - 1 ? "查看成绩" : "下一题");
   next.type = "button";
   next.id = "nextBtn";
@@ -8796,6 +8844,7 @@ function renderQuestion() {
   actions.append(next);
   card.append(exp, actions);
   stage.append(card);
+  if (answers[idx] !== undefined) paintAnswer(answers[idx], buttons, card, order);
 }
 
 function choose(i, buttons, card, order) {
@@ -8804,6 +8853,12 @@ function choose(i, buttons, card, order) {
   answers[idx] = i;
   score = calcScore();
   record(item, i, right);
+  paintAnswer(i, buttons, card, order);
+}
+// 标出对错、显示解析（回看做过的题时也用）
+function paintAnswer(i, buttons, card, order) {
+  const item = set.qs[idx];
+  const right = i === item.a;
   buttons.forEach((b, j) => {
     b.disabled = true;
     if (j === item.a) b.classList.add("correct");
