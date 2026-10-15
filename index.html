@@ -1,0 +1,52 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>选择题练习</title>
+<style>
+:root {
+  --bg: #eef1f5; --card: #ffffff; --fg: #1c2433; --muted: #5d6779; --line: #d5dbe5;
+  --accent: #2f5bd3; --accent-soft: #e3eafc;
+  color-scheme: light;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #12161e; --card: #1b212c; --fg: #e6eaf2; --muted: #9aa4b6; --line: #2d3545;
+    --accent: #7c9dff; --accent-soft: #232f4d; color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --bg: #12161e; --card: #1b212c; --fg: #e6eaf2; --muted: #9aa4b6; --line: #2d3545;
+  --accent: #7c9dff; --accent-soft: #232f4d; color-scheme: dark;
+}
+* { box-sizing: border-box; }
+body { margin: 0; background: var(--bg); color: var(--fg); font-family: "PingFang SC", "Noto Sans SC", "Microsoft YaHei", sans-serif; line-height: 1.6; }
+main { max-width: 760px; margin: 0 auto; padding: 32px 16px 48px; display: flex; flex-direction: column; gap: 16px; }
+h1 { font-family: "Songti SC", "Noto Serif SC", serif; font-weight: 900; font-size: 1.7rem; margin: 0; }
+.lead { color: var(--muted); margin: 0 0 8px; }
+a.card { display: flex; flex-direction: column; gap: 6px; background: var(--card); border: 1px solid var(--line); border-radius: 14px; padding: 20px; color: inherit; text-decoration: none; transition: border-color .15s; }
+a.card:hover { border-color: var(--accent); }
+a.card:focus-visible { outline: 3px solid var(--accent); outline-offset: 2px; }
+.card h2 { margin: 0; font-size: 1.2rem; display: flex; justify-content: space-between; gap: 12px; align-items: baseline; }
+.card h2 span { font-size: .8rem; font-weight: 700; color: var(--accent); background: var(--accent-soft); padding: 1px 10px; border-radius: 99px; white-space: nowrap; }
+.card p { margin: 0; color: var(--muted); font-size: .95rem; }
+.note { color: var(--muted); font-size: .85rem; margin: 8px 0 0; }
+</style>
+</head>
+<body>
+<main>
+  <h1>选择题练习</h1>
+  <p class="lead">按教材章节组织的单项选择题，每题有提示和解析。不用登录，打开就能做。</p>
+  <a class="card" href="french/">
+    <h2>法语语法 <span>570 题</span></h2>
+    <p>按《Advanced French Grammar》章节：冠词、代词、介词、时态、名词阴阳性、数词，以及听力辨音（用设备自带的法语朗读）、B1 模拟卷和背单词。</p>
+  </a>
+  <a class="card" href="stoch/">
+    <h2>随机分析与概率论 <span>384 题</span></h2>
+    <p>Le Gall《Brownian Motion, Martingales, and Stochastic Calculus》全部章节和附录，Pascucci《Probability Theory I》第 1–4 章，另有量化面试题。</p>
+  </a>
+  <p class="note">答题记录和错题本保存在你自己的浏览器里，换设备或清除浏览器数据后不会保留。打开“学习模式”后，每组题开始前会先复习本组涉及的知识点。</p>
+</main>
+</body>
+</html>
