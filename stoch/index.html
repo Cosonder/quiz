@@ -2280,7 +2280,12 @@ const isListen = q => !!q.audio;
 // 每个分组键包含哪些题
 function members(key) {
   const p = parseTagKey(key);
-  if (p) { const w = p.kind === "wrong" ? wrongIds() : null; return BANK.filter(q => (!w || w.has(q.id)) && (p.kind === "wrong" && !p.tags.length || tagMatch(q, p.tags, p.mode))); }
+  if (p) {
+    const w = p.kind === "wrong" ? wrongIds() : null;
+    const list = BANK.filter(q => (!w || w.has(q.id)) && (!p.tags.length && (p.kind === "wrong" || p.rnd) || tagMatch(q, p.tags, p.mode)));
+    if (p.rnd) for (let k = list.length - 1; k > 0; k--) { const j = Math.floor(Math.random() * (k + 1)); [list[k], list[j]] = [list[j], list[k]]; }
+    return list;
+  }
   if (key.startsWith("ch:")) { const n = Number(key.slice(3)); return BANK.filter(q => q.ch === n && !isListen(q)); }
   if (key.startsWith("ep:")) { const n = Number(key.slice(3)); return BANK.filter(q => q.ep === n); }
   return BANK.filter(q => roundOf(q.id) === key);
@@ -2553,18 +2558,19 @@ function remindRow() {
 // ---------- 标签检索：勾选标签 → 检索出题目；错题本按标签筛选 ----------
 const tagSaved = (() => { try { return JSON.parse(localStorage.getItem("sq-tags") || "{}"); } catch (e) { return {}; } })();
 let pickTags = new Set(tagSaved.tags || []);
-let tagMode = tagSaved.mode === "all" ? "all" : "any";   // any：带任一所选标签；all：同时带所有所选标签
-const saveTags = () => { try { localStorage.setItem("sq-tags", JSON.stringify({ tags: [...pickTags], mode: tagMode })); } catch (e) {} };
+let tagMode = tagSaved.mode === "all" ? "all" : "any";
+let tagRandom = !!tagSaved.rand;   // “随机”：打乱检索结果的顺序   // any：带任一所选标签；all：同时带所有所选标签
+const saveTags = () => { try { localStorage.setItem("sq-tags", JSON.stringify({ tags: [...pickTags], mode: tagMode, rand: tagRandom })); } catch (e) {} };
 const tagMatch = (q, tags, mode) => !!q && tags.length > 0 && (mode === "all" ? tags.every(t => q.tags.includes(t)) : tags.some(t => q.tags.includes(t)));
-const tagKey = (kind, tags = [...pickTags], mode = tagMode) => `${kind}:${mode}:${tags.join("|")}`;
+const tagKey = (kind, tags = [...pickTags], mode = tagMode, rnd = tagRandom) => `${kind}:${mode}${rnd ? "!" : ""}:${tags.join("|")}`;
 function parseTagKey(key) {
-  const m = /^(tag|wrong):(any|all):(.*)$/.exec(key);
-  return m ? { kind: m[1], mode: m[2], tags: m[3] ? m[3].split("|") : [] } : null;
+  const m = /^(tag|wrong):(any|all)(!?):(.*)$/.exec(key);
+  return m ? { kind: m[1], mode: m[2], rnd: m[3] === "!", tags: m[4] ? m[4].split("|") : [] } : null;
 }
 const wrongIds = () => new Set((bookCache?.wrong || []).map(d => d.qid));
 function tagLabel(p) {
   const t = p.tags.length ? p.tags.join(p.mode === "all" ? " + " : " / ") : "全部";
-  return (p.kind === "wrong" ? "错题 · " : "标签 · ") + t + (p.tags.length > 1 ? (p.mode === "all" ? "（同时满足）" : "（任一）") : "");
+  return (p.kind === "wrong" ? "错题 · " : "标签 · ") + (p.rnd ? "随机 · " : "") + t + (p.tags.length > 1 ? (p.mode === "all" ? "（同时满足）" : "（任一）") : "");
 }
 
 function tagPanel() {
@@ -2581,14 +2587,18 @@ function tagPanel() {
   const clear = el("button", "btn ghost", "清空");
   clear.type = "button";
   const chips = [];
+  const randChip = el("button", "chip"); randChip.type = "button"; randChip.id = "randChip";
+  randChip.append(document.createTextNode("随机"), el("small", null, "打乱顺序"));
+  randChip.addEventListener("click", () => { tagRandom = !tagRandom; saveTags(); refresh(); });
   const refresh = () => {
     const tags = [...pickTags];
-    const n = pool.filter(q => tagMatch(q, tags, tagMode)).length;
+    const n = tags.length ? pool.filter(q => tagMatch(q, tags, tagMode)).length : tagRandom ? pool.length : 0;
     sum.textContent = "";
-    if (!tags.length) sum.append(document.createTextNode(quiz ? "勾选标签来检索题目（可多选）" : "勾选标签来筛选错题（可多选）"));
-    else { sum.append(document.createTextNode(`已选 ${tags.length} 个标签 · ${quiz ? "共" : "错题"} `), el("b", null, String(n)), document.createTextNode(" 题")); }
+    if (!tags.length && !tagRandom) sum.append(document.createTextNode(quiz ? "勾选标签来检索题目（可多选）" : "勾选标签来筛选错题（可多选）"));
+    else { sum.append(document.createTextNode(tags.length ? `已选 ${tags.length} 个标签 · ${quiz ? "共" : "错题"} ` : (quiz ? "全部题目 · 共 " : "全部错题 · 共 ")), el("b", null, String(n)), document.createTextNode(" 题" + (tagRandom ? " · 随机顺序" : ""))); }
     go.disabled = !n;
-    clear.disabled = !tags.length;
+    clear.disabled = !tags.length && !tagRandom;
+    randChip.setAttribute("aria-pressed", String(tagRandom));
     chips.forEach(c => c.setAttribute("aria-pressed", String(pickTags.has(c.dataset.tag))));
   };
   [["any", "任一标签"], ["all", "同时满足"]].forEach(([m, t]) => {
@@ -2602,9 +2612,11 @@ function tagPanel() {
     else { bookFilter = tagKey("wrong"); renderToc(); drawBook(); }
     afterPick();
   });
-  clear.addEventListener("click", () => { pickTags.clear(); saveTags(); refresh(); if (!quiz && bookFilter !== "all") { bookFilter = "all"; renderToc(); drawBook(); } });
+  clear.addEventListener("click", () => { pickTags.clear(); tagRandom = false; saveTags(); refresh(); if (!quiz && bookFilter !== "all") { bookFilter = "all"; renderToc(); drawBook(); } });
   act.append(go, clear);
   box.append(sum, mode, act);
+  const rg = el("div", "tag-group"), rw = el("div", "chips");
+  rg.append(el("div", "tag-gname", "出题方式"), rw); rw.append(randChip); box.append(rg);
   TAG_GROUPS.forEach(g => {
     const grp = el("div", "tag-group");
     grp.append(el("div", "tag-gname", g.g));
