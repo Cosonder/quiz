@@ -214,6 +214,41 @@ mjx-container.mjx-wide { display: block; overflow-x: auto; overflow-y: hidden; m
 .heat-remind { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; font-size: .88rem; color: var(--muted); border-top: 1px solid var(--line); padding-top: 10px; }
 .heat-remind input { font: inherit; color: var(--fg); background: var(--card); border: 1px solid var(--line); border-radius: 6px; padding: 2px 6px; }
 .heat-remind a { color: var(--accent); }
+.tag-panel { display: flex; flex-direction: column; gap: 8px; padding: 0 8px 8px; }
+.tag-sum { font-size: .88rem; color: var(--muted); font-variant-numeric: tabular-nums; }
+.tag-sum b { color: var(--fg); font-size: 1.05rem; }
+.tag-mode { display: inline-flex; padding: 3px; gap: 3px; background: var(--bg); border-radius: 8px; align-self: flex-start; }
+.tag-mode button { font: inherit; font-size: .8rem; border: 0; border-radius: 6px; padding: 3px 10px; background: transparent; color: var(--muted); cursor: pointer; }
+.tag-mode button[aria-pressed="true"] { background: var(--card); color: var(--accent); font-weight: 700; box-shadow: 0 0 0 1px var(--line); }
+.tag-act { display: flex; gap: 8px; }
+.tag-act .btn { flex: 1; padding: 8px 12px; }
+.tag-act .btn.ghost { flex: none; }
+.tag-group { display: flex; flex-direction: column; gap: 4px; border-top: 1px solid var(--line); padding-top: 8px; }
+.tag-gname { font-size: .72rem; letter-spacing: .08em; color: var(--muted); font-weight: 700; }
+.chips { display: flex; flex-wrap: wrap; gap: 5px; }
+.chip { font: inherit; font-size: .82rem; line-height: 1.3; border: 1.5px solid var(--line); background: var(--card); color: var(--fg); border-radius: 99px; padding: 3px 9px; cursor: pointer; display: inline-flex; gap: 5px; align-items: baseline; }
+.chip small { font-size: .7rem; color: var(--muted); font-variant-numeric: tabular-nums; }
+.chip:hover:not(:disabled) { border-color: var(--accent); }
+.chip:focus-visible { outline: 2px solid var(--accent); outline-offset: 1px; }
+.chip[aria-pressed="true"] { background: var(--accent-soft); border-color: var(--accent); color: var(--accent); font-weight: 700; }
+.chip[aria-pressed="true"] small { color: var(--accent); }
+.chip:disabled { opacity: .4; cursor: default; }
+.legacy { border-top: 1px solid var(--line); margin-top: 6px; }
+.legacy > summary { cursor: pointer; padding: 10px 8px; font-size: .85rem; font-weight: 700; color: var(--muted); list-style: none; }
+.legacy > summary::-webkit-details-marker { display: none; }
+.legacy > summary::before { content: "▸ "; }
+.legacy[open] > summary::before { content: "▾ "; }
+.dist { display: flex; flex-direction: column; gap: 6px; }
+.dist h3 { margin: 0; font-size: 1rem; }
+.dist-row { display: grid; grid-template-columns: minmax(5.5em, 9em) minmax(0, 1fr) auto; gap: 10px; align-items: center; font: inherit; font-size: .88rem; text-align: left; background: transparent; border: 0; border-radius: 6px; padding: 3px 4px; color: var(--fg); cursor: pointer; }
+.dist-row:hover, .dist-row[aria-pressed="true"] { background: var(--accent-soft); }
+.dist-row:focus-visible { outline: 2px solid var(--accent); }
+.dist-row .bar2 { height: 10px; background: var(--line); border-radius: 0 4px 4px 0; overflow: hidden; }
+.dist-row .bar2 i { display: block; height: 100%; background: var(--accent); border-radius: 0 4px 4px 0; }
+.dist-row .n { color: var(--muted); font-variant-numeric: tabular-nums; white-space: nowrap; font-size: .8rem; }
+.dist-row .n b { color: var(--fg); }
+.dist-more { align-self: flex-start; }
+.explain .tag-note { display: block; margin-top: 4px; color: var(--muted); font-size: .85rem; }
 </style>
 
 <div class="wrap">
@@ -1780,6 +1815,395 @@ const KP_OF = {
   "p1-r4-18": "p1c4-cond-density",
 };
 BANK.forEach(q => { q.kp = KP_OF[q.id]; });
+// 标签：分组（目录里按组勾选）和每道题的标签
+const TAG_GROUPS = [{"g": "概率基础", "tags": ["σ-代数与测度", "概率空间与事件", "计数与组合", "条件概率与独立", "随机变量与分布", "期望与矩", "特征函数", "高斯分布", "收敛模式", "大数定律/中心极限定理", "条件期望"]}, {"g": "随机过程", "tags": ["高斯过程", "布朗运动", "马尔可夫过程", "Feller 半群与生成元", "Lévy 过程", "随机游走/离散过程"]}, {"g": "鞅论", "tags": ["滤子与停时", "鞅/上鞅/下鞅", "可选停时", "鞅收敛", "极大不等式", "一致可积", "局部鞅", "二次变差/括号"]}, {"g": "随机分析", "tags": ["随机积分", "Itô 公式", "随机指数", "Girsanov 定理", "Lévy 刻画", "鞅表示", "时间变换", "BDG 不等式", "局部时"]}, {"g": "方程与 PDE", "tags": ["SDE 存在唯一性", "显式解的 SDE", "调和函数/Dirichlet 问题", "热方程/Feynman–Kac", "常返与暂留"]}, {"g": "路径性质", "tags": ["路径连续性/修正", "反射原理/首达时", "零一律", "不变性（尺度/对称/时间反演）", "路径的变差"]}, {"g": "题型", "tags": ["定义", "定理条件", "计算", "反例"]}, {"g": "量化与金融", "tags": ["脑筋急转弯", "期权与定价", "概率面试技巧"]}];
+const TAGS_OF = {
+  "p1-r1-1": ["σ-代数与测度", "反例"],
+  "p1-r1-10": ["计数与组合", "计算"],
+  "p1-r1-11": ["计数与组合", "计算"],
+  "p1-r1-12": ["计数与组合", "计算"],
+  "p1-r1-13": ["计数与组合", "计算"],
+  "p1-r1-14": ["计数与组合", "随机变量与分布", "计算"],
+  "p1-r1-15": ["条件概率与独立", "计算"],
+  "p1-r1-16": ["条件概率与独立", "计算"],
+  "p1-r1-17": ["条件概率与独立", "计算"],
+  "p1-r1-18": ["条件概率与独立", "反例"],
+  "p1-r1-19": ["条件概率与独立", "反例"],
+  "p1-r1-2": ["σ-代数与测度", "反例"],
+  "p1-r1-20": ["条件概率与独立", "零一律", "计算"],
+  "p1-r1-21": ["条件概率与独立", "概率空间与事件", "定理条件"],
+  "p1-r1-22": ["σ-代数与测度", "概率空间与事件", "计算"],
+  "p1-r1-23": ["σ-代数与测度", "随机变量与分布", "反例"],
+  "p1-r1-24": ["σ-代数与测度", "定理条件"],
+  "p1-r1-25": ["随机变量与分布", "计算"],
+  "p1-r1-26": ["随机变量与分布", "计算"],
+  "p1-r1-27": ["随机变量与分布", "σ-代数与测度", "反例"],
+  "p1-r1-28": ["随机变量与分布", "反例"],
+  "p1-r1-29": ["随机变量与分布", "反例"],
+  "p1-r1-3": ["σ-代数与测度", "反例"],
+  "p1-r1-30": ["随机变量与分布", "反例"],
+  "p1-r1-4": ["概率空间与事件", "σ-代数与测度", "反例"],
+  "p1-r1-5": ["σ-代数与测度", "概率空间与事件", "定理条件"],
+  "p1-r1-6": ["概率空间与事件", "σ-代数与测度", "定义"],
+  "p1-r1-7": ["计数与组合", "概率空间与事件", "计算"],
+  "p1-r1-8": ["计数与组合", "计算"],
+  "p1-r1-9": ["概率空间与事件", "计算"],
+  "p1-r2-1": ["随机变量与分布", "计算"],
+  "p1-r2-10": ["期望与矩", "计算"],
+  "p1-r2-11": ["期望与矩", "反例"],
+  "p1-r2-12": ["期望与矩", "计算"],
+  "p1-r2-13": ["期望与矩", "随机变量与分布", "计算"],
+  "p1-r2-14": ["σ-代数与测度", "条件概率与独立", "随机变量与分布", "定理条件"],
+  "p1-r2-15": ["条件概率与独立", "随机变量与分布", "定理条件"],
+  "p1-r2-16": ["条件概率与独立", "随机变量与分布", "计算"],
+  "p1-r2-17": ["条件概率与独立", "期望与矩", "计算"],
+  "p1-r2-18": ["条件概率与独立", "高斯分布", "反例"],
+  "p1-r2-19": ["条件概率与独立", "随机变量与分布", "计算"],
+  "p1-r2-2": ["随机变量与分布", "反例"],
+  "p1-r2-20": ["条件概率与独立", "期望与矩", "计算"],
+  "p1-r2-21": ["高斯分布", "条件期望", "计算"],
+  "p1-r2-22": ["特征函数", "反例"],
+  "p1-r2-23": ["特征函数", "期望与矩", "计算"],
+  "p1-r2-24": ["特征函数", "随机变量与分布", "定理条件"],
+  "p1-r2-25": ["特征函数", "计算"],
+  "p1-r2-26": ["特征函数", "随机变量与分布", "计算"],
+  "p1-r2-27": ["高斯分布", "计算"],
+  "p1-r2-28": ["高斯分布", "条件概率与独立", "反例"],
+  "p1-r2-29": ["特征函数", "条件概率与独立", "反例"],
+  "p1-r2-3": ["随机变量与分布", "期望与矩", "定理条件"],
+  "p1-r2-30": ["特征函数", "条件概率与独立", "计算"],
+  "p1-r2-31": ["随机变量与分布", "条件概率与独立", "计算"],
+  "p1-r2-32": ["高斯分布", "随机变量与分布", "计算"],
+  "p1-r2-4": ["随机变量与分布", "反例"],
+  "p1-r2-5": ["随机变量与分布", "条件概率与独立", "计算"],
+  "p1-r2-6": ["随机变量与分布", "计算"],
+  "p1-r2-7": ["高斯分布", "随机变量与分布", "计算"],
+  "p1-r2-8": ["期望与矩", "收敛模式", "反例"],
+  "p1-r2-9": ["期望与矩", "随机变量与分布", "计算"],
+  "p1-r3-1": ["收敛模式", "反例"],
+  "p1-r3-10": ["收敛模式", "随机变量与分布", "反例"],
+  "p1-r3-11": ["收敛模式", "随机变量与分布", "计算"],
+  "p1-r3-12": ["收敛模式", "反例"],
+  "p1-r3-13": ["收敛模式", "高斯分布", "反例"],
+  "p1-r3-14": ["特征函数", "收敛模式", "定理条件"],
+  "p1-r3-15": ["特征函数", "收敛模式", "反例"],
+  "p1-r3-16": ["特征函数", "收敛模式", "计算"],
+  "p1-r3-17": ["大数定律/中心极限定理", "计算"],
+  "p1-r3-18": ["大数定律/中心极限定理", "计算"],
+  "p1-r3-2": ["收敛模式", "定理条件"],
+  "p1-r3-3": ["期望与矩", "计算"],
+  "p1-r3-4": ["收敛模式", "反例"],
+  "p1-r3-5": ["收敛模式", "反例"],
+  "p1-r3-6": ["收敛模式", "特征函数", "反例"],
+  "p1-r3-7": ["大数定律/中心极限定理", "期望与矩", "计算"],
+  "p1-r3-8": ["大数定律/中心极限定理", "收敛模式", "反例"],
+  "p1-r3-9": ["大数定律/中心极限定理", "期望与矩", "计算"],
+  "p1-r4-1": ["条件期望", "计算"],
+  "p1-r4-10": ["条件期望", "反例"],
+  "p1-r4-11": ["条件期望", "高斯分布", "计算"],
+  "p1-r4-12": ["条件期望", "定理条件"],
+  "p1-r4-13": ["条件期望", "定理条件"],
+  "p1-r4-14": ["条件期望", "随机变量与分布", "定理条件"],
+  "p1-r4-15": ["条件期望", "期望与矩", "计算"],
+  "p1-r4-16": ["条件期望", "计算"],
+  "p1-r4-17": ["条件期望", "期望与矩", "计算"],
+  "p1-r4-18": ["条件期望", "随机变量与分布", "计算"],
+  "p1-r4-2": ["条件期望", "定义"],
+  "p1-r4-3": ["条件期望", "期望与矩", "计算"],
+  "p1-r4-4": ["条件期望", "随机变量与分布", "计算"],
+  "p1-r4-5": ["条件期望", "随机变量与分布", "计算"],
+  "p1-r4-6": ["条件期望", "定义"],
+  "p1-r4-7": ["条件期望", "定义"],
+  "p1-r4-8": ["条件期望", "条件概率与独立", "反例"],
+  "p1-r4-9": ["条件期望", "特征函数", "计算"],
+  "qi-r1-1": ["期望与矩", "随机变量与分布", "概率面试技巧", "计算"],
+  "qi-r1-10": ["随机变量与分布", "期望与矩", "计算"],
+  "qi-r1-11": ["期望与矩", "计数与组合", "概率面试技巧", "计算"],
+  "qi-r1-12": ["计数与组合", "概率空间与事件", "计算"],
+  "qi-r1-13": ["概率空间与事件", "随机变量与分布", "计算"],
+  "qi-r1-14": ["随机游走/离散过程", "可选停时", "鞅/上鞅/下鞅", "计算"],
+  "qi-r1-15": ["随机游走/离散过程", "可选停时", "鞅/上鞅/下鞅", "计算"],
+  "qi-r1-16": ["高斯分布", "期望与矩", "计算"],
+  "qi-r1-17": ["高斯分布", "概率面试技巧", "计算"],
+  "qi-r1-18": ["期望与矩", "计算"],
+  "qi-r1-19": ["期望与矩", "概率面试技巧", "计算"],
+  "qi-r1-2": ["期望与矩", "随机游走/离散过程", "概率面试技巧", "计算"],
+  "qi-r1-20": ["布朗运动", "高斯分布", "期望与矩", "计算"],
+  "qi-r1-3": ["期望与矩", "随机游走/离散过程", "概率面试技巧", "计算"],
+  "qi-r1-4": ["概率空间与事件", "条件概率与独立", "概率面试技巧", "计算"],
+  "qi-r1-5": ["条件概率与独立", "计算"],
+  "qi-r1-6": ["条件概率与独立", "概率面试技巧", "计算"],
+  "qi-r1-7": ["条件概率与独立", "计算"],
+  "qi-r1-8": ["期望与矩", "概率面试技巧", "计算"],
+  "qi-r1-9": ["随机变量与分布", "期望与矩", "计算"],
+  "qi-r2-1": ["计数与组合", "脑筋急转弯", "计算"],
+  "qi-r2-10": ["期权与定价"],
+  "qi-r2-11": ["期权与定价"],
+  "qi-r2-12": ["期权与定价"],
+  "qi-r2-13": ["期权与定价", "概率面试技巧", "计算"],
+  "qi-r2-14": ["期权与定价", "高斯分布", "计算"],
+  "qi-r2-15": ["期权与定价"],
+  "qi-r2-16": ["期权与定价", "定理条件"],
+  "qi-r2-2": ["脑筋急转弯", "计算"],
+  "qi-r2-3": ["计数与组合", "计算"],
+  "qi-r2-4": ["脑筋急转弯"],
+  "qi-r2-5": ["脑筋急转弯"],
+  "qi-r2-6": ["脑筋急转弯"],
+  "qi-r2-7": ["概率空间与事件", "概率面试技巧", "计算"],
+  "qi-r2-8": ["计数与组合", "计算"],
+  "qi-r2-9": ["期权与定价"],
+  "sc-r1-1": ["高斯分布", "条件概率与独立", "定理条件"],
+  "sc-r1-10": ["鞅/上鞅/下鞅", "布朗运动"],
+  "sc-r1-11": ["局部鞅", "路径的变差", "定理条件"],
+  "sc-r1-12": ["二次变差/括号", "布朗运动", "计算"],
+  "sc-r1-13": ["Itô 公式", "计算"],
+  "sc-r1-14": ["随机积分", "Itô 公式", "计算"],
+  "sc-r1-15": ["随机积分", "计算"],
+  "sc-r1-16": ["随机指数", "鞅/上鞅/下鞅"],
+  "sc-r1-17": ["Lévy 刻画", "局部鞅", "二次变差/括号", "定理条件"],
+  "sc-r1-18": ["Girsanov 定理", "布朗运动", "计算"],
+  "sc-r1-19": ["常返与暂留", "布朗运动", "定理条件"],
+  "sc-r1-2": ["布朗运动", "高斯过程", "计算"],
+  "sc-r1-20": ["显式解的 SDE", "Itô 公式", "计算"],
+  "sc-r1-3": ["布朗运动", "不变性（尺度/对称/时间反演）"],
+  "sc-r1-4": ["布朗运动", "路径的变差", "路径连续性/修正"],
+  "sc-r1-5": ["布朗运动", "反射原理/首达时", "计算"],
+  "sc-r1-6": ["反射原理/首达时", "期望与矩", "布朗运动"],
+  "sc-r1-7": ["滤子与停时", "反例"],
+  "sc-r1-8": ["可选停时", "一致可积", "定理条件"],
+  "sc-r1-9": ["可选停时", "布朗运动", "反射原理/首达时", "计算"],
+  "sc-r2-1": ["高斯过程", "定义"],
+  "sc-r2-10": ["滤子与停时", "σ-代数与测度", "定义"],
+  "sc-r2-11": ["滤子与停时", "σ-代数与测度", "定义"],
+  "sc-r2-12": ["滤子与停时", "定理条件"],
+  "sc-r2-13": ["鞅/上鞅/下鞅", "定义"],
+  "sc-r2-14": ["鞅/上鞅/下鞅", "条件期望", "定义"],
+  "sc-r2-15": ["布朗运动", "滤子与停时", "定义"],
+  "sc-r2-16": ["鞅/上鞅/下鞅", "鞅收敛", "条件期望", "定义"],
+  "sc-r2-17": ["路径的变差", "σ-代数与测度", "定义"],
+  "sc-r2-18": ["路径的变差", "定义"],
+  "sc-r2-19": ["局部鞅", "一致可积", "定义"],
+  "sc-r2-2": ["高斯过程", "高斯分布", "定义"],
+  "sc-r2-20": ["局部鞅", "滤子与停时", "定义"],
+  "sc-r2-21": ["局部鞅", "定义"],
+  "sc-r2-22": ["二次变差/括号", "局部鞅", "定理条件"],
+  "sc-r2-23": ["二次变差/括号", "定义"],
+  "sc-r2-24": ["二次变差/括号", "局部鞅", "定义"],
+  "sc-r2-25": ["二次变差/括号", "定义"],
+  "sc-r2-26": ["随机积分", "鞅/上鞅/下鞅", "定义"],
+  "sc-r2-27": ["随机积分", "定义"],
+  "sc-r2-28": ["随机积分", "二次变差/括号", "定义"],
+  "sc-r2-29": ["随机积分", "定义"],
+  "sc-r2-3": ["布朗运动", "路径连续性/修正", "定义"],
+  "sc-r2-30": ["马尔可夫过程", "Feller 半群与生成元", "反例"],
+  "sc-r2-31": ["马尔可夫过程", "条件期望", "定义"],
+  "sc-r2-32": ["Feller 半群与生成元", "定义"],
+  "sc-r2-33": ["SDE 存在唯一性", "定义"],
+  "sc-r2-34": ["SDE 存在唯一性", "定义"],
+  "sc-r2-35": ["局部时", "定理条件"],
+  "sc-r2-4": ["布朗运动", "高斯过程", "路径连续性/修正", "反例"],
+  "sc-r2-5": ["路径连续性/修正", "定义"],
+  "sc-r2-6": ["路径连续性/修正", "定理条件"],
+  "sc-r2-7": ["滤子与停时", "定义"],
+  "sc-r2-8": ["滤子与停时", "定理条件"],
+  "sc-r2-9": ["滤子与停时", "σ-代数与测度", "定义"],
+  "sc-r3-1": ["高斯分布", "高斯过程", "条件概率与独立", "定理条件"],
+  "sc-r3-10": ["极大不等式", "定理条件"],
+  "sc-r3-11": ["鞅收敛", "鞅/上鞅/下鞅", "定理条件"],
+  "sc-r3-12": ["鞅收敛", "一致可积", "反例"],
+  "sc-r3-13": ["可选停时", "一致可积", "定理条件"],
+  "sc-r3-14": ["可选停时", "一致可积", "定理条件"],
+  "sc-r3-15": ["可选停时", "鞅/上鞅/下鞅", "定理条件"],
+  "sc-r3-16": ["局部鞅", "鞅/上鞅/下鞅", "定理条件"],
+  "sc-r3-17": ["局部鞅", "路径的变差", "定理条件"],
+  "sc-r3-18": ["二次变差/括号", "收敛模式", "定理条件"],
+  "sc-r3-19": ["局部鞅", "二次变差/括号", "定理条件"],
+  "sc-r3-2": ["路径连续性/修正", "路径的变差", "定理条件"],
+  "sc-r3-20": ["二次变差/括号", "定理条件"],
+  "sc-r3-21": ["随机积分", "二次变差/括号", "定理条件"],
+  "sc-r3-22": ["随机积分", "二次变差/括号", "定理条件"],
+  "sc-r3-23": ["随机积分", "局部鞅", "定理条件"],
+  "sc-r3-24": ["随机积分", "收敛模式", "定理条件"],
+  "sc-r3-25": ["Itô 公式", "定理条件"],
+  "sc-r3-26": ["随机指数", "局部鞅", "定理条件"],
+  "sc-r3-27": ["Lévy 刻画", "二次变差/括号", "定理条件"],
+  "sc-r3-28": ["时间变换", "二次变差/括号", "定理条件"],
+  "sc-r3-29": ["BDG 不等式", "定理条件"],
+  "sc-r3-3": ["路径连续性/修正", "路径的变差", "布朗运动", "计算"],
+  "sc-r3-30": ["BDG 不等式", "一致可积", "局部鞅", "定理条件"],
+  "sc-r3-31": ["鞅表示", "定理条件"],
+  "sc-r3-32": ["Girsanov 定理", "局部鞅", "定理条件"],
+  "sc-r3-33": ["随机指数", "Girsanov 定理", "一致可积", "定理条件"],
+  "sc-r3-34": ["随机指数", "Itô 公式", "定理条件"],
+  "sc-r3-35": ["马尔可夫过程", "Feller 半群与生成元", "滤子与停时", "定理条件"],
+  "sc-r3-36": ["SDE 存在唯一性", "定理条件"],
+  "sc-r3-37": ["SDE 存在唯一性", "定理条件"],
+  "sc-r3-38": ["SDE 存在唯一性", "Lévy 刻画", "反例"],
+  "sc-r3-39": ["局部时", "二次变差/括号", "定理条件"],
+  "sc-r3-4": ["零一律", "布朗运动", "定理条件"],
+  "sc-r3-40": ["局部时", "路径连续性/修正", "定理条件"],
+  "sc-r3-41": ["局部时", "反射原理/首达时", "布朗运动", "定理条件"],
+  "sc-r3-5": ["二次变差/括号", "路径的变差", "收敛模式", "定理条件"],
+  "sc-r3-6": ["马尔可夫过程", "布朗运动", "滤子与停时", "定理条件"],
+  "sc-r3-7": ["反射原理/首达时", "布朗运动", "定理条件"],
+  "sc-r3-8": ["反射原理/首达时", "随机变量与分布", "定理条件"],
+  "sc-r3-9": ["极大不等式", "鞅/上鞅/下鞅", "定理条件"],
+  "sc-r4-1": ["高斯分布", "期望与矩", "计算"],
+  "sc-r4-10": ["高斯分布", "条件期望", "计算"],
+  "sc-r4-11": ["高斯分布", "条件期望", "高斯过程", "定理条件"],
+  "sc-r4-12": ["高斯过程", "反例"],
+  "sc-r4-13": ["高斯过程", "特征函数", "计算"],
+  "sc-r4-14": ["高斯过程", "计算"],
+  "sc-r4-15": ["高斯过程", "σ-代数与测度", "反例"],
+  "sc-r4-16": ["高斯过程", "期望与矩", "二次变差/括号", "计算"],
+  "sc-r4-17": ["高斯过程", "布朗运动", "随机积分", "计算"],
+  "sc-r4-18": ["布朗运动", "不变性（尺度/对称/时间反演）", "反例"],
+  "sc-r4-19": ["布朗运动", "不变性（尺度/对称/时间反演）", "定理条件"],
+  "sc-r4-2": ["高斯分布", "特征函数", "计算"],
+  "sc-r4-20": ["布朗运动", "σ-代数与测度", "定理条件"],
+  "sc-r4-21": ["路径连续性/修正", "定理条件"],
+  "sc-r4-22": ["布朗运动", "零一律", "路径的变差", "反例"],
+  "sc-r4-23": ["布朗运动", "零一律", "路径的变差", "计算"],
+  "sc-r4-24": ["布朗运动", "滤子与停时", "反例"],
+  "sc-r4-25": ["滤子与停时", "布朗运动", "反例"],
+  "sc-r4-26": ["布朗运动", "反射原理/首达时", "马尔可夫过程", "不变性（尺度/对称/时间反演）", "定理条件"],
+  "sc-r4-27": ["布朗运动", "反射原理/首达时", "不变性（尺度/对称/时间反演）", "计算"],
+  "sc-r4-28": ["布朗运动", "高斯过程", "计算"],
+  "sc-r4-29": ["滤子与停时", "定理条件"],
+  "sc-r4-3": ["高斯分布", "条件概率与独立", "计算"],
+  "sc-r4-30": ["滤子与停时", "定理条件"],
+  "sc-r4-31": ["滤子与停时", "反射原理/首达时", "定理条件"],
+  "sc-r4-32": ["鞅/上鞅/下鞅", "反例"],
+  "sc-r4-33": ["鞅/上鞅/下鞅", "期望与矩", "计算"],
+  "sc-r4-34": ["鞅/上鞅/下鞅", "条件期望", "二次变差/括号", "计算"],
+  "sc-r4-35": ["鞅/上鞅/下鞅", "鞅收敛", "极大不等式", "定理条件"],
+  "sc-r4-36": ["鞅/上鞅/下鞅", "鞅收敛", "路径连续性/修正", "定理条件"],
+  "sc-r4-37": ["鞅/上鞅/下鞅", "路径连续性/修正", "滤子与停时", "反例"],
+  "sc-r4-38": ["可选停时", "布朗运动", "反射原理/首达时", "计算"],
+  "sc-r4-39": ["可选停时", "一致可积", "反射原理/首达时", "计算"],
+  "sc-r4-4": ["高斯分布", "收敛模式", "一致可积", "定理条件"],
+  "sc-r4-40": ["可选停时", "鞅/上鞅/下鞅", "反射原理/首达时", "计算"],
+  "sc-r4-41": ["σ-代数与测度", "定义"],
+  "sc-r4-42": ["σ-代数与测度", "定理条件"],
+  "sc-r4-43": ["σ-代数与测度", "定理条件"],
+  "sc-r4-44": ["σ-代数与测度", "反例"],
+  "sc-r4-45": ["σ-代数与测度", "反例"],
+  "sc-r4-46": ["σ-代数与测度", "条件概率与独立", "定理条件"],
+  "sc-r4-47": ["极大不等式", "鞅/上鞅/下鞅", "随机游走/离散过程", "定理条件"],
+  "sc-r4-48": ["极大不等式", "鞅/上鞅/下鞅", "随机游走/离散过程", "计算"],
+  "sc-r4-49": ["鞅收敛", "随机游走/离散过程", "计算"],
+  "sc-r4-5": ["高斯分布", "收敛模式", "特征函数", "定理条件"],
+  "sc-r4-50": ["鞅收敛", "极大不等式", "随机游走/离散过程", "定理条件"],
+  "sc-r4-51": ["鞅收敛", "一致可积", "随机游走/离散过程", "定理条件"],
+  "sc-r4-52": ["鞅收敛", "鞅/上鞅/下鞅", "随机游走/离散过程", "反例"],
+  "sc-r4-53": ["鞅收敛", "一致可积", "条件期望", "定理条件"],
+  "sc-r4-54": ["可选停时", "一致可积", "随机游走/离散过程", "定理条件"],
+  "sc-r4-55": ["可选停时", "鞅/上鞅/下鞅", "随机游走/离散过程", "定理条件"],
+  "sc-r4-56": ["鞅收敛", "随机游走/离散过程", "定理条件"],
+  "sc-r4-6": ["高斯分布", "特征函数", "计算"],
+  "sc-r4-7": ["高斯分布", "反例"],
+  "sc-r4-8": ["高斯分布", "随机变量与分布", "定理条件"],
+  "sc-r4-9": ["高斯分布", "随机变量与分布", "计算"],
+  "sc-r5-1": ["路径的变差", "计算"],
+  "sc-r5-10": ["二次变差/括号", "布朗运动", "期望与矩", "计算"],
+  "sc-r5-11": ["二次变差/括号", "局部鞅", "定理条件"],
+  "sc-r5-12": ["局部鞅", "二次变差/括号", "布朗运动", "定义"],
+  "sc-r5-13": ["二次变差/括号", "路径的变差", "计算"],
+  "sc-r5-14": ["局部鞅", "二次变差/括号", "鞅收敛", "定理条件"],
+  "sc-r5-15": ["随机积分", "二次变差/括号", "计算"],
+  "sc-r5-16": ["随机积分", "滤子与停时", "反例"],
+  "sc-r5-17": ["随机积分", "局部鞅", "期望与矩", "定理条件"],
+  "sc-r5-18": ["随机积分", "收敛模式", "定理条件"],
+  "sc-r5-19": ["随机积分", "二次变差/括号", "Itô 公式", "计算"],
+  "sc-r5-2": ["路径的变差", "计算"],
+  "sc-r5-20": ["Itô 公式", "随机积分", "计算"],
+  "sc-r5-21": ["局部鞅", "Itô 公式", "调和函数/Dirichlet 问题", "反例"],
+  "sc-r5-22": ["Itô 公式", "二次变差/括号", "特征函数", "计算"],
+  "sc-r5-23": ["二次变差/括号", "局部鞅", "时间变换", "定理条件"],
+  "sc-r5-24": ["时间变换", "Lévy 刻画", "二次变差/括号", "定理条件"],
+  "sc-r5-25": ["鞅表示", "局部鞅", "反例"],
+  "sc-r5-26": ["鞅表示", "Itô 公式", "计算"],
+  "sc-r5-27": ["Girsanov 定理", "一致可积", "鞅/上鞅/下鞅", "定理条件"],
+  "sc-r5-28": ["Girsanov 定理", "二次变差/括号", "定理条件"],
+  "sc-r5-29": ["随机指数", "一致可积", "定理条件"],
+  "sc-r5-3": ["路径的变差", "滤子与停时", "定理条件"],
+  "sc-r5-30": ["Girsanov 定理", "反射原理/首达时", "可选停时", "计算"],
+  "sc-r5-4": ["局部鞅", "反例"],
+  "sc-r5-5": ["局部鞅", "一致可积", "定理条件"],
+  "sc-r5-6": ["局部鞅", "滤子与停时", "定理条件"],
+  "sc-r5-7": ["二次变差/括号", "滤子与停时", "计算"],
+  "sc-r5-8": ["二次变差/括号", "局部鞅", "定理条件"],
+  "sc-r5-9": ["二次变差/括号", "布朗运动", "计算"],
+  "sc-r6-1": ["马尔可夫过程", "计算"],
+  "sc-r6-10": ["Feller 半群与生成元", "布朗运动", "定理条件"],
+  "sc-r6-11": ["Feller 半群与生成元", "鞅/上鞅/下鞅", "定理条件"],
+  "sc-r6-12": ["Feller 半群与生成元", "Itô 公式", "布朗运动", "定理条件"],
+  "sc-r6-13": ["Feller 半群与生成元", "路径连续性/修正", "鞅/上鞅/下鞅", "定理条件"],
+  "sc-r6-14": ["马尔可夫过程", "随机变量与分布", "定理条件"],
+  "sc-r6-15": ["马尔可夫过程", "随机游走/离散过程", "定理条件"],
+  "sc-r6-16": ["马尔可夫过程", "Feller 半群与生成元", "计算"],
+  "sc-r6-17": ["Lévy 过程", "收敛模式", "定义"],
+  "sc-r6-18": ["Feller 半群与生成元", "马尔可夫过程", "计算"],
+  "sc-r6-19": ["热方程/Feynman–Kac", "Feller 半群与生成元", "布朗运动"],
+  "sc-r6-2": ["马尔可夫过程", "路径连续性/修正", "定理条件"],
+  "sc-r6-20": ["热方程/Feynman–Kac"],
+  "sc-r6-21": ["调和函数/Dirichlet 问题", "可选停时", "定理条件"],
+  "sc-r6-22": ["调和函数/Dirichlet 问题", "可选停时", "计算"],
+  "sc-r6-23": ["调和函数/Dirichlet 问题", "定理条件"],
+  "sc-r6-24": ["调和函数/Dirichlet 问题", "常返与暂留", "计算"],
+  "sc-r6-25": ["调和函数/Dirichlet 问题", "定理条件"],
+  "sc-r6-26": ["调和函数/Dirichlet 问题", "布朗运动", "计算"],
+  "sc-r6-27": ["调和函数/Dirichlet 问题", "计算"],
+  "sc-r6-28": ["调和函数/Dirichlet 问题", "计算"],
+  "sc-r6-29": ["常返与暂留", "调和函数/Dirichlet 问题", "计算"],
+  "sc-r6-3": ["Feller 半群与生成元", "定义"],
+  "sc-r6-30": ["常返与暂留", "调和函数/Dirichlet 问题", "计算"],
+  "sc-r6-31": ["常返与暂留", "布朗运动", "反例"],
+  "sc-r6-32": ["时间变换", "Itô 公式", "二次变差/括号", "计算"],
+  "sc-r6-33": ["时间变换", "Itô 公式", "计算"],
+  "sc-r6-34": ["时间变换", "反射原理/首达时", "收敛模式", "定理条件"],
+  "sc-r6-35": ["常返与暂留", "布朗运动", "计算"],
+  "sc-r6-36": ["常返与暂留", "收敛模式", "定理条件"],
+  "sc-r6-4": ["Feller 半群与生成元", "布朗运动", "反射原理/首达时", "计算"],
+  "sc-r6-5": ["Feller 半群与生成元", "鞅/上鞅/下鞅", "定理条件"],
+  "sc-r6-6": ["Feller 半群与生成元", "定理条件"],
+  "sc-r6-7": ["Feller 半群与生成元", "定理条件"],
+  "sc-r6-8": ["Feller 半群与生成元", "定理条件"],
+  "sc-r6-9": ["Feller 半群与生成元", "布朗运动", "定理条件"],
+  "sc-r7-1": ["SDE 存在唯一性", "定理条件"],
+  "sc-r7-10": ["Feller 半群与生成元", "SDE 存在唯一性", "反例"],
+  "sc-r7-11": ["显式解的 SDE", "高斯过程", "计算"],
+  "sc-r7-12": ["显式解的 SDE", "Itô 公式", "计算"],
+  "sc-r7-13": ["Itô 公式", "二次变差/括号", "Lévy 刻画", "计算"],
+  "sc-r7-14": ["可选停时", "反射原理/首达时", "常返与暂留", "Itô 公式", "计算"],
+  "sc-r7-15": ["SDE 存在唯一性", "定理条件"],
+  "sc-r7-16": ["Itô 公式", "鞅/上鞅/下鞅", "SDE 存在唯一性", "计算"],
+  "sc-r7-17": ["局部时", "Itô 公式", "定理条件"],
+  "sc-r7-18": ["局部时", "定义"],
+  "sc-r7-19": ["局部时", "布朗运动", "期望与矩", "计算"],
+  "sc-r7-2": ["SDE 存在唯一性", "定理条件"],
+  "sc-r7-20": ["局部时", "定理条件"],
+  "sc-r7-21": ["局部时", "布朗运动", "零一律", "反例"],
+  "sc-r7-22": ["局部时", "二次变差/括号", "定理条件"],
+  "sc-r7-23": ["局部时", "布朗运动", "计算"],
+  "sc-r7-24": ["局部时", "Itô 公式", "计算"],
+  "sc-r7-25": ["局部时", "路径的变差", "二次变差/括号", "定理条件"],
+  "sc-r7-26": ["局部时", "二次变差/括号", "定理条件"],
+  "sc-r7-27": ["局部时", "二次变差/括号", "定理条件"],
+  "sc-r7-28": ["局部时", "定理条件"],
+  "sc-r7-29": ["局部时", "反射原理/首达时", "随机变量与分布", "计算"],
+  "sc-r7-3": ["SDE 存在唯一性", "定理条件"],
+  "sc-r7-30": ["局部时", "布朗运动", "反射原理/首达时", "定理条件"],
+  "sc-r7-31": ["局部时", "Lévy 过程", "不变性（尺度/对称/时间反演）", "计算"],
+  "sc-r7-32": ["局部时", "Lévy 过程", "布朗运动", "定理条件"],
+  "sc-r7-4": ["SDE 存在唯一性", "收敛模式", "定理条件"],
+  "sc-r7-5": ["SDE 存在唯一性", "布朗运动", "定理条件"],
+  "sc-r7-6": ["SDE 存在唯一性", "路径连续性/修正", "定理条件"],
+  "sc-r7-7": ["SDE 存在唯一性", "马尔可夫过程", "布朗运动", "定理条件"],
+  "sc-r7-8": ["SDE 存在唯一性", "马尔可夫过程", "Feller 半群与生成元", "定理条件"],
+  "sc-r7-9": ["Feller 半群与生成元", "SDE 存在唯一性", "计算"],
+};
+BANK.forEach(q => { q.tags = TAGS_OF[q.id] || []; });
 const BY_ID = new Map(BANK.map(q => [q.id, q]));
 const roundOf = id => id.split("-").slice(0, 2).join("-");
 const KEYS = ["A", "B", "C", "D"];
@@ -1855,17 +2279,23 @@ const SHOW_EPS = ["Pilot","Spanish 101","Introduction to Film","Social Psycholog
 const isListen = q => !!q.audio;
 // 每个分组键包含哪些题
 function members(key) {
+  const p = parseTagKey(key);
+  if (p) { const w = p.kind === "wrong" ? wrongIds() : null; return BANK.filter(q => (!w || w.has(q.id)) && (p.kind === "wrong" && !p.tags.length || tagMatch(q, p.tags, p.mode))); }
   if (key.startsWith("ch:")) { const n = Number(key.slice(3)); return BANK.filter(q => q.ch === n && !isListen(q)); }
   if (key.startsWith("ep:")) { const n = Number(key.slice(3)); return BANK.filter(q => q.ep === n); }
   return BANK.filter(q => roundOf(q.id) === key);
 }
 function inGroup(key, q) {
   if (!q) return false;
+  const p = parseTagKey(key);
+  if (p) return !p.tags.length || tagMatch(q, p.tags, p.mode);
   if (key.startsWith("ch:")) return q.ch === Number(key.slice(3)) && !isListen(q);
   if (key.startsWith("ep:")) return q.ep === Number(key.slice(3));
   return roundOf(q.id) === key;
 }
 function labelOf(key) {
+  const p = parseTagKey(key);
+  if (p) return tagLabel(p);
   if (key.startsWith("ch:")) { const c = CH.get(Number(key.slice(3))); return c ? chName(c) : "未归类"; }
   if (key.startsWith("ep:")) { const n = Number(key.slice(3)); return `废柴联盟 S1E${n} · ${SHOW_EPS[n - 1]}`; }
   return ROUNDS.find(r => r.id === key)?.name || key;
@@ -2120,6 +2550,116 @@ function remindRow() {
   return row;
 }
 
+// ---------- 标签检索：勾选标签 → 检索出题目；错题本按标签筛选 ----------
+const tagSaved = (() => { try { return JSON.parse(localStorage.getItem("sq-tags") || "{}"); } catch (e) { return {}; } })();
+let pickTags = new Set(tagSaved.tags || []);
+let tagMode = tagSaved.mode === "all" ? "all" : "any";   // any：带任一所选标签；all：同时带所有所选标签
+const saveTags = () => { try { localStorage.setItem("sq-tags", JSON.stringify({ tags: [...pickTags], mode: tagMode })); } catch (e) {} };
+const tagMatch = (q, tags, mode) => !!q && tags.length > 0 && (mode === "all" ? tags.every(t => q.tags.includes(t)) : tags.some(t => q.tags.includes(t)));
+const tagKey = (kind, tags = [...pickTags], mode = tagMode) => `${kind}:${mode}:${tags.join("|")}`;
+function parseTagKey(key) {
+  const m = /^(tag|wrong):(any|all):(.*)$/.exec(key);
+  return m ? { kind: m[1], mode: m[2], tags: m[3] ? m[3].split("|") : [] } : null;
+}
+const wrongIds = () => new Set((bookCache?.wrong || []).map(d => d.qid));
+function tagLabel(p) {
+  const t = p.tags.length ? p.tags.join(p.mode === "all" ? " + " : " / ") : "全部";
+  return (p.kind === "wrong" ? "错题 · " : "标签 · ") + t + (p.tags.length > 1 ? (p.mode === "all" ? "（同时满足）" : "（任一）") : "");
+}
+
+function tagPanel() {
+  const quiz = view === "quiz";
+  const box = el("div", "tag-panel");
+  // 题目池：答题页是全部题，错题本是当前错题
+  const wids = quiz ? null : wrongIds();
+  const pool = quiz ? BANK : BANK.filter(q => wids.has(q.id));
+  const sum = el("div", "tag-sum");
+  const mode = el("div", "tag-mode");
+  const act = el("div", "tag-act");
+  const go = el("button", "btn", quiz ? "检索并开始做题" : "检索错题");
+  go.type = "button"; go.id = "tagGo";
+  const clear = el("button", "btn ghost", "清空");
+  clear.type = "button";
+  const chips = [];
+  const refresh = () => {
+    const tags = [...pickTags];
+    const n = pool.filter(q => tagMatch(q, tags, tagMode)).length;
+    sum.textContent = "";
+    if (!tags.length) sum.append(document.createTextNode(quiz ? "勾选标签来检索题目（可多选）" : "勾选标签来筛选错题（可多选）"));
+    else { sum.append(document.createTextNode(`已选 ${tags.length} 个标签 · ${quiz ? "共" : "错题"} `), el("b", null, String(n)), document.createTextNode(" 题")); }
+    go.disabled = !n;
+    clear.disabled = !tags.length;
+    chips.forEach(c => c.setAttribute("aria-pressed", String(pickTags.has(c.dataset.tag))));
+  };
+  [["any", "任一标签"], ["all", "同时满足"]].forEach(([m, t]) => {
+    const b = el("button", null, t); b.type = "button";
+    b.setAttribute("aria-pressed", String(tagMode === m));
+    b.addEventListener("click", () => { tagMode = m; saveTags(); mode.querySelectorAll("button").forEach(x => x.setAttribute("aria-pressed", String(x === b))); refresh(); });
+    mode.append(b);
+  });
+  go.addEventListener("click", () => {
+    if (quiz) { startSet(tagKey("tag"), true); }
+    else { bookFilter = tagKey("wrong"); renderToc(); drawBook(); }
+    afterPick();
+  });
+  clear.addEventListener("click", () => { pickTags.clear(); saveTags(); refresh(); if (!quiz && bookFilter !== "all") { bookFilter = "all"; renderToc(); drawBook(); } });
+  act.append(go, clear);
+  box.append(sum, mode, act);
+  TAG_GROUPS.forEach(g => {
+    const grp = el("div", "tag-group");
+    grp.append(el("div", "tag-gname", g.g));
+    const wrap = el("div", "chips");
+    g.tags.forEach(t => {
+      const n = pool.reduce((s, q) => s + (q.tags.includes(t) ? 1 : 0), 0);
+      const c = el("button", "chip");
+      c.type = "button"; c.dataset.tag = t;
+      c.append(document.createTextNode(t), el("small", null, String(n)));
+      c.disabled = !n && !pickTags.has(t);
+      c.addEventListener("click", () => { pickTags.has(t) ? pickTags.delete(t) : pickTags.add(t); saveTags(); refresh(); });
+      chips.push(c);
+      wrap.append(c);
+    });
+    grp.append(wrap);
+    box.append(grp);
+  });
+  refresh();
+  return box;
+}
+
+// 错题本：每个标签累计答错多少次（所有答错记录，含后来改对的）、目前还有几道错题；按答错次数从多到少
+function tagDistCard() {
+  const card = el("section", "card dist");
+  card.append(el("h3", null, "错题分布（按标签）"));
+  const times = new Map(), now = new Map(), wids = wrongIds();
+  (bookCache?.raw || []).forEach(d => { if (d.isCorrect) return; const q = BY_ID.get(d.qid); if (q) q.tags.forEach(t => times.set(t, (times.get(t) || 0) + 1)); });
+  BANK.forEach(q => { if (wids.has(q.id)) q.tags.forEach(t => now.set(t, (now.get(t) || 0) + 1)); });
+  const rows = [...times.entries()].sort((a, b) => b[1] - a[1] || (now.get(b[0]) || 0) - (now.get(a[0]) || 0));
+  if (!rows.length) { card.append(el("p", "empty", "还没有答错过的题。")); return card; }
+  card.append(el("p", "sub", "条长 = 累计答错次数；点一行只看这个标签的错题。"));
+  const max = rows[0][1], list = el("div", "dist");
+  const show = n => {
+    list.textContent = "";
+    rows.slice(0, n).forEach(([t, c]) => {
+      const r = el("button", "dist-row"); r.type = "button";
+      const p = parseTagKey(bookFilter);
+      r.setAttribute("aria-pressed", String(!!p && p.tags.length === 1 && p.tags[0] === t));
+      const bar = el("span", "bar2"), fill = el("i"); fill.style.width = (c / max * 100) + "%"; bar.append(fill);
+      const num = el("span", "n"); num.append(el("b", null, `${c} 次`), document.createTextNode(` · 现有 ${now.get(t) || 0} 题`));
+      r.append(el("span", null, t), bar, num);
+      r.addEventListener("click", () => { pickTags = new Set([t]); saveTags(); bookFilter = tagKey("wrong", [t], "any"); renderToc(); drawBook(); });
+      list.append(r);
+    });
+  };
+  show(12);
+  card.append(list);
+  if (rows.length > 12) {
+    const more = el("button", "btn ghost dist-more", `显示全部 ${rows.length} 个标签`); more.type = "button";
+    more.addEventListener("click", () => { show(rows.length); more.remove(); });
+    card.append(more);
+  }
+  return card;
+}
+
 // ---------- 目录 ----------
 function tocItem({ no, title, zh, badge, badgeCls, current, disabled, onClick }) {
   const li = el("li");
@@ -2163,6 +2703,15 @@ function folder(title, sub, keys, build) {
 
 function renderToc() {
   toc.innerHTML = "";
+  toc.append(tagPanel());
+  const legacy = el("details", "legacy"), lbox = el("div");
+  legacy.append(el("summary", null, "按轮次 / 章节浏览"), lbox);
+  const cur = view === "quiz" ? set?.key : bookFilter;
+  legacy.open = !!cur && cur !== "all" && !parseTagKey(cur);
+  toc.append(legacy);
+  renderOldToc(lbox);
+}
+function renderOldToc(toc) {
   toc.append(el("div", "toc-book", "Le Gall · Brownian Motion, Martingales, and Stochastic Calculus（GTM 274）"));
   const ul = el("ul");
   if (view === "quiz") {
@@ -2450,6 +2999,7 @@ function paintAnswer(i, buttons, card, order) {
   }
   if (hintUsed) exp.append(el("span", "hint-used", "（用了提示）"));
   exp.append(document.createTextNode(" " + item.exp));
+  if (item.tags && item.tags.length) exp.append(el("span", "tag-note", "🏷 标签：" + item.tags.join("、")));
   if (study && item.kp && KP[item.kp]) exp.append(el("span", "kp-note", "📌 知识点：" + KP[item.kp].t));
   typeset(exp);
   const hb = card.querySelector("#hintBtn");
@@ -2536,10 +3086,11 @@ function drawBook() {
   const { all, wrong } = bookCache;
   stage.innerHTML = "";
   stage.append(heatCard(bookCache.raw || []));
+  stage.append(tagDistCard());
   const card = el("section", "card");
   stage.append(card);
   const tags = el("div", "tagrow");
-  tags.append(el("span", "tag", bookFilter === "all" ? "错题本 · 全部" : "错题本 · " + labelOf(bookFilter)));
+  tags.append(el("span", "tag", bookFilter === "all" ? "错题本 · 全部" : "错题本 · " + labelOf(bookFilter).replace(/^错题 · /, "")));
   card.append(tags);
 
   const scope = bookFilter === "all" ? all : all.filter(d => inGroup(bookFilter, BY_ID.get(d.qid)));
@@ -2548,13 +3099,19 @@ function drawBook() {
   [[scope.length, "已答题数"], [scopeWrong.length, "错题"], [scope.length ? Math.round((scope.length - scopeWrong.length) / scope.length * 100) + "%" : "–", "正确率"]]
     .forEach(([v, k]) => { const st = el("div", "stat"); st.append(el("b", null, String(v)), el("span", null, k)); stats.append(st); });
   card.append(stats);
+  if (scopeWrong.length) {
+    const drill = el("button", "btn", `练这些错题（${scopeWrong.length} 题）`); drill.type = "button"; drill.id = "drillBtn";
+    const p = parseTagKey(bookFilter);
+    drill.addEventListener("click", () => switchView("quiz", p ? tagKey("wrong", p.tags, p.mode) : bookFilter === "all" ? "wrong:any:" : bookFilter));
+    const row = el("div", "actions"); row.append(drill); card.append(row);
+  }
 
   if (!wrong.length) { card.append(el("p", "empty", all.length ? "目前没有错题，继续保持。" : "还没有答题记录。去「答题」做一轮，答错的题会出现在这里。")); return; }
 
   // 选了某一组就整组列出；看全部时，语法题按章节、听力题按集或按轮分组
   const groups = new Map();
   scopeWrong.forEach(d => {
-    const k = bookFilter === "all" ? homeOf(BY_ID.get(d.qid)) : bookFilter;
+    const k = bookFilter === "all" || parseTagKey(bookFilter) ? homeOf(BY_ID.get(d.qid)) : bookFilter;
     if (!groups.has(k)) groups.set(k, []);
     groups.get(k).push(d);
   });
