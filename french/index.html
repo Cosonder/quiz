@@ -375,6 +375,33 @@ h1 { font-family: var(--display); font-weight: 900; font-size: 1.6rem; line-heig
 .opt.cursor .key { background: var(--accent); color: var(--card); }
 .keys-note { font-size: .82rem; }
 @media (hover: none), (max-width: 819px) { .keys-note { display: none; } }
+.heat-card { --h0: #e3e7ee; --h1: #7cc493; --h2: #46a368; --h3: #23824a; --h4: #145a33; gap: 10px; }
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) .heat-card { --h0: #262e3b; --h1: #155c33; --h2: #1f8346; --h3: #3bb06a; --h4: #7bd99e; }
+}
+:root[data-theme="dark"] .heat-card { --h0: #262e3b; --h1: #155c33; --h2: #1f8346; --h3: #3bb06a; --h4: #7bd99e; }
+.heat-card { margin-bottom: 16px; }
+.heat-card h3 { margin: 0; font-size: 1rem; }
+.heat-stats { display: flex; flex-wrap: wrap; gap: 4px 16px; font-size: .88rem; color: var(--muted); font-variant-numeric: tabular-nums; }
+.heat-stats b { color: var(--fg); }
+.heat-scroll { overflow-x: auto; padding-bottom: 4px; }
+.heat-grid { display: grid; grid-auto-flow: column; grid-template-rows: 14px repeat(7, 11px); grid-auto-columns: 11px; gap: 3px; width: max-content; }
+.heat-grid .hm { font-size: .68rem; color: var(--muted); white-space: nowrap; line-height: 14px; overflow: visible; }
+.heat-grid .hw { font-size: .62rem; color: var(--muted); line-height: 11px; width: 14px; }
+.heat-grid i { display: block; width: 11px; height: 11px; border-radius: 2px; background: var(--h0); cursor: pointer; }
+.heat-grid i.l1 { background: var(--h1); } .heat-grid i.l2 { background: var(--h2); }
+.heat-grid i.l3 { background: var(--h3); } .heat-grid i.l4 { background: var(--h4); }
+.heat-grid i.future { background: transparent; cursor: default; }
+.heat-grid i.on { outline: 2px solid var(--fg); outline-offset: 1px; }
+.heat-foot { display: flex; flex-wrap: wrap; gap: 6px 16px; align-items: center; justify-content: space-between; font-size: .82rem; color: var(--muted); }
+.heat-legend { display: inline-flex; align-items: center; gap: 3px; }
+.heat-legend i { display: inline-block; width: 11px; height: 11px; border-radius: 2px; background: var(--h0); }
+.heat-legend i.l1 { background: var(--h1); } .heat-legend i.l2 { background: var(--h2); }
+.heat-legend i.l3 { background: var(--h3); } .heat-legend i.l4 { background: var(--h4); }
+.heat-day { color: var(--fg); font-variant-numeric: tabular-nums; min-height: 1.4em; }
+.heat-remind { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; font-size: .88rem; color: var(--muted); border-top: 1px solid var(--line); padding-top: 10px; }
+.heat-remind input { font: inherit; color: var(--fg); background: var(--card); border: 1px solid var(--line); border-radius: 6px; padding: 2px 6px; }
+.heat-remind a { color: var(--accent); }
 </style>
 
 <div class="wrap">
@@ -8596,6 +8623,116 @@ document.addEventListener("keydown", e => {
   else if (k === "Shift" && !e.repeat) click("hintBtn");
 });
 
+// ---------- 做题日历：最近一年每天答了多少题（每答一题记一次，包括重做） ----------
+const HEAT_STEPS = [1, 10, 25, 50];   // 颜色档：1–9、10–24、25–49、50 题以上
+const dayKey = d => `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, "0")}-${String(d.getDate()).padStart(2, "0")}`;
+const heatLevel = n => HEAT_STEPS.filter(s => n >= s).length;
+function heatCard(raw) {
+  const counts = new Map();
+  raw.forEach(d => { const t = new Date(d.at); if (!isNaN(t)) { const k = dayKey(t); counts.set(k, (counts.get(k) || 0) + 1); } });
+  const today = new Date(); today.setHours(0, 0, 0, 0);
+  const start = new Date(today); start.setDate(start.getDate() - 7 * 52 - (today.getDay() + 6) % 7);   // 52 周前的周一
+  const card = el("section", "card heat-card");
+  card.append(el("h3", null, "做题日历"));
+  // 统计：最近一年题数、做题天数、连续天数（今天还没做时从昨天算起）、今天
+  let total = 0, days = 0;
+  for (const [k, n] of counts) if (new Date(k + "T00:00") >= start) { total += n; days++; }
+  let streak = 0; const d = new Date(today);
+  if (!counts.get(dayKey(d))) d.setDate(d.getDate() - 1);
+  while (counts.get(dayKey(d))) { streak++; d.setDate(d.getDate() - 1); }
+  const stats = el("div", "heat-stats");
+  [["最近一年", `${total} 题`], ["做题", `${days} 天`], ["连续", `${streak} 天`], ["今天", `${counts.get(dayKey(today)) || 0} 题`]]
+    .forEach(([k, v]) => { const s = el("span", null, k + " "); s.append(el("b", null, v)); stats.append(s); });
+  card.append(stats);
+  // 网格：每列一周（周一在上），第一行是月份
+  const scroll = el("div", "heat-scroll"), grid = el("div", "heat-grid");
+  grid.setAttribute("role", "img");
+  grid.setAttribute("aria-label", `最近一年做题日历：共 ${total} 题，${days} 天`);
+  ["", "一", "", "三", "", "五", "", "日"].forEach(t => grid.append(el("span", "hw", t)));
+  const info = el("div", "heat-day", "点一个格子看当天做了多少题。");
+  const fmt = dt => `${dt.getFullYear()} 年 ${dt.getMonth() + 1} 月 ${dt.getDate()} 日（周${"日一二三四五六"[dt.getDay()]}）`;
+  let lastMonth = -1;
+  for (const wk = new Date(start); wk <= today; wk.setDate(wk.getDate() + 7)) {
+    const m = wk.getMonth(), endOfWeek = new Date(wk); endOfWeek.setDate(endOfWeek.getDate() + 6);
+    grid.append(el("span", "hm", m !== lastMonth && wk.getDate() <= 7 ? `${m + 1}月` : ""));
+    if (wk.getDate() <= 7) lastMonth = m;
+    for (let i = 0; i < 7; i++) {
+      const dt = new Date(wk); dt.setDate(dt.getDate() + i);
+      const cell = el("i");
+      if (dt > today) { cell.className = "future"; grid.append(cell); continue; }
+      const n = counts.get(dayKey(dt)) || 0, text = `${fmt(dt)}：${n ? n + " 题" : "没有做题"}`;
+      if (n) cell.className = "l" + heatLevel(n);
+      cell.title = text;
+      const show = () => { grid.querySelectorAll("i.on").forEach(c => c.classList.remove("on")); cell.classList.add("on"); info.textContent = text; };
+      cell.addEventListener("click", show);
+      cell.addEventListener("mouseenter", show);
+      grid.append(cell);
+    }
+  }
+  scroll.append(grid);
+  card.append(scroll);
+  const foot = el("div", "heat-foot");
+  const legend = el("span", "heat-legend");
+  legend.append(document.createTextNode("少 "));
+  for (let l = 0; l <= 4; l++) legend.append(el("i", l ? "l" + l : ""));
+  legend.append(document.createTextNode(" 多（1–9 / 10–24 / 25–49 / 50+ 题）"));
+  foot.append(info, legend);
+  card.append(foot);
+  card.append(remindRow());
+  requestAnimationFrame(() => { scroll.scrollLeft = scroll.scrollWidth; });
+  return card;
+}
+
+// 日历文件每行不超过 75 字节，长行折行（续行以空格开头），不拆开多字节字符
+function foldIcs(line) {
+  const enc = new TextEncoder(), out = [];
+  let cur = "", lim = 75;
+  for (const ch of line) {
+    if (enc.encode(cur + ch).length > lim) { out.push(cur); cur = " "; lim = 75; }
+    cur += ch;
+  }
+  out.push(cur);
+  return out.join("\r\n");
+}
+// ---------- 每日提醒：生成一个每天重复、带闹钟的日历事件（.ics），加到系统日历里 ----------
+function remindRow() {
+  const row = el("div", "heat-remind");
+  const local = typeof claude === "undefined";
+  if (!local) {
+    row.append(document.createTextNode("每日提醒：在 "));
+    const a = el("a", null, "公开网站的错题本页"); a.href = "https://cosonder.github.io/quiz/"; a.target = "_blank"; a.rel = "noopener";
+    row.append(a, document.createTextNode(" 下载日历提醒，加到 iPad / 手机日历后每天到点通知。"));
+    return row;
+  }
+  let t = "20:00";
+  try { t = localStorage.getItem("quiz-remind") || t; } catch (e) {}
+  const lab = el("label", null, "每日提醒 ");
+  const inp = el("input"); inp.type = "time"; inp.value = t; inp.id = "remindTime";
+  lab.append(inp);
+  const btn = el("button", "btn ghost", "加到日历"); btn.type = "button"; btn.id = "remindBtn";
+  const note = el("span", null, "下载一个每天重复的日历事件，打开后加到系统日历，到点会通知。");
+  btn.addEventListener("click", () => {
+    const [hh, mm] = (inp.value || "20:00").split(":");
+    try { localStorage.setItem("quiz-remind", `${hh}:${mm}`); } catch (e) {}
+    const now = new Date(), p2 = n => String(n).padStart(2, "0");
+    const stamp = now.toISOString().replace(/[-:]/g, "").replace(/\.\d+/, "");
+    const url = location.href.split("#")[0];
+    const ics = ["BEGIN:VCALENDAR", "VERSION:2.0", "PRODID:-//quiz//daily reminder//ZH", "CALSCALE:GREGORIAN", "BEGIN:VEVENT",
+      `UID:quiz-daily-${stamp}@cosonder.github.io`, `DTSTAMP:${stamp}`,
+      `DTSTART:${now.getFullYear()}${p2(now.getMonth() + 1)}${p2(now.getDate())}T${hh}${mm}00`, "DURATION:PT20M", "RRULE:FREQ=DAILY",
+      "SUMMARY:做题时间", `DESCRIPTION:打开练习页做几道题：${url}`, `URL:${url}`,
+      "BEGIN:VALARM", "ACTION:DISPLAY", "DESCRIPTION:做题时间", "TRIGGER:PT0M", "END:VALARM",
+      "END:VEVENT", "END:VCALENDAR"].map(foldIcs).join("\r\n") + "\r\n";
+    const a = document.createElement("a");
+    a.href = URL.createObjectURL(new Blob([ics], { type: "text/calendar" }));
+    a.download = "daily-quiz-reminder.ics";
+    document.body.append(a); a.click(); a.remove();
+    note.textContent = `已生成每天 ${hh}:${mm} 的提醒，打开下载的文件并选择“添加到日历”。`;
+  });
+  row.append(lab, btn, note);
+  return row;
+}
+
 // ---------- 目录 ----------
 function tocItem({ no, title, zh, badge, badgeCls, current, disabled, onClick }) {
   const li = el("li");
@@ -8952,7 +9089,7 @@ async function renderBook() {
     const latest = new Map();
     docs.sort((a, b) => String(a.at).localeCompare(String(b.at))).forEach(d => latest.set(d.qid, d));
     const all = [...latest.values()].filter(d => BY_ID.has(d.qid));
-    bookCache = { all, wrong: all.filter(d => !d.isCorrect) };
+    bookCache = { all, wrong: all.filter(d => !d.isCorrect), raw: docs };
   }
   if (view !== "book") return;
   if (bookFilter !== "all" && !bookCache.wrong.some(d => inGroup(bookFilter, BY_ID.get(d.qid)))) bookFilter = "all";
@@ -8964,6 +9101,7 @@ function drawBook() {
   if (!bookCache) return;
   const { all, wrong } = bookCache;
   stage.innerHTML = "";
+  stage.append(heatCard(bookCache.raw || []));
   const card = el("section", "card");
   stage.append(card);
   const tags = el("div", "tagrow");
