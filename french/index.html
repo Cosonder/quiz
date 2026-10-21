@@ -501,7 +501,7 @@ const PARTS = [
 ];
 const CH = new Map();
 PARTS.forEach(pt => pt.chs.forEach(([n, t, zh, p]) => CH.set(n, { n, t, zh, p, part: pt.n })));
-
+const chName = c => `第 ${c.n} 章 · ${c.zh}`;
 const ROUNDS = [
   { id: "fr-r1", kind: "grammar", name: "第一轮 · 综合" },
   { id: "fr-r2", kind: "grammar", name: "第二轮 · 冠词" },
@@ -564,8 +564,6 @@ const ROUNDS = [
   { id: "fr-c40", kind: "chapter", name: "第 40 章 · 并列与连用" },
   { id: "fr-c41", kind: "chapter", name: "第 41 章 · 间接引语" },
 ];
-const ROUND_NAMES = Object.fromEntries(ROUNDS.map(r => [r.id, r.name.split(" · ")[0]]));
-
 // 题库：id 与以往答题记录中的 qid 一致，ch 为教材章号
 const BANK = [
   { id: "fr-r1-1", ch: 9, cat: "助动词", q: "Hier, je ___ allé au cinéma avec mes amis.", opts: ["ai", "suis", "es", "est"], a: 1,
@@ -8431,7 +8429,6 @@ const KP_OF = {
   "fr-c41-41": "c41-firs",
   "fr-c41-42": "c41-firs",
 };
-BANK.forEach(q => { q.kp = KP_OF[q.id]; });
 // 标签：分组（目录里按组勾选）和每道题的标签
 const TAG_GROUPS = [{"g": "难度", "tags": ["A1", "A2", "B1", "B2", "C1", "C2"]}, {"g": "词类", "tags": ["名词", "冠词", "形容词", "副词", "人称代词", "关系代词", "指示词", "主有词", "泛指词", "疑问词", "介词", "连词", "数词"]}, {"g": "动词形式", "tags": ["直陈式现在时", "复合过去时", "未完成过去时", "愈过去时", "简单过去时", "简单将来时", "先将来时", "近将来时/近过去时", "条件式", "虚拟式", "命令式", "不定式", "现在分词/副动词", "过去分词"]}, {"g": "动词用法", "tags": ["助动词 être/avoir", "过去分词配合", "代词式动词", "被动态", "无人称结构", "情态动词", "savoir/connaître", "时态配合"]}, {"g": "句子结构", "tags": ["疑问句", "否定", "感叹句", "间接引语", "关系从句", "条件句 si", "比较级/最高级", "时间表达", "语序", "c'est / il est", "并列与连接", "强调"]}, {"g": "词形与书写", "tags": ["阴阳性", "单复数", "性数配合", "省音/缩合", "发音", "拼写", "标点", "语域"]}, {"g": "词汇", "tags": ["搭配", "固定表达", "词义辨析", "构词"]}, {"g": "常用小词", "tags": ["de", "à", "en", "y", "que", "ce/cela", "tout", "on", "ne"]}, {"g": "听力", "tags": ["听力理解", "听写辨音"]}];
 const TAGS_OF = {
@@ -12950,7 +12947,6 @@ const LEVEL_OF = {
   "fr-r9-9": "A2",
 };
 const LEVELS = ["A1", "A2", "B1", "B2", "C1", "C2"];
-BANK.forEach(q => { q.level = LEVEL_OF[q.id] || ""; q.tags = (TAGS_OF[q.id] || []).concat(q.level ? [q.level] : []); });
 // 老题补写的提示（题目本身没有 hint 时使用）
 const HINT_OF = {
   "fr-r1-1": "aller 的复合过去时用哪个助动词？再看主语。",
@@ -13437,10 +13433,15 @@ const HINT_OF = {
   "fr-r9-8": "找 l'année prochaine 后面的 j'aimerais。",
   "fr-r9-9": "听 dure environ 后面；et quart 和 et demie 不一样。",
 };
+// 题库整理：所有题库数据（含额外题库）载入后，把知识点、难度、标签、提示挂到每道题上
+const ROUND_NAMES = Object.fromEntries(ROUNDS.map(r => [r.id, r.name.split(" · ")[0]]));
+BANK.forEach(q => { q.kp = KP_OF[q.id]; });
+BANK.forEach(q => { q.level = LEVEL_OF[q.id] || ""; q.tags = (TAGS_OF[q.id] || []).concat(q.level ? [q.level] : []); });
 BANK.forEach(q => { if (!q.hint && HINT_OF[q.id]) q.hint = HINT_OF[q.id]; });
 const BY_ID = new Map(BANK.map(q => [q.id, q]));
 const roundOf = id => id.split("-").slice(0, 2).join("-");
 const KEYS = ["A", "B", "C", "D"];
+const typeset = () => {};   // 法语页没有公式，不用排版（随机分析页用 MathJax）
 
 const $ = id => document.getElementById(id);
 const stage = $("stage"), toc = $("toc"), tocwrap = $("tocwrap"), tocTitle = $("tocTitle");
@@ -13464,7 +13465,6 @@ wide.addEventListener?.("change", e => { if (e.matches) tocwrap.open = true; });
 function afterPick() {
   if (!wide.matches) { tocwrap.open = false; $("main").scrollIntoView({ block: "start" }); }
 }
-
 // ---------- 错题本存储 ----------
 let dbRef = null;
 const LOCAL = typeof claude === "undefined";   // 在 GitHub Pages 等普通网页里打开
@@ -13497,7 +13497,6 @@ function record(item, i, right) {
   }).catch(() => { saveNote.textContent = "有一条记录没保存成功，答题不受影响。"; });
   bookCache = null;
 }
-
 // ---------- 状态 ----------
 let view = "quiz";
 let set = null;            // { key, label, qs }
@@ -13536,7 +13535,7 @@ function inGroup(key, q) {
 function labelOf(key) {
   const p = parseTagKey(key);
   if (p) return tagLabel(p);
-  if (key.startsWith("ch:")) { const c = CH.get(Number(key.slice(3))); return c ? `第 ${c.n} 章 · ${c.zh}` : "未归类"; }
+  if (key.startsWith("ch:")) { const c = CH.get(Number(key.slice(3))); return c ? chName(c) : "未归类"; }
   if (key.startsWith("ep:")) { const n = Number(key.slice(3)); return `废柴联盟 S1E${n} · ${SHOW_EPS[n - 1]}`; }
   return ROUNDS.find(r => r.id === key)?.name || key;
 }
@@ -13579,7 +13578,6 @@ perSel.addEventListener("change", () => {
   const from = idx < set.qs.length ? idx : 0;
   if (view === "quiz") startBatch(from); else { bStart = idx = from; score = calcScore(); }
 });
-
 // ---------- 学习模式：每组开始前先乱序复习本组涉及的知识点 ----------
 const studyChk = document.getElementById("studyChk");
 let study = (() => { try { return localStorage.getItem("fq-study") === "1"; } catch (e) { return false; } })();
@@ -13629,6 +13627,7 @@ function renderReview() {
   actions.append(skip, prev, next);
   card.append(actions);
   stage.append(card);
+  typeset(card);
   next.focus({ preventScroll: true });
 }
 studyChk.addEventListener("change", () => {
@@ -13641,7 +13640,6 @@ studyChk.addEventListener("change", () => {
   for (let k = bStart; k < bEnd(); k++) if (answers[k] !== undefined) started = true;
   if (study && !rv && !started && idx === bStart) beginBatch();
 });
-
 // ---------- 键盘：↑↓ 移动光标，回车选择，← → 上一题 / 下一题，Shift 显示提示 ----------
 function goPrev() { if (idx > bStart) { idx--; renderQuestion(); } }
 document.addEventListener("keydown", e => {
@@ -13678,7 +13676,6 @@ document.addEventListener("keydown", e => {
   else if (k === "ArrowLeft") { e.preventDefault(); goPrev(); }
   else if (k === "Shift" && !e.repeat) click("hintBtn");
 });
-
 // ---------- 做题日历：最近一年每天答了多少题（每答一题记一次，包括重做） ----------
 const HEAT_STEPS = [1, 10, 25, 50];   // 颜色档：1–9、10–24、25–49、50 题以上
 const dayKey = d => `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, "0")}-${String(d.getDate()).padStart(2, "0")}`;
@@ -13738,7 +13735,6 @@ function heatCard(raw) {
   requestAnimationFrame(() => { scroll.scrollLeft = scroll.scrollWidth; });
   return card;
 }
-
 // ---------- 备份与恢复：所有记录 + 本机设置 → 一个 .json 文件；恢复时合并，已有的记录不重复 ----------
 const BK_COLLS = ["answers", "exams", "vocab"];
 const BK_PREFIX = "fq-";   // 本页在浏览器里的设置键前缀
@@ -13833,7 +13829,6 @@ function backupRow() {
   row.append(out, inBtn, file, note);
   return row;
 }
-
 // 日历文件每行不超过 75 字节，长行折行（续行以空格开头），不拆开多字节字符
 function foldIcs(line) {
   const enc = new TextEncoder(), out = [];
@@ -13883,7 +13878,6 @@ function remindRow() {
   row.append(lab, btn, note);
   return row;
 }
-
 // ---------- 标签检索：勾选标签 → 检索出题目；错题本按标签筛选 ----------
 const tagSaved = (() => { try { return JSON.parse(localStorage.getItem("fq-tags") || "{}"); } catch (e) { return {}; } })();
 let pickTags = new Set(tagSaved.tags || []);
@@ -13903,7 +13897,7 @@ function parseTagKey(key) {
 }
 const wrongIds = () => new Set((bookCache?.wrong || []).map(d => d.qid));
 function tagLabel(p) {
-  const lv = p.tags.filter(t => LEVELS.includes(t)).sort(), tp = p.tags.filter(t => !LEVELS.includes(t));
+  const lv = p.tags.filter(t => LEVELS.includes(t)).sort((a, b) => LEVELS.indexOf(a) - LEVELS.indexOf(b)), tp = p.tags.filter(t => !LEVELS.includes(t));
   const t = (lv.length ? lv.join("/") + (tp.length ? " · " : "") : "") + (tp.length ? tp.join(p.mode === "all" ? " + " : " / ") : lv.length ? "" : "全部");
   return (p.kind === "wrong" ? "错题 · " : "标签 · ") + (p.rnd ? "随机 · " : "") + t + (tp.length > 1 ? (p.mode === "all" ? "（同时满足）" : "（任一）") : "");
 }
@@ -14007,7 +14001,6 @@ function tagDistCard() {
   }
   return card;
 }
-
 // ---------- 目录 ----------
 function tocItem({ no, title, zh, badge, badgeCls, current, disabled, onClick }) {
   const li = el("li");
@@ -14109,7 +14102,6 @@ function renderOldToc(toc) {
     }));
   });
 }
-
 // ---------- 答题 ----------
 function updateProgress(done) {
   pSet.textContent = set.label;
@@ -14358,7 +14350,6 @@ function renderResult() {
   card.append(actions);
   stage.append(card);
 }
-
 // ---------- 错题本 ----------
 async function renderBook() {
   renderToc();
@@ -14423,7 +14414,7 @@ function drawBook() {
     const g = el("div", "group");
     const head = el("div", "group-head");
     const h = el("h3", null, labelOf(k));
-    if (k.startsWith("ch:")) { const c = CH.get(Number(k.slice(3))); if (c) h.append(el("span", "zh", `${c.t} · p.${c.p}`)); }
+    if (k.startsWith("ch:")) { const c = CH.get(Number(k.slice(3))); if (c) h.append(el("span", "zh", c.p ? `${c.t} · p.${c.p}` : c.t)); }
     h.append(el("span", "badge bad", `${items.length} 错`));
     head.append(h);
     const go = el("button", "btn ghost", "练这一组");
@@ -14444,8 +14435,8 @@ function drawBook() {
     });
     card.append(g);
   });
+  typeset(card);
 }
-
 // ---------- 切换 ----------
 function switchView(v, setKey) {
   view = v;
@@ -14469,7 +14460,6 @@ tabQuiz.addEventListener("click", () => { if (view !== "quiz") switchView("quiz"
 tabBook.addEventListener("click", () => { bookCache = null; switchView("book"); });
 tabExam.addEventListener("click", () => { if (view !== "exam") switchView("exam"); });
 tabVocab.addEventListener("click", () => { if (view !== "vocab") switchView("vocab"); });
-
 // ---------- 模拟卷：仿 2016 年全国 I 卷英语题型的法语 B1 试卷 ----------
 const EX = {
   id: "fr-b1-1",
@@ -14614,7 +14604,6 @@ const EX = {
     model: "Chère Léa,\n\nJ'espère que tu vas bien ! Je t'écris pour t'inviter à la Semaine culturelle franco-chinoise de mon lycée. Elle aura lieu du 12 au 16 novembre, dans la grande salle de notre école.\n\nPendant cette semaine, il y aura beaucoup d'activités. Les élèves présenteront des danses traditionnelles chinoises et chanteront des chansons françaises. Tu pourras aussi apprendre la calligraphie et faire des raviolis avec nous. Le vendredi soir, nous regarderons un film français sous-titré en chinois. Ce serait formidable si tu pouvais faire une petite présentation sur ta ville !\n\nJe suis sûr que tu t'amuseras beaucoup et que mes camarades seront ravis de te rencontrer. Dis-moi vite si tu peux venir !\n\nAmitiés,\nLi Hua",
   },
 };
-
 // 法语排版：问号、感叹号、冒号、分号和书名号内侧用不换行空格
 const frT = s => s.replace(/ ([?!:;»])/g, " $1").replace(/« /g, "« ");
 const LET = "ABCD";
@@ -15146,7 +15135,6 @@ function exResultCard() {
   card.append(el("p", "ex-rule", "下面每道题都标出了对错和解析；听力原文在每段题目下方。"));
   return card;
 }
-
 // ---------- 背单词：B1–B2 主题词表，每个词四种题型 ----------
 // 每个词：[法语, 词性, 英文释义, 补充]；词性 nm 阳性名词 / nf 阴性名词 / nfpl 阴性复数名词 / v 动词 / adj 形容词 / adv 副词 / prep 介词 / conj 连词 / loc 短语
 // 形容词的补充是阴性形式；动词的补充是常用搭配
@@ -15405,8 +15393,6 @@ const vLabel = w => vArt(w) + (w.pos === "adj" && w.extra && w.extra !== w.fr ? 
 const vNorm = s => String(s || "").normalize("NFC").trim().toLowerCase().replace(/[’`´]/g, "'").replace(/\s+/g, " ").replace(/\s*'\s*/g, "'");
 const vBare = s => vNorm(s).normalize("NFD").replace(/[̀-ͯ]/g, "");
 function vShuffle(a) { a = a.slice(); for (let i = a.length - 1; i > 0; i--) { const j = Math.floor(Math.random() * (i + 1)); [a[i], a[j]] = [a[j], a[i]]; } return a; }
-
-
 // 例句：方括号里是要填的词形，后面是英文翻译
 const V_EX = {
   "loyer": ["Le [loyer] de cet appartement est trop élevé.", "The rent for this flat is too high."],
@@ -15819,7 +15805,6 @@ const V_EX = {
   "lent": ["Internet est très [lent] aujourd'hui.", "The internet is very slow today."],
   "rapide": ["Le TGV est un train très [rapide].", "The TGV is a very fast train."],
 };
-
 // ---------- 记录：每个词每种题型最近一次是否答对 ----------
 const V_T = [6, 1, 2, 3, 4, 5];   // 题型顺序：先看图，再做其他题
 const vTypes = w => V_T.filter(t => t !== 6 || V_IMG[w.fr]);

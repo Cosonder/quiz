@@ -306,7 +306,6 @@ const PARTS = [
 const CH = new Map();
 PARTS.forEach(pt => pt.chs.forEach(([n, t, zh, p]) => CH.set(n, { n, t, zh, p, part: pt.n, book: pt.book, no: pt.book ? n - 30 : n })));
 const chName = c => c.book === "p1" ? `Pascucci 第 ${c.no} 章 · ${c.zh}` : c.p ? `第 ${c.n} 章 · ${c.zh}` : `量化面试 · ${c.zh}`;
-
 const ROUNDS = [
   { id: "sc-r1", kind: "grammar", name: "第一轮 · 基本概念与计算" },
   { id: "sc-r2", kind: "grammar", name: "第二轮 · 定义（逐条考条件）" },
@@ -322,8 +321,6 @@ const ROUNDS = [
   { id: "p1-r3", kind: "p1", name: "Pascucci 第三轮 · 随机变量序列" },
   { id: "p1-r4", kind: "p1", name: "Pascucci 第四轮 · 条件概率" },
 ];
-const ROUND_NAMES = Object.fromEntries(ROUNDS.map(r => [r.id, r.name.split(" · ")[0]]));
-
 // 题库：id 与以往答题记录中的 qid 一致，ch 为教材章号
 const BANK = [
   { id: "sc-r1-1", ch: 1, cat: "高斯向量 §1.2", q: "设 $(X,Y)$ 是高斯向量，且 $\\operatorname{cov}(X,Y)=0$。下列哪个结论成立？", opts: ["$X$ 与 $Y$ 独立", "$X$ 与 $Y$ 不一定独立", "只有均值都为 0 时才独立", "$X=Y$ 几乎必然成立"], a: 0, hint: "高斯向量的联合分布由哪些量完全决定？",
@@ -1818,7 +1815,6 @@ const KP_OF = {
   "p1-r4-17": "p1c4-cond-density",
   "p1-r4-18": "p1c4-cond-density",
 };
-BANK.forEach(q => { q.kp = KP_OF[q.id]; });
 // 标签：分组（目录里按组勾选）和每道题的标签
 const TAG_GROUPS = [{"g": "难度", "tags": ["基础", "中等", "困难"]}, {"g": "概率基础", "tags": ["σ-代数与测度", "概率空间与事件", "计数与组合", "条件概率与独立", "随机变量与分布", "期望与矩", "特征函数", "高斯分布", "收敛模式", "大数定律/中心极限定理", "条件期望"]}, {"g": "随机过程", "tags": ["高斯过程", "布朗运动", "马尔可夫过程", "Feller 半群与生成元", "Lévy 过程", "随机游走/离散过程"]}, {"g": "鞅论", "tags": ["滤子与停时", "鞅/上鞅/下鞅", "可选停时", "鞅收敛", "极大不等式", "一致可积", "局部鞅", "二次变差/括号"]}, {"g": "随机分析", "tags": ["随机积分", "Itô 公式", "随机指数", "Girsanov 定理", "Lévy 刻画", "鞅表示", "时间变换", "BDG 不等式", "局部时"]}, {"g": "方程与 PDE", "tags": ["SDE 存在唯一性", "显式解的 SDE", "调和函数/Dirichlet 问题", "热方程/Feynman–Kac", "常返与暂留"]}, {"g": "路径性质", "tags": ["路径连续性/修正", "反射原理/首达时", "零一律", "不变性（尺度/对称/时间反演）", "路径的变差"]}, {"g": "题型", "tags": ["定义", "定理条件", "计算", "反例"]}, {"g": "量化与金融", "tags": ["脑筋急转弯", "期权与定价", "概率面试技巧"]}];
 const TAGS_OF = {
@@ -2595,6 +2591,9 @@ const LEVEL_OF = {
   "sc-r7-9": "\u57fa\u7840",
 };
 const LEVELS = ["基础", "中等", "困难"];
+// 题库整理：所有题库数据（含额外题库）载入后，把知识点、难度、标签、提示挂到每道题上
+const ROUND_NAMES = Object.fromEntries(ROUNDS.map(r => [r.id, r.name.split(" · ")[0]]));
+BANK.forEach(q => { q.kp = KP_OF[q.id]; });
 BANK.forEach(q => { q.level = LEVEL_OF[q.id] || ""; q.tags = (TAGS_OF[q.id] || []).concat(q.level ? [q.level] : []); });
 const BY_ID = new Map(BANK.map(q => [q.id, q]));
 const roundOf = id => id.split("-").slice(0, 2).join("-");
@@ -2621,7 +2620,6 @@ wide.addEventListener?.("change", e => { if (e.matches) tocwrap.open = true; });
 function afterPick() {
   if (!wide.matches) { tocwrap.open = false; $("main").scrollIntoView({ block: "start" }); }
 }
-
 // ---------- 错题本存储 ----------
 let dbRef = null;
 const LOCAL = typeof claude === "undefined";   // 在 GitHub Pages 等普通网页里打开
@@ -2654,7 +2652,6 @@ function record(item, i, right) {
   }).catch(() => { saveNote.textContent = "有一条记录没保存成功，答题不受影响。"; });
   bookCache = null;
 }
-
 // ---------- 状态 ----------
 let view = "quiz";
 let set = null;            // { key, label, qs }
@@ -2736,7 +2733,6 @@ perSel.addEventListener("change", () => {
   const from = idx < set.qs.length ? idx : 0;
   if (view === "quiz") startBatch(from); else { bStart = idx = from; score = calcScore(); }
 });
-
 // ---------- 学习模式：每组开始前先乱序复习本组涉及的知识点 ----------
 const studyChk = document.getElementById("studyChk");
 let study = (() => { try { return localStorage.getItem("sq-study") === "1"; } catch (e) { return false; } })();
@@ -2799,7 +2795,6 @@ studyChk.addEventListener("change", () => {
   for (let k = bStart; k < bEnd(); k++) if (answers[k] !== undefined) started = true;
   if (study && !rv && !started && idx === bStart) beginBatch();
 });
-
 // ---------- 键盘：↑↓ 移动光标，回车选择，← → 上一题 / 下一题，Shift 显示提示 ----------
 function goPrev() { if (idx > bStart) { idx--; renderQuestion(); } }
 document.addEventListener("keydown", e => {
@@ -2836,7 +2831,6 @@ document.addEventListener("keydown", e => {
   else if (k === "ArrowLeft") { e.preventDefault(); goPrev(); }
   else if (k === "Shift" && !e.repeat) click("hintBtn");
 });
-
 // ---------- 做题日历：最近一年每天答了多少题（每答一题记一次，包括重做） ----------
 const HEAT_STEPS = [1, 10, 25, 50];   // 颜色档：1–9、10–24、25–49、50 题以上
 const dayKey = d => `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, "0")}-${String(d.getDate()).padStart(2, "0")}`;
@@ -2896,7 +2890,6 @@ function heatCard(raw) {
   requestAnimationFrame(() => { scroll.scrollLeft = scroll.scrollWidth; });
   return card;
 }
-
 // ---------- 备份与恢复：所有记录 + 本机设置 → 一个 .json 文件；恢复时合并，已有的记录不重复 ----------
 const BK_COLLS = ["answers", "exams", "vocab"];
 const BK_PREFIX = "sq-";   // 本页在浏览器里的设置键前缀
@@ -2991,7 +2984,6 @@ function backupRow() {
   row.append(out, inBtn, file, note);
   return row;
 }
-
 // 日历文件每行不超过 75 字节，长行折行（续行以空格开头），不拆开多字节字符
 function foldIcs(line) {
   const enc = new TextEncoder(), out = [];
@@ -3041,7 +3033,6 @@ function remindRow() {
   row.append(lab, btn, note);
   return row;
 }
-
 // ---------- 标签检索：勾选标签 → 检索出题目；错题本按标签筛选 ----------
 const tagSaved = (() => { try { return JSON.parse(localStorage.getItem("sq-tags") || "{}"); } catch (e) { return {}; } })();
 let pickTags = new Set(tagSaved.tags || []);
@@ -3165,7 +3156,6 @@ function tagDistCard() {
   }
   return card;
 }
-
 // ---------- 目录 ----------
 function tocItem({ no, title, zh, badge, badgeCls, current, disabled, onClick }) {
   const li = el("li");
@@ -3292,7 +3282,6 @@ function renderOldToc(toc) {
   }
   chapters("p1");
 }
-
 // ---------- 答题 ----------
 function updateProgress(done) {
   pSet.textContent = set.label;
@@ -3563,7 +3552,6 @@ function renderResult() {
   stage.append(card);
   typeset(card);
 }
-
 // ---------- 错题本 ----------
 async function renderBook() {
   renderToc();
@@ -3651,7 +3639,6 @@ function drawBook() {
   });
   typeset(card);
 }
-
 // ---------- 切换 ----------
 function switchView(v, setKey) {
   view = v;
