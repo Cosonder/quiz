@@ -471,17 +471,60 @@ h1 { font-family: var(--display); font-weight: 900; font-size: 1.6rem; line-heig
 .tag-group .lv-note { font-size: .72rem; color: var(--muted); }
 .bk-row .bk-name { font-weight: 600; color: var(--fg); }
 .bk-row .bk-note { flex: 1 1 220px; min-width: 0; overflow-wrap: anywhere; }
+
+/* 学习进度：经验等级、标签进度、+经验提示 */
+.xp-card { gap: 10px; }
+.xp-head { display: flex; gap: 14px; align-items: center; }
+.xp-badge { flex: none; width: 64px; height: 64px; border-radius: 16px; background: var(--accent); color: #fff; display: flex; flex-direction: column; align-items: center; justify-content: center; line-height: 1; }
+.xp-badge small { font-size: .7rem; opacity: .85; }
+.xp-badge b { font-family: var(--display); font-size: 1.7rem; font-variant-numeric: tabular-nums; }
+.xp-info { flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 6px; }
+.xp-title { display: flex; justify-content: space-between; gap: 8px; flex-wrap: wrap; align-items: baseline; }
+.xp-title b { font-size: 1.1rem; }
+.xp-title span, .xp-num { font-size: .8rem; color: var(--muted); font-variant-numeric: tabular-nums; }
+.xp-bar { height: 10px; background: var(--line); border-radius: 5px; overflow: hidden; }
+.xp-bar i { display: block; height: 100%; background: var(--good); border-radius: 5px; }
+.xp-rule summary { cursor: pointer; font-size: .85rem; color: var(--accent); }
+.xp-rule p { font-size: .82rem; color: var(--muted); margin: 6px 0 0; }
+.stats.stats4 { grid-template-columns: repeat(4, 1fr); }
+@media (max-width: 520px) { .stats.stats4 { grid-template-columns: repeat(2, 1fr); } }
+.prog-card h3 { margin: 0; font-size: 1rem; }
+.prog-group { border-top: 1px solid var(--line); padding-top: 6px; }
+.prog-group summary { cursor: pointer; display: flex; justify-content: space-between; gap: 8px; font-weight: 600; font-size: .92rem; padding: 4px 2px; }
+.prog-group .prog-gp { font-weight: 400; color: var(--muted); font-size: .82rem; font-variant-numeric: tabular-nums; }
+.prog-list { display: flex; flex-direction: column; gap: 4px; padding: 4px 0 6px; }
+.prog-row { display: grid; grid-template-columns: minmax(5.5em, 9em) minmax(0, 1fr) auto; gap: 10px; align-items: center; font: inherit; font-size: .88rem; text-align: left; background: transparent; border: 0; border-radius: 6px; padding: 3px 4px; color: var(--fg); cursor: pointer; }
+.prog-row:hover { background: var(--accent-soft); }
+.prog-row:focus-visible { outline: 2px solid var(--accent); }
+.prog-row .t { overflow-wrap: anywhere; }
+.pbar { position: relative; height: 10px; background: var(--line); border-radius: 5px; overflow: hidden; }
+.pbar i { position: absolute; left: 0; top: 0; bottom: 0; border-radius: 5px; }
+.pbar i.learned, .prog-key .k-learned { background: var(--accent-soft); }
+.pbar i.mastery, .prog-key .k-mastery { background: var(--good); }
+.prog-row .n { color: var(--muted); font-variant-numeric: tabular-nums; white-space: nowrap; font-size: .8rem; }
+.prog-row .n b { color: var(--fg); }
+.prog-row .due { color: var(--bad); }
+.prog-key i { display: inline-block; width: 12px; height: 8px; border-radius: 3px; margin-left: 8px; vertical-align: middle; }
+.prog-key i:first-child { margin-left: 0; }
+@media (max-width: 520px) { .prog-row { grid-template-columns: minmax(0, 1fr) auto; } .prog-row .pbar { grid-column: 1 / -1; grid-row: 2; } }
+.xp-toast { position: fixed; left: 50%; bottom: calc(18px + env(safe-area-inset-bottom, 0px)); transform: translate(-50%, 20px); opacity: 0; pointer-events: none; z-index: 50;
+  background: var(--fg); color: var(--bg); border-radius: 999px; padding: 8px 16px; font-size: .88rem; display: flex; flex-direction: column; align-items: center; gap: 2px;
+  max-width: calc(100vw - 32px); text-align: center; transition: opacity .2s, transform .2s; box-shadow: 0 6px 20px rgba(0,0,0,.18); }
+.xp-toast.show { opacity: 1; transform: translate(-50%, 0); }
+.xp-toast.big { border-radius: 16px; background: var(--good); color: #fff; }
+.xp-toast b { font-size: 1.05rem; }
+@media (prefers-reduced-motion: reduce) { .xp-toast { transition: none; } }
 </style>
 
 <div class="wrap">
   <header>
     <div class="titles">
       <h1>法语语法小测验</h1>
-      <p class="sub">按《Advanced French Grammar》章节练习，答错自动进错题本。<a class="home" href="../">全部练习</a></p>
+      <p class="sub">按《Advanced French Grammar》章节练习，答题记录自动计入学习进度。<a class="home" href="../">全部练习</a></p>
     </div>
     <div class="tabs" role="tablist">
       <button type="button" class="tab" role="tab" id="tabQuiz" aria-selected="true">答题</button>
-      <button type="button" class="tab" role="tab" id="tabBook" aria-selected="false">错题本</button>
+      <button type="button" class="tab" role="tab" id="tabBook" aria-selected="false">学习进度</button>
       <button type="button" class="tab" role="tab" id="tabExam" aria-selected="false">模拟卷</button>
       <button type="button" class="tab" role="tab" id="tabVocab" aria-selected="false">背单词</button>
     </div>
@@ -495,7 +538,7 @@ h1 { font-family: var(--display); font-weight: 900; font-size: 1.6rem; line-heig
       <div class="progress" id="progress"><span class="set" id="pSet"></span><span id="pText"><label for="jumpInput">第</label> <input id="jumpInput" type="number" inputmode="numeric" min="1" step="1" aria-label="题号"> <span id="pTotal"></span> 题 <button type="button" id="jumpBtn" class="jump">跳转</button></span><label class="per" for="perSel">每组 <select id="perSel"><option value="5">5</option><option value="10">10</option><option value="15">15</option><option value="20">20</option><option value="30">30</option><option value="0">全部</option></select> 题</label><label class="study" for="studyChk"><input type="checkbox" id="studyChk"> 学习模式</label><div class="bar"><i id="pBar"></i></div><span id="pScore">得分 0</span></div>
       <main id="stage"></main>
       <p class="sub keys-note">键盘：↑ ↓ 移动光标 · 回车 选择 · ← 上一题 · → 下一题 · Shift 提示</p>
-      <p class="sub" id="saveNote">正在连接错题本…</p>
+      <p class="sub" id="saveNote">正在读取答题记录…</p>
     </div>
   </div>
 </div>
@@ -13495,7 +13538,7 @@ wide.addEventListener?.("change", e => { if (e.matches) tocwrap.open = true; });
 function afterPick() {
   if (!wide.matches) { tocwrap.open = false; $("main").scrollIntoView({ block: "start" }); }
 }
-// ---------- 错题本存储 ----------
+// ---------- 答题记录存储（错题本、学习进度、经验值都从这里算） ----------
 let dbRef = null;
 const LOCAL = typeof claude === "undefined";   // 在 GitHub Pages 等普通网页里打开
 // 记录存在这台设备的浏览器里，每种记录一个键
@@ -13513,18 +13556,24 @@ function localDb(ns) {
   try {
     dbRef = LOCAL ? localDb("fq") : await claude.use("db");
     if (!dbRef) { saveNote.textContent = "当前视图无法保存记录，答题不受影响。"; return; }
-    const snap = await dbRef.collection("answers").where("isCorrect", "==", false).get();
-    saveNote.textContent = snap.size ? `错题本里共有 ${snap.size} 条错题记录，答题记录会自动保存。` : "答题记录会自动保存到错题本。";
+    const docs = (await dbRef.collection("answers").get()).docs.map(d => d.data());
+    let voc = [];
+    try { voc = (await dbRef.collection("vocab").get()).docs.map(d => d.data()); } catch (e) {}
+    progReset(docs, voc); progEnsure();
+    const wrong = docs.filter(d => !d.isCorrect).length;
+    saveNote.textContent = wrong ? `已有 ${wrong} 条错题记录，答题记录会自动保存到学习进度。` : "答题记录会自动保存到学习进度。";
     if (LOCAL) saveNote.textContent += "记录保存在这台设备的浏览器里，换设备或清除浏览器数据后不会保留。";
     if (view === "book") renderBook();
-  } catch (e) { saveNote.textContent = "暂时无法读取错题本，答题不受影响。"; }
+  } catch (e) { saveNote.textContent = "暂时无法读取答题记录，答题不受影响。"; }
 })();
 function record(item, i, right) {
   if (!dbRef) return;
-  dbRef.collection("answers").add({
+  const d = {
     round: roundOf(item.id), qid: item.id, ch: item.ch, cat: item.cat, question: item.title ? `（长文听力 · ${item.title}）${item.q}` : item.audio ? "（听力）" + item.audio : item.q,
     chosen: item.opts[i], correct: item.opts[item.a], isCorrect: right, at: new Date().toISOString(),
-  }).catch(() => { saveNote.textContent = "有一条记录没保存成功，答题不受影响。"; });
+  };
+  dbRef.collection("answers").add(d).catch(() => { saveNote.textContent = "有一条记录没保存成功，答题不受影响。"; });
+  progLive(d, "ans");
   bookCache = null;
 }
 // ---------- 状态 ----------
@@ -13543,6 +13592,7 @@ const SHOW_EPS = ["Pilot","Spanish 101","Introduction to Film","Social Psycholog
 const isListen = q => !!q.audio;
 // 每个分组键包含哪些题
 function members(key) {
+  if (/^(rev|learn):/.test(key)) return progMembers(key);
   const p = parseTagKey(key);
   if (p) {
     const w = p.kind === "wrong" ? wrongIds() : null;
@@ -13556,6 +13606,7 @@ function members(key) {
 }
 function inGroup(key, q) {
   if (!q) return false;
+  if (/^(rev|learn):/.test(key)) { const tags = key.split(":")[1].split("|").filter(Boolean); return !tags.length || tagMatch(q, tags, "any"); }
   const p = parseTagKey(key);
   if (p) return !p.tags.length || tagMatch(q, p.tags, p.mode);
   if (key.startsWith("ch:")) return q.ch === Number(key.slice(3)) && !isListen(q);
@@ -13563,6 +13614,7 @@ function inGroup(key, q) {
   return roundOf(q.id) === key;
 }
 function labelOf(key) {
+  if (/^(rev|learn):/.test(key)) return progLabel(key);
   const p = parseTagKey(key);
   if (p) return tagLabel(p);
   if (key.startsWith("ch:")) { const c = CH.get(Number(key.slice(3))); return c ? chName(c) : "未归类"; }
@@ -13587,7 +13639,7 @@ const bEnd = () => per ? Math.min(bStart + per, set.qs.length) : set.qs.length;
 function calcScore() { let n = 0; for (let k = bStart; k < bEnd(); k++) if (answers[k] !== undefined && set.qs[k].a === answers[k]) n++; return n; }
 function startSet(key, fresh) {
   set = makeSet(key); score = 0; answers = {};
-  const saved = fresh ? 0 : Number(loadPos()[key] || 0);
+  const saved = fresh || /^(rev|learn):/.test(key) ? 0 : Number(loadPos()[key] || 0);   // 复习、学习题组每次重新挑题，从头做
   idx = saved > 0 && saved < set.qs.length ? saved : 0;
   bStart = idx;
   renderToc(); beginBatch();
@@ -13765,6 +13817,202 @@ function heatCard(raw) {
   requestAnimationFrame(() => { scroll.scrollLeft = scroll.scrollWidth; });
   return card;
 }
+// ---------- 学习进度：按艾宾浩斯遗忘曲线安排复习，按时复习一次升一级；做题攒经验值、升等级 ----------
+// 每道题有一个记忆等级 0–6，全部由答题记录推算（不另存数据，备份恢复后照样算得出）：
+//   第一次答对 → 1 级。之后要隔够这一级的遗忘周期再答对，才升一级：
+//   1 级隔 1 天、2 级隔 2 天、3 级隔 4 天、4 级隔 7 天、5 级隔 15 天；6 级是长期记忆，每 30 天巩固一次。
+//   没到时间就答对只算练习，不升级；答错退两级，从这次重新计时。
+//   到了周期的 80% 就算“该复习了”。
+// 标签的学习进度 = 这个标签下所有题的记忆等级之和 ÷（题数 × 6）。
+const MEM_DAYS = [0, 1, 2, 4, 7, 15, 30];
+const MEM_MAX = 6, DAY_MS = 864e5, MEM_EARLY = 0.8;
+const MEM_NAMES = ["未学", "初识", "短期记忆", "短期记忆", "巩固中", "长期记忆", "长期记忆"];
+// 经验值：答对 +10，答错 +2，每天第一题 +20，按时复习成功再加 5×新的记忆等级；背单词答对 +4、答错 +1
+const XP_RIGHT = 10, XP_WRONG = 2, XP_DAILY = 20, XP_REVIEW = 5, XP_VOCAB_RIGHT = 4, XP_VOCAB_WRONG = 1;
+const xpNeed = n => 100 + 40 * (n - 1);   // 从 n 级升到 n+1 级要的经验
+const XP_TITLES = [[1, "新手"], [5, "学徒"], [10, "熟练"], [15, "进阶"], [20, "精通"], [30, "大师"], [40, "宗师"]];
+const xpTitle = lv => XP_TITLES.filter(([n]) => lv >= n).pop()[1];
+function xpLevel(xp) {
+  let lv = 1;
+  while (xp >= xpNeed(lv)) { xp -= xpNeed(lv); lv++; }
+  return { lv, cur: xp, need: xpNeed(lv) };
+}
+
+let ansRaw = null;   // 全部答题记录
+let vocRaw = [];     // 背单词记录（只有法语页有）
+let prog = null;     // { mem: Map(题号 → {lv, last}), xp, today, lastDay, days }
+
+const memInterval = lv => MEM_DAYS[Math.min(lv, MEM_MAX)] * DAY_MS;
+const memDue = (m, now = Date.now()) => !!m && m.lv >= 1 && now >= m.last + memInterval(m.lv) * MEM_EARLY;
+const memOf = id => (progEnsure() ? prog.mem.get(id) : null) || { lv: 0, last: 0 };
+
+// 按时间顺序记一条记录，返回这一条带来的经验和记忆变化
+function progStep(st, d, kind) {
+  const t = Date.parse(d.at) || Date.now(), day = dayKey(new Date(t));
+  let xp = 0, up = 0, down = -1, daily = false, learned = false;
+  if (day !== st.lastDay) { st.lastDay = day; st.days++; xp += XP_DAILY; daily = true; }
+  if (kind === "vocab") xp += d.ok ? XP_VOCAB_RIGHT : XP_VOCAB_WRONG;
+  else if (d.qid) {
+    const m = st.mem.get(d.qid) || { lv: 0, last: 0 };
+    if (d.isCorrect) {
+      xp += XP_RIGHT;
+      if (m.lv === 0) { m.lv = 1; m.last = t; learned = true; }
+      else if (memDue(m, t)) { m.lv = Math.min(MEM_MAX, m.lv + 1); m.last = t; up = m.lv; xp += XP_REVIEW * m.lv; }
+    } else {
+      xp += XP_WRONG;
+      if (m.lv > 0) down = Math.max(0, m.lv - 2);
+      m.lv = Math.max(0, m.lv - 2); m.last = t;
+    }
+    st.mem.set(d.qid, m);
+  }
+  st.xp += xp;
+  if (day === dayKey(new Date())) st.today += xp;
+  return { xp, up, down, daily, learned };
+}
+function progEnsure() {
+  if (prog) return true;
+  if (!ansRaw) return false;
+  const st = { mem: new Map(), xp: 0, today: 0, lastDay: "", days: 0 };
+  const ev = ansRaw.map(d => [d, "ans"]).concat(vocRaw.map(d => [d, "vocab"]));
+  ev.sort((a, b) => String(a[0].at).localeCompare(String(b[0].at))).forEach(([d, k]) => progStep(st, d, k));
+  prog = st;
+  return true;
+}
+function progReset(docs, voc) { ansRaw = docs; if (voc) vocRaw = voc; prog = null; }
+
+// 做题时：记一条，弹出“+经验”提示
+function progLive(d, kind) {
+  if (kind === "vocab") vocRaw.push(d); else if (ansRaw) ansRaw.push(d);
+  if (!prog) return;
+  const before = xpLevel(prog.xp).lv;
+  const r = progStep(prog, d, kind);
+  const after = xpLevel(prog.xp).lv;
+  const parts = [`+${r.xp} 经验`];
+  if (r.daily) parts.push(`今日首题 +${XP_DAILY}`);
+  if (r.up) parts.push(r.up === MEM_MAX ? "复习成功 · 长期记忆" : `复习成功 · 记忆 ${r.up} 级`);
+  else if (r.learned) parts.push("新学会一题");
+  else if (r.down >= 0) parts.push(`记忆退到 ${r.down} 级`);
+  xpToast(parts.join(" · "), after > before ? `升级！Lv ${after} · ${xpTitle(after)}` : "");
+}
+let toastTimer = 0;
+function xpToast(text, big) {
+  let t = $("xpToast");
+  if (!t) { t = el("div", "xp-toast"); t.id = "xpToast"; t.setAttribute("role", "status"); document.body.append(t); }
+  t.textContent = "";
+  if (big) t.append(el("b", null, big));
+  t.append(el("span", null, text));
+  t.classList.toggle("big", !!big);
+  t.classList.add("show");
+  clearTimeout(toastTimer);
+  toastTimer = setTimeout(() => t.classList.remove("show"), big ? 3200 : 1800);
+}
+
+// 复习 / 学习题组：rev:标签1|标签2（到期该复习的题，最该复习的在前）；
+// learn:…（还没学会的题；都学过了就练还没到长期记忆的题，等级低的在前）
+function progMembers(key) {
+  const rev = key.startsWith("rev:"), tags = key.slice(rev ? 4 : 6).split("|").filter(Boolean);
+  const pool = tags.length ? BANK.filter(q => tagMatch(q, tags, "any")) : BANK;
+  const now = Date.now();
+  if (rev) {
+    const over = q => { const m = memOf(q.id); return (now - m.last) / memInterval(m.lv); };
+    return pool.filter(q => memDue(memOf(q.id), now)).sort((a, b) => over(b) - over(a));
+  }
+  const fresh = pool.filter(q => memOf(q.id).lv === 0);
+  if (fresh.length) return fresh;
+  return pool.filter(q => { const m = memOf(q.id); return m.lv < MEM_MAX && !memDue(m, now); })
+    .map((q, k) => [q, memOf(q.id).lv, k]).sort((a, b) => a[1] - b[1] || a[2] - b[2]).map(x => x[0]);
+}
+// 开始复习 / 学习；挑不出题时只提示，不进空题组
+function progGo(key) {
+  if (!progMembers(key).length) { xpToast(key.startsWith("rev:") ? "现在没有到期要复习的题" : "这里的题都已经是长期记忆了"); return; }
+  switchView("quiz", key);
+}
+function progLabel(key) {
+  const rev = key.startsWith("rev:"), tags = key.slice(rev ? 4 : 6).split("|").filter(Boolean);
+  return (rev ? "复习 · " : "学习 · ") + (tags.length ? tags.join(" / ") : rev ? "全部到期题" : "全部未掌握题");
+}
+// 一组题的进度：记忆等级之和 ÷（题数 × 6），以及已学、长期记忆、到期题数
+function progOf(qs, now = Date.now()) {
+  let sum = 0, learned = 0, long = 0, due = 0;
+  qs.forEach(q => { const m = memOf(q.id); sum += m.lv; if (m.lv >= 1) learned++; if (m.lv >= 5) long++; if (memDue(m, now)) due++; });
+  return { n: qs.length, pct: qs.length ? sum / (qs.length * MEM_MAX) * 100 : 0, learned, long, due };
+}
+const pctText = p => p > 0 && p < 1 ? "<1%" : Math.floor(p) + "%";
+
+function xpCard() {
+  progEnsure();
+  const card = el("section", "card xp-card");
+  const L = xpLevel(prog ? prog.xp : 0);
+  const head = el("div", "xp-head");
+  const badge = el("div", "xp-badge"); badge.append(el("small", null, "Lv"), el("b", null, String(L.lv)));
+  const info = el("div", "xp-info");
+  const title = el("div", "xp-title"); title.append(el("b", null, xpTitle(L.lv)), el("span", null, `今日 +${prog ? prog.today : 0} 经验`));
+  const bar = el("div", "xp-bar"), fill = el("i"); fill.style.width = (L.cur / L.need * 100) + "%"; bar.append(fill);
+  info.append(title, bar, el("div", "xp-num", `本级 ${L.cur} / ${L.need} · 总经验 ${prog ? prog.xp : 0} · 学习 ${prog ? prog.days : 0} 天`));
+  head.append(badge, info);
+  card.append(head);
+  const rule = el("details", "xp-rule");
+  rule.append(el("summary", null, "经验和进度怎么算"),
+    el("p", null, `经验：答对 +${XP_RIGHT}，答错 +${XP_WRONG}，每天第一题 +${XP_DAILY}，按时复习成功另加 ${XP_REVIEW}×新的记忆等级` + (vocRaw.length || typeof renderVocab === "function" ? `；背单词答对 +${XP_VOCAB_RIGHT}、答错 +${XP_VOCAB_WRONG}。` : "。") + `每升一级所需经验比上一级多 40。`),
+    el("p", null, "记忆等级（艾宾浩斯遗忘曲线）：第一次答对是 1 级；之后隔够遗忘周期再答对才升一级——1 级隔 1 天、2 级隔 2 天、3 级隔 4 天、4 级隔 7 天、5 级隔 15 天，6 级是长期记忆，每 30 天巩固一次。没到时间答对只算练习，答错退两级。"),
+    el("p", null, "学习进度 = 标签下所有题的记忆等级之和 ÷（题数 × 6）。全部题都到 6 级就是 100%。"));
+  card.append(rule);
+  return card;
+}
+
+let progOpen = null;   // 展开了哪些标签组（本次打开页面内记住）
+function progressCard() {
+  progEnsure();
+  const card = el("section", "card prog-card");
+  card.append(el("h3", null, "学习进度"));
+  const all = progOf(BANK);
+  const stats = el("div", "stats stats4");
+  [[pctText(all.pct), "总进度"], [`${all.learned}`, `已学 / ${all.n} 题`], [String(all.long), "长期记忆"], [String(all.due), "待复习"]]
+    .forEach(([v, k]) => { const s = el("div", "stat"); s.append(el("b", null, v), el("span", null, k)); stats.append(s); });
+  card.append(stats);
+  const act = el("div", "actions");
+  const rv = el("button", all.due ? "btn" : "btn ghost", all.due ? `开始复习（${all.due} 题到期）` : "现在没有到期的题");
+  rv.type = "button"; rv.id = "revBtn"; rv.disabled = !all.due;
+  rv.addEventListener("click", () => progGo("rev:"));
+  const ln = el("button", "btn ghost", "学新题 / 巩固"); ln.type = "button";
+  ln.addEventListener("click", () => progGo("learn:"));
+  act.append(rv, ln);
+  card.append(act);
+  card.append(el("p", "sub", "按标签看进度；点一行：有到期的题就复习，没有就接着学这个标签里还没掌握的题。"));
+  const now = Date.now();
+  if (!progOpen) progOpen = new Set(TAG_GROUPS.filter(g => g.g !== "难度").slice(0, 1).map(g => g.g));
+  TAG_GROUPS.forEach(g => {
+    const rows = g.tags.map(t => [t, progOf(BANK.filter(q => q.tags.includes(t)), now)]).filter(([, p]) => p.n);
+    if (!rows.length) return;
+    const gp = progOf(BANK.filter(q => g.tags.some(t => q.tags.includes(t))), now);
+    const det = el("details", "prog-group");
+    det.open = progOpen.has(g.g);
+    det.addEventListener("toggle", () => { det.open ? progOpen.add(g.g) : progOpen.delete(g.g); });
+    const sum = el("summary");
+    sum.append(el("span", null, g.g), el("span", "prog-gp", pctText(gp.pct) + (gp.due ? ` · ${gp.due} 题待复习` : "")));
+    det.append(sum);
+    const list = el("div", "prog-list");
+    rows.forEach(([t, p]) => {
+      const r = el("button", "prog-row"); r.type = "button";
+      const bar = el("span", "pbar");
+      const a = el("i", "learned"); a.style.width = (p.learned / p.n * 100) + "%";
+      const b = el("i", "mastery"); b.style.width = p.pct + "%";
+      bar.append(a, b);
+      const num = el("span", "n"); num.append(el("b", null, pctText(p.pct)), document.createTextNode(` · 已学 ${p.learned}/${p.n}`));
+      if (p.due) num.append(el("span", "due", ` · ${p.due} 待复习`));
+      r.append(el("span", "t", t), bar, num);
+      r.title = p.due ? `复习「${t}」里到期的 ${p.due} 题` : `学习「${t}」里还没掌握的题`;
+      r.addEventListener("click", () => progGo((p.due ? "rev:" : "learn:") + t));
+      list.append(r);
+    });
+    det.append(list);
+    card.append(det);
+  });
+  const key = el("p", "sub prog-key");
+  key.append(el("i", "k-mastery"), document.createTextNode(" 学习进度（记忆等级）"), el("i", "k-learned"), document.createTextNode(" 已学过的题"));
+  card.append(key);
+  return card;
+}
 // ---------- 备份与恢复：所有记录 + 本机设置 → 一个 .json 文件；恢复时合并，已有的记录不重复 ----------
 const BK_COLLS = ["answers", "exams", "vocab"];
 const BK_PREFIX = "fq-";   // 本页在浏览器里的设置键前缀
@@ -13801,7 +14049,7 @@ function backupRow() {
   const out = el("button", "btn ghost", "备份记录"); out.type = "button"; out.id = "bkOut";
   const inBtn = el("button", "btn ghost", "从备份恢复"); inBtn.type = "button"; inBtn.id = "bkIn";
   const file = el("input"); file.type = "file"; file.accept = ".json,application/json"; file.hidden = true; file.id = "bkFile";
-  const note = el("span", "bk-note", "把错题本、做题日历、单词记录和本机设置存成一个文件，换设备或清除数据后可以恢复。");
+  const note = el("span", "bk-note", "把答题记录（学习进度、经验值、错题本、做题日历都由它算出）、单词记录和本机设置存成一个文件，换设备或清除数据后可以恢复。");
   const busy = on => { out.disabled = inBtn.disabled = on; };
   out.addEventListener("click", async () => {
     if (!dbRef) { note.textContent = "当前视图无法读取记录，不能备份。"; return; }
@@ -13876,7 +14124,7 @@ function remindRow() {
   const local = typeof claude === "undefined";
   if (!local) {
     row.append(document.createTextNode("每日提醒：在 "));
-    const a = el("a", null, "公开网站的错题本页"); a.href = "https://cosonder.github.io/quiz/"; a.target = "_blank"; a.rel = "noopener";
+    const a = el("a", null, "公开网站的学习进度页"); a.href = "https://cosonder.github.io/quiz/"; a.target = "_blank"; a.rel = "noopener";
     row.append(a, document.createTextNode(" 下载日历提醒，加到 iPad / 手机日历后每天到点通知。"));
     return row;
   }
@@ -14360,7 +14608,7 @@ function renderResult() {
   });
   card.append(list);
   const actions = el("div", "actions");
-  const book = el("button", "btn ghost", "看错题本");
+  const book = el("button", "btn ghost", "看学习进度");
   book.type = "button";
   book.addEventListener("click", () => switchView("book"));
   const again = el("button", nB < set.qs.length ? "btn ghost" : "btn", nB < set.qs.length ? "再做这一组" : "再做一次");
@@ -14380,18 +14628,21 @@ function renderResult() {
   card.append(actions);
   stage.append(card);
 }
-// ---------- 错题本 ----------
+// ---------- 学习进度（经验等级、各标签进度、做题日历、错题分布、错题本） ----------
 async function renderBook() {
   renderToc();
   stage.innerHTML = "";
   const card = el("section", "card");
   stage.append(card);
-  if (!dbRef) { card.append(el("p", "empty", "当前视图无法读取错题本。登录 claude.ai 后打开这个页面就能看到。")); return; }
+  if (!dbRef) { card.append(el("p", "empty", "当前视图无法读取答题记录。登录 claude.ai 后打开这个页面就能看到。")); return; }
   if (!bookCache) {
     card.append(el("p", "empty", "正在读取答题记录…"));
     let docs;
     try { docs = (await dbRef.collection("answers").get()).docs.map(d => d.data()); }
-    catch (e) { card.textContent = ""; card.append(el("p", "empty", "暂时读取不到错题本，稍后再点一次「错题本」。")); return; }
+    catch (e) { card.textContent = ""; card.append(el("p", "empty", "暂时读取不到答题记录，稍后再点一次「学习进度」。")); return; }
+    let voc = vocRaw;
+    try { voc = (await dbRef.collection("vocab").get()).docs.map(d => d.data()); } catch (e) {}
+    progReset(docs.slice(), voc);
     // 同一道题答了多次，只看最近一次
     const latest = new Map();
     docs.sort((a, b) => String(a.at).localeCompare(String(b.at))).forEach(d => latest.set(d.qid, d));
@@ -14408,6 +14659,7 @@ function drawBook() {
   if (!bookCache) return;
   const { all, wrong } = bookCache;
   stage.innerHTML = "";
+  stage.append(xpCard(), progressCard());
   stage.append(heatCard(bookCache.raw || []));
   stage.append(tagDistCard());
   const card = el("section", "card");
@@ -15862,7 +16114,10 @@ function vRecord(w, type, ok) {
   if (!vStats) vStats = new Map();
   if (!vStats.has(w.id)) vStats.set(w.id, {});
   vStats.get(w.id)[type] = ok;
-  if (dbRef) dbRef.collection("vocab").add({ word: w.id, fr: w.fr, type, ok, at: new Date().toISOString() }).catch(() => {});
+  if (!dbRef) return;
+  const d = { word: w.id, fr: w.fr, type, ok, at: new Date().toISOString() };
+  dbRef.collection("vocab").add(d).catch(() => {});
+  progLive(d, "vocab");
 }
 // 状态：new 没练过 / weak 有错或没练全 / done 五种题型最近一次都答对
 function vState(w) {
