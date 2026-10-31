@@ -1,4 +1,34 @@
-<!doctype html><html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}body{margin:0;padding:0}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style></head><body>
+<!doctype html><html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><link rel="manifest" href="../manifest.webmanifest"><link rel="apple-touch-icon" href="../icons/icon-180.png"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-title" content="选择题练习"><meta name="theme-color" content="#2f5bd3"><script>
+// 注册离线缓存（Service Worker），并在首页显示离线准备情况；下面 sw.js 的路径由 build.py 按页面所在位置填好
+(() => {
+  if (!("serviceWorker" in navigator) || location.protocol === "file:") return;
+  addEventListener("load", async () => {
+    try {
+      const reg = await navigator.serviceWorker.register("../sw.js", { scope: "../" });
+      if (navigator.storage && navigator.storage.persist) navigator.storage.persist().catch(() => {});   // 请浏览器不要自动清掉记录和缓存
+      await navigator.serviceWorker.ready;
+      const sw = () => navigator.serviceWorker.controller || reg.active;
+      if (navigator.onLine) sw()?.postMessage("prefetch");
+      const box = document.getElementById("offlineStatus");
+      if (!box) return;
+      let tries = 0;
+      const ask = () => sw()?.postMessage("status");
+      navigator.serviceWorker.addEventListener("message", e => {
+        const d = e.data;
+        if (!d || d.type !== "status") return;
+        const pagesOk = d.pages >= d.files, imgOk = d.imgs >= d.images, ok = pagesOk && imgOk && d.mathjax;
+        box.classList.toggle("ok", ok);
+        if (ok) { box.textContent = "✓ 已可离线使用：所有题目、单词图片和公式排版都已存到这台设备，断网也能做题。"; return; }
+        if (!navigator.onLine) { box.textContent = `现在没有网络。已存好：页面${pagesOk ? " ✓" : "（未完成）"} · 单词图片 ${d.imgs}/${d.images} · 公式${d.mathjax ? " ✓" : "（未完成）"}。联网后打开本页会继续下载。`; return; }
+        box.textContent = `正在准备离线使用，请保持联网…… 页面${pagesOk ? " ✓" : "…"} · 单词图片 ${d.imgs}/${d.images} · 公式${d.mathjax ? " ✓" : "…"}`;
+        if (!d.busy && tries++ % 10 === 9) sw()?.postMessage("prefetch");
+        setTimeout(ask, 1500);
+      });
+      ask();
+    } catch (e) {}
+  });
+})();
+</script><style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}body{margin:0;padding:0}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style></head><body>
 <title>随机分析练习</title>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@600;900&family=Noto+Sans+SC:wght@400;500;700&display=swap">
 <script>
