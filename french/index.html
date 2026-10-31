@@ -286,6 +286,10 @@ h1 { font-family: var(--display); font-weight: 900; font-size: 1.6rem; line-heig
 /* 提交栏与成绩 */
 .ex-bar { position: sticky; bottom: 0; z-index: 2; background: var(--card); border: 1px solid var(--line); border-radius: 14px; padding: 10px 14px calc(10px + env(safe-area-inset-bottom, 0px)); display: flex; gap: 10px; align-items: center; justify-content: space-between; flex-wrap: wrap; box-shadow: 0 -4px 16px rgb(0 0 0 / .06); }
 .ex-bar .ex-count { font-size: .88rem; }
+.ex-meta .ex-clock { font-variant-numeric: tabular-nums; }
+.ex-meta .ex-clock.over b { color: var(--bad); }
+.ex-meta .ex-paused { color: var(--muted); }
+.ex-meta .ex-pause { padding: 4px 12px; font-size: .85rem; }
 .ex-table { width: 100%; border-collapse: collapse; font-size: .93rem; font-variant-numeric: tabular-nums; }
 .ex-table th, .ex-table td { text-align: left; padding: 6px 8px; border-bottom: 1px solid var(--line); }
 .ex-table td:last-child, .ex-table th:last-child { text-align: right; }
@@ -14903,7 +14907,7 @@ EX.fix.key.forEach(k => {
 
 // ---------- 草稿（只存在本机浏览器） ----------
 const EX_DRAFT_KEY = "fq-exam-" + EX.id;
-let exState = null;      // { ans:{}, edits:{}, essay:"", start:时间戳, plays:{} }
+let exState = null;      // { ans:{}, edits:{}, essay:"", used:已用秒数, paused:是否手动暂停, plays:{} }
 let exResult = null;     // 交卷后的成绩
 let exTimer = null, exSel = null, exHist = null, exConfirmReset = false;
 function exLoad() {
@@ -14912,7 +14916,21 @@ function exLoad() {
   if (!exState || typeof exState !== "object") exState = {};
   exState.ans ||= {}; exState.edits ||= {}; exState.plays ||= {}; exState.essay ||= "";
   if (exState.result) exResult = exState.result;
+  if (typeof exState.used !== "number") exState.used = 0;   // 旧草稿按开卷时刻算，不准，从 0 重新计
+  delete exState.start;
 }
+// ---------- 计时：只算真正在做卷子的时间 ----------
+// 停在“模拟卷”页、页面在前台、没交卷、没手动暂停时才走；切到别的页、锁屏、切走应用都会自动停
+let exRunSince = 0;   // 这一段从什么时候开始走（0 = 没在走）
+const exUsed = () => exState.used + (exRunSince ? (Date.now() - exRunSince) / 1000 : 0);
+const exShouldRun = () => !!exState && !exResult && !exState.paused && view === "exam" && document.visibilityState === "visible";
+function exPause() {
+  if (!exRunSince) return;
+  exState.used = exUsed(); exRunSince = 0; exSave();
+}
+function exResume() { if (!exRunSince && exShouldRun()) exRunSince = Date.now(); }
+document.addEventListener("visibilitychange", () => { if (document.visibilityState === "visible") exResume(); else exPause(); });
+addEventListener("pagehide", exPause);
 function exSave() { try { localStorage.setItem(EX_DRAFT_KEY, JSON.stringify({ ...exState, result: exResult })); } catch (e) {} }
 
 // ---------- 听力朗读：男女两种声音 ----------
@@ -15292,7 +15310,8 @@ function exScore() {
 }
 async function exSubmit() {
   clearInterval(exTimer);
-  exResult = { parts: exScore(), essay: "pending", at: new Date().toISOString(), secs: Math.round((Date.now() - (exState.start || Date.now())) / 1000) };
+  exPause();
+  exResult = { parts: exScore(), essay: "pending", at: new Date().toISOString(), secs: Math.round(exUsed()) };
   exSave();
   renderExam();
   $("ex-result")?.scrollIntoView({ block: "start" });
@@ -15339,14 +15358,20 @@ function fillHist(box) {
 
 function renderExam() {
   exLoad();
-  if (!exState.start) { exState.start = Date.now(); exSave(); }
   stage.innerHTML = "";
   const wrap = el("div", "ex");
   const head = el("section", "card ex-head");
   head.append(el("h2", null, EX.title), el("p", "ex-rule", EX.sub));
   const meta = el("div", "ex-meta");
-  const clock = el("span");
+  const clock = el("span", "ex-clock");
+  const pause = el("button", "btn ghost ex-pause"); pause.type = "button"; pause.id = "exPause";
+  pause.addEventListener("click", () => {
+    exState.paused = !exState.paused;
+    if (exState.paused) exPause(); else { exSave(); exResume(); }
+    tick();
+  });
   meta.append(clock);
+  if (!exResult) meta.append(pause);
   head.append(meta);
   const nav = el("nav", "ex-nav"); nav.setAttribute("aria-label", "试卷各部分");
   [["listen", "听力"], ["reading", "阅读"], ["cloze", "完形与语法填空"], ["fix", "改错与作文"]].forEach(([id, t]) => {
@@ -15369,7 +15394,7 @@ function renderExam() {
     const redo = el("button", "btn", "清空重做"); redo.type = "button";
     redo.addEventListener("click", () => {
       if (!exConfirmReset) { exConfirmReset = true; redo.textContent = "再点一次确认清空"; return; }
-      exConfirmReset = false; exResult = null; exState = { ans: {}, edits: {}, plays: {}, essay: "", start: Date.now() }; exSave(); renderExam(); window.scrollTo(0, 0);
+      exConfirmReset = false; exResult = null; exState = { ans: {}, edits: {}, plays: {}, essay: "", used: 0 }; exRunSince = 0; exSave(); renderExam(); window.scrollTo(0, 0);
     });
     const top = el("button", "btn ghost", "看成绩"); top.type = "button";
     top.addEventListener("click", () => $("ex-result")?.scrollIntoView({ block: "start", behavior: "smooth" }));
@@ -15389,13 +15414,22 @@ function renderExam() {
   exUpdateCount();
 
   clearInterval(exTimer);
-  const tick = () => {
-    const s = exResult ? exResult.secs : Math.round((Date.now() - exState.start) / 1000);
+  function tick() {
+    const s = exResult ? exResult.secs : Math.floor(exUsed());
     clock.textContent = "";
+    clock.classList.toggle("over", s > 120 * 60);
     clock.append(document.createTextNode(exResult ? "用时 " : "已用时 "), el("b", null, exClock(s)), document.createTextNode(" / 建议 120:00"));
-  };
+    if (!exResult && exState.paused) clock.append(el("span", "ex-paused", " · 已暂停"));
+    pause.textContent = exState.paused ? "继续计时" : "暂停";
+  }
+  exResume();
   tick();
-  if (!exResult) exTimer = setInterval(() => { if (view === "exam") tick(); else clearInterval(exTimer); }, 1000);
+  let n = 0;
+  if (!exResult) exTimer = setInterval(() => {
+    if (view !== "exam") { exPause(); clearInterval(exTimer); return; }
+    exResume(); tick();
+    if (++n % 15 === 0 && exRunSince) { exPause(); exResume(); }   // 每 15 秒存一次，关掉页面也不丢时间
+  }, 1000);
   exLoadHist();
 }
 function exResultCard() {
