@@ -4,7 +4,27 @@
   if (!("serviceWorker" in navigator) || location.protocol === "file:") return;
   addEventListener("load", async () => {
     try {
+      const had = !!navigator.serviceWorker.controller;   // 打开时已经有旧版本在管这个页面
       const reg = await navigator.serviceWorker.register("../sw.js", { scope: "../" });
+      // 新版本装好后不自动刷新（可能正在做题），只在顶部提示一下
+      navigator.serviceWorker.addEventListener("controllerchange", () => {
+        if (!had || document.getElementById("swUpdate")) return;
+        const bar = document.createElement("div"); bar.id = "swUpdate"; bar.setAttribute("role", "status");
+        bar.style.cssText = "position:fixed;top:calc(8px + env(safe-area-inset-top,0px));left:50%;transform:translateX(-50%);z-index:60;display:flex;gap:10px;align-items:center;"
+          + "background:#2f5bd3;color:#fff;border-radius:999px;padding:6px 8px 6px 16px;font-size:14px;box-shadow:0 6px 20px rgba(0,0,0,.2);max-width:calc(100vw - 32px)";
+        const t = document.createElement("span"); t.textContent = "题库已更新";
+        const go = document.createElement("button"); go.type = "button"; go.textContent = "刷新";
+        go.style.cssText = "font:inherit;border:0;border-radius:999px;padding:4px 12px;background:#fff;color:#2f5bd3;font-weight:600;cursor:pointer";
+        go.addEventListener("click", () => location.reload());
+        const x = document.createElement("button"); x.type = "button"; x.textContent = "×"; x.setAttribute("aria-label", "稍后");
+        x.style.cssText = "font:inherit;border:0;background:transparent;color:#fff;font-size:18px;line-height:1;padding:0 6px;cursor:pointer";
+        x.addEventListener("click", () => bar.remove());
+        bar.append(t, go, x); document.body.append(bar);
+      });
+      // 从后台切回来、或重新连上网时，检查有没有新版本（主屏幕 App 常常不重新打开页面）
+      const check = () => { if (navigator.onLine && document.visibilityState === "visible") reg.update().catch(() => {}); };
+      document.addEventListener("visibilitychange", check);
+      addEventListener("online", check);
       if (navigator.storage && navigator.storage.persist) navigator.storage.persist().catch(() => {});   // 请浏览器不要自动清掉记录和缓存
       await navigator.serviceWorker.ready;
       const sw = () => navigator.serviceWorker.controller || reg.active;
