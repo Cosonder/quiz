@@ -531,13 +531,59 @@ h1 { font-family: var(--display); font-weight: 900; font-size: 1.6rem; line-heig
 .prog-key i { display: inline-block; width: 12px; height: 8px; border-radius: 3px; margin-left: 8px; vertical-align: middle; }
 .prog-key i:first-child { margin-left: 0; }
 @media (max-width: 520px) { .prog-row { grid-template-columns: minmax(0, 1fr) auto; } .prog-row .pbar { grid-column: 1 / -1; grid-row: 2; } }
-.xp-toast { position: fixed; left: 50%; bottom: calc(18px + env(safe-area-inset-bottom, 0px)); transform: translate(-50%, 20px); opacity: 0; pointer-events: none; z-index: 50;
+.xp-toast { position: fixed; left: 50%; top: calc(12px + env(safe-area-inset-top, 0px)); transform: translate(-50%, -20px); opacity: 0; pointer-events: none; z-index: 50;
   background: var(--fg); color: var(--bg); border-radius: 999px; padding: 8px 16px; font-size: .88rem; display: flex; flex-direction: column; align-items: center; gap: 2px;
   max-width: calc(100vw - 32px); text-align: center; transition: opacity .2s, transform .2s; box-shadow: 0 6px 20px rgba(0,0,0,.18); }
 .xp-toast.show { opacity: 1; transform: translate(-50%, 0); }
 .xp-toast.big { border-radius: 16px; background: var(--good); color: #fff; }
 .xp-toast b { font-size: 1.05rem; }
 @media (prefers-reduced-motion: reduce) { .xp-toast { transition: none; } }
+
+/* 今日计划 */
+.plan-toc { display: grid; grid-template-columns: 1fr; gap: 4px; width: 100%; text-align: left; font: inherit; color: var(--fg); background: var(--accent-soft); border: 1.5px solid var(--accent); border-radius: 10px; padding: 8px 10px; margin-bottom: 10px; cursor: pointer; }
+.plan-toc:disabled { cursor: default; opacity: .7; }
+.plan-toc b { font-size: .92rem; color: var(--accent); }
+.plan-toc .n { font-size: .78rem; color: var(--muted); font-variant-numeric: tabular-nums; }
+.plan-toc:focus-visible { outline: 3px solid var(--accent); outline-offset: 2px; }
+.plan-slot .plan-toc { margin-bottom: 0; }
+@media (min-width: 820px) { .plan-slot { display: none; } }
+@media (max-width: 819px) { .toc .plan-toc { display: none; } }
+.plan-card { gap: 10px; }
+.plan-head { display: flex; justify-content: space-between; align-items: center; gap: 8px; flex-wrap: wrap; }
+.plan-head h3 { margin: 0; font-size: 1rem; }
+.plan-head .streak { font-size: .82rem; font-weight: 700; padding: 3px 10px; border-radius: 99px; background: var(--bg); color: var(--muted); font-variant-numeric: tabular-nums; }
+.plan-head .streak.on { background: var(--good-soft); color: var(--good); }
+.plan-all { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 10px; align-items: center; }
+.plan-all .pbar { height: 12px; }
+.plan-all b { font-variant-numeric: tabular-nums; }
+.plan-goal { display: grid; grid-template-columns: auto minmax(0, 1fr) auto; gap: 10px; align-items: center; font-size: .85rem; color: var(--muted); }
+.plan-goal select { font: inherit; color: var(--fg); background: var(--card); border: 1px solid var(--line); border-radius: 6px; padding: 2px 4px; }
+@media (max-width: 520px) { .plan-goal { grid-template-columns: 1fr auto; } .plan-goal .xp-bar { grid-column: 1 / -1; grid-row: 2; } }
+.plan-patch { margin: 0; font-size: .85rem; color: var(--bad); }
+
+/* 动词变位无限练 */
+.cj-verb { display: flex; gap: 10px; align-items: baseline; flex-wrap: wrap; }
+.cj-verb b { font-family: var(--display); font-size: 1.5rem; }
+.cj-verb span { color: var(--muted); }
+.cj-q { min-height: 0; display: flex; flex-wrap: wrap; align-items: baseline; gap: 0 .3em; }
+.cj-q .cj-blank { color: var(--accent); }
+.cj-q .cj-who { flex-basis: 100%; font-family: inherit; font-size: .8rem; font-weight: 400; color: var(--muted); }
+.cj-card .opts { height: auto; }
+.cj-type { display: flex; gap: 8px; }
+.cj-type input { flex: 1; min-width: 0; font: inherit; font-size: 1.15rem; color: var(--fg); background: var(--card); border: 1.5px solid var(--line); border-radius: 10px; padding: 8px 12px; }
+.cj-type input:focus { outline: none; border-color: var(--accent); box-shadow: 0 0 0 3px var(--accent-soft); }
+.cj-type input.ok { border-color: var(--good); background: var(--good-soft); }
+.cj-type input.no { border-color: var(--bad); background: var(--bad-soft); }
+.cj-acc { display: flex; flex-wrap: wrap; gap: 5px; }
+.cj-acc .chip { min-width: 2.2em; font-size: .95rem; }
+.cj-fb { height: auto; min-height: calc(1.6em * 2 + 24px); }
+.cj-fb p { margin: 0 0 6px; }
+.cj-table { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 2px 14px; font-size: .9rem; }
+.cj-table span { color: var(--muted); }
+.cj-table span.on { color: var(--fg); font-weight: 700; }
+.cj-say { font-size: .8rem; padding: 1px 8px; }
+@media (max-width: 520px) { .tab { padding: 6px 10px; } }
+.tabs { max-width: 100%; overflow-x: auto; }
 </style>
 
 <div class="wrap">
@@ -551,6 +597,7 @@ h1 { font-family: var(--display); font-weight: 900; font-size: 1.6rem; line-heig
       <button type="button" class="tab" role="tab" id="tabBook" aria-selected="false">学习进度</button>
       <button type="button" class="tab" role="tab" id="tabExam" aria-selected="false">模拟卷</button>
       <button type="button" class="tab" role="tab" id="tabVocab" aria-selected="false">背单词</button>
+      <button type="button" class="tab" role="tab" id="tabConj" aria-selected="false">变位</button>
     </div>
   </header>
   <div class="layout">
@@ -13543,7 +13590,7 @@ const typeset = () => {};   // 法语页没有公式，不用排版（随机分�
 const $ = id => document.getElementById(id);
 const stage = $("stage"), toc = $("toc"), tocwrap = $("tocwrap"), tocTitle = $("tocTitle");
 const pSet = $("pSet"), pText = $("pText"), pBar = $("pBar"), pScore = $("pScore"), progressEl = $("progress");
-const tabQuiz = $("tabQuiz"), tabBook = $("tabBook"), tabExam = $("tabExam"), tabVocab = $("tabVocab"), saveNote = $("saveNote");
+const tabQuiz = $("tabQuiz"), tabBook = $("tabBook"), tabExam = $("tabExam"), tabVocab = $("tabVocab"), tabConj = $("tabConj"), saveNote = $("saveNote");
 const layoutEl = document.querySelector(".layout");
 
 function el(tag, cls, text) {
@@ -13583,7 +13630,7 @@ function localDb(ns) {
     const docs = (await dbRef.collection("answers").get()).docs.map(d => d.data());
     let voc = [];
     try { voc = (await dbRef.collection("vocab").get()).docs.map(d => d.data()); } catch (e) {}
-    progReset(docs, voc); progEnsure();
+    progReset(docs, voc); progEnsure(); planRefresh();
     const wrong = docs.filter(d => !d.isCorrect).length;
     saveNote.textContent = wrong ? `已有 ${wrong} 条错题记录，答题记录会自动保存到学习进度。` : "答题记录会自动保存到学习进度。";
     if (LOCAL) saveNote.textContent += "记录保存在这台设备的浏览器里，换设备或清除浏览器数据后不会保留。";
@@ -13617,6 +13664,7 @@ const isListen = q => !!q.audio;
 // 每个分组键包含哪些题
 function members(key) {
   if (/^(rev|learn):/.test(key)) return progMembers(key);
+  if (key.startsWith("plan:")) return planMembers(key);
   const p = parseTagKey(key);
   if (p) {
     const w = p.kind === "wrong" ? wrongIds() : null;
@@ -13630,6 +13678,7 @@ function members(key) {
 }
 function inGroup(key, q) {
   if (!q) return false;
+  if (key.startsWith("plan:")) return true;
   if (/^(rev|learn):/.test(key)) { const tags = key.split(":")[1].split("|").filter(Boolean); return !tags.length || tagMatch(q, tags, "any"); }
   const p = parseTagKey(key);
   if (p) return !p.tags.length || tagMatch(q, p.tags, p.mode);
@@ -13639,6 +13688,7 @@ function inGroup(key, q) {
 }
 function labelOf(key) {
   if (/^(rev|learn):/.test(key)) return progLabel(key);
+  if (key.startsWith("plan:")) return planLabel(key);
   const p = parseTagKey(key);
   if (p) return tagLabel(p);
   if (key.startsWith("ch:")) { const c = CH.get(Number(key.slice(3))); return c ? chName(c) : "未归类"; }
@@ -13663,7 +13713,7 @@ const bEnd = () => per ? Math.min(bStart + per, set.qs.length) : set.qs.length;
 function calcScore() { let n = 0; for (let k = bStart; k < bEnd(); k++) if (answers[k] !== undefined && set.qs[k].a === answers[k]) n++; return n; }
 function startSet(key, fresh) {
   set = makeSet(key); score = 0; answers = {};
-  const saved = fresh || /^(rev|learn):/.test(key) ? 0 : Number(loadPos()[key] || 0);   // 复习、学习题组每次重新挑题，从头做
+  const saved = fresh || /^(rev|learn|plan):/.test(key) ? 0 : Number(loadPos()[key] || 0);   // 复习、学习题组每次重新挑题，从头做
   idx = saved > 0 && saved < set.qs.length ? saved : 0;
   bStart = idx;
   renderToc(); beginBatch();
@@ -13864,7 +13914,7 @@ function xpLevel(xp) {
 
 let ansRaw = null;   // 全部答题记录
 let vocRaw = [];     // 背单词记录（只有法语页有）
-let prog = null;     // { mem: Map(题号 → {lv, last}), xp, today, lastDay, days }
+let prog = null;     // { mem: Map(题号 → {lv, last}), xp, today, lastDay, days, byDay: {日期: 当天经验} }
 
 const memInterval = lv => MEM_DAYS[Math.min(lv, MEM_MAX)] * DAY_MS;
 const memDue = (m, now = Date.now()) => !!m && m.lv >= 1 && now >= m.last + memInterval(m.lv) * MEM_EARLY;
@@ -13890,13 +13940,14 @@ function progStep(st, d, kind) {
     st.mem.set(d.qid, m);
   }
   st.xp += xp;
+  st.byDay[day] = (st.byDay[day] || 0) + xp;
   if (day === dayKey(new Date())) st.today += xp;
   return { xp, up, down, daily, learned };
 }
 function progEnsure() {
   if (prog) return true;
   if (!ansRaw) return false;
-  const st = { mem: new Map(), xp: 0, today: 0, lastDay: "", days: 0 };
+  const st = { mem: new Map(), xp: 0, today: 0, lastDay: "", days: 0, byDay: {} };
   const ev = ansRaw.map(d => [d, "ans"]).concat(vocRaw.map(d => [d, "vocab"]));
   ev.sort((a, b) => String(a[0].at).localeCompare(String(b[0].at))).forEach(([d, k]) => progStep(st, d, k));
   prog = st;
@@ -13908,7 +13959,7 @@ function progReset(docs, voc) { ansRaw = docs; if (voc) vocRaw = voc; prog = nul
 function progLive(d, kind) {
   if (kind === "vocab") vocRaw.push(d); else if (ansRaw) ansRaw.push(d);
   if (!prog) return;
-  const before = xpLevel(prog.xp).lv;
+  const before = xpLevel(prog.xp).lv, todayBefore = prog.today;
   const r = progStep(prog, d, kind);
   const after = xpLevel(prog.xp).lv;
   const parts = [`+${r.xp} 经验`];
@@ -13916,7 +13967,9 @@ function progLive(d, kind) {
   if (r.up) parts.push(r.up === MEM_MAX ? "复习成功 · 长期记忆" : `复习成功 · 记忆 ${r.up} 级`);
   else if (r.learned) parts.push("新学会一题");
   else if (r.down >= 0) parts.push(`记忆退到 ${r.down} 级`);
-  xpToast(parts.join(" · "), after > before ? `升级！Lv ${after} · ${xpTitle(after)}` : "");
+  const note = typeof planNotice === "function" ? planNotice(d, todayBefore) : "";
+  xpToast(parts.join(" · "), after > before ? `升级！Lv ${after} · ${xpTitle(after)}` : note);
+  if (typeof planRefresh === "function") planRefresh();
 }
 let toastTimer = 0;
 function xpToast(text, big) {
@@ -14035,6 +14088,213 @@ function progressCard() {
   const key = el("p", "sub prog-key");
   key.append(el("i", "k-mastery"), document.createTextNode(" 学习进度（记忆等级）"), el("i", "k-learned"), document.createTextNode(" 已学过的题"));
   card.append(key);
+  return card;
+}
+// ---------- 今日计划：每天自动配一组题（到期复习 + 新题 + 最弱标签），每日经验目标、连续打卡和补签 ----------
+// 计划在当天第一次打开时生成并记在本机，当天不变；做过的题（今天答过一次就算）自动打勾。
+// 连续打卡：当天经验达到目标算打卡。某天没达标，第二天达到 2 倍目标就能补签那一天（不能连着两天都缺）。
+const PLAN_REVIEW_MAX = 30, PLAN_NEW = 10, PLAN_WEAK = 5, PLAN_CONJ = 10;
+const GOAL_OPTS = [50, 100, 150, 250, 400];
+let xpGoal = (() => { try { const v = Number(localStorage.getItem("fq-goal")); return GOAL_OPTS.includes(v) ? v : 150; } catch (e) { return 150; } })();
+const dayOffset = (day, k) => { const [y, m, d] = day.split("-").map(Number); return dayKey(new Date(y, m - 1, d + k)); };
+const hasConj = () => typeof renderConj === "function";
+function answeredToday() {
+  const t = dayKey(new Date());
+  return new Set((ansRaw || []).filter(d => d.at && dayKey(new Date(d.at)) === t).map(d => d.qid));
+}
+const conjToday = () => { const t = dayKey(new Date()); return (ansRaw || []).filter(d => d.round === "cj" && d.at && dayKey(new Date(d.at)) === t).length; };
+
+// 最近 60 天里答错比例最高的标签（至少答过 5 次）
+function weakestTag() {
+  const since = Date.now() - 60 * DAY_MS, st = new Map();
+  (ansRaw || []).forEach(d => {
+    const q = BY_ID.get(d.qid);
+    if (!q || !(Date.parse(d.at) >= since)) return;
+    q.tags.forEach(t => { if (LEVELS.includes(t)) return; const s = st.get(t) || [0, 0]; s[0]++; if (!d.isCorrect) s[1]++; st.set(t, s); });
+  });
+  let best = null;
+  st.forEach(([n, w], t) => { if (n < 5 || !w) return; const r = w / n; if (!best || r > best.r || (r === best.r && w > best.w)) best = { t, r, w, n }; });
+  return best;
+}
+function planBuild() {
+  const used = new Set();
+  const review = progMembers("rev:").slice(0, PLAN_REVIEW_MAX).map(q => q.id);
+  review.forEach(i => used.add(i));
+  // 新题：从最近做的那一轮接着往下，挑还没做过的题
+  const lastQ = [...(ansRaw || [])].sort((a, b) => String(a.at).localeCompare(String(b.at))).reverse().map(d => BY_ID.get(d.qid)).find(Boolean);
+  const order = ROUNDS.map(r => r.id);
+  let start = lastQ ? order.indexOf(roundOf(lastQ.id)) : 0;
+  if (start < 0) start = 0;
+  const byRound = new Map();
+  BANK.forEach(q => { const r = roundOf(q.id); if (!byRound.has(r)) byRound.set(r, []); byRound.get(r).push(q); });
+  const fresh = [];
+  for (const r of order.slice(start).concat(order.slice(0, start))) {
+    for (const q of byRound.get(r) || []) {
+      if (fresh.length >= PLAN_NEW) break;
+      if (memOf(q.id).last === 0 && !used.has(q.id)) { fresh.push(q.id); used.add(q.id); }
+    }
+    if (fresh.length >= PLAN_NEW) break;
+  }
+  // 弱项：最弱标签里先挑答错过的，再挑没做过的
+  const wk = weakestTag();
+  let weak = [];
+  if (wk) {
+    const score = q => { const m = memOf(q.id); return m.last && m.lv === 0 ? 0 : m.last === 0 ? 1 : 2 + m.lv; };
+    weak = BANK.filter(q => q.tags.includes(wk.t) && !used.has(q.id)).map((q, k) => [q, score(q), k])
+      .sort((a, b) => a[1] - b[1] || a[2] - b[2]).slice(0, PLAN_WEAK).map(x => x[0].id);
+  }
+  return { day: dayKey(new Date()), review, fresh, weak, weakTag: wk ? wk.t : "" };
+}
+function planGet() {
+  if (!progEnsure()) return null;
+  const day = dayKey(new Date());
+  let p = null;
+  try { p = JSON.parse(localStorage.getItem("fq-plan") || "null"); } catch (e) {}
+  if (!p || p.day !== day || !Array.isArray(p.review)) {
+    p = planBuild();
+    try { localStorage.setItem("fq-plan", JSON.stringify(p)); } catch (e) {}
+  }
+  return p;
+}
+const PLAN_PARTS = [["review", "复习到期题"], ["fresh", "新题"], ["weak", "弱项"]];
+function planStatus(p) {
+  const done = answeredToday();
+  const parts = PLAN_PARTS.filter(([k]) => p[k].length).map(([k, name]) => ({
+    k, name: k === "weak" ? `弱项「${p.weakTag}」` : name, n: p[k].length, d: p[k].filter(i => done.has(i)).length,
+  }));
+  if (hasConj()) parts.push({ k: "conj", name: "动词变位", n: PLAN_CONJ, d: Math.min(PLAN_CONJ, conjToday()) });
+  const n = parts.reduce((s, x) => s + x.n, 0), d = parts.reduce((s, x) => s + x.d, 0);
+  return { parts, n, d };
+}
+// plan: 今日计划里还没做的题；plan:review / plan:fresh / plan:weak 只做其中一部分
+function planMembers(key) {
+  const p = planGet();
+  if (!p) return [];
+  const part = key.slice(5), done = answeredToday();
+  const ids = part ? p[part] || [] : [...p.review, ...p.fresh, ...p.weak];
+  return ids.filter(i => !done.has(i)).map(i => BY_ID.get(i)).filter(Boolean);
+}
+function planLabel(key) {
+  const part = key.slice(5), p = planGet();
+  return "今日计划" + (part ? " · " + (part === "weak" && p ? `弱项「${p.weakTag}」` : (PLAN_PARTS.find(x => x[0] === part) || [, part])[1]) : "");
+}
+function planGo(key) {
+  if (key === "plan:conj") { switchView("conj"); return; }
+  if (!planMembers(key).length) {
+    const s = planGet() && planStatus(planGet());
+    xpToast(s && hasConj() && s.parts.find(x => x.k === "conj" && x.d < x.n) ? "这些题都做完了，还差动词变位" : "今天计划里的题都做完了");
+    return;
+  }
+  switchView("quiz", key);
+}
+
+// 连续打卡（含补签），从某一天往前数
+function streakFrom(day) {
+  const by = prog.byDay, xp = d => by[d] || 0, met = d => xp(d) >= xpGoal;
+  let n = 0, d = day;
+  for (let g = 0; g < 3660; g++) {
+    if (met(d)) { n++; d = dayOffset(d, -1); continue; }
+    // 这一天没达标：第二天达到 2 倍目标、前一天也达标，就算补签
+    if (xp(dayOffset(d, 1)) >= 2 * xpGoal && met(dayOffset(d, -1))) { n++; d = dayOffset(d, -1); continue; }
+    break;
+  }
+  return n;
+}
+function streakInfo() {
+  if (!progEnsure()) return { n: 0, today: 0, met: false, patch: 0 };
+  const today = dayKey(new Date()), y = dayOffset(today, -1), xp = d => prog.byDay[d] || 0;
+  const met = xp(today) >= xpGoal;
+  const n = streakFrom(y) + (met ? 1 : 0);
+  // 昨天没达标、前天达标：今天达到 2 倍目标就能补签，保住之前的连续天数
+  const patch = xp(y) < xpGoal && xp(dayOffset(y, -1)) >= xpGoal && xp(today) < 2 * xpGoal ? streakFrom(dayOffset(y, -1)) : 0;
+  return { n, today: xp(today), met, patch };
+}
+// 答完一题后：今天目标刚达成 / 今日计划刚做完时，返回一句大提示
+function planNotice(d, todayBefore) {
+  const p = planGet();
+  if (p) {
+    const ids = [...p.review, ...p.fresh, ...p.weak];
+    const s = planStatus(p);
+    const hit = d.round === "cj" ? hasConj() && conjToday() === PLAN_CONJ : ids.includes(d.qid);
+    if (hit && s.n && s.d === s.n) return "今日计划完成！";
+  }
+  if (todayBefore < xpGoal && prog.today >= xpGoal) return `今日目标达成！连续 ${streakInfo().n} 天`;
+  return "";
+}
+
+// 今日计划进度条：宽屏放在目录顶上，窄屏（目录收起时）放在主区域最上面；点了直接开始
+function planTocItem(id = "planToc") {
+  const box = el("button", "plan-toc"); box.type = "button"; box.id = id;
+  const p = planGet();
+  if (!p) { box.disabled = true; box.append(el("b", null, "今日计划"), el("span", null, "正在读取答题记录…")); return box; }
+  const s = planStatus(p), st = streakInfo();
+  const bar = el("span", "pbar"), fill = el("i", "mastery"); fill.style.width = (s.n ? s.d / s.n * 100 : 0) + "%"; bar.append(fill);
+  box.append(el("b", null, s.d === s.n ? "今日计划 · 已完成" : "今日计划"), el("span", "n", `${s.d}/${s.n} 题 · 今日 ${st.today}/${xpGoal} 经验 · 连续 ${st.n} 天`), bar);
+  box.addEventListener("click", () => {
+    const left = s.parts.find(x => x.d < x.n);
+    planGo(left ? (left.k === "conj" ? "plan:conj" : "plan:") : "plan:");
+  });
+  return box;
+}
+const planSlot = el("div", "plan-slot");
+$("main").prepend(planSlot);
+function planRefresh() {
+  const old = $("planToc");
+  if (old) old.replaceWith(planTocItem());
+  planSlot.textContent = ""; planSlot.append(planTocItem("planMini"));
+  planSlot.hidden = view === "book" || view === "exam";   // 学习进度页有完整的计划卡，模拟卷不打扰
+}
+planRefresh();
+
+// 学习进度页最上面的今日计划卡
+function planCard() {
+  const card = el("section", "card plan-card");
+  const p = planGet();
+  const head = el("div", "plan-head");
+  const d = new Date();
+  head.append(el("h3", null, `今日计划 · ${d.getMonth() + 1} 月 ${d.getDate()} 日`));
+  if (!p) { card.append(head, el("p", "empty", "正在读取答题记录…")); return card; }
+  const s = planStatus(p), st = streakInfo();
+  head.append(el("span", "streak" + (st.met ? " on" : ""), `连续 ${st.n} 天`));
+  card.append(head);
+  const all = el("div", "plan-all");
+  const bar = el("span", "pbar"), fill = el("i", "mastery"); fill.style.width = (s.n ? s.d / s.n * 100 : 0) + "%"; bar.append(fill);
+  all.append(bar, el("b", null, `${s.d} / ${s.n} 题`));
+  card.append(all);
+  const list = el("div", "prog-list");
+  s.parts.forEach(x => {
+    const r = el("button", "prog-row"); r.type = "button";
+    const b = el("span", "pbar"), f = el("i", "mastery"); f.style.width = (x.d / x.n * 100) + "%"; b.append(f);
+    const num = el("span", "n"); num.append(el("b", null, `${x.d}/${x.n}`), document.createTextNode(x.d >= x.n ? " · 完成" : ""));
+    r.append(el("span", "t", x.name), b, num);
+    r.addEventListener("click", () => planGo("plan:" + x.k));
+    list.append(r);
+  });
+  card.append(list);
+  const left = s.n - s.d;
+  const act = el("div", "actions");
+  const go = el("button", left ? "btn" : "btn ghost", left ? `开始今日计划（剩 ${left} 题）` : "今日计划已完成"); go.type = "button"; go.id = "planGo";
+  go.disabled = !left;
+  const first = s.parts.find(x => x.d < x.n && x.k !== "conj");
+  go.addEventListener("click", () => planGo(first ? "plan:" : "plan:conj"));
+  act.append(go);
+  card.append(act);
+  // 每日经验目标
+  const goal = el("div", "plan-goal");
+  const gb = el("span", "xp-bar"), gf = el("i"); gf.style.width = Math.min(100, st.today / xpGoal * 100) + "%"; gb.append(gf);
+  const lab = el("label", null, "每日目标 ");
+  const sel = el("select"); sel.id = "goalSel";
+  GOAL_OPTS.forEach(v => { const o = el("option", null, `${v} 经验`); o.value = String(v); if (v === xpGoal) o.selected = true; sel.append(o); });
+  sel.addEventListener("change", () => { xpGoal = Number(sel.value); try { localStorage.setItem("fq-goal", String(xpGoal)); } catch (e) {} drawBook(); });
+  lab.append(sel);
+  goal.append(el("span", null, `今日经验 ${st.today} / ${xpGoal}` + (st.met ? " · 已打卡" : "")), gb, lab);
+  card.append(goal);
+  if (st.patch) card.append(el("p", "plan-patch", `昨天没达到目标。今天拿到 ${2 * xpGoal} 经验（2 倍目标）就能补签昨天，保住之前连续的 ${st.patch} 天。`));
+  const rule = el("details", "xp-rule");
+  rule.append(el("summary", null, "今日计划怎么配"),
+    el("p", null, `每天第一次打开时生成，当天不变：到期该复习的题（最多 ${PLAN_REVIEW_MAX} 道，最该复习的在前）、从最近做的那一轮接着往下的 ${PLAN_NEW} 道新题、最近 60 天答错比例最高的标签里 ${PLAN_WEAK} 道题` + (hasConj() ? `，再加 ${PLAN_CONJ} 道动词变位。` : "。") + "今天答过一次就算完成。"),
+    el("p", null, "连续打卡：当天经验达到每日目标算打卡。某天没达标，第二天达到 2 倍目标就能补签那一天；不能连着两天都缺。"));
+  card.append(rule);
   return card;
 }
 // ---------- 备份与恢复：所有记录 + 本机设置 → 一个 .json 文件；恢复时合并，已有的记录不重复 ----------
@@ -14346,7 +14606,7 @@ function folder(title, sub, keys, build) {
 
 function renderToc() {
   toc.innerHTML = "";
-  toc.append(tagPanel());
+  toc.append(planTocItem(), tagPanel());
   const legacy = el("details", "legacy"), lbox = el("div");
   legacy.append(el("summary", null, "按轮次 / 章节浏览"), lbox);
   const cur = view === "quiz" ? set?.key : bookFilter;
@@ -14683,7 +14943,7 @@ function drawBook() {
   if (!bookCache) return;
   const { all, wrong } = bookCache;
   stage.innerHTML = "";
-  stage.append(xpCard(), progressCard());
+  stage.append(planCard(), xpCard(), progressCard());
   stage.append(heatCard(bookCache.raw || []));
   stage.append(tagDistCard());
   const card = el("section", "card");
@@ -14746,15 +15006,18 @@ function drawBook() {
 // ---------- 切换 ----------
 function switchView(v, setKey) {
   view = v;
+  planRefresh();
   tabQuiz.setAttribute("aria-selected", String(v === "quiz"));
   tabBook.setAttribute("aria-selected", String(v === "book"));
   tabExam.setAttribute("aria-selected", String(v === "exam"));
   tabVocab.setAttribute("aria-selected", String(v === "vocab"));
+  tabConj.setAttribute("aria-selected", String(v === "conj"));
   layoutEl.classList.toggle("solo", v === "exam");
   progressEl.hidden = v !== "quiz";
   if (tts) tts.cancel();
   if (v === "exam") { renderExam(); return; }
   if (v === "vocab") { renderVocab(); return; }
+  if (v === "conj") { renderConj(); return; }
   if (v === "book") { renderBook(); return; }
   if (setKey) { startSet(setKey); return; }
   renderToc();
@@ -14766,6 +15029,7 @@ tabQuiz.addEventListener("click", () => { if (view !== "quiz") switchView("quiz"
 tabBook.addEventListener("click", () => { bookCache = null; switchView("book"); });
 tabExam.addEventListener("click", () => { if (view !== "exam") switchView("exam"); });
 tabVocab.addEventListener("click", () => { if (view !== "vocab") switchView("vocab"); });
+tabConj.addEventListener("click", () => { if (view !== "conj") switchView("conj"); });
 // ---------- 模拟卷：仿 2016 年全国 I 卷英语题型的法语 B1 试卷 ----------
 const EX = {
   id: "fr-b1-1",
@@ -16613,8 +16877,406 @@ function renderVocab() {
   vToc();
   if (vSess && vSess.i < vSess.qs.length) vQuestion(); else { vSess = null; vList(); }
 }
+// 动词变位表（由 french-quiz/tools/conj_build.py 用 verbecc 生成，不要手改）
+// 每个时态是 6 个人称（je tu il nous vous ils）的动词部分；阴阳性不同时是 [阳性, 阴性] 两组；命令式只有 tu nous vous
+const CJ_TENSES = [["pres", "直陈式现在时"], ["pc", "复合过去时"], ["imp", "未完成过去时"], ["fut", "简单将来时"], ["cond", "条件式现在时"], ["subj", "虚拟式现在时"], ["pqp", "愈过去时"], ["fa", "先将来时"], ["condp", "条件式过去时"], ["ps", "简单过去时"], ["impe", "命令式"]];
+const CJ_VERBS = [
+  {"v":"parler","zh":"说话","g":"er","t":{"pres":["parle","parles","parle","parlons","parlez","parlent"],"pc":["ai parlé","as parlé","a parlé","avons parlé","avez parlé","ont parlé"],"imp":["parlais","parlais","parlait","parlions","parliez","parlaient"],"fut":["parlerai","parleras","parlera","parlerons","parlerez","parleront"],"cond":["parlerais","parlerais","parlerait","parlerions","parleriez","parleraient"],"subj":["parle","parles","parle","parlions","parliez","parlent"],"pqp":["avais parlé","avais parlé","avait parlé","avions parlé","aviez parlé","avaient parlé"],"fa":["aurai parlé","auras parlé","aura parlé","aurons parlé","aurez parlé","auront parlé"],"condp":["aurais parlé","aurais parlé","aurait parlé","aurions parlé","auriez parlé","auraient parlé"],"ps":["parlai","parlas","parla","parlâmes","parlâtes","parlèrent"],"impe":["","parle","","parlons","parlez",""]},"aux":"avoir"},
+  {"v":"aimer","zh":"喜欢；爱","g":"er","t":{"pres":["aime","aimes","aime","aimons","aimez","aiment"],"pc":["ai aimé","as aimé","a aimé","avons aimé","avez aimé","ont aimé"],"imp":["aimais","aimais","aimait","aimions","aimiez","aimaient"],"fut":["aimerai","aimeras","aimera","aimerons","aimerez","aimeront"],"cond":["aimerais","aimerais","aimerait","aimerions","aimeriez","aimeraient"],"subj":["aime","aimes","aime","aimions","aimiez","aiment"],"pqp":["avais aimé","avais aimé","avait aimé","avions aimé","aviez aimé","avaient aimé"],"fa":["aurai aimé","auras aimé","aura aimé","aurons aimé","aurez aimé","auront aimé"],"condp":["aurais aimé","aurais aimé","aurait aimé","aurions aimé","auriez aimé","auraient aimé"],"ps":["aimai","aimas","aima","aimâmes","aimâtes","aimèrent"],"impe":["","aime","","aimons","aimez",""]},"aux":"avoir"},
+  {"v":"travailler","zh":"工作","g":"er","t":{"pres":["travaille","travailles","travaille","travaillons","travaillez","travaillent"],"pc":["ai travaillé","as travaillé","a travaillé","avons travaillé","avez travaillé","ont travaillé"],"imp":["travaillais","travaillais","travaillait","travaillions","travailliez","travaillaient"],"fut":["travaillerai","travailleras","travaillera","travaillerons","travaillerez","travailleront"],"cond":["travaillerais","travaillerais","travaillerait","travaillerions","travailleriez","travailleraient"],"subj":["travaille","travailles","travaille","travaillions","travailliez","travaillent"],"pqp":["avais travaillé","avais travaillé","avait travaillé","avions travaillé","aviez travaillé","avaient travaillé"],"fa":["aurai travaillé","auras travaillé","aura travaillé","aurons travaillé","aurez travaillé","auront travaillé"],"condp":["aurais travaillé","aurais travaillé","aurait travaillé","aurions travaillé","auriez travaillé","auraient travaillé"],"ps":["travaillai","travaillas","travailla","travaillâmes","travaillâtes","travaillèrent"],"impe":["","travaille","","travaillons","travaillez",""]},"aux":"avoir"},
+  {"v":"habiter","zh":"居住","g":"er","t":{"pres":["habite","habites","habite","habitons","habitez","habitent"],"pc":["ai habité","as habité","a habité","avons habité","avez habité","ont habité"],"imp":["habitais","habitais","habitait","habitions","habitiez","habitaient"],"fut":["habiterai","habiteras","habitera","habiterons","habiterez","habiteront"],"cond":["habiterais","habiterais","habiterait","habiterions","habiteriez","habiteraient"],"subj":["habite","habites","habite","habitions","habitiez","habitent"],"pqp":["avais habité","avais habité","avait habité","avions habité","aviez habité","avaient habité"],"fa":["aurai habité","auras habité","aura habité","aurons habité","aurez habité","auront habité"],"condp":["aurais habité","aurais habité","aurait habité","aurions habité","auriez habité","auraient habité"],"ps":["habitai","habitas","habita","habitâmes","habitâtes","habitèrent"],"impe":["","habite","","habitons","habitez",""]},"aux":"avoir"},
+  {"v":"regarder","zh":"看","g":"er","t":{"pres":["regarde","regardes","regarde","regardons","regardez","regardent"],"pc":["ai regardé","as regardé","a regardé","avons regardé","avez regardé","ont regardé"],"imp":["regardais","regardais","regardait","regardions","regardiez","regardaient"],"fut":["regarderai","regarderas","regardera","regarderons","regarderez","regarderont"],"cond":["regarderais","regarderais","regarderait","regarderions","regarderiez","regarderaient"],"subj":["regarde","regardes","regarde","regardions","regardiez","regardent"],"pqp":["avais regardé","avais regardé","avait regardé","avions regardé","aviez regardé","avaient regardé"],"fa":["aurai regardé","auras regardé","aura regardé","aurons regardé","aurez regardé","auront regardé"],"condp":["aurais regardé","aurais regardé","aurait regardé","aurions regardé","auriez regardé","auraient regardé"],"ps":["regardai","regardas","regarda","regardâmes","regardâtes","regardèrent"],"impe":["","regarde","","regardons","regardez",""]},"aux":"avoir"},
+  {"v":"chercher","zh":"寻找","g":"er","t":{"pres":["cherche","cherches","cherche","cherchons","cherchez","cherchent"],"pc":["ai cherché","as cherché","a cherché","avons cherché","avez cherché","ont cherché"],"imp":["cherchais","cherchais","cherchait","cherchions","cherchiez","cherchaient"],"fut":["chercherai","chercheras","cherchera","chercherons","chercherez","chercheront"],"cond":["chercherais","chercherais","chercherait","chercherions","chercheriez","chercheraient"],"subj":["cherche","cherches","cherche","cherchions","cherchiez","cherchent"],"pqp":["avais cherché","avais cherché","avait cherché","avions cherché","aviez cherché","avaient cherché"],"fa":["aurai cherché","auras cherché","aura cherché","aurons cherché","aurez cherché","auront cherché"],"condp":["aurais cherché","aurais cherché","aurait cherché","aurions cherché","auriez cherché","auraient cherché"],"ps":["cherchai","cherchas","chercha","cherchâmes","cherchâtes","cherchèrent"],"impe":["","cherche","","cherchons","cherchez",""]},"aux":"avoir"},
+  {"v":"trouver","zh":"找到","g":"er","t":{"pres":["trouve","trouves","trouve","trouvons","trouvez","trouvent"],"pc":["ai trouvé","as trouvé","a trouvé","avons trouvé","avez trouvé","ont trouvé"],"imp":["trouvais","trouvais","trouvait","trouvions","trouviez","trouvaient"],"fut":["trouverai","trouveras","trouvera","trouverons","trouverez","trouveront"],"cond":["trouverais","trouverais","trouverait","trouverions","trouveriez","trouveraient"],"subj":["trouve","trouves","trouve","trouvions","trouviez","trouvent"],"pqp":["avais trouvé","avais trouvé","avait trouvé","avions trouvé","aviez trouvé","avaient trouvé"],"fa":["aurai trouvé","auras trouvé","aura trouvé","aurons trouvé","aurez trouvé","auront trouvé"],"condp":["aurais trouvé","aurais trouvé","aurait trouvé","aurions trouvé","auriez trouvé","auraient trouvé"],"ps":["trouvai","trouvas","trouva","trouvâmes","trouvâtes","trouvèrent"],"impe":["","trouve","","trouvons","trouvez",""]},"aux":"avoir"},
+  {"v":"donner","zh":"给","g":"er","t":{"pres":["donne","donnes","donne","donnons","donnez","donnent"],"pc":["ai donné","as donné","a donné","avons donné","avez donné","ont donné"],"imp":["donnais","donnais","donnait","donnions","donniez","donnaient"],"fut":["donnerai","donneras","donnera","donnerons","donnerez","donneront"],"cond":["donnerais","donnerais","donnerait","donnerions","donneriez","donneraient"],"subj":["donne","donnes","donne","donnions","donniez","donnent"],"pqp":["avais donné","avais donné","avait donné","avions donné","aviez donné","avaient donné"],"fa":["aurai donné","auras donné","aura donné","aurons donné","aurez donné","auront donné"],"condp":["aurais donné","aurais donné","aurait donné","aurions donné","auriez donné","auraient donné"],"ps":["donnai","donnas","donna","donnâmes","donnâtes","donnèrent"],"impe":["","donne","","donnons","donnez",""]},"aux":"avoir"},
+  {"v":"penser","zh":"想；认为","g":"er","t":{"pres":["pense","penses","pense","pensons","pensez","pensent"],"pc":["ai pensé","as pensé","a pensé","avons pensé","avez pensé","ont pensé"],"imp":["pensais","pensais","pensait","pensions","pensiez","pensaient"],"fut":["penserai","penseras","pensera","penserons","penserez","penseront"],"cond":["penserais","penserais","penserait","penserions","penseriez","penseraient"],"subj":["pense","penses","pense","pensions","pensiez","pensent"],"pqp":["avais pensé","avais pensé","avait pensé","avions pensé","aviez pensé","avaient pensé"],"fa":["aurai pensé","auras pensé","aura pensé","aurons pensé","aurez pensé","auront pensé"],"condp":["aurais pensé","aurais pensé","aurait pensé","aurions pensé","auriez pensé","auraient pensé"],"ps":["pensai","pensas","pensa","pensâmes","pensâtes","pensèrent"],"impe":["","pense","","pensons","pensez",""]},"aux":"avoir"},
+  {"v":"arriver","zh":"到达","g":"er","t":{"pres":["arrive","arrives","arrive","arrivons","arrivez","arrivent"],"pc":[["suis arrivé","es arrivé","est arrivé","sommes arrivés","êtes arrivés","sont arrivés"],["suis arrivée","es arrivée","est arrivée","sommes arrivées","êtes arrivées","sont arrivées"]],"imp":["arrivais","arrivais","arrivait","arrivions","arriviez","arrivaient"],"fut":["arriverai","arriveras","arrivera","arriverons","arriverez","arriveront"],"cond":["arriverais","arriverais","arriverait","arriverions","arriveriez","arriveraient"],"subj":["arrive","arrives","arrive","arrivions","arriviez","arrivent"],"pqp":[["étais arrivé","étais arrivé","était arrivé","étions arrivés","étiez arrivés","étaient arrivés"],["étais arrivée","étais arrivée","était arrivée","étions arrivées","étiez arrivées","étaient arrivées"]],"fa":[["serai arrivé","seras arrivé","sera arrivé","serons arrivés","serez arrivés","seront arrivés"],["serai arrivée","seras arrivée","sera arrivée","serons arrivées","serez arrivées","seront arrivées"]],"condp":[["serais arrivé","serais arrivé","serait arrivé","serions arrivés","seriez arrivés","seraient arrivés"],["serais arrivée","serais arrivée","serait arrivée","serions arrivées","seriez arrivées","seraient arrivées"]],"ps":["arrivai","arrivas","arriva","arrivâmes","arrivâtes","arrivèrent"],"impe":["","arrive","","arrivons","arrivez",""]},"aux":"être"},
+  {"v":"entrer","zh":"进入","g":"er","t":{"pres":["entre","entres","entre","entrons","entrez","entrent"],"pc":[["suis entré","es entré","est entré","sommes entrés","êtes entrés","sont entrés"],["suis entrée","es entrée","est entrée","sommes entrées","êtes entrées","sont entrées"]],"imp":["entrais","entrais","entrait","entrions","entriez","entraient"],"fut":["entrerai","entreras","entrera","entrerons","entrerez","entreront"],"cond":["entrerais","entrerais","entrerait","entrerions","entreriez","entreraient"],"subj":["entre","entres","entre","entrions","entriez","entrent"],"pqp":[["étais entré","étais entré","était entré","étions entrés","étiez entrés","étaient entrés"],["étais entrée","étais entrée","était entrée","étions entrées","étiez entrées","étaient entrées"]],"fa":[["serai entré","seras entré","sera entré","serons entrés","serez entrés","seront entrés"],["serai entrée","seras entrée","sera entrée","serons entrées","serez entrées","seront entrées"]],"condp":[["serais entré","serais entré","serait entré","serions entrés","seriez entrés","seraient entrés"],["serais entrée","serais entrée","serait entrée","serions entrées","seriez entrées","seraient entrées"]],"ps":["entrai","entras","entra","entrâmes","entrâtes","entrèrent"],"impe":["","entre","","entrons","entrez",""]},"aux":"être"},
+  {"v":"rester","zh":"停留","g":"er","t":{"pres":["reste","restes","reste","restons","restez","restent"],"pc":[["suis resté","es resté","est resté","sommes restés","êtes restés","sont restés"],["suis restée","es restée","est restée","sommes restées","êtes restées","sont restées"]],"imp":["restais","restais","restait","restions","restiez","restaient"],"fut":["resterai","resteras","restera","resterons","resterez","resteront"],"cond":["resterais","resterais","resterait","resterions","resteriez","resteraient"],"subj":["reste","restes","reste","restions","restiez","restent"],"pqp":[["étais resté","étais resté","était resté","étions restés","étiez restés","étaient restés"],["étais restée","étais restée","était restée","étions restées","étiez restées","étaient restées"]],"fa":[["serai resté","seras resté","sera resté","serons restés","serez restés","seront restés"],["serai restée","seras restée","sera restée","serons restées","serez restées","seront restées"]],"condp":[["serais resté","serais resté","serait resté","serions restés","seriez restés","seraient restés"],["serais restée","serais restée","serait restée","serions restées","seriez restées","seraient restées"]],"ps":["restai","restas","resta","restâmes","restâtes","restèrent"],"impe":["","reste","","restons","restez",""]},"aux":"être"},
+  {"v":"tomber","zh":"跌倒；落下","g":"er","t":{"pres":["tombe","tombes","tombe","tombons","tombez","tombent"],"pc":[["suis tombé","es tombé","est tombé","sommes tombés","êtes tombés","sont tombés"],["suis tombée","es tombée","est tombée","sommes tombées","êtes tombées","sont tombées"]],"imp":["tombais","tombais","tombait","tombions","tombiez","tombaient"],"fut":["tomberai","tomberas","tombera","tomberons","tomberez","tomberont"],"cond":["tomberais","tomberais","tomberait","tomberions","tomberiez","tomberaient"],"subj":["tombe","tombes","tombe","tombions","tombiez","tombent"],"pqp":[["étais tombé","étais tombé","était tombé","étions tombés","étiez tombés","étaient tombés"],["étais tombée","étais tombée","était tombée","étions tombées","étiez tombées","étaient tombées"]],"fa":[["serai tombé","seras tombé","sera tombé","serons tombés","serez tombés","seront tombés"],["serai tombée","seras tombée","sera tombée","serons tombées","serez tombées","seront tombées"]],"condp":[["serais tombé","serais tombé","serait tombé","serions tombés","seriez tombés","seraient tombés"],["serais tombée","serais tombée","serait tombée","serions tombées","seriez tombées","seraient tombées"]],"ps":["tombai","tombas","tomba","tombâmes","tombâtes","tombèrent"],"impe":["","tombe","","tombons","tombez",""]},"aux":"être"},
+  {"v":"jouer","zh":"玩；演奏","g":"er","t":{"pres":["joue","joues","joue","jouons","jouez","jouent"],"pc":["ai joué","as joué","a joué","avons joué","avez joué","ont joué"],"imp":["jouais","jouais","jouait","jouions","jouiez","jouaient"],"fut":["jouerai","joueras","jouera","jouerons","jouerez","joueront"],"cond":["jouerais","jouerais","jouerait","jouerions","joueriez","joueraient"],"subj":["joue","joues","joue","jouions","jouiez","jouent"],"pqp":["avais joué","avais joué","avait joué","avions joué","aviez joué","avaient joué"],"fa":["aurai joué","auras joué","aura joué","aurons joué","aurez joué","auront joué"],"condp":["aurais joué","aurais joué","aurait joué","aurions joué","auriez joué","auraient joué"],"ps":["jouai","jouas","joua","jouâmes","jouâtes","jouèrent"],"impe":["","joue","","jouons","jouez",""]},"aux":"avoir"},
+  {"v":"étudier","zh":"学习","g":"er","t":{"pres":["étudie","étudies","étudie","étudions","étudiez","étudient"],"pc":["ai étudié","as étudié","a étudié","avons étudié","avez étudié","ont étudié"],"imp":["étudiais","étudiais","étudiait","étudiions","étudiiez","étudiaient"],"fut":["étudierai","étudieras","étudiera","étudierons","étudierez","étudieront"],"cond":["étudierais","étudierais","étudierait","étudierions","étudieriez","étudieraient"],"subj":["étudie","étudies","étudie","étudiions","étudiiez","étudient"],"pqp":["avais étudié","avais étudié","avait étudié","avions étudié","aviez étudié","avaient étudié"],"fa":["aurai étudié","auras étudié","aura étudié","aurons étudié","aurez étudié","auront étudié"],"condp":["aurais étudié","aurais étudié","aurait étudié","aurions étudié","auriez étudié","auraient étudié"],"ps":["étudiai","étudias","étudia","étudiâmes","étudiâtes","étudièrent"],"impe":["","étudie","","étudions","étudiez",""]},"aux":"avoir"},
+  {"v":"oublier","zh":"忘记","g":"er","t":{"pres":["oublie","oublies","oublie","oublions","oubliez","oublient"],"pc":["ai oublié","as oublié","a oublié","avons oublié","avez oublié","ont oublié"],"imp":["oubliais","oubliais","oubliait","oubliions","oubliiez","oubliaient"],"fut":["oublierai","oublieras","oubliera","oublierons","oublierez","oublieront"],"cond":["oublierais","oublierais","oublierait","oublierions","oublieriez","oublieraient"],"subj":["oublie","oublies","oublie","oubliions","oubliiez","oublient"],"pqp":["avais oublié","avais oublié","avait oublié","avions oublié","aviez oublié","avaient oublié"],"fa":["aurai oublié","auras oublié","aura oublié","aurons oublié","aurez oublié","auront oublié"],"condp":["aurais oublié","aurais oublié","aurait oublié","aurions oublié","auriez oublié","auraient oublié"],"ps":["oubliai","oublias","oublia","oubliâmes","oubliâtes","oublièrent"],"impe":["","oublie","","oublions","oubliez",""]},"aux":"avoir"},
+  {"v":"demander","zh":"询问；要求","g":"er","t":{"pres":["demande","demandes","demande","demandons","demandez","demandent"],"pc":["ai demandé","as demandé","a demandé","avons demandé","avez demandé","ont demandé"],"imp":["demandais","demandais","demandait","demandions","demandiez","demandaient"],"fut":["demanderai","demanderas","demandera","demanderons","demanderez","demanderont"],"cond":["demanderais","demanderais","demanderait","demanderions","demanderiez","demanderaient"],"subj":["demande","demandes","demande","demandions","demandiez","demandent"],"pqp":["avais demandé","avais demandé","avait demandé","avions demandé","aviez demandé","avaient demandé"],"fa":["aurai demandé","auras demandé","aura demandé","aurons demandé","aurez demandé","auront demandé"],"condp":["aurais demandé","aurais demandé","aurait demandé","aurions demandé","auriez demandé","auraient demandé"],"ps":["demandai","demandas","demanda","demandâmes","demandâtes","demandèrent"],"impe":["","demande","","demandons","demandez",""]},"aux":"avoir"},
+  {"v":"écouter","zh":"听","g":"er","t":{"pres":["écoute","écoutes","écoute","écoutons","écoutez","écoutent"],"pc":["ai écouté","as écouté","a écouté","avons écouté","avez écouté","ont écouté"],"imp":["écoutais","écoutais","écoutait","écoutions","écoutiez","écoutaient"],"fut":["écouterai","écouteras","écoutera","écouterons","écouterez","écouteront"],"cond":["écouterais","écouterais","écouterait","écouterions","écouteriez","écouteraient"],"subj":["écoute","écoutes","écoute","écoutions","écoutiez","écoutent"],"pqp":["avais écouté","avais écouté","avait écouté","avions écouté","aviez écouté","avaient écouté"],"fa":["aurai écouté","auras écouté","aura écouté","aurons écouté","aurez écouté","auront écouté"],"condp":["aurais écouté","aurais écouté","aurait écouté","aurions écouté","auriez écouté","auraient écouté"],"ps":["écoutai","écoutas","écouta","écoutâmes","écoutâtes","écoutèrent"],"impe":["","écoute","","écoutons","écoutez",""]},"aux":"avoir"},
+  {"v":"passer","zh":"经过；度过","g":"er","t":{"pres":["passe","passes","passe","passons","passez","passent"],"pc":[["suis passé","es passé","est passé","sommes passés","êtes passés","sont passés"],["suis passée","es passée","est passée","sommes passées","êtes passées","sont passées"]],"imp":["passais","passais","passait","passions","passiez","passaient"],"fut":["passerai","passeras","passera","passerons","passerez","passeront"],"cond":["passerais","passerais","passerait","passerions","passeriez","passeraient"],"subj":["passe","passes","passe","passions","passiez","passent"],"pqp":[["étais passé","étais passé","était passé","étions passés","étiez passés","étaient passés"],["étais passée","étais passée","était passée","étions passées","étiez passées","étaient passées"]],"fa":[["serai passé","seras passé","sera passé","serons passés","serez passés","seront passés"],["serai passée","seras passée","sera passée","serons passées","serez passées","seront passées"]],"condp":[["serais passé","serais passé","serait passé","serions passés","seriez passés","seraient passés"],["serais passée","serais passée","serait passée","serions passées","seriez passées","seraient passées"]],"ps":["passai","passas","passa","passâmes","passâtes","passèrent"],"impe":["","passe","","passons","passez",""]},"aux":"être"},
+  {"v":"rentrer","zh":"回家","g":"er","t":{"pres":["rentre","rentres","rentre","rentrons","rentrez","rentrent"],"pc":[["suis rentré","es rentré","est rentré","sommes rentrés","êtes rentrés","sont rentrés"],["suis rentrée","es rentrée","est rentrée","sommes rentrées","êtes rentrées","sont rentrées"]],"imp":["rentrais","rentrais","rentrait","rentrions","rentriez","rentraient"],"fut":["rentrerai","rentreras","rentrera","rentrerons","rentrerez","rentreront"],"cond":["rentrerais","rentrerais","rentrerait","rentrerions","rentreriez","rentreraient"],"subj":["rentre","rentres","rentre","rentrions","rentriez","rentrent"],"pqp":[["étais rentré","étais rentré","était rentré","étions rentrés","étiez rentrés","étaient rentrés"],["étais rentrée","étais rentrée","était rentrée","étions rentrées","étiez rentrées","étaient rentrées"]],"fa":[["serai rentré","seras rentré","sera rentré","serons rentrés","serez rentrés","seront rentrés"],["serai rentrée","seras rentrée","sera rentrée","serons rentrées","serez rentrées","seront rentrées"]],"condp":[["serais rentré","serais rentré","serait rentré","serions rentrés","seriez rentrés","seraient rentrés"],["serais rentrée","serais rentrée","serait rentrée","serions rentrées","seriez rentrées","seraient rentrées"]],"ps":["rentrai","rentras","rentra","rentrâmes","rentrâtes","rentrèrent"],"impe":["","rentre","","rentrons","rentrez",""]},"aux":"être"},
+  {"v":"manger","zh":"吃","g":"er2","t":{"pres":["mange","manges","mange","mangeons","mangez","mangent"],"pc":["ai mangé","as mangé","a mangé","avons mangé","avez mangé","ont mangé"],"imp":["mangeais","mangeais","mangeait","mangions","mangiez","mangeaient"],"fut":["mangerai","mangeras","mangera","mangerons","mangerez","mangeront"],"cond":["mangerais","mangerais","mangerait","mangerions","mangeriez","mangeraient"],"subj":["mange","manges","mange","mangions","mangiez","mangent"],"pqp":["avais mangé","avais mangé","avait mangé","avions mangé","aviez mangé","avaient mangé"],"fa":["aurai mangé","auras mangé","aura mangé","aurons mangé","aurez mangé","auront mangé"],"condp":["aurais mangé","aurais mangé","aurait mangé","aurions mangé","auriez mangé","auraient mangé"],"ps":["mangeai","mangeas","mangea","mangeâmes","mangeâtes","mangèrent"],"impe":["","mange","","mangeons","mangez",""]},"aux":"avoir"},
+  {"v":"commencer","zh":"开始","g":"er2","t":{"pres":["commence","commences","commence","commençons","commencez","commencent"],"pc":["ai commencé","as commencé","a commencé","avons commencé","avez commencé","ont commencé"],"imp":["commençais","commençais","commençait","commencions","commenciez","commençaient"],"fut":["commencerai","commenceras","commencera","commencerons","commencerez","commenceront"],"cond":["commencerais","commencerais","commencerait","commencerions","commenceriez","commenceraient"],"subj":["commence","commences","commence","commencions","commenciez","commencent"],"pqp":["avais commencé","avais commencé","avait commencé","avions commencé","aviez commencé","avaient commencé"],"fa":["aurai commencé","auras commencé","aura commencé","aurons commencé","aurez commencé","auront commencé"],"condp":["aurais commencé","aurais commencé","aurait commencé","aurions commencé","auriez commencé","auraient commencé"],"ps":["commençai","commenças","commença","commençâmes","commençâtes","commencèrent"],"impe":["","commence","","commençons","commencez",""]},"aux":"avoir"},
+  {"v":"acheter","zh":"买","g":"er2","t":{"pres":["achète","achètes","achète","achetons","achetez","achètent"],"pc":["ai acheté","as acheté","a acheté","avons acheté","avez acheté","ont acheté"],"imp":["achetais","achetais","achetait","achetions","achetiez","achetaient"],"fut":["achèterai","achèteras","achètera","achèterons","achèterez","achèteront"],"cond":["achèterais","achèterais","achèterait","achèterions","achèteriez","achèteraient"],"subj":["achète","achètes","achète","achetions","achetiez","achètent"],"pqp":["avais acheté","avais acheté","avait acheté","avions acheté","aviez acheté","avaient acheté"],"fa":["aurai acheté","auras acheté","aura acheté","aurons acheté","aurez acheté","auront acheté"],"condp":["aurais acheté","aurais acheté","aurait acheté","aurions acheté","auriez acheté","auraient acheté"],"ps":["achetai","achetas","acheta","achetâmes","achetâtes","achetèrent"],"impe":["","achète","","achetons","achetez",""]},"aux":"avoir"},
+  {"v":"lever","zh":"举起","g":"er2","t":{"pres":["lève","lèves","lève","levons","levez","lèvent"],"pc":["ai levé","as levé","a levé","avons levé","avez levé","ont levé"],"imp":["levais","levais","levait","levions","leviez","levaient"],"fut":["lèverai","lèveras","lèvera","lèverons","lèverez","lèveront"],"cond":["lèverais","lèverais","lèverait","lèverions","lèveriez","lèveraient"],"subj":["lève","lèves","lève","levions","leviez","lèvent"],"pqp":["avais levé","avais levé","avait levé","avions levé","aviez levé","avaient levé"],"fa":["aurai levé","auras levé","aura levé","aurons levé","aurez levé","auront levé"],"condp":["aurais levé","aurais levé","aurait levé","aurions levé","auriez levé","auraient levé"],"ps":["levai","levas","leva","levâmes","levâtes","levèrent"],"impe":["","lève","","levons","levez",""]},"aux":"avoir"},
+  {"v":"appeler","zh":"叫；打电话","g":"er2","t":{"pres":["appelle","appelles","appelle","appelons","appelez","appellent"],"pc":["ai appelé","as appelé","a appelé","avons appelé","avez appelé","ont appelé"],"imp":["appelais","appelais","appelait","appelions","appeliez","appelaient"],"fut":["appellerai","appelleras","appellera","appellerons","appellerez","appelleront"],"cond":["appellerais","appellerais","appellerait","appellerions","appelleriez","appelleraient"],"subj":["appelle","appelles","appelle","appelions","appeliez","appellent"],"pqp":["avais appelé","avais appelé","avait appelé","avions appelé","aviez appelé","avaient appelé"],"fa":["aurai appelé","auras appelé","aura appelé","aurons appelé","aurez appelé","auront appelé"],"condp":["aurais appelé","aurais appelé","aurait appelé","aurions appelé","auriez appelé","auraient appelé"],"ps":["appelai","appelas","appela","appelâmes","appelâtes","appelèrent"],"impe":["","appelle","","appelons","appelez",""]},"aux":"avoir"},
+  {"v":"jeter","zh":"扔","g":"er2","t":{"pres":["jette","jettes","jette","jetons","jetez","jettent"],"pc":["ai jeté","as jeté","a jeté","avons jeté","avez jeté","ont jeté"],"imp":["jetais","jetais","jetait","jetions","jetiez","jetaient"],"fut":["jetterai","jetteras","jettera","jetterons","jetterez","jetteront"],"cond":["jetterais","jetterais","jetterait","jetterions","jetteriez","jetteraient"],"subj":["jette","jettes","jette","jetions","jetiez","jettent"],"pqp":["avais jeté","avais jeté","avait jeté","avions jeté","aviez jeté","avaient jeté"],"fa":["aurai jeté","auras jeté","aura jeté","aurons jeté","aurez jeté","auront jeté"],"condp":["aurais jeté","aurais jeté","aurait jeté","aurions jeté","auriez jeté","auraient jeté"],"ps":["jetai","jetas","jeta","jetâmes","jetâtes","jetèrent"],"impe":["","jette","","jetons","jetez",""]},"aux":"avoir"},
+  {"v":"préférer","zh":"更喜欢","g":"er2","t":{"pres":["préfère","préfères","préfère","préférons","préférez","préfèrent"],"pc":["ai préféré","as préféré","a préféré","avons préféré","avez préféré","ont préféré"],"imp":["préférais","préférais","préférait","préférions","préfériez","préféraient"],"fut":["préférerai","préféreras","préférera","préférerons","préférerez","préféreront"],"cond":["préférerais","préférerais","préférerait","préférerions","préféreriez","préféreraient"],"subj":["préfère","préfères","préfère","préférions","préfériez","préfèrent"],"pqp":["avais préféré","avais préféré","avait préféré","avions préféré","aviez préféré","avaient préféré"],"fa":["aurai préféré","auras préféré","aura préféré","aurons préféré","aurez préféré","auront préféré"],"condp":["aurais préféré","aurais préféré","aurait préféré","aurions préféré","auriez préféré","auraient préféré"],"ps":["préférai","préféras","préféra","préférâmes","préférâtes","préférèrent"],"impe":["","préfère","","préférons","préférez",""]},"aux":"avoir"},
+  {"v":"espérer","zh":"希望","g":"er2","t":{"pres":["espère","espères","espère","espérons","espérez","espèrent"],"pc":["ai espéré","as espéré","a espéré","avons espéré","avez espéré","ont espéré"],"imp":["espérais","espérais","espérait","espérions","espériez","espéraient"],"fut":["espérerai","espéreras","espérera","espérerons","espérerez","espéreront"],"cond":["espérerais","espérerais","espérerait","espérerions","espéreriez","espéreraient"],"subj":["espère","espères","espère","espérions","espériez","espèrent"],"pqp":["avais espéré","avais espéré","avait espéré","avions espéré","aviez espéré","avaient espéré"],"fa":["aurai espéré","auras espéré","aura espéré","aurons espéré","aurez espéré","auront espéré"],"condp":["aurais espéré","aurais espéré","aurait espéré","aurions espéré","auriez espéré","auraient espéré"],"ps":["espérai","espéras","espéra","espérâmes","espérâtes","espérèrent"],"impe":["","espère","","espérons","espérez",""]},"aux":"avoir"},
+  {"v":"payer","zh":"付钱","g":"er2","t":{"pres":["paie","paies","paie","payons","payez","paient"],"pc":["ai payé","as payé","a payé","avons payé","avez payé","ont payé"],"imp":["payais","payais","payait","payions","payiez","payaient"],"fut":["paierai","paieras","paiera","paierons","paierez","paieront"],"cond":["paierais","paierais","paierait","paierions","paieriez","paieraient"],"subj":["paie","paies","paie","payions","payiez","paient"],"pqp":["avais payé","avais payé","avait payé","avions payé","aviez payé","avaient payé"],"fa":["aurai payé","auras payé","aura payé","aurons payé","aurez payé","auront payé"],"condp":["aurais payé","aurais payé","aurait payé","aurions payé","auriez payé","auraient payé"],"ps":["payai","payas","paya","payâmes","payâtes","payèrent"],"impe":["","paie","","payons","payez",""]},"aux":"avoir"},
+  {"v":"essayer","zh":"尝试","g":"er2","t":{"pres":["essaie","essaies","essaie","essayons","essayez","essaient"],"pc":["ai essayé","as essayé","a essayé","avons essayé","avez essayé","ont essayé"],"imp":["essayais","essayais","essayait","essayions","essayiez","essayaient"],"fut":["essaierai","essaieras","essaiera","essaierons","essaierez","essaieront"],"cond":["essaierais","essaierais","essaierait","essaierions","essaieriez","essaieraient"],"subj":["essaie","essaies","essaie","essayions","essayiez","essaient"],"pqp":["avais essayé","avais essayé","avait essayé","avions essayé","aviez essayé","avaient essayé"],"fa":["aurai essayé","auras essayé","aura essayé","aurons essayé","aurez essayé","auront essayé"],"condp":["aurais essayé","aurais essayé","aurait essayé","aurions essayé","auriez essayé","auraient essayé"],"ps":["essayai","essayas","essaya","essayâmes","essayâtes","essayèrent"],"impe":["","essaie","","essayons","essayez",""]},"aux":"avoir"},
+  {"v":"envoyer","zh":"寄；派","g":"er2","t":{"pres":["envoie","envoies","envoie","envoyons","envoyez","envoient"],"pc":["ai envoyé","as envoyé","a envoyé","avons envoyé","avez envoyé","ont envoyé"],"imp":["envoyais","envoyais","envoyait","envoyions","envoyiez","envoyaient"],"fut":["enverrai","enverras","enverra","enverrons","enverrez","enverront"],"cond":["enverrais","enverrais","enverrait","enverrions","enverriez","enverraient"],"subj":["envoie","envoies","envoie","envoyions","envoyiez","envoient"],"pqp":["avais envoyé","avais envoyé","avait envoyé","avions envoyé","aviez envoyé","avaient envoyé"],"fa":["aurai envoyé","auras envoyé","aura envoyé","aurons envoyé","aurez envoyé","auront envoyé"],"condp":["aurais envoyé","aurais envoyé","aurait envoyé","aurions envoyé","auriez envoyé","auraient envoyé"],"ps":["envoyai","envoyas","envoya","envoyâmes","envoyâtes","envoyèrent"],"impe":["","envoie","","envoyons","envoyez",""]},"aux":"avoir"},
+  {"v":"nettoyer","zh":"打扫","g":"er2","t":{"pres":["nettoie","nettoies","nettoie","nettoyons","nettoyez","nettoient"],"pc":["ai nettoyé","as nettoyé","a nettoyé","avons nettoyé","avez nettoyé","ont nettoyé"],"imp":["nettoyais","nettoyais","nettoyait","nettoyions","nettoyiez","nettoyaient"],"fut":["nettoierai","nettoieras","nettoiera","nettoierons","nettoierez","nettoieront"],"cond":["nettoierais","nettoierais","nettoierait","nettoierions","nettoieriez","nettoieraient"],"subj":["nettoie","nettoies","nettoie","nettoyions","nettoyiez","nettoient"],"pqp":["avais nettoyé","avais nettoyé","avait nettoyé","avions nettoyé","aviez nettoyé","avaient nettoyé"],"fa":["aurai nettoyé","auras nettoyé","aura nettoyé","aurons nettoyé","aurez nettoyé","auront nettoyé"],"condp":["aurais nettoyé","aurais nettoyé","aurait nettoyé","aurions nettoyé","auriez nettoyé","auraient nettoyé"],"ps":["nettoyai","nettoyas","nettoya","nettoyâmes","nettoyâtes","nettoyèrent"],"impe":["","nettoie","","nettoyons","nettoyez",""]},"aux":"avoir"},
+  {"v":"voyager","zh":"旅行","g":"er2","t":{"pres":["voyage","voyages","voyage","voyageons","voyagez","voyagent"],"pc":["ai voyagé","as voyagé","a voyagé","avons voyagé","avez voyagé","ont voyagé"],"imp":["voyageais","voyageais","voyageait","voyagions","voyagiez","voyageaient"],"fut":["voyagerai","voyageras","voyagera","voyagerons","voyagerez","voyageront"],"cond":["voyagerais","voyagerais","voyagerait","voyagerions","voyageriez","voyageraient"],"subj":["voyage","voyages","voyage","voyagions","voyagiez","voyagent"],"pqp":["avais voyagé","avais voyagé","avait voyagé","avions voyagé","aviez voyagé","avaient voyagé"],"fa":["aurai voyagé","auras voyagé","aura voyagé","aurons voyagé","aurez voyagé","auront voyagé"],"condp":["aurais voyagé","aurais voyagé","aurait voyagé","aurions voyagé","auriez voyagé","auraient voyagé"],"ps":["voyageai","voyageas","voyagea","voyageâmes","voyageâtes","voyagèrent"],"impe":["","voyage","","voyageons","voyagez",""]},"aux":"avoir"},
+  {"v":"placer","zh":"放置","g":"er2","t":{"pres":["place","places","place","plaçons","placez","placent"],"pc":["ai placé","as placé","a placé","avons placé","avez placé","ont placé"],"imp":["plaçais","plaçais","plaçait","placions","placiez","plaçaient"],"fut":["placerai","placeras","placera","placerons","placerez","placeront"],"cond":["placerais","placerais","placerait","placerions","placeriez","placeraient"],"subj":["place","places","place","placions","placiez","placent"],"pqp":["avais placé","avais placé","avait placé","avions placé","aviez placé","avaient placé"],"fa":["aurai placé","auras placé","aura placé","aurons placé","aurez placé","auront placé"],"condp":["aurais placé","aurais placé","aurait placé","aurions placé","auriez placé","auraient placé"],"ps":["plaçai","plaças","plaça","plaçâmes","plaçâtes","placèrent"],"impe":["","place","","plaçons","placez",""]},"aux":"avoir"},
+  {"v":"finir","zh":"结束；完成","g":"ir","t":{"pres":["finis","finis","finit","finissons","finissez","finissent"],"pc":["ai fini","as fini","a fini","avons fini","avez fini","ont fini"],"imp":["finissais","finissais","finissait","finissions","finissiez","finissaient"],"fut":["finirai","finiras","finira","finirons","finirez","finiront"],"cond":["finirais","finirais","finirait","finirions","finiriez","finiraient"],"subj":["finisse","finisses","finisse","finissions","finissiez","finissent"],"pqp":["avais fini","avais fini","avait fini","avions fini","aviez fini","avaient fini"],"fa":["aurai fini","auras fini","aura fini","aurons fini","aurez fini","auront fini"],"condp":["aurais fini","aurais fini","aurait fini","aurions fini","auriez fini","auraient fini"],"ps":["finis","finis","finit","finîmes","finîtes","finirent"],"impe":["","finis","","finissons","finissez",""]},"aux":"avoir"},
+  {"v":"choisir","zh":"选择","g":"ir","t":{"pres":["choisis","choisis","choisit","choisissons","choisissez","choisissent"],"pc":["ai choisi","as choisi","a choisi","avons choisi","avez choisi","ont choisi"],"imp":["choisissais","choisissais","choisissait","choisissions","choisissiez","choisissaient"],"fut":["choisirai","choisiras","choisira","choisirons","choisirez","choisiront"],"cond":["choisirais","choisirais","choisirait","choisirions","choisiriez","choisiraient"],"subj":["choisisse","choisisses","choisisse","choisissions","choisissiez","choisissent"],"pqp":["avais choisi","avais choisi","avait choisi","avions choisi","aviez choisi","avaient choisi"],"fa":["aurai choisi","auras choisi","aura choisi","aurons choisi","aurez choisi","auront choisi"],"condp":["aurais choisi","aurais choisi","aurait choisi","aurions choisi","auriez choisi","auraient choisi"],"ps":["choisis","choisis","choisit","choisîmes","choisîtes","choisirent"],"impe":["","choisis","","choisissons","choisissez",""]},"aux":"avoir"},
+  {"v":"réussir","zh":"成功","g":"ir","t":{"pres":["réussis","réussis","réussit","réussissons","réussissez","réussissent"],"pc":["ai réussi","as réussi","a réussi","avons réussi","avez réussi","ont réussi"],"imp":["réussissais","réussissais","réussissait","réussissions","réussissiez","réussissaient"],"fut":["réussirai","réussiras","réussira","réussirons","réussirez","réussiront"],"cond":["réussirais","réussirais","réussirait","réussirions","réussiriez","réussiraient"],"subj":["réussisse","réussisses","réussisse","réussissions","réussissiez","réussissent"],"pqp":["avais réussi","avais réussi","avait réussi","avions réussi","aviez réussi","avaient réussi"],"fa":["aurai réussi","auras réussi","aura réussi","aurons réussi","aurez réussi","auront réussi"],"condp":["aurais réussi","aurais réussi","aurait réussi","aurions réussi","auriez réussi","auraient réussi"],"ps":["réussis","réussis","réussit","réussîmes","réussîtes","réussirent"],"impe":["","réussis","","réussissons","réussissez",""]},"aux":"avoir"},
+  {"v":"réfléchir","zh":"思考","g":"ir","t":{"pres":["réfléchis","réfléchis","réfléchit","réfléchissons","réfléchissez","réfléchissent"],"pc":["ai réfléchi","as réfléchi","a réfléchi","avons réfléchi","avez réfléchi","ont réfléchi"],"imp":["réfléchissais","réfléchissais","réfléchissait","réfléchissions","réfléchissiez","réfléchissaient"],"fut":["réfléchirai","réfléchiras","réfléchira","réfléchirons","réfléchirez","réfléchiront"],"cond":["réfléchirais","réfléchirais","réfléchirait","réfléchirions","réfléchiriez","réfléchiraient"],"subj":["réfléchisse","réfléchisses","réfléchisse","réfléchissions","réfléchissiez","réfléchissent"],"pqp":["avais réfléchi","avais réfléchi","avait réfléchi","avions réfléchi","aviez réfléchi","avaient réfléchi"],"fa":["aurai réfléchi","auras réfléchi","aura réfléchi","aurons réfléchi","aurez réfléchi","auront réfléchi"],"condp":["aurais réfléchi","aurais réfléchi","aurait réfléchi","aurions réfléchi","auriez réfléchi","auraient réfléchi"],"ps":["réfléchis","réfléchis","réfléchit","réfléchîmes","réfléchîtes","réfléchirent"],"impe":["","réfléchis","","réfléchissons","réfléchissez",""]},"aux":"avoir"},
+  {"v":"grandir","zh":"长大","g":"ir","t":{"pres":["grandis","grandis","grandit","grandissons","grandissez","grandissent"],"pc":["ai grandi","as grandi","a grandi","avons grandi","avez grandi","ont grandi"],"imp":["grandissais","grandissais","grandissait","grandissions","grandissiez","grandissaient"],"fut":["grandirai","grandiras","grandira","grandirons","grandirez","grandiront"],"cond":["grandirais","grandirais","grandirait","grandirions","grandiriez","grandiraient"],"subj":["grandisse","grandisses","grandisse","grandissions","grandissiez","grandissent"],"pqp":["avais grandi","avais grandi","avait grandi","avions grandi","aviez grandi","avaient grandi"],"fa":["aurai grandi","auras grandi","aura grandi","aurons grandi","aurez grandi","auront grandi"],"condp":["aurais grandi","aurais grandi","aurait grandi","aurions grandi","auriez grandi","auraient grandi"],"ps":["grandis","grandis","grandit","grandîmes","grandîtes","grandirent"],"impe":["","grandis","","grandissons","grandissez",""]},"aux":"avoir"},
+  {"v":"remplir","zh":"填满","g":"ir","t":{"pres":["remplis","remplis","remplit","remplissons","remplissez","remplissent"],"pc":["ai rempli","as rempli","a rempli","avons rempli","avez rempli","ont rempli"],"imp":["remplissais","remplissais","remplissait","remplissions","remplissiez","remplissaient"],"fut":["remplirai","rempliras","remplira","remplirons","remplirez","rempliront"],"cond":["remplirais","remplirais","remplirait","remplirions","rempliriez","rempliraient"],"subj":["remplisse","remplisses","remplisse","remplissions","remplissiez","remplissent"],"pqp":["avais rempli","avais rempli","avait rempli","avions rempli","aviez rempli","avaient rempli"],"fa":["aurai rempli","auras rempli","aura rempli","aurons rempli","aurez rempli","auront rempli"],"condp":["aurais rempli","aurais rempli","aurait rempli","aurions rempli","auriez rempli","auraient rempli"],"ps":["remplis","remplis","remplit","remplîmes","remplîtes","remplirent"],"impe":["","remplis","","remplissons","remplissez",""]},"aux":"avoir"},
+  {"v":"obéir","zh":"服从","g":"ir","t":{"pres":["obéis","obéis","obéit","obéissons","obéissez","obéissent"],"pc":["ai obéi","as obéi","a obéi","avons obéi","avez obéi","ont obéi"],"imp":["obéissais","obéissais","obéissait","obéissions","obéissiez","obéissaient"],"fut":["obéirai","obéiras","obéira","obéirons","obéirez","obéiront"],"cond":["obéirais","obéirais","obéirait","obéirions","obéiriez","obéiraient"],"subj":["obéisse","obéisses","obéisse","obéissions","obéissiez","obéissent"],"pqp":["avais obéi","avais obéi","avait obéi","avions obéi","aviez obéi","avaient obéi"],"fa":["aurai obéi","auras obéi","aura obéi","aurons obéi","aurez obéi","auront obéi"],"condp":["aurais obéi","aurais obéi","aurait obéi","aurions obéi","auriez obéi","auraient obéi"],"ps":["obéis","obéis","obéit","obéîmes","obéîtes","obéirent"],"impe":["","obéis","","obéissons","obéissez",""]},"aux":"avoir"},
+  {"v":"agir","zh":"行动","g":"ir","t":{"pres":["agis","agis","agit","agissons","agissez","agissent"],"pc":["ai agi","as agi","a agi","avons agi","avez agi","ont agi"],"imp":["agissais","agissais","agissait","agissions","agissiez","agissaient"],"fut":["agirai","agiras","agira","agirons","agirez","agiront"],"cond":["agirais","agirais","agirait","agirions","agiriez","agiraient"],"subj":["agisse","agisses","agisse","agissions","agissiez","agissent"],"pqp":["avais agi","avais agi","avait agi","avions agi","aviez agi","avaient agi"],"fa":["aurai agi","auras agi","aura agi","aurons agi","aurez agi","auront agi"],"condp":["aurais agi","aurais agi","aurait agi","aurions agi","auriez agi","auraient agi"],"ps":["agis","agis","agit","agîmes","agîtes","agirent"],"impe":["","agis","","agissons","agissez",""]},"aux":"avoir"},
+  {"v":"attendre","zh":"等待","g":"re","t":{"pres":["attends","attends","attend","attendons","attendez","attendent"],"pc":["ai attendu","as attendu","a attendu","avons attendu","avez attendu","ont attendu"],"imp":["attendais","attendais","attendait","attendions","attendiez","attendaient"],"fut":["attendrai","attendras","attendra","attendrons","attendrez","attendront"],"cond":["attendrais","attendrais","attendrait","attendrions","attendriez","attendraient"],"subj":["attende","attendes","attende","attendions","attendiez","attendent"],"pqp":["avais attendu","avais attendu","avait attendu","avions attendu","aviez attendu","avaient attendu"],"fa":["aurai attendu","auras attendu","aura attendu","aurons attendu","aurez attendu","auront attendu"],"condp":["aurais attendu","aurais attendu","aurait attendu","aurions attendu","auriez attendu","auraient attendu"],"ps":["attendis","attendis","attendit","attendîmes","attendîtes","attendirent"],"impe":["","attends","","attendons","attendez",""]},"aux":"avoir"},
+  {"v":"vendre","zh":"卖","g":"re","t":{"pres":["vends","vends","vend","vendons","vendez","vendent"],"pc":["ai vendu","as vendu","a vendu","avons vendu","avez vendu","ont vendu"],"imp":["vendais","vendais","vendait","vendions","vendiez","vendaient"],"fut":["vendrai","vendras","vendra","vendrons","vendrez","vendront"],"cond":["vendrais","vendrais","vendrait","vendrions","vendriez","vendraient"],"subj":["vende","vendes","vende","vendions","vendiez","vendent"],"pqp":["avais vendu","avais vendu","avait vendu","avions vendu","aviez vendu","avaient vendu"],"fa":["aurai vendu","auras vendu","aura vendu","aurons vendu","aurez vendu","auront vendu"],"condp":["aurais vendu","aurais vendu","aurait vendu","aurions vendu","auriez vendu","auraient vendu"],"ps":["vendis","vendis","vendit","vendîmes","vendîtes","vendirent"],"impe":["","vends","","vendons","vendez",""]},"aux":"avoir"},
+  {"v":"entendre","zh":"听见","g":"re","t":{"pres":["entends","entends","entend","entendons","entendez","entendent"],"pc":["ai entendu","as entendu","a entendu","avons entendu","avez entendu","ont entendu"],"imp":["entendais","entendais","entendait","entendions","entendiez","entendaient"],"fut":["entendrai","entendras","entendra","entendrons","entendrez","entendront"],"cond":["entendrais","entendrais","entendrait","entendrions","entendriez","entendraient"],"subj":["entende","entendes","entende","entendions","entendiez","entendent"],"pqp":["avais entendu","avais entendu","avait entendu","avions entendu","aviez entendu","avaient entendu"],"fa":["aurai entendu","auras entendu","aura entendu","aurons entendu","aurez entendu","auront entendu"],"condp":["aurais entendu","aurais entendu","aurait entendu","aurions entendu","auriez entendu","auraient entendu"],"ps":["entendis","entendis","entendit","entendîmes","entendîtes","entendirent"],"impe":["","entends","","entendons","entendez",""]},"aux":"avoir"},
+  {"v":"répondre","zh":"回答","g":"re","t":{"pres":["réponds","réponds","répond","répondons","répondez","répondent"],"pc":["ai répondu","as répondu","a répondu","avons répondu","avez répondu","ont répondu"],"imp":["répondais","répondais","répondait","répondions","répondiez","répondaient"],"fut":["répondrai","répondras","répondra","répondrons","répondrez","répondront"],"cond":["répondrais","répondrais","répondrait","répondrions","répondriez","répondraient"],"subj":["réponde","répondes","réponde","répondions","répondiez","répondent"],"pqp":["avais répondu","avais répondu","avait répondu","avions répondu","aviez répondu","avaient répondu"],"fa":["aurai répondu","auras répondu","aura répondu","aurons répondu","aurez répondu","auront répondu"],"condp":["aurais répondu","aurais répondu","aurait répondu","aurions répondu","auriez répondu","auraient répondu"],"ps":["répondis","répondis","répondit","répondîmes","répondîtes","répondirent"],"impe":["","réponds","","répondons","répondez",""]},"aux":"avoir"},
+  {"v":"perdre","zh":"失去","g":"re","t":{"pres":["perds","perds","perd","perdons","perdez","perdent"],"pc":["ai perdu","as perdu","a perdu","avons perdu","avez perdu","ont perdu"],"imp":["perdais","perdais","perdait","perdions","perdiez","perdaient"],"fut":["perdrai","perdras","perdra","perdrons","perdrez","perdront"],"cond":["perdrais","perdrais","perdrait","perdrions","perdriez","perdraient"],"subj":["perde","perdes","perde","perdions","perdiez","perdent"],"pqp":["avais perdu","avais perdu","avait perdu","avions perdu","aviez perdu","avaient perdu"],"fa":["aurai perdu","auras perdu","aura perdu","aurons perdu","aurez perdu","auront perdu"],"condp":["aurais perdu","aurais perdu","aurait perdu","aurions perdu","auriez perdu","auraient perdu"],"ps":["perdis","perdis","perdit","perdîmes","perdîtes","perdirent"],"impe":["","perds","","perdons","perdez",""]},"aux":"avoir"},
+  {"v":"descendre","zh":"下来","g":"re","t":{"pres":["descends","descends","descend","descendons","descendez","descendent"],"pc":[["suis descendu","es descendu","est descendu","sommes descendus","êtes descendus","sont descendus"],["suis descendue","es descendue","est descendue","sommes descendues","êtes descendues","sont descendues"]],"imp":["descendais","descendais","descendait","descendions","descendiez","descendaient"],"fut":["descendrai","descendras","descendra","descendrons","descendrez","descendront"],"cond":["descendrais","descendrais","descendrait","descendrions","descendriez","descendraient"],"subj":["descende","descendes","descende","descendions","descendiez","descendent"],"pqp":[["étais descendu","étais descendu","était descendu","étions descendus","étiez descendus","étaient descendus"],["étais descendue","étais descendue","était descendue","étions descendues","étiez descendues","étaient descendues"]],"fa":[["serai descendu","seras descendu","sera descendu","serons descendus","serez descendus","seront descendus"],["serai descendue","seras descendue","sera descendue","serons descendues","serez descendues","seront descendues"]],"condp":[["serais descendu","serais descendu","serait descendu","serions descendus","seriez descendus","seraient descendus"],["serais descendue","serais descendue","serait descendue","serions descendues","seriez descendues","seraient descendues"]],"ps":["descendis","descendis","descendit","descendîmes","descendîtes","descendirent"],"impe":["","descends","","descendons","descendez",""]},"aux":"être"},
+  {"v":"rendre","zh":"归还","g":"re","t":{"pres":["rends","rends","rend","rendons","rendez","rendent"],"pc":["ai rendu","as rendu","a rendu","avons rendu","avez rendu","ont rendu"],"imp":["rendais","rendais","rendait","rendions","rendiez","rendaient"],"fut":["rendrai","rendras","rendra","rendrons","rendrez","rendront"],"cond":["rendrais","rendrais","rendrait","rendrions","rendriez","rendraient"],"subj":["rende","rendes","rende","rendions","rendiez","rendent"],"pqp":["avais rendu","avais rendu","avait rendu","avions rendu","aviez rendu","avaient rendu"],"fa":["aurai rendu","auras rendu","aura rendu","aurons rendu","aurez rendu","auront rendu"],"condp":["aurais rendu","aurais rendu","aurait rendu","aurions rendu","auriez rendu","auraient rendu"],"ps":["rendis","rendis","rendit","rendîmes","rendîtes","rendirent"],"impe":["","rends","","rendons","rendez",""]},"aux":"avoir"},
+  {"v":"être","zh":"是","g":"irr","t":{"pres":["suis","es","est","sommes","êtes","sont"],"pc":["ai été","as été","a été","avons été","avez été","ont été"],"imp":["étais","étais","était","étions","étiez","étaient"],"fut":["serai","seras","sera","serons","serez","seront"],"cond":["serais","serais","serait","serions","seriez","seraient"],"subj":["sois","sois","soit","soyons","soyez","soient"],"pqp":["avais été","avais été","avait été","avions été","aviez été","avaient été"],"fa":["aurai été","auras été","aura été","aurons été","aurez été","auront été"],"condp":["aurais été","aurais été","aurait été","aurions été","auriez été","auraient été"],"ps":["fus","fus","fut","fûmes","fûtes","furent"],"impe":["","sois","","soyons","soyez",""]},"aux":"avoir"},
+  {"v":"avoir","zh":"有","g":"irr","t":{"pres":["ai","as","a","avons","avez","ont"],"pc":["ai eu","as eu","a eu","avons eu","avez eu","ont eu"],"imp":["avais","avais","avait","avions","aviez","avaient"],"fut":["aurai","auras","aura","aurons","aurez","auront"],"cond":["aurais","aurais","aurait","aurions","auriez","auraient"],"subj":["aie","aies","ait","ayons","ayez","aient"],"pqp":["avais eu","avais eu","avait eu","avions eu","aviez eu","avaient eu"],"fa":["aurai eu","auras eu","aura eu","aurons eu","aurez eu","auront eu"],"condp":["aurais eu","aurais eu","aurait eu","aurions eu","auriez eu","auraient eu"],"ps":["eus","eus","eut","eûmes","eûtes","eurent"],"impe":["","aie","","ayons","ayez",""]},"aux":"avoir"},
+  {"v":"aller","zh":"去","g":"irr","t":{"pres":["vais","vas","va","allons","allez","vont"],"pc":[["suis allé","es allé","est allé","sommes allés","êtes allés","sont allés"],["suis allée","es allée","est allée","sommes allées","êtes allées","sont allées"]],"imp":["allais","allais","allait","allions","alliez","allaient"],"fut":["irai","iras","ira","irons","irez","iront"],"cond":["irais","irais","irait","irions","iriez","iraient"],"subj":["aille","ailles","aille","allions","alliez","aillent"],"pqp":[["étais allé","étais allé","était allé","étions allés","étiez allés","étaient allés"],["étais allée","étais allée","était allée","étions allées","étiez allées","étaient allées"]],"fa":[["serai allé","seras allé","sera allé","serons allés","serez allés","seront allés"],["serai allée","seras allée","sera allée","serons allées","serez allées","seront allées"]],"condp":[["serais allé","serais allé","serait allé","serions allés","seriez allés","seraient allés"],["serais allée","serais allée","serait allée","serions allées","seriez allées","seraient allées"]],"ps":["allai","allas","alla","allâmes","allâtes","allèrent"],"impe":["","va","","allons","allez",""]},"aux":"être"},
+  {"v":"faire","zh":"做","g":"irr","t":{"pres":["fais","fais","fait","faisons","faites","font"],"pc":["ai fait","as fait","a fait","avons fait","avez fait","ont fait"],"imp":["faisais","faisais","faisait","faisions","faisiez","faisaient"],"fut":["ferai","feras","fera","ferons","ferez","feront"],"cond":["ferais","ferais","ferait","ferions","feriez","feraient"],"subj":["fasse","fasses","fasse","fassions","fassiez","fassent"],"pqp":["avais fait","avais fait","avait fait","avions fait","aviez fait","avaient fait"],"fa":["aurai fait","auras fait","aura fait","aurons fait","aurez fait","auront fait"],"condp":["aurais fait","aurais fait","aurait fait","aurions fait","auriez fait","auraient fait"],"ps":["fis","fis","fit","fîmes","fîtes","firent"],"impe":["","fais","","faisons","faites",""]},"aux":"avoir"},
+  {"v":"dire","zh":"说","g":"irr","t":{"pres":["dis","dis","dit","disons","dites","disent"],"pc":["ai dit","as dit","a dit","avons dit","avez dit","ont dit"],"imp":["disais","disais","disait","disions","disiez","disaient"],"fut":["dirai","diras","dira","dirons","direz","diront"],"cond":["dirais","dirais","dirait","dirions","diriez","diraient"],"subj":["dise","dises","dise","disions","disiez","disent"],"pqp":["avais dit","avais dit","avait dit","avions dit","aviez dit","avaient dit"],"fa":["aurai dit","auras dit","aura dit","aurons dit","aurez dit","auront dit"],"condp":["aurais dit","aurais dit","aurait dit","aurions dit","auriez dit","auraient dit"],"ps":["dis","dis","dit","dîmes","dîtes","dirent"],"impe":["","dis","","disons","dites",""]},"aux":"avoir"},
+  {"v":"pouvoir","zh":"能够","g":"irr","t":{"pres":["peux","peux","peut","pouvons","pouvez","peuvent"],"pc":["ai pu","as pu","a pu","avons pu","avez pu","ont pu"],"imp":["pouvais","pouvais","pouvait","pouvions","pouviez","pouvaient"],"fut":["pourrai","pourras","pourra","pourrons","pourrez","pourront"],"cond":["pourrais","pourrais","pourrait","pourrions","pourriez","pourraient"],"subj":["puisse","puisses","puisse","puissions","puissiez","puissent"],"pqp":["avais pu","avais pu","avait pu","avions pu","aviez pu","avaient pu"],"fa":["aurai pu","auras pu","aura pu","aurons pu","aurez pu","auront pu"],"condp":["aurais pu","aurais pu","aurait pu","aurions pu","auriez pu","auraient pu"],"ps":["pus","pus","put","pûmes","pûtes","purent"],"impe":["","","","","",""]},"aux":"avoir"},
+  {"v":"vouloir","zh":"想要","g":"irr","t":{"pres":["veux","veux","veut","voulons","voulez","veulent"],"pc":["ai voulu","as voulu","a voulu","avons voulu","avez voulu","ont voulu"],"imp":["voulais","voulais","voulait","voulions","vouliez","voulaient"],"fut":["voudrai","voudras","voudra","voudrons","voudrez","voudront"],"cond":["voudrais","voudrais","voudrait","voudrions","voudriez","voudraient"],"subj":["veuille","veuilles","veuille","voulions","vouliez","veuillent"],"pqp":["avais voulu","avais voulu","avait voulu","avions voulu","aviez voulu","avaient voulu"],"fa":["aurai voulu","auras voulu","aura voulu","aurons voulu","aurez voulu","auront voulu"],"condp":["aurais voulu","aurais voulu","aurait voulu","aurions voulu","auriez voulu","auraient voulu"],"ps":["voulus","voulus","voulut","voulûmes","voulûtes","voulurent"],"impe":["","veuille","","veuillons","veuillez",""]},"aux":"avoir"},
+  {"v":"savoir","zh":"知道；会","g":"irr","t":{"pres":["sais","sais","sait","savons","savez","savent"],"pc":["ai su","as su","a su","avons su","avez su","ont su"],"imp":["savais","savais","savait","savions","saviez","savaient"],"fut":["saurai","sauras","saura","saurons","saurez","sauront"],"cond":["saurais","saurais","saurait","saurions","sauriez","sauraient"],"subj":["sache","saches","sache","sachions","sachiez","sachent"],"pqp":["avais su","avais su","avait su","avions su","aviez su","avaient su"],"fa":["aurai su","auras su","aura su","aurons su","aurez su","auront su"],"condp":["aurais su","aurais su","aurait su","aurions su","auriez su","auraient su"],"ps":["sus","sus","sut","sûmes","sûtes","surent"],"impe":["","sache","","sachons","sachez",""]},"aux":"avoir"},
+  {"v":"voir","zh":"看见","g":"irr","t":{"pres":["vois","vois","voit","voyons","voyez","voient"],"pc":["ai vu","as vu","a vu","avons vu","avez vu","ont vu"],"imp":["voyais","voyais","voyait","voyions","voyiez","voyaient"],"fut":["verrai","verras","verra","verrons","verrez","verront"],"cond":["verrais","verrais","verrait","verrions","verriez","verraient"],"subj":["voie","voies","voie","voyions","voyiez","voient"],"pqp":["avais vu","avais vu","avait vu","avions vu","aviez vu","avaient vu"],"fa":["aurai vu","auras vu","aura vu","aurons vu","aurez vu","auront vu"],"condp":["aurais vu","aurais vu","aurait vu","aurions vu","auriez vu","auraient vu"],"ps":["vis","vis","vit","vîmes","vîtes","virent"],"impe":["","vois","","voyons","voyez",""]},"aux":"avoir"},
+  {"v":"venir","zh":"来","g":"irr","t":{"pres":["viens","viens","vient","venons","venez","viennent"],"pc":[["suis venu","es venu","est venu","sommes venus","êtes venus","sont venus"],["suis venue","es venue","est venue","sommes venues","êtes venues","sont venues"]],"imp":["venais","venais","venait","venions","veniez","venaient"],"fut":["viendrai","viendras","viendra","viendrons","viendrez","viendront"],"cond":["viendrais","viendrais","viendrait","viendrions","viendriez","viendraient"],"subj":["vienne","viennes","vienne","venions","veniez","viennent"],"pqp":[["étais venu","étais venu","était venu","étions venus","étiez venus","étaient venus"],["étais venue","étais venue","était venue","étions venues","étiez venues","étaient venues"]],"fa":[["serai venu","seras venu","sera venu","serons venus","serez venus","seront venus"],["serai venue","seras venue","sera venue","serons venues","serez venues","seront venues"]],"condp":[["serais venu","serais venu","serait venu","serions venus","seriez venus","seraient venus"],["serais venue","serais venue","serait venue","serions venues","seriez venues","seraient venues"]],"ps":["vins","vins","vint","vînmes","vîntes","vinrent"],"impe":["","viens","","venons","venez",""]},"aux":"être"},
+  {"v":"devenir","zh":"变成","g":"irr","t":{"pres":["deviens","deviens","devient","devenons","devenez","deviennent"],"pc":[["suis devenu","es devenu","est devenu","sommes devenus","êtes devenus","sont devenus"],["suis devenue","es devenue","est devenue","sommes devenues","êtes devenues","sont devenues"]],"imp":["devenais","devenais","devenait","devenions","deveniez","devenaient"],"fut":["deviendrai","deviendras","deviendra","deviendrons","deviendrez","deviendront"],"cond":["deviendrais","deviendrais","deviendrait","deviendrions","deviendriez","deviendraient"],"subj":["devienne","deviennes","devienne","devenions","deveniez","deviennent"],"pqp":[["étais devenu","étais devenu","était devenu","étions devenus","étiez devenus","étaient devenus"],["étais devenue","étais devenue","était devenue","étions devenues","étiez devenues","étaient devenues"]],"fa":[["serai devenu","seras devenu","sera devenu","serons devenus","serez devenus","seront devenus"],["serai devenue","seras devenue","sera devenue","serons devenues","serez devenues","seront devenues"]],"condp":[["serais devenu","serais devenu","serait devenu","serions devenus","seriez devenus","seraient devenus"],["serais devenue","serais devenue","serait devenue","serions devenues","seriez devenues","seraient devenues"]],"ps":["devins","devins","devint","devînmes","devîntes","devinrent"],"impe":["","deviens","","devenons","devenez",""]},"aux":"être"},
+  {"v":"revenir","zh":"回来","g":"irr","t":{"pres":["reviens","reviens","revient","revenons","revenez","reviennent"],"pc":[["suis revenu","es revenu","est revenu","sommes revenus","êtes revenus","sont revenus"],["suis revenue","es revenue","est revenue","sommes revenues","êtes revenues","sont revenues"]],"imp":["revenais","revenais","revenait","revenions","reveniez","revenaient"],"fut":["reviendrai","reviendras","reviendra","reviendrons","reviendrez","reviendront"],"cond":["reviendrais","reviendrais","reviendrait","reviendrions","reviendriez","reviendraient"],"subj":["revienne","reviennes","revienne","revenions","reveniez","reviennent"],"pqp":[["étais revenu","étais revenu","était revenu","étions revenus","étiez revenus","étaient revenus"],["étais revenue","étais revenue","était revenue","étions revenues","étiez revenues","étaient revenues"]],"fa":[["serai revenu","seras revenu","sera revenu","serons revenus","serez revenus","seront revenus"],["serai revenue","seras revenue","sera revenue","serons revenues","serez revenues","seront revenues"]],"condp":[["serais revenu","serais revenu","serait revenu","serions revenus","seriez revenus","seraient revenus"],["serais revenue","serais revenue","serait revenue","serions revenues","seriez revenues","seraient revenues"]],"ps":["revins","revins","revint","revînmes","revîntes","revinrent"],"impe":["","reviens","","revenons","revenez",""]},"aux":"être"},
+  {"v":"tenir","zh":"拿着；握住","g":"irr","t":{"pres":["tiens","tiens","tient","tenons","tenez","tiennent"],"pc":["ai tenu","as tenu","a tenu","avons tenu","avez tenu","ont tenu"],"imp":["tenais","tenais","tenait","tenions","teniez","tenaient"],"fut":["tiendrai","tiendras","tiendra","tiendrons","tiendrez","tiendront"],"cond":["tiendrais","tiendrais","tiendrait","tiendrions","tiendriez","tiendraient"],"subj":["tienne","tiennes","tienne","tenions","teniez","tiennent"],"pqp":["avais tenu","avais tenu","avait tenu","avions tenu","aviez tenu","avaient tenu"],"fa":["aurai tenu","auras tenu","aura tenu","aurons tenu","aurez tenu","auront tenu"],"condp":["aurais tenu","aurais tenu","aurait tenu","aurions tenu","auriez tenu","auraient tenu"],"ps":["tins","tins","tint","tînmes","tîntes","tinrent"],"impe":["","tiens","","tenons","tenez",""]},"aux":"avoir"},
+  {"v":"obtenir","zh":"获得","g":"irr","t":{"pres":["obtiens","obtiens","obtient","obtenons","obtenez","obtiennent"],"pc":["ai obtenu","as obtenu","a obtenu","avons obtenu","avez obtenu","ont obtenu"],"imp":["obtenais","obtenais","obtenait","obtenions","obteniez","obtenaient"],"fut":["obtiendrai","obtiendras","obtiendra","obtiendrons","obtiendrez","obtiendront"],"cond":["obtiendrais","obtiendrais","obtiendrait","obtiendrions","obtiendriez","obtiendraient"],"subj":["obtienne","obtiennes","obtienne","obtenions","obteniez","obtiennent"],"pqp":["avais obtenu","avais obtenu","avait obtenu","avions obtenu","aviez obtenu","avaient obtenu"],"fa":["aurai obtenu","auras obtenu","aura obtenu","aurons obtenu","aurez obtenu","auront obtenu"],"condp":["aurais obtenu","aurais obtenu","aurait obtenu","aurions obtenu","auriez obtenu","auraient obtenu"],"ps":["obtins","obtins","obtint","obtînmes","obtîntes","obtinrent"],"impe":["","obtiens","","obtenons","obtenez",""]},"aux":"avoir"},
+  {"v":"devoir","zh":"必须；欠","g":"irr","t":{"pres":["dois","dois","doit","devons","devez","doivent"],"pc":["ai dû","as dû","a dû","avons dû","avez dû","ont dû"],"imp":["devais","devais","devait","devions","deviez","devaient"],"fut":["devrai","devras","devra","devrons","devrez","devront"],"cond":["devrais","devrais","devrait","devrions","devriez","devraient"],"subj":["doive","doives","doive","devions","deviez","doivent"],"pqp":["avais dû","avais dû","avait dû","avions dû","aviez dû","avaient dû"],"fa":["aurai dû","auras dû","aura dû","aurons dû","aurez dû","auront dû"],"condp":["aurais dû","aurais dû","aurait dû","aurions dû","auriez dû","auraient dû"],"ps":["dus","dus","dut","dûmes","dûtes","durent"],"impe":["","dois","","devons","devez",""]},"aux":"avoir"},
+  {"v":"prendre","zh":"拿；乘坐","g":"irr","t":{"pres":["prends","prends","prend","prenons","prenez","prennent"],"pc":["ai pris","as pris","a pris","avons pris","avez pris","ont pris"],"imp":["prenais","prenais","prenait","prenions","preniez","prenaient"],"fut":["prendrai","prendras","prendra","prendrons","prendrez","prendront"],"cond":["prendrais","prendrais","prendrait","prendrions","prendriez","prendraient"],"subj":["prenne","prennes","prenne","prenions","preniez","prennent"],"pqp":["avais pris","avais pris","avait pris","avions pris","aviez pris","avaient pris"],"fa":["aurai pris","auras pris","aura pris","aurons pris","aurez pris","auront pris"],"condp":["aurais pris","aurais pris","aurait pris","aurions pris","auriez pris","auraient pris"],"ps":["pris","pris","prit","prîmes","prîtes","prirent"],"impe":["","prends","","prenons","prenez",""]},"aux":"avoir"},
+  {"v":"apprendre","zh":"学会","g":"irr","t":{"pres":["apprends","apprends","apprend","apprenons","apprenez","apprennent"],"pc":["ai appris","as appris","a appris","avons appris","avez appris","ont appris"],"imp":["apprenais","apprenais","apprenait","apprenions","appreniez","apprenaient"],"fut":["apprendrai","apprendras","apprendra","apprendrons","apprendrez","apprendront"],"cond":["apprendrais","apprendrais","apprendrait","apprendrions","apprendriez","apprendraient"],"subj":["apprenne","apprennes","apprenne","apprenions","appreniez","apprennent"],"pqp":["avais appris","avais appris","avait appris","avions appris","aviez appris","avaient appris"],"fa":["aurai appris","auras appris","aura appris","aurons appris","aurez appris","auront appris"],"condp":["aurais appris","aurais appris","aurait appris","aurions appris","auriez appris","auraient appris"],"ps":["appris","appris","apprit","apprîmes","apprîtes","apprirent"],"impe":["","apprends","","apprenons","apprenez",""]},"aux":"avoir"},
+  {"v":"comprendre","zh":"理解","g":"irr","t":{"pres":["comprends","comprends","comprend","comprenons","comprenez","comprennent"],"pc":["ai compris","as compris","a compris","avons compris","avez compris","ont compris"],"imp":["comprenais","comprenais","comprenait","comprenions","compreniez","comprenaient"],"fut":["comprendrai","comprendras","comprendra","comprendrons","comprendrez","comprendront"],"cond":["comprendrais","comprendrais","comprendrait","comprendrions","comprendriez","comprendraient"],"subj":["comprenne","comprennes","comprenne","comprenions","compreniez","comprennent"],"pqp":["avais compris","avais compris","avait compris","avions compris","aviez compris","avaient compris"],"fa":["aurai compris","auras compris","aura compris","aurons compris","aurez compris","auront compris"],"condp":["aurais compris","aurais compris","aurait compris","aurions compris","auriez compris","auraient compris"],"ps":["compris","compris","comprit","comprîmes","comprîtes","comprirent"],"impe":["","comprends","","comprenons","comprenez",""]},"aux":"avoir"},
+  {"v":"mettre","zh":"放；穿","g":"irr","t":{"pres":["mets","mets","met","mettons","mettez","mettent"],"pc":["ai mis","as mis","a mis","avons mis","avez mis","ont mis"],"imp":["mettais","mettais","mettait","mettions","mettiez","mettaient"],"fut":["mettrai","mettras","mettra","mettrons","mettrez","mettront"],"cond":["mettrais","mettrais","mettrait","mettrions","mettriez","mettraient"],"subj":["mette","mettes","mette","mettions","mettiez","mettent"],"pqp":["avais mis","avais mis","avait mis","avions mis","aviez mis","avaient mis"],"fa":["aurai mis","auras mis","aura mis","aurons mis","aurez mis","auront mis"],"condp":["aurais mis","aurais mis","aurait mis","aurions mis","auriez mis","auraient mis"],"ps":["mis","mis","mit","mîmes","mîtes","mirent"],"impe":["","mets","","mettons","mettez",""]},"aux":"avoir"},
+  {"v":"permettre","zh":"允许","g":"irr","t":{"pres":["permets","permets","permet","permettons","permettez","permettent"],"pc":["ai permis","as permis","a permis","avons permis","avez permis","ont permis"],"imp":["permettais","permettais","permettait","permettions","permettiez","permettaient"],"fut":["permettrai","permettras","permettra","permettrons","permettrez","permettront"],"cond":["permettrais","permettrais","permettrait","permettrions","permettriez","permettraient"],"subj":["permette","permettes","permette","permettions","permettiez","permettent"],"pqp":["avais permis","avais permis","avait permis","avions permis","aviez permis","avaient permis"],"fa":["aurai permis","auras permis","aura permis","aurons permis","aurez permis","auront permis"],"condp":["aurais permis","aurais permis","aurait permis","aurions permis","auriez permis","auraient permis"],"ps":["permis","permis","permit","permîmes","permîtes","permirent"],"impe":["","permets","","permettons","permettez",""]},"aux":"avoir"},
+  {"v":"promettre","zh":"承诺","g":"irr","t":{"pres":["promets","promets","promet","promettons","promettez","promettent"],"pc":["ai promis","as promis","a promis","avons promis","avez promis","ont promis"],"imp":["promettais","promettais","promettait","promettions","promettiez","promettaient"],"fut":["promettrai","promettras","promettra","promettrons","promettrez","promettront"],"cond":["promettrais","promettrais","promettrait","promettrions","promettriez","promettraient"],"subj":["promette","promettes","promette","promettions","promettiez","promettent"],"pqp":["avais promis","avais promis","avait promis","avions promis","aviez promis","avaient promis"],"fa":["aurai promis","auras promis","aura promis","aurons promis","aurez promis","auront promis"],"condp":["aurais promis","aurais promis","aurait promis","aurions promis","auriez promis","auraient promis"],"ps":["promis","promis","promit","promîmes","promîtes","promirent"],"impe":["","promets","","promettons","promettez",""]},"aux":"avoir"},
+  {"v":"croire","zh":"相信","g":"irr","t":{"pres":["crois","crois","croit","croyons","croyez","croient"],"pc":["ai cru","as cru","a cru","avons cru","avez cru","ont cru"],"imp":["croyais","croyais","croyait","croyions","croyiez","croyaient"],"fut":["croirai","croiras","croira","croirons","croirez","croiront"],"cond":["croirais","croirais","croirait","croirions","croiriez","croiraient"],"subj":["croie","croies","croie","croyions","croyiez","croient"],"pqp":["avais cru","avais cru","avait cru","avions cru","aviez cru","avaient cru"],"fa":["aurai cru","auras cru","aura cru","aurons cru","aurez cru","auront cru"],"condp":["aurais cru","aurais cru","aurait cru","aurions cru","auriez cru","auraient cru"],"ps":["crus","crus","crut","crûmes","crûtes","crurent"],"impe":["","crois","","croyons","croyez",""]},"aux":"avoir"},
+  {"v":"connaître","zh":"认识","g":"irr","t":{"pres":["connais","connais","connaît","connaissons","connaissez","connaissent"],"pc":["ai connu","as connu","a connu","avons connu","avez connu","ont connu"],"imp":["connaissais","connaissais","connaissait","connaissions","connaissiez","connaissaient"],"fut":["connaîtrai","connaîtras","connaîtra","connaîtrons","connaîtrez","connaîtront"],"cond":["connaîtrais","connaîtrais","connaîtrait","connaîtrions","connaîtriez","connaîtraient"],"subj":["connaisse","connaisses","connaisse","connaissions","connaissiez","connaissent"],"pqp":["avais connu","avais connu","avait connu","avions connu","aviez connu","avaient connu"],"fa":["aurai connu","auras connu","aura connu","aurons connu","aurez connu","auront connu"],"condp":["aurais connu","aurais connu","aurait connu","aurions connu","auriez connu","auraient connu"],"ps":["connus","connus","connut","connûmes","connûtes","connurent"],"impe":["","connais","","connaissons","connaissez",""]},"aux":"avoir"},
+  {"v":"paraître","zh":"显得","g":"irr","t":{"pres":["parais","parais","paraît","paraissons","paraissez","paraissent"],"pc":["ai paru","as paru","a paru","avons paru","avez paru","ont paru"],"imp":["paraissais","paraissais","paraissait","paraissions","paraissiez","paraissaient"],"fut":["paraîtrai","paraîtras","paraîtra","paraîtrons","paraîtrez","paraîtront"],"cond":["paraîtrais","paraîtrais","paraîtrait","paraîtrions","paraîtriez","paraîtraient"],"subj":["paraisse","paraisses","paraisse","paraissions","paraissiez","paraissent"],"pqp":["avais paru","avais paru","avait paru","avions paru","aviez paru","avaient paru"],"fa":["aurai paru","auras paru","aura paru","aurons paru","aurez paru","auront paru"],"condp":["aurais paru","aurais paru","aurait paru","aurions paru","auriez paru","auraient paru"],"ps":["parus","parus","parut","parûmes","parûtes","parurent"],"impe":["","parais","","paraissons","paraissez",""]},"aux":"avoir"},
+  {"v":"naître","zh":"出生","g":"irr","t":{"pres":["nais","nais","naît","naissons","naissez","naissent"],"pc":[["suis né","es né","est né","sommes nés","êtes nés","sont nés"],["suis née","es née","est née","sommes nées","êtes nées","sont nées"]],"imp":["naissais","naissais","naissait","naissions","naissiez","naissaient"],"fut":["naîtrai","naîtras","naîtra","naîtrons","naîtrez","naîtront"],"cond":["naîtrais","naîtrais","naîtrait","naîtrions","naîtriez","naîtraient"],"subj":["naisse","naisses","naisse","naissions","naissiez","naissent"],"pqp":[["étais né","étais né","était né","étions nés","étiez nés","étaient nés"],["étais née","étais née","était née","étions nées","étiez nées","étaient nées"]],"fa":[["serai né","seras né","sera né","serons nés","serez nés","seront nés"],["serai née","seras née","sera née","serons nées","serez nées","seront nées"]],"condp":[["serais né","serais né","serait né","serions nés","seriez nés","seraient nés"],["serais née","serais née","serait née","serions nées","seriez nées","seraient nées"]],"ps":["naquis","naquis","naquit","naquîmes","naquîtes","naquirent"],"impe":["","nais","","naissons","naissez",""]},"aux":"être"},
+  {"v":"partir","zh":"出发","g":"irr","t":{"pres":["pars","pars","part","partons","partez","partent"],"pc":[["suis parti","es parti","est parti","sommes partis","êtes partis","sont partis"],["suis partie","es partie","est partie","sommes parties","êtes parties","sont parties"]],"imp":["partais","partais","partait","partions","partiez","partaient"],"fut":["partirai","partiras","partira","partirons","partirez","partiront"],"cond":["partirais","partirais","partirait","partirions","partiriez","partiraient"],"subj":["parte","partes","parte","partions","partiez","partent"],"pqp":[["étais parti","étais parti","était parti","étions partis","étiez partis","étaient partis"],["étais partie","étais partie","était partie","étions parties","étiez parties","étaient parties"]],"fa":[["serai parti","seras parti","sera parti","serons partis","serez partis","seront partis"],["serai partie","seras partie","sera partie","serons parties","serez parties","seront parties"]],"condp":[["serais parti","serais parti","serait parti","serions partis","seriez partis","seraient partis"],["serais partie","serais partie","serait partie","serions parties","seriez parties","seraient parties"]],"ps":["partis","partis","partit","partîmes","partîtes","partirent"],"impe":["","pars","","partons","partez",""]},"aux":"être"},
+  {"v":"sortir","zh":"出去","g":"irr","t":{"pres":["sors","sors","sort","sortons","sortez","sortent"],"pc":[["suis sorti","es sorti","est sorti","sommes sortis","êtes sortis","sont sortis"],["suis sortie","es sortie","est sortie","sommes sorties","êtes sorties","sont sorties"]],"imp":["sortais","sortais","sortait","sortions","sortiez","sortaient"],"fut":["sortirai","sortiras","sortira","sortirons","sortirez","sortiront"],"cond":["sortirais","sortirais","sortirait","sortirions","sortiriez","sortiraient"],"subj":["sorte","sortes","sorte","sortions","sortiez","sortent"],"pqp":[["étais sorti","étais sorti","était sorti","étions sortis","étiez sortis","étaient sortis"],["étais sortie","étais sortie","était sortie","étions sorties","étiez sorties","étaient sorties"]],"fa":[["serai sorti","seras sorti","sera sorti","serons sortis","serez sortis","seront sortis"],["serai sortie","seras sortie","sera sortie","serons sorties","serez sorties","seront sorties"]],"condp":[["serais sorti","serais sorti","serait sorti","serions sortis","seriez sortis","seraient sortis"],["serais sortie","serais sortie","serait sortie","serions sorties","seriez sorties","seraient sorties"]],"ps":["sortis","sortis","sortit","sortîmes","sortîtes","sortirent"],"impe":["","sors","","sortons","sortez",""]},"aux":"être"},
+  {"v":"dormir","zh":"睡觉","g":"irr","t":{"pres":["dors","dors","dort","dormons","dormez","dorment"],"pc":["ai dormi","as dormi","a dormi","avons dormi","avez dormi","ont dormi"],"imp":["dormais","dormais","dormait","dormions","dormiez","dormaient"],"fut":["dormirai","dormiras","dormira","dormirons","dormirez","dormiront"],"cond":["dormirais","dormirais","dormirait","dormirions","dormiriez","dormiraient"],"subj":["dorme","dormes","dorme","dormions","dormiez","dorment"],"pqp":["avais dormi","avais dormi","avait dormi","avions dormi","aviez dormi","avaient dormi"],"fa":["aurai dormi","auras dormi","aura dormi","aurons dormi","aurez dormi","auront dormi"],"condp":["aurais dormi","aurais dormi","aurait dormi","aurions dormi","auriez dormi","auraient dormi"],"ps":["dormis","dormis","dormit","dormîmes","dormîtes","dormirent"],"impe":["","dors","","dormons","dormez",""]},"aux":"avoir"},
+  {"v":"servir","zh":"服务；用作","g":"irr","t":{"pres":["sers","sers","sert","servons","servez","servent"],"pc":["ai servi","as servi","a servi","avons servi","avez servi","ont servi"],"imp":["servais","servais","servait","servions","serviez","servaient"],"fut":["servirai","serviras","servira","servirons","servirez","serviront"],"cond":["servirais","servirais","servirait","servirions","serviriez","serviraient"],"subj":["serve","serves","serve","servions","serviez","servent"],"pqp":["avais servi","avais servi","avait servi","avions servi","aviez servi","avaient servi"],"fa":["aurai servi","auras servi","aura servi","aurons servi","aurez servi","auront servi"],"condp":["aurais servi","aurais servi","aurait servi","aurions servi","auriez servi","auraient servi"],"ps":["servis","servis","servit","servîmes","servîtes","servirent"],"impe":["","sers","","servons","servez",""]},"aux":"avoir"},
+  {"v":"sentir","zh":"感觉；闻","g":"irr","t":{"pres":["sens","sens","sent","sentons","sentez","sentent"],"pc":["ai senti","as senti","a senti","avons senti","avez senti","ont senti"],"imp":["sentais","sentais","sentait","sentions","sentiez","sentaient"],"fut":["sentirai","sentiras","sentira","sentirons","sentirez","sentiront"],"cond":["sentirais","sentirais","sentirait","sentirions","sentiriez","sentiraient"],"subj":["sente","sentes","sente","sentions","sentiez","sentent"],"pqp":["avais senti","avais senti","avait senti","avions senti","aviez senti","avaient senti"],"fa":["aurai senti","auras senti","aura senti","aurons senti","aurez senti","auront senti"],"condp":["aurais senti","aurais senti","aurait senti","aurions senti","auriez senti","auraient senti"],"ps":["sentis","sentis","sentit","sentîmes","sentîtes","sentirent"],"impe":["","sens","","sentons","sentez",""]},"aux":"avoir"},
+  {"v":"ouvrir","zh":"打开","g":"irr","t":{"pres":["ouvre","ouvres","ouvre","ouvrons","ouvrez","ouvrent"],"pc":["ai ouvert","as ouvert","a ouvert","avons ouvert","avez ouvert","ont ouvert"],"imp":["ouvrais","ouvrais","ouvrait","ouvrions","ouvriez","ouvraient"],"fut":["ouvrirai","ouvriras","ouvrira","ouvrirons","ouvrirez","ouvriront"],"cond":["ouvrirais","ouvrirais","ouvrirait","ouvririons","ouvririez","ouvriraient"],"subj":["ouvre","ouvres","ouvre","ouvrions","ouvriez","ouvrent"],"pqp":["avais ouvert","avais ouvert","avait ouvert","avions ouvert","aviez ouvert","avaient ouvert"],"fa":["aurai ouvert","auras ouvert","aura ouvert","aurons ouvert","aurez ouvert","auront ouvert"],"condp":["aurais ouvert","aurais ouvert","aurait ouvert","aurions ouvert","auriez ouvert","auraient ouvert"],"ps":["ouvris","ouvris","ouvrit","ouvrîmes","ouvrîtes","ouvrirent"],"impe":["","ouvre","","ouvrons","ouvrez",""]},"aux":"avoir"},
+  {"v":"offrir","zh":"送","g":"irr","t":{"pres":["offre","offres","offre","offrons","offrez","offrent"],"pc":["ai offert","as offert","a offert","avons offert","avez offert","ont offert"],"imp":["offrais","offrais","offrait","offrions","offriez","offraient"],"fut":["offrirai","offriras","offrira","offrirons","offrirez","offriront"],"cond":["offrirais","offrirais","offrirait","offririons","offririez","offriraient"],"subj":["offre","offres","offre","offrions","offriez","offrent"],"pqp":["avais offert","avais offert","avait offert","avions offert","aviez offert","avaient offert"],"fa":["aurai offert","auras offert","aura offert","aurons offert","aurez offert","auront offert"],"condp":["aurais offert","aurais offert","aurait offert","aurions offert","auriez offert","auraient offert"],"ps":["offris","offris","offrit","offrîmes","offrîtes","offrirent"],"impe":["","offre","","offrons","offrez",""]},"aux":"avoir"},
+  {"v":"découvrir","zh":"发现","g":"irr","t":{"pres":["découvre","découvres","découvre","découvrons","découvrez","découvrent"],"pc":["ai découvert","as découvert","a découvert","avons découvert","avez découvert","ont découvert"],"imp":["découvrais","découvrais","découvrait","découvrions","découvriez","découvraient"],"fut":["découvrirai","découvriras","découvrira","découvrirons","découvrirez","découvriront"],"cond":["découvrirais","découvrirais","découvrirait","découvririons","découvririez","découvriraient"],"subj":["découvre","découvres","découvre","découvrions","découvriez","découvrent"],"pqp":["avais découvert","avais découvert","avait découvert","avions découvert","aviez découvert","avaient découvert"],"fa":["aurai découvert","auras découvert","aura découvert","aurons découvert","aurez découvert","auront découvert"],"condp":["aurais découvert","aurais découvert","aurait découvert","aurions découvert","auriez découvert","auraient découvert"],"ps":["découvris","découvris","découvrit","découvrîmes","découvrîtes","découvrirent"],"impe":["","découvre","","découvrons","découvrez",""]},"aux":"avoir"},
+  {"v":"courir","zh":"跑","g":"irr","t":{"pres":["cours","cours","court","courons","courez","courent"],"pc":["ai couru","as couru","a couru","avons couru","avez couru","ont couru"],"imp":["courais","courais","courait","courions","couriez","couraient"],"fut":["courrai","courras","courra","courrons","courrez","courront"],"cond":["courrais","courrais","courrait","courrions","courriez","courraient"],"subj":["coure","coures","coure","courions","couriez","courent"],"pqp":["avais couru","avais couru","avait couru","avions couru","aviez couru","avaient couru"],"fa":["aurai couru","auras couru","aura couru","aurons couru","aurez couru","auront couru"],"condp":["aurais couru","aurais couru","aurait couru","aurions couru","auriez couru","auraient couru"],"ps":["courus","courus","courut","courûmes","courûtes","coururent"],"impe":["","cours","","courons","courez",""]},"aux":"avoir"},
+  {"v":"mourir","zh":"死","g":"irr","t":{"pres":["meurs","meurs","meurt","mourons","mourez","meurent"],"pc":[["suis mort","es mort","est mort","sommes morts","êtes morts","sont morts"],["suis morte","es morte","est morte","sommes mortes","êtes mortes","sont mortes"]],"imp":["mourais","mourais","mourait","mourions","mouriez","mouraient"],"fut":["mourrai","mourras","mourra","mourrons","mourrez","mourront"],"cond":["mourrais","mourrais","mourrait","mourrions","mourriez","mourraient"],"subj":["meure","meures","meure","mourions","mouriez","meurent"],"pqp":[["étais mort","étais mort","était mort","étions morts","étiez morts","étaient morts"],["étais morte","étais morte","était morte","étions mortes","étiez mortes","étaient mortes"]],"fa":[["serai mort","seras mort","sera mort","serons morts","serez morts","seront morts"],["serai morte","seras morte","sera morte","serons mortes","serez mortes","seront mortes"]],"condp":[["serais mort","serais mort","serait mort","serions morts","seriez morts","seraient morts"],["serais morte","serais morte","serait morte","serions mortes","seriez mortes","seraient mortes"]],"ps":["mourus","mourus","mourut","mourûmes","mourûtes","moururent"],"impe":["","meurs","","mourons","mourez",""]},"aux":"être"},
+  {"v":"vivre","zh":"生活","g":"irr","t":{"pres":["vis","vis","vit","vivons","vivez","vivent"],"pc":["ai vécu","as vécu","a vécu","avons vécu","avez vécu","ont vécu"],"imp":["vivais","vivais","vivait","vivions","viviez","vivaient"],"fut":["vivrai","vivras","vivra","vivrons","vivrez","vivront"],"cond":["vivrais","vivrais","vivrait","vivrions","vivriez","vivraient"],"subj":["vive","vives","vive","vivions","viviez","vivent"],"pqp":["avais vécu","avais vécu","avait vécu","avions vécu","aviez vécu","avaient vécu"],"fa":["aurai vécu","auras vécu","aura vécu","aurons vécu","aurez vécu","auront vécu"],"condp":["aurais vécu","aurais vécu","aurait vécu","aurions vécu","auriez vécu","auraient vécu"],"ps":["vécus","vécus","vécut","vécûmes","vécûtes","vécurent"],"impe":["","vis","","vivons","vivez",""]},"aux":"avoir"},
+  {"v":"suivre","zh":"跟随","g":"irr","t":{"pres":["suis","suis","suit","suivons","suivez","suivent"],"pc":["ai suivi","as suivi","a suivi","avons suivi","avez suivi","ont suivi"],"imp":["suivais","suivais","suivait","suivions","suiviez","suivaient"],"fut":["suivrai","suivras","suivra","suivrons","suivrez","suivront"],"cond":["suivrais","suivrais","suivrait","suivrions","suivriez","suivraient"],"subj":["suive","suives","suive","suivions","suiviez","suivent"],"pqp":["avais suivi","avais suivi","avait suivi","avions suivi","aviez suivi","avaient suivi"],"fa":["aurai suivi","auras suivi","aura suivi","aurons suivi","aurez suivi","auront suivi"],"condp":["aurais suivi","aurais suivi","aurait suivi","aurions suivi","auriez suivi","auraient suivi"],"ps":["suivis","suivis","suivit","suivîmes","suivîtes","suivirent"],"impe":["","suis","","suivons","suivez",""]},"aux":"avoir"},
+  {"v":"écrire","zh":"写","g":"irr","t":{"pres":["écris","écris","écrit","écrivons","écrivez","écrivent"],"pc":["ai écrit","as écrit","a écrit","avons écrit","avez écrit","ont écrit"],"imp":["écrivais","écrivais","écrivait","écrivions","écriviez","écrivaient"],"fut":["écrirai","écriras","écrira","écrirons","écrirez","écriront"],"cond":["écrirais","écrirais","écrirait","écririons","écririez","écriraient"],"subj":["écrive","écrives","écrive","écrivions","écriviez","écrivent"],"pqp":["avais écrit","avais écrit","avait écrit","avions écrit","aviez écrit","avaient écrit"],"fa":["aurai écrit","auras écrit","aura écrit","aurons écrit","aurez écrit","auront écrit"],"condp":["aurais écrit","aurais écrit","aurait écrit","aurions écrit","auriez écrit","auraient écrit"],"ps":["écrivis","écrivis","écrivit","écrivîmes","écrivîtes","écrivirent"],"impe":["","écris","","écrivons","écrivez",""]},"aux":"avoir"},
+  {"v":"lire","zh":"读","g":"irr","t":{"pres":["lis","lis","lit","lisons","lisez","lisent"],"pc":["ai lu","as lu","a lu","avons lu","avez lu","ont lu"],"imp":["lisais","lisais","lisait","lisions","lisiez","lisaient"],"fut":["lirai","liras","lira","lirons","lirez","liront"],"cond":["lirais","lirais","lirait","lirions","liriez","liraient"],"subj":["lise","lises","lise","lisions","lisiez","lisent"],"pqp":["avais lu","avais lu","avait lu","avions lu","aviez lu","avaient lu"],"fa":["aurai lu","auras lu","aura lu","aurons lu","aurez lu","auront lu"],"condp":["aurais lu","aurais lu","aurait lu","aurions lu","auriez lu","auraient lu"],"ps":["lus","lus","lut","lûmes","lûtes","lurent"],"impe":["","lis","","lisons","lisez",""]},"aux":"avoir"},
+  {"v":"boire","zh":"喝","g":"irr","t":{"pres":["bois","bois","boit","buvons","buvez","boivent"],"pc":["ai bu","as bu","a bu","avons bu","avez bu","ont bu"],"imp":["buvais","buvais","buvait","buvions","buviez","buvaient"],"fut":["boirai","boiras","boira","boirons","boirez","boiront"],"cond":["boirais","boirais","boirait","boirions","boiriez","boiraient"],"subj":["boive","boives","boive","buvions","buviez","boivent"],"pqp":["avais bu","avais bu","avait bu","avions bu","aviez bu","avaient bu"],"fa":["aurai bu","auras bu","aura bu","aurons bu","aurez bu","auront bu"],"condp":["aurais bu","aurais bu","aurait bu","aurions bu","auriez bu","auraient bu"],"ps":["bus","bus","but","bûmes","bûtes","burent"],"impe":["","bois","","buvons","buvez",""]},"aux":"avoir"},
+  {"v":"recevoir","zh":"收到","g":"irr","t":{"pres":["reçois","reçois","reçoit","recevons","recevez","reçoivent"],"pc":["ai reçu","as reçu","a reçu","avons reçu","avez reçu","ont reçu"],"imp":["recevais","recevais","recevait","recevions","receviez","recevaient"],"fut":["recevrai","recevras","recevra","recevrons","recevrez","recevront"],"cond":["recevrais","recevrais","recevrait","recevrions","recevriez","recevraient"],"subj":["reçoive","reçoives","reçoive","recevions","receviez","reçoivent"],"pqp":["avais reçu","avais reçu","avait reçu","avions reçu","aviez reçu","avaient reçu"],"fa":["aurai reçu","auras reçu","aura reçu","aurons reçu","aurez reçu","auront reçu"],"condp":["aurais reçu","aurais reçu","aurait reçu","aurions reçu","auriez reçu","auraient reçu"],"ps":["reçus","reçus","reçut","reçûmes","reçûtes","reçurent"],"impe":["","reçois","","recevons","recevez",""]},"aux":"avoir"},
+  {"v":"conduire","zh":"驾驶","g":"irr","t":{"pres":["conduis","conduis","conduit","conduisons","conduisez","conduisent"],"pc":["ai conduit","as conduit","a conduit","avons conduit","avez conduit","ont conduit"],"imp":["conduisais","conduisais","conduisait","conduisions","conduisiez","conduisaient"],"fut":["conduirai","conduiras","conduira","conduirons","conduirez","conduiront"],"cond":["conduirais","conduirais","conduirait","conduirions","conduiriez","conduiraient"],"subj":["conduise","conduises","conduise","conduisions","conduisiez","conduisent"],"pqp":["avais conduit","avais conduit","avait conduit","avions conduit","aviez conduit","avaient conduit"],"fa":["aurai conduit","auras conduit","aura conduit","aurons conduit","aurez conduit","auront conduit"],"condp":["aurais conduit","aurais conduit","aurait conduit","aurions conduit","auriez conduit","auraient conduit"],"ps":["conduisis","conduisis","conduisit","conduisîmes","conduisîtes","conduisirent"],"impe":["","conduis","","conduisons","conduisez",""]},"aux":"avoir"},
+  {"v":"craindre","zh":"害怕","g":"irr","t":{"pres":["crains","crains","craint","craignons","craignez","craignent"],"pc":["ai craint","as craint","a craint","avons craint","avez craint","ont craint"],"imp":["craignais","craignais","craignait","craignions","craigniez","craignaient"],"fut":["craindrai","craindras","craindra","craindrons","craindrez","craindront"],"cond":["craindrais","craindrais","craindrait","craindrions","craindriez","craindraient"],"subj":["craigne","craignes","craigne","craignions","craigniez","craignent"],"pqp":["avais craint","avais craint","avait craint","avions craint","aviez craint","avaient craint"],"fa":["aurai craint","auras craint","aura craint","aurons craint","aurez craint","auront craint"],"condp":["aurais craint","aurais craint","aurait craint","aurions craint","auriez craint","auraient craint"],"ps":["craignis","craignis","craignit","craignîmes","craignîtes","craignirent"],"impe":["","crains","","craignons","craignez",""]},"aux":"avoir"},
+  {"v":"peindre","zh":"画；涂","g":"irr","t":{"pres":["peins","peins","peint","peignons","peignez","peignent"],"pc":["ai peint","as peint","a peint","avons peint","avez peint","ont peint"],"imp":["peignais","peignais","peignait","peignions","peigniez","peignaient"],"fut":["peindrai","peindras","peindra","peindrons","peindrez","peindront"],"cond":["peindrais","peindrais","peindrait","peindrions","peindriez","peindraient"],"subj":["peigne","peignes","peigne","peignions","peigniez","peignent"],"pqp":["avais peint","avais peint","avait peint","avions peint","aviez peint","avaient peint"],"fa":["aurai peint","auras peint","aura peint","aurons peint","aurez peint","auront peint"],"condp":["aurais peint","aurais peint","aurait peint","aurions peint","auriez peint","auraient peint"],"ps":["peignis","peignis","peignit","peignîmes","peignîtes","peignirent"],"impe":["","peins","","peignons","peignez",""]},"aux":"avoir"},
+  {"v":"rire","zh":"笑","g":"irr","t":{"pres":["ris","ris","rit","rions","riez","rient"],"pc":["ai ri","as ri","a ri","avons ri","avez ri","ont ri"],"imp":["riais","riais","riait","riions","riiez","riaient"],"fut":["rirai","riras","rira","rirons","rirez","riront"],"cond":["rirais","rirais","rirait","ririons","ririez","riraient"],"subj":["rie","ries","rie","riions","riiez","rient"],"pqp":["avais ri","avais ri","avait ri","avions ri","aviez ri","avaient ri"],"fa":["aurai ri","auras ri","aura ri","aurons ri","aurez ri","auront ri"],"condp":["aurais ri","aurais ri","aurait ri","aurions ri","auriez ri","auraient ri"],"ps":["ris","ris","rit","rîmes","rîtes","rirent"],"impe":["","ris","","rions","riez",""]},"aux":"avoir"},
+  {"v":"plaire","zh":"使喜欢","g":"irr","t":{"pres":["plais","plais","plaît","plaisons","plaisez","plaisent"],"pc":["ai plu","as plu","a plu","avons plu","avez plu","ont plu"],"imp":["plaisais","plaisais","plaisait","plaisions","plaisiez","plaisaient"],"fut":["plairai","plairas","plaira","plairons","plairez","plairont"],"cond":["plairais","plairais","plairait","plairions","plairiez","plairaient"],"subj":["plaise","plaises","plaise","plaisions","plaisiez","plaisent"],"pqp":["avais plu","avais plu","avait plu","avions plu","aviez plu","avaient plu"],"fa":["aurai plu","auras plu","aura plu","aurons plu","aurez plu","auront plu"],"condp":["aurais plu","aurais plu","aurait plu","aurions plu","auriez plu","auraient plu"],"ps":["plus","plus","plut","plûmes","plûtes","plurent"],"impe":["","plais","","plaisons","plaisez",""]},"aux":"avoir"},
+  {"v":"battre","zh":"打","g":"irr","t":{"pres":["bats","bats","bat","battons","battez","battent"],"pc":["ai battu","as battu","a battu","avons battu","avez battu","ont battu"],"imp":["battais","battais","battait","battions","battiez","battaient"],"fut":["battrai","battras","battra","battrons","battrez","battront"],"cond":["battrais","battrais","battrait","battrions","battriez","battraient"],"subj":["batte","battes","batte","battions","battiez","battent"],"pqp":["avais battu","avais battu","avait battu","avions battu","aviez battu","avaient battu"],"fa":["aurai battu","auras battu","aura battu","aurons battu","aurez battu","auront battu"],"condp":["aurais battu","aurais battu","aurait battu","aurions battu","auriez battu","auraient battu"],"ps":["battis","battis","battit","battîmes","battîtes","battirent"],"impe":["","bats","","battons","battez",""]},"aux":"avoir"},
+];
+// ---------- 动词变位无限练：动词 × 时态 × 人称随机出题（选择或填空），每个“动词 + 时态”按记忆等级跟踪 ----------
+// 出题顺序：到期该复习的优先，其次答错过的、没练过的，再随机巩固；记录和普通题一样存进答题记录（题号 cj:动词:时态），
+// 所以也算经验、做题日历和今日计划。
+const CJ_GROUPS = [["irr", "常用不规则"], ["er", "-er 规则"], ["er2", "-er 拼写变化"], ["ir", "-ir 第二组"], ["re", "-re 规则"]];
+const CJ_PRON = ["je", "tu", "il", "nous", "vous", "ils"];
+const CJ_TZH = Object.fromEntries(CJ_TENSES);
+const CJ_COMPOUND = ["pc", "pqp", "fa", "condp"];
+const CJ_AUX_TENSE = { pc: "pres", pqp: "imp", fa: "fut", condp: "cond" };   // 复合时态的助动词用哪个简单时态
+const CJ_BOTH_AUX = ["passer", "rentrer", "descendre", "sortir"];   // 带直接宾语时改用 avoir
+const CJ_BY = new Map(CJ_VERBS.map(v => [v.v, v]));
+const cjSaved = (() => { try { return JSON.parse(localStorage.getItem("fq-conj") || "{}"); } catch (e) { return {}; } })();
+let cjCfg = {
+  tenses: Array.isArray(cjSaved.tenses) && cjSaved.tenses.length ? cjSaved.tenses.filter(t => CJ_TZH[t]) : ["pres", "pc", "imp", "fut", "cond", "subj"],
+  groups: Array.isArray(cjSaved.groups) && cjSaved.groups.length ? cjSaved.groups : CJ_GROUPS.map(g => g[0]),
+  mode: cjSaved.mode === "type" ? "type" : "pick",
+  n: [10, 20, 30, 0].includes(cjSaved.n) ? cjSaved.n : 10,
+};
+const cjSaveCfg = () => { try { localStorage.setItem("fq-conj", JSON.stringify(cjCfg)); } catch (e) {} };
+let cjSess = null;   // { k: 第几题, right, xp0, q: 当前题, answered, lastKey }
+const cjId = (v, t) => `cj:${v}:${t}`;
+const cjNorm = s => String(s || "").normalize("NFC").trim().toLowerCase().replace(/[’`´]/g, "'").replace(/\s+/g, " ");
+const cjBare = s => cjNorm(s).normalize("NFD").replace(/[̀-ͯ]/g, "");
+// 去掉主语代词和 que，只留动词部分
+const cjStrip = s => cjNorm(s).replace(/^qu(e |')/, "").replace(/^(je |j'|tu |il |elle |on |nous |vous |ils |elles )/, "").replace(/\s*!$/, "");
+function cjForm(v, t, i, fem) { const x = v.t[t]; return (Array.isArray(x[0]) ? x[fem ? 1 : 0] : x)[i]; }
+const cjHasFem = (v, t) => Array.isArray(v.t[t][0]);
+function cjSubject(t, i, fem) { return t === "impe" ? "" : i === 2 ? (fem ? "elle" : "il") : i === 5 ? (fem ? "elles" : "ils") : CJ_PRON[i]; }
+// 带主语的完整形式：j' 省音，虚拟式前加 que
+function cjFull(t, i, fem, form) {
+  if (t === "impe") return form + " !";
+  let sj = cjSubject(t, i, fem);
+  const s = sj === "je" && /^[aeiouyhâàéèêîïôû]/i.test(form) ? "j'" + form : sj + " " + form;
+  return t === "subj" ? (/^[aeiouyh]/i.test(s) ? "qu'" : "que ") + s : s;
+}
 
+// 按规则“规则化”的形式：不规则动词和拼写变化动词最常见的错法（如 *allerai、*mangons）
+function cjRegular(v, t, i) {
+  const inf = v.v, end = inf.endsWith("er") ? "er" : inf.endsWith("ir") ? "ir" : "re";
+  const st = end === "re" && inf.endsWith("oir") ? inf.slice(0, -3) : inf.slice(0, -2);
+  const futSt = end === "re" ? inf.slice(0, -1) : inf;
+  const E = {
+    er: { pres: ["e", "es", "e", "ons", "ez", "ent"], imp: ["ais", "ais", "ait", "ions", "iez", "aient"], subj: ["e", "es", "e", "ions", "iez", "ent"], ps: ["ai", "as", "a", "âmes", "âtes", "èrent"] },
+    ir: { pres: ["is", "is", "it", "issons", "issez", "issent"], imp: ["issais", "issais", "issait", "issions", "issiez", "issaient"], subj: ["isse", "isses", "isse", "issions", "issiez", "issent"], ps: ["is", "is", "it", "îmes", "îtes", "irent"] },
+    re: { pres: ["s", "s", "", "ons", "ez", "ent"], imp: ["ais", "ais", "ait", "ions", "iez", "aient"], subj: ["e", "es", "e", "ions", "iez", "ent"], ps: ["is", "is", "it", "îmes", "îtes", "irent"] },
+  }[end];
+  const FUT = ["ai", "as", "a", "ons", "ez", "ont"], COND = ["ais", "ais", "ait", "ions", "iez", "aient"];
+  if (t === "fut") return futSt + FUT[i];
+  if (t === "cond") return futSt + COND[i];
+  if (t === "impe") return i === 1 ? st + (end === "er" ? "e" : end === "ir" ? "is" : "s") : st + E.pres[i];
+  return E[t] ? st + E[t][i] : "";
+}
+// 干扰项：配错人称、混淆时态、规则化错误、用错助动词
+function cjDistract(v, t, i, fem, ans) {
+  const pers = t === "impe" ? [1, 3, 4] : [0, 1, 2, 3, 4, 5];
+  const same = u => CJ_COMPOUND.includes(u) === CJ_COMPOUND.includes(t);   // 简单时态和简单时态比，复合和复合比
+  const okSet = new Set([ans, cjForm(v, t, i, !fem)].map(cjNorm));   // 另一种阴阳性也是对的，不当干扰项
+  const pool = [];
+  const reg = cjRegular(v, t, i);
+  if (reg) pool.push([reg, 3]);
+  if (CJ_COMPOUND.includes(t) && !CJ_BOTH_AUX.includes(v.v)) {
+    // 用错助动词：本该 être 的用 avoir（*avons allé），本该 avoir 的用 être
+    const part = cjForm(v, t, 2, false).split(" ").pop();   // 阳性单数过去分词
+    const aux = cjForm(CJ_BY.get(v.aux === "être" ? "avoir" : "être"), CJ_AUX_TENSE[t], i, false);
+    pool.push([aux + " " + part + (v.aux === "avoir" && i >= 3 ? "s" : ""), 3]);
+  }
+  pers.filter(j => j !== i).forEach(j => pool.push([cjForm(v, t, j, fem), 2]));
+  cjCfg.tenses.concat(["pres", "imp", "fut", "cond", "subj", "pc"]).filter(u => u !== t && same(u) && v.t[u]).forEach(u => pool.push([cjForm(v, u, i, fem), 1]));
+  const seen = new Set(okSet), out = [];
+  pool.sort((a, b) => b[1] - a[1] + (Math.random() - .5) * 1.5).forEach(([s]) => {
+    const k = cjNorm(s);
+    if (!s || seen.has(k) || out.length >= 3) return;
+    seen.add(k); out.push(s);
+  });
+  return out;
+}
 
+function cjPool() { return CJ_VERBS.filter(v => cjCfg.groups.includes(v.g)).flatMap(v => cjCfg.tenses.filter(t => v.t[t]).map(t => [v, t])); }
+function cjNext() {
+  const pool = cjPool(), now = Date.now();
+  if (!pool.length) return null;
+  const m = ([v, t]) => memOf(cjId(v.v, t));
+  const due = pool.filter(x => memDue(m(x), now)), weak = pool.filter(x => m(x).lv === 0 && m(x).last > 0), fresh = pool.filter(x => m(x).last === 0);
+  const r = Math.random();
+  let src = due.length && r < .6 ? due : weak.length && r < .75 ? weak : fresh.length && r < .95 ? fresh : pool;
+  if (src.length > 1 && cjSess?.lastKey) { const f = src.filter(([v, t]) => cjId(v.v, t) !== cjSess.lastKey); if (f.length) src = f; }
+  const [v, t] = src[Math.floor(Math.random() * src.length)];
+  const pers = t === "impe" ? [1, 3, 4] : [0, 1, 2, 3, 4, 5];
+  const i = pers[Math.floor(Math.random() * pers.length)];
+  const fem = cjHasFem(v, t) && t !== "impe" ? Math.random() < .4 : false;
+  const ans = cjForm(v, t, i, fem);
+  const q = { v, t, i, fem, ans };
+  if (cjCfg.mode === "pick") {
+    const opts = [ans, ...cjDistract(v, t, i, fem, ans)];
+    for (let k = opts.length - 1; k > 0; k--) { const j = Math.floor(Math.random() * (k + 1)); [opts[k], opts[j]] = [opts[j], opts[k]]; }
+    q.opts = opts;
+  }
+  return q;
+}
+// 填空判对：去掉主语后完全一致；je/tu/nous/vous 两种阴阳性都算对；-ayer 动词 i/y 两种拼法都算对
+function cjCheck(q, input) {
+  const got = cjStrip(input);
+  const ok = [q.ans];
+  if (cjHasFem(q.v, q.t) && ![2, 5].includes(q.i)) ok.push(cjForm(q.v, q.t, q.i, !q.fem));
+  if (q.v.v.endsWith("ayer")) ok.slice().forEach(s => ok.push(s.replace(/ai(e|es|ent|erai|eras|era|erons|erez|eront|erais|erait|erions|eriez|eraient)$/, "ay$1")));
+  if (ok.some(s => cjNorm(s) === got)) return { right: true };
+  return { right: false, accent: ok.some(s => cjBare(s) === cjBare(got)) };
+}
+function cjRecord(q, chosen, right) {
+  const d = {
+    round: "cj", qid: cjId(q.v.v, q.t), ch: 0, cat: "动词变位 · " + CJ_TZH[q.t],
+    question: `${cjFull(q.t, q.i, q.fem, "___")}（${q.v.v}）`, chosen: chosen || "（空）", correct: q.ans, isCorrect: right, at: new Date().toISOString(),
+  };
+  if (dbRef) dbRef.collection("answers").add(d).catch(() => {});
+  progLive(d, "ans");
+  bookCache = null;
+}
+
+// ---------- 设置和进度（左侧面板） ----------
+function cjToc() {
+  toc.innerHTML = "";
+  toc.append(planTocItem());
+  const box = el("div", "tag-panel cj-panel");
+  const restart = () => { cjSaveCfg(); cjSess = null; cjToc(); cjQuestion(); };
+  const group = (name, items, isOn, toggle, note) => {
+    const g = el("div", "tag-group"), row = el("div", "chips");
+    g.append(el("div", "tag-gname", name));
+    if (note) g.append(el("div", "lv-note", note));
+    items.forEach(([k, t, small]) => {
+      const c = el("button", "chip"); c.type = "button"; c.dataset.k = k;
+      c.append(document.createTextNode(t)); if (small != null) c.append(el("small", null, small));
+      c.setAttribute("aria-pressed", String(isOn(k)));
+      c.addEventListener("click", () => { toggle(k); restart(); });
+      row.append(c);
+    });
+    g.append(row);
+    return g;
+  };
+  const tPct = t => { const qs = CJ_VERBS.filter(v => cjCfg.groups.includes(v.g) && v.t[t]); const s = qs.reduce((a, v) => a + memOf(cjId(v.v, t)).lv, 0); return qs.length ? Math.floor(s / (qs.length * MEM_MAX) * 100) + "%" : "–"; };
+  const flip = (arr, k) => arr.includes(k) ? (arr.length > 1 ? arr.filter(x => x !== k) : arr) : arr.concat(k);
+  const mode = el("div", "tag-mode");
+  [["pick", "选择"], ["type", "填空"]].forEach(([m, t]) => {
+    const b = el("button", null, t); b.type = "button"; b.setAttribute("aria-pressed", String(cjCfg.mode === m));
+    b.addEventListener("click", () => { cjCfg.mode = m; restart(); });
+    mode.append(b);
+  });
+  const g0 = el("div", "tag-group"); g0.append(el("div", "tag-gname", "出题方式"), mode);
+  const nRow = el("div", "tag-mode");
+  [[10, "10 题"], [20, "20 题"], [30, "30 题"], [0, "不限"]].forEach(([n, t]) => {
+    const b = el("button", null, t); b.type = "button"; b.setAttribute("aria-pressed", String(cjCfg.n === n));
+    b.addEventListener("click", () => { cjCfg.n = n; restart(); });
+    nRow.append(b);
+  });
+  g0.append(el("div", "tag-gname", "每组"), nRow);
+  box.append(g0);
+  box.append(group("时态（可多选）", CJ_TENSES.map(([k, zh]) => [k, zh, tPct(k)]), k => cjCfg.tenses.includes(k), k => { cjCfg.tenses = flip(cjCfg.tenses, k); }, "后面的百分比是这个时态的掌握进度"));
+  box.append(group("动词", CJ_GROUPS.map(([k, t]) => [k, t, CJ_VERBS.filter(v => v.g === k).length]), k => cjCfg.groups.includes(k), k => { cjCfg.groups = flip(cjCfg.groups, k); }));
+  const pool = cjPool(), now = Date.now();
+  const sum = pool.reduce((a, [v, t]) => a + memOf(cjId(v.v, t)).lv, 0), due = pool.filter(([v, t]) => memDue(memOf(cjId(v.v, t)), now)).length;
+  const s = el("div", "tag-sum");
+  s.append(document.createTextNode(`${pool.length} 个“动词 + 时态” · 进度 `), el("b", null, pool.length ? Math.floor(sum / (pool.length * MEM_MAX) * 100) + "%" : "–"), document.createTextNode(due ? ` · ${due} 个待复习` : ""));
+  box.append(s);
+  toc.append(box);
+}
+
+// ---------- 出题 ----------
+function cjQuestion() {
+  stage.innerHTML = "";
+  if (!cjSess) cjSess = { k: 0, right: 0, xp0: prog ? prog.xp : 0 };
+  if (cjCfg.n && cjSess.k >= cjCfg.n) { cjResult(); return; }
+  const q = cjNext();
+  if (!q) { stage.append(el("p", "empty", "没有可出的题：请至少选一个时态和一组动词。")); return; }
+  cjSess.q = q; cjSess.answered = false; cjSess.cursor = -1;
+  const card = el("section", "card cj-card");
+  const tags = el("div", "tagrow");
+  tags.append(el("span", "tag", CJ_TZH[q.t]), el("span", "tag plain", CJ_GROUPS.find(g => g[0] === q.v.g)[1]),
+    el("span", "tag plain", `第 ${cjSess.k + 1}${cjCfg.n ? "/" + cjCfg.n : ""} 题 · 对 ${cjSess.right}`));
+  const m = memOf(cjId(q.v.v, q.t));
+  if (m.last) tags.append(el("span", "tag plain", `记忆 ${m.lv} 级`));
+  card.append(tags);
+  const verb = el("div", "cj-verb");
+  verb.append(el("b", null, q.v.v), el("span", null, q.v.zh));
+  card.append(verb);
+  const prompt = el("h2", "q cj-q");
+  const full = cjFull(q.t, q.i, q.fem, "\u0001");
+  const [pre, post] = full.split("\u0001");
+  prompt.append(document.createTextNode(pre.replace(/j'$/, "je ")), el("span", "cj-blank", "___"), document.createTextNode(post));
+  const who = q.t === "impe" ? `命令式 · 对 ${["", "tu", "", "nous", "vous"][q.i]} 说` : q.fem && ![2, 5].includes(q.i) ? "主语是女性" : "";
+  if (who) prompt.append(el("small", "cj-who", who));
+  card.append(prompt);
+  const fb = el("div", "explain pending cj-fb", cjCfg.mode === "pick" ? "选出正确的变位形式" : "输入动词部分（不用写主语），回车提交");
+  if (cjCfg.mode === "pick") {
+    const box = el("div", "opts");
+    q.opts.forEach((o, k) => {
+      const b = el("button", "opt"); b.type = "button";
+      b.append(el("span", "key", "ABCD"[k]), el("span", null, o));
+      b.addEventListener("click", () => cjAnswer(o, card, fb));
+      box.append(b);
+    });
+    card.append(box);
+  } else {
+    const row = el("div", "cj-type");
+    const inp = el("input"); inp.type = "text"; inp.id = "cjInput"; inp.autocomplete = "off"; inp.autocapitalize = "off"; inp.spellcheck = false;
+    inp.setAttribute("autocorrect", "off"); inp.setAttribute("aria-label", "变位形式"); inp.lang = "fr";
+    const go = el("button", "btn", "提交"); go.type = "button";
+    go.addEventListener("click", () => cjAnswer(inp.value, card, fb));
+    inp.addEventListener("keydown", e => { if (e.key === "Enter") { e.preventDefault(); e.stopPropagation(); cjSess.answered ? cjGoNext() : cjAnswer(inp.value, card, fb); } });
+    row.append(inp, go);
+    const acc = el("div", "cj-acc");
+    ["é", "è", "ê", "à", "â", "ç", "î", "ï", "ô", "û", "ù", "ë", "œ"].forEach(ch => {
+      const b = el("button", "chip", ch); b.type = "button"; b.tabIndex = -1;
+      b.addEventListener("mousedown", e => e.preventDefault());
+      b.addEventListener("click", () => { const s = inp.selectionStart ?? inp.value.length, e2 = inp.selectionEnd ?? s; inp.value = inp.value.slice(0, s) + ch + inp.value.slice(e2); inp.focus(); inp.setSelectionRange(s + 1, s + 1); });
+      acc.append(b);
+    });
+    card.append(row, acc);
+    setTimeout(() => inp.focus({ preventScroll: true }), 0);
+  }
+  card.append(fb);
+  const act = el("div", "actions");
+  const next = el("button", "btn", "下一题"); next.type = "button"; next.id = "cjNext"; next.disabled = true;
+  next.addEventListener("click", cjGoNext);
+  act.append(next);
+  card.append(act);
+  stage.append(card);
+}
+function cjAnswer(input, card, fb) {
+  const q = cjSess.q;
+  if (cjSess.answered) return;
+  cjSess.answered = true;
+  let right, accent = false;
+  if (cjCfg.mode === "pick") {
+    right = cjNorm(input) === cjNorm(q.ans);
+    card.querySelectorAll(".opt").forEach(b => {
+      const t = b.lastChild.textContent;
+      b.disabled = true;
+      if (cjNorm(t) === cjNorm(q.ans)) b.classList.add("correct");
+      else if (t === input) b.classList.add("wrong");
+    });
+  } else {
+    const r = cjCheck(q, input); right = r.right; accent = r.accent;
+    const inp = $("cjInput"); inp.readOnly = true; inp.classList.add(right ? "ok" : "no");
+  }
+  if (right) cjSess.right++;
+  cjSess.k++;
+  cjSess.lastKey = cjId(q.v.v, q.t);
+  cjRecord(q, cjCfg.mode === "pick" ? input : cjStrip(input), right);
+  // 反馈：对错、完整形式（可朗读）、这个时态的整张变位表
+  fb.className = "explain cj-fb";
+  fb.textContent = "";
+  const line = el("p");
+  line.append(el("b", right ? "ok" : "no", right ? "答对了。" : accent ? "差在重音符号上。" : "答错了。"), document.createTextNode(" 正确："), el("b", null, cjFull(q.t, q.i, q.fem, q.ans)));
+  if (tts) {
+    const say = el("button", "play cj-say", "▶ 读"); say.type = "button";
+    say.addEventListener("click", () => speak(cjFull(q.t, q.i, q.fem, q.ans).replace(/ !$/, ""), .9, say));
+    line.append(document.createTextNode(" "), say);
+  }
+  fb.append(line);
+  const table = el("div", "cj-table");
+  (q.t === "impe" ? [1, 3, 4] : [0, 1, 2, 3, 4, 5]).forEach(j => {
+    const f = cjForm(q.v, q.t, j, j === q.i ? q.fem : false);
+    const c = el("span", j === q.i ? "on" : "", cjFull(q.t, j, j === q.i ? q.fem : false, f));
+    table.append(c);
+  });
+  fb.append(table);
+  const notes = [];
+  if (CJ_COMPOUND.includes(q.t)) notes.push(`助动词用 ${q.v.aux}` + (q.v.aux === "être" ? "，过去分词与主语性数配合" : "") + (CJ_BOTH_AUX.includes(q.v.v) ? `；${q.v.v} 带直接宾语时改用 avoir` : "") + "。");
+  if (q.v.v.endsWith("ayer")) notes.push("-ayer 动词 i / y 两种拼法都对（paie / paye）。");
+  const m = memOf(cjId(q.v.v, q.t));
+  notes.push(`「${q.v.v} · ${CJ_TZH[q.t]}」记忆 ${m.lv} 级` + (m.lv >= 1 && m.lv < MEM_MAX ? `，${MEM_DAYS[m.lv]} 天后复习能升级` : "") + "。");
+  fb.append(el("span", "kp-note", notes.join(" ")));
+  $("cjNext").disabled = false;
+  if (cjCfg.mode === "pick") $("cjNext").focus({ preventScroll: true });
+}
+function cjGoNext() { if (cjSess?.answered) { cjToc(); cjQuestion(); } }
+function cjResult() {
+  const card = el("section", "card");
+  const n = cjSess.k, xp = prog ? prog.xp - cjSess.xp0 : 0;
+  card.append(el("span", "tag", "本组完成"));
+  const sc = el("p", "score", `${cjSess.right}`); sc.append(el("small", null, ` / ${n}`));
+  card.append(sc, el("p", "sub", `这一组得了 ${xp} 经验。到期的“动词 + 时态”会优先再出现。`));
+  const act = el("div", "actions");
+  const again = el("button", "btn", "再来一组"); again.type = "button"; again.id = "cjAgain";
+  again.addEventListener("click", () => { cjSess = null; cjToc(); cjQuestion(); });
+  act.append(again);
+  card.append(act);
+  stage.append(card);
+}
+function renderConj() { cjToc(); cjQuestion(); }
+// 键盘：选择模式按 1–4 或 A–D 选；回车 / → 下一题
+document.addEventListener("keydown", e => {
+  if (view !== "conj" || e.ctrlKey || e.metaKey || e.altKey || !cjSess) return;
+  if (e.target && e.target.id === "cjInput") return;
+  const k = e.key.toLowerCase();
+  if (!cjSess.answered && cjCfg.mode === "pick") {
+    const n = "1234".indexOf(k) >= 0 ? "1234".indexOf(k) : "abcd".indexOf(k);
+    if (n >= 0) { const b = stage.querySelectorAll(".opt")[n]; if (b) { e.preventDefault(); b.click(); } }
+  } else if (cjSess.answered && (k === "enter" || k === "arrowright")) { e.preventDefault(); cjGoNext(); }
+});
+// 所有模块载入后：打开页面时先出这一轮
 startSet("fr-r23");
 </script>
 

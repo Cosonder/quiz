@@ -339,13 +339,35 @@ mjx-container.mjx-wide { display: block; overflow-x: auto; overflow-y: hidden; m
 .prog-key i { display: inline-block; width: 12px; height: 8px; border-radius: 3px; margin-left: 8px; vertical-align: middle; }
 .prog-key i:first-child { margin-left: 0; }
 @media (max-width: 520px) { .prog-row { grid-template-columns: minmax(0, 1fr) auto; } .prog-row .pbar { grid-column: 1 / -1; grid-row: 2; } }
-.xp-toast { position: fixed; left: 50%; bottom: calc(18px + env(safe-area-inset-bottom, 0px)); transform: translate(-50%, 20px); opacity: 0; pointer-events: none; z-index: 50;
+.xp-toast { position: fixed; left: 50%; top: calc(12px + env(safe-area-inset-top, 0px)); transform: translate(-50%, -20px); opacity: 0; pointer-events: none; z-index: 50;
   background: var(--fg); color: var(--bg); border-radius: 999px; padding: 8px 16px; font-size: .88rem; display: flex; flex-direction: column; align-items: center; gap: 2px;
   max-width: calc(100vw - 32px); text-align: center; transition: opacity .2s, transform .2s; box-shadow: 0 6px 20px rgba(0,0,0,.18); }
 .xp-toast.show { opacity: 1; transform: translate(-50%, 0); }
 .xp-toast.big { border-radius: 16px; background: var(--good); color: #fff; }
 .xp-toast b { font-size: 1.05rem; }
 @media (prefers-reduced-motion: reduce) { .xp-toast { transition: none; } }
+
+/* 今日计划 */
+.plan-toc { display: grid; grid-template-columns: 1fr; gap: 4px; width: 100%; text-align: left; font: inherit; color: var(--fg); background: var(--accent-soft); border: 1.5px solid var(--accent); border-radius: 10px; padding: 8px 10px; margin-bottom: 10px; cursor: pointer; }
+.plan-toc:disabled { cursor: default; opacity: .7; }
+.plan-toc b { font-size: .92rem; color: var(--accent); }
+.plan-toc .n { font-size: .78rem; color: var(--muted); font-variant-numeric: tabular-nums; }
+.plan-toc:focus-visible { outline: 3px solid var(--accent); outline-offset: 2px; }
+.plan-slot .plan-toc { margin-bottom: 0; }
+@media (min-width: 820px) { .plan-slot { display: none; } }
+@media (max-width: 819px) { .toc .plan-toc { display: none; } }
+.plan-card { gap: 10px; }
+.plan-head { display: flex; justify-content: space-between; align-items: center; gap: 8px; flex-wrap: wrap; }
+.plan-head h3 { margin: 0; font-size: 1rem; }
+.plan-head .streak { font-size: .82rem; font-weight: 700; padding: 3px 10px; border-radius: 99px; background: var(--bg); color: var(--muted); font-variant-numeric: tabular-nums; }
+.plan-head .streak.on { background: var(--good-soft); color: var(--good); }
+.plan-all { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 10px; align-items: center; }
+.plan-all .pbar { height: 12px; }
+.plan-all b { font-variant-numeric: tabular-nums; }
+.plan-goal { display: grid; grid-template-columns: auto minmax(0, 1fr) auto; gap: 10px; align-items: center; font-size: .85rem; color: var(--muted); }
+.plan-goal select { font: inherit; color: var(--fg); background: var(--card); border: 1px solid var(--line); border-radius: 6px; padding: 2px 4px; }
+@media (max-width: 520px) { .plan-goal { grid-template-columns: 1fr auto; } .plan-goal .xp-bar { grid-column: 1 / -1; grid-row: 2; } }
+.plan-patch { margin: 0; font-size: .85rem; color: var(--bad); }
 </style>
 
 <div class="wrap">
@@ -2734,7 +2756,7 @@ function localDb(ns) {
     const docs = (await dbRef.collection("answers").get()).docs.map(d => d.data());
     let voc = [];
     try { voc = (await dbRef.collection("vocab").get()).docs.map(d => d.data()); } catch (e) {}
-    progReset(docs, voc); progEnsure();
+    progReset(docs, voc); progEnsure(); planRefresh();
     const wrong = docs.filter(d => !d.isCorrect).length;
     saveNote.textContent = wrong ? `已有 ${wrong} 条错题记录，答题记录会自动保存到学习进度。` : "答题记录会自动保存到学习进度。";
     if (LOCAL) saveNote.textContent += "记录保存在这台设备的浏览器里，换设备或清除浏览器数据后不会保留。";
@@ -2768,6 +2790,7 @@ const isListen = q => !!q.audio;
 // 每个分组键包含哪些题
 function members(key) {
   if (/^(rev|learn):/.test(key)) return progMembers(key);
+  if (key.startsWith("plan:")) return planMembers(key);
   const p = parseTagKey(key);
   if (p) {
     const w = p.kind === "wrong" ? wrongIds() : null;
@@ -2781,6 +2804,7 @@ function members(key) {
 }
 function inGroup(key, q) {
   if (!q) return false;
+  if (key.startsWith("plan:")) return true;
   if (/^(rev|learn):/.test(key)) { const tags = key.split(":")[1].split("|").filter(Boolean); return !tags.length || tagMatch(q, tags, "any"); }
   const p = parseTagKey(key);
   if (p) return !p.tags.length || tagMatch(q, p.tags, p.mode);
@@ -2790,6 +2814,7 @@ function inGroup(key, q) {
 }
 function labelOf(key) {
   if (/^(rev|learn):/.test(key)) return progLabel(key);
+  if (key.startsWith("plan:")) return planLabel(key);
   const p = parseTagKey(key);
   if (p) return tagLabel(p);
   if (key.startsWith("ch:")) { const c = CH.get(Number(key.slice(3))); return c ? chName(c) : "未归类"; }
@@ -2814,7 +2839,7 @@ const bEnd = () => per ? Math.min(bStart + per, set.qs.length) : set.qs.length;
 function calcScore() { let n = 0; for (let k = bStart; k < bEnd(); k++) if (answers[k] !== undefined && set.qs[k].a === answers[k]) n++; return n; }
 function startSet(key, fresh) {
   set = makeSet(key); score = 0; answers = {};
-  const saved = fresh || /^(rev|learn):/.test(key) ? 0 : Number(loadPos()[key] || 0);   // 复习、学习题组每次重新挑题，从头做
+  const saved = fresh || /^(rev|learn|plan):/.test(key) ? 0 : Number(loadPos()[key] || 0);   // 复习、学习题组每次重新挑题，从头做
   idx = saved > 0 && saved < set.qs.length ? saved : 0;
   bStart = idx;
   renderToc(); beginBatch();
@@ -3015,7 +3040,7 @@ function xpLevel(xp) {
 
 let ansRaw = null;   // 全部答题记录
 let vocRaw = [];     // 背单词记录（只有法语页有）
-let prog = null;     // { mem: Map(题号 → {lv, last}), xp, today, lastDay, days }
+let prog = null;     // { mem: Map(题号 → {lv, last}), xp, today, lastDay, days, byDay: {日期: 当天经验} }
 
 const memInterval = lv => MEM_DAYS[Math.min(lv, MEM_MAX)] * DAY_MS;
 const memDue = (m, now = Date.now()) => !!m && m.lv >= 1 && now >= m.last + memInterval(m.lv) * MEM_EARLY;
@@ -3041,13 +3066,14 @@ function progStep(st, d, kind) {
     st.mem.set(d.qid, m);
   }
   st.xp += xp;
+  st.byDay[day] = (st.byDay[day] || 0) + xp;
   if (day === dayKey(new Date())) st.today += xp;
   return { xp, up, down, daily, learned };
 }
 function progEnsure() {
   if (prog) return true;
   if (!ansRaw) return false;
-  const st = { mem: new Map(), xp: 0, today: 0, lastDay: "", days: 0 };
+  const st = { mem: new Map(), xp: 0, today: 0, lastDay: "", days: 0, byDay: {} };
   const ev = ansRaw.map(d => [d, "ans"]).concat(vocRaw.map(d => [d, "vocab"]));
   ev.sort((a, b) => String(a[0].at).localeCompare(String(b[0].at))).forEach(([d, k]) => progStep(st, d, k));
   prog = st;
@@ -3059,7 +3085,7 @@ function progReset(docs, voc) { ansRaw = docs; if (voc) vocRaw = voc; prog = nul
 function progLive(d, kind) {
   if (kind === "vocab") vocRaw.push(d); else if (ansRaw) ansRaw.push(d);
   if (!prog) return;
-  const before = xpLevel(prog.xp).lv;
+  const before = xpLevel(prog.xp).lv, todayBefore = prog.today;
   const r = progStep(prog, d, kind);
   const after = xpLevel(prog.xp).lv;
   const parts = [`+${r.xp} 经验`];
@@ -3067,7 +3093,9 @@ function progLive(d, kind) {
   if (r.up) parts.push(r.up === MEM_MAX ? "复习成功 · 长期记忆" : `复习成功 · 记忆 ${r.up} 级`);
   else if (r.learned) parts.push("新学会一题");
   else if (r.down >= 0) parts.push(`记忆退到 ${r.down} 级`);
-  xpToast(parts.join(" · "), after > before ? `升级！Lv ${after} · ${xpTitle(after)}` : "");
+  const note = typeof planNotice === "function" ? planNotice(d, todayBefore) : "";
+  xpToast(parts.join(" · "), after > before ? `升级！Lv ${after} · ${xpTitle(after)}` : note);
+  if (typeof planRefresh === "function") planRefresh();
 }
 let toastTimer = 0;
 function xpToast(text, big) {
@@ -3186,6 +3214,213 @@ function progressCard() {
   const key = el("p", "sub prog-key");
   key.append(el("i", "k-mastery"), document.createTextNode(" 学习进度（记忆等级）"), el("i", "k-learned"), document.createTextNode(" 已学过的题"));
   card.append(key);
+  return card;
+}
+// ---------- 今日计划：每天自动配一组题（到期复习 + 新题 + 最弱标签），每日经验目标、连续打卡和补签 ----------
+// 计划在当天第一次打开时生成并记在本机，当天不变；做过的题（今天答过一次就算）自动打勾。
+// 连续打卡：当天经验达到目标算打卡。某天没达标，第二天达到 2 倍目标就能补签那一天（不能连着两天都缺）。
+const PLAN_REVIEW_MAX = 30, PLAN_NEW = 10, PLAN_WEAK = 5, PLAN_CONJ = 10;
+const GOAL_OPTS = [50, 100, 150, 250, 400];
+let xpGoal = (() => { try { const v = Number(localStorage.getItem("sq-goal")); return GOAL_OPTS.includes(v) ? v : 150; } catch (e) { return 150; } })();
+const dayOffset = (day, k) => { const [y, m, d] = day.split("-").map(Number); return dayKey(new Date(y, m - 1, d + k)); };
+const hasConj = () => typeof renderConj === "function";
+function answeredToday() {
+  const t = dayKey(new Date());
+  return new Set((ansRaw || []).filter(d => d.at && dayKey(new Date(d.at)) === t).map(d => d.qid));
+}
+const conjToday = () => { const t = dayKey(new Date()); return (ansRaw || []).filter(d => d.round === "cj" && d.at && dayKey(new Date(d.at)) === t).length; };
+
+// 最近 60 天里答错比例最高的标签（至少答过 5 次）
+function weakestTag() {
+  const since = Date.now() - 60 * DAY_MS, st = new Map();
+  (ansRaw || []).forEach(d => {
+    const q = BY_ID.get(d.qid);
+    if (!q || !(Date.parse(d.at) >= since)) return;
+    q.tags.forEach(t => { if (LEVELS.includes(t)) return; const s = st.get(t) || [0, 0]; s[0]++; if (!d.isCorrect) s[1]++; st.set(t, s); });
+  });
+  let best = null;
+  st.forEach(([n, w], t) => { if (n < 5 || !w) return; const r = w / n; if (!best || r > best.r || (r === best.r && w > best.w)) best = { t, r, w, n }; });
+  return best;
+}
+function planBuild() {
+  const used = new Set();
+  const review = progMembers("rev:").slice(0, PLAN_REVIEW_MAX).map(q => q.id);
+  review.forEach(i => used.add(i));
+  // 新题：从最近做的那一轮接着往下，挑还没做过的题
+  const lastQ = [...(ansRaw || [])].sort((a, b) => String(a.at).localeCompare(String(b.at))).reverse().map(d => BY_ID.get(d.qid)).find(Boolean);
+  const order = ROUNDS.map(r => r.id);
+  let start = lastQ ? order.indexOf(roundOf(lastQ.id)) : 0;
+  if (start < 0) start = 0;
+  const byRound = new Map();
+  BANK.forEach(q => { const r = roundOf(q.id); if (!byRound.has(r)) byRound.set(r, []); byRound.get(r).push(q); });
+  const fresh = [];
+  for (const r of order.slice(start).concat(order.slice(0, start))) {
+    for (const q of byRound.get(r) || []) {
+      if (fresh.length >= PLAN_NEW) break;
+      if (memOf(q.id).last === 0 && !used.has(q.id)) { fresh.push(q.id); used.add(q.id); }
+    }
+    if (fresh.length >= PLAN_NEW) break;
+  }
+  // 弱项：最弱标签里先挑答错过的，再挑没做过的
+  const wk = weakestTag();
+  let weak = [];
+  if (wk) {
+    const score = q => { const m = memOf(q.id); return m.last && m.lv === 0 ? 0 : m.last === 0 ? 1 : 2 + m.lv; };
+    weak = BANK.filter(q => q.tags.includes(wk.t) && !used.has(q.id)).map((q, k) => [q, score(q), k])
+      .sort((a, b) => a[1] - b[1] || a[2] - b[2]).slice(0, PLAN_WEAK).map(x => x[0].id);
+  }
+  return { day: dayKey(new Date()), review, fresh, weak, weakTag: wk ? wk.t : "" };
+}
+function planGet() {
+  if (!progEnsure()) return null;
+  const day = dayKey(new Date());
+  let p = null;
+  try { p = JSON.parse(localStorage.getItem("sq-plan") || "null"); } catch (e) {}
+  if (!p || p.day !== day || !Array.isArray(p.review)) {
+    p = planBuild();
+    try { localStorage.setItem("sq-plan", JSON.stringify(p)); } catch (e) {}
+  }
+  return p;
+}
+const PLAN_PARTS = [["review", "复习到期题"], ["fresh", "新题"], ["weak", "弱项"]];
+function planStatus(p) {
+  const done = answeredToday();
+  const parts = PLAN_PARTS.filter(([k]) => p[k].length).map(([k, name]) => ({
+    k, name: k === "weak" ? `弱项「${p.weakTag}」` : name, n: p[k].length, d: p[k].filter(i => done.has(i)).length,
+  }));
+  if (hasConj()) parts.push({ k: "conj", name: "动词变位", n: PLAN_CONJ, d: Math.min(PLAN_CONJ, conjToday()) });
+  const n = parts.reduce((s, x) => s + x.n, 0), d = parts.reduce((s, x) => s + x.d, 0);
+  return { parts, n, d };
+}
+// plan: 今日计划里还没做的题；plan:review / plan:fresh / plan:weak 只做其中一部分
+function planMembers(key) {
+  const p = planGet();
+  if (!p) return [];
+  const part = key.slice(5), done = answeredToday();
+  const ids = part ? p[part] || [] : [...p.review, ...p.fresh, ...p.weak];
+  return ids.filter(i => !done.has(i)).map(i => BY_ID.get(i)).filter(Boolean);
+}
+function planLabel(key) {
+  const part = key.slice(5), p = planGet();
+  return "今日计划" + (part ? " · " + (part === "weak" && p ? `弱项「${p.weakTag}」` : (PLAN_PARTS.find(x => x[0] === part) || [, part])[1]) : "");
+}
+function planGo(key) {
+  if (key === "plan:conj") { switchView("conj"); return; }
+  if (!planMembers(key).length) {
+    const s = planGet() && planStatus(planGet());
+    xpToast(s && hasConj() && s.parts.find(x => x.k === "conj" && x.d < x.n) ? "这些题都做完了，还差动词变位" : "今天计划里的题都做完了");
+    return;
+  }
+  switchView("quiz", key);
+}
+
+// 连续打卡（含补签），从某一天往前数
+function streakFrom(day) {
+  const by = prog.byDay, xp = d => by[d] || 0, met = d => xp(d) >= xpGoal;
+  let n = 0, d = day;
+  for (let g = 0; g < 3660; g++) {
+    if (met(d)) { n++; d = dayOffset(d, -1); continue; }
+    // 这一天没达标：第二天达到 2 倍目标、前一天也达标，就算补签
+    if (xp(dayOffset(d, 1)) >= 2 * xpGoal && met(dayOffset(d, -1))) { n++; d = dayOffset(d, -1); continue; }
+    break;
+  }
+  return n;
+}
+function streakInfo() {
+  if (!progEnsure()) return { n: 0, today: 0, met: false, patch: 0 };
+  const today = dayKey(new Date()), y = dayOffset(today, -1), xp = d => prog.byDay[d] || 0;
+  const met = xp(today) >= xpGoal;
+  const n = streakFrom(y) + (met ? 1 : 0);
+  // 昨天没达标、前天达标：今天达到 2 倍目标就能补签，保住之前的连续天数
+  const patch = xp(y) < xpGoal && xp(dayOffset(y, -1)) >= xpGoal && xp(today) < 2 * xpGoal ? streakFrom(dayOffset(y, -1)) : 0;
+  return { n, today: xp(today), met, patch };
+}
+// 答完一题后：今天目标刚达成 / 今日计划刚做完时，返回一句大提示
+function planNotice(d, todayBefore) {
+  const p = planGet();
+  if (p) {
+    const ids = [...p.review, ...p.fresh, ...p.weak];
+    const s = planStatus(p);
+    const hit = d.round === "cj" ? hasConj() && conjToday() === PLAN_CONJ : ids.includes(d.qid);
+    if (hit && s.n && s.d === s.n) return "今日计划完成！";
+  }
+  if (todayBefore < xpGoal && prog.today >= xpGoal) return `今日目标达成！连续 ${streakInfo().n} 天`;
+  return "";
+}
+
+// 今日计划进度条：宽屏放在目录顶上，窄屏（目录收起时）放在主区域最上面；点了直接开始
+function planTocItem(id = "planToc") {
+  const box = el("button", "plan-toc"); box.type = "button"; box.id = id;
+  const p = planGet();
+  if (!p) { box.disabled = true; box.append(el("b", null, "今日计划"), el("span", null, "正在读取答题记录…")); return box; }
+  const s = planStatus(p), st = streakInfo();
+  const bar = el("span", "pbar"), fill = el("i", "mastery"); fill.style.width = (s.n ? s.d / s.n * 100 : 0) + "%"; bar.append(fill);
+  box.append(el("b", null, s.d === s.n ? "今日计划 · 已完成" : "今日计划"), el("span", "n", `${s.d}/${s.n} 题 · 今日 ${st.today}/${xpGoal} 经验 · 连续 ${st.n} 天`), bar);
+  box.addEventListener("click", () => {
+    const left = s.parts.find(x => x.d < x.n);
+    planGo(left ? (left.k === "conj" ? "plan:conj" : "plan:") : "plan:");
+  });
+  return box;
+}
+const planSlot = el("div", "plan-slot");
+$("main").prepend(planSlot);
+function planRefresh() {
+  const old = $("planToc");
+  if (old) old.replaceWith(planTocItem());
+  planSlot.textContent = ""; planSlot.append(planTocItem("planMini"));
+  planSlot.hidden = view === "book" || view === "exam";   // 学习进度页有完整的计划卡，模拟卷不打扰
+}
+planRefresh();
+
+// 学习进度页最上面的今日计划卡
+function planCard() {
+  const card = el("section", "card plan-card");
+  const p = planGet();
+  const head = el("div", "plan-head");
+  const d = new Date();
+  head.append(el("h3", null, `今日计划 · ${d.getMonth() + 1} 月 ${d.getDate()} 日`));
+  if (!p) { card.append(head, el("p", "empty", "正在读取答题记录…")); return card; }
+  const s = planStatus(p), st = streakInfo();
+  head.append(el("span", "streak" + (st.met ? " on" : ""), `连续 ${st.n} 天`));
+  card.append(head);
+  const all = el("div", "plan-all");
+  const bar = el("span", "pbar"), fill = el("i", "mastery"); fill.style.width = (s.n ? s.d / s.n * 100 : 0) + "%"; bar.append(fill);
+  all.append(bar, el("b", null, `${s.d} / ${s.n} 题`));
+  card.append(all);
+  const list = el("div", "prog-list");
+  s.parts.forEach(x => {
+    const r = el("button", "prog-row"); r.type = "button";
+    const b = el("span", "pbar"), f = el("i", "mastery"); f.style.width = (x.d / x.n * 100) + "%"; b.append(f);
+    const num = el("span", "n"); num.append(el("b", null, `${x.d}/${x.n}`), document.createTextNode(x.d >= x.n ? " · 完成" : ""));
+    r.append(el("span", "t", x.name), b, num);
+    r.addEventListener("click", () => planGo("plan:" + x.k));
+    list.append(r);
+  });
+  card.append(list);
+  const left = s.n - s.d;
+  const act = el("div", "actions");
+  const go = el("button", left ? "btn" : "btn ghost", left ? `开始今日计划（剩 ${left} 题）` : "今日计划已完成"); go.type = "button"; go.id = "planGo";
+  go.disabled = !left;
+  const first = s.parts.find(x => x.d < x.n && x.k !== "conj");
+  go.addEventListener("click", () => planGo(first ? "plan:" : "plan:conj"));
+  act.append(go);
+  card.append(act);
+  // 每日经验目标
+  const goal = el("div", "plan-goal");
+  const gb = el("span", "xp-bar"), gf = el("i"); gf.style.width = Math.min(100, st.today / xpGoal * 100) + "%"; gb.append(gf);
+  const lab = el("label", null, "每日目标 ");
+  const sel = el("select"); sel.id = "goalSel";
+  GOAL_OPTS.forEach(v => { const o = el("option", null, `${v} 经验`); o.value = String(v); if (v === xpGoal) o.selected = true; sel.append(o); });
+  sel.addEventListener("change", () => { xpGoal = Number(sel.value); try { localStorage.setItem("sq-goal", String(xpGoal)); } catch (e) {} drawBook(); });
+  lab.append(sel);
+  goal.append(el("span", null, `今日经验 ${st.today} / ${xpGoal}` + (st.met ? " · 已打卡" : "")), gb, lab);
+  card.append(goal);
+  if (st.patch) card.append(el("p", "plan-patch", `昨天没达到目标。今天拿到 ${2 * xpGoal} 经验（2 倍目标）就能补签昨天，保住之前连续的 ${st.patch} 天。`));
+  const rule = el("details", "xp-rule");
+  rule.append(el("summary", null, "今日计划怎么配"),
+    el("p", null, `每天第一次打开时生成，当天不变：到期该复习的题（最多 ${PLAN_REVIEW_MAX} 道，最该复习的在前）、从最近做的那一轮接着往下的 ${PLAN_NEW} 道新题、最近 60 天答错比例最高的标签里 ${PLAN_WEAK} 道题` + (hasConj() ? `，再加 ${PLAN_CONJ} 道动词变位。` : "。") + "今天答过一次就算完成。"),
+    el("p", null, "连续打卡：当天经验达到每日目标算打卡。某天没达标，第二天达到 2 倍目标就能补签那一天；不能连着两天都缺。"));
+  card.append(rule);
   return card;
 }
 // ---------- 备份与恢复：所有记录 + 本机设置 → 一个 .json 文件；恢复时合并，已有的记录不重复 ----------
@@ -3497,7 +3732,7 @@ function folder(title, sub, keys, build) {
 
 function renderToc() {
   toc.innerHTML = "";
-  toc.append(tagPanel());
+  toc.append(planTocItem(), tagPanel());
   const legacy = el("details", "legacy"), lbox = el("div");
   legacy.append(el("summary", null, "按轮次 / 章节浏览"), lbox);
   const cur = view === "quiz" ? set?.key : bookFilter;
@@ -3881,7 +4116,7 @@ function drawBook() {
   if (!bookCache) return;
   const { all, wrong } = bookCache;
   stage.innerHTML = "";
-  stage.append(xpCard(), progressCard());
+  stage.append(planCard(), xpCard(), progressCard());
   stage.append(heatCard(bookCache.raw || []));
   stage.append(tagDistCard());
   const card = el("section", "card");
@@ -3944,6 +4179,7 @@ function drawBook() {
 // ---------- 切换 ----------
 function switchView(v, setKey) {
   view = v;
+  planRefresh();
   tabQuiz.setAttribute("aria-selected", String(v === "quiz"));
   tabBook.setAttribute("aria-selected", String(v === "book"));
   progressEl.hidden = v === "book";
