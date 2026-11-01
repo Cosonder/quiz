@@ -21,6 +21,11 @@
         x.addEventListener("click", () => bar.remove());
         bar.append(t, go, x); document.body.append(bar);
       });
+      // 新版本接管后：补齐新增或换过的图片，首页重新显示离线准备情况
+      navigator.serviceWorker.addEventListener("controllerchange", () => {
+        if (navigator.onLine) navigator.serviceWorker.controller?.postMessage("prefetch");
+        if (document.getElementById("offlineStatus")) setTimeout(() => navigator.serviceWorker.controller?.postMessage("status"), 500);
+      });
       // 从后台切回来、或重新连上网时，检查有没有新版本（主屏幕 App 常常不重新打开页面）
       const check = () => { if (navigator.onLine && document.visibilityState === "visible") reg.update().catch(() => {}); };
       document.addEventListener("visibilitychange", check);
