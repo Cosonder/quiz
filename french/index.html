@@ -15973,8 +15973,8 @@ const V_SCENE = {
   "ranger": "ex-ranger", "emprunter": "ex-emprunter", "prêter": "ex-preter", "s'habituer": "ex-s-habituer", "démissionner": "ex-demissionner", "syndicat": "ex-syndicat",
   "foie": "ex-foie", "épaule": "ex-epaule", "citoyenneté": "ex-citoyennete", "droit": "ex-droit", "inégalité": "ex-inegalite", "pauvreté": "ex-pauvrete",
   "cependant": "ex-cependant", "d'ailleurs": "ex-d-ailleurs", "autrement dit": "ex-autrement-dit", "en revanche": "ex-en-revanche", "davantage": "ex-davantage", "désormais": "ex-desormais",
-  "auparavant": "ex-auparavant", "aussitôt": "ex-aussitot", "peu à peu": "ex-peu-a-peu", "environ": "ex-environ", "grâce à": "ex-grace-a", "au lieu de": "ex-au-lieu-de",
-  "malgré": "ex-malgre", "lors de": "ex-lors-de", "à condition que": "ex-a-condition-que", "tandis que": "ex-tandis-que", "bien que": "ex-bien-que", "afin de": "ex-afin-de",
+  "auparavant": "ex-auparavant", "aussitôt": "ex-aussitot", "peu à peu": "ex-peu-a-peu-generated.webp", "environ": "ex-environ", "grâce à": "ex-grace-a", "au lieu de": "ex-au-lieu-de-generated.webp",
+  "malgré": "ex-malgre-generated.webp", "lors de": "ex-lors-de", "à condition que": "ex-a-condition-que", "tandis que": "ex-tandis-que", "bien que": "ex-bien-que", "afin de": "ex-afin-de",
   "quant à": "ex-quant-a", "parmi": "ex-parmi",
   "faim": "ex-faim", "échanger": "ex-echanger", "rencontre": "ex-rencontre", "divorcer": "ex-divorcer", "célibataire": "ex-celibataire", "témoin": "ex-temoin",
   "coupable": "ex-coupable", "innocent": "ex-innocent", "découverte": "ex-decouverte", "scientifique": "ex-scientifique", "mince": "ex-mince", "oublier": "ex-oublier",
@@ -15982,7 +15982,8 @@ const V_SCENE = {
 };
 const vPic = w => V_IMG[w.fr] || V_SCENE[w.fr];
 function vImg(w, cls) {
-  const i = el("img", cls); i.src = "img/" + vPic(w) + ".jpg"; i.alt = ""; i.loading = "lazy"; i.decoding = "async";
+  const pic = vPic(w);
+  const i = el("img", cls); i.src = "img/" + (/\.(?:jpe?g|png|webp)$/i.test(pic) ? pic : pic + ".jpg"); i.alt = ""; i.loading = "lazy"; i.decoding = "async";
   return i;
 }
 
@@ -16197,11 +16198,11 @@ const V_EX = {
   "désormais": ["[Désormais], les magasins ferment à vingt heures.", "From now on, shops close at 8 pm."],
   "auparavant": ["Il habitait [auparavant] à Marseille.", "He previously lived in Marseilles."],
   "aussitôt": ["Il est arrivé et il est [aussitôt] reparti.", "He arrived and left again immediately."],
-  "peu à peu": ["[Peu à peu], j'ai compris le problème.", "Little by little, I understood the problem."],
+  "peu à peu": ["[Peu à peu], le bonhomme de neige fond au soleil.", "Little by little, the snowman melts in the sun."],
   "environ": ["Le trajet dure [environ] deux heures.", "The journey takes about two hours."],
   "grâce à": ["J'ai trouvé ce travail [grâce à] un ami.", "I found this job thanks to a friend."],
-  "au lieu de": ["Prends le vélo [au lieu de] la voiture.", "Take the bike instead of the car."],
-  "malgré": ["Nous sommes sortis [malgré] la pluie.", "We went out despite the rain."],
+  "au lieu de": ["[Au lieu de] manger le gâteau, le lapin choisit une carotte.", "Instead of eating the cake, the rabbit chooses a carrot."],
+  "malgré": ["[Malgré] la pluie, elle continue à courir.", "Despite the rain, she keeps running."],
   "lors de": ["[Lors de] notre dernière visite, il était malade.", "During our last visit, he was ill."],
   "à condition que": ["Je viendrai [à condition que] tu sois là.", "I'll come provided that you're there."],
   "tandis que": ["Il aime la mer, [tandis que] sa femme préfère la montagne.", "He loves the sea, whereas his wife prefers the mountains."],
@@ -17286,3 +17287,4 @@ startSet("fr-r23");
 </script>
 
 </body></html>
+
