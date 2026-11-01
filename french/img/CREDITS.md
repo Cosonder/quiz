@@ -1,6 +1,6 @@
 # 图片来源
 
-单词卡片里的图片都来自 [Pixabay](https://pixabay.com)，按 [Pixabay 内容许可](https://pixabay.com/service/license-summary/) 使用（可免费使用，无需署名）。下面列出每张图的原始页面和作者，方便替换或核对。
+下表中的原有图片来自 [Pixabay](https://pixabay.com)，按 [Pixabay 内容许可](https://pixabay.com/service/license-summary/) 使用（可免费使用，无需署名）。下面列出每张图的原始页面和作者，方便替换或核对。
 
 | 单词 | 文件 | 原图 | 作者 |
 |---|---|---|---|
@@ -418,3 +418,14 @@
 | léger | leger.jpg | [3010848](https://pixabay.com/photos/feather-ease-slightly-blue-airy-3010848/) | Sponchia |
 | lent | lent.jpg | [4345504](https://pixabay.com/photos/snail-shell-mollusk-gastropod-4345504/) | Ralphs_Fotos |
 | rapide | rapide.jpg | [8446249](https://pixabay.com/photos/train-high-speed-rail-bullet-train-8446249/) | Kanenori |
+
+## 按例句生成的插图
+
+以下三张插图使用 OpenAI 内置 imagegen 生成，用于单词的例句场景展示。网页使用 512 × 512 的 WebP 版本；生成图不是 Pixabay 素材。旧 JPG 文件和上方来源记录保留。
+
+| 单词 | 当前使用的文件 | 对应例句 |
+|---|---|---|
+| malgré | ex-malgre-generated.webp | Malgré la pluie, elle continue à courir. |
+| au lieu de | ex-au-lieu-de-generated.webp | Au lieu de manger le gâteau, le lapin choisit une carotte. |
+| peu à peu | ex-peu-a-peu-generated.webp | Peu à peu, le bonhomme de neige fond au soleil. |
+
