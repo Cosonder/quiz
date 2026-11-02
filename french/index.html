@@ -419,6 +419,13 @@ h1 { font-family: var(--display); font-weight: 900; font-size: 1.6rem; line-heig
 .v-pic.wrong .v-pic-cap { background: var(--bad); }
 /* 例句识图：生词蓝色高亮；图下方小字标出单词 */
 .v-sent .v-hl { color: var(--accent); font-weight: 800; }
+/* 连对 combo */
+.v-combo { margin-left: auto; flex: none; font-size: .8rem; font-weight: 800; letter-spacing: .03em; color: #fff; background: #f08c00; border-radius: 99px; padding: 2px 10px; font-variant-numeric: tabular-nums; }
+.v-combo.hot { background: #e8590c; box-shadow: 0 0 0 3px rgba(232, 89, 12, .25); }
+.v-combo.bump { animation: vComboBump .35s ease-out; }
+@keyframes vComboBump { 0% { transform: scale(1); } 40% { transform: scale(1.35); } 100% { transform: scale(1); } }
+@media (prefers-reduced-motion: reduce) { .v-combo.bump { animation: none; } }
+.v-maxcombo { margin: 0; font-weight: 700; color: #e8590c; }
 .v-ex-img { display: block; width: 100%; max-width: 360px; aspect-ratio: 3 / 2; object-fit: cover; border-radius: 10px; margin: 0 auto 4px; background: var(--line); }
 .v-card .v-ans.v-ans7 { height: auto; }
 .v-pics.v-pics7 { flex: none; grid-template-rows: auto auto; width: 100%; max-width: 620px; margin: 0 auto; }
@@ -17326,6 +17333,11 @@ function vQuestion() {
   const card = el("section", "card v-card");
   const tags = el("div", "tagrow");
   tags.append(el("span", "tag", V_TYPES[q.type - 1]), el("span", "tag plain", `第 ${S.i + 1} / ${S.qs.length} 题`));
+  // 连对计数：本组里连续答对几题，答错清零；连对 2 题起显示
+  const combo = el("span", "v-combo"); combo.id = "vCombo";
+  const drawCombo = bump => { const n = S.combo || 0; combo.textContent = n >= 2 ? `combo ${n}` : ""; combo.hidden = n < 2; combo.classList.toggle("hot", n >= 10); if (bump && n >= 2) { combo.classList.remove("bump"); void combo.offsetWidth; combo.classList.add("bump"); } };
+  drawCombo(false);
+  tags.append(combo);
   card.append(tags);
   const bar = el("div", "bar"); const bi = el("i"); bi.style.width = (S.i / S.qs.length * 100) + "%"; bar.append(bi); card.append(bar);
   const head = el("h2", "q v-q");
@@ -17345,6 +17357,9 @@ function vQuestion() {
   const say = text => { if (tts && userActivated) speak(text, 0.85, null); };
   const finish = (ok, given) => {
     S.res[w.id + ":" + q.type] = { ok, given };
+    S.combo = ok ? (S.combo || 0) + 1 : 0;
+    S.maxCombo = Math.max(S.maxCombo || 0, S.combo);
+    drawCombo(ok);
     vRecord(w, q.type, ok);
     exp.classList.remove("pending"); exp.textContent = "";
     exp.append(el("b", ok ? "ok" : "no", ok ? "答对了！" : "答错了。"), document.createTextNode(" "));
@@ -17361,7 +17376,7 @@ function vQuestion() {
     next.disabled = false;
     if (ok && !first) {
       next.textContent = S.i === S.qs.length - 1 ? "查看成绩" : "下一题 →";
-      vAdvanceTimer = setTimeout(go, q.type === 5 ? 1300 : 900);
+      vAdvanceTimer = setTimeout(go, q.type === 5 ? 800 : 500);
     } else if (ok) {
       next.focus({ preventScroll: true });
       say(vArt(w));
@@ -17571,6 +17586,7 @@ function vResult() {
   const card = el("section", "card");
   card.append(el("span", "tag", "背单词 · 本组成绩"));
   const s = el("p", "score", String(right)); s.append(el("small", null, ` / ${total}`)); card.append(s);
+  if ((S.maxCombo || 0) >= 2) card.append(el("p", "v-maxcombo", `本组最高连对：combo ${S.maxCombo}`));
   card.append(el("p", "sub", "每个词后面的标记依次是：" + V_T.map(t => V_TYPES[t - 1]).join("、") + "；“–”表示这个词没有该题型。"));
   const tbl = el("div", "v-table");
   S.words.forEach(w => {
