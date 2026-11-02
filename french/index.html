@@ -589,6 +589,33 @@ h1 { font-family: var(--display); font-weight: 900; font-size: 1.6rem; line-heig
 .cj-say { font-size: .8rem; padding: 1px 8px; }
 @media (max-width: 520px) { .tab { padding: 6px 10px; } }
 .tabs { max-width: 100%; overflow-x: auto; }
+
+/* 每日任务、金币和商店 */
+.coin { display: inline-block; width: .95em; height: .95em; border-radius: 50%; background: radial-gradient(circle at 35% 35%, #ffe38a, #f2b705 60%, #c98a00); box-shadow: inset 0 0 0 1.5px #b07800; vertical-align: -.12em; margin-right: 4px; }
+.coin-n { font-weight: 700; font-variant-numeric: tabular-nums; white-space: nowrap; }
+.plan-head .coin-n { font-size: 1.05rem; }
+.game-card { gap: 10px; }
+.quest-list { display: flex; flex-direction: column; gap: 8px; }
+.quest { display: grid; grid-template-columns: 1.5em minmax(0, 1fr) auto auto; grid-template-areas: "chk t n c" "chk bar bar bar"; gap: 3px 10px; align-items: center; font-size: .9rem; }
+.quest .chk { grid-area: chk; width: 1.4em; height: 1.4em; border-radius: 50%; border: 2px solid var(--line); display: grid; place-items: center; font-size: .8rem; font-weight: 700; color: #fff; }
+.quest.done .chk { background: var(--good); border-color: var(--good); }
+.quest .t { grid-area: t; overflow-wrap: anywhere; }
+.quest .n { grid-area: n; color: var(--muted); font-variant-numeric: tabular-nums; font-size: .82rem; }
+.quest .coin-n { grid-area: c; font-size: .85rem; }
+.quest .pbar { grid-area: bar; }
+.quest.done .t { color: var(--muted); text-decoration: line-through; }
+.quest-bonus, .shop-note { margin: 0; font-size: .82rem; color: var(--muted); }
+.potion-on { margin: 0; padding: 6px 10px; border-radius: 8px; background: var(--good-soft); color: var(--good); font-weight: 600; font-size: .88rem; }
+.potion-on b { font-variant-numeric: tabular-nums; }
+.shop-h { margin: 6px 0 0; font-size: 1rem; }
+.shop { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 10px; }
+@media (max-width: 640px) { .shop { grid-template-columns: 1fr; } }
+.shop-item { background: var(--bg); border-radius: 10px; padding: 10px 12px; display: flex; flex-direction: column; gap: 6px; min-width: 0; }
+.shop-top { display: flex; justify-content: space-between; gap: 8px; align-items: baseline; }
+.shop-item p { margin: 0; font-size: .8rem; color: var(--muted); flex: 1; }
+.shop-item .own { font-size: .8rem; font-variant-numeric: tabular-nums; }
+.shop-acts { display: flex; gap: 6px; flex-wrap: wrap; }
+.shop-acts .btn { padding: 4px 12px; font-size: .85rem; }
 </style>
 
 <div class="wrap">
@@ -13635,6 +13662,7 @@ function localDb(ns) {
     const docs = (await dbRef.collection("answers").get()).docs.map(d => d.data());
     let voc = [];
     try { voc = (await dbRef.collection("vocab").get()).docs.map(d => d.data()); } catch (e) {}
+    try { gameReset((await dbRef.collection("game").get()).docs.map(d => d.data())); } catch (e) {}
     progReset(docs, voc); progEnsure(); planRefresh();
     const wrong = docs.filter(d => !d.isCorrect).length;
     saveNote.textContent = wrong ? `已有 ${wrong} 条错题记录，答题记录会自动保存到学习进度。` : "答题记录会自动保存到学习进度。";
@@ -13919,7 +13947,7 @@ function xpLevel(xp) {
 
 let ansRaw = null;   // 全部答题记录
 let vocRaw = [];     // 背单词记录（只有法语页有）
-let prog = null;     // { mem: Map(题号 → {lv, last}), xp, today, lastDay, days, byDay: {日期: 当天经验} }
+let prog = null;     // { mem: Map(题号 → {lv, last}), xp, today, lastDay, days, byDay: {日期: 当天经验}, stat: {日期: 当天做题统计} }
 
 const memInterval = lv => MEM_DAYS[Math.min(lv, MEM_MAX)] * DAY_MS;
 const memDue = (m, now = Date.now()) => !!m && m.lv >= 1 && now >= m.last + memInterval(m.lv) * MEM_EARLY;
@@ -13929,9 +13957,12 @@ const memOf = id => (progEnsure() ? prog.mem.get(id) : null) || { lv: 0, last: 0
 function progStep(st, d, kind) {
   const t = Date.parse(d.at) || Date.now(), day = dayKey(new Date(t));
   let xp = 0, up = 0, down = -1, daily = false, learned = false;
+  const s = st.stat[day] || (st.stat[day] = { n: 0, right: 0, run: 0, maxRun: 0, up: 0, learned: 0, cj: 0, voc: 0, vocRight: 0, xp: 0 });
   if (day !== st.lastDay) { st.lastDay = day; st.days++; xp += XP_DAILY; daily = true; }
-  if (kind === "vocab") xp += d.ok ? XP_VOCAB_RIGHT : XP_VOCAB_WRONG;
+  if (kind === "vocab") { xp += d.ok ? XP_VOCAB_RIGHT : XP_VOCAB_WRONG; s.voc++; if (d.ok) s.vocRight++; }
   else if (d.qid) {
+    s.n++; if (d.round === "cj") s.cj++;
+    if (d.isCorrect) { s.right++; s.run++; s.maxRun = Math.max(s.maxRun, s.run); } else s.run = 0;
     const m = st.mem.get(d.qid) || { lv: 0, last: 0 };
     if (d.isCorrect) {
       xp += XP_RIGHT;
@@ -13943,16 +13974,22 @@ function progStep(st, d, kind) {
       m.lv = Math.max(0, m.lv - 2); m.last = t;
     }
     st.mem.set(d.qid, m);
+    if (up) s.up++;
+    if (learned) s.learned++;
   }
+  // 经验药水生效期间，这一条的经验乘以倍数
+  const mult = typeof gameMult === "function" ? gameMult(t) : 1;
+  xp = Math.round(xp * mult);
+  s.xp += xp;
   st.xp += xp;
   st.byDay[day] = (st.byDay[day] || 0) + xp;
   if (day === dayKey(new Date())) st.today += xp;
-  return { xp, up, down, daily, learned };
+  return { xp, up, down, daily, learned, mult };
 }
 function progEnsure() {
   if (prog) return true;
   if (!ansRaw) return false;
-  const st = { mem: new Map(), xp: 0, today: 0, lastDay: "", days: 0, byDay: {} };
+  const st = { mem: new Map(), xp: 0, today: 0, lastDay: "", days: 0, byDay: {}, stat: {} };
   const ev = ansRaw.map(d => [d, "ans"]).concat(vocRaw.map(d => [d, "vocab"]));
   ev.sort((a, b) => String(a[0].at).localeCompare(String(b[0].at))).forEach(([d, k]) => progStep(st, d, k));
   prog = st;
@@ -13967,13 +14004,15 @@ function progLive(d, kind) {
   const before = xpLevel(prog.xp).lv, todayBefore = prog.today;
   const r = progStep(prog, d, kind);
   const after = xpLevel(prog.xp).lv;
-  const parts = [`+${r.xp} 经验`];
+  const parts = [`+${r.xp} 经验` + (r.mult > 1 ? `（×${r.mult}）` : "")];
   if (r.daily) parts.push(`今日首题 +${XP_DAILY}`);
   if (r.up) parts.push(r.up === MEM_MAX ? "复习成功 · 长期记忆" : `复习成功 · 记忆 ${r.up} 级`);
   else if (r.learned) parts.push("新学会一题");
   else if (r.down >= 0) parts.push(`记忆退到 ${r.down} 级`);
   const note = typeof planNotice === "function" ? planNotice(d, todayBefore) : "";
-  xpToast(parts.join(" · "), after > before ? `升级！Lv ${after} · ${xpTitle(after)}` : note);
+  const coins = typeof gameCheck === "function" ? gameCheck() : [];   // 刚完成的每日任务 → 金币
+  coins.forEach(c => parts.push(`${c.why} +${c.coins} 金币`));
+  xpToast(parts.join(" · "), after > before ? `升级！Lv ${after} · ${xpTitle(after)}` : note || (coins.length ? "任务完成！" : ""));
   if (typeof planRefresh === "function") planRefresh();
 }
 let toastTimer = 0;
@@ -14035,7 +14074,7 @@ function xpCard() {
   card.append(head);
   const rule = el("details", "xp-rule");
   rule.append(el("summary", null, "经验和进度怎么算"),
-    el("p", null, `经验：答对 +${XP_RIGHT}，答错 +${XP_WRONG}，每天第一题 +${XP_DAILY}，按时复习成功另加 ${XP_REVIEW}×新的记忆等级` + (vocRaw.length || typeof renderVocab === "function" ? `；背单词答对 +${XP_VOCAB_RIGHT}、答错 +${XP_VOCAB_WRONG}。` : "。") + `每升一级所需经验比上一级多 40。`),
+    el("p", null, `经验：答对 +${XP_RIGHT}，答错 +${XP_WRONG}，每天第一题 +${XP_DAILY}，按时复习成功另加 ${XP_REVIEW}×新的记忆等级` + (vocRaw.length || typeof renderVocab === "function" ? `；背单词答对 +${XP_VOCAB_RIGHT}、答错 +${XP_VOCAB_WRONG}` : "") + `。经验药水生效期间，所有经验乘以 2 或 3。每升一级所需经验比上一级多 40。`),
     el("p", null, "记忆等级（艾宾浩斯遗忘曲线）：第一次答对是 1 级；之后隔够遗忘周期再答对才升一级——1 级隔 1 天、2 级隔 2 天、3 级隔 4 天、4 级隔 7 天、5 级隔 15 天，6 级是长期记忆，每 30 天巩固一次。没到时间答对只算练习，答错退两级。"),
     el("p", null, "学习进度 = 标签下所有题的记忆等级之和 ÷（题数 × 6）。全部题都到 6 级就是 100%。"));
   card.append(rule);
@@ -14195,7 +14234,8 @@ function planGo(key) {
 
 // 连续打卡（含补签），从某一天往前数
 function streakFrom(day) {
-  const by = prog.byDay, xp = d => by[d] || 0, met = d => xp(d) >= xpGoal;
+  const by = prog.byDay, xp = d => by[d] || 0, pat = typeof patchedDays === "function" ? patchedDays() : new Set();
+  const met = d => xp(d) >= xpGoal || pat.has(d);   // 用补签卡补上的日子也算打卡
   let n = 0, d = day;
   for (let g = 0; g < 3660; g++) {
     if (met(d)) { n++; d = dayOffset(d, -1); continue; }
@@ -14211,7 +14251,8 @@ function streakInfo() {
   const met = xp(today) >= xpGoal;
   const n = streakFrom(y) + (met ? 1 : 0);
   // 昨天没达标、前天达标：今天达到 2 倍目标就能补签，保住之前的连续天数
-  const patch = xp(y) < xpGoal && xp(dayOffset(y, -1)) >= xpGoal && xp(today) < 2 * xpGoal ? streakFrom(dayOffset(y, -1)) : 0;
+  const pat = typeof patchedDays === "function" ? patchedDays() : new Set();
+  const patch = xp(y) < xpGoal && !pat.has(y) && (xp(dayOffset(y, -1)) >= xpGoal || pat.has(dayOffset(y, -1))) && xp(today) < 2 * xpGoal ? streakFrom(dayOffset(y, -1)) : 0;
   return { n, today: xp(today), met, patch };
 }
 // 答完一题后：今天目标刚达成 / 今日计划刚做完时，返回一句大提示
@@ -14234,7 +14275,9 @@ function planTocItem(id = "planToc") {
   if (!p) { box.disabled = true; box.append(el("b", null, "今日计划"), el("span", null, "正在读取答题记录…")); return box; }
   const s = planStatus(p), st = streakInfo();
   const bar = el("span", "pbar"), fill = el("i", "mastery"); fill.style.width = (s.n ? s.d / s.n * 100 : 0) + "%"; bar.append(fill);
-  box.append(el("b", null, s.d === s.n ? "今日计划 · 已完成" : "今日计划"), el("span", "n", `${s.d}/${s.n} 题 · 今日 ${st.today}/${xpGoal} 经验 · 连续 ${st.n} 天`), bar);
+  const pa = typeof potionActive === "function" ? potionActive() : null;
+  const coins = typeof gameLedger === "function" ? ` · ${gameLedger().coins} 金币` : "";
+  box.append(el("b", null, (s.d === s.n ? "今日计划 · 已完成" : "今日计划") + (pa ? ` · ${pa.mult} 倍经验中` : "")), el("span", "n", `${s.d}/${s.n} 题 · 今日 ${st.today}/${xpGoal} 经验 · 连续 ${st.n} 天${coins}`), bar);
   box.addEventListener("click", () => {
     const left = s.parts.find(x => x.d < x.n);
     planGo(left ? (left.k === "conj" ? "plan:conj" : "plan:") : "plan:");
@@ -14294,16 +14337,228 @@ function planCard() {
   lab.append(sel);
   goal.append(el("span", null, `今日经验 ${st.today} / ${xpGoal}` + (st.met ? " · 已打卡" : "")), gb, lab);
   card.append(goal);
-  if (st.patch) card.append(el("p", "plan-patch", `昨天没达到目标。今天拿到 ${2 * xpGoal} 经验（2 倍目标）就能补签昨天，保住之前连续的 ${st.patch} 天。`));
+  if (st.patch) card.append(el("p", "plan-patch", `昨天没达到目标。今天拿到 ${2 * xpGoal} 经验（2 倍目标），或在下面的商店用一张补签卡，就能补上昨天，保住之前连续的 ${st.patch} 天。`));
   const rule = el("details", "xp-rule");
   rule.append(el("summary", null, "今日计划怎么配"),
     el("p", null, `每天第一次打开时生成，当天不变：到期该复习的题（最多 ${PLAN_REVIEW_MAX} 道，最该复习的在前）、从最近做的那一轮接着往下的 ${PLAN_NEW} 道新题、最近 60 天答错比例最高的标签里 ${PLAN_WEAK} 道题` + (hasConj() ? `，再加 ${PLAN_CONJ} 道动词变位。` : "。") + "今天答过一次就算完成。"),
-    el("p", null, "连续打卡：当天经验达到每日目标算打卡。某天没达标，第二天达到 2 倍目标就能补签那一天；不能连着两天都缺。"));
+    el("p", null, "连续打卡：当天经验达到每日目标算打卡。某天没达标，第二天达到 2 倍目标就能补签那一天（不能连着两天都缺），也可以用商店里的补签卡补昨天。做完今日计划奖励 30 金币。"));
   card.append(rule);
   return card;
 }
+// ---------- 每日任务、金币和商店（多邻国式）：每天 3 个任务，完成得金币；金币买补签卡和双倍 / 三倍经验药水 ----------
+// 金币的获得、购买、使用都记成记录（game 集合），和答题记录一样能备份恢复；余额和库存都由记录算出。
+// 同一个奖励（某天的某个任务）只算一次，两台设备同时领取也不会重复。
+const COIN_TIERS = [10, 15, 20];      // 三个任务：简单 / 中等 / 困难
+const COIN_ALL = 20, COIN_PLAN = 30;  // 三个任务全部完成；做完今日计划
+const POTION_MIN = 15;
+const SHOP = [
+  { id: "patch", name: "补签卡", price: 100, max: 2, desc: "昨天没达到每日目标时，用它补上昨天的打卡，保住连续天数。最多存 2 张。" },
+  { id: "x2", name: "双倍经验药水", price: 60, mult: 2, desc: `喝下后 ${POTION_MIN} 分钟内，答题得到的经验 ×2。` },
+  { id: "x3", name: "三倍经验药水", price: 120, mult: 3, desc: `喝下后 ${POTION_MIN} 分钟内，答题得到的经验 ×3。` },
+];
+// 任务池：tier 是简单 / 中等 / 困难三档目标；xp 任务按每日经验目标的倍数
+const QUESTS = [
+  { id: "n", tier: [15, 25, 40], text: n => `答 ${n} 道题`, val: s => s.n },
+  { id: "right", tier: [10, 20, 32], text: n => `答对 ${n} 道题`, val: s => s.right },
+  { id: "run", tier: [5, 8, 12], text: n => `连续答对 ${n} 道题`, val: s => s.maxRun },
+  { id: "up", tier: [5, 10, 20], text: n => `按时复习成功 ${n} 道题`, val: s => s.up, ok: n => progMembers("rev:").length >= n },
+  { id: "learn", tier: [5, 10, 15], text: n => `新学会 ${n} 道题`, val: s => s.learned },
+  { id: "xp", tier: [0.6, 1, 1.5], goal: true, text: n => `今天拿到 ${n} 经验`, val: s => s.xp },
+  { id: "cj", tier: [10, 20, 30], text: n => `做 ${n} 道动词变位`, val: s => s.cj, ok: () => typeof renderConj === "function" },
+  { id: "voc", tier: [10, 20, 30], text: n => `背单词答对 ${n} 次`, val: s => s.vocRight, ok: () => typeof renderVocab === "function" },
+];
+
+let gameRaw = [];   // game 集合的全部记录
+let potionCache = null;
+function gameReset(docs) { gameRaw = docs || []; potionCache = null; prog = null; }
+// 药水生效时段 [开始, 结束, 倍数]
+function potionWindows() {
+  if (!potionCache) potionCache = gameRaw.filter(g => g.kind === "use" && g.until && SHOP.find(s => s.id === g.item)?.mult)
+    .map(g => [Date.parse(g.at), Date.parse(g.until), SHOP.find(s => s.id === g.item).mult]);
+  return potionCache;
+}
+function gameMult(t) { let m = 1; for (const [a, b, k] of potionWindows()) if (t >= a && t < b) m = Math.max(m, k); return m; }
+function potionActive(now = Date.now()) {
+  const w = potionWindows().filter(([a, b]) => now >= a && now < b).sort((x, y) => y[2] - x[2])[0];
+  return w ? { mult: w[2], left: w[1] - now } : null;
+}
+// 余额、库存、已经领过的奖励、用补签卡补上的日子
+function gameLedger() {
+  const earned = new Set(), inv = { patch: 0, x2: 0, x3: 0 }, patched = new Set();
+  let coins = 0;
+  [...gameRaw].sort((a, b) => String(a.at).localeCompare(String(b.at))).forEach(g => {
+    if (g.kind === "earn") { if (earned.has(g.key)) return; earned.add(g.key); coins += g.coins || 0; }
+    else if (g.kind === "buy" && inv[g.item] != null) { coins -= g.price || 0; inv[g.item]++; }
+    else if (g.kind === "use" && inv[g.item] != null) { inv[g.item]--; if (g.item === "patch" && g.day) patched.add(g.day); }
+  });
+  return { coins, inv, earned, patched };
+}
+const patchedDays = () => gameLedger().patched;
+function gameAdd(doc) {
+  gameRaw.push(doc); potionCache = null;
+  if (dbRef) dbRef.collection("game").add(doc).catch(() => {});
+}
+
+// 今天的三个任务：按最近的做题量定难度，当天第一次打开时抽好并记在本机，当天不变
+function questsToday() {
+  if (!progEnsure()) return null;
+  const day = dayKey(new Date());
+  let q = null;
+  try { q = JSON.parse(localStorage.getItem("fq-quests") || "null"); } catch (e) {}
+  if (q && q.day === day && Array.isArray(q.list)) return q;
+  const recent = Object.entries(prog.stat).filter(([d, s]) => d !== day && s.n).sort((a, b) => b[0].localeCompare(a[0])).slice(0, 7);
+  const avg = recent.length ? recent.reduce((a, [, s]) => a + s.n, 0) / recent.length : 0;
+  const base = avg < 20 ? 0 : avg < 45 ? 1 : 2;
+  // 用日期做种子打乱任务池，同一天在哪台设备上抽到的一样
+  let seed = [...day].reduce((h, c) => (h * 31 + c.charCodeAt(0)) >>> 0, 7);
+  const rnd = () => { seed = (seed * 1103515245 + 12345) >>> 0; return seed / 4294967296; };
+  const pool = QUESTS.slice();
+  for (let k = pool.length - 1; k > 0; k--) { const j = Math.floor(rnd() * (k + 1)); [pool[k], pool[j]] = [pool[j], pool[k]]; }
+  const list = [];
+  for (const def of pool) {
+    if (list.length === 3) break;
+    const slot = list.length, lvl = Math.max(0, Math.min(2, base + slot - 1));
+    const target = def.goal ? Math.round(def.tier[lvl] * xpGoal / 10) * 10 : def.tier[lvl];
+    if (def.ok && !def.ok(target)) continue;
+    list.push({ id: def.id, target, coins: COIN_TIERS[slot] });
+  }
+  q = { day, list };
+  try { localStorage.setItem("fq-quests", JSON.stringify(q)); } catch (e) {}
+  return q;
+}
+function questStatus() {
+  const q = questsToday();
+  if (!q) return null;
+  const s = prog.stat[q.day] || {};
+  const led = gameLedger();
+  const list = q.list.map(x => {
+    const def = QUESTS.find(d => d.id === x.id), v = def.val(s) || 0;
+    return { ...x, text: def.text(x.target), v: Math.min(v, x.target), done: v >= x.target, claimed: led.earned.has(`${q.day}:q:${x.id}`) };
+  });
+  return { day: q.day, list, all: list.every(x => x.done), allClaimed: led.earned.has(`${q.day}:all`), planClaimed: led.earned.has(`${q.day}:plan`), led };
+}
+// 发放刚完成的任务奖励（答完题后、打开学习进度页时调用），返回这次发的
+function gameCheck() {
+  const st = questStatus();
+  if (!st) return [];
+  const out = [], now = new Date().toISOString();
+  st.list.forEach(x => { if (x.done && !x.claimed) out.push({ key: `${st.day}:q:${x.id}`, coins: x.coins, why: `任务完成：${x.text}` }); });
+  if (st.all && !st.allClaimed) out.push({ key: `${st.day}:all`, coins: COIN_ALL, why: "三个任务全部完成" });
+  const p = typeof planGet === "function" ? planGet() : null;
+  if (p && !st.planClaimed) { const s = planStatus(p); if (s.n && s.d === s.n) out.push({ key: `${st.day}:plan`, coins: COIN_PLAN, why: "今日计划完成" }); }
+  out.forEach(c => gameAdd({ kind: "earn", key: c.key, coins: c.coins, why: c.why, at: now }));
+  return out;
+}
+
+// 商店：买和用
+function gameBuy(id) {
+  const it = SHOP.find(s => s.id === id), led = gameLedger();
+  if (!it || led.coins < it.price) return "金币不够";
+  if (it.max && led.inv[id] >= it.max) return `最多存 ${it.max} 张`;
+  gameAdd({ kind: "buy", item: id, price: it.price, at: new Date().toISOString() });
+  return "";
+}
+// 补签卡能补的那一天（昨天）：昨天没达标、没补过，而且今天还没靠 2 倍目标经验补上
+function patchTarget() {
+  if (!progEnsure()) return null;
+  const t = dayKey(new Date()), y = dayOffset(t, -1), xp = d => prog.byDay[d] || 0;
+  if (xp(y) >= xpGoal || gameLedger().patched.has(y)) return null;
+  if (xp(t) >= 2 * xpGoal && (xp(dayOffset(y, -1)) >= xpGoal || gameLedger().patched.has(dayOffset(y, -1)))) return null;
+  return y;
+}
+function gameUse(id) {
+  const led = gameLedger(), now = Date.now();
+  if (!led.inv[id]) return "还没有这件道具";
+  if (id === "patch") {
+    const y = patchTarget();
+    if (!y) return "昨天已经算打卡了，不用补签";
+    gameAdd({ kind: "use", item: "patch", day: y, at: new Date(now).toISOString() });
+  } else {
+    if (potionActive(now)) return "已经有一瓶药水在生效";
+    gameAdd({ kind: "use", item: id, at: new Date(now).toISOString(), until: new Date(now + POTION_MIN * 60e3).toISOString() });
+  }
+  prog = null;   // 连续天数、经验要按新记录重算
+  return "";
+}
+
+const coinEl = n => { const s = el("span", "coin-n"); s.append(el("i", "coin"), document.createTextNode(String(n))); return s; };
+const mmss = ms => `${Math.floor(ms / 60e3)}:${String(Math.floor(ms / 1e3) % 60).padStart(2, "0")}`;
+// 学习进度页：每日任务 + 商店
+function gameCard() {
+  const card = el("section", "card game-card");
+  gameCheck();
+  const st = questStatus();
+  const head = el("div", "plan-head");
+  head.append(el("h3", null, "每日任务"));
+  if (!st) { card.append(head, el("p", "empty", "正在读取答题记录…")); return card; }
+  head.append(coinEl(st.led.coins));
+  card.append(head);
+  const pa = potionActive();
+  if (pa) { const b = el("p", "potion-on"); b.append(document.createTextNode(`${pa.mult} 倍经验生效中 · 还剩 `), el("b", "potion-left", mmss(pa.left))); card.append(b); }
+  const list = el("div", "quest-list");
+  st.list.forEach(x => {
+    const r = el("div", "quest" + (x.done ? " done" : ""));
+    const bar = el("span", "pbar"), f = el("i", "mastery"); f.style.width = (x.v / x.target * 100) + "%"; bar.append(f);
+    r.append(el("span", "chk", x.done ? "✓" : ""), el("span", "t", x.text), el("span", "n", `${x.v}/${x.target}`), bar, coinEl("+" + x.coins));
+    list.append(r);
+  });
+  card.append(list);
+  const bonus = el("p", "quest-bonus");
+  bonus.append(document.createTextNode(`三个任务全部完成再 +${COIN_ALL}` + (st.allClaimed ? "（已领）" : "") + ` · 做完今日计划 +${COIN_PLAN}` + (st.planClaimed ? "（已领）" : "")));
+  card.append(bonus);
+  // 商店
+  card.append(el("h3", "shop-h", "商店"));
+  const shop = el("div", "shop");
+  const note = el("p", "shop-note", "");
+  const pt = patchTarget();
+  SHOP.forEach(it => {
+    const own = st.led.inv[it.id];
+    const box = el("div", "shop-item");
+    const top = el("div", "shop-top");
+    top.append(el("b", null, it.name), coinEl(it.price));
+    box.append(top, el("p", null, it.desc), el("span", "own", `拥有 ${own}`));
+    const acts = el("div", "shop-acts");
+    const buy = el("button", "btn ghost", "购买"); buy.type = "button"; buy.id = "buy-" + it.id;
+    buy.disabled = st.led.coins < it.price || (it.max && own >= it.max);
+    let sure = false;
+    buy.addEventListener("click", () => {
+      if (!sure) { sure = true; buy.textContent = `确认花 ${it.price} 金币`; return; }
+      const err = gameBuy(it.id);
+      if (err) { note.textContent = err; return; }
+      xpToast(`花了 ${it.price} 金币`, `买到了：${it.name}`);
+      drawBook();
+    });
+    const use = el("button", "btn", it.id === "patch" ? "补签昨天" : "喝下"); use.type = "button"; use.id = "use-" + it.id;
+    use.disabled = !own || (it.id === "patch" ? !pt : !!pa);
+    use.addEventListener("click", () => {
+      const err = gameUse(it.id);
+      if (err) { note.textContent = err; return; }
+      xpToast(it.id === "patch" ? "已用补签卡补上昨天的打卡" : `${it.mult} 倍经验，${POTION_MIN} 分钟内有效`, it.id === "patch" ? "补签成功！" : "药水生效！");
+      drawBook();
+      if (typeof planRefresh === "function") planRefresh();
+    });
+    acts.append(buy, use);
+    box.append(acts);
+    shop.append(box);
+  });
+  card.append(shop, note);
+  const rule = el("details", "xp-rule");
+  rule.append(el("summary", null, "任务和金币怎么算"),
+    el("p", null, `每天 3 个任务，按你最近每天的做题量定难度，奖励 ${COIN_TIERS.join(" / ")} 金币；三个都完成再给 ${COIN_ALL}，做完今日计划给 ${COIN_PLAN}。任务完成时自动发金币。`),
+    el("p", null, `补签卡只能补“昨天”：昨天没达到每日目标、今天还来得及补的时候可以用。药水一次只能喝一瓶，生效 ${POTION_MIN} 分钟。`));
+  card.append(rule);
+  return card;
+}
+// 药水倒计时
+setInterval(() => {
+  const els = document.querySelectorAll(".potion-left");
+  if (!els.length) return;
+  const pa = potionActive();
+  els.forEach(e => { e.textContent = pa ? mmss(pa.left) : "0:00"; });
+  if (!pa && view === "book") drawBook();
+}, 1000);
 // ---------- 备份与恢复：所有记录 + 本机设置 → 一个 .json 文件；恢复时合并，已有的记录不重复 ----------
-const BK_COLLS = ["answers", "exams", "vocab"];
+const BK_COLLS = ["answers", "exams", "vocab", "game"];
 const BK_PREFIX = "fq-";   // 本页在浏览器里的设置键前缀
 const BK_APP = (BANK[0] && BANK[0].id.split("-")[0]) || "quiz";
 const bkKey = d => JSON.stringify(Object.keys(d).sort().map(k => [k, d[k]]));
@@ -14338,7 +14593,7 @@ function backupRow() {
   const out = el("button", "btn ghost", "备份记录"); out.type = "button"; out.id = "bkOut";
   const inBtn = el("button", "btn ghost", "从备份恢复"); inBtn.type = "button"; inBtn.id = "bkIn";
   const file = el("input"); file.type = "file"; file.accept = ".json,application/json"; file.hidden = true; file.id = "bkFile";
-  const note = el("span", "bk-note", "把答题记录（学习进度、经验值、错题本、做题日历都由它算出）、单词记录和本机设置存成一个文件，换设备或清除数据后可以恢复。");
+  const note = el("span", "bk-note", "把答题记录（学习进度、经验值、错题本、做题日历都由它算出）、单词记录、金币和道具，以及本机设置存成一个文件，换设备或清除数据后可以恢复。");
   const busy = on => { out.disabled = inBtn.disabled = on; };
   out.addEventListener("click", async () => {
     if (!dbRef) { note.textContent = "当前视图无法读取记录，不能备份。"; return; }
@@ -14931,6 +15186,7 @@ async function renderBook() {
     catch (e) { card.textContent = ""; card.append(el("p", "empty", "暂时读取不到答题记录，稍后再点一次「学习进度」。")); return; }
     let voc = vocRaw;
     try { voc = (await dbRef.collection("vocab").get()).docs.map(d => d.data()); } catch (e) {}
+    try { gameReset((await dbRef.collection("game").get()).docs.map(d => d.data())); } catch (e) {}
     progReset(docs.slice(), voc);
     // 同一道题答了多次，只看最近一次
     const latest = new Map();
@@ -14948,7 +15204,7 @@ function drawBook() {
   if (!bookCache) return;
   const { all, wrong } = bookCache;
   stage.innerHTML = "";
-  stage.append(planCard(), xpCard(), progressCard());
+  stage.append(planCard(), gameCard(), xpCard(), progressCard());
   stage.append(heatCard(bookCache.raw || []));
   stage.append(tagDistCard());
   const card = el("section", "card");
