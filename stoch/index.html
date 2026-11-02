@@ -400,6 +400,14 @@ mjx-container.mjx-wide { display: block; overflow-x: auto; overflow-y: hidden; m
 .shop-item .own { font-size: .8rem; font-variant-numeric: tabular-nums; }
 .shop-acts { display: flex; gap: 6px; flex-wrap: wrap; }
 .shop-acts .btn { padding: 4px 12px; font-size: .85rem; }
+
+/* 连对 combo */
+.v-combo { margin-left: auto; flex: none; font-size: .8rem; font-weight: 800; letter-spacing: .03em; color: #fff; background: #f08c00; border-radius: 99px; padding: 2px 10px; font-variant-numeric: tabular-nums; }
+.tagrow .v-combo { transform-origin: right center; }
+.v-combo.hot { background: #e8590c; box-shadow: 0 0 0 3px rgba(232, 89, 12, .25); }
+.v-combo.bump { animation: vComboBump .35s ease-out; }
+@keyframes vComboBump { 0% { transform: scale(1); } 40% { transform: scale(1.35); } 100% { transform: scale(1); } }
+@media (prefers-reduced-motion: reduce) { .v-combo.bump { animation: none; } }
 </style>
 
 <div class="wrap">
@@ -3683,6 +3691,26 @@ setInterval(() => {
   els.forEach(e => { e.textContent = pa ? mmss(pa.left) : "0:00"; });
   if (!pa && view === "book") drawBook();
 }, 1000);
+// ---------- 连对 combo：连续答对计数，答错清零（答题、变位各自计数；本次打开页面内有效） ----------
+const combos = {};
+function comboHit(key, ok) {
+  combos[key] = ok ? (combos[key] || 0) + 1 : 0;
+  document.querySelectorAll(`.v-combo[data-k="${key}"]`).forEach(b => comboDraw(b, ok));
+  return combos[key];
+}
+// 题卡标签行里的 combo 标记：连对 2 题起显示，10 题以上换深色
+function comboBadge(key) {
+  const b = el("span", "v-combo"); b.dataset.k = key;
+  comboDraw(b, false);
+  return b;
+}
+function comboDraw(b, bump) {
+  const n = combos[b.dataset.k] || 0;
+  b.textContent = n >= 2 ? `combo ${n}` : "";
+  b.hidden = n < 2;
+  b.classList.toggle("hot", n >= 10);
+  if (bump && n >= 2) { b.classList.remove("bump"); void b.offsetWidth; b.classList.add("bump"); }
+}
 // ---------- 备份与恢复：所有记录 + 本机设置 → 一个 .json 文件；恢复时合并，已有的记录不重复 ----------
 const BK_COLLS = ["answers", "exams", "vocab", "game"];
 const BK_PREFIX = "sq-";   // 本页在浏览器里的设置键前缀
@@ -4167,6 +4195,7 @@ function renderQuestion() {
   const tags = el("div", "tagrow");
   if (item.level) tags.append(el("span", "tag lv", item.level));
   tags.append(el("span", "tag", item.cat), el("span", "tag plain", chName(CH.get(item.ch))));
+  tags.append(comboBadge("quiz"));
   if (item.audio) {
     if (tts) tts.cancel();
     const head = el("h2", "q listen");
@@ -4260,6 +4289,7 @@ function choose(i, buttons, card, order) {
   answers[idx] = i;
   score = calcScore();
   record(item, i, right);
+  comboHit("quiz", right);
   paintAnswer(i, buttons, card, order);
 }
 // 标出对错、显示解析（回看做过的题时也用）
