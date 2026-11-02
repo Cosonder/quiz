@@ -423,7 +423,7 @@ h1 { font-family: var(--display); font-weight: 900; font-size: 1.6rem; line-heig
 .v-pics.v-pics7 { flex: none; grid-template-rows: auto auto; width: 100%; max-width: 620px; margin: 0 auto; }
 .v-pic7 { flex-direction: column; gap: 2px; }
 .v-pic7 .v-pic-img { flex: none; height: auto; aspect-ratio: 3 / 2; }
-.v-pic-word { font-size: .78rem; line-height: 1.3; color: var(--muted); text-align: center; padding: 2px 4px 1px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.v-pic-word { font-size: .78rem; line-height: 1.3; color: var(--muted); text-align: center; padding: 2px 4px 1px; overflow-wrap: anywhere; }
 .v-pic7.correct .v-pic-word { color: var(--good); font-weight: 700; }
 .v-pic7.wrong .v-pic-word { color: var(--bad); font-weight: 700; }
 .v-bw { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 18px; align-items: center; }
@@ -16179,6 +16179,7 @@ const V_ZH = {
   "lent": "慢的", "rapide": "快的",
 };
 const vMean = w => V_ZH[w.fr] ? `${w.en} · ${V_ZH[w.fr]}` : w.en;
+const V_POS_ZH = { nm: "阳性名词", nf: "阴性名词", nfpl: "阴性复数名词", v: "动词", adj: "形容词", adv: "副词", prep: "介词", conj: "连词", loc: "短语" };
 const V_POS = { nm: "n.m. 阳性名词", nf: "n.f. 阴性名词", nfpl: "n.f.pl. 阴性复数名词", v: "v. 动词", adj: "adj. 形容词", adv: "adv. 副词", prep: "prép. 介词", conj: "conj. 连词", loc: "loc. 短语" };
 const V_HASPIRE = new Set(["honte"]);   // 嘘音 h：前面不省音
 const V_WORDS = [];
@@ -17461,10 +17462,11 @@ function vQuestion() {
       const dis = pool.filter(x => !seen.has(vPic(x)) && seen.add(vPic(x))).slice(0, 3);
       const list = vShuffle([w, ...dis]);
       const grid = el("div", "v-pics v-pics7");
+      const capOf = x => `${V_POS_ZH[x.pos] || ""} · ${V_ZH[x.fr] || x.en}`;   // 图下方：词性 + 中文，不写法语
       const bs = list.map((x, k) => {
         const b = el("button", "v-pic v-pic7"); b.type = "button";
-        b.setAttribute("aria-label", "图 " + KEYS[k] + "：" + vArt(x));
-        b.append(el("span", "key", KEYS[k]), vImg(x, "v-pic-img"), el("span", "v-pic-word", vArt(x)));
+        b.setAttribute("aria-label", "图 " + KEYS[k] + "：" + capOf(x));
+        b.append(el("span", "key", KEYS[k]), vImg(x, "v-pic-img"), el("span", "v-pic-word", capOf(x)));
         b.addEventListener("click", () => {
           bs.forEach((bb, j) => { bb.disabled = true; if (list[j] === w) bb.classList.add("correct"); else if (j === k) bb.classList.add("wrong"); });
           finish(x === w, vArt(x));
