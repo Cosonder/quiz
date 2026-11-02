@@ -419,6 +419,7 @@ h1 { font-family: var(--display); font-weight: 900; font-size: 1.6rem; line-heig
 .v-pic.wrong .v-pic-cap { background: var(--bad); }
 /* 例句识图：生词蓝色高亮；图下方小字标出单词 */
 .v-sent .v-hl { color: var(--accent); font-weight: 800; }
+.v-ex-img { display: block; width: 100%; max-width: 360px; aspect-ratio: 3 / 2; object-fit: cover; border-radius: 10px; margin: 0 auto 4px; background: var(--line); }
 .v-card .v-ans.v-ans7 { height: auto; }
 .v-pics.v-pics7 { flex: none; grid-template-rows: auto auto; width: 100%; max-width: 620px; margin: 0 auto; }
 .v-pic7 { flex-direction: column; gap: 2px; }
@@ -17318,7 +17319,9 @@ let vAdvanceTimer = null;
 function vQuestion() {
   vUnbindKeys();
   clearTimeout(vAdvanceTimer);
-  const S = vSess, q = S.qs[S.i], w = q.w, ex = vEx(w);
+  const S = vSess, q = S.qs[S.i], w = q.w;
+  // 例句填空用描述配图的例句（和题上的配图对得上）；没有时才用普通例句
+  const ex = q.type === 5 ? vPicEx(w) || vEx(w) : vEx(w);
   stage.innerHTML = "";
   const card = el("section", "card v-card");
   const tags = el("div", "tagrow");
@@ -17532,8 +17535,10 @@ function vQuestion() {
       const sent = el("span", "v-sent");
       const gap = el("span", "v-gap", " ".repeat(8));
       sent.append(document.createTextNode(ex.before), gap, document.createTextNode(ex.after));
+      // 配图：只放图，不写单词
+      if (vPic(w) && vPicEx(w)) head.append(vImg(w, "v-ex-img"));
       head.append(el("span", "listen-note", "选出填入空格的词"), sent);
-      const formOf = x => { const e = vEx(x); return e ? e.form.charAt(0).toLowerCase() + e.form.slice(1) : x.fr; };
+      const formOf = x => { const e = vPicEx(x) || vEx(x); return e ? e.form.charAt(0).toLowerCase() + e.form.slice(1) : x.fr; };
       opts = [w, ...vDistract(w, formOf)]; show = formOf;
       const fill = () => { gap.textContent = ex.form; gap.classList.add("filled"); };
       card._fill = fill;
