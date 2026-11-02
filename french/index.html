@@ -417,6 +417,15 @@ h1 { font-family: var(--display); font-weight: 900; font-size: 1.6rem; line-heig
 .v-pic.wrong { border-color: var(--bad); box-shadow: 0 0 0 2px var(--bad); }
 .v-pic.correct .v-pic-cap { background: var(--good); }
 .v-pic.wrong .v-pic-cap { background: var(--bad); }
+/* 例句识图：生词蓝色高亮；图下方小字标出单词 */
+.v-sent .v-hl { color: var(--accent); font-weight: 800; }
+.v-card .v-ans.v-ans7 { height: auto; }
+.v-pics.v-pics7 { flex: none; grid-template-rows: auto auto; width: 100%; max-width: 620px; margin: 0 auto; }
+.v-pic7 { flex-direction: column; gap: 2px; }
+.v-pic7 .v-pic-img { flex: none; height: auto; aspect-ratio: 3 / 2; }
+.v-pic-word { font-size: .78rem; line-height: 1.3; color: var(--muted); text-align: center; padding: 2px 4px 1px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.v-pic7.correct .v-pic-word { color: var(--good); font-weight: 700; }
+.v-pic7.wrong .v-pic-word { color: var(--bad); font-weight: 700; }
 .v-bw { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 18px; align-items: center; }
 .v-bw-fig { margin: 0; display: flex; flex-direction: column; gap: 4px; min-width: 0; }
 .v-bw-cap { color: var(--muted); font-size: .8rem; }
@@ -16175,7 +16184,7 @@ const V_HASPIRE = new Set(["honte"]);   // 嘘音 h：前面不省音
 const V_WORDS = [];
 VOCAB.forEach(th => th.w.forEach(([fr, pos, en, extra]) => V_WORDS.push({ id: th.id + ":" + fr, th: th.id, fr, pos, en, extra })));
 const V_BY_ID = new Map(V_WORDS.map(w => [w.id, w]));
-const V_TYPES = ["看词选义", "看义选词", "听音选义", "拼写", "例句填空", "看词选图"];
+const V_TYPES = ["看词选义", "看义选词", "听音选义", "拼写", "例句填空", "看词选图", "例句识图"];
 // 图片：Pixabay 照片，存在 img/ 目录下（img/<名字>.jpg，来源见 img/CREDITS.md）；
 // 抽象词（尤其是连接词）没有合适的图，就不出“看词选图”
 const V_IMG = {
@@ -16666,9 +16675,413 @@ const V_EX = {
   "lent": ["Internet est très [lent] aujourd'hui.", "The internet is very slow today."],
   "rapide": ["Le TGV est un train très [rapide].", "The TGV is a very fast train."],
 };
+// 描述配图的例句：背单词的初见题（例句识图）用。每句严格描述这个词现在的配图，方括号里是生词（蓝色高亮）。
+// 由 french-quiz/tools/picsent/build_picsent.py 从 picsent.json 生成；换了配图要同时改这里的句子。
+const V_PICEX = {
+  "loyer": ["Chaque mois, on paie le [loyer] en billets pour pouvoir habiter cette maison.", "每个月都要用钞票付房租，才能住在这栋房子里。"],
+  "emploi": ["La jeune femme cherche un [emploi] sur son ordinateur portable, un café à côté d'elle.", "这位年轻女子在笔记本电脑上找工作，旁边放着一杯咖啡。"],
+  "diplôme": ["Le [diplôme] est roulé et attaché avec un ruban rouge.", "文凭被卷起来，用一条红丝带系着。"],
+  "douleur": ["Assis sur un banc, l'homme se tient le dos à cause d'une forte [douleur].", "那个男人坐在长凳上，因为剧烈的疼痛而捂着后背。"],
+  "billet": ["Sur ce rouleau, chaque [billet] porte le mot « ticket » et un numéro.", "这卷票上，每张票都印着“ticket”字样和一个号码。"],
+  "environnement": ["Dans cet [environnement] de montagne, une cascade coule entre les rochers et les arbres.", "在这片山地环境中，一道瀑布在岩石和树木之间流淌。"],
+  "loi": ["Ce marteau de juge en bois est le symbole de la [loi] et de la justice.", "这把木制法槌是法律和正义的象征。"],
+  "écran": ["Sur le bureau blanc, l'[écran] de l'ordinateur est allumé mais complètement blanc.", "白色的书桌上，电脑屏幕亮着，却是一片空白。"],
+  "colère": ["La jeune femme est si en [colère] que de la fumée lui sort des oreilles.", "这位年轻女子气得耳朵里都冒烟了。"],
+  "cependant": ["L'homme tient des billets et des papiers ; [cependant], il a l'air très inquiet.", "这个男人手里拿着钞票和纸张，然而他看起来非常担忧。"],
+  "recette": ["Le livre de cuisine est ouvert sur une [recette] de viande à la sauce tomate.", "菜谱书翻开在一道番茄酱汁肉的做法上。"],
+  "caisse": ["À la [caisse] du supermarché, la caissière scanne les articles d'une cliente souriante.", "在超市收银台，收银员正在为一位面带微笑的顾客扫描商品。"],
+  "entraînement": ["Pendant l'[entraînement], la petite fille court sur le terrain de foot, le ballon derrière elle.", "训练时，小女孩在足球场上奔跑，足球在她身后。"],
+  "tableau": ["Ce [tableau] dans un cadre doré montre une statue d'ange à côté d'une horloge.", "这幅装在金色画框里的画描绘了一座天使雕像和旁边的一座钟。"],
+  "mariage": ["Le jour de leur [mariage], les mariés posent devant un mur de pierre.", "在婚礼当天，新郎新娘站在一面石墙前合影。"],
+  "immeuble": ["Cet [immeuble] a des fenêtres bleues et des balcons avec des plantes.", "这栋公寓楼有蓝色的窗户和摆着植物的阳台。"],
+  "vol": ["Avec sa lampe de poche et son gros sac, le voleur prépare un [vol].", "小偷拿着手电筒，背着一个大袋子，正准备行窃。"],
+  "expérience": ["Au laboratoire, quelqu'un en gants bleus verse un liquide rouge dans un tube pour une [expérience].", "在实验室里，一个戴蓝手套的人正把红色液体倒进试管里做实验。"],
+  "visage": ["La femme aux cheveux roux baisse les yeux, et son [visage] est très calme.", "这位红发女子垂下眼睛，脸上非常平静。"],
+  "oublier": ["Quelqu'un a [oublié] son trousseau de clés sur le bureau, à côté du clavier.", "有人把一串钥匙忘在了书桌上，就在键盘旁边。"],
+  "quartier": ["Dans ce [quartier] calme, de jolies maisons colorées bordent une large rue.", "在这个安静的街区，一排排漂亮的彩色房子沿着一条宽阔的街道而建。"],
+  "chômage": ["Au [chômage], ce jeune homme cherche un emploi avec des jumelles.", "这个失业的年轻人拿着望远镜寻找工作。"],
+  "formation": ["Pendant la [formation], deux femmes souriantes travaillent ensemble sur un ordinateur portable.", "培训期间，两位面带微笑的女士一起在笔记本电脑上操作。"],
+  "ordonnance": ["Un stéthoscope et un stylo sont posés sur l'[ordonnance] du médecin.", "听诊器和一支笔放在医生的处方上。"],
+  "quai": ["Une femme assise sur un banc du [quai] attend pendant qu'un train arrive en gare.", "一位女士坐在站台的长椅上等候，一列火车正驶进车站。"],
+  "déchet": ["Au coucher du soleil, des oiseaux volent au-dessus d'une montagne de [déchets].", "日落时分，鸟儿在一座垃圾山上空飞翔。"],
+  "élection": ["Le jour de l'[élection], quatre personnes votent dans des isoloirs.", "选举当天，四个人在投票间里投票。"],
+  "clavier": ["Ce [clavier] d'ordinateur blanc a des touches en anglais et en coréen.", "这个白色电脑键盘的按键上有英文和韩文。"],
+  "honte": ["Elle cache son visage dans ses mains, comme si elle avait [honte].", "她用双手捂住脸，好像感到很羞耻。"],
+  "d'ailleurs": ["Mieux vaut ralentir : il pleut fort et, [d'ailleurs], on ne voit presque rien.", "最好开慢点：雨下得很大，而且几乎什么都看不见。"],
+  "casserole": ["Cette grande [casserole] en inox a deux poignées et un couvercle.", "这口不锈钢大锅有两个把手和一个锅盖。"],
+  "reçu": ["Ce petit [reçu] en papier blanc a plusieurs lignes imprimées en gris.", "这张白色的小票上印着几行灰色的字。"],
+  "équipe": ["Les joueuses de l'[équipe] se serrent en cercle avant le match.", "球队的女队员们在比赛前围成一圈，紧紧搂在一起。"],
+  "peintre": ["Dehors, une [peintre] blonde peint des pommes sur une toile posée sur un chevalet.", "在户外，一位金发女画家正在画架上的画布上画苹果。"],
+  "couple": ["Ce [couple] se tient par la main devant un mur de briques blanches.", "这对情侣在一面白砖墙前手牵着手。"],
+  "banlieue": ["En [banlieue], ces maisons en briques ont chacune un petit jardin devant.", "在郊区，这些砖房前面都有一个小花园。"],
+  "voleur": ["Le [voleur] masqué porte un sac à dos et attrape un gros sac d'argent.", "那个蒙面小偷背着背包，正抓起一大袋钱。"],
+  "laboratoire": ["Dans le [laboratoire], une femme en blouse blanche travaille entourée de flacons.", "在实验室里，一位穿白大褂的女士在瓶瓶罐罐中工作。"],
+  "peau": ["La jeune femme a mis une crème blanche sur la [peau] de son visage.", "这位年轻女士在脸部皮肤上涂了白色面霜。"],
+  "se souvenir": ["Ces photos de Rome et de Paris permettent de [se souvenir] du voyage.", "这些罗马和巴黎的照片让人能记住这次旅行。"],
+  "déménagement": ["Pour le [déménagement], deux gros cartons sont posés sur un diable rouge.", "为了搬家，两个大纸箱放在一辆红色手推车上。"],
+  "salaire": ["Tous ces billets de cent représentent le [salaire] de tout un mois.", "这些一百面额的钞票代表整整一个月的工资。"],
+  "connaissance": ["Ce vieux livre ouvert, avec des lunettes posées dessus, est plein de [connaissances].", "这本打开的旧书上放着一副眼镜，里面充满了知识。"],
+  "médicament": ["Des comprimés blancs de [médicament] sortent d'un flacon renversé.", "白色的药片从一个倒下的药瓶里撒了出来。"],
+  "retard": ["À l'aéroport, une jeune femme regarde les panneaux pour voir si son vol a du [retard].", "在机场，一位年轻女子看着显示屏，看她的航班是否晚点。"],
+  "réchauffement": ["Cette Terre entourée de flammes illustre le [réchauffement] de la planète.", "这个被火焰包围的地球象征着全球变暖。"],
+  "gouvernement": ["Dans cette grande salle du parlement, les membres du [gouvernement] sont assis face aux députés.", "在这个议会大厅里，政府成员坐在议员们对面。"],
+  "souris": ["Une main est posée sur une [souris] grise et noire.", "一只手放在一个灰黑色的鼠标上。"],
+  "fierté": ["Le jeune homme montre sa coupe dorée avec [fierté] et un grand sourire.", "年轻人带着自豪和灿烂的笑容展示他的金色奖杯。"],
+  "autrement dit": ["L'homme masqué porte un gros sac et tient une lampe : [autrement dit], c'est un voleur.", "那个蒙面男子背着一个大袋子，拿着一支手电筒：换句话说，他是个小偷。"],
+  "four": ["Une femme aux cheveux blancs sort une tarte fumante du [four].", "一位白发女士从烤箱里取出一个冒着热气的馅饼。"],
+  "rayon": ["Dans ce [rayon] du supermarché, les yaourts remplissent toutes les étagères.", "在超市的这个货架区，酸奶摆满了所有的架子。"],
+  "stade": ["Le [stade] est vide sous un ciel bleu, avec sa pelouse bien verte.", "蓝天下的体育场空无一人，草坪绿油油的。"],
+  "musée": ["Des touristes se promènent devant la pyramide de verre du [musée] du Louvre.", "游客们在卢浮宫博物馆的玻璃金字塔前散步。"],
+  "naissance": ["Peu après sa [naissance], le bébé dort avec un bonnet à oreilles d'ours.", "出生后不久，宝宝戴着一顶小熊耳朵帽子睡着了。"],
+  "pont": ["Le soir, les lumières du [pont] se reflètent dans l'eau du fleuve.", "傍晚，桥上的灯光倒映在河水中。"],
+  "policier": ["Chaque [policier] porte un gilet noir marqué « POLICE » dans le dos.", "每名警察都穿着背后印有“POLICE”字样的黑色背心。"],
+  "chercheur": ["Le [chercheur] en blouse blanche regarde dans un microscope.", "穿着白大褂的研究员正在看显微镜。"],
+  "joue": ["La jeune femme pose doucement les doigts sur sa [joue].", "年轻女子轻轻地把手指放在脸颊上。"],
+  "expliquer": ["La professeure tient des livres et montre le tableau pour [expliquer] quelque chose.", "女老师拿着几本书，指着黑板解释着什么。"],
+  "étagère": ["Des centaines de livres colorés sont rangés sur chaque [étagère] de la bibliothèque.", "书柜的每一层架子上都摆满了数百本五颜六色的书。"],
+  "entreprise": ["Plusieurs grandes [entreprises] ont leurs bureaux dans ces immeubles de verre modernes.", "好几家大公司的办公室都设在这些现代化的玻璃大楼里。"],
+  "apprentissage": ["Devant son ordinateur, la jeune femme mord son crayon : l'[apprentissage] demande des efforts.", "年轻女子在电脑前咬着铅笔：学习需要付出努力。"],
+  "rhume": ["Elle a attrapé un [rhume] et se mouche dans un mouchoir en papier.", "她得了感冒，正用纸巾擤鼻涕。"],
+  "correspondance": ["À la gare, deux TGV attendent côte à côte pour une [correspondance] rapide.", "在车站，两列高铁并排停靠，方便快速换乘。"],
+  "sécheresse": ["À cause de la [sécheresse], la terre est toute craquelée et l'arbre est mort.", "由于干旱，土地全都龟裂了，那棵树也枯死了。"],
+  "citoyenneté": ["Ce passeport français posé sur une carte prouve la [citoyenneté] de son titulaire.", "这本放在地图上的法国护照证明了持有人的公民身份。"],
+  "logiciel": ["Sur l'écran de l'ordinateur portable, on voit le code d'un [logiciel] en développement.", "笔记本电脑的屏幕上显示着一个正在开发的软件的代码。"],
+  "jalousie": ["Assise seule, la femme détourne les yeux avec [jalousie] pendant que le couple discute.", "那个女人独自坐着，在那对男女聊天时满怀嫉妒地移开了目光。"],
+  "en revanche": ["La tasse de café est blanche et lisse ; [en revanche], le bois en dessous est sombre et fissuré.", "咖啡杯洁白光滑；相反，下面的木头却又暗又满是裂纹。"],
+  "poêle": ["Un œuf au plat se trouve dans une petite [poêle] noire, à côté des coquilles cassées.", "一个煎蛋放在一只黑色小平底锅里，旁边是破开的蛋壳。"],
+  "panier": ["Ce [panier] en osier posé sur l'herbe contient des pommes et des bananes.", "这个放在草地上的柳条篮里装着苹果和香蕉。"],
+  "ballon": ["C'est un [ballon] de football classique, avec des hexagones blancs et des pentagones noirs.", "这是一个经典的足球，有白色六边形和黑色五边形。"],
+  "exposition": ["Dans le musée, une femme assise sur un banc admire les grands tableaux de l'[exposition].", "在博物馆里，一位女士坐在长凳上欣赏展览中的大幅油画。"],
+  "enfance": ["Pieds nus, trois garçons jouent au foot sur un terrain mouillé : une vraie scène d'[enfance].", "三个男孩光着脚在湿漉漉的场地上踢足球：真是一幅童年的画面。"],
+  "place": ["Au coucher du soleil, quelques passants traversent la grande [place] devant une église gothique.", "日落时分，几位行人穿过一座哥特式教堂前的大广场。"],
+  "enquête": ["Avec sa grosse loupe, le détective en vert mène son [enquête].", "穿绿衣服的侦探拿着大放大镜进行调查。"],
+  "découverte": ["Grâce à un microscope comme celui-ci, on peut faire une grande [découverte].", "借助这样一台显微镜，人们可以取得重大发现。"],
+  "menton": ["De profil, cet homme a le [menton] couvert d'une barbe grise.", "从侧面看，这个男人的下巴上长满了灰白的胡子。"],
+  "partager": ["Assis par terre, des amis [partagent] plusieurs pizzas et des canettes de soda.", "朋友们坐在地上，分享着几个披萨和几罐汽水。"],
+  "tiroir": ["Chaque vieux [tiroir] en bois porte une étiquette écrite à la main et une poignée ronde.", "每个旧木抽屉上都贴着手写标签，并有一个圆形拉环。"],
+  "entretien": ["Pendant l'[entretien], les deux hommes discutent face à face devant un ordinateur portable.", "面试时，两个男人在一台笔记本电脑前面对面交谈。"],
+  "exposé": ["Une femme blonde aux cheveux bouclés parle au micro pendant son [exposé].", "一位金色卷发的女士在做报告时对着麦克风讲话。"],
+  "grippe": ["Au lit en pyjama, le couple a la [grippe] et utilise beaucoup de mouchoirs.", "这对穿着睡衣躺在床上的夫妇得了流感，用了很多纸巾。"],
+  "bagage": ["Pour ce voyage, il y a trois [bagages] : deux valises roses et une valise verte.", "这次旅行有三件行李：两个粉色行李箱和一个绿色行李箱。"],
+  "inondation": ["Pendant l'[inondation], seul le panneau pour piétons et vélos dépasse de l'eau boueuse.", "洪水期间，只有行人和自行车标志牌露出浑浊的水面。"],
+  "droit": ["Ces enfants, la plupart en uniforme scolaire, rient ensemble : l'école est un [droit] pour tous.", "这些孩子大多穿着校服，一起欢笑：上学是每个人的权利。"],
+  "mot de passe": ["Sur l'écran, il faut entrer un nom d'utilisateur et un [mot de passe].", "在屏幕上需要输入用户名和密码。"],
+  "inquiétude": ["Appuyée sur la rambarde au-dessus de l'eau, la jeune femme semble pleine d'[inquiétude].", "年轻女子靠在水边的栏杆上，看起来满怀忧虑。"],
+  "davantage": ["Le stylo à la main, l'homme regarde [davantage] son carnet que son ordinateur portable.", "男人手里拿着笔，看本子比看笔记本电脑更多。"],
+  "épicerie": ["Dans cette [épicerie], les fruits frais sont rangés dans des caisses vertes.", "在这家杂货店里，新鲜水果摆放在绿色的箱子里。"],
+  "marque": ["Cette boutique de [marque] expose des sacs à main et des chaussures sur ses étagères.", "这家品牌店的货架上陈列着手提包和鞋子。"],
+  "natation": ["Avec ses lunettes roses, le petit garçon fait de la [natation] dans la piscine.", "戴着粉色泳镜的小男孩在泳池里游泳。"],
+  "roman": ["Assise dans l'herbe du parc, elle lit un [roman] au soleil.", "她坐在公园的草地上，在阳光下读小说。"],
+  "jumeau": ["Chaque [jumeau] porte un bonnet blanc avec des oreilles de lapin et tient une peluche.", "双胞胎每人都戴着带兔耳朵的白帽子，抱着一个毛绒玩具。"],
+  "fontaine": ["L'eau coule de la [fontaine] en pierre devant de vieux immeubles en brique.", "水从石头喷泉中流出，后面是古老的砖砌建筑。"],
+  "témoin": ["Un enquêteur examine les indices et le policier prend des notes ; aucun [témoin] n'est là.", "一名调查员在检查证物，警察在做记录；现场没有任何目击者。"],
+  "inventer": ["Ce vieux téléphone noir à cadran a été [inventé] il y a très longtemps.", "这台黑色旧式拨盘电话是很久以前发明的。"],
+  "barbe": ["Ce jeune homme aux yeux bleus porte une épaisse [barbe] brune.", "这个蓝眼睛的年轻人留着浓密的棕色胡子。"],
+  "attendre": ["À l'arrêt de bus, la jeune femme [attend] en regardant son téléphone.", "在公交车站，年轻女子一边看手机一边等车。"],
+  "évier": ["L'eau coule du robinet noir dans l'[évier] de la cuisine.", "水从黑色水龙头流进厨房的洗碗池。"],
+  "candidature": ["Pour sa [candidature], cette femme blonde a préparé un CV.", "为了求职申请，这位金发女子准备了一份简历。"],
+  "mémoire": ["À la bibliothèque, une étudiante rédige son [mémoire] entourée de livres.", "在图书馆里，一名女学生被书本围绕着撰写她的论文。"],
+  "blessure": ["On colle ces deux pansements sur une petite [blessure].", "这两片创可贴是贴在小伤口上的。"],
+  "valise": ["Une vieille [valise] en cuir marron est ouverte sur le lit.", "一只棕色的旧皮箱打开着放在床上。"],
+  "forêt": ["Un chemin de terre traverse la [forêt], éclairée par les rayons du soleil.", "一条土路穿过被阳光照亮的森林。"],
+  "manifestation": ["Pendant la [manifestation], la foule porte des drapeaux dans la rue.", "示威游行期间，人群在街上举着旗帜。"],
+  "fichier": ["Cette icône jaune représente un dossier qui contient un [fichier].", "这个黄色图标代表一个装有文件的文件夹。"],
+  "soulagement": ["Les bras levés vers le soleil, elle exprime son [soulagement].", "她向着太阳举起双臂，表达如释重负的心情。"],
+  "désormais": ["D'après cette pancarte, le magasin est [désormais] fermé jusqu'à 8 h 30.", "根据这块牌子，商店从现在起关门，直到八点半。"],
+  "repas": ["La table est prête pour un grand [repas] avec salades et petits plats.", "餐桌已为一顿丰盛的饭菜摆好，有沙拉和各种小菜。"],
+  "taille": ["Sur l'étiquette grise, la [taille] indiquée est XL.", "灰色标签上标明的尺码是XL。"],
+  "randonnée": ["Un homme avec un sac à dos fait une [randonnée] en montagne.", "一名背着背包的男子在山里徒步。"],
+  "auteur": ["Deux plumes d'[auteur] sont posées sur un vieux livre ouvert.", "两支作家用的蘸水笔放在一本打开的旧书上。"],
+  "neveu": ["Mon petit [neveu] sourit devant ses gâteaux d'anniversaire et des ballons bleus.", "我的小侄子在生日蛋糕和蓝色气球前笑着。"],
+  "gratte-ciel": ["Ces [gratte-ciel] en verre s'élèvent très haut vers le ciel bleu.", "这些玻璃摩天大楼高耸入蓝天。"],
+  "preuve": ["Cette empreinte digitale peut servir de [preuve] à la police.", "这枚指纹可以作为警方的证据。"],
+  "outil": ["Le marteau et la clé sont des [outils] utiles pour bricoler.", "锤子和扳手是做手工活的实用工具。"],
+  "lunettes": ["Ces [lunettes] à monture métallique sont posées sur un fond blanc.", "这副金属框眼镜放在白色背景上。"],
+  "remplir": ["Avec un crayon, il [remplit] les cases d'un questionnaire.", "他用铅笔填写问卷上的格子。"],
+  "poubelle": ["Trois grandes [poubelles] grises sont posées sur l'herbe, près d'un chemin.", "三个灰色的大垃圾桶放在草地上，靠近一条小路。"],
+  "embaucher": ["Deux hommes en costume se serrent la main : l'un vient d'[embaucher] l'autre.", "两个穿西装的男人握手：其中一人刚刚雇用了另一人。"],
+  "bourse": ["Un chapeau de diplômé posé sur des liasses de billets symbolise une [bourse] d'études.", "放在几叠钞票上的学位帽象征着一笔奖学金。"],
+  "se blesser": ["Ce footballeur [s'est blessé] et reste à genoux sur la pelouse.", "这名足球运动员受伤了，跪在草地上。"],
+  "embouteillage": ["Au coucher du soleil, un long [embouteillage] bloque les voitures sur l'avenue.", "日落时分，一场长长的堵车把汽车堵在大街上。"],
+  "paysage": ["Ce [paysage] de montagnes boisées se reflète dans un lac vert.", "这片林木葱郁的山景倒映在绿色的湖水中。"],
+  "débat": ["Pendant le [débat], un homme et une femme parlent derrière deux pupitres.", "辩论中，一男一女站在两个讲台后发言。"],
+  "réseau": ["Des téléphones et des icônes d'applications forment un grand [réseau] social.", "手机和各种应用图标组成了一个庞大的社交网络。"],
+  "ennui": ["Par ce jour de pluie, l'[ennui] se lit sur le visage du garçon à la fenêtre.", "在这个下雨天，窗边男孩的脸上写满了无聊。"],
+  "auparavant": ["Des promeneurs longent le port ; [auparavant], ils ont visité la grande cathédrale.", "人们沿着港口散步；在此之前，他们参观了那座大教堂。"],
+  "goût": ["Le chef porte la cuillère à sa bouche pour vérifier le [goût] de la sauce.", "厨师把勺子送到嘴边，尝尝酱汁的味道。"],
+  "prix": ["Sur cette étiquette jaune, on n'a pas encore écrit le [prix].", "这张黄色标签上还没有写价格。"],
+  "course": ["Une athlète est en pleine [course] sur la piste d'un grand stade vide.", "一名女运动员正在空荡荡的大体育场跑道上奔跑。"],
+  "scène": ["Des projecteurs éclairent la [scène] d'un théâtre plongé dans le noir.", "聚光灯照亮了漆黑剧院里的舞台。"],
+  "copain": ["Trois [copines] souriantes posent ensemble, serrées les unes contre les autres.", "三个面带微笑的好朋友紧紧靠在一起合影。"],
+  "chantier": ["Sur ce [chantier], deux grandes grues dominent un immeuble en construction.", "在这个工地上，两台大吊车耸立在一座在建的楼房上方。"],
+  "juge": ["Dans la salle d'audience, un jeune homme en costume s'adresse au [juge].", "在法庭上，一位穿西装的年轻人正在向法官陈述。"],
+  "machine": ["Cette grosse [machine] industrielle est faite de tuyaux gris et de vannes bleues.", "这台大型工业机器由灰色管道和蓝色阀门组成。"],
+  "manteau": ["La jeune femme porte un [manteau] sombre avec une capuche en fourrure.", "这位年轻女子穿着一件带毛皮帽兜的深色大衣。"],
+  "éviter": ["La pluie coule sur la vitre : mieux vaut [éviter] de sortir maintenant.", "雨水顺着玻璃流下：现在最好避免出门。"],
+  "ménage": ["Un balai serpillière vert et des chiffons sont prêts pour faire le [ménage].", "一把绿色拖把和几块抹布已经准备好用来做家务了。"],
+  "licencier": ["Ce grand tampon rouge annonce qu'un employé vient d'être [licencié].", "这个红色大印章表明一名员工刚刚被解雇了。"],
+  "note": ["Les enfants lèvent les bras, fiers de leur excellente [note] à l'examen.", "孩子们举起手臂，为自己考试的优异成绩感到自豪。"],
+  "guérir": ["Triste sous les nuages au début, l'homme semble [guéri] et marche joyeusement au soleil.", "这个男人起初在乌云下很沮丧，如今似乎已经痊愈，在阳光下愉快地走着。"],
+  "permis de conduire": ["Deux [permis de conduire] britanniques sont posés sur une feuille imprimée.", "两张英国驾照放在一张印有字的纸上。"],
+  "espèce": ["L'éléphant d'Afrique est une [espèce] qui vit en troupeau dans la savane.", "非洲象是一种在草原上群居的物种。"],
+  "inégalité": ["Une personne assise seule sur des marches en pierre montre l'[inégalité] dans nos villes.", "一个人独自坐在石阶上，体现了我们城市中的不平等。"],
+  "appareil": ["Un écran, une tablette et un téléphone : trois [appareils] de tailles différentes.", "一台显示器、一台平板和一部手机：三种大小不同的设备。"],
+  "bonheur": ["Les deux amis sautent en l'air sous le ciel bleu, pleins de [bonheur].", "两个朋友在蓝天下跳向空中，充满了幸福。"],
+  "aussitôt": ["La porte s'ouvre et l'homme en costume s'avance [aussitôt] vers la lumière.", "门一打开，穿西装的男人就立刻走向光亮处。"],
+  "épice": ["Des cuillères remplies de sel, de poivre et d'autres [épices] sont posées sur une ardoise.", "装满盐、胡椒和其他香料的勺子放在一块石板上。"],
+  "remise": ["Quatre étiquettes forment le mot « SALE » pour annoncer une [remise].", "四张标签拼出“SALE”一词，宣告有折扣。"],
+  "spectateur": ["Dans le stade plein, un [spectateur] lève le poing pour encourager son équipe.", "在座无虚席的体育场里，一名观众举起拳头为球队加油。"],
+  "pièce": ["À la fin de la [pièce], les actrices dansent sur scène sous les serpentins.", "戏剧结束时，女演员们在彩带下在舞台上跳舞。"],
+  "dispute": ["Pendant la [dispute], le jeune homme pointe le doigt vers la jeune femme.", "争吵时，年轻男子用手指指着年轻女子。"],
+  "ascenseur": ["Dans l'[ascenseur], une main appuie sur le bouton du dix-huitième étage.", "在电梯里，一只手按下了十八楼的按钮。"],
+  "tribunal": ["La salle du [tribunal] est vide, avec ses bancs en bois sombre.", "法庭里空无一人，摆着深色的木质长椅。"],
+  "robot": ["Un [robot] aspirateur blanc nettoie le sol carrelé de la maison.", "一台白色扫地机器人正在清洁家里的瓷砖地面。"],
+  "écharpe": ["La petite fille porte une grosse [écharpe] grise autour de la tête.", "小女孩头上围着一条厚厚的灰色围巾。"],
+  "réfléchir": ["Le jeune homme à lunettes [réfléchit], la main sous le menton.", "戴眼镜的年轻男子手托着下巴，正在思考。"],
+  "lessive": ["Des pinces à linge colorées attendent sur le fil pour étendre la [lessive].", "彩色的晾衣夹挂在绳子上，等着晾洗好的衣服。"],
+  "démissionner": ["L'homme en costume [démissionne] et marche vers la porte de sortie.", "穿西装的男人辞职了，正走向出口的门。"],
+  "échouer": ["Ce grand tampon rouge « FAIL » signifie qu'on [a échoué].", "这个写着“FAIL”的红色大印章表示没有通过。"],
+  "tousser": ["La femme aux cheveux longs [tousse] fort dans un mouchoir blanc.", "长发女人对着白色纸巾用力咳嗽。"],
+  "carrefour": ["Deux chemins de terre se croisent et forment un [carrefour] au milieu de la forêt.", "两条土路在森林中央交汇，形成一个十字路口。"],
+  "ressource": ["L'eau de ce vieux puits en pierre est une [ressource] précieuse.", "这口古老石井里的水是一种宝贵的资源。"],
+  "pauvreté": ["Un homme donne une pièce à un vieil homme qui vit dans la [pauvreté].", "一个男人给了一位生活贫困的老人一枚硬币。"],
+  "télécharger": ["Cette icône bleue avec une flèche sert à [télécharger] un fichier.", "这个带箭头的蓝色图标用来下载文件。"],
+  "malheur": ["Accablé par le [malheur], l'homme cache son visage dans ses mains.", "这个男人被不幸压垮，双手捂住了脸。"],
+  "peu à peu": ["Les pièces du puzzle se rapprochent [peu à peu] les unes des autres.", "拼图块正一点一点地彼此靠近。"],
+  "plat": ["Ce [plat] de couscous est garni de pois chiches, d'oignons et d'olives.", "这道古斯古斯配有鹰嘴豆、洋葱和橄榄。"],
+  "vendeur": ["Le [vendeur] montre une chaussure marron à un client assis dans le magasin.", "售货员给坐在店里的顾客看一只棕色的鞋。"],
+  "joueur": ["Le jeune [joueur] en maillot vert frappe le ballon sur le terrain.", "穿绿色球衣的小球员在球场上踢球。"],
+  "concert": ["Pendant le [concert], la foule lève les bras sous les projecteurs.", "音乐会上，人群在聚光灯下举起双臂。"],
+  "rencontre": ["Lors de leur [rencontre], la jeune femme se jette dans les bras de l'homme.", "见面时，年轻女子扑进了男人的怀里。"],
+  "escalier": ["Ce grand [escalier] en spirale descend jusqu'au rez-de-chaussée.", "这座巨大的螺旋楼梯一直通到底层。"],
+  "avocat": ["L'[avocat] écrit à son bureau, à côté d'une statue de la Justice.", "律师在办公桌前写东西，旁边有一尊正义女神像。"],
+  "énergie": ["L'ampoule allumée transforme l'[énergie] électrique en lumière.", "亮着的灯泡把电能转化为光。"],
+  "gant": ["Deux mains dans des [gants] rouges tiennent un cœur de neige.", "一双戴着红手套的手捧着一颗雪做的心。"],
+  "décider": ["L'homme [a décidé] de vendre sa maison jaune.", "这个男人决定卖掉他的黄色房子。"],
+  "facture": ["Une main tend un billet pour payer la [facture] qui sort de l'enveloppe.", "一只手递出一张钞票，用来支付从信封里露出的账单。"],
+  "réunion": ["Autour de la table, deux collègues se serrent la main au début de la [réunion].", "在桌子周围，两位同事在会议开始时握手。"],
+  "réussir": ["Les bras levés au milieu des feuilles qui volent, il crie de joie : il a [réussi] !", "他在飞舞的纸张中高举双臂，欢呼着：他成功了！"],
+  "fièvre": ["Le thermomètre affiche 36 degrés, donc il n'y a pas de [fièvre].", "体温计显示36度，所以没有发烧。"],
+  "trottoir": ["Trois personnes marchent sur le [trottoir] au coin d'une rue ensoleillée.", "三个人走在一条阳光明媚的街道拐角处的人行道上。"],
+  "renouvelable": ["Ces éoliennes sur les collines produisent une énergie [renouvelable].", "山丘上的这些风力发电机生产可再生能源。"],
+  "accueil": ["À l'[accueil] de l'hôtel, une employée répond au téléphone près de son collègue.", "在酒店前台，一位女员工在同事旁边接电话。"],
+  "enregistrer": ["Autrefois, on utilisait cette disquette pour [enregistrer] ses fichiers.", "以前，人们用这种软盘来保存文件。"],
+  "espoir": ["Cette jeune pousse qui sort de la terre au soleil est un symbole d'[espoir].", "这株在阳光下破土而出的嫩芽是希望的象征。"],
+  "environ": ["Sur ce quai de gare, l'horloge indique [environ] une heure et demie.", "在这个火车站台上，时钟显示大约一点半。"],
+  "cuire": ["Une main tient des spaghettis au-dessus de la casserole pour les faire [cuire].", "一只手把意大利面拿在锅的上方，准备下锅煮。"],
+  "client": ["Ce [client] barbu marche avec des sacs de shopping colorés dans les mains.", "这位留胡子的顾客手里提着彩色购物袋走着。"],
+  "gagner": ["Cette coupe dorée avec le chiffre 1 récompense l'équipe qui a [gagné].", "这座印有数字1的金色奖杯奖励获胜的队伍。"],
+  "orchestre": ["Les violonistes de l'[orchestre] jouent assis devant leurs pupitres.", "管弦乐队的小提琴手们坐在乐谱架前演奏。"],
+  "anniversaire": ["Une seule bougie brûle sur ce petit gâteau d'[anniversaire] aux fruits rouges.", "这个红色浆果小生日蛋糕上只点着一根蜡烛。"],
+  "toit": ["Un chat tigré est assis sur le [toit] et regarde droit devant lui.", "一只虎斑猫坐在屋顶上，直直地看着前方。"],
+  "prison": ["Dans ce long couloir de la vieille [prison], les portes des cellules sont fermées.", "在这座旧监狱的长走廊里，牢房的门都关着。"],
+  "électricité": ["Ces grands pylônes transportent l'[électricité] à travers la campagne.", "这些高大的电塔把电输送到乡间各处。"],
+  "chaussette": ["Chaque petite [chaussette] en laine est blanche, avec un motif gris et vert.", "每只小羊毛袜都是白色的，带有灰绿色的花纹。"],
+  "empêcher": ["Allongée dans son lit, elle a les yeux ouverts : quelque chose l'[empêche] de dormir.", "她躺在床上睁着眼睛：有什么事让她睡不着。"],
+  "chauffage": ["Ce radiateur gris et son thermostat blanc servent au [chauffage] de la pièce.", "这台灰色散热器和它的白色温控阀用来给房间供暖。"],
+  "tâche": ["Sur cette liste, quatre [tâches] sont cochées en vert et une porte une croix rouge.", "在这张清单上，有四项任务打了绿色的勾，一项打了红叉。"],
+  "rédiger": ["On peut [rédiger] une belle lettre avec ce stylo plume doré.", "可以用这支金色钢笔写一封漂亮的信。"],
+  "poumon": ["Sur cette image, on voit les deux [poumons] roses dans la poitrine.", "在这张图上，可以看到胸腔里的两个粉红色的肺。"],
+  "auberge": ["Devant cette vieille [auberge] aux volets verts, il y a un grand jardin.", "这家绿色百叶窗的老客栈前面有一个大花园。"],
+  "gaspiller": ["Ces fruits et légumes jetés autour d'une benne verte sont [gaspillés].", "这些扔在绿色垃圾箱周围的水果和蔬菜被浪费了。"],
+  "bénévolat": ["Ces nombreuses mains levées sur un fond coloré symbolisent le [bénévolat].", "这些在彩色背景前举起的手象征着志愿活动。"],
+  "supprimer": ["Pour [supprimer] un mot, on appuie sur la touche rouge « Del ».", "要删除一个词，就按红色的“Del”键。"],
+  "sensible": ["Cette fille [sensible] cache son visage dans ses mains sous sa capuche.", "这个敏感的女孩戴着兜帽，用双手捂着脸。"],
+  "grâce à": ["[Grâce à] cette main solide, l'autre main trouve un appui au coucher du soleil.", "多亏这只有力的手，另一只手在日落时找到了依靠。"],
+  "éplucher": ["On utilise cet économe bleu pour [éplucher] les pommes de terre.", "人们用这把蓝色削皮器给土豆削皮。"],
+  "vitrine": ["Plusieurs robes de mariée blanches sont exposées dans la [vitrine] du magasin.", "商店的橱窗里展示着好几件白色婚纱。"],
+  "marquer": ["Près du poteau de corner, le joueur frappe le ballon pour tenter de [marquer] un but.", "在角旗杆旁，球员踢球，试图进球。"],
+  "chanson": ["Sur scène, le guitariste aux cheveux longs chante une [chanson] avec force.", "舞台上，长发吉他手用力地唱着一首歌。"],
+  "souvenir": ["Il regarde de vieilles photos en noir et blanc pleines de [souvenirs].", "他看着满是回忆的黑白老照片。"],
+  "balcon": ["Sur cette façade blanche, chaque [balcon] a une rambarde rouge.", "在这面白色外墙上，每个阳台都有红色栏杆。"],
+  "amende": ["Une [amende] de stationnement est posée sur le tableau de bord de la voiture.", "一张停车罚单放在汽车的仪表板上。"],
+  "batterie": ["La [batterie] rouge n'est plus chargée qu'à vingt pour cent.", "这块红色电池只剩百分之二十的电了。"],
+  "ceinture": ["Cette [ceinture] en cuir noir a une boucle argentée.", "这条黑色皮腰带有一个银色扣环。"],
+  "profiter": ["Deux jeunes femmes courent dans les vagues pour [profiter] de la mer.", "两位年轻女子跑进浪花里，尽情享受大海。"],
+  "clé": ["Il y a beaucoup de [clés] différentes sur ce trousseau.", "这串钥匙上有很多把不同的钥匙。"],
+  "délai": ["Sur ce chronomètre, le mot « deadline » rappelle qu'il faut respecter le [délai].", "这个秒表上的“deadline”一词提醒人们必须遵守期限。"],
+  "réviser": ["Le jeune homme [révise] ses notes à son bureau avec un livre ouvert.", "这个年轻人在书桌前对着一本打开的书复习笔记。"],
+  "cœur": ["Ce dessin montre un [cœur] humain avec ses vaisseaux bleus et rouges.", "这幅画展示了一颗带有蓝色和红色血管的人类心脏。"],
+  "séjour": ["On rêve d'un [séjour] sur cette plage de sable blanc au bord de la mer.", "人们梦想在这片海边的白色沙滩上逗留一段时间。"],
+  "recycler": ["Cette poubelle verte est pleine de bouteilles et d'emballages à [recycler].", "这个绿色垃圾桶里装满了待回收的瓶子和包装。"],
+  "voter": ["Pour [voter], on glisse son bulletin dans cette urne.", "投票时，要把选票塞进这个投票箱。"],
+  "recherche": ["La loupe est souvent le symbole de la [recherche].", "放大镜常常是搜索的象征。"],
+  "bavard": ["Ces trois personnes sont très [bavardes] et parlent toutes en même temps.", "这三个人话很多，大家同时都在说话。"],
+  "au lieu de": ["Cette femme va en ville à vélo [au lieu de] prendre la voiture.", "这个女人骑自行车进城，而不是开车。"],
+  "mélanger": ["Avec ce fouet, on va [mélanger] les œufs dans le bol.", "我们要用这个打蛋器在碗里搅拌鸡蛋。"],
+  "échanger": ["Dans ce magasin de sacs et de chaussures, on peut [échanger] un article contre un autre.", "在这家卖包和鞋的商店里，可以把一件商品换成另一件。"],
+  "s'entraîner": ["Sur le terrain de foot, la jeune femme [s'entraîne] en faisant des étirements.", "在足球场上，这位年轻女子正在做拉伸训练。"],
+  "danse": ["Un homme saute pendant qu'une femme en rouge fait une figure de [danse] au sol.", "一个男人跃起，而一个穿红衣的女人在地上摆出一个舞蹈动作。"],
+  "se marier": ["Quand on [se marie], on échange souvent deux alliances en or comme celles-ci.", "人们结婚时，常常会交换两枚像这样的金色婚戒。"],
+  "habitant": ["Des [habitants] se promènent dans une rue ensoleillée, à côté d'un petit chien blanc.", "居民们在阳光明媚的街上散步，旁边有一只白色的小狗。"],
+  "arrêter": ["La police a [arrêté] cet homme, il a les menottes aux poignets.", "警察逮捕了这个男人，他手腕上戴着手铐。"],
+  "planète": ["Mars est une [planète] rouge couverte de cratères.", "火星是一颗布满陨石坑的红色行星。"],
+  "bague": ["Cette [bague] en or porte une belle pierre rouge.", "这枚金戒指上镶着一颗漂亮的红色宝石。"],
+  "se tromper": ["Au téléphone devant la fenêtre, l'homme dit : « Pardon, je [me suis trompé] de numéro. »", "在窗前打电话的男人说：“抱歉，我拨错号码了。”"],
+  "couverture": ["Une [couverture] rayée à franges noires est posée sur le fauteuil vert.", "一条带黑色流苏的条纹毯子搭在绿色扶手椅上。"],
+  "dépense": ["Derrière un petit chariot doré, une pile de tickets de caisse montre les [dépenses].", "一辆金色小购物车后面，一叠收银小票显示着各项开支。"],
+  "emploi du temps": ["Un stylo est posé sur un agenda ouvert où l'on note son [emploi du temps].", "一支笔放在一本打开的记事本上，人们在里面记下自己的时间安排。"],
+  "foie": ["Un médecin en blouse blanche se tient à côté d'un énorme [foie] rouge.", "一位穿白大褂的医生站在一个巨大的红色肝脏旁边。"],
+  "douane": ["Ce panneau rond indique qu'il faut s'arrêter à la [douane].", "这块圆形标志表示必须在海关停下。"],
+  "protéger": ["Deux mains ouvertes [protègent] doucement un petit oiseau brun.", "一双张开的手轻轻地保护着一只棕色的小鸟。"],
+  "interdire": ["Ce panneau rouge barré d'une diagonale signifie que quelque chose est [interdit].", "这个带斜杠的红色标志表示某事被禁止。"],
+  "journal": ["Un [journal] plié est posé sur une table en bois.", "一份折好的报纸放在木桌上。"],
+  "têtu": ["Cet âne au poil épais, réputé [têtu], reste immobile près de la clôture.", "这头毛很厚的驴，出了名的固执，一动不动地待在栅栏边。"],
+  "malgré": ["[Malgré] la pluie, une femme en manteau rouge se promène dans le parc.", "尽管下着雨，一位穿红色外套的女人仍在公园里散步。"],
+  "goûter": ["Avec la cuillère en bois, on peut [goûter] cette soupe de potiron servie dans un bocal.", "可以用木勺尝一尝这罐南瓜汤。"],
+  "rembourser": ["Une main tend une pièce d'un euro pour [rembourser] une petite dette.", "一只手递出一枚一欧元硬币来还一笔小债。"],
+  "se détendre": ["Allongée dans un hamac orange, une femme [se détend] à l'ombre des arbres.", "一个女人躺在橙色吊床上，在树荫下放松。"],
+  "sous-titre": ["Sur l'écran du cinéma, une danseuse apparaît, mais on ne voit aucun [sous-titre].", "电影院的银幕上出现了一位舞者，但看不到任何字幕。"],
+  "divorcer": ["Un homme en costume montre un certificat attestant qu'un couple a [divorcé].", "一个穿西装的男人展示着一份证明某对夫妇已离婚的证书。"],
+  "piéton": ["Ce large passage clouté en ville permet aux [piétons] de traverser la rue.", "城里这条宽阔的斑马线让行人可以过马路。"],
+  "voler": ["Ce portefeuille dépasse de la poche arrière : il serait facile de le [voler].", "这个钱包从后裤袋里露出来：很容易被偷。"],
+  "étoile": ["Des milliers d'[étoiles] brillent dans le ciel au-dessus d'une montagne.", "成千上万颗星星在一座山上方的夜空中闪耀。"],
+  "maquillage": ["Avec un pinceau, on applique du [maquillage] vert sur la paupière d'une femme.", "有人用刷子在一位女士的眼皮上涂绿色眼妆。"],
+  "prévenir": ["Un homme en veste grise prend son téléphone pour [prévenir] quelqu'un.", "一个穿灰色外套的男人拿起手机通知某人。"],
+  "quotidien": ["Lire le journal au lit avec une tasse fait partie de sa routine [quotidienne].", "在床上就着一杯饮品看报纸是他日常生活的一部分。"],
+  "économiser": ["Cette tirelire rose en forme de cochon sert à [économiser] de l'argent.", "这个粉色的小猪存钱罐是用来存钱的。"],
+  "bibliothèque": ["Cette grande [bibliothèque] ancienne a plusieurs étages de livres et des balcons en fer.", "这座古老的大图书馆有好几层书架和铁制阳台。"],
+  "genou": ["Ce dessin montre les os du [genou], avec une zone rouge entre eux.", "这幅图展示了膝盖的骨头，骨头之间有一处红色区域。"],
+  "frontière": ["Au poste de [frontière], la route est bloquée par des cônes et un panneau stop.", "在边境检查站，道路被锥形桶和停车标志拦住了。"],
+  "menacer": ["Un poing serré brise la vitre et semble [menacer] la personne derrière.", "一只紧握的拳头击碎了玻璃，似乎在威胁后面的人。"],
+  "exiger": ["D'un doigt pointé, cette main semble [exiger] quelque chose avec autorité.", "这只手伸出食指，似乎在强硬地要求着什么。"],
+  "émission": ["Deux présentateurs enregistrent une [émission] dans un studio plein de caméras et de lumières.", "两位主持人在一个摆满摄像机和灯光的演播室里录制节目。"],
+  "paresseux": ["Ce chat [paresseux] fait la sieste dans un panier en osier, une patte en l'air.", "这只懒猫在柳条篮里睡午觉，一只爪子举在空中。"],
+  "lors de": ["[Lors de] sa visite à l'hôpital, il apporte des fleurs à un vieil homme.", "去医院探望时，他给一位老人带来了鲜花。"],
+  "bouillir": ["L'eau [bout] dans la bouilloire en verre, à côté d'une tasse et d'un sachet de thé.", "玻璃水壶里的水正在沸腾，旁边放着一个杯子和一个茶包。"],
+  "essayer": ["Dans la cabine, elle tient une chemise blanche contre elle avant de l'[essayer].", "在试衣间里，她把一件白衬衫比在身上，准备试穿。"],
+  "nager": ["Un homme va [nager] dans la mer, au milieu des grosses vagues.", "一个男人在大浪中准备下海游泳。"],
+  "critique": ["Avec une seule étoile sur cinq, cette [critique] est très négative.", "五颗星只给了一颗，这条评论非常负面。"],
+  "élever": ["Cette mère [élève] ses trois filles, qui la serrent dans leurs bras sur l'herbe.", "这位母亲抚养着三个女儿，她们在草地上紧紧抱着她。"],
+  "bruyant": ["La nuit, ce quartier [bruyant] est plein de lumières, d'écrans et de passants.", "夜晚，这个喧闹的街区到处是灯光、屏幕和行人。"],
+  "coupable": ["Sur ce tampon rouge, on lit le mot anglais qui signifie [coupable].", "这个红色印章上写着意为“有罪”的英文单词。"],
+  "lune": ["La pleine [lune] brille dans le ciel noir de la nuit.", "满月在漆黑的夜空中闪耀。"],
+  "mode": ["Les mannequins marchent sur le podium pendant un défilé de [mode].", "模特们在时装秀上走T台。"],
+  "atteindre": ["Avec son piolet, l'alpiniste grimpe pour [atteindre] le sommet de la montagne.", "登山者拿着冰镐向上攀爬，想要到达山顶。"],
+  "ranger": ["Elle [range] sa chambre et passe la serpillière sur le sol.", "她在收拾房间，用拖把拖地。"],
+  "compte": ["Pour ouvrir un [compte], on peut aller dans cette vieille banque.", "要开账户，可以去这家老银行。"],
+  "matière": ["Chaque livre correspond à une [matière] : histoire, physique, biologie ou anglais.", "每本书对应一门科目：历史、物理、生物或英语。"],
+  "épaule": ["L'homme porte une sacoche en cuir sur l'[épaule] et tient un livre.", "那个男人肩上挎着一个皮包，手里拿着一本书。"],
+  "atterrir": ["L'avion descend et va bientôt [atterrir] près de la grande ville.", "飞机正在下降，很快就要在大城市附近降落。"],
+  "tempête": ["Pendant la [tempête], d'énormes vagues frappent le phare au bout de la jetée.", "暴风雨中，巨浪拍打着防波堤尽头的灯塔。"],
+  "soutenir": ["Une main se tend vers une autre pour la [soutenir] et l'aider.", "一只手伸向另一只手，想扶住它、帮助它。"],
+  "chaîne": ["Il change de [chaîne] avec la télécommande devant la télévision.", "他在电视前用遥控器换频道。"],
+  "fier": ["Elle sourit et se montre du doigt, très [fière] d'elle-même.", "她笑着用手指着自己，非常自豪。"],
+  "à condition que": ["Ces amis aiment boire un verre dehors, [à condition qu']il fasse beau.", "这些朋友喜欢在户外喝一杯，只要天气好。"],
+  "frais": ["Des brocolis et des carottes [frais] cuisent dans une poêle.", "新鲜的西兰花和胡萝卜正在平底锅里煮着。"],
+  "livrer": ["Le jeune homme porte trois colis qu'il doit [livrer] dans l'immeuble.", "这个年轻人抱着三个包裹，要送到楼里去。"],
+  "courir": ["Une personne en baskets [court] sur un chemin dans le parc.", "一个穿运动鞋的人在公园的小路上跑步。"],
+  "chef-d'œuvre": ["La Joconde de Léonard de Vinci est un [chef-d'œuvre] mondialement connu.", "达·芬奇的《蒙娜丽莎》是一幅举世闻名的杰作。"],
+  "se disputer": ["Deux garçons [se disputent] sur le lit en se battant avec des oreillers.", "两个男孩在床上用枕头打架，吵了起来。"],
+  "propre": ["Il balaie les feuilles pour que le sol soit [propre].", "他扫落叶，好让地面干净。"],
+  "innocent": ["Cet homme serre les barreaux de sa cellule, mais il est peut-être [innocent].", "这个男人紧握牢房的铁栏，但他也许是无辜的。"],
+  "mesurer": ["Il [mesure] une pile de planches en bois avec un mètre ruban jaune.", "他用黄色卷尺测量一摞木板。"],
+  "s'habiller": ["Elle [s'habille] chaudement avec un gros pull en laine.", "她穿着厚厚的毛衣，穿得很暖和。"],
+  "vide": ["La porte du réfrigérateur est ouverte et il est complètement [vide].", "冰箱门开着，里面完全是空的。"],
+  "emprunter": ["Pour [emprunter] de l'argent, deux personnes examinent des documents, un stylo à la main.", "为了借钱，两个人手拿着笔，仔细查看文件。"],
+  "prêt": ["L'homme en costume remet une liasse de billets de 500 euros pour le [prêt].", "穿西装的男人递出一叠500欧元的钞票作为贷款。"],
+  "inscription": ["Quelqu'un remplit le formulaire d'[inscription] avec un stylo.", "有人用笔填写报名表。"],
+  "urgences": ["Les ambulances sont garées devant l'entrée des [urgences] de l'hôpital.", "救护车停在医院急诊室的入口前。"],
+  "décoller": ["L'avion vient de [décoller] et monte dans le ciel nuageux.", "飞机刚刚起飞，正向多云的天空爬升。"],
+  "falaise": ["La haute [falaise], couverte d'herbe au sommet, tombe à pic dans la mer.", "高高的悬崖顶上长满青草，陡直地插入大海。"],
+  "lutter": ["Ce poing levé montre la volonté de [lutter] jusqu'au bout.", "这只举起的拳头表现出斗争到底的决心。"],
+  "rubrique": ["Deux personnes âgées, assises dehors, lisent chacune une [rubrique] du journal.", "两位老人坐在户外，各自读着报纸的一个栏目。"],
+  "gêné": ["La jeune fille, très [gênée], cache son visage dans ses mains.", "女孩非常尴尬，用双手捂住了脸。"],
+  "tandis que": ["Les vagues bougent au premier plan, [tandis que] les montagnes restent immobiles au loin.", "前景的海浪在涌动，而远处的群山静止不动。"],
+  "épicé": ["Ces piments rouges dans le panier sont très [épicés].", "篮子里的这些红辣椒非常辣。"],
+  "commander": ["Ce petit chariot rempli de sacs, posé sur un ordinateur, rappelle qu'on peut [commander] en ligne.", "这辆装满购物袋的小推车放在电脑上，提醒人们可以在网上订购。"],
+  "sportif": ["Ce jeune homme [sportif] s'entraîne entre des plots sur un terrain en plein air.", "这个爱运动的年轻人在户外场地的标志桶之间训练。"],
+  "applaudir": ["Ces deux mains se frappent l'une contre l'autre pour [applaudir].", "这双手互相拍打着鼓掌。"],
+  "fidèle": ["Ce dalmatien [fidèle] attend, les pattes posées sur la balustrade.", "这只忠实的斑点狗把爪子搭在栏杆上等待着。"],
+  "sale": ["Cette chaussure est toute [sale], couverte de boue.", "这只鞋满是泥巴，脏透了。"],
+  "incendie": ["Un violent [incendie] détruit la maison en pleine nuit.", "一场猛烈的火灾在深夜吞噬了这栋房子。"],
+  "calculer": ["Une calculatrice et un stylo sont posés sur des feuilles pleines de chiffres à [calculer].", "计算器和笔放在写满待计算数字的纸上。"],
+  "porter": ["Elle [porte] une longue robe rouge et danse sur un chemin de terre.", "她穿着一条红色长裙，在土路上跳舞。"],
+  "plein": ["Le train est [plein] et les voyageurs sont serrés les uns contre les autres.", "火车上挤满了人，乘客们紧紧挨在一起。"],
+  "prêter": ["Elle me [prête] la clé de sa voiture violette.", "她把她那辆紫色汽车的钥匙借给我。"],
+  "grève": ["Ce panneau triangulaire rouge et jaune annonce une [grève].", "这块红黄相间的三角牌预告有一场罢工。"],
+  "enseignement": ["Cette femme souriante travaille dans l'[enseignement], debout dans sa salle de classe.", "这位面带微笑的女士从事教育工作，正站在她的教室里。"],
+  "piqûre": ["Cette seringue verte est prête pour une [piqûre].", "这支绿色注射器已经准备好打针了。"],
+  "louer": ["Avec une clé, on ouvre la portière grise de la voiture [louée].", "有人用钥匙打开这辆租来的车的灰色车门。"],
+  "marée": ["À [marée] haute, les vagues recouvrent le pied des poteaux en bois.", "涨潮时，海浪淹没了木桩的底部。"],
+  "mairie": ["La nuit, la [mairie] illuminée se dresse derrière une grande fontaine.", "夜晚，灯火通明的市政厅矗立在一座大喷泉后面。"],
+  "abonnement": ["La flèche clique sur le bouton rouge pour prendre un [abonnement] à la chaîne.", "鼠标箭头点击红色按钮来订阅这个频道。"],
+  "se plaindre": ["Devant le bureau, l'écolière pense à la femme qui [s'est plainte] d'elle en criant.", "站在办公桌前，小学生想起那位大喊着抱怨她的女士。"],
+  "bien que": ["[Bien que] son ordinateur soit ouvert, la jeune femme mord son crayon sans travailler.", "虽然电脑开着，这位年轻女子却咬着铅笔没有工作。"],
+  "sucré": ["Ces petits oursons gélifiés de toutes les couleurs sont très [sucrés].", "这些五颜六色的小熊软糖非常甜。"],
+  "cher": ["Cette montre argentée au bracelet en cuir a l'air très [chère].", "这块皮表带的银色手表看起来很贵。"],
+  "vélo": ["Un [vélo] noir est garé sur un chemin au milieu de la forêt.", "一辆黑色自行车停在森林中间的小路上。"],
+  "dessiner": ["Quelqu'un [dessine] sur une feuille blanche avec un crayon bleu.", "有人用一支蓝色铅笔在白纸上画画。"],
+  "amical": ["Elle fait un signe [amical] de la main et dit bonjour en souriant.", "她友好地挥手，笑着打招呼。"],
+  "construire": ["Un ouvrier porte une longue barre de fer pour [construire] un immeuble.", "一名工人扛着一根长铁棒来建造一栋楼。"],
+  "pompier": ["Des [pompiers] en uniforme portent des bouteilles d'air jaunes sur le dos.", "穿制服的消防员背上背着黄色的空气瓶。"],
+  "chiffre": ["Le [chiffre] huit est fixé en blanc sur un mur de carreaux bleus.", "白色的数字八固定在一面蓝色瓷砖墙上。"],
+  "mince": ["Cette femme [mince] porte une robe noire plissée et des lunettes.", "这位苗条的女士穿着一条黑色百褶裙，戴着眼镜。"],
+  "lourd": ["Elle sourit en tenant une [lourde] valise posée sur les pavés.", "她微笑着拎着一只放在石板路上的沉重手提箱。"],
+  "s'habituer": ["Dans cette rue, on [s'habitue] vite aux terrasses de café sous les auvents verts.", "在这条街上，人们很快就习惯了绿色遮阳篷下的咖啡馆露天座。"],
+  "syndicat": ["Les membres du [syndicat] manifestent dans la rue avec des drapeaux.", "工会成员举着旗帜在街上游行示威。"],
+  "devoir": ["L'enfant fait son [devoir] sur une feuille avec un crayon rouge.", "孩子用一支红色铅笔在纸上写作业。"],
+  "enceinte": ["La femme [enceinte] forme un cœur avec ses mains sur son ventre.", "这位孕妇用双手在肚子上比了一个心形。"],
+  "rater": ["Il a [raté] son train et attend seul sur un banc du quai.", "他错过了火车，独自坐在站台的长椅上等着。"],
+  "colline": ["Un arbre isolé pousse au sommet de chaque [colline] verte.", "每座绿色小山的山顶上都长着一棵孤零零的树。"],
+  "impôt": ["Deux hommes marchent tête baissée sous le poids de l'[impôt].", "两个男人低着头走着，被税压得喘不过气。"],
+  "publicité": ["Sur ce panneau noir dans la rue, l'écran blanc attend une nouvelle [publicité].", "街上这块黑色广告牌上的白色屏幕正等着新的广告。"],
+  "se fâcher": ["Le jeune homme [se fâche] et pointe le doigt vers nous en criant.", "这个年轻人生气了，一边喊一边用手指着我们。"],
+  "afin de": ["Une main se tend vers le réveil [afin de] l'arrêter.", "一只手伸向闹钟，想把它关掉。"],
+  "faim": ["L'assiette vide a l'air triste, comme si elle avait [faim].", "空盘子看起来很难过，好像它饿了。"],
+  "gratuit": ["Tous les objets qui sortent de ce carton orange sont [gratuits].", "从这个橙色纸箱里冒出来的东西全都是免费的。"],
+  "jeu": ["Les pièces noires et blanches sont prêtes pour un [jeu] d'échecs.", "黑白棋子已经摆好，准备下一盘国际象棋。"],
+  "célèbre": ["L'actrice [célèbre] sourit devant les photographes sur le tapis rouge.", "这位著名的女演员在红毯上对着摄影师微笑。"],
+  "célibataire": ["Cet homme [célibataire] se tient seul face à un paysage brumeux.", "这位单身男子独自站在雾蒙蒙的风景前。"],
+  "traverser": ["Une foule de piétons [traverse] la rue sur le passage clouté.", "一大群行人正从人行横道上穿过马路。"],
+  "sécurité": ["Ce panneau rappelle que la ceinture est obligatoire pour votre [sécurité].", "这块标牌提醒大家，为了安全必须系好安全带。"],
+  "scientifique": ["Au laboratoire, une personne gantée verse un liquide rouge dans un tube pour une expérience [scientifique].", "在实验室里，一个戴着手套的人把红色液体倒进试管，做科学实验。"],
+  "élégant": ["Avec son costume gris et son nœud papillon, cet homme est très [élégant].", "这个男人穿着灰色西装、打着领结，非常优雅。"],
+  "léger": ["Cette plume bleue est si [légère] qu'elle flotte dans l'air.", "这根蓝色羽毛轻得能飘在空中。"],
+  "se dépêcher": ["L'homme en costume court, une horloge et une mallette à la main : il [se dépêche].", "穿西装的男人手里拿着时钟和公文包奔跑：他在赶时间。"],
+  "carrière": ["Cet homme qui monte un grand escalier symbolise une [carrière] en progression.", "这个登上大楼梯的男人象征着不断上升的职业生涯。"],
+  "épreuve": ["Pendant l'[épreuve], l'élève remplit sa feuille de réponses au crayon.", "考试时，学生用铅笔填写答题卡。"],
+  "épuisé": ["[Épuisé], l'homme a posé la tête sur la table, à côté d'une bouteille vide.", "筋疲力尽的男人把头趴在桌上，旁边放着一个空瓶子。"],
+  "itinéraire": ["Une petite voiture est posée sur une carte pour préparer l'[itinéraire] du voyage.", "一辆小汽车模型放在地图上，用来规划旅行路线。"],
+  "nuage": ["Plusieurs petits [nuages] blancs flottent dans le ciel bleu.", "几朵白色的小云飘在蓝天上。"],
+  "sondage": ["Pour répondre au [sondage], il faut cocher la case « oui » ou « non ».", "要回答这项民意调查，需要勾选“是”或“否”的方框。"],
+  "en ligne": ["Des dizaines d'e-mails sont envoyés [en ligne] depuis l'ordinateur portable et le téléphone.", "几十封电子邮件正从笔记本电脑和手机在线发出。"],
+  "regretter": ["L'homme grimace et pose deux doigts sur sa tempe : il [regrette] son erreur.", "男人做着鬼脸，把两根手指抵在太阳穴上：他后悔自己的错误。"],
+  "quant à": ["La flèche verte indique la droite ; [quant à] la flèche rouge, elle indique la gauche.", "绿色箭头指向右边；至于红色箭头，它指向左边。"],
+  "boulangerie": ["Des baguettes dorées sont posées sur un torchon, devant le four de la [boulangerie].", "几根金黄的法棍放在一块布上，位于面包店的烤炉前。"],
+  "colis": ["Un homme soulève un [colis] en carton posé sur une pile de cartons.", "一个男人从一摞纸箱上抬起一个纸箱包裹。"],
+  "pêche": ["Une canne à [pêche] est fixée au bateau sur le lac au coucher du soleil.", "日落时分，一根钓鱼竿固定在湖面的船上。"],
+  "sculpture": ["Cette vieille [sculpture] en pierre représente un ange aux grandes ailes.", "这座古老的石雕塑表现的是一位长着大翅膀的天使。"],
+  "confiance": ["La petite main du bébé serre le doigt de l'adulte avec [confiance].", "婴儿的小手信任地握着大人的手指。"],
+  "se promener": ["Un jeune couple [se promène] dans une allée du parc.", "一对年轻情侣在公园的小路上散步。"],
+  "danger": ["Ce panneau triangulaire avec un point d'exclamation signale un [danger].", "这个带感叹号的三角形标志表示有危险。"],
+  "microscope": ["L'objectif du [microscope] est placé juste au-dessus d'une lame éclairée.", "显微镜的物镜正位于一块被照亮的玻片上方。"],
+  "ressembler": ["La jeune fille aux fleurs [ressemble] beaucoup à la femme à côté d'elle.", "拿着花的女孩和她身旁的女人长得很像。"],
+  "lent": ["L'escargot avance sur la pierre ; c'est un animal très [lent].", "蜗牛在石头上爬行；它是一种很慢的动物。"],
+  "voisin": ["Ces maisons aux toits de tuiles rouges ont des terrasses très proches de celles des [voisins].", "这些红瓦屋顶的房子，露台和邻居家的挨得很近。"],
+  "rentable": ["Sur l'écran, le graphique en hausse montre une activité de plus en plus [rentable].", "屏幕上不断上升的图表显示业务越来越赚钱。"],
+  "doué": ["Cette petite fille en robe bleue est très [douée] pour jouer du violon.", "这个穿蓝裙子的小女孩很有拉小提琴的天赋。"],
+  "sain": ["Le brocoli, les tomates et le concombre sont des légumes [sains] et frais.", "西兰花、西红柿和黄瓜都是健康又新鲜的蔬菜。"],
+  "dépaysement": ["Cette plage de sable blanc sous un palmier offre un vrai [dépaysement].", "棕榈树下的这片白沙滩让人有一种真正身处异乡的感觉。"],
+  "ciel": ["Au-dessus du champ et de l'arbre solitaire, le [ciel] est rempli de nuages orange.", "在田野和孤零零的树上方，天空布满了橙色的云。"],
+  "société": ["Ces personnages de toutes les couleurs se tiennent la main comme une [société] unie.", "这些五颜六色的小人手拉着手，就像一个团结的社会。"],
+  "numérique": ["Quelqu'un regarde des photos [numériques] sur une tablette, devant un ordinateur portable.", "有人在笔记本电脑前用平板电脑看数码照片。"],
+  "éprouver": ["Sur cette aquarelle, la jeune femme semble [éprouver] une profonde tristesse.", "在这幅水彩画中，年轻女子似乎感到深深的悲伤。"],
+  "parmi": ["[Parmi] les femmes qui lèvent la main, celle au foulard vert sourit au premier plan.", "在举手的女人们当中，戴绿色头巾的那位在前面微笑。"],
+  "serveur": ["La [serveuse] en gilet noir sourit en préparant une boisson au comptoir.", "穿黑色马甲的女服务员一边在吧台准备饮料一边微笑。"],
+  "dépenser": ["Elle a [dépensé] beaucoup d'argent et porte plusieurs sacs de courses sur l'épaule.", "她花了很多钱，肩上挎着好几个购物袋。"],
+  "vacances": ["Ce ponton en bois mène à des bungalows sur l'eau, parfaits pour les [vacances].", "这条木栈桥通向水上的小屋，非常适合度假。"],
+  "public": ["Dans la salle de cinéma, le [public] est assis devant un grand écran blanc.", "电影院里，观众坐在一块白色大银幕前。"],
+  "petit-enfant": ["La grand-mère pose pour une photo entre ses deux [petits-enfants].", "奶奶在她的两个孙子中间合影。"],
+  "panneau": ["Le [panneau] rouge et blanc indique aux conducteurs qu'ils doivent s'arrêter.", "这块红白相间的标志牌告诉司机必须停车。"],
+  "accident": ["Après l'[accident], l'avant de la voiture grise est très abîmé.", "事故之后，这辆灰色汽车的车头严重受损。"],
+  "fusée": ["La [fusée] décolle dans un énorme nuage de fumée blanche.", "火箭在一大团白烟中升空。"],
+  "ride": ["Cette vieille femme au foulard vert a le visage couvert de [rides].", "这位戴绿色头巾的老妇人满脸皱纹。"],
+  "rapide": ["Ce train blanc très [rapide] traverse un pont au-dessus de la rivière.", "这列非常快的白色火车正驶过河上的一座桥。"],
+};
 // ---------- 记录：每个词每种题型最近一次是否答对 ----------
-const V_T = [6, 1, 2, 3, 4, 5];   // 题型顺序：先看图，再做其他题
-const vTypes = w => V_T.filter(t => t !== 6 || V_IMG[w.fr]);
+const V_T = [7, 1, 2, 3, 4, 5];   // 题型顺序：初见题是“例句识图”（读描述图片的例句，从四张图里选），再做其他题
+const vTypes = w => V_T.filter(t => t !== 7 || (vPic(w) && V_PICEX[w.fr]));
 let vStats = null;     // Map<词 id, {1..5: true/false}>
 let vLoading = null, vRetry = 0;
 function vLoad() {
@@ -16685,6 +17098,7 @@ function vLoad() {
       if (!m.has(d.word)) m.set(d.word, {});
       m.get(d.word)[d.type] = !!d.ok;
     });
+    m.forEach(s => { if (s[7] === undefined && s[6] !== undefined) s[7] = s[6]; });   // 以前做过的“看词选图”算作初见题做过
     vStats = m;
   }).catch(() => { vStats = new Map(); }).finally(() => { vLoading = null; if (view === "vocab") { vToc(); if (!vSess) vList(); } });
   return vLoading;
@@ -16712,6 +17126,13 @@ function vMarks(get, w) {
     const v = get(t); marks.append(el("i", v === true ? "ok" : v === false ? "no" : "", v === true ? "✓" : v === false ? "✗" : "·"));
   });
   return marks;
+}
+// 描述配图的例句（初见题用）：同样拆成 前半 / 生词 / 后半
+function vPicEx(w) {
+  const e = V_PICEX[w.fr];
+  if (!e) return null;
+  const m = e[0].match(/^(.*)\[([^\]]+)\](.*)$/);
+  return { before: m[1], form: m[2], after: m[3], full: m[1] + m[2] + m[3], tr: e[1] };
 }
 // 例句：拆成 前半 / 要填的词形 / 后半
 function vEx(w) {
@@ -16927,10 +17348,11 @@ function vQuestion() {
     if (vPic(w)) word.append(vImg(w, "v-thumb"));
     word.append(document.createTextNode(vLabel(w) + " "), vSpeakBtn(w, "▶ 读音"));
     exp.append(word, document.createTextNode(`${V_POS[w.pos]} · ${vMean(w)}` + (w.extra && w.pos !== "adj" ? ` · ${w.extra}` : "")));
-    if (ex) {
+    const shown = q.type === 7 ? vPicEx(w) : ex;
+    if (shown) {
       const line = el("span", "v-exline");
-      line.append(document.createTextNode(ex.before), el("b", null, ex.form), document.createTextNode(ex.after + " "), vSpeakBtn(w, "▶ 例句", ex.full));
-      exp.append(line, el("span", "v-tr", ex.tr));
+      line.append(document.createTextNode(shown.before), el("b", null, shown.form), document.createTextNode(shown.after + " "), vSpeakBtn(w, "▶ 例句", shown.full));
+      exp.append(line, el("span", "v-tr", shown.tr));
     }
     next.disabled = false;
     if (ok && !first) {
@@ -17024,7 +17446,40 @@ function vQuestion() {
     say(vArt(w));
   } else {
     let opts, show;
-    if (q.type === 6) {
+    if (q.type === 7) {
+      // 例句识图（初见题）：例句描述的是这个词的配图，生词蓝色高亮；四张图下面都标着各自的单词
+      const pe = vPicEx(w);
+      head.classList.add("v-exq");
+      const sent = el("span", "v-sent");
+      sent.append(document.createTextNode(pe.before), el("b", "v-hl", pe.form), document.createTextNode(pe.after));
+      const row = el("div", "listen-row");
+      row.append(el("span", "listen-note", "读例句，选出它描述的那张图"));
+      if (tts) row.append(vSpeakBtn(w, "▶ 读例句", pe.full));
+      head.append(sent, row);
+      const seen = new Set([vPic(w)]);
+      const pool = vShuffle(V_WORDS.filter(x => x.id !== w.id && vPic(x)));
+      const dis = pool.filter(x => !seen.has(vPic(x)) && seen.add(vPic(x))).slice(0, 3);
+      const list = vShuffle([w, ...dis]);
+      const grid = el("div", "v-pics v-pics7");
+      const bs = list.map((x, k) => {
+        const b = el("button", "v-pic v-pic7"); b.type = "button";
+        b.setAttribute("aria-label", "图 " + KEYS[k] + "：" + vArt(x));
+        b.append(el("span", "key", KEYS[k]), vImg(x, "v-pic-img"), el("span", "v-pic-word", vArt(x)));
+        b.addEventListener("click", () => {
+          bs.forEach((bb, j) => { bb.disabled = true; if (list[j] === w) bb.classList.add("correct"); else if (j === k) bb.classList.add("wrong"); });
+          finish(x === w, vArt(x));
+        });
+        grid.append(b);
+        return b;
+      });
+      ans.classList.add("v-ans7");
+      ans.append(grid);
+      card.append(head, ans);
+      actions.append(next);
+      card.append(exp, actions);
+      stage.append(card);
+      return;
+    } else if (q.type === 6) {
       // 看词选图：四张图里选出这个词
       head.append(el("span", "v-big", vLabel(w)), el("span", "listen-note", V_POS[w.pos] + " · 选出对应的图"));
       const seen = new Set([V_IMG[w.fr]]);
