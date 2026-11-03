@@ -27,7 +27,7 @@
         if (document.getElementById("offlineStatus")) setTimeout(() => navigator.serviceWorker.controller?.postMessage("status"), 500);
       });
       // 从后台切回来、或重新连上网时，检查有没有新版本（主屏幕 App 常常不重新打开页面）
-      const check = () => { if (navigator.onLine && document.visibilityState === "visible") reg.update().catch(() => {}); };
+      const check = () => { if (navigator.onLine && document.visibilityState === "visible") reg && reg.update && reg.update().catch(() => {}); };
       document.addEventListener("visibilitychange", check);
       addEventListener("online", check);
       if (navigator.storage && navigator.storage.persist) navigator.storage.persist().catch(() => {});   // 请浏览器不要自动清掉记录和缓存
@@ -634,6 +634,17 @@ h1 { font-family: var(--display); font-weight: 900; font-size: 1.6rem; line-heig
 .shop-item .own { font-size: .8rem; font-variant-numeric: tabular-nums; }
 .shop-acts { display: flex; gap: 6px; flex-wrap: wrap; }
 .shop-acts .btn { padding: 4px 12px; font-size: .85rem; }
+
+/* 账号与同步 */
+.sync-card { gap: 10px; }
+.sync-card .sync-status { font-size: .82rem; color: var(--good); font-weight: 600; }
+.sync-card .sync-status.bad { color: var(--bad); }
+.sync-who, .sync-msg { margin: 0; font-size: .88rem; color: var(--muted); }
+.sync-msg:empty { display: none; }
+.sync-row { display: flex; gap: 8px; flex-wrap: wrap; }
+.sync-row input { flex: 1 1 200px; min-width: 0; font: inherit; color: var(--fg); background: var(--card); border: 1.5px solid var(--line); border-radius: 10px; padding: 8px 12px; }
+.sync-row input:focus { outline: none; border-color: var(--accent); box-shadow: 0 0 0 3px var(--accent-soft); }
+.btn.ghost.danger { color: var(--bad); border-color: var(--bad); }
 </style>
 
 <div class="wrap">
@@ -13668,7 +13679,7 @@ function localDb(ns) {
   const load = c => { try { return JSON.parse(localStorage.getItem(key(c)) || "[]"); } catch (e) { return []; } };
   const snap = arr => ({ size: arr.length, docs: arr.map(d => ({ data: () => d })) });
   return { collection: c => ({
-    add: async d => { const a = load(c); a.push(d); localStorage.setItem(key(c), JSON.stringify(a)); },
+    add: async d => { const a = load(c); a.push(d); localStorage.setItem(key(c), JSON.stringify(a)); if (typeof syncPush === "function") syncPush(c, d); },
     get: async () => snap(load(c)),
     where: (f, op, v) => ({ get: async () => snap(load(c).filter(d => d[f] === v)) }),
   }) };
@@ -13682,6 +13693,7 @@ function localDb(ns) {
     try { voc = (await dbRef.collection("vocab").get()).docs.map(d => d.data()); } catch (e) {}
     try { gameReset((await dbRef.collection("game").get()).docs.map(d => d.data())); } catch (e) {}
     progReset(docs, voc); progEnsure(); planRefresh();
+    if (typeof syncNow === "function") syncNow(true);   // 公开网站登录后：和云端同步
     const wrong = docs.filter(d => !d.isCorrect).length;
     saveNote.textContent = wrong ? `已有 ${wrong} 条错题记录，答题记录会自动保存到学习进度。` : "答题记录会自动保存到学习进度。";
     if (LOCAL) saveNote.textContent += "记录保存在这台设备的浏览器里，换设备或清除浏览器数据后不会保留。";
@@ -14595,6 +14607,218 @@ function comboDraw(b, bump) {
   b.classList.toggle("hot", n >= 10);
   if (bump && n >= 2) { b.classList.remove("bump"); void b.offsetWidth; b.classList.add("bump"); }
 }
+// ---------- 账号登录与多设备同步（只在公开网站上启用；Claude 页面的记录本来就跟着 Claude 账号走） ----------
+// 登录：邮箱验证码（Supabase Auth）。记录存在 Supabase 的 records 表里，每个用户只能读写自己的记录（见 quiz-site/supabase/schema.sql）。
+// 记录只增不改，所以同步 = 本机和云端取并集（按内容指纹去重）；离线时做的题联网后补传。不登录时和以前一样只存在本机。
+const SYNC_URL = "https://aitqcayhvurtbpduxlvc.supabase.co";
+const SYNC_KEY = "sb_publishable_gYcafzI23rtTsuCYWQWlrA_5sXku0ez";   // 公开的 publishable key（权限由数据库的行级安全策略限制）
+const SYNC_NS = "fq-";            // 本页在浏览器里的存储前缀（随机分析页构建时换成 sq-）
+const SYNC_AUTH = "quiz-auth";    // 登录状态：两个练习页共用，登录一次就行
+const SYNC_ON = typeof claude === "undefined";
+let syncState = { busy: false, last: 0, err: "", queue: [], timer: 0 };
+
+// 记录内容的指纹（cyrb53），和备份恢复的去重规则一致
+function syncHash(str) {
+  let h1 = 0xdeadbeef, h2 = 0x41c6ce57;
+  for (let i = 0; i < str.length; i++) { const c = str.charCodeAt(i); h1 = Math.imul(h1 ^ c, 2654435761); h2 = Math.imul(h2 ^ c, 1597334677); }
+  h1 = Math.imul(h1 ^ (h1 >>> 16), 2246822507) ^ Math.imul(h2 ^ (h2 >>> 13), 3266489909);
+  h2 = Math.imul(h2 ^ (h2 >>> 16), 2246822507) ^ Math.imul(h1 ^ (h1 >>> 13), 3266489909);
+  return (4294967296 * (2097151 & h2) + (h1 >>> 0)).toString(36);
+}
+const syncKeyOf = d => syncHash(bkKey(d));
+function syncAuth() { try { return JSON.parse(localStorage.getItem(SYNC_AUTH) || "null"); } catch (e) { return null; } }
+function syncSaveAuth(a) { try { if (a) localStorage.setItem(SYNC_AUTH, JSON.stringify(a)); else localStorage.removeItem(SYNC_AUTH); } catch (e) {} }
+function syncSaveSession(j) {
+  const old = syncAuth() || {};
+  syncSaveAuth({ access_token: j.access_token, refresh_token: j.refresh_token, expires_at: j.expires_at || Math.floor(Date.now() / 1000) + (j.expires_in || 3600),
+    email: (j.user && j.user.email) || old.email || "", uid: (j.user && j.user.id) || old.uid || "" });
+}
+// 取一个有效的登录令牌；快过期时用 refresh_token 换新的
+async function syncToken() {
+  const a = syncAuth();
+  if (!a) return null;
+  if (Date.now() / 1000 < a.expires_at - 60) return a.access_token;
+  const r = await fetch(`${SYNC_URL}/auth/v1/token?grant_type=refresh_token`, {
+    method: "POST", headers: { apikey: SYNC_KEY, "Content-Type": "application/json" }, body: JSON.stringify({ refresh_token: a.refresh_token }),
+  });
+  if (!r.ok) { if (r.status >= 400 && r.status < 500) syncSaveAuth(null); return null; }
+  syncSaveSession(await r.json());
+  return syncAuth().access_token;
+}
+async function syncFetch(path, opt = {}, auth = true) {
+  const headers = { apikey: SYNC_KEY, "Content-Type": "application/json", ...(opt.headers || {}) };
+  if (auth) {
+    const tok = await syncToken();
+    if (!tok) { const e = new Error("未登录"); e.code = "auth"; throw e; }
+    headers.Authorization = "Bearer " + tok;
+  }
+  const r = await fetch(SYNC_URL + path, { ...opt, headers });
+  if (!r.ok) {
+    let msg = "";
+    try { const j = await r.json(); msg = j.msg || j.message || j.error_description || j.error || ""; } catch (e) {}
+    const e = new Error(msg || "HTTP " + r.status); e.status = r.status; e.code = r.status === 401 ? "auth" : r.status === 429 ? "rate" : ""; throw e;
+  }
+  const text = await r.text();
+  return text ? JSON.parse(text) : null;
+}
+
+// 本机的记录（和公开网站的本地数据库同一份）
+const syncLocal = c => { try { return JSON.parse(localStorage.getItem(SYNC_NS + "db-" + c) || "[]"); } catch (e) { return []; } };
+const syncStore = (c, arr) => { try { localStorage.setItem(SYNC_NS + "db-" + c, JSON.stringify(arr)); } catch (e) {} };
+const syncRow = (c, d) => ({ app: BK_APP, coll: c, key: syncKeyOf(d), data: d });
+async function syncUpload(rows) {
+  for (let i = 0; i < rows.length; i += 500)
+    await syncFetch("/rest/v1/records?on_conflict=user_id,app,coll,key", {
+      method: "POST", headers: { Prefer: "resolution=ignore-duplicates,return=minimal" }, body: JSON.stringify(rows.slice(i, i + 500)),
+    });
+}
+// 完整同步：拉取云端全部记录合并进本机，再把本机有、云端没有的传上去
+async function syncNow(force) {
+  if (!SYNC_ON || !syncAuth() || !navigator.onLine || syncState.busy) return;
+  if (!force && Date.now() - syncState.last < 60e3) return;
+  syncState.busy = true; syncDraw();
+  try {
+    const remote = [];
+    for (let off = 0; ; off += 1000) {
+      const rows = await syncFetch(`/rest/v1/records?select=coll,key,data&app=eq.${BK_APP}&order=id.asc&limit=1000&offset=${off}`);
+      remote.push(...rows);
+      if (rows.length < 1000) break;
+    }
+    let added = 0;
+    const up = [];
+    for (const c of BK_COLLS) {
+      const loc = syncLocal(c), lk = new Set(loc.map(syncKeyOf));
+      const rk = new Set();
+      let n = 0;
+      remote.forEach(r => { if (r.coll !== c) return; rk.add(r.key); if (!lk.has(r.key)) { loc.push(r.data); lk.add(r.key); n++; } });
+      if (n) { syncStore(c, loc); added += n; }
+      loc.forEach(d => { const k = syncKeyOf(d); if (!rk.has(k)) { up.push({ app: BK_APP, coll: c, key: k, data: d }); rk.add(k); } });
+    }
+    await syncUpload(up);
+    syncState.last = Date.now(); syncState.err = "";
+    syncState.lastUp = up.length; syncState.lastDown = added;
+    if (added) await syncReload();
+  } catch (e) {
+    syncState.err = e.code === "auth" ? "登录已过期，请重新登录" : "同步没成功（可能是网络问题），稍后会自动再试";
+    if (e.code === "auth") syncSaveAuth(null);
+  }
+  syncState.busy = false; syncDraw();
+}
+// 答完一题：把新记录攒一小会儿再一起传（恢复备份时一次会加很多条）
+function syncPush(c, d) {
+  if (!SYNC_ON || !syncAuth()) return;
+  syncState.queue.push(syncRow(c, d));
+  clearTimeout(syncState.timer);
+  syncState.timer = setTimeout(async () => {
+    const rows = syncState.queue.splice(0);
+    if (!rows.length || !navigator.onLine) return;   // 没网：下次完整同步时会补传
+    try { await syncUpload(rows); syncState.last = Date.now(); syncState.err = ""; } catch (e) {}
+    syncDraw();
+  }, 1500);
+}
+// 云端拉下来新记录后：重新读一遍本机记录，刷新进度、经验和页面
+async function syncReload() {
+  if (!dbRef) return;
+  const get = async c => (await dbRef.collection(c).get()).docs.map(d => d.data());
+  gameReset(await get("game"));
+  progReset(await get("answers"), await get("vocab"));
+  progEnsure();
+  bookCache = null;
+  if (typeof vStats !== "undefined") vStats = null;
+  planRefresh();
+  if (view === "book") renderBook();
+  else if (view === "vocab" && typeof renderVocab === "function" && !vSess) renderVocab();
+}
+function syncLogout() { syncSaveAuth(null); syncState.err = ""; syncDraw(); if (view === "book") drawBook(); }
+async function syncDeleteAccount() {
+  await syncFetch("/rest/v1/rpc/delete_my_account", { method: "POST", body: "{}" });
+  syncLogout();
+}
+if (SYNC_ON) {
+  addEventListener("online", () => syncNow(true));
+  document.addEventListener("visibilitychange", () => { if (document.visibilityState === "visible") syncNow(false); });
+  setInterval(() => { if (document.visibilityState === "visible") syncNow(false); }, 5 * 60e3);
+}
+
+// 学习进度页最上面的“账号与同步”卡
+function syncStatusText() {
+  if (syncState.busy) return "正在同步…";
+  if (syncState.err) return syncState.err;
+  if (!syncState.last) return navigator.onLine ? "还没有同步" : "现在没有网络，联网后会自动同步";
+  const t = new Date(syncState.last);
+  return `已同步 · ${String(t.getHours()).padStart(2, "0")}:${String(t.getMinutes()).padStart(2, "0")}`;
+}
+function syncDraw() { document.querySelectorAll(".sync-status").forEach(e => { e.textContent = syncStatusText(); e.classList.toggle("bad", !!syncState.err); }); }
+function syncCard() {
+  if (!SYNC_ON) return null;
+  const card = el("section", "card sync-card");
+  const a = syncAuth();
+  const head = el("div", "plan-head");
+  head.append(el("h3", null, "账号与同步"));
+  card.append(head);
+  const note = el("p", "sync-msg");
+  if (a) {
+    head.append(el("span", "sync-status", syncStatusText()));
+    card.append(el("p", "sync-who", `已登录：${a.email || "（邮箱）"}。在其他设备上用同一个邮箱登录，做题记录会自动同步。`));
+    const act = el("div", "actions");
+    const now = el("button", "btn ghost", "立即同步"); now.type = "button"; now.id = "syncNowBtn";
+    now.addEventListener("click", () => syncNow(true));
+    const out = el("button", "btn ghost", "退出登录"); out.type = "button";
+    out.addEventListener("click", syncLogout);
+    const del = el("button", "btn ghost danger", "删除账号"); del.type = "button";
+    let sure = false;
+    del.addEventListener("click", async () => {
+      if (!sure) { sure = true; del.textContent = "再点一次：删除账号和云端记录"; note.textContent = "删除后云端的记录无法恢复；这台设备上的记录会保留。"; return; }
+      del.disabled = true;
+      try { await syncDeleteAccount(); } catch (e) { note.textContent = "删除没成功，请稍后再试。"; del.disabled = false; }
+    });
+    act.append(now, out, del);
+    card.append(act, note);
+    syncDraw();
+  } else {
+    card.append(el("p", "sync-who", "用邮箱登录后，在手机、iPad、电脑上登录同一个邮箱，做题记录会自动同步。不登录也能照常做题，记录只存在这台设备上。"));
+    const row = el("div", "sync-row");
+    const email = el("input"); email.type = "email"; email.id = "syncEmail"; email.placeholder = "你的邮箱"; email.autocomplete = "email"; email.setAttribute("aria-label", "邮箱");
+    const send = el("button", "btn", "发送验证码"); send.type = "button"; send.id = "syncSend";
+    row.append(email, send);
+    const row2 = el("div", "sync-row"); row2.hidden = true;
+    const code = el("input"); code.type = "text"; code.id = "syncCode"; code.inputMode = "numeric"; code.autocomplete = "one-time-code"; code.placeholder = "邮件里的 6 位验证码"; code.setAttribute("aria-label", "验证码");
+    const go = el("button", "btn", "登录"); go.type = "button"; go.id = "syncLogin";
+    row2.append(code, go);
+    send.addEventListener("click", async () => {
+      const em = email.value.trim();
+      if (!/^\S+@\S+\.\S+$/.test(em)) { note.textContent = "请填写正确的邮箱地址。"; return; }
+      send.disabled = true; note.textContent = "正在发送…";
+      try {
+        await syncSendCode(em);
+        row2.hidden = false; code.focus();
+        note.textContent = `验证码已发到 ${em}，几分钟内有效。没收到的话看看垃圾邮件。`;
+      } catch (e) { note.textContent = e.code === "rate" ? "发送太频繁了，请过一会儿再试。" : "发送没成功，请检查邮箱或稍后再试。"; }
+      send.disabled = false; send.textContent = "重新发送";
+    });
+    const login = async () => {
+      const c = code.value.replace(/\s/g, "");
+      if (!/^\d{6,10}$/.test(c)) { note.textContent = "请填写邮件里的验证码。"; return; }
+      go.disabled = true; note.textContent = "正在登录…";
+      try { await syncVerify(email.value.trim(), c); drawBook(); }
+      catch (e) { note.textContent = "验证码不对或已过期，请重新发送。"; go.disabled = false; }
+    };
+    go.addEventListener("click", login);
+    code.addEventListener("keydown", e => { if (e.key === "Enter") login(); });
+    const priv = el("details", "xp-rule");
+    priv.append(el("summary", null, "隐私说明"),
+      el("p", null, "登录后会在云端（Supabase）保存：你的邮箱，以及做题、背单词、金币和道具的记录。这些数据只用来在你自己的设备之间同步，别人看不到，也不会用于其他用途。"),
+      el("p", null, "随时可以在这里“删除账号”，云端的账号和记录会一起删除；这台设备上的记录不受影响。"));
+    card.append(row, row2, note, priv);
+  }
+  return card;
+}
+async function syncSendCode(email) { await syncFetch("/auth/v1/otp", { method: "POST", body: JSON.stringify({ email, create_user: true }) }, false); }
+async function syncVerify(email, token) {
+  const j = await syncFetch("/auth/v1/verify", { method: "POST", body: JSON.stringify({ type: "email", email, token }) }, false);
+  syncSaveSession(j);
+  await syncNow(true);
+}
 // ---------- 备份与恢复：所有记录 + 本机设置 → 一个 .json 文件；恢复时合并，已有的记录不重复 ----------
 const BK_COLLS = ["answers", "exams", "vocab", "game"];
 const BK_PREFIX = "fq-";   // 本页在浏览器里的设置键前缀
@@ -15244,6 +15468,8 @@ function drawBook() {
   if (!bookCache) return;
   const { all, wrong } = bookCache;
   stage.innerHTML = "";
+  const sc = typeof syncCard === "function" ? syncCard() : null;
+  if (sc) stage.append(sc);
   stage.append(planCard(), gameCard(), xpCard(), progressCard());
   stage.append(heatCard(bookCache.raw || []));
   stage.append(tagDistCard());

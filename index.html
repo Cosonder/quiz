@@ -64,7 +64,7 @@ a.card:focus-visible { outline: 3px solid var(--accent); outline-offset: 2px; }
         if (document.getElementById("offlineStatus")) setTimeout(() => navigator.serviceWorker.controller?.postMessage("status"), 500);
       });
       // 从后台切回来、或重新连上网时，检查有没有新版本（主屏幕 App 常常不重新打开页面）
-      const check = () => { if (navigator.onLine && document.visibilityState === "visible") reg.update().catch(() => {}); };
+      const check = () => { if (navigator.onLine && document.visibilityState === "visible") reg && reg.update && reg.update().catch(() => {}); };
       document.addEventListener("visibilitychange", check);
       addEventListener("online", check);
       if (navigator.storage && navigator.storage.persist) navigator.storage.persist().catch(() => {});   // 请浏览器不要自动清掉记录和缓存
@@ -106,7 +106,7 @@ a.card:focus-visible { outline: 3px solid var(--accent); outline-offset: 2px; }
   </a>
   <p class="offline" id="offlineStatus">离线使用：用支持的浏览器打开本页后会自动把题目存到设备上。</p>
   <p class="note">想断网也能做题：在 iPad / iPhone 的 Safari 里点“分享”→“添加到主屏幕”，以后从主屏幕图标打开，像 App 一样全屏使用，没网也能打开。电脑上的 Chrome / Edge 可以在地址栏点“安装”。第一次打开时要联网，等上面显示“已可离线使用”。</p>
-  <p class="note">答题记录（学习进度、经验等级、错题本都由它算出）保存在你自己的浏览器里，换设备或清除浏览器数据后不会保留（可以在“学习进度”里用“备份记录”存成文件）。主屏幕上的图标和 Safari 里的网页记录可能是分开的，可以用备份文件搬过去。打开“学习模式”后，每组题开始前会先复习本组涉及的知识点。</p>
+  <p class="note">答题记录（学习进度、经验等级、错题本都由它算出）保存在你自己的浏览器里，换设备或清除浏览器数据后不会保留（可以在“学习进度”里用“备份记录”存成文件）。在“学习进度”里用邮箱登录后，记录会在你的各个设备之间自动同步，云端只保存你的邮箱和做题记录，可以随时删除账号。。主屏幕上的图标和 Safari 里的网页记录可能是分开的，可以用备份文件搬过去。打开“学习模式”后，每组题开始前会先复习本组涉及的知识点。</p>
 </main>
 </body>
 </html>
