@@ -668,6 +668,7 @@ h1 { font-family: var(--display); font-weight: 900; font-size: 1.6rem; line-heig
 .v-set-link { font: inherit; font-size: .85rem; text-align: left; color: var(--muted); background: var(--card); border: 1px dashed var(--line); border-radius: 10px; padding: 8px 12px; cursor: pointer; }
 .v-set-link b { color: var(--accent); white-space: nowrap; }
 .v-set-link:hover { border-color: var(--accent); }
+.v-tip { display: block; margin-top: 6px; font-size: .85rem; color: var(--fg); background: var(--accent-soft); border-radius: 8px; padding: 6px 10px; }
 </style>
 
 <div class="wrap">
@@ -17319,6 +17320,60 @@ const V_PICEX = {
   "ride": ["Cette vieille femme au foulard vert a le visage couvert de [rides].", "这位戴绿色头巾的老妇人满脸皱纹。"],
   "rapide": ["Ce train blanc très [rapide] traverse un pont au-dessus de la rivière.", "这列非常快的白色火车正驶过河上的一座桥。"],
 };
+// 易混词名单：意思、用法容易弄混的词放一组（拼写不一定像）。困难模式下优先拿同组的词当干扰项，答完显示这组的辨析。
+// 一个词可以在几组里；组里的词都必须在词表（VOCAB）里。
+const V_CONFUSE = [
+  { w: ["prêter", "emprunter", "louer", "rembourser", "prêt"], tip: "prêter 借出（给别人），emprunter 借入（从别人那里），louer 租（付钱借用），rembourser 还钱 / 退款；prêt 是名词“贷款”。" },
+  { w: ["louer", "loyer", "prêt"], tip: "louer 是动词“租”，loyer 是名词“房租”，prêt 是名词“贷款”。" },
+  { w: ["se souvenir", "souvenir", "oublier", "regretter"], tip: "se souvenir de 记得（动词），souvenir 回忆 / 纪念品（名词），oublier 忘记，regretter 后悔 / 想念。" },
+  { w: ["réussir", "échouer", "rater", "gagner"], tip: "réussir 成功、考试通过，échouer 失败、不及格，rater 错过（车、机会）或搞砸，gagner 赢（比赛）/ 挣钱。" },
+  { w: ["gagner", "dépenser", "économiser", "gaspiller"], tip: "gagner 挣钱，dépenser 花钱，économiser 省钱、存钱，gaspiller 浪费。" },
+  { w: ["embaucher", "licencier", "démissionner", "chômage"], tip: "embaucher 公司招人，licencier 公司解雇人，démissionner 自己辞职；chômage 是“失业”状态。" },
+  { w: ["atterrir", "décoller", "vol"], tip: "décoller 起飞，atterrir 降落；vol 这里是“航班”。" },
+  { w: ["vol", "voler", "voleur"], tip: "vol 偷窃 / 航班（名词），voler 偷 / 飞（动词），voleur 小偷（人）。" },
+  { w: ["propre", "sale"], tip: "propre 干净的（放在名词前是“自己的”），sale 脏的。" },
+  { w: ["vide", "plein"], tip: "vide 空的，plein 满的。" },
+  { w: ["lourd", "léger"], tip: "lourd 重的，léger 轻的。" },
+  { w: ["lent", "rapide"], tip: "lent 慢的，rapide 快的。" },
+  { w: ["cher", "gratuit", "prix", "remise"], tip: "cher 贵的，gratuit 免费的；prix 价格，remise 折扣。" },
+  { w: ["coupable", "innocent", "témoin"], tip: "coupable 有罪的，innocent 无辜的；témoin 是证人（人）。" },
+  { w: ["bonheur", "malheur", "soulagement"], tip: "bonheur 幸福，malheur 不幸，soulagement 松了口气。" },
+  { w: ["fier", "fierté", "honte", "gêné"], tip: "fier 骄傲的（形容词），fierté 自豪（名词），honte 羞耻（名词），gêné 尴尬的（形容词）。" },
+  { w: ["colère", "se fâcher", "se disputer", "dispute"], tip: "colère 愤怒（名词），se fâcher 生气（动词），se disputer 吵架（动词），dispute 争吵（名词）。" },
+  { w: ["spectateur", "public", "joueur"], tip: "spectateur 观众（一个个看比赛 / 演出的人），public 观众、公众（整体），joueur 运动员、选手。" },
+  { w: ["client", "vendeur", "serveur"], tip: "client 顾客，vendeur 售货员（商店），serveur 服务员（餐厅）。" },
+  { w: ["avocat", "juge", "témoin", "policier", "tribunal"], tip: "avocat 律师（辩护），juge 法官（判决），témoin 证人，policier 警察，tribunal 法庭（地方）。" },
+  { w: ["pièce", "place", "scène"], tip: "pièce 戏剧 / 房间，place 广场 / 座位，scène 舞台 / 场景。" },
+  { w: ["note", "mémoire", "exposé", "devoir", "épreuve"], tip: "note 分数，mémoire 学位论文，exposé 课堂报告，devoir 作业，épreuve 考试。" },
+  { w: ["reçu", "facture", "remise", "prix"], tip: "reçu 收据、小票（付完钱拿到的），facture 账单、发票（要付的），remise 折扣，prix 价格。" },
+  { w: ["casserole", "poêle", "four", "plat"], tip: "casserole 有柄的深锅，poêle 平底锅，four 烤箱，plat 菜 / 盘子。" },
+  { w: ["épice", "épicé", "épicerie"], tip: "épice 香料（名词），épicé 辣的（形容词），épicerie 杂货店。" },
+  { w: ["course", "courir", "randonnée", "natation", "nager"], tip: "course 赛跑（名词），courir 跑（动词），randonnée 徒步，natation 游泳（运动项目，名词），nager 游泳（动词）。" },
+  { w: ["tableau", "peintre", "dessiner", "sculpture"], tip: "tableau 画 / 黑板，peintre 画家（人），dessiner 画画（动词），sculpture 雕塑。" },
+  { w: ["ciel", "nuage", "étoile", "lune", "planète"], tip: "ciel 天空，nuage 云，étoile 星星（恒星），lune 月亮，planète 行星。" },
+  { w: ["tempête", "inondation", "sécheresse", "incendie"], tip: "tempête 暴风雨，inondation 洪水，sécheresse 干旱，incendie 火灾。" },
+  { w: ["rhume", "grippe", "fièvre", "tousser"], tip: "rhume 普通感冒，grippe 流感，fièvre 发烧，tousser 咳嗽（动词）。" },
+  { w: ["douleur", "blessure", "se blesser", "piqûre"], tip: "douleur 疼痛（感觉），blessure 伤口（名词），se blesser 受伤（动词），piqûre 打针 / 叮咬。" },
+  { w: ["visage", "joue", "menton", "barbe", "ride"], tip: "visage 脸，joue 脸颊，menton 下巴，barbe 胡子，ride 皱纹。" },
+  { w: ["écharpe", "ceinture", "gant", "chaussette", "manteau"], tip: "écharpe 围巾，ceinture 腰带，gant 手套，chaussette 袜子，manteau 大衣。" },
+  { w: ["cependant", "en revanche", "tandis que", "bien que", "malgré"], tip: "cependant 然而（转折），en revanche 相反（对比另一面），tandis que 而（同时对比，接从句），bien que 虽然（接虚拟式），malgré 尽管（接名词）。" },
+  { w: ["auparavant", "désormais", "aussitôt", "peu à peu"], tip: "auparavant 以前，désormais 从今以后，aussitôt 立刻，peu à peu 逐渐。" },
+  { w: ["grâce à", "afin de", "au lieu de", "lors de"], tip: "grâce à 多亏（原因，好结果），afin de 为了（目的），au lieu de 而不是，lors de 在……的时候。" },
+  { w: ["d'ailleurs", "autrement dit", "davantage", "quant à"], tip: "d'ailleurs 再说（补充理由），autrement dit 换句话说，davantage 更多，quant à 至于（转到另一个话题）。" },
+  { w: ["quai", "correspondance", "billet", "retard"], tip: "quai 站台，correspondance 换乘，billet 票，retard 晚点。" },
+  { w: ["trottoir", "piéton", "carrefour", "embouteillage", "panneau"], tip: "trottoir 人行道，piéton 行人，carrefour 十字路口，embouteillage 堵车，panneau 路牌。" },
+  { w: ["immeuble", "gratte-ciel", "ascenseur", "escalier", "balcon", "toit"], tip: "immeuble 楼房，gratte-ciel 摩天大楼，ascenseur 电梯，escalier 楼梯，balcon 阳台，toit 屋顶。" },
+  { w: ["écran", "clavier", "souris", "logiciel", "fichier"], tip: "écran 屏幕，clavier 键盘，souris 鼠标，logiciel 软件，fichier 文件。" },
+  { w: ["télécharger", "enregistrer", "supprimer"], tip: "télécharger 下载，enregistrer 保存 / 录制，supprimer 删除。" },
+  { w: ["émission", "chaîne", "rubrique", "publicité", "journal"], tip: "émission 节目，chaîne 频道，rubrique 栏目，publicité 广告，journal 报纸。" },
+  { w: ["mariage", "se marier", "divorcer", "couple", "célibataire"], tip: "mariage 婚礼 / 婚姻（名词），se marier 结婚（动词），divorcer 离婚，couple 一对伴侣，célibataire 单身的。" },
+  { w: ["naissance", "enfance", "anniversaire", "élever"], tip: "naissance 出生，enfance 童年，anniversaire 生日 / 周年，élever 抚养（动词）。" },
+  { w: ["expérience", "découverte", "recherche", "laboratoire", "chercheur"], tip: "expérience 实验 / 经验，découverte 发现，recherche 研究，laboratoire 实验室（地方），chercheur 研究员（人）。" },
+  { w: ["espoir", "inquiétude", "confiance", "soulagement"], tip: "espoir 希望，inquiétude 担心，confiance 信任，soulagement 松了口气。" },
+  { w: ["essayer", "porter", "s'habiller"], tip: "essayer 试穿，porter 穿着、戴着（状态），s'habiller 穿衣服（动作）。" },
+  { w: ["ranger", "ménage", "lessive"], tip: "ranger 整理、把东西放好（动词），ménage 家务（名词），lessive 洗衣 / 洗衣粉。" },
+  { w: ["éviter", "empêcher", "interdire", "protéger"], tip: "éviter 避免（自己躲开），empêcher 阻止（不让别人做），interdire 禁止（规定），protéger 保护。" },
+];
 // ---------- 记录：每个词每种题型最近一次是否答对 ----------
 const V_T = [7, 1, 2, 3, 4, 5];   // 题型顺序：初见题是“例句识图”（读描述图片的例句，从四张图里选），再做其他题
 // 练习设置（记在本机）：难度（困难 = 干扰项用形近词）、要练的题型、做对后停留多久、答完是否自动朗读
@@ -17543,13 +17598,22 @@ function vStart(pool) {
 }
 const vKind = w => vIsNoun(w) ? "n" : ["v", "adj"].includes(w.pos) ? w.pos : "x";
 function vDistract(w, field) {
-  // 干扰项从全部单词里挑同一类（名词/动词/形容词）的词，不再限于同一主题；困难模式先挑形近词
+  // 干扰项从全部单词里挑同一类（名词/动词/形容词）的词，不再限于同一主题；困难模式先挑易混词，再挑形近词
   const same = V_WORDS.filter(x => x.id !== w.id && vKind(x) === vKind(w));
   const pool = same.length >= 3 ? same : V_WORDS.filter(x => x.id !== w.id);
   const seen = new Set([field(w)]);
-  const near = vSet.hard ? vShuffle(vSimilar(w).slice(0, 6)) : [];
+  const near = vSet.hard ? vHardPool(w) : [];
   return near.concat(vShuffle(pool)).filter(x => !seen.has(field(x)) && seen.add(field(x))).slice(0, 3);
 }
+// 困难模式的干扰项候选：先是易混词名单里同组的词（打乱），再是最像的 6 个形近词（打乱）
+const vByFr = new Map(V_WORDS.map(x => [x.fr, x]));
+const vConfuseGroups = w => V_CONFUSE.filter(g => g.w.includes(w.fr));
+function vConfusables(w) {
+  const seen = new Set([w.fr]), out = [];
+  vConfuseGroups(w).forEach(g => g.w.forEach(f => { if (!seen.has(f) && vByFr.has(f)) { seen.add(f); out.push(vByFr.get(f)); } }));
+  return out;
+}
+const vHardPool = w => vShuffle(vConfusables(w)).concat(vShuffle(vSimilar(w).slice(0, 6)));
 // 形近词：去掉重音后比拼写（编辑距离，开头 / 结尾相同的更像），最像的排在前面
 function vLev(a, b) {
   const d = Array.from({ length: b.length + 1 }, (_, j) => j);
@@ -17598,7 +17662,7 @@ function vQuestion() {
   const card = el("section", "card v-card");
   const tags = el("div", "tagrow");
   tags.append(el("span", "tag", V_TYPES[q.type - 1]), el("span", "tag plain", `第 ${S.i + 1} / ${S.qs.length} 题`));
-  if (vSet.hard) tags.append(el("span", "tag plain", "形近词"));
+  if (vSet.hard) tags.append(el("span", "tag plain", vConfuseGroups(w).length ? "易混词" : "形近词"));
   // 连对计数：本组里连续答对几题，答错清零；连对 2 题起显示
   const combo = el("span", "v-combo"); combo.id = "vCombo";
   const drawCombo = bump => { const n = S.combo || 0; combo.textContent = n >= 2 ? `combo ${n}` : ""; combo.hidden = n < 2; combo.classList.toggle("hot", n >= 10); if (bump && n >= 2) { combo.classList.remove("bump"); void combo.offsetWidth; combo.classList.add("bump"); } };
@@ -17633,6 +17697,7 @@ function vQuestion() {
     if (vPic(w)) word.append(vImg(w, "v-thumb"));
     word.append(document.createTextNode(vLabel(w) + " "), vSpeakBtn(w, "▶ 读音"));
     exp.append(word, document.createTextNode(`${V_POS[w.pos]} · ${vMean(w)}` + (w.extra && w.pos !== "adj" ? ` · ${w.extra}` : "")));
+    if (vSet.hard) vConfuseGroups(w).forEach(g => exp.append(el("span", "v-tip", "易混辨析：" + g.tip)));
     const shown = q.type === 7 ? vPicEx(w) : ex;
     if (shown) {
       const line = el("span", "v-exline");
@@ -17747,7 +17812,7 @@ function vQuestion() {
       if (tts) row.append(vSpeakBtn(w, "▶ 读例句", pe.full));
       head.append(sent, row);
       const seen = new Set([vPic(w)]);
-      const near = vSet.hard ? vShuffle(vSimilar(w).filter(x => vPic(x)).slice(0, 6)) : [];
+      const near = vSet.hard ? vHardPool(w).filter(x => vPic(x)) : [];
       const pool = near.concat(vShuffle(V_WORDS.filter(x => x.id !== w.id && vPic(x))));
       const dis = pool.filter(x => !seen.has(vPic(x)) && seen.add(vPic(x))).slice(0, 3);
       const list = vShuffle([w, ...dis]);
@@ -18363,7 +18428,7 @@ function renderSettings() {
   setQuizSection(wrap);
 
   // 背单词
-  const v = section("背单词", "难度为“困难”时，干扰选项用拼写相近的词（形近词辨析）。");
+  const v = section("背单词", "难度为“困难”时，干扰选项优先用易混词（意思、用法容易混，如 prêter / emprunter），再用拼写相近的词，答完显示辨析。");
   v.append(selectRow("setVPer", "每组词数", [5, 10, 15, 20].map(n => [n, `${n} 个词`]), vPer, val => {
     vPer = Number(val); try { localStorage.setItem("fq-vper", String(vPer)); } catch (e) {}
   }), ...vSetRows());
