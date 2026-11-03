@@ -175,42 +175,44 @@
 
 ## 抽象词的例句配图
 
+标“ChatGPT 生成”的图由 ChatGPT 按例句生成（OpenAI 条款下归使用者所有）。
+
 这些词没有能直接表示词义的图，配的是描绘例句场景的图。
 
 | 单词 | 文件 | 原图 | 作者 |
 |---|---|---|---|
-| ranger | ex-ranger.jpg | Generated with OpenAI image_gen, 2026-11 | AI-generated example scene |
-| emprunter | ex-emprunter.jpg | Generated with OpenAI image_gen, 2026-11 | AI-generated example scene |
-| prêter | ex-preter.jpg | Generated with OpenAI image_gen, 2026-11 | AI-generated example scene |
-| s'habituer | ex-s-habituer.jpg | Generated with OpenAI image_gen, 2026-11 | AI-generated example scene |
-| démissionner | ex-demissionner.jpg | Generated with OpenAI image_gen, 2026-11 | AI-generated example scene |
-| syndicat | ex-syndicat.jpg | Generated with OpenAI image_gen, 2026-11 | AI-generated example scene |
-| foie | ex-foie.jpg | Generated with OpenAI image_gen, 2026-11 | AI-generated example scene |
-| épaule | ex-epaule.jpg | Generated with OpenAI image_gen, 2026-11 | AI-generated example scene |
-| citoyenneté | ex-citoyennete.jpg | Generated with OpenAI image_gen, 2026-11 | AI-generated example scene |
-| droit | ex-droit.jpg | Generated with OpenAI image_gen, 2026-11 | AI-generated example scene |
-| inégalité | ex-inegalite.jpg | Generated with OpenAI image_gen, 2026-11 | AI-generated example scene |
-| pauvreté | ex-pauvrete.jpg | Generated with OpenAI image_gen, 2026-11 | AI-generated example scene |
-| cependant | ex-cependant.jpg | Generated with OpenAI image_gen, 2026-11 | AI-generated example scene |
-| d'ailleurs | ex-d-ailleurs.jpg | Generated with OpenAI image_gen, 2026-11 | AI-generated example scene |
-| autrement dit | ex-autrement-dit.jpg | Generated with OpenAI image_gen, 2026-11 | AI-generated example scene |
-| en revanche | ex-en-revanche.jpg | Generated with OpenAI image_gen, 2026-11 | AI-generated example scene |
-| davantage | ex-davantage.jpg | Generated with OpenAI image_gen, 2026-11 | AI-generated example scene |
-| désormais | ex-desormais.jpg | Generated with OpenAI image_gen, 2026-11 | AI-generated example scene |
-| auparavant | ex-auparavant.jpg | Generated with OpenAI image_gen, 2026-11 | AI-generated example scene |
-| aussitôt | ex-aussitot.jpg | Generated with OpenAI image_gen, 2026-11 | AI-generated example scene |
-| peu à peu | ex-peu-a-peu.jpg | Generated with OpenAI image_gen, 2026-11 | AI-generated example scene |
-| environ | ex-environ.jpg | Generated with OpenAI image_gen, 2026-11 | AI-generated example scene |
-| grâce à | ex-grace-a.jpg | Generated with OpenAI image_gen, 2026-11 | AI-generated example scene |
-| au lieu de | ex-au-lieu-de.jpg | Generated with OpenAI image_gen, 2026-11 | AI-generated example scene |
-| malgré | ex-malgre.jpg | Generated with OpenAI image_gen, 2026-11 | AI-generated example scene |
-| lors de | ex-lors-de.jpg | Generated with OpenAI image_gen, 2026-11 | AI-generated example scene |
-| à condition que | ex-a-condition-que.jpg | Generated with OpenAI image_gen, 2026-11 | AI-generated example scene |
-| tandis que | ex-tandis-que.jpg | Generated with OpenAI image_gen, 2026-11 | AI-generated example scene |
-| bien que | ex-bien-que.jpg | Generated with OpenAI image_gen, 2026-11 | AI-generated example scene |
-| afin de | ex-afin-de.jpg | Generated with OpenAI image_gen, 2026-11 | AI-generated example scene |
-| quant à | ex-quant-a.jpg | Generated with OpenAI image_gen, 2026-11 | AI-generated example scene |
-| parmi | ex-parmi.jpg | Generated with OpenAI image_gen, 2026-11 | AI-generated example scene |
+| ranger | ex-ranger.jpg | ChatGPT 生成（按例句：En dix minutes, le petit robot a rangé toute la chambre.） | — |
+| emprunter | ex-emprunter.jpg | ChatGPT 生成（按例句：Ma grand-mère emprunte dix romans par semaine à la bibliothèque.） | — |
+| prêter | ex-preter.jpg | ChatGPT 生成（按例句：Le pingouin prête son écharpe au flamant rose qui grelotte.） | — |
+| s'habituer | ex-s-habituer.jpg | ChatGPT 生成（按例句：L'ours polaire s'est vite habitué au soleil de Marseille.） | — |
+| démissionner | ex-demissionner.jpg | ChatGPT 生成（按例句：Elle a démissionné pour faire le tour du monde à vélo.） | — |
+| syndicat | ex-syndicat.jpg | ChatGPT 生成（按例句：Le syndicat des facteurs défile pour de meilleurs salaires.） | — |
+| foie | ex-foie.jpg | ChatGPT 生成（按例句：Le médecin montre le foie : il est juste sous les côtes, à droite.） | — |
+| épaule | ex-epaule.jpg | ChatGPT 生成（按例句：Le perroquet voyage toujours sur l'épaule du pirate.） | — |
+| citoyenneté | ex-citoyennete.jpg | ChatGPT 生成（按例句：Après dix ans à Lyon, Mei a obtenu la citoyenneté française.） | — |
+| droit | ex-droit.jpg | ChatGPT 生成（按例句：Tout le monde a droit à l'école, même la petite fille du village.） | — |
+| inégalité | ex-inegalite.jpg | ChatGPT 生成（按例句：Les inégalités grandissent : l'un a un gâteau entier, les autres une miette.） | — |
+| pauvreté | ex-pauvrete.jpg | ChatGPT 生成（按例句：Chaque hiver, l'association lutte contre la pauvreté en servant des repas chauds.） | — |
+| cependant | ex-cependant.jpg | ChatGPT 生成（按例句：Le gâteau est magnifique ; cependant, personne n'ose le goûter.） | — |
+| d'ailleurs | ex-d-ailleurs.jpg | ChatGPT 生成（按例句：Je n'ai pas envie de sortir ; d'ailleurs, mon chat dort sur moi.） | — |
+| autrement dit | ex-autrement-dit.jpg | ChatGPT 生成（按例句：Le chien a mangé les douze croissants ; autrement dit, plus de petit-déjeuner.） | — |
+| en revanche | ex-en-revanche.jpg | ChatGPT 生成（按例句：Mon frère déteste la plage ; en revanche, il adore la montagne.） | — |
+| davantage | ex-davantage.jpg | ChatGPT 生成（按例句：Avec trois chats, il faut davantage de croquettes.） | — |
+| désormais | ex-desormais.jpg | ChatGPT 生成（按例句：Désormais, on paie avec son téléphone, même au marché.） | — |
+| auparavant | ex-auparavant.jpg | ChatGPT 生成（按例句：Auparavant, cette usine était grise ; aujourd'hui, c'est un jardin.） | — |
+| aussitôt | ex-aussitot.jpg | ChatGPT 生成（按例句：Le chef pose le gâteau et le chien saute aussitôt dessus.） | — |
+| peu à peu | ex-peu-a-peu.jpg | ChatGPT 生成（按例句：Peu à peu, le petit gland est devenu un grand chêne.） | — |
+| environ | ex-environ.jpg | ChatGPT 生成（按例句：Il y a environ mille bonbons dans ce bocal : devinez combien !） | — |
+| grâce à | ex-grace-a.jpg | ChatGPT 生成（按例句：Grâce à un chien de sauvetage, on a retrouvé le randonneur perdu.） | — |
+| au lieu de | ex-au-lieu-de.jpg | ChatGPT 生成（按例句：Au lieu de faire ses devoirs, Léo construit une fusée en carton.） | — |
+| malgré | ex-malgre.jpg | ChatGPT 生成（按例句：Malgré la tempête, le facteur livre le courrier en sifflant.） | — |
+| lors de | ex-lors-de.jpg | ChatGPT 生成（按例句：Lors de leur mariage, le gâteau est tombé par terre.） | — |
+| à condition que | ex-a-condition-que.jpg | ChatGPT 生成（按例句：Je te prête mon vélo, à condition que tu le rendes propre.） | — |
+| tandis que | ex-tandis-que.jpg | ChatGPT 生成（按例句：Le chat dort au soleil, tandis que la souris fait la fête.） | — |
+| bien que | ex-bien-que.jpg | ChatGPT 生成（按例句：Bien qu'il soit tout petit, le chihuahua fait peur au facteur.） | — |
+| afin de | ex-afin-de.jpg | ChatGPT 生成（按例句：Il se lève à cinq heures afin de voir le soleil se lever au sommet.） | — |
+| quant à | ex-quant-a.jpg | ChatGPT 生成（按例句：Les enfants veulent aller à la plage ; quant au chat, il préfère dormir.） | — |
+| parmi | ex-parmi.jpg | ChatGPT 生成（按例句：Saurez-vous trouver le chat parmi tous ces hiboux ?） | — |
 
 ## 第二批单词（10 个新主题）
 
@@ -235,7 +237,7 @@
 | frais | frais.jpg | [2106825](https://pixabay.com/photos/carrots-yellow-beets-vegetables-2106825/) | RitaE |
 | épicé | epice-adj.jpg | [2779828](https://pixabay.com/photos/cayenne-peppers-chili-peppers-2779828/) | JillWellington |
 | sucré | sucre.jpg | [9792290](https://pixabay.com/photos/gummy-bear-sweets-multicoloured-9792290/) | Alexas_Fotos |
-| faim | ex-faim.jpg | Generated with OpenAI image_gen, 2026-11 | AI-generated example scene |
+| faim | ex-faim.jpg | ChatGPT 生成（按例句：Le loup a tellement faim qu'il voit des sandwichs à la place des moutons.） | — |
 | boulangerie | boulangerie.jpg | [2436370](https://pixabay.com/photos/loaf-bakery-preparation-fresh-bread-2436370/) | Intuitivmedia |
 | serveur | serveur.jpg | [2376728](https://pixabay.com/photos/waitress-the-waiter-restaurant-cafe-2376728/) | LuckyLife11 |
 | caisse | caisse.jpg | [10383557](https://pixabay.com/photos/supermarket-shopping-cashier-10383557/) | Feygrace |
@@ -249,7 +251,7 @@
 | vendeur | vendeur.jpg | [10354189](https://pixabay.com/vectors/shoes-shopping-store-customer-10354189/) | Mohamed_hassan |
 | client | client.jpg | [8042865](https://pixabay.com/vectors/shopping-bags-man-satisfied-8042865/) | Mohamed_hassan |
 | vitrine | vitrine.jpg | [1817472](https://pixabay.com/photos/business-store-window-load-clothing-1817472/) | 652234 |
-| échanger | ex-echanger.jpg | Generated with OpenAI image_gen, 2026-11 | AI-generated example scene |
+| échanger | ex-echanger.jpg | ChatGPT 生成（按例句：À la récré, Lucas échange son sandwich contre une pomme d'amour.） | — |
 | rembourser | rembourser.jpg | [517114](https://pixabay.com/photos/hand-keep-finger-euro-coin-money-517114/) | geralt |
 | essayer | essayer.jpg | [4988807](https://pixabay.com/photos/shop-fitting-clothes-purchase-4988807/) | Sunriseforever |
 | livrer | livrer.jpg | [6153947](https://pixabay.com/photos/packages-delivery-delivery-man-6153947/) | romeosessions |
@@ -306,16 +308,16 @@
 | neveu | neveu.jpg | [8475867](https://pixabay.com/illustrations/ai-generated-child-boy-8475867/) | Baby-Lama |
 | copain | copain.jpg | [3104635](https://pixabay.com/photos/friendship-day-black-women-portrait-3104635/) | trevoykellyphotography |
 | dispute | dispute.jpg | [8153759](https://pixabay.com/illustrations/ai-generated-couple-argument-8153759/) | Franz26 |
-| rencontre | ex-rencontre.jpg | Generated with OpenAI image_gen, 2026-11 | AI-generated example scene |
+| rencontre | ex-rencontre.jpg | ChatGPT 生成（按例句：Leur rencontre a eu lieu sous la pluie, sous le même parapluie.） | — |
 | anniversaire | anniversaire.jpg | [8470012](https://pixabay.com/photos/cake-berries-candle-sponge-cake-8470012/) | BISEEISE |
 | souvenir | souvenir.jpg | [256887](https://pixabay.com/photos/photos-hands-hold-old-256887/) | jarmoluk |
 | se marier | se-marier.jpg | [2634929](https://pixabay.com/illustrations/rings-jewellery-wedding-gold-marry-2634929/) | MasterTux |
-| divorcer | ex-divorcer.jpg | Generated with OpenAI image_gen, 2026-11 | AI-generated example scene |
+| divorcer | ex-divorcer.jpg | ChatGPT 生成（按例句：M. et Mme Dupont ont divorcé : même le chien a deux maisons.） | — |
 | élever | elever.jpg | [4447538](https://pixabay.com/photos/family-mother-daughters-lawn-grass-4447538/) | shelleywiart |
 | se disputer | se-disputer.jpg | [5026267](https://pixabay.com/photos/kids-games-pillow-fight-family-5026267/) | Sunriseforever |
 | fidèle | fidele.jpg | [3210166](https://pixabay.com/photos/dalmatian-dogs-domestic-animal-3210166/) | RebeccasPictures |
 | amical | amical.jpg | [8704993](https://pixabay.com/illustrations/ai-generated-hello-woman-wave-8704993/) | Hellio42 |
-| célibataire | ex-celibataire.jpg | Generated with OpenAI image_gen, 2026-11 | AI-generated example scene |
+| célibataire | ex-celibataire.jpg | ChatGPT 生成（按例句：À la soirée des couples, Paul est le seul célibataire… avec son chat.） | — |
 | confiance | confiance.jpg | [4867454](https://pixabay.com/photos/toddler-hand-childs-hand-hand-4867454/) | Myriams-Fotos |
 | petit-enfant | petit-enfant.jpg | [6921212](https://pixabay.com/photos/family-grandchildren-grandmother-6921212/) | Sunriseforever |
 | immeuble | immeuble.jpg | [1845884](https://pixabay.com/photos/apartments-architecture-balconies-1845884/) | Pexels |
@@ -342,7 +344,7 @@
 | voleur | voleur.jpg | [8899456](https://pixabay.com/illustrations/thief-robber-theft-steal-robbery-8899456/) | Mohamed_hassan |
 | policier | policier.jpg | [2673363](https://pixabay.com/photos/police-police-officer-uniform-2673363/) | JacquesTiberi |
 | enquête | enquete.jpg | [1424831](https://pixabay.com/vectors/detective-searching-man-search-1424831/) | GraphicMama-team |
-| témoin | ex-temoin.jpg | Generated with OpenAI image_gen, 2026-11 | AI-generated example scene |
+| témoin | ex-temoin.jpg | ChatGPT 生成（按例句：Le seul témoin du vol de la tarte, c'est le perroquet.） | — |
 | preuve | preuve.jpg | [88534](https://pixabay.com/photos/dirt-dirty-fingerprints-forensics-88534/) | byrev |
 | juge | juge.jpg | [8850331](https://pixabay.com/illustrations/ai-generated-attorney-law-lawyer-8850331/) | MoMagic |
 | tribunal | tribunal.jpg | [8749987](https://pixabay.com/illustrations/ai-generated-courtroom-court-judge-8749987/) | MoMagic |
@@ -351,8 +353,8 @@
 | amende | amende.jpg | [5461689](https://pixabay.com/photos/parking-ticket-parking-dashboard-5461689/) | LPArt |
 | arrêter | arreter.jpg | [2122376](https://pixabay.com/photos/police-arrest-handcuffs-crime-2122376/) | 4711018 |
 | voler | voler.jpg | [1010601](https://pixabay.com/photos/wallet-cash-pocket-money-purse-1010601/) | stevepb |
-| coupable | ex-coupable.jpg | Generated with OpenAI image_gen, 2026-11 | AI-generated example scene |
-| innocent | ex-innocent.jpg | Generated with OpenAI image_gen, 2026-11 | AI-generated example scene |
+| coupable | ex-coupable.jpg | ChatGPT 生成（按例句：Le chien a l'air coupable : il a de la crème plein le museau.） | — |
+| innocent | ex-innocent.jpg | ChatGPT 生成（按例句：Le chat prend un air innocent, mais le vase est cassé juste à côté.） | — |
 | incendie | incendie.jpg | [2946038](https://pixabay.com/photos/fire-burning-house-flame-2946038/) | kolyaeg |
 | pompier | pompier.jpg | [4495488](https://pixabay.com/photos/fire-fighting-helm-firefighters-4495488/) | Randgruppe |
 | sécurité | securite.jpg | [44127](https://pixabay.com/vectors/car-law-road-warning-seat-buckle-44127/) | Clker-Free-Vector-Images |
@@ -361,7 +363,7 @@
 | expérience | experience.jpg | [5169689](https://pixabay.com/photos/covid-19-health-coronavirus-corona-5169689/) | Excellentcc |
 | laboratoire | laboratoire.jpg | [2815641](https://pixabay.com/photos/laboratory-analysis-chemistry-2815641/) | jarmoluk |
 | chercheur | chercheur.jpg | [2141259](https://pixabay.com/photos/scientist-drugstore-microscope-2141259/) | luvqs |
-| découverte | ex-decouverte.jpg | Generated with OpenAI image_gen, 2026-11 | AI-generated example scene |
+| découverte | ex-decouverte.jpg | ChatGPT 生成（按例句：La découverte d'un œuf de dinosaure a stupéfié les chercheurs.） | — |
 | inventer | inventer.jpg | [499991](https://pixabay.com/photos/phone-letter-fountain-pen-dial-499991/) | 526663 |
 | outil | outil.jpg | [15539](https://pixabay.com/photos/tools-hammer-wrench-screw-nails-15539/) | PublicDomainPictures |
 | machine | machine.jpg | [495376](https://pixabay.com/photos/machine-tubes-blue-pipes-factory-495376/) | Martinelle |
@@ -375,7 +377,7 @@
 | mesurer | mesurer.jpg | [5446219](https://pixabay.com/photos/measures-carpentry-cnc-wood-5446219/) | JulioMuebles |
 | calculer | calculer.jpg | [385506](https://pixabay.com/photos/calculator-calculation-insurance-385506/) | stevepb |
 | chiffre | chiffre.jpg | [195302](https://pixabay.com/photos/number-digit-eight-house-number-195302/) | AnnaER |
-| scientifique | ex-scientifique.jpg | Generated with OpenAI image_gen, 2026-11 | AI-generated example scene |
+| scientifique | ex-scientifique.jpg | ChatGPT 生成（按例句：Pour son expérience scientifique, Léa fait exploser un volcan.） | — |
 | microscope | microscope.jpg | [2030265](https://pixabay.com/photos/analysis-biochemistry-biologist-2030265/) | Kost9n4 |
 | fusée | fusee.jpg | [67643](https://pixabay.com/photos/rocket-launch-rocket-take-off-67643/) | WikiImages |
 | visage | visage.jpg | [1467820](https://pixabay.com/photos/girl-woman-portrait-young-face-1467820/) | JerzyGórecki |
@@ -394,23 +396,23 @@
 | mode | mode.jpg | [1840941](https://pixabay.com/photos/catwalk-models-women-fashion-1840941/) | Pexels |
 | s'habiller | s-habiller.jpg | [2563491](https://pixabay.com/photos/woman-knitwear-eyes-face-head-2563491/) | StockSnap |
 | porter | porter.jpg | [1505407](https://pixabay.com/photos/woman-dancer-dance-dancing-dress-1505407/) | AdinaVoicu |
-| mince | ex-mince.jpg | Generated with OpenAI image_gen, 2026-11 | AI-generated example scene |
+| mince | ex-mince.jpg | ChatGPT 生成（按例句：Seul le chat mince passe entre les barreaux ; le gros reste coincé.） | — |
 | élégant | elegant.jpg | [1850932](https://pixabay.com/photos/groom-beard-bow-tie-brooch-fashion-1850932/) | Pexels |
 | ressembler | ressembler.jpg | [8733622](https://pixabay.com/illustrations/ai-generated-happy-mothers-day-8733622/) | TatyOcampo |
 | ride | ride.jpg | [5376200](https://pixabay.com/photos/the-old-man-gray-hair-clothing-5376200/) | 马尔 |
-| oublier | ex-oublier.jpg | Generated with OpenAI image_gen, 2026-11 | AI-generated example scene |
-| se souvenir | ex-se-souvenir.jpg | Generated with OpenAI image_gen, 2026-11 | AI-generated example scene |
+| oublier | ex-oublier.jpg | ChatGPT 生成（按例句：Il a oublié de mettre son pantalon avant la réunion en ligne.） | — |
+| se souvenir | ex-se-souvenir.jpg | ChatGPT 生成（按例句：Grand-père se souvient de son premier vélo comme si c'était hier.） | — |
 | expliquer | expliquer.jpg | [9722741](https://pixabay.com/illustrations/ai-generated-teacher-education-9722741/) | Mohamed_hassan |
 | partager | partager.jpg | [2618726](https://pixabay.com/photos/pizza-boxes-soda-pop-drinks-2618726/) | StockSnap |
 | attendre | attendre.jpg | [6912566](https://pixabay.com/photos/woman-bus-stop-street-smartphone-6912566/) | Surprising_Media |
 | remplir | remplir.jpg | [7702622](https://pixabay.com/photos/test-paper-answering-hand-note-7702622/) | F1Digitals |
-| éviter | ex-eviter.jpg | Generated with OpenAI image_gen, 2026-11 | AI-generated example scene |
+| éviter | ex-eviter.jpg | ChatGPT 生成（按例句：Le chat saute très haut pour éviter la flaque d'eau.） | — |
 | réfléchir | reflechir.jpg | [3157821](https://pixabay.com/photos/portrait-people-adult-africa-3157821/) | artsysolomon |
-| décider | ex-decider.jpg | Generated with OpenAI image_gen, 2026-11 | AI-generated example scene |
+| décider | ex-decider.jpg | ChatGPT 生成（按例句：Après une heure devant la carte, il a enfin décidé : une pizza !） | — |
 | empêcher | empecher.jpg | [9654397](https://pixabay.com/illustrations/chronic-illness-9654397/) | kaazoom |
 | profiter | profiter.jpg | [3266211](https://pixabay.com/photos/women-friends-beach-sea-summer-3266211/) | FotografieLink |
-| se tromper | ex-se-tromper.jpg | Generated with OpenAI image_gen, 2026-11 | AI-generated example scene |
-| prévenir | ex-prevenir.jpg | Generated with OpenAI image_gen, 2026-11 | AI-generated example scene |
+| se tromper | ex-se-tromper.jpg | ChatGPT 生成（按例句：Le cambrioleur s'est trompé de maison : c'est le commissariat !） | — |
+| prévenir | ex-prevenir.jpg | ChatGPT 生成（按例句：Le panneau prévient les promeneurs : attention aux crocodiles !） | — |
 | atteindre | atteindre.jpg | [2125148](https://pixabay.com/photos/climb-mountaineering-mountains-2125148/) | TeeFarm |
 | vide | vide.jpg | [158634](https://pixabay.com/vectors/refrigerator-fridge-cooling-cold-158634/) | OpenClipart-Vectors |
 | plein | plein.jpg | [4807330](https://pixabay.com/photos/people-train-commuter-passenger-4807330/) | binmassam |
@@ -418,4 +420,3 @@
 | léger | leger.jpg | [3010848](https://pixabay.com/photos/feather-ease-slightly-blue-airy-3010848/) | Sponchia |
 | lent | lent.jpg | [4345504](https://pixabay.com/photos/snail-shell-mollusk-gastropod-4345504/) | Ralphs_Fotos |
 | rapide | rapide.jpg | [8446249](https://pixabay.com/photos/train-high-speed-rail-bullet-train-8446249/) | Kanenori |
-
