@@ -179,38 +179,38 @@
 
 | 单词 | 文件 | 原图 | 作者 |
 |---|---|---|---|
-| ranger | ex-ranger.jpg | [9942903](https://pixabay.com/vectors/cleaning-mopping-housework-9942903/) | Mohamed_hassan |
-| emprunter | ex-emprunter.jpg | [3196481](https://pixabay.com/photos/laptop-office-hand-writing-3196481/) | AymaneJed |
-| prêter | ex-preter.jpg | [7600895](https://pixabay.com/photos/automobile-car-key-key-car-vehicle-7600895/) | Anrita1705 |
-| s'habituer | ex-s-habituer.jpg | [8238114](https://pixabay.com/illustrations/ai-generated-paris-street-road-8238114/) | geralt |
-| démissionner | ex-demissionner.jpg | [6689322](https://pixabay.com/vectors/door-exit-open-man-office-people-6689322/) | Mohamed_hassan |
-| syndicat | ex-syndicat.jpg | [4130710](https://pixabay.com/photos/protest-meeting-people-crowd-4130710/) | YuryRymko |
-| foie | ex-foie.jpg | [6685574](https://pixabay.com/vectors/liver-internal-medicine-doctor-6685574/) | Mohamed_hassan |
-| épaule | ex-epaule.jpg | [1868758](https://pixabay.com/photos/bag-book-man-fashion-pants-1868758/) | Pexels |
-| citoyenneté | ex-citoyennete.jpg | [3127927](https://pixabay.com/photos/passport-visa-border-buffer-3127927/) | jackmac34 |
-| droit | ex-droit.jpg | [876543](https://pixabay.com/photos/children-india-education-classroom-876543/) | akshayapatra |
-| inégalité | ex-inegalite.jpg | [4074203](https://pixabay.com/photos/inequality-poverty-homeless-crisis-4074203/) | useche360 |
-| pauvreté | ex-pauvrete.jpg | [9573708](https://pixabay.com/vectors/charity-donation-giving-helping-9573708/) | Mohamed_hassan |
-| cependant | ex-cependant.jpg | [8947217](https://pixabay.com/illustrations/ai-generated-man-money-rich-model-8947217/) | Dinero777 |
-| d'ailleurs | ex-d-ailleurs.jpg | [5366584](https://pixabay.com/photos/windshield-rain-glass-surface-5366584/) | AveCalvar |
-| autrement dit | ex-autrement-dit.jpg | [3025730](https://pixabay.com/illustrations/man-thief-police-man-arrested-law-3025730/) | Mohamed_hassan |
-| en revanche | ex-en-revanche.jpg | [2714970](https://pixabay.com/photos/coffee-coffee-cup-cup-drink-beans-2714970/) | cocoparisienne |
-| davantage | ex-davantage.jpg | [2562325](https://pixabay.com/photos/man-writing-laptop-computer-write-2562325/) | StockSnap |
-| désormais | ex-desormais.jpg | [3592133](https://pixabay.com/photos/business-clock-closed-concept-day-3592133/) | igorovsyannykov |
-| auparavant | ex-auparavant.jpg | [7359849](https://pixabay.com/photos/church-cathedral-marseille-7359849/) | ChiemSeherin |
-| aussitôt | ex-aussitot.jpg | [6596010](https://pixabay.com/photos/man-leaving-exit-opportunity-6596010/) | Tumisu |
-| peu à peu | ex-peu-a-peu.jpg | [1721464](https://pixabay.com/illustrations/puzzle-problem-3d-task-solution-1721464/) | PIRO4D |
-| environ | ex-environ.jpg | [2428759](https://pixabay.com/photos/station-antwerp-travel-city-2428759/) | ClickerHappy |
-| grâce à | ex-grace-a.jpg | [2888625](https://pixabay.com/photos/hands-cohesion-together-people-2888625/) | cocoparisienne |
-| au lieu de | ex-au-lieu-de.jpg | [6950837](https://pixabay.com/photos/san-francisco-woman-electric-bike-6950837/) | u_d7hddm5o |
-| malgré | ex-malgre.jpg | [5917792](https://pixabay.com/photos/rain-umbrella-person-5917792/) | TheOtherKev |
-| lors de | ex-lors-de.jpg | [9578726](https://pixabay.com/vectors/hospital-patient-visitor-flowers-9578726/) | Mohamed_hassan |
-| à condition que | ex-a-condition-que.jpg | [8383413](https://pixabay.com/illustrations/ai-generated-friends-joy-laughter-8383413/) | EvaMichalkova |
-| tandis que | ex-tandis-que.jpg | [7413448](https://pixabay.com/photos/waves-sea-ocean-mountain-landscape-7413448/) | christi_j |
-| bien que | ex-bien-que.jpg | [3087585](https://pixabay.com/photos/laptop-woman-education-study-young-3087585/) | JESHOOTS-com |
-| afin de | ex-afin-de.jpg | [10187887](https://pixabay.com/photos/hand-alarm-clock-morning-sleep-10187887/) | TyliJura |
-| quant à | ex-quant-a.jpg | [1697537](https://pixabay.com/illustrations/decision-choice-path-road-1697537/) | waldryano |
-| parmi | ex-parmi.jpg | [10165350](https://pixabay.com/photos/education-classroom-participation-10165350/) | geralt |
+| ranger | ex-ranger.jpg | Generated with OpenAI image_gen, 2026-11 | AI-generated example scene |
+| emprunter | ex-emprunter.jpg | Generated with OpenAI image_gen, 2026-11 | AI-generated example scene |
+| prêter | ex-preter.jpg | Generated with OpenAI image_gen, 2026-11 | AI-generated example scene |
+| s'habituer | ex-s-habituer.jpg | Generated with OpenAI image_gen, 2026-11 | AI-generated example scene |
+| démissionner | ex-demissionner.jpg | Generated with OpenAI image_gen, 2026-11 | AI-generated example scene |
+| syndicat | ex-syndicat.jpg | Generated with OpenAI image_gen, 2026-11 | AI-generated example scene |
+| foie | ex-foie.jpg | Generated with OpenAI image_gen, 2026-11 | AI-generated example scene |
+| épaule | ex-epaule.jpg | Generated with OpenAI image_gen, 2026-11 | AI-generated example scene |
+| citoyenneté | ex-citoyennete.jpg | Generated with OpenAI image_gen, 2026-11 | AI-generated example scene |
+| droit | ex-droit.jpg | Generated with OpenAI image_gen, 2026-11 | AI-generated example scene |
+| inégalité | ex-inegalite.jpg | Generated with OpenAI image_gen, 2026-11 | AI-generated example scene |
+| pauvreté | ex-pauvrete.jpg | Generated with OpenAI image_gen, 2026-11 | AI-generated example scene |
+| cependant | ex-cependant.jpg | Generated with OpenAI image_gen, 2026-11 | AI-generated example scene |
+| d'ailleurs | ex-d-ailleurs.jpg | Generated with OpenAI image_gen, 2026-11 | AI-generated example scene |
+| autrement dit | ex-autrement-dit.jpg | Generated with OpenAI image_gen, 2026-11 | AI-generated example scene |
+| en revanche | ex-en-revanche.jpg | Generated with OpenAI image_gen, 2026-11 | AI-generated example scene |
+| davantage | ex-davantage.jpg | Generated with OpenAI image_gen, 2026-11 | AI-generated example scene |
+| désormais | ex-desormais.jpg | Generated with OpenAI image_gen, 2026-11 | AI-generated example scene |
+| auparavant | ex-auparavant.jpg | Generated with OpenAI image_gen, 2026-11 | AI-generated example scene |
+| aussitôt | ex-aussitot.jpg | Generated with OpenAI image_gen, 2026-11 | AI-generated example scene |
+| peu à peu | ex-peu-a-peu.jpg | Generated with OpenAI image_gen, 2026-11 | AI-generated example scene |
+| environ | ex-environ.jpg | Generated with OpenAI image_gen, 2026-11 | AI-generated example scene |
+| grâce à | ex-grace-a.jpg | Generated with OpenAI image_gen, 2026-11 | AI-generated example scene |
+| au lieu de | ex-au-lieu-de.jpg | Generated with OpenAI image_gen, 2026-11 | AI-generated example scene |
+| malgré | ex-malgre.jpg | Generated with OpenAI image_gen, 2026-11 | AI-generated example scene |
+| lors de | ex-lors-de.jpg | Generated with OpenAI image_gen, 2026-11 | AI-generated example scene |
+| à condition que | ex-a-condition-que.jpg | Generated with OpenAI image_gen, 2026-11 | AI-generated example scene |
+| tandis que | ex-tandis-que.jpg | Generated with OpenAI image_gen, 2026-11 | AI-generated example scene |
+| bien que | ex-bien-que.jpg | Generated with OpenAI image_gen, 2026-11 | AI-generated example scene |
+| afin de | ex-afin-de.jpg | Generated with OpenAI image_gen, 2026-11 | AI-generated example scene |
+| quant à | ex-quant-a.jpg | Generated with OpenAI image_gen, 2026-11 | AI-generated example scene |
+| parmi | ex-parmi.jpg | Generated with OpenAI image_gen, 2026-11 | AI-generated example scene |
 
 ## 第二批单词（10 个新主题）
 
@@ -235,7 +235,7 @@
 | frais | frais.jpg | [2106825](https://pixabay.com/photos/carrots-yellow-beets-vegetables-2106825/) | RitaE |
 | épicé | epice-adj.jpg | [2779828](https://pixabay.com/photos/cayenne-peppers-chili-peppers-2779828/) | JillWellington |
 | sucré | sucre.jpg | [9792290](https://pixabay.com/photos/gummy-bear-sweets-multicoloured-9792290/) | Alexas_Fotos |
-| faim | ex-faim.jpg | [7065817](https://pixabay.com/illustrations/plate-diet-hunger-remove-cutlery-7065817/) | Alexandra_Koch |
+| faim | ex-faim.jpg | Generated with OpenAI image_gen, 2026-11 | AI-generated example scene |
 | boulangerie | boulangerie.jpg | [2436370](https://pixabay.com/photos/loaf-bakery-preparation-fresh-bread-2436370/) | Intuitivmedia |
 | serveur | serveur.jpg | [2376728](https://pixabay.com/photos/waitress-the-waiter-restaurant-cafe-2376728/) | LuckyLife11 |
 | caisse | caisse.jpg | [10383557](https://pixabay.com/photos/supermarket-shopping-cashier-10383557/) | Feygrace |
@@ -249,7 +249,7 @@
 | vendeur | vendeur.jpg | [10354189](https://pixabay.com/vectors/shoes-shopping-store-customer-10354189/) | Mohamed_hassan |
 | client | client.jpg | [8042865](https://pixabay.com/vectors/shopping-bags-man-satisfied-8042865/) | Mohamed_hassan |
 | vitrine | vitrine.jpg | [1817472](https://pixabay.com/photos/business-store-window-load-clothing-1817472/) | 652234 |
-| échanger | ex-echanger.jpg | [1850804](https://pixabay.com/photos/apparel-boutique-bags-shoes-shop-1850804/) | Pexels |
+| échanger | ex-echanger.jpg | Generated with OpenAI image_gen, 2026-11 | AI-generated example scene |
 | rembourser | rembourser.jpg | [517114](https://pixabay.com/photos/hand-keep-finger-euro-coin-money-517114/) | geralt |
 | essayer | essayer.jpg | [4988807](https://pixabay.com/photos/shop-fitting-clothes-purchase-4988807/) | Sunriseforever |
 | livrer | livrer.jpg | [6153947](https://pixabay.com/photos/packages-delivery-delivery-man-6153947/) | romeosessions |
@@ -306,16 +306,16 @@
 | neveu | neveu.jpg | [8475867](https://pixabay.com/illustrations/ai-generated-child-boy-8475867/) | Baby-Lama |
 | copain | copain.jpg | [3104635](https://pixabay.com/photos/friendship-day-black-women-portrait-3104635/) | trevoykellyphotography |
 | dispute | dispute.jpg | [8153759](https://pixabay.com/illustrations/ai-generated-couple-argument-8153759/) | Franz26 |
-| rencontre | ex-rencontre.jpg | [7737589](https://pixabay.com/vectors/couple-lovers-in-love-meeting-date-7737589/) | dandelion_tea |
+| rencontre | ex-rencontre.jpg | Generated with OpenAI image_gen, 2026-11 | AI-generated example scene |
 | anniversaire | anniversaire.jpg | [8470012](https://pixabay.com/photos/cake-berries-candle-sponge-cake-8470012/) | BISEEISE |
 | souvenir | souvenir.jpg | [256887](https://pixabay.com/photos/photos-hands-hold-old-256887/) | jarmoluk |
 | se marier | se-marier.jpg | [2634929](https://pixabay.com/illustrations/rings-jewellery-wedding-gold-marry-2634929/) | MasterTux |
-| divorcer | ex-divorcer.jpg | [5817033](https://pixabay.com/photos/certificate-paper-document-divorce-5817033/) | Tumisu |
+| divorcer | ex-divorcer.jpg | Generated with OpenAI image_gen, 2026-11 | AI-generated example scene |
 | élever | elever.jpg | [4447538](https://pixabay.com/photos/family-mother-daughters-lawn-grass-4447538/) | shelleywiart |
 | se disputer | se-disputer.jpg | [5026267](https://pixabay.com/photos/kids-games-pillow-fight-family-5026267/) | Sunriseforever |
 | fidèle | fidele.jpg | [3210166](https://pixabay.com/photos/dalmatian-dogs-domestic-animal-3210166/) | RebeccasPictures |
 | amical | amical.jpg | [8704993](https://pixabay.com/illustrations/ai-generated-hello-woman-wave-8704993/) | Hellio42 |
-| célibataire | ex-celibataire.jpg | [8657492](https://pixabay.com/illustrations/ai-generated-fog-foggy-mountains-8657492/) | Tobiii |
+| célibataire | ex-celibataire.jpg | Generated with OpenAI image_gen, 2026-11 | AI-generated example scene |
 | confiance | confiance.jpg | [4867454](https://pixabay.com/photos/toddler-hand-childs-hand-hand-4867454/) | Myriams-Fotos |
 | petit-enfant | petit-enfant.jpg | [6921212](https://pixabay.com/photos/family-grandchildren-grandmother-6921212/) | Sunriseforever |
 | immeuble | immeuble.jpg | [1845884](https://pixabay.com/photos/apartments-architecture-balconies-1845884/) | Pexels |
@@ -342,7 +342,7 @@
 | voleur | voleur.jpg | [8899456](https://pixabay.com/illustrations/thief-robber-theft-steal-robbery-8899456/) | Mohamed_hassan |
 | policier | policier.jpg | [2673363](https://pixabay.com/photos/police-police-officer-uniform-2673363/) | JacquesTiberi |
 | enquête | enquete.jpg | [1424831](https://pixabay.com/vectors/detective-searching-man-search-1424831/) | GraphicMama-team |
-| témoin | ex-temoin.jpg | [10381559](https://pixabay.com/vectors/crime-detective-police-10381559/) | Mohamed_hassan |
+| témoin | ex-temoin.jpg | Generated with OpenAI image_gen, 2026-11 | AI-generated example scene |
 | preuve | preuve.jpg | [88534](https://pixabay.com/photos/dirt-dirty-fingerprints-forensics-88534/) | byrev |
 | juge | juge.jpg | [8850331](https://pixabay.com/illustrations/ai-generated-attorney-law-lawyer-8850331/) | MoMagic |
 | tribunal | tribunal.jpg | [8749987](https://pixabay.com/illustrations/ai-generated-courtroom-court-judge-8749987/) | MoMagic |
@@ -351,8 +351,8 @@
 | amende | amende.jpg | [5461689](https://pixabay.com/photos/parking-ticket-parking-dashboard-5461689/) | LPArt |
 | arrêter | arreter.jpg | [2122376](https://pixabay.com/photos/police-arrest-handcuffs-crime-2122376/) | 4711018 |
 | voler | voler.jpg | [1010601](https://pixabay.com/photos/wallet-cash-pocket-money-purse-1010601/) | stevepb |
-| coupable | ex-coupable.jpg | [5250785](https://pixabay.com/illustrations/guilty-stamp-charged-complicit-5250785/) | TheDigitalArtist |
-| innocent | ex-innocent.jpg | [840062](https://pixabay.com/photos/defense-attorney-defense-lawyer-840062/) | diegoattorney |
+| coupable | ex-coupable.jpg | Generated with OpenAI image_gen, 2026-11 | AI-generated example scene |
+| innocent | ex-innocent.jpg | Generated with OpenAI image_gen, 2026-11 | AI-generated example scene |
 | incendie | incendie.jpg | [2946038](https://pixabay.com/photos/fire-burning-house-flame-2946038/) | kolyaeg |
 | pompier | pompier.jpg | [4495488](https://pixabay.com/photos/fire-fighting-helm-firefighters-4495488/) | Randgruppe |
 | sécurité | securite.jpg | [44127](https://pixabay.com/vectors/car-law-road-warning-seat-buckle-44127/) | Clker-Free-Vector-Images |
@@ -361,7 +361,7 @@
 | expérience | experience.jpg | [5169689](https://pixabay.com/photos/covid-19-health-coronavirus-corona-5169689/) | Excellentcc |
 | laboratoire | laboratoire.jpg | [2815641](https://pixabay.com/photos/laboratory-analysis-chemistry-2815641/) | jarmoluk |
 | chercheur | chercheur.jpg | [2141259](https://pixabay.com/photos/scientist-drugstore-microscope-2141259/) | luvqs |
-| découverte | ex-decouverte.jpg | [275984](https://pixabay.com/photos/microscope-slide-research-close-up-275984/) | PublicDomainPictures |
+| découverte | ex-decouverte.jpg | Generated with OpenAI image_gen, 2026-11 | AI-generated example scene |
 | inventer | inventer.jpg | [499991](https://pixabay.com/photos/phone-letter-fountain-pen-dial-499991/) | 526663 |
 | outil | outil.jpg | [15539](https://pixabay.com/photos/tools-hammer-wrench-screw-nails-15539/) | PublicDomainPictures |
 | machine | machine.jpg | [495376](https://pixabay.com/photos/machine-tubes-blue-pipes-factory-495376/) | Martinelle |
@@ -375,7 +375,7 @@
 | mesurer | mesurer.jpg | [5446219](https://pixabay.com/photos/measures-carpentry-cnc-wood-5446219/) | JulioMuebles |
 | calculer | calculer.jpg | [385506](https://pixabay.com/photos/calculator-calculation-insurance-385506/) | stevepb |
 | chiffre | chiffre.jpg | [195302](https://pixabay.com/photos/number-digit-eight-house-number-195302/) | AnnaER |
-| scientifique | ex-scientifique.jpg | [5169689](https://pixabay.com/photos/covid-19-health-coronavirus-corona-5169689/) | Excellentcc |
+| scientifique | ex-scientifique.jpg | Generated with OpenAI image_gen, 2026-11 | AI-generated example scene |
 | microscope | microscope.jpg | [2030265](https://pixabay.com/photos/analysis-biochemistry-biologist-2030265/) | Kost9n4 |
 | fusée | fusee.jpg | [67643](https://pixabay.com/photos/rocket-launch-rocket-take-off-67643/) | WikiImages |
 | visage | visage.jpg | [1467820](https://pixabay.com/photos/girl-woman-portrait-young-face-1467820/) | JerzyGórecki |
@@ -394,23 +394,23 @@
 | mode | mode.jpg | [1840941](https://pixabay.com/photos/catwalk-models-women-fashion-1840941/) | Pexels |
 | s'habiller | s-habiller.jpg | [2563491](https://pixabay.com/photos/woman-knitwear-eyes-face-head-2563491/) | StockSnap |
 | porter | porter.jpg | [1505407](https://pixabay.com/photos/woman-dancer-dance-dancing-dress-1505407/) | AdinaVoicu |
-| mince | ex-mince.jpg | [9085843](https://pixabay.com/photos/woman-young-tall-slim-pensive-9085843/) | Surprising_Media |
+| mince | ex-mince.jpg | Generated with OpenAI image_gen, 2026-11 | AI-generated example scene |
 | élégant | elegant.jpg | [1850932](https://pixabay.com/photos/groom-beard-bow-tie-brooch-fashion-1850932/) | Pexels |
 | ressembler | ressembler.jpg | [8733622](https://pixabay.com/illustrations/ai-generated-happy-mothers-day-8733622/) | TatyOcampo |
 | ride | ride.jpg | [5376200](https://pixabay.com/photos/the-old-man-gray-hair-clothing-5376200/) | 马尔 |
-| oublier | ex-oublier.jpg | [3221185](https://pixabay.com/photos/keychain-key-table-office-table-3221185/) | FlorinBirj |
-| se souvenir | ex-se-souvenir.jpg | [1130731](https://pixabay.com/photos/camera-photographs-souvenir-1130731/) | DariuszSankowski |
+| oublier | ex-oublier.jpg | Generated with OpenAI image_gen, 2026-11 | AI-generated example scene |
+| se souvenir | ex-se-souvenir.jpg | Generated with OpenAI image_gen, 2026-11 | AI-generated example scene |
 | expliquer | expliquer.jpg | [9722741](https://pixabay.com/illustrations/ai-generated-teacher-education-9722741/) | Mohamed_hassan |
 | partager | partager.jpg | [2618726](https://pixabay.com/photos/pizza-boxes-soda-pop-drinks-2618726/) | StockSnap |
 | attendre | attendre.jpg | [6912566](https://pixabay.com/photos/woman-bus-stop-street-smartphone-6912566/) | Surprising_Media |
 | remplir | remplir.jpg | [7702622](https://pixabay.com/photos/test-paper-answering-hand-note-7702622/) | F1Digitals |
-| éviter | ex-eviter.jpg | [5159008](https://pixabay.com/photos/rain-window-pane-black-and-white-5159008/) | Mylene2401 |
+| éviter | ex-eviter.jpg | Generated with OpenAI image_gen, 2026-11 | AI-generated example scene |
 | réfléchir | reflechir.jpg | [3157821](https://pixabay.com/photos/portrait-people-adult-africa-3157821/) | artsysolomon |
-| décider | ex-decider.jpg | [6019792](https://pixabay.com/vectors/realtor-business-house-sign-sale-6019792/) | Mohamed_hassan |
+| décider | ex-decider.jpg | Generated with OpenAI image_gen, 2026-11 | AI-generated example scene |
 | empêcher | empecher.jpg | [9654397](https://pixabay.com/illustrations/chronic-illness-9654397/) | kaazoom |
 | profiter | profiter.jpg | [3266211](https://pixabay.com/photos/women-friends-beach-sea-summer-3266211/) | FotografieLink |
-| se tromper | ex-se-tromper.jpg | [2635036](https://pixabay.com/photos/man-cell-phone-tuxedo-entrepreneur-2635036/) | Fotorech |
-| prévenir | ex-prevenir.jpg | [586268](https://pixabay.com/photos/telephone-mobile-call-samsung-586268/) | niekverlaan |
+| se tromper | ex-se-tromper.jpg | Generated with OpenAI image_gen, 2026-11 | AI-generated example scene |
+| prévenir | ex-prevenir.jpg | Generated with OpenAI image_gen, 2026-11 | AI-generated example scene |
 | atteindre | atteindre.jpg | [2125148](https://pixabay.com/photos/climb-mountaineering-mountains-2125148/) | TeeFarm |
 | vide | vide.jpg | [158634](https://pixabay.com/vectors/refrigerator-fridge-cooling-cold-158634/) | OpenClipart-Vectors |
 | plein | plein.jpg | [4807330](https://pixabay.com/photos/people-train-commuter-passenger-4807330/) | binmassam |
@@ -418,3 +418,4 @@
 | léger | leger.jpg | [3010848](https://pixabay.com/photos/feather-ease-slightly-blue-airy-3010848/) | Sponchia |
 | lent | lent.jpg | [4345504](https://pixabay.com/photos/snail-shell-mollusk-gastropod-4345504/) | Ralphs_Fotos |
 | rapide | rapide.jpg | [8446249](https://pixabay.com/photos/train-high-speed-rail-bullet-train-8446249/) | Kanenori |
+
