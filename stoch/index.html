@@ -600,7 +600,8 @@ mjx-container.mjx-wide { display: block; overflow-x: auto; overflow-y: hidden; m
 .shop-fold > summary b { font-size: 1rem; }
 .shop-fold-hint { font-size: .78rem; color: var(--muted); }
 .shop-fold > .shop, .shop-fold > .cos-sec, .shop-fold > .cos-grid, .shop-fold > .shop-note { margin-left: 12px; margin-right: 12px; }
-.shop-fold > .shop { margin-bottom: 12px; }
+.shop-fold > .shop, .shop-fold > .album-grid { margin-bottom: 12px; }
+.shop-fold > .album-grid { margin-left: 12px; margin-right: 12px; }
 .shop-fold > .shop-note:last-child { margin-bottom: 12px; }
 
 </style>
@@ -4319,6 +4320,8 @@ function albumCard() {
   if (owned.size >= ALBUM_CARDS.length) buy.textContent = "全部集齐了！";
   buy.addEventListener("click", () => { const r = albumBuy(); if (r.err) { note.textContent = r.err; return; } albumReveal(r); });
   const row = el("div", "album-buy"); row.append(buy, coinEl(led.coins)); card.append(row, note);
+  const regDone = ALBUM_REGIONS.filter(r => albumRegionDone(r.id, owned)).length;
+  const fold = foldSec("album", "我的收藏", `已收集 ${owned.size} / ${ALBUM_CARDS.length} 张 · 集齐 ${regDone} / ${ALBUM_REGIONS.length} 个大区`);
   const grid = el("div", "album-grid");
   ALBUM_REGIONS.forEach(r => {
     const cs = ALBUM_CARDS.filter(c => c.r === r.id), done = cs.every(c => owned.has(c.id));
@@ -4340,7 +4343,8 @@ function albumCard() {
     });
     box.append(slots); grid.append(box);
   });
-  card.append(grid);
+  fold.append(grid);
+  card.append(fold);
   return card;
 }
 // ---------- 连对 combo：连续答对计数，答错清零（答题、变位、背单词各自计数） ----------
@@ -5248,8 +5252,8 @@ function drawBook() {
   if (!bookCache) return;
   const { all, wrong } = bookCache;
   stage.innerHTML = "";
-  stage.append(heatCard(bookCache.raw || []));   // 做题日历放最上面
-  stage.append(planCard(), gameCard(), typeof albumCard === "function" ? albumCard() : "", xpCard(), progressCard());
+  stage.append(heatCard(bookCache.raw || []), xpCard());   // 做题日历放最上面，等级紧跟在下面
+  stage.append(planCard(), gameCard(), typeof albumCard === "function" ? albumCard() : "", progressCard());
   stage.append(tagDistCard());
   const card = el("section", "card");
   stage.append(card);
