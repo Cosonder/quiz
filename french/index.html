@@ -645,6 +645,23 @@ h1 { font-family: var(--display); font-weight: 900; font-size: 1.6rem; line-heig
 .sync-row input { flex: 1 1 200px; min-width: 0; font: inherit; color: var(--fg); background: var(--card); border: 1.5px solid var(--line); border-radius: 10px; padding: 8px 12px; }
 .sync-row input:focus { outline: none; border-color: var(--accent); box-shadow: 0 0 0 3px var(--accent-soft); }
 .btn.ghost.danger { color: var(--bad); border-color: var(--bad); }
+/* 背单词：做对后在题目位置复习；练习设置 */
+.v-q.v-review { justify-content: center; gap: 6px; }
+.v-rv-top { display: flex; gap: 12px; align-items: center; }
+.v-rv-img { width: 96px; aspect-ratio: 3 / 2; object-fit: cover; border-radius: 8px; flex: none; background: var(--line); }
+.v-rv-txt { display: flex; flex-direction: column; gap: 2px; min-width: 0; }
+.v-rv-word { font-family: var(--display); font-size: 1.5rem; color: var(--good); line-height: 1.2; }
+.v-rv-mean { font-family: inherit; font-size: .95rem; font-weight: 500; color: var(--fg); }
+.v-rv-sent { font-family: inherit; font-size: .95rem; font-weight: 500; color: var(--muted); line-height: 1.5; }
+.v-settings { padding: 10px 16px; }
+.v-settings summary { cursor: pointer; font-size: .88rem; color: var(--accent); font-weight: 600; }
+.v-set-body { display: flex; flex-direction: column; gap: 10px; padding-top: 10px; }
+.v-set-row { display: flex; flex-wrap: wrap; gap: 6px 10px; align-items: center; font-size: .88rem; }
+.v-set-name { flex: none; min-width: 5.5em; color: var(--muted); font-weight: 600; }
+.v-set-row select { font: inherit; color: var(--fg); background: var(--card); border: 1px solid var(--line); border-radius: 6px; padding: 2px 6px; }
+.v-set-check { display: flex; gap: 6px; align-items: center; font-size: .85rem; cursor: pointer; }
+.v-set-note { margin: 0; }
+.v-set-note:empty { display: none; }
 </style>
 
 <div class="wrap">
@@ -15230,8 +15247,8 @@ function pickVoice() {
   return fr[0] || null;
 }
 if (tts) { frVoice = pickVoice(); tts.addEventListener?.("voiceschanged", () => { frVoice = pickVoice(); }); }
-function speak(text, rate, btn) {
-  if (!tts) return false;
+function speak(text, rate, btn, done) {   // done：读完（或出错）时调用
+  if (!tts) { if (done) done(); return false; }
   lastAutoAudio = text;
   if (!frVoice) frVoice = pickVoice();   // 声音列表可能在页面打开后才加载好
   tts.cancel();
@@ -15243,7 +15260,7 @@ function speak(text, rate, btn) {
     u.lang = "fr-FR";
     if (frVoice) u.voice = frVoice;
     u.rate = rate;
-    if (btn && k === parts.length - 1) u.onend = u.onerror = () => btn.setAttribute("aria-pressed", "false");
+    if (k === parts.length - 1) u.onend = u.onerror = () => { if (btn) btn.setAttribute("aria-pressed", "false"); if (done) done(); };
     tts.speak(u);
   });
   if (btn) btn.setAttribute("aria-pressed", "true");
@@ -17339,7 +17356,16 @@ const V_PICEX = {
 };
 // ---------- 记录：每个词每种题型最近一次是否答对 ----------
 const V_T = [7, 1, 2, 3, 4, 5];   // 题型顺序：初见题是“例句识图”（读描述图片的例句，从四张图里选），再做其他题
-const vTypes = w => V_T.filter(t => t !== 7 || (vPic(w) && V_PICEX[w.fr]));
+// 练习设置（记在本机）：难度（困难 = 干扰项用形近词）、要练的题型、做对后停留多久、答完是否自动朗读
+const V_PAUSES = [300, 500, 800, 1200, 2000, 3000];
+const vSet = (() => {
+  let s = {};
+  try { s = JSON.parse(localStorage.getItem("fq-vset") || "{}"); } catch (e) {}
+  const types = Array.isArray(s.types) ? s.types.filter(t => V_T.includes(t)) : [];
+  return { hard: !!s.hard, types: types.length ? types : V_T.slice(), pause: V_PAUSES.includes(s.pause) ? s.pause : 500, read: s.read !== false };
+})();
+const vSaveSet = () => { try { localStorage.setItem("fq-vset", JSON.stringify(vSet)); } catch (e) {} };
+const vTypes = w => V_T.filter(t => vSet.types.includes(t) && (t !== 7 || (vPic(w) && V_PICEX[w.fr])));
 let vStats = null;     // Map<词 id, {1..5: true/false}>
 let vLoading = null, vRetry = 0;
 function vLoad() {
@@ -17468,7 +17494,7 @@ function vList() {
     const v = frVoice || pickVoice();
     card.append(el("p", "sub v-voice", v ? `朗读用的声音：${v.name}（${v.lang}）` : "这台设备上没找到法语朗读声音，读音可能不准，可以在系统设置里添加法语语音。"));
   }
-  card.append(row, el("p", "sub", "优先练没掌握的词。每组按题型依次做：" + V_T.map(t => V_TYPES[t - 1]).join(" → ") + "（抽象词没有图片题）。每个词的第一题答完都会停下；之后的题答对自动进入下一题，答错会停下来让你看清楚。"));
+  card.append(row, el("p", "sub", "优先练没掌握的词。每组按题型依次做（可以在下面的练习设置里选题型）。每个词的第一题答完都会停下；之后的题答对后，复习一下这个词再自动进入下一题，答错会停下来让你看清楚。"), vSettingsBox(true));
   const tbl = el("div", "v-table");
   const order = { weak: 0, new: 1, done: 2 };
   const sorted = words.slice().sort((a, b) => order[vState(a)] - order[vState(b)]);
@@ -17552,11 +17578,36 @@ function vStart(pool) {
 }
 const vKind = w => vIsNoun(w) ? "n" : ["v", "adj"].includes(w.pos) ? w.pos : "x";
 function vDistract(w, field) {
-  // 干扰项从全部单词里挑同一类（名词/动词/形容词）的词，不再限于同一主题
+  // 干扰项从全部单词里挑同一类（名词/动词/形容词）的词，不再限于同一主题；困难模式先挑形近词
   const same = V_WORDS.filter(x => x.id !== w.id && vKind(x) === vKind(w));
   const pool = same.length >= 3 ? same : V_WORDS.filter(x => x.id !== w.id);
   const seen = new Set([field(w)]);
-  return vShuffle(pool).filter(x => !seen.has(field(x)) && seen.add(field(x))).slice(0, 3);
+  const near = vSet.hard ? vShuffle(vSimilar(w).slice(0, 6)) : [];
+  return near.concat(vShuffle(pool)).filter(x => !seen.has(field(x)) && seen.add(field(x))).slice(0, 3);
+}
+// 形近词：去掉重音后比拼写（编辑距离，开头 / 结尾相同的更像），最像的排在前面
+function vLev(a, b) {
+  const d = Array.from({ length: b.length + 1 }, (_, j) => j);
+  for (let i = 1; i <= a.length; i++) {
+    let prev = d[0]; d[0] = i;
+    for (let j = 1; j <= b.length; j++) { const t = d[j]; d[j] = Math.min(d[j] + 1, d[j - 1] + 1, prev + (a[i - 1] === b[j - 1] ? 0 : 1)); prev = t; }
+  }
+  return d[b.length];
+}
+const vSimCache = new Map();
+function vSimilar(w) {
+  if (vSimCache.has(w.id)) return vSimCache.get(w.id);
+  const core = s => vBare(s).replace(/^(se |s')/, "");
+  const a = core(w.fr);
+  const score = x => {
+    const b = core(x.fr);
+    let pre = 0; while (pre < a.length && a[pre] === b[pre]) pre++;
+    let suf = 0; while (suf < a.length && suf < b.length && a[a.length - 1 - suf] === b[b.length - 1 - suf]) suf++;
+    return vLev(a, b) / Math.max(a.length, b.length) - 0.12 * Math.min(pre, 4) / 4 - 0.08 * Math.min(suf, 3) / 3;
+  };
+  const list = V_WORDS.filter(x => x.id !== w.id && x.fr !== w.fr).map(x => [x, score(x)]).sort((p, q) => p[1] - q[1]).map(p => p[0]);
+  vSimCache.set(w.id, list);
+  return list;
 }
 // 拼写用的字母块：单词里的字母 + 干扰字母，一共约 16 个
 const V_LOOK = { a: "àâ", à: "aâ", â: "aà", e: "éèê", é: "eèê", è: "eéê", ê: "eéè", ë: "eé", i: "îï", î: "iï", ï: "iî", o: "ô", ô: "o", u: "ùû", ù: "uû", û: "uù", c: "çs", ç: "cs", s: "cz", n: "m", m: "n", r: "l", l: "r", g: "j", p: "b", t: "d", q: "k", œ: "oe" };
@@ -17582,6 +17633,7 @@ function vQuestion() {
   const card = el("section", "card v-card");
   const tags = el("div", "tagrow");
   tags.append(el("span", "tag", V_TYPES[q.type - 1]), el("span", "tag plain", `第 ${S.i + 1} / ${S.qs.length} 题`));
+  if (vSet.hard) tags.append(el("span", "tag plain", "形近词"));
   // 连对计数：本组里连续答对几题，答错清零；连对 2 题起显示
   const combo = el("span", "v-combo"); combo.id = "vCombo";
   const drawCombo = bump => { const n = S.combo || 0; combo.textContent = n >= 2 ? `combo ${n}` : ""; combo.hidden = n < 2; combo.classList.toggle("hot", n >= 10); if (bump && n >= 2) { combo.classList.remove("bump"); void combo.offsetWidth; combo.classList.add("bump"); } };
@@ -17603,7 +17655,7 @@ function vQuestion() {
     S.i < S.qs.length ? vQuestion() : vResult();
   };
   next.addEventListener("click", go);
-  const say = text => { if (tts && userActivated) speak(text, 0.85, null); };
+  const say = text => { if (vSet.read && tts && userActivated) speak(text, 0.85, null); };
   const finish = (ok, given) => {
     S.res[w.id + ":" + q.type] = { ok, given };
     S.combo = ok ? (S.combo || 0) + 1 : 0;
@@ -17623,9 +17675,14 @@ function vQuestion() {
       exp.append(line, el("span", "v-tr", shown.tr));
     }
     next.disabled = false;
+    if (ok) vReview(head, w, q.type, shown);
     if (ok && !first) {
       next.textContent = S.i === S.qs.length - 1 ? "查看成绩" : "下一题 →";
-      vAdvanceTimer = setTimeout(go, q.type === 5 ? 800 : 500);
+      // 停留够设置的时间、并且读完单词，再进入下一题（朗读最多等 3 秒）
+      let timed = false, spoken = !(vSet.read && tts && userActivated);
+      const tryGo = () => { if (timed && spoken) go(); };
+      vAdvanceTimer = setTimeout(() => { timed = true; tryGo(); }, vSet.pause + (q.type === 5 ? 300 : 0));
+      if (!spoken) { speak(vArt(w), 0.9, null, () => { spoken = true; tryGo(); }); setTimeout(() => { spoken = true; tryGo(); }, 3000); }
     } else if (ok) {
       next.focus({ preventScroll: true });
       say(vArt(w));
@@ -17725,7 +17782,8 @@ function vQuestion() {
       if (tts) row.append(vSpeakBtn(w, "▶ 读例句", pe.full));
       head.append(sent, row);
       const seen = new Set([vPic(w)]);
-      const pool = vShuffle(V_WORDS.filter(x => x.id !== w.id && vPic(x)));
+      const near = vSet.hard ? vShuffle(vSimilar(w).filter(x => vPic(x)).slice(0, 6)) : [];
+      const pool = near.concat(vShuffle(V_WORDS.filter(x => x.id !== w.id && vPic(x))));
       const dis = pool.filter(x => !seen.has(vPic(x)) && seen.add(vPic(x))).slice(0, 3);
       const list = vShuffle([w, ...dis]);
       const grid = el("div", "v-pics v-pics7");
@@ -17746,7 +17804,7 @@ function vQuestion() {
       card.append(head, ans);
       actions.append(next);
       card.append(exp, actions);
-      stage.append(card);
+      stage.append(card, vSettingsBox(false));
       return;
     } else if (q.type === 6) {
       // 看词选图：四张图里选出这个词
@@ -17825,7 +17883,74 @@ function vQuestion() {
   }
   actions.append(next);
   card.append(exp, actions);
-  stage.append(card);
+  stage.append(card, vSettingsBox(false));
+}
+// 做对后：把这个词的复习内容放在题目的位置（视线所在），停留一会儿再进入下一题
+function vReview(head, w, type, shown) {
+  head.textContent = "";
+  head.className = "q v-q v-review";
+  const top = el("div", "v-rv-top");
+  if (vPic(w) && type !== 7) top.append(vImg(w, "v-rv-img"));
+  const t = el("div", "v-rv-txt");
+  t.append(el("b", "v-rv-word", vLabel(w)), el("span", "v-rv-mean", `${V_POS_ABBR[w.pos] || ""} ${vMean(w)}`));
+  top.append(t);
+  head.append(top);
+  if (shown && (type === 5 || type === 7)) {
+    const s = el("span", "v-rv-sent");
+    s.append(document.createTextNode(shown.before), el("b", "v-hl", shown.form), document.createTextNode(shown.after));
+    head.append(s);
+  }
+}
+// 练习设置面板（词表页和答题页下方都有）
+function vSettingsBox(open) {
+  const box = el("details", "card v-settings"); box.open = !!open;
+  const sum = el("summary");
+  const brief = () => `练习设置 · ${vSet.hard ? "困难（形近词）" : "普通"} · ${vSet.types.length} 种题型 · 做对停 ${vSet.pause / 1000} 秒 · 朗读${vSet.read ? "开" : "关"}`;
+  sum.textContent = brief();
+  box.append(sum);
+  const body = el("div", "v-set-body");
+  const changed = () => { vSaveSet(); sum.textContent = brief(); };
+  // 难度
+  const g1 = el("div", "v-set-row"); g1.append(el("span", "v-set-name", "难度"));
+  const seg = el("div", "tag-mode");
+  [[false, "普通"], [true, "困难：形近词辨析"]].forEach(([v, t]) => {
+    const b = el("button", null, t); b.type = "button"; b.setAttribute("aria-pressed", String(vSet.hard === v));
+    b.addEventListener("click", () => { vSet.hard = v; seg.querySelectorAll("button").forEach(x => x.setAttribute("aria-pressed", String(x === b))); changed(); });
+    seg.append(b);
+  });
+  g1.append(seg);
+  // 题型
+  const g2 = el("div", "v-set-row"); g2.append(el("span", "v-set-name", "题型"));
+  const chips = el("div", "chips");
+  V_T.forEach(t => {
+    const c = el("button", "chip", V_TYPES[t - 1]); c.type = "button"; c.dataset.t = t;
+    c.setAttribute("aria-pressed", String(vSet.types.includes(t)));
+    c.addEventListener("click", () => {
+      const on = vSet.types.includes(t);
+      if (on && vSet.types.length === 1) { note.textContent = "至少要留一种题型。"; return; }
+      vSet.types = on ? vSet.types.filter(x => x !== t) : V_T.filter(x => x === t || vSet.types.includes(x));
+      c.setAttribute("aria-pressed", String(!on)); note.textContent = "题型改动从下一组开始生效。"; changed();
+    });
+    chips.append(c);
+  });
+  g2.append(chips);
+  // 做对后停留
+  const g3 = el("div", "v-set-row"); g3.append(el("label", "v-set-name", "做对后停留"));
+  const sel = el("select"); sel.id = "vPauseSel";
+  V_PAUSES.forEach(ms => sel.append(new Option(`${ms / 1000} 秒`, String(ms))));
+  sel.value = String(vSet.pause);
+  sel.addEventListener("change", () => { vSet.pause = Number(sel.value); changed(); });
+  g3.firstChild.htmlFor = "vPauseSel";
+  g3.append(sel);
+  // 自动朗读
+  const g4 = el("label", "v-set-row v-set-check");
+  const cb = el("input"); cb.type = "checkbox"; cb.id = "vReadChk"; cb.checked = vSet.read;
+  cb.addEventListener("change", () => { vSet.read = cb.checked; changed(); });
+  g4.append(cb, document.createTextNode(" 答完自动朗读单词（背单词和变位都适用）"));
+  const note = el("p", "sub v-set-note", "");
+  body.append(g1, g2, g3, g4, note);
+  box.append(body);
+  return box;
 }
 function vResult() {
   vUnbindKeys();
@@ -18119,6 +18244,11 @@ function cjToc() {
     nRow.append(b);
   });
   g0.append(el("div", "tag-gname", "每组"), nRow);
+  const rd = el("label", "v-set-check");
+  const rcb = el("input"); rcb.type = "checkbox"; rcb.id = "cjReadChk"; rcb.checked = vSet.read;
+  rcb.addEventListener("change", () => { vSet.read = rcb.checked; vSaveSet(); });
+  rd.append(rcb, document.createTextNode(" 答完自动朗读"));
+  g0.append(rd);
   box.append(g0);
   box.append(group("时态（可多选）", CJ_TENSES.map(([k, zh]) => [k, zh, tPct(k)]), k => cjCfg.tenses.includes(k), k => { cjCfg.tenses = flip(cjCfg.tenses, k); }, "后面的百分比是这个时态的掌握进度"));
   box.append(group("动词", CJ_GROUPS.map(([k, t]) => [k, t, CJ_VERBS.filter(v => v.g === k).length]), k => cjCfg.groups.includes(k), k => { cjCfg.groups = flip(cjCfg.groups, k); }));
@@ -18214,6 +18344,7 @@ function cjAnswer(input, card, fb) {
   cjSess.lastKey = cjId(q.v.v, q.t);
   cjRecord(q, cjCfg.mode === "pick" ? input : cjStrip(input), right);
   comboHit("conj", right);
+  if (vSet.read && tts && userActivated) speak(cjFull(q.t, q.i, q.fem, q.ans).replace(/ !$/, ""), 0.9, null);   // 答完自动朗读（可在背单词的练习设置里关掉）
   // 反馈：对错、完整形式（可朗读）、这个时态的整张变位表
   fb.className = "explain cj-fb";
   fb.textContent = "";
