@@ -14753,7 +14753,9 @@ async function syncReload() {
   if (view === "book") renderBook();
   else if (view === "vocab" && typeof renderVocab === "function" && !vSess) renderVocab();
 }
-function syncLogout() { syncSaveAuth(null); syncState.err = ""; syncDraw(); if (view === "book") drawBook(); }
+// 登录状态变了：重画“账号与同步”所在的设置页
+function syncRefreshView() { if (view === "settings" && typeof renderSettings === "function") renderSettings(); }
+function syncLogout() { syncSaveAuth(null); syncState.err = ""; syncDraw(); syncRefreshView(); }
 async function syncDeleteAccount() {
   await syncFetch("/rest/v1/rpc/delete_my_account", { method: "POST", body: "{}" });
   syncLogout();
@@ -14824,7 +14826,7 @@ function syncCard() {
       const c = code.value.replace(/\s/g, "");
       if (!/^\d{6,10}$/.test(c)) { note.textContent = "请填写邮件里的验证码。"; return; }
       go.disabled = true; note.textContent = "正在登录…";
-      try { await syncVerify(email.value.trim(), c); drawBook(); }
+      try { await syncVerify(email.value.trim(), c); syncRefreshView(); }
       catch (e) { note.textContent = "验证码不对或已过期，请重新发送。"; go.disabled = false; }
     };
     go.addEventListener("click", login);
@@ -14842,6 +14844,50 @@ async function syncVerify(email, token) {
   const j = await syncFetch("/auth/v1/verify", { method: "POST", body: JSON.stringify({ type: "email", email, token }) }, false);
   syncSaveSession(j);
   await syncNow(true);
+}
+// ---------- 设置页的公共部件：分区卡片、下拉、勾选，以及最上面的“账号与同步” ----------
+function setSection(wrap, title, sub) {
+  const card = el("section", "card set-card");
+  card.append(el("h3", null, title));
+  if (sub) card.append(el("p", "sub", sub));
+  wrap.append(card);
+  return card;
+}
+function setSelectRow(id, label, opts, value, onChange) {
+  const row = el("div", "v-set-row");
+  const lab = el("label", "v-set-name", label); lab.htmlFor = id;
+  const sel = el("select"); sel.id = id;
+  opts.forEach(([v, t]) => sel.append(new Option(t, String(v))));
+  sel.value = String(value);
+  sel.addEventListener("change", () => onChange(sel.value));
+  row.append(lab, sel);
+  return row;
+}
+function setCheckRow(id, text, checked, onChange) {
+  const row = el("label", "v-set-row v-set-check");
+  const cb = el("input"); cb.type = "checkbox"; cb.id = id; cb.checked = checked;
+  cb.addEventListener("change", () => onChange(cb.checked));
+  row.append(cb, document.createTextNode(" " + text));
+  return row;
+}
+// 公开网站：登录 / 同步卡；Claude 页面：记录本来就跟着 Claude 账号
+function setAccountSection(wrap) {
+  const card = typeof syncCard === "function" ? syncCard() : null;
+  if (card) { wrap.append(card); return; }
+  setSection(wrap, "账号与同步", "这个页面在 Claude 里打开：做题记录保存在你的 Claude 账号里，换设备登录同一个 Claude 账号就能看到，不需要另外登录。");
+}
+// 答题和学习进度的设置（两页都有）
+function setQuizSection(wrap) {
+  const q = setSection(wrap, "答题", "每组做几题、要不要先复习知识点。");
+  q.append(
+    setSelectRow("setPer", "每组题数", PER_OPTS.map(n => [n, n ? `${n} 题` : "整轮一次做完"]), per, v => { perSel.value = v; perSel.dispatchEvent(new Event("change")); }),
+    setCheckRow("setStudy", "学习模式：每组开始前先复习本组涉及的知识点", study, v => { studyChk.checked = v; studyChk.dispatchEvent(new Event("change")); }));
+}
+function setGoalSection(wrap) {
+  const g = setSection(wrap, "学习进度", "当天经验达到目标算打卡；连续打卡和补签都按这个目标算。");
+  g.append(setSelectRow("setGoal", "每日经验目标", GOAL_OPTS.map(n => [n, `${n} 经验`]), xpGoal, val => {
+    xpGoal = Number(val); try { localStorage.setItem("fq-goal", String(xpGoal)); } catch (e) {} planRefresh();
+  }));
 }
 // ---------- 做题记录的公共定义（账号同步用） ----------
 // 记录分四类：答题、模拟卷、单词、金币和道具；每条记录按内容（键排序后）算指纹去重
@@ -15404,8 +15450,6 @@ function drawBook() {
   const { all, wrong } = bookCache;
   stage.innerHTML = "";
   stage.append(heatCard(bookCache.raw || []));   // 做题日历放最上面
-  const sc = typeof syncCard === "function" ? syncCard() : null;
-  if (sc) stage.append(sc);
   stage.append(planCard(), gameCard(), xpCard(), progressCard());
   stage.append(tagDistCard());
   const card = el("section", "card");
@@ -18311,36 +18355,12 @@ document.addEventListener("keydown", e => {
 function renderSettings() {
   stage.innerHTML = "";
   const wrap = el("div", "set-page");
-  const section = (title, sub) => {
-    const card = el("section", "card set-card");
-    card.append(el("h3", null, title));
-    if (sub) card.append(el("p", "sub", sub));
-    wrap.append(card);
-    return card;
-  };
-  const selectRow = (id, label, opts, value, onChange) => {
-    const row = el("div", "v-set-row");
-    const lab = el("label", "v-set-name", label); lab.htmlFor = id;
-    const sel = el("select"); sel.id = id;
-    opts.forEach(([v, t]) => sel.append(new Option(t, String(v))));
-    sel.value = String(value);
-    sel.addEventListener("change", () => onChange(sel.value));
-    row.append(lab, sel);
-    return row;
-  };
-  const checkRow = (id, text, checked, onChange) => {
-    const row = el("label", "v-set-row v-set-check");
-    const cb = el("input"); cb.type = "checkbox"; cb.id = id; cb.checked = checked;
-    cb.addEventListener("change", () => onChange(cb.checked));
-    row.append(cb, document.createTextNode(" " + text));
-    return row;
-  };
+  const section = (title, sub) => setSection(wrap, title, sub);
+  const selectRow = setSelectRow, checkRow = setCheckRow;
 
-  // 答题：和答题页顶部的“每组 / 学习模式”是同一个设置
-  const q = section("答题", "每组做几题、要不要先复习知识点。");
-  q.append(
-    selectRow("setPer", "每组题数", PER_OPTS.map(n => [n, n ? `${n} 题` : "整轮一次做完"]), per, v => { perSel.value = v; perSel.dispatchEvent(new Event("change")); }),
-    checkRow("setStudy", "学习模式：每组开始前先复习本组涉及的知识点", study, v => { studyChk.checked = v; studyChk.dispatchEvent(new Event("change")); }));
+  setAccountSection(wrap);   // 账号与同步放最上面
+
+  setQuizSection(wrap);
 
   // 背单词
   const v = section("背单词", "难度为“困难”时，干扰选项用拼写相近的词（形近词辨析）。");
@@ -18354,11 +18374,7 @@ function renderSettings() {
     selectRow("setCjMode", "出题方式", [["pick", "选择"], ["type", "填空"]], cjCfg.mode, val => { cjCfg.mode = val; cjSaveCfg(); cjSess = null; }),
     selectRow("setCjN", "每组题数", [[10, "10 题"], [20, "20 题"], [30, "30 题"], [0, "不限"]], cjCfg.n, val => { cjCfg.n = Number(val); cjSaveCfg(); cjSess = null; }));
 
-  // 学习进度
-  const g = section("学习进度", "当天经验达到目标算打卡；连续打卡和补签都按这个目标算。");
-  g.append(selectRow("setGoal", "每日经验目标", GOAL_OPTS.map(n => [n, `${n} 经验`]), xpGoal, val => {
-    xpGoal = Number(val); try { localStorage.setItem("fq-goal", String(xpGoal)); } catch (e) {} planRefresh();
-  }));
+  setGoalSection(wrap);
 
   // 朗读
   const r = section("朗读");

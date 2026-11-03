@@ -417,6 +417,19 @@ mjx-container.mjx-wide { display: block; overflow-x: auto; overflow-y: hidden; m
 .sync-row input { flex: 1 1 200px; min-width: 0; font: inherit; color: var(--fg); background: var(--card); border: 1.5px solid var(--line); border-radius: 10px; padding: 8px 12px; }
 .sync-row input:focus { outline: none; border-color: var(--accent); box-shadow: 0 0 0 3px var(--accent-soft); }
 .btn.ghost.danger { color: var(--bad); border-color: var(--bad); }
+
+/* 设置页 */
+.layout.solo { grid-template-columns: minmax(0, 1fr); }
+.layout.solo .tocwrap { display: none; }
+.set-page { display: flex; flex-direction: column; gap: 14px; max-width: 760px; width: 100%; margin: 0 auto; }
+.set-card { gap: 10px; }
+.set-card h3 { margin: 0; font-size: 1.05rem; }
+.set-card > .sub { margin: 0; }
+.set-foot { margin: 0; text-align: center; }
+.v-set-row { display: flex; flex-wrap: wrap; gap: 6px 10px; align-items: center; font-size: .88rem; }
+.v-set-name { flex: none; min-width: 5.5em; color: var(--muted); font-weight: 600; }
+.v-set-row select { font: inherit; color: var(--fg); background: var(--card); border: 1px solid var(--line); border-radius: 6px; padding: 2px 6px; }
+.v-set-check { display: flex; gap: 6px; align-items: center; font-size: .85rem; cursor: pointer; }
 </style>
 
 <div class="wrap">
@@ -428,6 +441,7 @@ mjx-container.mjx-wide { display: block; overflow-x: auto; overflow-y: hidden; m
     <div class="tabs" role="tablist">
       <button type="button" class="tab" role="tab" id="tabQuiz" aria-selected="true">答题</button>
       <button type="button" class="tab" role="tab" id="tabBook" aria-selected="false">学习进度</button>
+      <button type="button" class="tab" role="tab" id="tabSet" aria-selected="false">设置</button>
     </div>
   </header>
   <div class="layout">
@@ -2766,7 +2780,7 @@ const KEYS = ["A", "B", "C", "D"];
 const $ = id => document.getElementById(id);
 const stage = $("stage"), toc = $("toc"), tocwrap = $("tocwrap"), tocTitle = $("tocTitle");
 const pSet = $("pSet"), pText = $("pText"), pBar = $("pBar"), pScore = $("pScore"), progressEl = $("progress");
-const tabQuiz = $("tabQuiz"), tabBook = $("tabBook"), saveNote = $("saveNote");
+const tabQuiz = $("tabQuiz"), tabBook = $("tabBook"), tabSet = $("tabSet"), saveNote = $("saveNote");
 
 function el(tag, cls, text) {
   const e = document.createElement(tag);
@@ -3843,7 +3857,9 @@ async function syncReload() {
   if (view === "book") renderBook();
   else if (view === "vocab" && typeof renderVocab === "function" && !vSess) renderVocab();
 }
-function syncLogout() { syncSaveAuth(null); syncState.err = ""; syncDraw(); if (view === "book") drawBook(); }
+// 登录状态变了：重画“账号与同步”所在的设置页
+function syncRefreshView() { if (view === "settings" && typeof renderSettings === "function") renderSettings(); }
+function syncLogout() { syncSaveAuth(null); syncState.err = ""; syncDraw(); syncRefreshView(); }
 async function syncDeleteAccount() {
   await syncFetch("/rest/v1/rpc/delete_my_account", { method: "POST", body: "{}" });
   syncLogout();
@@ -3914,7 +3930,7 @@ function syncCard() {
       const c = code.value.replace(/\s/g, "");
       if (!/^\d{6,10}$/.test(c)) { note.textContent = "请填写邮件里的验证码。"; return; }
       go.disabled = true; note.textContent = "正在登录…";
-      try { await syncVerify(email.value.trim(), c); drawBook(); }
+      try { await syncVerify(email.value.trim(), c); syncRefreshView(); }
       catch (e) { note.textContent = "验证码不对或已过期，请重新发送。"; go.disabled = false; }
     };
     go.addEventListener("click", login);
@@ -3932,6 +3948,50 @@ async function syncVerify(email, token) {
   const j = await syncFetch("/auth/v1/verify", { method: "POST", body: JSON.stringify({ type: "email", email, token }) }, false);
   syncSaveSession(j);
   await syncNow(true);
+}
+// ---------- 设置页的公共部件：分区卡片、下拉、勾选，以及最上面的“账号与同步” ----------
+function setSection(wrap, title, sub) {
+  const card = el("section", "card set-card");
+  card.append(el("h3", null, title));
+  if (sub) card.append(el("p", "sub", sub));
+  wrap.append(card);
+  return card;
+}
+function setSelectRow(id, label, opts, value, onChange) {
+  const row = el("div", "v-set-row");
+  const lab = el("label", "v-set-name", label); lab.htmlFor = id;
+  const sel = el("select"); sel.id = id;
+  opts.forEach(([v, t]) => sel.append(new Option(t, String(v))));
+  sel.value = String(value);
+  sel.addEventListener("change", () => onChange(sel.value));
+  row.append(lab, sel);
+  return row;
+}
+function setCheckRow(id, text, checked, onChange) {
+  const row = el("label", "v-set-row v-set-check");
+  const cb = el("input"); cb.type = "checkbox"; cb.id = id; cb.checked = checked;
+  cb.addEventListener("change", () => onChange(cb.checked));
+  row.append(cb, document.createTextNode(" " + text));
+  return row;
+}
+// 公开网站：登录 / 同步卡；Claude 页面：记录本来就跟着 Claude 账号
+function setAccountSection(wrap) {
+  const card = typeof syncCard === "function" ? syncCard() : null;
+  if (card) { wrap.append(card); return; }
+  setSection(wrap, "账号与同步", "这个页面在 Claude 里打开：做题记录保存在你的 Claude 账号里，换设备登录同一个 Claude 账号就能看到，不需要另外登录。");
+}
+// 答题和学习进度的设置（两页都有）
+function setQuizSection(wrap) {
+  const q = setSection(wrap, "答题", "每组做几题、要不要先复习知识点。");
+  q.append(
+    setSelectRow("setPer", "每组题数", PER_OPTS.map(n => [n, n ? `${n} 题` : "整轮一次做完"]), per, v => { perSel.value = v; perSel.dispatchEvent(new Event("change")); }),
+    setCheckRow("setStudy", "学习模式：每组开始前先复习本组涉及的知识点", study, v => { studyChk.checked = v; studyChk.dispatchEvent(new Event("change")); }));
+}
+function setGoalSection(wrap) {
+  const g = setSection(wrap, "学习进度", "当天经验达到目标算打卡；连续打卡和补签都按这个目标算。");
+  g.append(setSelectRow("setGoal", "每日经验目标", GOAL_OPTS.map(n => [n, `${n} 经验`]), xpGoal, val => {
+    xpGoal = Number(val); try { localStorage.setItem("sq-goal", String(xpGoal)); } catch (e) {} planRefresh();
+  }));
 }
 // ---------- 做题记录的公共定义（账号同步用） ----------
 // 记录分四类：答题、模拟卷、单词、金币和道具；每条记录按内容（键排序后）算指纹去重
@@ -4541,8 +4601,6 @@ function drawBook() {
   const { all, wrong } = bookCache;
   stage.innerHTML = "";
   stage.append(heatCard(bookCache.raw || []));   // 做题日历放最上面
-  const sc = typeof syncCard === "function" ? syncCard() : null;
-  if (sc) stage.append(sc);
   stage.append(planCard(), gameCard(), xpCard(), progressCard());
   stage.append(tagDistCard());
   const card = el("section", "card");
@@ -4602,14 +4660,27 @@ function drawBook() {
   });
   typeset(card);
 }
+// ---------- 设置：账号与同步、答题、学习进度（都记在本机浏览器里） ----------
+function renderSettings() {
+  stage.innerHTML = "";
+  const wrap = el("div", "set-page");
+  setAccountSection(wrap);   // 账号与同步放最上面
+  setQuizSection(wrap);
+  setGoalSection(wrap);
+  wrap.append(el("p", "sub set-foot", "设置只保存在这台设备的浏览器里，改动马上生效。"));
+  stage.append(wrap);
+}
 // ---------- 切换 ----------
 function switchView(v, setKey) {
   view = v;
   planRefresh();
   tabQuiz.setAttribute("aria-selected", String(v === "quiz"));
   tabBook.setAttribute("aria-selected", String(v === "book"));
-  progressEl.hidden = v === "book";
+  tabSet.setAttribute("aria-selected", String(v === "settings"));
+  document.querySelector(".layout").classList.toggle("solo", v === "settings");
+  progressEl.hidden = v !== "quiz";
   if (v === "book") { renderBook(); return; }
+  if (v === "settings") { renderSettings(); return; }
   if (setKey) { startSet(setKey); return; }
   renderToc();
   if (rv) { renderReview(); return; }
@@ -4618,6 +4689,7 @@ function switchView(v, setKey) {
 }
 tabQuiz.addEventListener("click", () => { if (view !== "quiz") switchView("quiz"); });
 tabBook.addEventListener("click", () => { bookCache = null; switchView("book"); });
+tabSet.addEventListener("click", () => { if (view !== "settings") switchView("settings"); });
 
 startSet("p1-r1");
 </script>
