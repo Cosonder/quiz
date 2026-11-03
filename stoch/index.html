@@ -436,6 +436,9 @@ mjx-container.mjx-wide { display: block; overflow-x: auto; overflow-y: hidden; m
 .v-set-name { flex: none; min-width: 5.5em; color: var(--muted); font-weight: 600; }
 .v-set-row select { font: inherit; color: var(--fg); background: var(--card); border: 1px solid var(--line); border-radius: 6px; padding: 2px 6px; }
 .v-set-check { display: flex; gap: 6px; align-items: center; font-size: .85rem; cursor: pointer; }
+
+/* 游戏模式关掉时隐藏 combo 等游戏元素 */
+.game-off .v-combo, .game-off .v-maxcombo, .game-off .game-only { display: none !important; }
 </style>
 
 <div class="wrap">
@@ -3172,7 +3175,7 @@ function progLive(d, kind) {
   const r = progStep(prog, d, kind);
   const after = xpLevel(prog.xp).lv;
   const parts = [`+${r.xp} 经验` + (r.mult > 1 ? `（×${r.mult}）` : "")];
-  if (r.coins) parts.push(`+${r.coins} 金币` + (r.run >= 2 ? `（combo ${r.run}）` : ""));
+  if (r.coins && gameOn()) parts.push(`+${r.coins} 金币` + (r.run >= 2 ? `（combo ${r.run}）` : ""));
   if (r.daily) parts.push(`今日首题 +${XP_DAILY}`);
   if (r.up) parts.push(r.up === MEM_MAX ? "复习成功 · 长期记忆" : `复习成功 · 记忆 ${r.up} 级`);
   else if (r.learned) parts.push("新学会一题");
@@ -3443,8 +3446,9 @@ function planTocItem(id = "planToc") {
   if (!p) { box.disabled = true; box.append(el("b", null, "今日计划"), el("span", null, "正在读取答题记录…")); return box; }
   const s = planStatus(p), st = streakInfo();
   const bar = el("span", "pbar"), fill = el("i", "mastery"); fill.style.width = (s.n ? s.d / s.n * 100 : 0) + "%"; bar.append(fill);
-  const pa = typeof potionActive === "function" ? potionActive() : null;
-  const coins = typeof gameLedger === "function" ? ` · ${gameLedger().coins} 金币` : "";
+  const gm = typeof gameOn === "function" && gameOn();
+  const pa = gm ? potionActive() : null;
+  const coins = gm ? ` · ${gameLedger().coins} 金币` : "";
   box.append(el("b", null, (s.d === s.n ? "今日计划 · 已完成" : "今日计划") + (pa ? ` · ${pa.mult} 倍经验中` : "")), el("span", "n", `${s.d}/${s.n} 题 · 今日 ${st.today}/${xpGoal} 经验 · 连续 ${st.n} 天${coins}`), bar);
   box.addEventListener("click", () => {
     const left = s.parts.find(x => x.d < x.n);
@@ -3532,7 +3536,7 @@ function coinStep(st, key, right, t) {
   r.t = t;
   if (!right) return { coins: 0, run: 0 };
   r.n++;
-  if (dayKey(new Date(t)) < COIN_ANS_FROM) return { coins: 0, run: r.n };
+  if (dayKey(new Date(t)) < COIN_ANS_FROM || !gameOnAt(t)) return { coins: 0, run: r.n };
   const c = coinFor(r.n);
   st.coins += c;
   return { coins: c, run: r.n };
@@ -3555,8 +3559,31 @@ const QUESTS = [
 ];
 
 let gameRaw = [];   // game 集合的全部记录
-let potionCache = null;
-function gameReset(docs) { gameRaw = docs || []; potionCache = null; prog = null; }
+let potionCache = null, modeCache = null;
+function gameReset(docs) { gameRaw = docs || []; potionCache = null; modeCache = null; prog = null; gameApplyMode(); }
+
+// ---------- 游戏模式（设置里开关）：金币、combo、每日任务、商店和道具，以及以后新加的游戏玩法，都只在打开时出现 ----------
+// 开关记成 game 记录（kind: "mode"），跟着账号同步；关掉期间答对不得金币。没有记录时默认打开。
+function modeList() {
+  if (!modeCache) modeCache = gameRaw.filter(g => g.kind === "mode").map(g => [Date.parse(g.at), !!g.on]).sort((a, b) => a[0] - b[0]);
+  return modeCache;
+}
+function gameOnAt(t) { let on = true; for (const [a, v] of modeList()) { if (a <= t) on = v; else break; } return on; }
+function gameOn() {
+  const m = modeList();
+  if (m.length) return m[m.length - 1][1];
+  try { return localStorage.getItem("sq-game") !== "0"; } catch (e) { return true; }
+}
+function gameApplyMode() { document.documentElement.classList.toggle("game-off", !gameOn()); }
+function gameSetMode(on) {
+  if (on === gameOn()) return;
+  try { localStorage.setItem("sq-game", on ? "1" : "0"); } catch (e) {}
+  gameAdd({ kind: "mode", on, at: new Date().toISOString() });
+  modeCache = null; prog = null;
+  gameApplyMode();
+  if (typeof planRefresh === "function") planRefresh();
+}
+gameApplyMode();
 // 药水生效时段 [开始, 结束, 倍数]
 function potionWindows() {
   if (!potionCache) potionCache = gameRaw.filter(g => g.kind === "use" && g.until && SHOP.find(s => s.id === g.item)?.mult)
@@ -3625,6 +3652,7 @@ function questStatus() {
 }
 // 发放刚完成的任务奖励（答完题后、打开学习进度页时调用），返回这次发的
 function gameCheck() {
+  if (!gameOn()) return [];
   const st = questStatus();
   if (!st) return [];
   const out = [], now = new Date().toISOString();
@@ -3671,6 +3699,7 @@ const coinEl = n => { const s = el("span", "coin-n"); s.append(el("i", "coin"), 
 const mmss = ms => `${Math.floor(ms / 60e3)}:${String(Math.floor(ms / 1e3) % 60).padStart(2, "0")}`;
 // 学习进度页：每日任务 + 商店
 function gameCard() {
+  if (!gameOn()) return document.createDocumentFragment();
   const card = el("section", "card game-card");
   gameCheck();
   const st = questStatus();
@@ -4015,6 +4044,11 @@ function setQuizSection(wrap) {
   q.append(
     setSelectRow("setPer", "每组题数", PER_OPTS.map(n => [n, n ? `${n} 题` : "整轮一次做完"]), per, v => { perSel.value = v; perSel.dispatchEvent(new Event("change")); }),
     setCheckRow("setStudy", "学习模式：每组开始前先复习本组涉及的知识点", study, v => { studyChk.checked = v; studyChk.dispatchEvent(new Event("change")); }));
+}
+// 游戏模式：金币、combo、每日任务、商店和道具
+function setGameSection(wrap) {
+  const g = setSection(wrap, "游戏模式", "打开后：答对得金币、连对 combo 计数、每日任务、商店和道具（经验药水、补签卡）。关掉后这些都不显示，关掉期间答对也不得金币；已有的金币和道具会保留，重新打开还在。经验、等级、今日计划和闯关不受影响。这个开关跟着账号同步。");
+  g.append(setCheckRow("setGame", "打开游戏模式", gameOn(), v => gameSetMode(v)));
 }
 function setGoalSection(wrap) {
   const g = setSection(wrap, "学习进度", "当天经验达到目标算打卡；连续打卡和补签都按这个目标算。");
@@ -4694,6 +4728,7 @@ function renderSettings() {
   stage.innerHTML = "";
   const wrap = el("div", "set-page");
   setAccountSection(wrap);   // 账号与同步放最上面
+  setGameSection(wrap);
   setQuizSection(wrap);
   setGoalSection(wrap);
   wrap.append(el("p", "sub set-foot", "设置只保存在这台设备的浏览器里，改动马上生效。"));
