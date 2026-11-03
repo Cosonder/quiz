@@ -591,6 +591,17 @@ mjx-container.mjx-wide { display: block; overflow-x: auto; overflow-y: hidden; m
 .pc-msg { color: #fff; text-align: center; display: flex; flex-direction: column; gap: 6px; align-items: center; min-height: 90px; }
 .pc-msg b { font-size: 1.1rem; } .pc-bonus { color: #ffd23a; font-weight: 700; }
 .pc-msg .btn.ghost { color: #fff; border-color: #fff; }
+/* 可折叠的商店分区 */
+.shop-fold { border: 1px solid var(--line); border-radius: 10px; margin-top: 10px; background: var(--card); }
+.shop-fold > summary { list-style: none; cursor: pointer; padding: 10px 12px; display: flex; flex-wrap: wrap; align-items: baseline; gap: 4px 10px; }
+.shop-fold > summary::-webkit-details-marker { display: none; }
+.shop-fold > summary::before { content: "▸"; color: var(--accent); font-weight: 700; transition: transform .15s; display: inline-block; }
+.shop-fold[open] > summary::before { transform: rotate(90deg); }
+.shop-fold > summary b { font-size: 1rem; }
+.shop-fold-hint { font-size: .78rem; color: var(--muted); }
+.shop-fold > .shop, .shop-fold > .cos-sec, .shop-fold > .cos-grid, .shop-fold > .shop-note { margin-left: 12px; margin-right: 12px; }
+.shop-fold > .shop { margin-bottom: 12px; }
+.shop-fold > .shop-note:last-child { margin-bottom: 12px; }
 
 </style>
 
@@ -3912,6 +3923,19 @@ function gameUse(id) {
   return "";
 }
 
+// 可折叠的分区（商店、外观）：默认收起，展开 / 收起记在本机
+const foldOpen = {};
+function foldSec(key, title, hint) {
+  const d = el("details", "shop-fold"); d.dataset.k = key;
+  let open = foldOpen[key];
+  if (open === undefined) { try { open = localStorage.getItem("sq-fold-" + key) === "1"; } catch (e) { open = false; } }
+  d.open = !!open;
+  const s = el("summary", "shop-fold-h"); s.append(el("b", null, title));
+  if (hint) s.append(el("span", "shop-fold-hint", hint));
+  d.append(s);
+  d.addEventListener("toggle", () => { foldOpen[key] = d.open; try { localStorage.setItem("sq-fold-" + key, d.open ? "1" : "0"); } catch (e) {} });
+  return d;
+}
 const coinEl = n => { const s = el("span", "coin-n"); s.append(el("i", "coin"), document.createTextNode(String(n))); return s; };
 const mmss = ms => `${Math.floor(ms / 60e3)}:${String(Math.floor(ms / 1e3) % 60).padStart(2, "0")}`;
 // 学习进度页：每日任务 + 商店
@@ -3940,7 +3964,9 @@ function gameCard() {
   card.append(bonus);
   if (st.led.chests.length) card.append(chestBox(st.led.chests.length));
   // 商店
-  card.append(el("h3", "shop-h", "商店"));
+  const own = Object.values(st.led.inv).reduce((a, b) => a + b, 0);
+  const shopSec = foldSec("shop", "商店 · 道具", `连对护盾、补签卡、经验药水${own ? ` · 拥有 ${own} 件` : ""}`);
+  card.append(shopSec);
   const shop = el("div", "shop");
   const note = el("p", "shop-note", "");
   const pt = patchTarget();
@@ -3976,8 +4002,9 @@ function gameCard() {
     box.append(acts);
     shop.append(box);
   });
-  card.append(shop, note);
+  shopSec.append(shop);
   if (typeof cosShop === "function") card.append(cosShop(note));
+  card.append(note);
   const rule = el("details", "xp-rule");
   rule.append(el("summary", null, "任务和金币怎么算"),
     el("p", null, `每答对一题 +1 金币，连对越多给得越多：combo 5 起每题 2 个，10 起 3 个，20 起 4 个，30 起 5 个。答错、或隔 10 分钟以上没答，连对重新算；答题、变位、背单词分开算。`),
@@ -4096,9 +4123,10 @@ function cosPreview(it) {
   return box;
 }
 function cosShop(note) {
-  const wrap = el("div", "cos-shop");
-  wrap.append(el("h3", "shop-h", "外观"));
   const led = gameLedger(), eq = cosEquipped();
+  const ownN = COSMETICS.filter(c => led.owned.has(c.id)).length;
+  const wrap = foldSec("cos", "商店 · 外观", `金币皮肤、主题配色、连对特效、称号框 · 已拥有 ${ownN} / ${COSMETICS.length}`);
+  wrap.classList.add("cos-shop");
   COS_SLOTS.forEach(([slot, label]) => {
     const items = COSMETICS.filter(c => c.slot === slot);
     wrap.append(el("div", "cos-sec", label));
