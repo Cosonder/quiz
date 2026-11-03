@@ -306,8 +306,6 @@ mjx-container.mjx-wide { display: block; overflow-x: auto; overflow-y: hidden; m
 .explain .tag-note { display: block; margin-top: 4px; color: var(--muted); font-size: .85rem; }
 .tag.lv { flex: none; font-weight: 700; font-variant-numeric: tabular-nums; }
 .tag-group .lv-note { font-size: .72rem; color: var(--muted); }
-.bk-row .bk-name { font-weight: 600; color: var(--fg); }
-.bk-row .bk-note { flex: 1 1 220px; min-width: 0; overflow-wrap: anywhere; }
 
 /* 学习进度：经验等级、标签进度、+经验提示 */
 .xp-card { gap: 10px; }
@@ -3066,12 +3064,12 @@ function heatCard(raw) {
   legend.append(document.createTextNode(" 多（1–9 / 10–24 / 25–49 / 50+ 题）"));
   foot.append(info, legend);
   card.append(foot);
-  card.append(remindRow(), backupRow());
+  card.append(remindRow());
   requestAnimationFrame(() => { scroll.scrollLeft = scroll.scrollWidth; });
   return card;
 }
 // ---------- 学习进度：按艾宾浩斯遗忘曲线安排复习，按时复习一次升一级；做题攒经验值、升等级 ----------
-// 每道题有一个记忆等级 0–6，全部由答题记录推算（不另存数据，备份恢复后照样算得出）：
+// 每道题有一个记忆等级 0–6，全部由答题记录推算（不另存数据，同步到别的设备后照样算得出）：
 //   第一次答对 → 1 级。之后要隔够这一级的遗忘周期再答对，才升一级：
 //   1 级隔 1 天、2 级隔 2 天、3 级隔 4 天、4 级隔 7 天、5 级隔 15 天；6 级是长期记忆，每 30 天巩固一次。
 //   没到时间就答对只算练习，不升级；答错退两级，从这次重新计时。
@@ -3492,7 +3490,7 @@ function planCard() {
   return card;
 }
 // ---------- 每日任务、金币和商店（多邻国式）：每天 3 个任务，完成得金币；金币买补签卡和双倍 / 三倍经验药水 ----------
-// 金币的获得、购买、使用都记成记录（game 集合），和答题记录一样能备份恢复；余额和库存都由记录算出。
+// 金币的获得、购买、使用都记成记录（game 集合），和答题记录一样跟着账号同步；余额和库存都由记录算出。
 // 同一个奖励（某天的某个任务）只算一次，两台设备同时领取也不会重复。
 const COIN_TIERS = [10, 15, 20];      // 三个任务：简单 / 中等 / 困难
 const COIN_ALL = 20, COIN_PLAN = 30;  // 三个任务全部完成；做完今日计划
@@ -3733,7 +3731,7 @@ const SYNC_AUTH = "quiz-auth";    // 登录状态：两个练习页共用，登�
 const SYNC_ON = typeof claude === "undefined";
 let syncState = { busy: false, last: 0, err: "", queue: [], timer: 0 };
 
-// 记录内容的指纹（cyrb53），和备份恢复的去重规则一致
+// 记录内容的指纹（cyrb53）
 function syncHash(str) {
   let h1 = 0xdeadbeef, h2 = 0x41c6ce57;
   for (let i = 0; i < str.length; i++) { const c = str.charCodeAt(i); h1 = Math.imul(h1 ^ c, 2654435761); h2 = Math.imul(h2 ^ c, 1597334677); }
@@ -3741,7 +3739,7 @@ function syncHash(str) {
   h2 = Math.imul(h2 ^ (h2 >>> 16), 2246822507) ^ Math.imul(h1 ^ (h1 >>> 13), 3266489909);
   return (4294967296 * (2097151 & h2) + (h1 >>> 0)).toString(36);
 }
-const syncKeyOf = d => syncHash(bkKey(d));
+const syncKeyOf = d => syncHash(recKey(d));
 function syncAuth() { try { return JSON.parse(localStorage.getItem(SYNC_AUTH) || "null"); } catch (e) { return null; } }
 function syncSaveAuth(a) { try { if (a) localStorage.setItem(SYNC_AUTH, JSON.stringify(a)); else localStorage.removeItem(SYNC_AUTH); } catch (e) {} }
 function syncSaveSession(j) {
@@ -3781,7 +3779,7 @@ async function syncFetch(path, opt = {}, auth = true) {
 // 本机的记录（和公开网站的本地数据库同一份）
 const syncLocal = c => { try { return JSON.parse(localStorage.getItem(SYNC_NS + "db-" + c) || "[]"); } catch (e) { return []; } };
 const syncStore = (c, arr) => { try { localStorage.setItem(SYNC_NS + "db-" + c, JSON.stringify(arr)); } catch (e) {} };
-const syncRow = (c, d) => ({ app: BK_APP, coll: c, key: syncKeyOf(d), data: d });
+const syncRow = (c, d) => ({ app: REC_APP, coll: c, key: syncKeyOf(d), data: d });
 async function syncUpload(rows) {
   for (let i = 0; i < rows.length; i += 500)
     await syncFetch("/rest/v1/records?on_conflict=user_id,app,coll,key", {
@@ -3796,19 +3794,19 @@ async function syncNow(force) {
   try {
     const remote = [];
     for (let off = 0; ; off += 1000) {
-      const rows = await syncFetch(`/rest/v1/records?select=coll,key,data&app=eq.${BK_APP}&order=id.asc&limit=1000&offset=${off}`);
+      const rows = await syncFetch(`/rest/v1/records?select=coll,key,data&app=eq.${REC_APP}&order=id.asc&limit=1000&offset=${off}`);
       remote.push(...rows);
       if (rows.length < 1000) break;
     }
     let added = 0;
     const up = [];
-    for (const c of BK_COLLS) {
+    for (const c of REC_COLLS) {
       const loc = syncLocal(c), lk = new Set(loc.map(syncKeyOf));
       const rk = new Set();
       let n = 0;
       remote.forEach(r => { if (r.coll !== c) return; rk.add(r.key); if (!lk.has(r.key)) { loc.push(r.data); lk.add(r.key); n++; } });
       if (n) { syncStore(c, loc); added += n; }
-      loc.forEach(d => { const k = syncKeyOf(d); if (!rk.has(k)) { up.push({ app: BK_APP, coll: c, key: k, data: d }); rk.add(k); } });
+      loc.forEach(d => { const k = syncKeyOf(d); if (!rk.has(k)) { up.push({ app: REC_APP, coll: c, key: k, data: d }); rk.add(k); } });
     }
     await syncUpload(up);
     syncState.last = Date.now(); syncState.err = "";
@@ -3820,7 +3818,7 @@ async function syncNow(force) {
   }
   syncState.busy = false; syncDraw();
 }
-// 答完一题：把新记录攒一小会儿再一起传（恢复备份时一次会加很多条）
+// 答完一题：把新记录攒一小会儿再一起传
 function syncPush(c, d) {
   if (!SYNC_ON || !syncAuth()) return;
   syncState.queue.push(syncRow(c, d));
@@ -3935,100 +3933,11 @@ async function syncVerify(email, token) {
   syncSaveSession(j);
   await syncNow(true);
 }
-// ---------- 备份与恢复：所有记录 + 本机设置 → 一个 .json 文件；恢复时合并，已有的记录不重复 ----------
-const BK_COLLS = ["answers", "exams", "vocab", "game"];
-const BK_PREFIX = "sq-";   // 本页在浏览器里的设置键前缀
-const BK_APP = (BANK[0] && BANK[0].id.split("-")[0]) || "quiz";
-const bkKey = d => JSON.stringify(Object.keys(d).sort().map(k => [k, d[k]]));
-async function bkCollect() {
-  const db = {};
-  for (const c of BK_COLLS) db[c] = (await dbRef.collection(c).get()).docs.map(d => d.data());
-  const ls = {};
-  try {
-    for (let k = 0; k < localStorage.length; k++) {
-      const key = localStorage.key(k);
-      if (key && (key.startsWith(BK_PREFIX) && !key.startsWith(BK_PREFIX + "db-") || key === "quiz-remind")) ls[key] = localStorage.getItem(key);
-    }
-  } catch (e) {}
-  return { app: BK_APP, title: document.title, version: 1, at: new Date().toISOString(), db, ls };
-}
-async function bkSave(text, name) {
-  if (typeof claude !== "undefined") {
-    const dl = await claude.use("downloads");
-    if (dl) { await dl.save({ filename: name, data: text }); return "saved"; }
-    await navigator.clipboard.writeText(text); return "copied";
-  }
-  const a = document.createElement("a");
-  a.href = URL.createObjectURL(new Blob([text], { type: "application/json" }));
-  a.download = name;
-  document.body.append(a); a.click(); a.remove();
-  setTimeout(() => URL.revokeObjectURL(a.href), 5000);
-  return "saved";
-}
-function backupRow() {
-  const row = el("div", "heat-remind bk-row");
-  row.append(el("span", "bk-name", "备份与恢复"));
-  const out = el("button", "btn ghost", "备份记录"); out.type = "button"; out.id = "bkOut";
-  const inBtn = el("button", "btn ghost", "从备份恢复"); inBtn.type = "button"; inBtn.id = "bkIn";
-  const file = el("input"); file.type = "file"; file.accept = ".json,application/json"; file.hidden = true; file.id = "bkFile";
-  const note = el("span", "bk-note", "把答题记录（学习进度、经验值、错题本、做题日历都由它算出）、单词记录、金币和道具，以及本机设置存成一个文件，换设备或清除数据后可以恢复。");
-  const busy = on => { out.disabled = inBtn.disabled = on; };
-  out.addEventListener("click", async () => {
-    if (!dbRef) { note.textContent = "当前视图无法读取记录，不能备份。"; return; }
-    busy(true); note.textContent = "正在整理记录…";
-    try {
-      const data = await bkCollect();
-      const n = BK_COLLS.reduce((s, c) => s + data.db[c].length, 0);
-      const d = new Date(), p2 = x => String(x).padStart(2, "0");
-      const name = `${BK_APP}-quiz-backup-${d.getFullYear()}${p2(d.getMonth() + 1)}${p2(d.getDate())}.json`;
-      const how = await bkSave(JSON.stringify(data), name);
-      note.textContent = how === "copied" ? `共 ${n} 条记录。这里不能下载文件，备份内容已复制到剪贴板，可以粘贴到备忘录里另存为 .json 文件。`
-        : `已生成备份文件 ${name}（共 ${n} 条记录），请保存好。`;
-    } catch (e) {
-      note.textContent = e && e.code === "declined" ? "已取消保存。" : "备份没有完成，请稍后再试。";
-    }
-    busy(false);
-  });
-  inBtn.addEventListener("click", () => { if (!dbRef) { note.textContent = "当前视图无法保存记录，不能恢复。"; return; } file.value = ""; file.click(); });
-  file.addEventListener("change", async () => {
-    const f = file.files && file.files[0];
-    if (!f) return;
-    let data;
-    try { data = JSON.parse(await f.text()); } catch (e) { note.textContent = "这个文件不是有效的备份文件。"; return; }
-    if (!data || typeof data.db !== "object") { note.textContent = "这个文件不是有效的备份文件。"; return; }
-    if (data.app && data.app !== BK_APP && !confirm(`这个备份来自“${data.title || data.app}”，不是本页的记录。仍然导入吗？`)) return;
-    busy(true);
-    let added = 0, skipped = 0, failed = 0, total = 0;
-    try {
-      for (const c of BK_COLLS) total += Array.isArray(data.db[c]) ? data.db[c].length : 0;
-      for (const c of BK_COLLS) {
-        const list = Array.isArray(data.db[c]) ? data.db[c] : [];
-        if (!list.length) continue;
-        const have = new Set((await dbRef.collection(c).get()).docs.map(d => bkKey(d.data())));
-        for (const d of list) {
-          if (!d || typeof d !== "object") { failed++; continue; }
-          const k = bkKey(d);
-          if (have.has(k)) { skipped++; continue; }
-          try { await dbRef.collection(c).add(d); have.add(k); added++; }
-          catch (e) { failed++; if (e && e.code === "quota_exceeded") throw e; }
-          if ((added + skipped + failed) % 20 === 0) note.textContent = `正在恢复… ${added + skipped + failed} / ${total}`;
-        }
-      }
-      if (data.ls && typeof data.ls === "object") {
-        try { for (const [k, v] of Object.entries(data.ls)) if (typeof v === "string" && (k.startsWith(BK_PREFIX) || k === "quiz-remind")) localStorage.setItem(k, v); } catch (e) {}
-      }
-      note.textContent = `恢复完成：新增 ${added} 条记录` + (skipped ? `，${skipped} 条已存在（跳过）` : "") + (failed ? `，${failed} 条没能写入` : "") + "。";
-    } catch (e) {
-      note.textContent = `恢复到一半停止了（已新增 ${added} 条）：记录存储已满。`;
-    }
-    busy(false);
-    bookCache = null;
-    if (typeof vStats !== "undefined") vStats = null;
-    if (view === "book") { const keep = note.textContent; renderBook(); setTimeout(() => { const n = $("bkOut")?.parentElement?.querySelector(".bk-note"); if (n) n.textContent = keep; }, 0); }
-  });
-  row.append(out, inBtn, file, note);
-  return row;
-}
+// ---------- 做题记录的公共定义（账号同步用） ----------
+// 记录分四类：答题、模拟卷、单词、金币和道具；每条记录按内容（键排序后）算指纹去重
+const REC_COLLS = ["answers", "exams", "vocab", "game"];
+const REC_APP = (BANK[0] && BANK[0].id.split("-")[0]) || "quiz";   // fr 法语页 / sc 随机分析页
+const recKey = d => JSON.stringify(Object.keys(d).sort().map(k => [k, d[k]]));
 // 日历文件每行不超过 75 字节，长行折行（续行以空格开头），不拆开多字节字符
 function foldIcs(line) {
   const enc = new TextEncoder(), out = [];
@@ -4631,10 +4540,10 @@ function drawBook() {
   if (!bookCache) return;
   const { all, wrong } = bookCache;
   stage.innerHTML = "";
+  stage.append(heatCard(bookCache.raw || []));   // 做题日历放最上面
   const sc = typeof syncCard === "function" ? syncCard() : null;
   if (sc) stage.append(sc);
   stage.append(planCard(), gameCard(), xpCard(), progressCard());
-  stage.append(heatCard(bookCache.raw || []));
   stage.append(tagDistCard());
   const card = el("section", "card");
   stage.append(card);
