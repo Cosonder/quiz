@@ -17373,6 +17373,102 @@ const V_CONFUSE = [
   { w: ["essayer", "porter", "s'habiller"], tip: "essayer 试穿，porter 穿着、戴着（状态），s'habiller 穿衣服（动作）。" },
   { w: ["ranger", "ménage", "lessive"], tip: "ranger 整理、把东西放好（动词），ménage 家务（名词），lessive 洗衣 / 洗衣粉。" },
   { w: ["éviter", "empêcher", "interdire", "protéger"], tip: "éviter 避免（自己躲开），empêcher 阻止（不让别人做），interdire 禁止（规定），protéger 保护。" },
+  // —— 第二批：按主题补充 ——
+  // 家居与日常
+  { w: ["quartier", "voisin", "habitant", "banlieue"], tip: "quartier 街区（地方），voisin 邻居（住隔壁的人），habitant 居民（住在某地的人），banlieue 郊区。" },
+  { w: ["étagère", "tiroir", "évier", "poubelle"], tip: "étagère 搁板、架子，tiroir 抽屉，évier 厨房水槽，poubelle 垃圾桶。" },
+  { w: ["déménagement", "s'habituer", "dépaysement"], tip: "déménagement 搬家（名词），s'habituer à 习惯于（动词），dépaysement 身处异乡的陌生感。" },
+  { w: ["se dépêcher", "retard", "rater"], tip: "se dépêcher 赶紧（动作），retard 迟到、晚点（名词），rater 没赶上（车）/ 错过。" },
+  { w: ["quotidien", "journal"], tip: "quotidien 日常的（形容词），作名词时是“日报”；journal 报纸 / 日记。" },
+  // 工作与金钱
+  { w: ["emploi", "entretien", "candidature", "carrière", "tâche"], tip: "emploi 工作岗位，entretien 面试，candidature 求职申请，carrière 职业生涯，tâche 一项任务。" },
+  { w: ["salaire", "dépense", "compte", "impôt", "amende"], tip: "salaire 工资（收入），dépense 支出，compte 账户，impôt 税，amende 罚款。" },
+  { w: ["grève", "manifestation", "syndicat"], tip: "grève 罢工（停工），manifestation 游行示威（上街），syndicat 工会（组织）。" },
+  { w: ["délai", "retard"], tip: "délai 期限、所需时间，retard 迟到、晚点（超过了时间）。" },
+  { w: ["réunion", "rencontre", "entretien"], tip: "réunion 会议，rencontre 相遇、见面，entretien 面试 / 正式谈话。" },
+  { w: ["société", "entreprise"], tip: "société 社会，也可指“公司”；entreprise 企业、公司。" },
+  // 学习与教育
+  { w: ["diplôme", "formation", "apprentissage", "enseignement", "connaissance"], tip: "diplôme 文凭，formation 培训、所受教育，apprentissage 学习过程 / 学徒，enseignement 教学（老师那方），connaissance 知识 / 认识。" },
+  { w: ["réviser", "rédiger", "réfléchir"], tip: "réviser 复习，rédiger 撰写，réfléchir à 思考。" },
+  { w: ["bourse", "inscription", "emploi du temps", "matière"], tip: "bourse 奖学金，inscription 注册、报名，emploi du temps 课程表，matière 科目。" },
+  // 健康与身体
+  { w: ["ordonnance", "médicament", "piqûre", "urgences"], tip: "ordonnance 处方（医生开的单子），médicament 药，piqûre 打针，urgences 急诊。" },
+  { w: ["guérir", "sain", "épuisé"], tip: "guérir 治愈、痊愈（动词），sain 健康的，épuisé 筋疲力尽的。" },
+  { w: ["poumon", "cœur", "foie", "genou", "épaule"], tip: "poumon 肺，cœur 心脏，foie 肝，genou 膝盖，épaule 肩膀。" },
+  // 旅行与交通
+  { w: ["bagage", "valise", "colis"], tip: "bagage 行李（统称），valise 行李箱，colis 包裹（邮寄的）。" },
+  { w: ["séjour", "itinéraire", "auberge"], tip: "séjour 逗留（在某地待一段时间），itinéraire 路线，auberge 旅店。" },
+  { w: ["douane", "frontière", "permis de conduire"], tip: "douane 海关（检查行李），frontière 边境（国界），permis de conduire 驾照。" },
+  // 自然与环境
+  { w: ["environnement", "paysage", "ressource", "espèce"], tip: "environnement 环境，paysage 风景，ressource 资源，espèce 物种。" },
+  { w: ["déchet", "recycler", "gaspiller", "poubelle"], tip: "déchet 垃圾、废物（名词），recycler 回收（动词），gaspiller 浪费，poubelle 垃圾桶。" },
+  { w: ["falaise", "marée", "colline", "forêt"], tip: "falaise 悬崖（海边），marée 潮汐，colline 小山丘，forêt 森林。" },
+  { w: ["réchauffement", "renouvelable", "énergie"], tip: "réchauffement 变暖（气候），renouvelable 可再生的，énergie 能源。" },
+  { w: ["menacer", "protéger"], tip: "menacer 威胁，protéger 保护。" },
+  // 社会与时事
+  { w: ["loi", "droit", "impôt"], tip: "loi 法律（一条条规定），droit 权利 / 法学，impôt 税。" },
+  { w: ["élection", "voter", "sondage", "débat"], tip: "élection 选举，voter 投票（动词），sondage 民意调查，débat 辩论。" },
+  { w: ["exiger", "soutenir", "lutter"], tip: "exiger 强烈要求，soutenir 支持，lutter contre 斗争、对抗。" },
+  { w: ["inégalité", "pauvreté", "bénévolat", "accueil"], tip: "inégalité 不平等，pauvreté 贫穷，bénévolat 志愿服务，accueil 接待、收容。" },
+  { w: ["mairie", "gouvernement", "citoyenneté"], tip: "mairie 市政府（地方），gouvernement 政府（国家），citoyenneté 公民身份。" },
+  // 媒体与科技
+  { w: ["réseau", "en ligne", "numérique", "abonnement", "mot de passe"], tip: "réseau 网络，en ligne 在线，numérique 数字的，abonnement 订阅，mot de passe 密码。" },
+  { w: ["appareil", "machine", "outil", "robot"], tip: "appareil 设备、电器（相机等），machine 机器，outil 工具（手用），robot 机器人。" },
+  // 情感与性格
+  { w: ["jalousie", "ennui", "inquiétude", "honte"], tip: "jalousie 嫉妒，ennui 无聊 / 麻烦，inquiétude 担心，honte 羞耻。" },
+  { w: ["sensible", "bavard", "têtu", "paresseux"], tip: "sensible 敏感的（不是“理智”），bavard 话多的，têtu 固执的，paresseux 懒的。" },
+  { w: ["se plaindre", "regretter", "éprouver", "se fâcher"], tip: "se plaindre de 抱怨，regretter 后悔 / 想念，éprouver 感受到，se fâcher 生气。" },
+  // 常用连接与抽象词
+  { w: ["à condition que", "bien que", "afin de", "malgré"], tip: "à condition que 只要、条件是（+ 虚拟式），bien que 虽然（+ 虚拟式），afin de 为了（+ 不定式），malgré 尽管（+ 名词）。" },
+  { w: ["environ", "parmi", "davantage"], tip: "environ 大约，parmi 在……之中，davantage 更多。" },
+  // 饮食与烹饪
+  { w: ["cuire", "bouillir", "éplucher", "mélanger"], tip: "cuire 煮熟、烹饪（统称），bouillir 沸腾、煮开，éplucher 削皮，mélanger 搅拌。" },
+  { w: ["goût", "goûter", "sucré", "épicé"], tip: "goût 味道（名词），goûter 尝（动词），sucré 甜的，épicé 辣的。" },
+  { w: ["repas", "plat", "recette"], tip: "repas 一顿饭，plat 一道菜 / 盘子，recette 食谱。" },
+  { w: ["boulangerie", "épicerie"], tip: "boulangerie 面包店，épicerie 杂货店。" },
+  { w: ["frais", "sain"], tip: "frais 新鲜的 / 凉爽的，sain 健康的（对身体好的）。" },
+  // 购物与消费
+  { w: ["caisse", "rayon", "vitrine", "panier"], tip: "caisse 收银台，rayon 货架、柜台区，vitrine 橱窗，panier 购物篮。" },
+  { w: ["marque", "taille", "mode"], tip: "marque 品牌，taille 尺码，mode 时尚。" },
+  { w: ["échanger", "rembourser", "commander", "livrer"], tip: "échanger 换货，rembourser 退款，commander 下单，livrer 送货。" },
+  // 运动与休闲
+  { w: ["entraînement", "s'entraîner", "sportif"], tip: "entraînement 训练（名词），s'entraîner 训练（动词），sportif 爱运动的。" },
+  { w: ["marquer", "gagner"], tip: "marquer 进球、得分，gagner 赢（整场比赛）。" },
+  { w: ["stade", "équipe", "ballon"], tip: "stade 体育场（地方），équipe 队伍，ballon 球。" },
+  { w: ["se détendre", "se promener", "vacances"], tip: "se détendre 放松，se promener 散步，vacances 假期。" },
+  // 文化与艺术
+  { w: ["musée", "exposition", "exposé"], tip: "musée 博物馆（地方），exposition 展览，exposé 课堂报告（别和展览弄混）。" },
+  { w: ["roman", "auteur", "critique", "chef-d'œuvre"], tip: "roman 小说，auteur 作者，critique 评论，chef-d'œuvre 杰作。" },
+  { w: ["concert", "orchestre", "chanson", "danse"], tip: "concert 音乐会，orchestre 管弦乐队，chanson 歌曲，danse 舞蹈。" },
+  { w: ["applaudir", "célèbre", "public"], tip: "applaudir 鼓掌，célèbre 有名的，public 观众。" },
+  // 家庭与人际
+  { w: ["jumeau", "neveu", "petit-enfant"], tip: "jumeau 双胞胎，neveu 侄子 / 外甥，petit-enfant 孙子女。" },
+  { w: ["copain", "voisin", "rencontre"], tip: "copain 朋友 / 男朋友，voisin 邻居，rencontre 相遇。" },
+  { w: ["fidèle", "amical", "confiance"], tip: "fidèle 忠诚的，amical 友好的，confiance 信任（名词）。" },
+  // 城市与建筑
+  { w: ["pont", "fontaine", "chantier", "banlieue"], tip: "pont 桥，fontaine 喷泉，chantier 工地，banlieue 郊区。" },
+  { w: ["construire", "traverser", "se promener"], tip: "construire 建造，traverser 穿过（马路），se promener 散步。" },
+  { w: ["bruyant", "propre", "sale"], tip: "bruyant 吵闹的，propre 干净的，sale 脏的。" },
+  // 法律与安全
+  { w: ["enquête", "preuve", "témoin"], tip: "enquête 调查，preuve 证据（东西），témoin 证人（人）。" },
+  { w: ["prison", "amende", "arrêter"], tip: "prison 监狱，amende 罚款，arrêter 逮捕 / 停止。" },
+  { w: ["pompier", "policier", "incendie"], tip: "pompier 消防员，policier 警察，incendie 火灾。" },
+  { w: ["sécurité", "danger", "accident"], tip: "sécurité 安全，danger 危险，accident 事故。" },
+  // 科学与技术
+  { w: ["inventer", "découverte", "recherche"], tip: "inventer 发明（造出新东西），découverte 发现（找到本来就有的），recherche 研究。" },
+  { w: ["énergie", "électricité", "batterie"], tip: "énergie 能源 / 能量，électricité 电，batterie 电池。" },
+  { w: ["mesurer", "calculer", "chiffre"], tip: "mesurer 测量，calculer 计算，chiffre 数字。" },
+  { w: ["microscope", "fusée", "robot", "machine"], tip: "microscope 显微镜，fusée 火箭，robot 机器人，machine 机器。" },
+  // 外貌与穿着
+  { w: ["peau", "ride", "maquillage"], tip: "peau 皮肤，ride 皱纹，maquillage 化妆。" },
+  { w: ["lunettes", "bague", "ceinture"], tip: "lunettes 眼镜（总是复数），bague 戒指，ceinture 腰带。" },
+  { w: ["mince", "élégant", "ressembler"], tip: "mince 苗条的，élégant 优雅的，ressembler à 长得像。" },
+  // 常用动词与形容词
+  { w: ["attendre", "atteindre"], tip: "attendre 等待，atteindre 达到、够到（拼写很像，别看错）。" },
+  { w: ["expliquer", "prévenir", "partager"], tip: "expliquer 解释，prévenir 通知、提前告诉 / 预防，partager 分享。" },
+  { w: ["remplir", "vide", "plein"], tip: "remplir 装满、填写（动词），vide 空的，plein 满的。" },
+  { w: ["réfléchir", "décider", "se tromper"], tip: "réfléchir à 思考，décider de 决定，se tromper 弄错。" },
+  { w: ["profiter", "partager"], tip: "profiter de 利用、享受，partager 分享。" },
 ];
 // ---------- 记录：每个词每种题型最近一次是否答对 ----------
 const V_T = [7, 1, 2, 3, 4, 5];   // 题型顺序：初见题是“例句识图”（读描述图片的例句，从四张图里选），再做其他题
