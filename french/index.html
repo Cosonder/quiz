@@ -14014,6 +14014,9 @@ function progStep(st, d, kind) {
   let xp = 0, up = 0, down = -1, daily = false, learned = false;
   const s = st.stat[day] || (st.stat[day] = { n: 0, right: 0, run: 0, maxRun: 0, up: 0, learned: 0, cj: 0, voc: 0, vocRight: 0, xp: 0 });
   if (day !== st.lastDay) { st.lastDay = day; st.days++; xp += XP_DAILY; daily = true; }
+  const right = kind === "vocab" ? !!d.ok : !!d.isCorrect;
+  const coin = typeof coinStep === "function" && (kind === "vocab" || d.qid) ? coinStep(st, kind === "vocab" ? "voc" : d.round === "cj" ? "conj" : "quiz", right, t) : { coins: 0, run: 0 };
+  s.coins = (s.coins || 0) + coin.coins;
   if (kind === "vocab") { xp += d.ok ? XP_VOCAB_RIGHT : XP_VOCAB_WRONG; s.voc++; if (d.ok) s.vocRight++; }
   else if (d.qid) {
     s.n++; if (d.round === "cj") s.cj++;
@@ -14039,12 +14042,12 @@ function progStep(st, d, kind) {
   st.xp += xp;
   st.byDay[day] = (st.byDay[day] || 0) + xp;
   if (day === dayKey(new Date())) st.today += xp;
-  return { xp, up, down, daily, learned, mult };
+  return { xp, up, down, daily, learned, mult, coins: coin.coins, run: coin.run };
 }
 function progEnsure() {
   if (prog) return true;
   if (!ansRaw) return false;
-  const st = { mem: new Map(), xp: 0, today: 0, lastDay: "", days: 0, byDay: {}, stat: {} };
+  const st = { mem: new Map(), xp: 0, today: 0, lastDay: "", days: 0, byDay: {}, stat: {}, coins: 0, runs: {} };
   const ev = ansRaw.map(d => [d, "ans"]).concat(vocRaw.map(d => [d, "vocab"]));
   ev.sort((a, b) => String(a[0].at).localeCompare(String(b[0].at))).forEach(([d, k]) => progStep(st, d, k));
   prog = st;
@@ -14060,6 +14063,7 @@ function progLive(d, kind) {
   const r = progStep(prog, d, kind);
   const after = xpLevel(prog.xp).lv;
   const parts = [`+${r.xp} 经验` + (r.mult > 1 ? `（×${r.mult}）` : "")];
+  if (r.coins) parts.push(`+${r.coins} 金币` + (r.run >= 2 ? `（combo ${r.run}）` : ""));
   if (r.daily) parts.push(`今日首题 +${XP_DAILY}`);
   if (r.up) parts.push(r.up === MEM_MAX ? "复习成功 · 长期记忆" : `复习成功 · 记忆 ${r.up} 级`);
   else if (r.learned) parts.push("新学会一题");
@@ -14406,10 +14410,28 @@ function planCard() {
 const COIN_TIERS = [10, 15, 20];      // 三个任务：简单 / 中等 / 困难
 const COIN_ALL = 20, COIN_PLAN = 30;  // 三个任务全部完成；做完今日计划
 const POTION_MIN = 15;
+// 答对得金币：每答对一题 +1，连对越多给得越多（combo 5 起 2 个，10 起 3 个，20 起 4 个，30 起 5 个封顶）。
+// 连对按记录算：答题、变位、背单词各算各的，答错或隔了 10 分钟以上没答就重新算。
+// 只算这个日期以后的记录（以前的记录不补发）。
+const COIN_ANS_FROM = "2026-11-03";
+const COIN_RUN_GAP = 10 * 60e3;
+const COIN_CURVE = [[30, 5], [20, 4], [10, 3], [5, 2], [1, 1]];
+const coinFor = run => (COIN_CURVE.find(([n]) => run >= n) || [0, 0])[1];
+function coinStep(st, key, right, t) {
+  const r = st.runs[key] || (st.runs[key] = { n: 0, t: 0 });
+  if (!right || t - r.t > COIN_RUN_GAP) r.n = 0;
+  r.t = t;
+  if (!right) return { coins: 0, run: 0 };
+  r.n++;
+  if (dayKey(new Date(t)) < COIN_ANS_FROM) return { coins: 0, run: r.n };
+  const c = coinFor(r.n);
+  st.coins += c;
+  return { coins: c, run: r.n };
+}
 const SHOP = [
-  { id: "patch", name: "补签卡", price: 100, max: 2, desc: "昨天没达到每日目标时，用它补上昨天的打卡，保住连续天数。最多存 2 张。" },
-  { id: "x2", name: "双倍经验药水", price: 60, mult: 2, desc: `喝下后 ${POTION_MIN} 分钟内，答题得到的经验 ×2。` },
-  { id: "x3", name: "三倍经验药水", price: 120, mult: 3, desc: `喝下后 ${POTION_MIN} 分钟内，答题得到的经验 ×3。` },
+  { id: "patch", name: "补签卡", price: 300, max: 2, desc: "昨天没达到每日目标时，用它补上昨天的打卡，保住连续天数。最多存 2 张。" },
+  { id: "x2", name: "双倍经验药水", price: 200, mult: 2, desc: `喝下后 ${POTION_MIN} 分钟内，答题得到的经验 ×2。` },
+  { id: "x3", name: "三倍经验药水", price: 400, mult: 3, desc: `喝下后 ${POTION_MIN} 分钟内，答题得到的经验 ×3。` },
 ];
 // 任务池：tier 是简单 / 中等 / 困难三档目标；xp 任务按每日经验目标的倍数
 const QUESTS = [
@@ -14440,7 +14462,7 @@ function potionActive(now = Date.now()) {
 // 余额、库存、已经领过的奖励、用补签卡补上的日子
 function gameLedger() {
   const earned = new Set(), inv = { patch: 0, x2: 0, x3: 0 }, patched = new Set();
-  let coins = 0;
+  let coins = progEnsure() ? prog.coins || 0 : 0;   // 答对得的金币（由答题记录算出）
   [...gameRaw].sort((a, b) => String(a.at).localeCompare(String(b.at))).forEach(g => {
     if (g.kind === "earn") { if (earned.has(g.key)) return; earned.add(g.key); coins += g.coins || 0; }
     else if (g.kind === "buy" && inv[g.item] != null) { coins -= g.price || 0; inv[g.item]++; }
@@ -14599,6 +14621,7 @@ function gameCard() {
   card.append(shop, note);
   const rule = el("details", "xp-rule");
   rule.append(el("summary", null, "任务和金币怎么算"),
+    el("p", null, `每答对一题 +1 金币，连对越多给得越多：combo 5 起每题 2 个，10 起 3 个，20 起 4 个，30 起 5 个。答错、或隔 10 分钟以上没答，连对重新算；答题、变位、背单词分开算。`),
     el("p", null, `每天 3 个任务，按你最近每天的做题量定难度，奖励 ${COIN_TIERS.join(" / ")} 金币；三个都完成再给 ${COIN_ALL}，做完今日计划给 ${COIN_PLAN}。任务完成时自动发金币。`),
     el("p", null, `补签卡只能补“昨天”：昨天没达到每日目标、今天还来得及补的时候可以用。药水一次只能喝一瓶，生效 ${POTION_MIN} 分钟。`));
   card.append(rule);
