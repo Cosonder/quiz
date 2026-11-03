@@ -323,6 +323,19 @@ h1 { font-family: var(--display); font-weight: 900; font-size: 1.6rem; line-heig
 .ex-part > .tag { align-self: flex-start; }
 
 /* ---------- 背单词 ---------- */
+.v-levels { display: grid; grid-template-columns: repeat(auto-fill, minmax(64px, 1fr)); gap: 6px; margin: 12px 0 4px; }
+.v-lv { display: flex; flex-direction: column; align-items: center; gap: 1px; padding: 6px 2px; border: 1px solid var(--line); border-radius: 10px; background: var(--card); color: var(--fg); font: inherit; cursor: pointer; }
+.v-lv b { font-size: 1.15rem; }
+.v-lv .st { color: #e0a100; letter-spacing: 1px; font-size: .85rem; }
+.v-lv .n { color: var(--muted); font-size: .75rem; }
+.v-lv.clear { background: var(--good-soft); border-color: var(--good); }
+.v-lv.next { border: 2px solid var(--accent); background: var(--accent-soft); }
+.v-lv.locked { opacity: .5; cursor: default; }
+.v-lv:not(:disabled):hover { border-color: var(--accent); }
+.v-lvstar { color: #e0a100; }
+.v-lvres { padding: 10px 12px; border-radius: 8px; background: var(--bad-soft); }
+.v-lvres.clear { background: var(--good-soft); }
+.v-lvres b { margin-right: 6px; }
 .v-start { display: flex; flex-wrap: wrap; gap: 10px 16px; align-items: center; }
 .v-start select { font: inherit; color: var(--fg); background: var(--card); border: 1px solid var(--line); border-radius: 6px; padding: 1px 2px; }
 .v-table { display: flex; flex-direction: column; border-top: 1px solid var(--line); }
@@ -17493,6 +17506,49 @@ const V_CONFUSE = [
   { w: ["réfléchir", "décider", "se tromper"], tip: "réfléchir à 思考，décider de 决定，se tromper 弄错。" },
   { w: ["profiter", "partager"], tip: "profiter de 利用、享受，partager 分享。" },
 ];
+// 背单词闯关：每关 10 个词（主题:单词），由 french-quiz/tools/levels/build_levels.mjs 生成，别手改
+const V_LEVELS = [
+  ["medias:numérique", "verbes:éviter", "achats:client", "loisirs:sportif", "maison:ménage", "culture:célèbre", "sante:blessure", "voyage:rater", "securite:tribunal", "famille:copain"],
+  ["cuisine:poêle", "ville:chantier", "etudes:enseignement", "travail:entreprise", "science:scientifique", "liens:d'ailleurs", "nature:sécheresse", "sentiments:têtu", "apparence:barbe", "societe:inégalité"],
+  ["societe:sondage", "liens:aussitôt", "sante:foie", "culture:danse", "verbes:se tromper", "travail:délai", "cuisine:casserole", "apparence:ressembler", "medias:en ligne", "loisirs:équipe"],
+  ["etudes:exposé", "nature:falaise", "sentiments:soulagement", "voyage:dépaysement", "achats:dépenser", "science:calculer", "securite:policier", "maison:tiroir", "ville:construire", "famille:fidèle"],
+  ["verbes:vide", "etudes:devoir", "securite:preuve", "ville:escalier", "famille:rencontre", "voyage:louer", "loisirs:spectateur", "medias:clavier", "maison:évier", "culture:sous-titre"],
+  ["apparence:gant", "sante:urgences", "societe:exiger", "liens:environ", "science:inventer", "cuisine:boulangerie", "sentiments:espoir", "travail:embaucher", "achats:colis", "nature:recycler"],
+  ["securite:arrêter", "apparence:manteau", "etudes:réviser", "maison:loyer", "sentiments:honte", "loisirs:randonnée", "culture:critique", "voyage:bagage", "liens:cependant", "travail:prêt"],
+  ["cuisine:cuire", "medias:journal", "achats:cher", "nature:forêt", "verbes:se souvenir", "societe:droit", "famille:enfance", "science:robot", "sante:genou", "ville:panneau"],
+  ["verbes:léger", "liens:grâce à", "famille:célibataire", "nature:ciel", "science:énergie", "maison:déménagement", "achats:remise", "medias:souris", "securite:accident", "voyage:auberge"],
+  ["apparence:maquillage", "culture:exposition", "travail:économiser", "sentiments:se plaindre", "ville:gratte-ciel", "societe:citoyenneté", "etudes:rédiger", "sante:guérir", "loisirs:vélo", "cuisine:sucré"],
+  ["societe:gouvernement", "famille:naissance", "liens:peu à peu", "verbes:expliquer", "sentiments:fierté", "sante:poumon", "etudes:doué", "voyage:atterrir", "achats:marque", "apparence:mince"],
+  ["cuisine:repas", "loisirs:pêche", "culture:pièce", "medias:écran", "ville:balcon", "securite:enquête", "maison:chauffage", "nature:paysage", "travail:salaire", "science:fusée"],
+  ["voyage:valise", "sante:se blesser", "maison:ranger", "achats:gratuit", "famille:élever", "verbes:empêcher", "medias:abonnement", "sentiments:bonheur", "nature:environnement", "cuisine:frais"],
+  ["travail:démissionner", "societe:interdire", "culture:applaudir", "ville:ascenseur", "securite:vol", "liens:en revanche", "etudes:matière", "science:planète", "loisirs:course", "apparence:bague"],
+  ["apparence:élégant", "etudes:note", "travail:candidature", "loisirs:marquer", "securite:coupable", "liens:tandis que", "verbes:décider", "societe:pauvreté", "science:mesurer", "sante:fièvre"],
+  ["ville:fontaine", "maison:étagère", "sentiments:fier", "nature:nuage", "achats:taille", "voyage:trottoir", "famille:jumeau", "culture:tableau", "medias:recherche", "cuisine:éplucher"],
+  ["etudes:échouer", "sentiments:jalousie", "achats:panier", "voyage:carrefour", "sante:tousser", "science:microscope", "culture:sculpture", "medias:réseau", "maison:lessive", "cuisine:épice"],
+  ["nature:protéger", "famille:se marier", "liens:à condition que", "travail:tâche", "loisirs:gagner", "ville:sale", "apparence:peau", "verbes:rapide", "securite:voleur", "societe:lutter"],
+  ["cuisine:faim", "culture:scène", "loisirs:entraînement", "societe:bénévolat", "science:batterie", "securite:voler", "travail:entretien", "medias:appareil", "maison:clé", "sante:rhume"],
+  ["achats:livrer", "voyage:permis de conduire", "etudes:apprentissage", "nature:réchauffement", "famille:mariage", "liens:davantage", "apparence:joue", "verbes:partager", "ville:bruyant", "sentiments:bavard"],
+  ["travail:syndicat", "voyage:douane", "sentiments:inquiétude", "securite:témoin", "sante:cœur", "ville:habitant", "societe:loi", "liens:afin de", "apparence:ride", "science:chercheur"],
+  ["culture:auteur", "loisirs:vacances", "cuisine:épicerie", "famille:souvenir", "achats:rembourser", "medias:chaîne", "verbes:attendre", "etudes:inscription", "maison:emprunter", "nature:colline"],
+  ["societe:manifestation", "verbes:oublier", "sentiments:éprouver", "medias:publicité", "science:outil", "famille:se disputer", "ville:se promener", "loisirs:courir", "achats:reçu", "culture:public"],
+  ["sante:épaule", "liens:quant à", "etudes:mémoire", "securite:pompier", "voyage:frontière", "travail:carrière", "cuisine:goût", "nature:espèce", "maison:s'habituer", "apparence:s'habiller"],
+  ["etudes:formation", "medias:fichier", "societe:accueil", "sante:sain", "science:électricité", "securite:prison", "cuisine:goûter", "famille:petit-enfant", "liens:bien que", "verbes:prévenir"],
+  ["culture:dessiner", "achats:vitrine", "ville:place", "nature:renouvelable", "apparence:menton", "voyage:embouteillage", "maison:couverture", "sentiments:ennui", "travail:grève", "loisirs:nager"],
+  ["cuisine:serveur", "verbes:remplir", "societe:société", "achats:caisse", "liens:parmi", "famille:amical", "apparence:ceinture", "nature:marée", "culture:chanson", "voyage:retard"],
+  ["etudes:bibliothèque", "loisirs:stade", "travail:emploi", "sante:enceinte", "medias:émission", "ville:propre", "maison:se dépêcher", "securite:amende", "sentiments:gêné", "science:découverte"],
+  ["apparence:porter", "liens:malgré", "loisirs:ballon", "maison:prêter", "voyage:itinéraire", "nature:tempête", "culture:chef-d'œuvre", "famille:divorcer", "science:laboratoire", "securite:sécurité"],
+  ["achats:essayer", "medias:mot de passe", "sentiments:sensible", "travail:réunion", "societe:soutenir", "verbes:lourd", "cuisine:recette", "ville:piéton", "sante:médicament", "etudes:épreuve"],
+  ["sante:douleur", "ville:toit", "voyage:quai", "travail:dépense", "liens:désormais", "sentiments:se fâcher", "nature:déchet", "maison:facture", "securite:juge", "loisirs:s'entraîner"],
+  ["culture:roman", "cuisine:mélanger", "apparence:visage", "etudes:connaissance", "verbes:atteindre", "medias:enregistrer", "societe:impôt", "science:chiffre", "famille:confiance", "achats:prix"],
+  ["sentiments:colère", "science:lune", "cuisine:plat", "verbes:profiter", "sante:piqûre", "travail:compte", "nature:ressource", "securite:avocat", "etudes:diplôme", "societe:mairie"],
+  ["culture:concert", "achats:commander", "loisirs:jeu", "medias:rubrique", "ville:traverser", "apparence:chaussette", "famille:couple", "maison:voisin", "voyage:décoller", "liens:auparavant"],
+  ["medias:logiciel", "maison:quotidien", "sante:ordonnance", "liens:au lieu de", "securite:innocent", "achats:rayon", "apparence:mode", "science:expérience", "nature:menacer", "verbes:plein"],
+  ["voyage:séjour", "loisirs:natation", "cuisine:bouillir", "culture:orchestre", "travail:licencier", "etudes:emploi du temps", "societe:débat", "sentiments:malheur", "ville:pont", "famille:dispute"],
+  ["sante:grippe", "famille:anniversaire", "societe:élection", "apparence:écharpe", "culture:musée", "nature:inondation", "maison:poubelle", "voyage:billet", "loisirs:se détendre", "liens:autrement dit"],
+  ["achats:vendeur", "science:machine", "travail:chômage", "securite:danger", "medias:supprimer", "etudes:réussir", "ville:immeuble", "sentiments:paresseux", "cuisine:four", "verbes:lent"],
+  ["securite:incendie", "loisirs:joueur", "societe:voter", "cuisine:épicé", "apparence:lunettes", "famille:neveu", "travail:rentable", "voyage:correspondance", "science:étoile", "nature:gaspiller"],
+  ["sante:épuisé", "ville:banlieue", "achats:échanger", "maison:quartier", "verbes:réfléchir", "sentiments:regretter", "liens:lors de", "medias:télécharger", "etudes:bourse", "culture:peintre"],
+];
 // ---------- 记录：每个词每种题型最近一次是否答对 ----------
 const V_T = [7, 1, 2, 3, 4, 5];   // 题型顺序：初见题是“例句识图”（读描述图片的例句，从四张图里选），再做其他题
 // 练习设置（记在本机）：难度（困难 = 干扰项用形近词）、要练的题型、做对后停留多久、答完是否自动朗读
@@ -17570,8 +17626,59 @@ let vTheme = "all";         // "all" = 全部单词（打乱），"weak" = 生�
 let vSess = null;           // 正在练习的一组
 let vPer = (() => { try { const v = Number(localStorage.getItem("fq-vper")); return [5, 10, 15, 20].includes(v) ? v : 10; } catch (e) { return 10; } })();
 const V_MIXED = vShuffle(V_WORDS);   // 全部单词打乱一次，本次打开页面内保持这个顺序
-function vThemeWords(id) { return id === "all" ? V_MIXED : id === "weak" ? V_MIXED.filter(w => vState(w) === "weak") : V_WORDS.filter(w => w.th === id); }
-const vTitle = () => vTheme === "all" ? "全部单词（打乱）" : vTheme === "weak" ? "生词本" : VOCAB.find(t => t.id === vTheme).t;
+function vThemeWords(id) {
+  if (id === "levels") return [];
+  if (id.startsWith("lv:")) return vLevelWords(Number(id.slice(3)));
+  return id === "all" ? V_MIXED : id === "weak" ? V_MIXED.filter(w => vState(w) === "weak") : V_WORDS.filter(w => w.th === id);
+}
+const vLvNo = () => vTheme.startsWith("lv:") ? Number(vTheme.slice(3)) : -1;
+const vTitle = () => vTheme === "all" ? "全部单词（打乱）" : vTheme === "weak" ? "生词本" : vTheme === "levels" ? "闯关" : vLvNo() >= 0 ? `闯关 · 第 ${vLvNo() + 1} 关` : VOCAB.find(t => t.id === vTheme).t;
+
+// ---------- 闯关：所有单词事先分好关（levels.js），每关 10 个词，来自不同主题 ----------
+// 一关里至少 7 个词“已掌握”（这个词每种题型最近一次都答对）就算通关，解锁下一关；9 个两颗星，10 个三颗星。
+// 通关情况由背单词记录算出，跟着账号同步。
+const V_PASS = 7;
+const vById = new Map(V_WORDS.map(w => [w.id, w]));
+const vLevelWords = k => (V_LEVELS[k] || []).map(id => vById.get(id)).filter(Boolean);
+function vLevels() {
+  let open = true;
+  return V_LEVELS.map((_, k) => {
+    const ws = vLevelWords(k), done = vStats ? ws.filter(w => vState(w) === "done").length : 0;
+    const tried = vStats ? ws.filter(w => vState(w) !== "new").length : 0;
+    const stars = done >= ws.length ? 3 : done >= V_PASS + 2 ? 2 : done >= V_PASS ? 1 : 0;
+    const x = { k, ws, done, tried, stars, open };
+    open = open && stars > 0;
+    return x;
+  });
+}
+const vStars = n => "★".repeat(n) + "☆".repeat(3 - n);
+function vLevelMap() {
+  vUnbindKeys();
+  stage.innerHTML = "";
+  const card = el("section", "card");
+  const lv = vLevels(), cleared = lv.filter(x => x.stars).length;
+  const tags = el("div", "tagrow");
+  tags.append(el("span", "tag", "背单词 · 闯关"), el("span", "tag plain", `已通关 ${vStats ? cleared : "…"} / ${lv.length}`));
+  card.append(tags, el("p", "sub", `每关 10 个词，来自不同主题。一关里掌握 ${V_PASS} 个词（这个词每种题型最近一次都答对）就算通关，解锁下一关；掌握 ${V_PASS + 2} 个两颗星，全部掌握三颗星。`));
+  const grid = el("div", "v-levels");
+  const next = lv.find(x => x.open && !x.stars);
+  lv.forEach(x => {
+    const b = el("button", "v-lv" + (x.stars ? " clear" : "") + (x === next ? " next" : "") + (x.open ? "" : " locked"));
+    b.type = "button"; b.id = "vLv" + (x.k + 1);
+    b.disabled = !x.open || !vStats;
+    b.append(el("b", null, String(x.k + 1)), el("span", "st", x.open ? vStars(x.stars) : "🔒"), el("span", "n", x.open ? `${x.done}/${x.ws.length}` : "未解锁"));
+    b.addEventListener("click", () => { vTheme = "lv:" + x.k; vSess = null; vToc(); vStart(x.ws); });
+    grid.append(b);
+  });
+  card.append(grid);
+  if (next) {
+    const go = el("button", "btn", `继续闯关：第 ${next.k + 1} 关`); go.type = "button"; go.id = "vLvGo";
+    go.addEventListener("click", () => { vTheme = "lv:" + next.k; vSess = null; vToc(); vStart(next.ws); });
+    const row = el("div", "actions"); row.append(go); card.append(row);
+  }
+  card.append(vSetLink());
+  stage.append(card);
+}
 function vToc() {
   toc.innerHTML = "";
   toc.append(el("div", "toc-book", "B1–B2 主题词汇 · 每个词最多六种题型"));
@@ -17583,6 +17690,9 @@ function vToc() {
   const weak = vThemeWords("weak").length;
   ul0.append(tocItem({ title: "生词本", zh: "答错过、还没练熟的词", badge: vStats ? String(weak) : "…", badgeCls: weak ? "bad" : "zero",
     current: vTheme === "weak", disabled: !weak, onClick: () => { vTheme = "weak"; vSess = null; vToc(); vList(); afterPick(); } }));
+  const lvs = vLevels(), lvDone = lvs.filter(x => x.stars).length;
+  ul0.append(tocItem({ title: "闯关", zh: `${V_LEVELS.length} 关，每关 10 个词，各主题混合`, badge: vStats ? `${lvDone}/${lvs.length}` : "…", badgeCls: lvDone ? "" : "zero",
+    current: vTheme === "levels" || vLvNo() >= 0, onClick: () => { vTheme = "levels"; vSess = null; vToc(); vList(); afterPick(); } }));
   toc.append(ul0);
   toc.append(el("div", "toc-sec", "按主题（可选）"));
   const ul = el("ul");
@@ -17604,10 +17714,12 @@ function vSpeakBtn(w, label, text) {
 }
 function vList() {
   vUnbindKeys();
+  if (vTheme === "levels") { vLevelMap(); return; }
   stage.innerHTML = "";
   const card = el("section", "card");
   const words = vThemeWords(vTheme);
   const title = vTitle();
+  const isLv = vLvNo() >= 0;
   const tags = el("div", "tagrow");
   tags.append(el("span", "tag", "背单词 · " + title), el("span", "tag plain", `${words.length} 个词`));
   card.append(tags);
@@ -17622,13 +17734,17 @@ function vList() {
   const sel = el("select"); sel.id = "vPerSel";
   [5, 10, 15, 20].forEach(k => sel.append(new Option(String(k), String(k))));
   sel.value = String(vPer);
-  const goLabel = () => `开始练习（${Math.min(vPer, words.length)} 个词）`;
+  const goLabel = () => `开始练习（${isLv ? words.length : Math.min(vPer, words.length)} 个词）`;
   const go = el("button", "btn", goLabel()); go.type = "button"; go.id = "vGo";
   sel.addEventListener("change", () => { vPer = Number(sel.value); try { localStorage.setItem("fq-vper", String(vPer)); } catch (e) {} go.textContent = goLabel(); });
   lab.append(document.createTextNode("每组 "), sel, document.createTextNode(" 个词"));
   go.addEventListener("click", () => vStart(words));
   const look = el("button", "btn ghost", "浏览单词"); look.type = "button"; look.id = "vLook";
-  row.append(lab, go, look);
+  if (isLv) {
+    const map = el("button", "btn ghost", "← 关卡地图"); map.type = "button";
+    map.addEventListener("click", () => { vTheme = "levels"; vToc(); vList(); });
+    row.append(map, go, look);
+  } else row.append(lab, go, look);
   if (tts) {
     const v = frVoice || pickVoice();
     card.append(el("p", "sub v-voice", v ? `朗读用的声音：${v.name}（${v.lang}）` : "这台设备上没找到法语朗读声音，读音可能不准，可以在系统设置里添加法语语音。"));
@@ -17657,7 +17773,7 @@ function vList() {
 
 // ---------- 浏览：按词表顺序一张一张看 ----------
 const V_STATE_ZH = { weak: "待加强", new: "未练习", done: "已掌握" };
-function vBrowse(words, i) {
+function vBrowse(words, i, pre) {
   vUnbindKeys();
   const w = words[i], ex = vEx(w), last = i === words.length - 1;
   stage.innerHTML = "";
@@ -17687,18 +17803,19 @@ function vBrowse(words, i) {
   card.append(body);
   const actions = el("div", "actions v-bw-nav");
   const back = el("button", "btn ghost", "回到词表"); back.type = "button";
-  back.addEventListener("click", () => { vUnbindKeys(); vList(); });
+  if (pre) back.textContent = "回到预览";
+  back.addEventListener("click", () => { vUnbindKeys(); pre ? vPreview(words) : vList(); });
   const prev = el("button", "btn ghost", "← 上一个"); prev.type = "button"; prev.disabled = i === 0;
-  prev.addEventListener("click", () => vBrowse(words, i - 1));
+  prev.addEventListener("click", () => vBrowse(words, i - 1, pre));
   const next = el("button", "btn", last ? "开始练习" : "下一个 →"); next.type = "button"; next.id = "vBwNext";
-  next.addEventListener("click", () => last ? vStart(words) : vBrowse(words, i + 1));
+  next.addEventListener("click", () => last ? (pre ? vBegin(words) : vStart(words)) : vBrowse(words, i + 1, pre));
   actions.append(back, prev, next);
   card.append(actions, el("p", "sub", "键盘：← → 翻页，空格朗读。"));
   stage.append(card);
   vKeyHandler = e => {
     if (e.target.closest && e.target.closest("input, select, textarea")) return;
-    if (e.key === "ArrowRight") { e.preventDefault(); if (!last) vBrowse(words, i + 1); }
-    else if (e.key === "ArrowLeft") { e.preventDefault(); if (i > 0) vBrowse(words, i - 1); }
+    if (e.key === "ArrowRight") { e.preventDefault(); if (!last) vBrowse(words, i + 1, pre); }
+    else if (e.key === "ArrowLeft") { e.preventDefault(); if (i > 0) vBrowse(words, i - 1, pre); }
     else if (e.key === " ") { e.preventDefault(); if (tts) speak(vArt(w), 0.85, null); }
   };
   document.addEventListener("keydown", vKeyHandler);
@@ -17707,12 +17824,51 @@ function vBrowse(words, i) {
 }
 
 // ---------- 练习 ----------
+// 选出这一组的词（闯关时就是这一关的全部词），先预览，再开始
 function vStart(pool) {
   const order = { weak: 0, new: 1, done: 2 };
-  const picked = vShuffle(pool).sort((a, b) => order[vState(a)] - order[vState(b)]).slice(0, vPer);
+  const picked = vShuffle(pool).sort((a, b) => order[vState(a)] - order[vState(b)]).slice(0, vLvNo() >= 0 ? pool.length : vPer);
+  vPreview(picked);
+}
+function vPreview(picked) {
+  vUnbindKeys();
+  vSess = null;
+  stage.innerHTML = "";
+  const card = el("section", "card v-preview");
+  const tags = el("div", "tagrow");
+  tags.append(el("span", "tag", "预览 · " + vTitle()), el("span", "tag plain", `${picked.length} 个词`));
+  const k = vLvNo();
+  if (k >= 0) { const x = vLevels()[k]; tags.append(el("span", "tag plain v-lvstar", vStars(x.stars))); }
+  card.append(tags, el("p", "sub", "先看一遍这组要背的词，点 🔊 听读音。准备好了就开始练习；想一张一张看图和例句，点“逐个浏览”。"));
+  const tbl = el("div", "v-table");
+  picked.forEach(w => {
+    const r = el("div", "v-row " + vState(w));
+    const fr = el("span", "v-fr");
+    if (vPic(w)) fr.append(vImg(w, "v-thumb"));
+    fr.append(el("b", null, vLabel(w)));
+    if (w.extra && w.pos !== "adj") fr.append(el("span", "v-extra", " " + w.extra));
+    r.append(vSpeakBtn(w), fr, el("span", "v-pos", V_POS[w.pos]), el("span", "v-en", vMean(w)));
+    const ex = vEx(w);
+    if (ex) { const e = el("span", "v-exline"); e.append(document.createTextNode(ex.before), el("b", null, ex.form), document.createTextNode(ex.after)); r.append(e); }
+    tbl.append(r);
+  });
+  card.append(tbl);
+  const actions = el("div", "actions");
+  const back = el("button", "btn ghost", k >= 0 ? "← 关卡地图" : "回到词表"); back.type = "button";
+  back.addEventListener("click", () => { if (k >= 0) vTheme = "levels"; vToc(); vList(); });
+  const look = el("button", "btn ghost", "逐个浏览"); look.type = "button"; look.id = "vPvLook";
+  look.addEventListener("click", () => vBrowse(picked, 0, true));
+  const go = el("button", "btn", "开始练习"); go.type = "button"; go.id = "vPvGo";
+  go.addEventListener("click", () => vBegin(picked));
+  actions.append(back, look, go);
+  card.append(actions);
+  stage.append(card);
+  go.focus({ preventScroll: true });
+}
+function vBegin(picked) {
   const qs = [];
   V_T.forEach(type => vShuffle(picked).filter(w => vTypes(w).includes(type)).forEach(w => qs.push({ w, type })));
-  vSess = { words: picked, qs, i: 0, res: {} };
+  vSess = { words: picked, qs, i: 0, res: {}, lv: vLvNo() };
   vQuestion();
 }
 const vKind = w => vIsNoun(w) ? "n" : ["v", "adj"].includes(w.pos) ? w.pos : "x";
@@ -18104,6 +18260,13 @@ function vResult() {
   card.append(el("span", "tag", "背单词 · 本组成绩"));
   const s = el("p", "score", String(right)); s.append(el("small", null, ` / ${total}`)); card.append(s);
   if ((S.maxCombo || 0) >= 2) card.append(el("p", "v-maxcombo", `本组最高连对：combo ${S.maxCombo}`));
+  const lvs = S.lv >= 0 ? vLevels() : null, lx = lvs && lvs[S.lv];
+  if (lx) {
+    const msg = el("p", "v-lvres" + (lx.stars ? " clear" : ""));
+    msg.append(el("b", null, lx.stars ? `第 ${S.lv + 1} 关通关！ ${vStars(lx.stars)}` : `第 ${S.lv + 1} 关还没通关`),
+      document.createTextNode(lx.stars ? (lx.stars < 3 ? ` 已掌握 ${lx.done}/10，全部掌握可得三颗星。` : " 这关的词全部掌握了。") : ` 已掌握 ${lx.done}/10，掌握 ${V_PASS} 个就能通关。没掌握的词再练一次吧。`));
+    card.append(msg);
+  }
   card.append(el("p", "sub", "每个词后面的标记依次是：" + V_T.map(t => V_TYPES[t - 1]).join("、") + "；“–”表示这个词没有该题型。"));
   const tbl = el("div", "v-table");
   S.words.forEach(w => {
@@ -18117,13 +18280,29 @@ function vResult() {
   });
   card.append(tbl);
   const actions = el("div", "actions");
-  const back = el("button", "btn ghost", "回到词表"); back.type = "button";
-  back.addEventListener("click", () => { vSess = null; vToc(); vList(); });
+  const back = el("button", "btn ghost", lx ? "← 关卡地图" : "回到词表"); back.type = "button";
+  back.addEventListener("click", () => { vSess = null; if (lx) vTheme = "levels"; vToc(); vList(); });
   const again = el("button", "btn ghost", "再练这组词"); again.type = "button";
-  again.addEventListener("click", () => vStart(S.words));
-  const more = el("button", "btn", "下一组"); more.type = "button"; more.id = "vMore";
-  more.addEventListener("click", () => vStart(vThemeWords(vTheme === "weak" && !vThemeWords("weak").length ? "all" : vTheme)));
-  actions.append(back, again, more);
+  again.addEventListener("click", () => vBegin(S.words));
+  actions.append(back, again);
+  if (lx) {
+    const left = S.words.filter(w => vState(w) !== "done");
+    if (left.length && left.length < S.words.length) {
+      const weak = el("button", lx.stars ? "btn ghost" : "btn", `只练没掌握的 ${left.length} 个`); weak.type = "button"; weak.id = "vLvWeak";
+      weak.addEventListener("click", () => vBegin(left));
+      actions.append(weak);
+    }
+    const nx = lvs[S.lv + 1];
+    if (lx.stars && nx) {
+      const more = el("button", "btn", `下一关：第 ${S.lv + 2} 关`); more.type = "button"; more.id = "vMore";
+      more.addEventListener("click", () => { vTheme = "lv:" + (S.lv + 1); vToc(); vStart(nx.ws); });
+      actions.append(more);
+    }
+  } else {
+    const more = el("button", "btn", "下一组"); more.type = "button"; more.id = "vMore";
+    more.addEventListener("click", () => vStart(vThemeWords(vTheme === "weak" && !vThemeWords("weak").length ? "all" : vTheme)));
+    actions.append(more);
+  }
   card.append(actions);
   stage.append(card);
   vToc();
