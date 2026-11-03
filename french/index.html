@@ -606,6 +606,8 @@ h1 { font-family: var(--display); font-weight: 900; font-size: 1.6rem; line-heig
 .cj-table span.on { color: var(--fg); font-weight: 700; }
 .cj-say { font-size: .8rem; padding: 1px 8px; }
 @media (max-width: 520px) { .tab { padding: 6px 10px; } }
+.tab { white-space: nowrap; }
+@media (max-width: 440px) { .tabs { gap: 3px; } .tab { padding: 6px 7px; font-size: .9rem; } }
 .tabs { max-width: 100%; overflow-x: auto; }
 
 /* 每日任务、金币和商店 */
@@ -645,7 +647,7 @@ h1 { font-family: var(--display); font-weight: 900; font-size: 1.6rem; line-heig
 .sync-row input { flex: 1 1 200px; min-width: 0; font: inherit; color: var(--fg); background: var(--card); border: 1.5px solid var(--line); border-radius: 10px; padding: 8px 12px; }
 .sync-row input:focus { outline: none; border-color: var(--accent); box-shadow: 0 0 0 3px var(--accent-soft); }
 .btn.ghost.danger { color: var(--bad); border-color: var(--bad); }
-/* 背单词：做对后在题目位置复习；练习设置 */
+/* 背单词：做对后在题目位置复习；设置项 */
 .v-q.v-review { justify-content: center; gap: 6px; }
 .v-rv-top { display: flex; gap: 12px; align-items: center; }
 .v-rv-img { width: 96px; aspect-ratio: 3 / 2; object-fit: cover; border-radius: 8px; flex: none; background: var(--line); }
@@ -653,15 +655,21 @@ h1 { font-family: var(--display); font-weight: 900; font-size: 1.6rem; line-heig
 .v-rv-word { font-family: var(--display); font-size: 1.5rem; color: var(--good); line-height: 1.2; }
 .v-rv-mean { font-family: inherit; font-size: .95rem; font-weight: 500; color: var(--fg); }
 .v-rv-sent { font-family: inherit; font-size: .95rem; font-weight: 500; color: var(--muted); line-height: 1.5; }
-.v-settings { padding: 10px 16px; }
-.v-settings summary { cursor: pointer; font-size: .88rem; color: var(--accent); font-weight: 600; }
-.v-set-body { display: flex; flex-direction: column; gap: 10px; padding-top: 10px; }
 .v-set-row { display: flex; flex-wrap: wrap; gap: 6px 10px; align-items: center; font-size: .88rem; }
 .v-set-name { flex: none; min-width: 5.5em; color: var(--muted); font-weight: 600; }
 .v-set-row select { font: inherit; color: var(--fg); background: var(--card); border: 1px solid var(--line); border-radius: 6px; padding: 2px 6px; }
 .v-set-check { display: flex; gap: 6px; align-items: center; font-size: .85rem; cursor: pointer; }
 .v-set-note { margin: 0; }
 .v-set-note:empty { display: none; }
+/* 设置页 */
+.set-page { display: flex; flex-direction: column; gap: 14px; max-width: 760px; width: 100%; margin: 0 auto; }
+.set-card { gap: 10px; }
+.set-card h3 { margin: 0; font-size: 1.05rem; }
+.set-card > .sub { margin: 0; }
+.set-foot { margin: 0; text-align: center; }
+.v-set-link { font: inherit; font-size: .85rem; text-align: left; color: var(--muted); background: var(--card); border: 1px dashed var(--line); border-radius: 10px; padding: 8px 12px; cursor: pointer; }
+.v-set-link b { color: var(--accent); white-space: nowrap; }
+.v-set-link:hover { border-color: var(--accent); }
 </style>
 
 <div class="wrap">
@@ -676,6 +684,7 @@ h1 { font-family: var(--display); font-weight: 900; font-size: 1.6rem; line-heig
       <button type="button" class="tab" role="tab" id="tabExam" aria-selected="false">模拟卷</button>
       <button type="button" class="tab" role="tab" id="tabVocab" aria-selected="false">背单词</button>
       <button type="button" class="tab" role="tab" id="tabConj" aria-selected="false">变位</button>
+      <button type="button" class="tab" role="tab" id="tabSet" aria-selected="false">设置</button>
     </div>
   </header>
   <div class="layout">
@@ -13668,7 +13677,7 @@ const typeset = () => {};   // 法语页没有公式，不用排版（随机分�
 const $ = id => document.getElementById(id);
 const stage = $("stage"), toc = $("toc"), tocwrap = $("tocwrap"), tocTitle = $("tocTitle");
 const pSet = $("pSet"), pText = $("pText"), pBar = $("pBar"), pScore = $("pScore"), progressEl = $("progress");
-const tabQuiz = $("tabQuiz"), tabBook = $("tabBook"), tabExam = $("tabExam"), tabVocab = $("tabVocab"), tabConj = $("tabConj"), saveNote = $("saveNote");
+const tabQuiz = $("tabQuiz"), tabBook = $("tabBook"), tabExam = $("tabExam"), tabVocab = $("tabVocab"), tabConj = $("tabConj"), tabSet = $("tabSet"), saveNote = $("saveNote");
 const layoutEl = document.querySelector(".layout");
 
 function el(tag, cls, text) {
@@ -14337,7 +14346,7 @@ function planRefresh() {
   const old = $("planToc");
   if (old) old.replaceWith(planTocItem());
   planSlot.textContent = ""; planSlot.append(planTocItem("planMini"));
-  planSlot.hidden = view === "book" || view === "exam";   // 学习进度页有完整的计划卡，模拟卷不打扰
+  planSlot.hidden = view === "book" || view === "exam" || view === "settings";   // 学习进度页有完整的计划卡，模拟卷不打扰
 }
 planRefresh();
 
@@ -15556,12 +15565,14 @@ function switchView(v, setKey) {
   tabExam.setAttribute("aria-selected", String(v === "exam"));
   tabVocab.setAttribute("aria-selected", String(v === "vocab"));
   tabConj.setAttribute("aria-selected", String(v === "conj"));
-  layoutEl.classList.toggle("solo", v === "exam");
+  tabSet.setAttribute("aria-selected", String(v === "settings"));
+  layoutEl.classList.toggle("solo", v === "exam" || v === "settings");
   progressEl.hidden = v !== "quiz";
   if (tts) tts.cancel();
   if (v === "exam") { renderExam(); return; }
   if (v === "vocab") { renderVocab(); return; }
   if (v === "conj") { renderConj(); return; }
+  if (v === "settings") { renderSettings(); return; }
   if (v === "book") { renderBook(); return; }
   if (setKey) { startSet(setKey); return; }
   renderToc();
@@ -15574,6 +15585,7 @@ tabBook.addEventListener("click", () => { bookCache = null; switchView("book"); 
 tabExam.addEventListener("click", () => { if (view !== "exam") switchView("exam"); });
 tabVocab.addEventListener("click", () => { if (view !== "vocab") switchView("vocab"); });
 tabConj.addEventListener("click", () => { if (view !== "conj") switchView("conj"); });
+tabSet.addEventListener("click", () => { if (view !== "settings") switchView("settings"); });
 // ---------- 模拟卷：仿 2016 年全国 I 卷英语题型的法语 B1 试卷 ----------
 const EX = {
   id: "fr-b1-1",
@@ -17494,7 +17506,7 @@ function vList() {
     const v = frVoice || pickVoice();
     card.append(el("p", "sub v-voice", v ? `朗读用的声音：${v.name}（${v.lang}）` : "这台设备上没找到法语朗读声音，读音可能不准，可以在系统设置里添加法语语音。"));
   }
-  card.append(row, el("p", "sub", "优先练没掌握的词。每组按题型依次做（可以在下面的练习设置里选题型）。每个词的第一题答完都会停下；之后的题答对后，复习一下这个词再自动进入下一题，答错会停下来让你看清楚。"), vSettingsBox(true));
+  card.append(row, el("p", "sub", "优先练没掌握的词。每组按题型依次做（可以在“设置”里选题型）。每个词的第一题答完都会停下；之后的题答对后，复习一下这个词再自动进入下一题，答错会停下来让你看清楚。"), vSetLink());
   const tbl = el("div", "v-table");
   const order = { weak: 0, new: 1, done: 2 };
   const sorted = words.slice().sort((a, b) => order[vState(a)] - order[vState(b)]);
@@ -17804,7 +17816,7 @@ function vQuestion() {
       card.append(head, ans);
       actions.append(next);
       card.append(exp, actions);
-      stage.append(card, vSettingsBox(false));
+      stage.append(card, vSetLink());
       return;
     } else if (q.type === 6) {
       // 看词选图：四张图里选出这个词
@@ -17883,7 +17895,7 @@ function vQuestion() {
   }
   actions.append(next);
   card.append(exp, actions);
-  stage.append(card, vSettingsBox(false));
+  stage.append(card, vSetLink());
 }
 // 做对后：把这个词的复习内容放在题目的位置（视线所在），停留一会儿再进入下一题
 function vReview(head, w, type, shown) {
@@ -17901,21 +17913,16 @@ function vReview(head, w, type, shown) {
     head.append(s);
   }
 }
-// 练习设置面板（词表页和答题页下方都有）
-function vSettingsBox(open) {
-  const box = el("details", "card v-settings"); box.open = !!open;
-  const sum = el("summary");
-  const brief = () => `练习设置 · ${vSet.hard ? "困难（形近词）" : "普通"} · ${vSet.types.length} 种题型 · 做对停 ${vSet.pause / 1000} 秒 · 朗读${vSet.read ? "开" : "关"}`;
-  sum.textContent = brief();
-  box.append(sum);
-  const body = el("div", "v-set-body");
-  const changed = () => { vSaveSet(); sum.textContent = brief(); };
+// 背单词的练习设置（放在“设置”页）：难度、题型、做对后停留
+function vSetBrief() { return `${vSet.hard ? "困难（形近词）" : "普通难度"} · ${vSet.types.length} 种题型 · 做对停 ${vSet.pause / 1000} 秒 · 朗读${vSet.read ? "开" : "关"}`; }
+function vSetRows() {
+  const note = el("p", "sub v-set-note", "");
   // 难度
   const g1 = el("div", "v-set-row"); g1.append(el("span", "v-set-name", "难度"));
   const seg = el("div", "tag-mode");
   [[false, "普通"], [true, "困难：形近词辨析"]].forEach(([v, t]) => {
     const b = el("button", null, t); b.type = "button"; b.setAttribute("aria-pressed", String(vSet.hard === v));
-    b.addEventListener("click", () => { vSet.hard = v; seg.querySelectorAll("button").forEach(x => x.setAttribute("aria-pressed", String(x === b))); changed(); });
+    b.addEventListener("click", () => { vSet.hard = v; seg.querySelectorAll("button").forEach(x => x.setAttribute("aria-pressed", String(x === b))); vSaveSet(); });
     seg.append(b);
   });
   g1.append(seg);
@@ -17929,28 +17936,27 @@ function vSettingsBox(open) {
       const on = vSet.types.includes(t);
       if (on && vSet.types.length === 1) { note.textContent = "至少要留一种题型。"; return; }
       vSet.types = on ? vSet.types.filter(x => x !== t) : V_T.filter(x => x === t || vSet.types.includes(x));
-      c.setAttribute("aria-pressed", String(!on)); note.textContent = "题型改动从下一组开始生效。"; changed();
+      c.setAttribute("aria-pressed", String(!on)); note.textContent = "题型改动从下一组开始生效。"; vSaveSet();
     });
     chips.append(c);
   });
   g2.append(chips);
   // 做对后停留
-  const g3 = el("div", "v-set-row"); g3.append(el("label", "v-set-name", "做对后停留"));
+  const g3 = el("div", "v-set-row");
+  const lab = el("label", "v-set-name", "做对后停留"); lab.htmlFor = "vPauseSel";
   const sel = el("select"); sel.id = "vPauseSel";
   V_PAUSES.forEach(ms => sel.append(new Option(`${ms / 1000} 秒`, String(ms))));
   sel.value = String(vSet.pause);
-  sel.addEventListener("change", () => { vSet.pause = Number(sel.value); changed(); });
-  g3.firstChild.htmlFor = "vPauseSel";
-  g3.append(sel);
-  // 自动朗读
-  const g4 = el("label", "v-set-row v-set-check");
-  const cb = el("input"); cb.type = "checkbox"; cb.id = "vReadChk"; cb.checked = vSet.read;
-  cb.addEventListener("change", () => { vSet.read = cb.checked; changed(); });
-  g4.append(cb, document.createTextNode(" 答完自动朗读单词（背单词和变位都适用）"));
-  const note = el("p", "sub v-set-note", "");
-  body.append(g1, g2, g3, g4, note);
-  box.append(body);
-  return box;
+  sel.addEventListener("change", () => { vSet.pause = Number(sel.value); vSaveSet(); });
+  g3.append(lab, sel);
+  return [g1, g2, g3, note];
+}
+// 词表页和答题页下方：一行摘要，点了去“设置”页
+function vSetLink() {
+  const a = el("button", "v-set-link"); a.type = "button";
+  a.append(document.createTextNode("练习设置：" + vSetBrief() + " "), el("b", null, "去设置 →"));
+  a.addEventListener("click", () => switchView("settings"));
+  return a;
 }
 function vResult() {
   vUnbindKeys();
@@ -18244,11 +18250,6 @@ function cjToc() {
     nRow.append(b);
   });
   g0.append(el("div", "tag-gname", "每组"), nRow);
-  const rd = el("label", "v-set-check");
-  const rcb = el("input"); rcb.type = "checkbox"; rcb.id = "cjReadChk"; rcb.checked = vSet.read;
-  rcb.addEventListener("change", () => { vSet.read = rcb.checked; vSaveSet(); });
-  rd.append(rcb, document.createTextNode(" 答完自动朗读"));
-  g0.append(rd);
   box.append(g0);
   box.append(group("时态（可多选）", CJ_TENSES.map(([k, zh]) => [k, zh, tPct(k)]), k => cjCfg.tenses.includes(k), k => { cjCfg.tenses = flip(cjCfg.tenses, k); }, "后面的百分比是这个时态的掌握进度"));
   box.append(group("动词", CJ_GROUPS.map(([k, t]) => [k, t, CJ_VERBS.filter(v => v.g === k).length]), k => cjCfg.groups.includes(k), k => { cjCfg.groups = flip(cjCfg.groups, k); }));
@@ -18344,7 +18345,7 @@ function cjAnswer(input, card, fb) {
   cjSess.lastKey = cjId(q.v.v, q.t);
   cjRecord(q, cjCfg.mode === "pick" ? input : cjStrip(input), right);
   comboHit("conj", right);
-  if (vSet.read && tts && userActivated) speak(cjFull(q.t, q.i, q.fem, q.ans).replace(/ !$/, ""), 0.9, null);   // 答完自动朗读（可在背单词的练习设置里关掉）
+  if (vSet.read && tts && userActivated) speak(cjFull(q.t, q.i, q.fem, q.ans).replace(/ !$/, ""), 0.9, null);   // 答完自动朗读（可在“设置”里关掉）
   // 反馈：对错、完整形式（可朗读）、这个时态的整张变位表
   fb.className = "explain cj-fb";
   fb.textContent = "";
@@ -18397,6 +18398,70 @@ document.addEventListener("keydown", e => {
     if (n >= 0) { const b = stage.querySelectorAll(".opt")[n]; if (b) { e.preventDefault(); b.click(); } }
   } else if (cjSess.answered && (k === "enter" || k === "arrowright")) { e.preventDefault(); cjGoNext(); }
 });
+// ---------- 设置：集中管理各模块的练习设置（都记在本机浏览器里） ----------
+function renderSettings() {
+  stage.innerHTML = "";
+  const wrap = el("div", "set-page");
+  const section = (title, sub) => {
+    const card = el("section", "card set-card");
+    card.append(el("h3", null, title));
+    if (sub) card.append(el("p", "sub", sub));
+    wrap.append(card);
+    return card;
+  };
+  const selectRow = (id, label, opts, value, onChange) => {
+    const row = el("div", "v-set-row");
+    const lab = el("label", "v-set-name", label); lab.htmlFor = id;
+    const sel = el("select"); sel.id = id;
+    opts.forEach(([v, t]) => sel.append(new Option(t, String(v))));
+    sel.value = String(value);
+    sel.addEventListener("change", () => onChange(sel.value));
+    row.append(lab, sel);
+    return row;
+  };
+  const checkRow = (id, text, checked, onChange) => {
+    const row = el("label", "v-set-row v-set-check");
+    const cb = el("input"); cb.type = "checkbox"; cb.id = id; cb.checked = checked;
+    cb.addEventListener("change", () => onChange(cb.checked));
+    row.append(cb, document.createTextNode(" " + text));
+    return row;
+  };
+
+  // 答题：和答题页顶部的“每组 / 学习模式”是同一个设置
+  const q = section("答题", "每组做几题、要不要先复习知识点。");
+  q.append(
+    selectRow("setPer", "每组题数", PER_OPTS.map(n => [n, n ? `${n} 题` : "整轮一次做完"]), per, v => { perSel.value = v; perSel.dispatchEvent(new Event("change")); }),
+    checkRow("setStudy", "学习模式：每组开始前先复习本组涉及的知识点", study, v => { studyChk.checked = v; studyChk.dispatchEvent(new Event("change")); }));
+
+  // 背单词
+  const v = section("背单词", "难度为“困难”时，干扰选项用拼写相近的词（形近词辨析）。");
+  v.append(selectRow("setVPer", "每组词数", [5, 10, 15, 20].map(n => [n, `${n} 个词`]), vPer, val => {
+    vPer = Number(val); try { localStorage.setItem("fq-vper", String(vPer)); } catch (e) {}
+  }), ...vSetRows());
+
+  // 变位
+  const c = section("变位", "时态和动词组在“变位”页左侧选择。");
+  c.append(
+    selectRow("setCjMode", "出题方式", [["pick", "选择"], ["type", "填空"]], cjCfg.mode, val => { cjCfg.mode = val; cjSaveCfg(); cjSess = null; }),
+    selectRow("setCjN", "每组题数", [[10, "10 题"], [20, "20 题"], [30, "30 题"], [0, "不限"]], cjCfg.n, val => { cjCfg.n = Number(val); cjSaveCfg(); cjSess = null; }));
+
+  // 学习进度
+  const g = section("学习进度", "当天经验达到目标算打卡；连续打卡和补签都按这个目标算。");
+  g.append(selectRow("setGoal", "每日经验目标", GOAL_OPTS.map(n => [n, `${n} 经验`]), xpGoal, val => {
+    xpGoal = Number(val); try { localStorage.setItem("fq-goal", String(xpGoal)); } catch (e) {} planRefresh();
+  }));
+
+  // 朗读
+  const r = section("朗读");
+  r.append(checkRow("setRead", "答完自动朗读单词（背单词和变位）", vSet.read, val => { vSet.read = val; vSaveSet(); }));
+  if (tts) {
+    const voice = frVoice || pickVoice();
+    r.append(el("p", "sub", voice ? `朗读用的声音：${voice.name}（${voice.lang}）。想换更好听的声音，可以在系统设置的“辅助功能 → 朗读内容 → 声音”里下载法语的增强版声音。` : "这台设备上没找到法语朗读声音，可以在系统设置里添加法语语音。"));
+  } else r.append(el("p", "sub", "这个浏览器不支持朗读。"));
+
+  wrap.append(el("p", "sub set-foot", "设置只保存在这台设备的浏览器里，改动马上生效（背单词的题型从下一组开始）。"));
+  stage.append(wrap);
+}
 // 所有模块载入后：打开页面时先出这一轮
 startSet("fr-r23");
 </script>

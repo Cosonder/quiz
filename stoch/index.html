@@ -3436,7 +3436,7 @@ function planRefresh() {
   const old = $("planToc");
   if (old) old.replaceWith(planTocItem());
   planSlot.textContent = ""; planSlot.append(planTocItem("planMini"));
-  planSlot.hidden = view === "book" || view === "exam";   // 学习进度页有完整的计划卡，模拟卷不打扰
+  planSlot.hidden = view === "book" || view === "exam" || view === "settings";   // 学习进度页有完整的计划卡，模拟卷不打扰
 }
 planRefresh();
 
