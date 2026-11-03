@@ -3898,7 +3898,7 @@ function syncCard() {
     const send = el("button", "btn", "发送验证码"); send.type = "button"; send.id = "syncSend";
     row.append(email, send);
     const row2 = el("div", "sync-row"); row2.hidden = true;
-    const code = el("input"); code.type = "text"; code.id = "syncCode"; code.inputMode = "numeric"; code.autocomplete = "one-time-code"; code.placeholder = "邮件里的 6 位验证码"; code.setAttribute("aria-label", "验证码");
+    const code = el("input"); code.type = "text"; code.id = "syncCode"; code.inputMode = "numeric"; code.autocomplete = "one-time-code"; code.placeholder = "邮件里的验证码（一串数字）"; code.setAttribute("aria-label", "验证码");
     const go = el("button", "btn", "登录"); go.type = "button"; go.id = "syncLogin";
     row2.append(code, go);
     send.addEventListener("click", async () => {
