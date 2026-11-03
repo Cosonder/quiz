@@ -437,8 +437,28 @@ mjx-container.mjx-wide { display: block; overflow-x: auto; overflow-y: hidden; m
 .v-set-row select { font: inherit; color: var(--fg); background: var(--card); border: 1px solid var(--line); border-radius: 6px; padding: 2px 6px; }
 .v-set-check { display: flex; gap: 6px; align-items: center; font-size: .85rem; cursor: pointer; }
 
-/* 游戏模式关掉时隐藏 combo 等游戏元素 */
-.game-off .v-combo, .game-off .v-maxcombo, .game-off .game-only { display: none !important; }
+/* 游戏模式关掉时隐藏的游戏元素 */
+.game-off .game-only { display: none !important; }
+
+/* 连对护盾挡下时的 combo 标记 */
+.v-combo.shielded { background: #dff0ff; color: #1f5fa8; box-shadow: 0 0 0 2px #7fb6ff inset; }
+.shop-auto { font-size: .8rem; color: var(--muted); align-self: center; }
+/* 宝箱 */
+.chest-box { display: flex; align-items: center; gap: 12px; margin: 10px 0 4px; padding: 10px 12px; border-radius: 12px; background: linear-gradient(135deg, #fff6d6, #ffe7a8); border: 1px solid #e8c25a; color: #4a3200; }
+.chest-ico { width: 54px; flex: none; }
+.chest-ico svg { display: block; width: 100%; }
+.chest-ico .lid { transform-origin: 6px 24px; transition: transform .35s ease; }
+.chest-txt { flex: 1; display: flex; flex-direction: column; gap: 2px; min-width: 0; }
+.chest-txt span { font-size: .85rem; opacity: .8; }
+.chest-box.opening .chest-ico { animation: chestShake .7s ease; }
+.chest-box.opened .chest-ico .lid { transform: rotate(-28deg) translate(-2px, -4px); }
+.chest-box.opened .btn { display: none; }
+.chest-box.opened .chest-loot { animation: lootPop .45s ease; color: #9a5d00; font-size: 1.1rem; }
+@keyframes chestShake { 0%, 100% { transform: none; } 20% { transform: rotate(-8deg); } 40% { transform: rotate(8deg); } 60% { transform: rotate(-6deg); } 80% { transform: rotate(5deg) scale(1.05); } }
+@keyframes lootPop { 0% { transform: scale(.4); opacity: 0; } 70% { transform: scale(1.15); } 100% { transform: scale(1); opacity: 1; } }
+@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) .chest-box { background: linear-gradient(135deg, #3a2f12, #4a3a10); color: #ffe7a8; border-color: #7a5f1a; } :root:not([data-theme="light"]) .v-combo.shielded { background: #1d2f4a; color: #9cc8ff; } }
+:root[data-theme="dark"] .chest-box { background: linear-gradient(135deg, #3a2f12, #4a3a10); color: #ffe7a8; border-color: #7a5f1a; }
+:root[data-theme="dark"] .v-combo.shielded { background: #1d2f4a; color: #9cc8ff; }
 </style>
 
 <div class="wrap">
@@ -3172,9 +3192,11 @@ function progLive(d, kind) {
   if (kind === "vocab") vocRaw.push(d); else if (ansRaw) ansRaw.push(d);
   if (!prog) return;
   const before = xpLevel(prog.xp).lv, todayBefore = prog.today;
+  const shield = typeof shieldTry === "function" && shieldTry(d, kind);   // 答错时自动用连对护盾
   const r = progStep(prog, d, kind);
   const after = xpLevel(prog.xp).lv;
   const parts = [`+${r.xp} 经验` + (r.mult > 1 ? `（×${r.mult}）` : "")];
+  if (shield) parts.push(`🛡 连对护盾挡下了这次答错，combo ${r.run} 保住了`);
   if (r.coins && gameOn()) parts.push(`+${r.coins} 金币` + (r.run >= 2 ? `（combo ${r.run}）` : ""));
   if (r.daily) parts.push(`今日首题 +${XP_DAILY}`);
   if (r.up) parts.push(r.up === MEM_MAX ? "复习成功 · 长期记忆" : `复习成功 · 记忆 ${r.up} 级`);
@@ -3182,8 +3204,8 @@ function progLive(d, kind) {
   else if (r.down >= 0) parts.push(`记忆退到 ${r.down} 级`);
   const note = typeof planNotice === "function" ? planNotice(d, todayBefore) : "";
   const coins = typeof gameCheck === "function" ? gameCheck() : [];   // 刚完成的每日任务 → 金币
-  coins.forEach(c => parts.push(`${c.why} +${c.coins} 金币`));
-  xpToast(parts.join(" · "), after > before ? `升级！Lv ${after} · ${xpTitle(after)}` : note || (coins.length ? "任务完成！" : ""));
+  coins.forEach(c => parts.push(c.coins ? `${c.why} +${c.coins} 金币` : c.why));
+  xpToast(parts.join(" · "), after > before ? `升级！Lv ${after} · ${xpTitle(after)}` : note || (coins.some(c => c.chest) ? "获得一个宝箱！" : coins.length ? "任务完成！" : shield ? "护盾生效！" : ""));
   if (typeof planRefresh === "function") planRefresh();
 }
 let toastTimer = 0;
@@ -3521,7 +3543,7 @@ function planCard() {
 // 金币的获得、购买、使用都记成记录（game 集合），和答题记录一样跟着账号同步；余额和库存都由记录算出。
 // 同一个奖励（某天的某个任务）只算一次，两台设备同时领取也不会重复。
 const COIN_TIERS = [10, 15, 20];      // 三个任务：简单 / 中等 / 困难
-const COIN_ALL = 20, COIN_PLAN = 30;  // 三个任务全部完成；做完今日计划
+const COIN_PLAN = 30;  // 做完今日计划（三个任务全部完成改成给一个宝箱）
 const POTION_MIN = 15;
 // 答对得金币：每答对一题 +1，连对越多给得越多（combo 5 起 2 个，10 起 3 个，20 起 4 个，30 起 5 个封顶）。
 // 连对按记录算：答题、变位、背单词各算各的，答错或隔了 10 分钟以上没答就重新算。
@@ -3532,16 +3554,53 @@ const COIN_CURVE = [[30, 5], [20, 4], [10, 3], [5, 2], [1, 1]];
 const coinFor = run => (COIN_CURVE.find(([n]) => run >= n) || [0, 0])[1];
 function coinStep(st, key, right, t) {
   const r = st.runs[key] || (st.runs[key] = { n: 0, t: 0 });
-  if (!right || t - r.t > COIN_RUN_GAP) r.n = 0;
+  if (t - r.t > COIN_RUN_GAP) r.n = 0;
   r.t = t;
-  if (!right) return { coins: 0, run: 0 };
+  if (!right) {
+    if (r.n && shieldUsed(key, t)) return { coins: 0, run: r.n, shield: true };   // 连对护盾挡下：连对不断
+    r.n = 0;
+    return { coins: 0, run: 0 };
+  }
   r.n++;
   if (dayKey(new Date(t)) < COIN_ANS_FROM || !gameOnAt(t)) return { coins: 0, run: r.n };
   const c = coinFor(r.n);
   st.coins += c;
   return { coins: c, run: r.n };
 }
+// 连对护盾：游戏模式下，连对 3 题以上时答错一次，自动用掉一个，连对不断。用掉时记成 use 记录（哪一路、挡的是哪条记录）。
+const SHIELD_MIN = 3;
+let shieldCache = null;
+function shieldUsed(key, t) {
+  if (!shieldCache) shieldCache = new Set(gameRaw.filter(g => g.kind === "use" && g.item === "shield").map(g => g.key + "|" + Date.parse(g.ref)));
+  return shieldCache.has(key + "|" + t);
+}
+const streamOf = (d, kind) => kind === "vocab" ? "voc" : d.round === "cj" ? "conj" : "quiz";
+function shieldTry(d, kind) {
+  if (!gameOn() || !prog || (kind === "vocab" ? d.ok : d.isCorrect) || (kind !== "vocab" && !d.qid)) return false;
+  const key = streamOf(d, kind), r = prog.runs[key], t = Date.parse(d.at);
+  if (!r || r.n < SHIELD_MIN || t - r.t > COIN_RUN_GAP || !gameLedger().inv.shield) return false;
+  gameAdd({ kind: "use", item: "shield", key, ref: d.at, at: d.at });
+  comboShielded = key;
+  return true;
+}
+// 宝箱：每天三个任务全部完成得一个（记成 chest 记录），打开时随机给奖励，奖励在打开那一刻记下来
+const CHEST_LOOT = [
+  [30, { coins: 30 }], [25, { coins: 50 }], [15, { coins: 80 }], [5, { coins: 150 }],
+  [12, { item: "shield" }], [8, { item: "x2" }], [5, { item: "patch" }],
+];
+const lootText = l => l.coins ? `${l.coins} 金币` : SHOP.find(s => s.id === l.item).name;
+function chestOpen() {
+  const led = gameLedger(), key = led.chests[0];
+  if (!key) return null;
+  let roll = Math.random() * CHEST_LOOT.reduce((a, [w]) => a + w, 0), loot = CHEST_LOOT[0][1];
+  for (const [w, l] of CHEST_LOOT) { if ((roll -= w) < 0) { loot = l; break; } }
+  const it = loot.item && SHOP.find(s => s.id === loot.item);
+  if (it && it.max && led.inv[it.id] >= it.max) loot = { coins: Math.round(it.price / 2) };   // 已经存满：换成金币
+  gameAdd({ kind: "chest", key, open: true, loot, at: new Date().toISOString() });
+  return loot;
+}
 const SHOP = [
+  { id: "shield", name: "连对护盾", price: 80, max: 3, auto: true, desc: `连对 ${SHIELD_MIN} 题以上时答错一次，自动用掉一个护盾，combo 不断。最多存 3 个。` },
   { id: "patch", name: "补签卡", price: 300, max: 2, desc: "昨天没达到每日目标时，用它补上昨天的打卡，保住连续天数。最多存 2 张。" },
   { id: "x2", name: "双倍经验药水", price: 200, mult: 2, desc: `喝下后 ${POTION_MIN} 分钟内，答题得到的经验 ×2。` },
   { id: "x3", name: "三倍经验药水", price: 400, mult: 3, desc: `喝下后 ${POTION_MIN} 分钟内，答题得到的经验 ×3。` },
@@ -3560,7 +3619,7 @@ const QUESTS = [
 
 let gameRaw = [];   // game 集合的全部记录
 let potionCache = null, modeCache = null;
-function gameReset(docs) { gameRaw = docs || []; potionCache = null; modeCache = null; prog = null; gameApplyMode(); }
+function gameReset(docs) { gameRaw = docs || []; potionCache = null; modeCache = null; shieldCache = null; prog = null; gameApplyMode(); }
 
 // ---------- 游戏模式（设置里开关）：金币、combo、每日任务、商店和道具，以及以后新加的游戏玩法，都只在打开时出现 ----------
 // 开关记成 game 记录（kind: "mode"），跟着账号同步；关掉期间答对不得金币。没有记录时默认打开。
@@ -3597,18 +3656,22 @@ function potionActive(now = Date.now()) {
 }
 // 余额、库存、已经领过的奖励、用补签卡补上的日子
 function gameLedger() {
-  const earned = new Set(), inv = { patch: 0, x2: 0, x3: 0 }, patched = new Set();
+  const earned = new Set(), inv = { shield: 0, patch: 0, x2: 0, x3: 0 }, patched = new Set(), got = [], opened = new Set();
   let coins = progEnsure() ? prog.coins || 0 : 0;   // 答对得的金币（由答题记录算出）
   [...gameRaw].sort((a, b) => String(a.at).localeCompare(String(b.at))).forEach(g => {
     if (g.kind === "earn") { if (earned.has(g.key)) return; earned.add(g.key); coins += g.coins || 0; }
     else if (g.kind === "buy" && inv[g.item] != null) { coins -= g.price || 0; inv[g.item]++; }
     else if (g.kind === "use" && inv[g.item] != null) { inv[g.item]--; if (g.item === "patch" && g.day) patched.add(g.day); }
+    else if (g.kind === "chest") {
+      if (!g.open) { if (!got.includes(g.key)) got.push(g.key); }
+      else if (!opened.has(g.key)) { opened.add(g.key); const l = g.loot || {}; coins += l.coins || 0; if (l.item && inv[l.item] != null) inv[l.item]++; }
+    }
   });
-  return { coins, inv, earned, patched };
+  return { coins, inv, earned, patched, chests: got.filter(k => !opened.has(k)) };
 }
 const patchedDays = () => gameLedger().patched;
 function gameAdd(doc) {
-  gameRaw.push(doc); potionCache = null;
+  gameRaw.push(doc); potionCache = null; shieldCache = null;
   if (dbRef) dbRef.collection("game").add(doc).catch(() => {});
 }
 
@@ -3648,7 +3711,7 @@ function questStatus() {
     const def = QUESTS.find(d => d.id === x.id), v = def.val(s) || 0;
     return { ...x, text: def.text(x.target), v: Math.min(v, x.target), done: v >= x.target, claimed: led.earned.has(`${q.day}:q:${x.id}`) };
   });
-  return { day: q.day, list, all: list.every(x => x.done), allClaimed: led.earned.has(`${q.day}:all`), planClaimed: led.earned.has(`${q.day}:plan`), led };
+  return { day: q.day, list, all: list.every(x => x.done), allClaimed: led.earned.has(`${q.day}:all`) || gameRaw.some(g => g.kind === "chest" && g.key === `${q.day}:chest`), planClaimed: led.earned.has(`${q.day}:plan`), led };
 }
 // 发放刚完成的任务奖励（答完题后、打开学习进度页时调用），返回这次发的
 function gameCheck() {
@@ -3657,10 +3720,13 @@ function gameCheck() {
   if (!st) return [];
   const out = [], now = new Date().toISOString();
   st.list.forEach(x => { if (x.done && !x.claimed) out.push({ key: `${st.day}:q:${x.id}`, coins: x.coins, why: `任务完成：${x.text}` }); });
-  if (st.all && !st.allClaimed) out.push({ key: `${st.day}:all`, coins: COIN_ALL, why: "三个任务全部完成" });
+  if (st.all && !st.allClaimed) {
+    gameAdd({ kind: "chest", key: `${st.day}:chest`, at: now });
+    out.push({ coins: 0, chest: true, why: "三个任务全部完成：获得一个宝箱，去学习进度页打开" });
+  }
   const p = typeof planGet === "function" ? planGet() : null;
   if (p && !st.planClaimed) { const s = planStatus(p); if (s.n && s.d === s.n) out.push({ key: `${st.day}:plan`, coins: COIN_PLAN, why: "今日计划完成" }); }
-  out.forEach(c => gameAdd({ kind: "earn", key: c.key, coins: c.coins, why: c.why, at: now }));
+  out.forEach(c => { if (c.key) gameAdd({ kind: "earn", key: c.key, coins: c.coins, why: c.why, at: now }); });
   return out;
 }
 
@@ -3719,8 +3785,9 @@ function gameCard() {
   });
   card.append(list);
   const bonus = el("p", "quest-bonus");
-  bonus.append(document.createTextNode(`三个任务全部完成再 +${COIN_ALL}` + (st.allClaimed ? "（已领）" : "") + ` · 做完今日计划 +${COIN_PLAN}` + (st.planClaimed ? "（已领）" : "")));
+  bonus.append(document.createTextNode("三个任务全部完成得一个宝箱" + (st.allClaimed ? "（已领）" : "") + ` · 做完今日计划 +${COIN_PLAN}` + (st.planClaimed ? "（已领）" : "")));
   card.append(bonus);
+  if (st.led.chests.length) card.append(chestBox(st.led.chests.length));
   // 商店
   card.append(el("h3", "shop-h", "商店"));
   const shop = el("div", "shop");
@@ -3743,6 +3810,7 @@ function gameCard() {
       xpToast(`花了 ${it.price} 金币`, `买到了：${it.name}`);
       drawBook();
     });
+    if (it.auto) { acts.append(buy, el("span", "shop-auto", "答错时自动生效")); box.append(acts); shop.append(box); return; }
     const use = el("button", "btn", it.id === "patch" ? "补签昨天" : "喝下"); use.type = "button"; use.id = "use-" + it.id;
     use.disabled = !own || (it.id === "patch" ? !pt : !!pa);
     use.addEventListener("click", () => {
@@ -3760,10 +3828,33 @@ function gameCard() {
   const rule = el("details", "xp-rule");
   rule.append(el("summary", null, "任务和金币怎么算"),
     el("p", null, `每答对一题 +1 金币，连对越多给得越多：combo 5 起每题 2 个，10 起 3 个，20 起 4 个，30 起 5 个。答错、或隔 10 分钟以上没答，连对重新算；答题、变位、背单词分开算。`),
-    el("p", null, `每天 3 个任务，按你最近每天的做题量定难度，奖励 ${COIN_TIERS.join(" / ")} 金币；三个都完成再给 ${COIN_ALL}，做完今日计划给 ${COIN_PLAN}。任务完成时自动发金币。`),
+    el("p", null, `每天 3 个任务，按你最近每天的做题量定难度，奖励 ${COIN_TIERS.join(" / ")} 金币；三个都完成得一个宝箱，打开随机得到 30–150 金币、连对护盾、双倍经验药水或补签卡（道具已存满就换成金币）；做完今日计划给 ${COIN_PLAN}。任务完成时自动发奖励。`),
     el("p", null, `补签卡只能补“昨天”：昨天没达到每日目标、今天还来得及补的时候可以用。药水一次只能喝一瓶，生效 ${POTION_MIN} 分钟。`));
   card.append(rule);
   return card;
+}
+// 宝箱：图标 + 打开按钮；打开时先晃一晃，再弹出奖励
+const CHEST_SVG = `<svg viewBox="0 0 64 56" aria-hidden="true"><defs><linearGradient id="cw" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#b8743a"/><stop offset="1" stop-color="#7a4520"/></linearGradient><linearGradient id="cg" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#ffe58a"/><stop offset="1" stop-color="#c98a00"/></linearGradient></defs><g class="lid"><path d="M6 24V18C6 9 14 4 32 4S58 9 58 18V24Z" fill="url(#cw)" stroke="#5a3214" stroke-width="2"/><path d="M14 24V12M50 24V12" stroke="url(#cg)" stroke-width="5"/></g><rect x="6" y="24" width="52" height="28" rx="3" fill="url(#cw)" stroke="#5a3214" stroke-width="2"/><path d="M14 24V52M50 24V52" stroke="url(#cg)" stroke-width="5"/><rect x="5" y="22" width="54" height="5" rx="2" fill="url(#cg)" stroke="#8a5a00" stroke-width="1"/><rect x="27" y="25" width="10" height="13" rx="2" fill="url(#cg)" stroke="#8a5a00" stroke-width="1"/><circle cx="32" cy="31" r="2" fill="#5a3214"/></svg>`;
+function chestBox(n) {
+  const box = el("div", "chest-box");
+  const ico = el("div", "chest-ico"); ico.innerHTML = CHEST_SVG;
+  const txt = el("div", "chest-txt");
+  txt.append(el("b", null, n > 1 ? `你有 ${n} 个宝箱` : "你有一个宝箱"), el("span", null, "打开看看里面有什么"));
+  const btn = el("button", "btn", "打开宝箱"); btn.type = "button"; btn.id = "chestOpen";
+  btn.addEventListener("click", () => {
+    btn.disabled = true;
+    box.classList.add("opening");
+    setTimeout(() => {
+      const loot = chestOpen();
+      box.classList.remove("opening"); box.classList.add("opened");
+      txt.innerHTML = "";
+      txt.append(el("b", "chest-loot", loot ? "获得 " + lootText(loot) + "！" : "宝箱是空的"), el("span", null, loot && loot.item ? "已放进道具栏" : "已加到余额"));
+      if (loot) xpToast("宝箱里是：" + lootText(loot), "打开宝箱！");
+      setTimeout(() => drawBook(), 1800);
+    }, 700);
+  });
+  box.append(ico, txt, btn);
+  return box;
 }
 // 药水倒计时
 setInterval(() => {
@@ -3773,12 +3864,24 @@ setInterval(() => {
   els.forEach(e => { e.textContent = pa ? mmss(pa.left) : "0:00"; });
   if (!pa && view === "book") drawBook();
 }, 1000);
-// ---------- 连对 combo：连续答对计数，答错清零（答题、变位各自计数；本次打开页面内有效） ----------
-const combos = {};
+// ---------- 连对 combo：连续答对计数，答错清零（答题、变位、背单词各自计数） ----------
+// 连对按做题记录算（和金币、连对护盾用同一个数）：隔 10 分钟以上没答也重新算。不受游戏模式影响，一直显示。
+const comboLocal = {};        // 记录还没读完时的临时计数
+let comboShielded = "";       // 刚被连对护盾挡下的那一路（quiz / conj / voc）
+function comboVal(key) {
+  if (typeof prog !== "undefined" && prog && prog.runs) {
+    const r = prog.runs[key];
+    return r && Date.now() - r.t <= COIN_RUN_GAP ? r.n : 0;
+  }
+  return comboLocal[key] || 0;
+}
+// 答完一题后调用（在记录之后）：更新这一路的 combo 标记，返回当前连对数
 function comboHit(key, ok) {
-  combos[key] = ok ? (combos[key] || 0) + 1 : 0;
-  document.querySelectorAll(`.v-combo[data-k="${key}"]`).forEach(b => comboDraw(b, ok));
-  return combos[key];
+  const shield = !ok && comboShielded === key;
+  comboShielded = "";
+  comboLocal[key] = ok ? (comboLocal[key] || 0) + 1 : shield ? comboLocal[key] || 0 : 0;
+  document.querySelectorAll(`.v-combo[data-k="${key}"]`).forEach(b => comboDraw(b, ok || shield, shield));
+  return comboVal(key);
 }
 // 题卡标签行里的 combo 标记：连对 2 题起显示，10 题以上换深色
 function comboBadge(key) {
@@ -3786,11 +3889,12 @@ function comboBadge(key) {
   comboDraw(b, false);
   return b;
 }
-function comboDraw(b, bump) {
-  const n = combos[b.dataset.k] || 0;
-  b.textContent = n >= 2 ? `combo ${n}` : "";
+function comboDraw(b, bump, shield) {
+  const n = comboVal(b.dataset.k);
+  b.textContent = n >= 2 ? (shield ? "🛡 " : "") + `combo ${n}` : "";
   b.hidden = n < 2;
   b.classList.toggle("hot", n >= 10);
+  b.classList.toggle("shielded", !!shield);
   if (bump && n >= 2) { b.classList.remove("bump"); void b.offsetWidth; b.classList.add("bump"); }
 }
 // ---------- 账号登录与多设备同步（只在公开网站上启用；Claude 页面的记录本来就跟着 Claude 账号走） ----------
