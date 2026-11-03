@@ -459,6 +459,12 @@ mjx-container.mjx-wide { display: block; overflow-x: auto; overflow-y: hidden; m
 @media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) .chest-box { background: linear-gradient(135deg, #3a2f12, #4a3a10); color: #ffe7a8; border-color: #7a5f1a; } :root:not([data-theme="light"]) .v-combo.shielded { background: #1d2f4a; color: #9cc8ff; } }
 :root[data-theme="dark"] .chest-box { background: linear-gradient(135deg, #3a2f12, #4a3a10); color: #ffe7a8; border-color: #7a5f1a; }
 :root[data-theme="dark"] .v-combo.shielded { background: #1d2f4a; color: #9cc8ff; }
+/* 商店商品图标 */
+.shop-name { display: inline-flex; align-items: center; gap: 8px; }
+.shop-ico { display: inline-block; width: 38px; height: 38px; flex: none; filter: drop-shadow(0 1px 1.5px rgba(0, 0, 0, .18)); }
+.shop-ico svg, .loot-ico svg { display: block; width: 100%; height: 100%; }
+.loot-ico { display: inline-block; width: 26px; height: 26px; vertical-align: -7px; margin-right: 6px; }
+.shop-top { align-items: center; }
 </style>
 
 <div class="wrap">
@@ -3599,6 +3605,14 @@ function chestOpen() {
   gameAdd({ kind: "chest", key, open: true, loot, at: new Date().toISOString() });
   return loot;
 }
+// 商店商品的图标（原图在 quiz-common/icons/）
+const SHOP_ICONS = {
+  shield: `<svg viewBox="0 0 48 48"><defs><linearGradient id="ish-r" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#f4f7fb"/><stop offset=".5" stop-color="#b9c4d4"/><stop offset="1" stop-color="#7d8aa0"/></linearGradient><linearGradient id="ish-f" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#5aa2ff"/><stop offset="1" stop-color="#1f4fb8"/></linearGradient><linearGradient id="ish-b" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#fff1a8"/><stop offset="1" stop-color="#f2a900"/></linearGradient></defs><path d="M24 3L41 9V22C41 33 33.5 41 24 45C14.5 41 7 33 7 22V9Z" fill="url(#ish-r)" stroke="#4d5a70" stroke-width="1.4" stroke-linejoin="round"/><path d="M24 7.2L37.2 11.8V22C37.2 31 31.2 37.6 24 40.8C16.8 37.6 10.8 31 10.8 22V11.8Z" fill="url(#ish-f)"/><path d="M24 7.2L37.2 11.8V22C37.2 31 31.2 37.6 24 40.8Z" fill="#0d2f80" fill-opacity=".22"/><path d="M26.5 11.5L17.5 25.5H23.5L21 36.5L31 21.5H25L26.5 11.5Z" fill="#7a4a00" fill-opacity=".45" transform="translate(.8 1)"/><path d="M26.5 11.5L17.5 25.5H23.5L21 36.5L31 21.5H25L26.5 11.5Z" fill="url(#ish-b)" stroke="#b07400" stroke-width=".8" stroke-linejoin="round"/><path d="M13.5 13.6L22 10.6" stroke="#fff" stroke-opacity=".75" stroke-width="2" stroke-linecap="round"/></svg>`,
+  patch: `<svg viewBox="0 0 48 48"><defs><linearGradient id="ipa-t" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#ff7a6b"/><stop offset="1" stop-color="#d93c32"/></linearGradient><linearGradient id="ipa-p" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#ffffff"/><stop offset="1" stop-color="#e6ebf2"/></linearGradient><linearGradient id="ipa-c" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#5fd98f"/><stop offset="1" stop-color="#169a52"/></linearGradient></defs><rect x="7" y="9" width="34" height="34" rx="5" fill="#8b98ad" opacity=".35" transform="translate(1.2 1.6)"/><rect x="7" y="9" width="34" height="34" rx="5" fill="url(#ipa-p)" stroke="#5d6779" stroke-width="1.3"/><path d="M7 14A5 5 0 0 1 12 9H36A5 5 0 0 1 41 14V18H7Z" fill="url(#ipa-t)" stroke="#5d6779" stroke-width="1.3"/><rect x="14" y="5" width="3.4" height="8" rx="1.7" fill="#c9d1dd" stroke="#5d6779" stroke-width="1.1"/><rect x="30.6" y="5" width="3.4" height="8" rx="1.7" fill="#c9d1dd" stroke="#5d6779" stroke-width="1.1"/><g fill="#c9d1dd"><rect x="11" y="22" width="5" height="4" rx="1"/><rect x="18" y="22" width="5" height="4" rx="1"/><rect x="25" y="22" width="5" height="4" rx="1"/><rect x="32" y="22" width="5" height="4" rx="1"/><rect x="11" y="29" width="5" height="4" rx="1"/><rect x="11" y="36" width="5" height="4" rx="1"/><rect x="32" y="36" width="5" height="4" rx="1"/></g><circle cx="26" cy="32.5" r="9" fill="url(#ipa-c)" stroke="#0f7a3f" stroke-width="1.1"/><path d="M21.6 32.6L24.9 35.8L30.8 29.4" fill="none" stroke="#fff" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/><path d="M10 12.5H20" stroke="#fff" stroke-opacity=".55" stroke-width="1.6" stroke-linecap="round"/></svg>`,
+  x2: `<svg viewBox="0 0 48 48"><defs><radialGradient id="ix2-l" cx=".35" cy=".35" r=".8"><stop offset="0" stop-color="#e7b8ff"/><stop offset=".55" stop-color="#9b4dff"/><stop offset="1" stop-color="#5b1fb8"/></radialGradient><linearGradient id="ix2-k" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#d9a06a"/><stop offset="1" stop-color="#8a5328"/></linearGradient></defs><path d="M19 5H29V15.5C35.5 17.8 40 23.6 40 30.5C40 39.3 32.8 45.5 24 45.5S8 39.3 8 30.5C8 23.6 12.5 17.8 19 15.5Z" fill="#e9f2fb" fill-opacity=".55" stroke="#56627a" stroke-width="1.4" stroke-linejoin="round"/><path d="M10.6 27.5C13.8 25.6 18 26.8 24 27.8S34 28.4 37.4 26.6C37.9 28 38.1 29.2 38.1 30.5C38.1 38.2 31.8 43.6 24 43.6S9.9 38.2 9.9 30.5C9.9 29.5 10.1 28.4 10.6 27.5Z" fill="url(#ix2-l)"/><g fill="#fff" fill-opacity=".7"><circle cx="17" cy="33" r="1.4"/><circle cx="29.5" cy="36.5" r="1"/><circle cx="21" cy="38.5" r=".8"/><circle cx="31" cy="31" r="1.6" fill-opacity=".45"/></g><rect x="17.5" y="2.5" width="13" height="6" rx="2" fill="url(#ix2-k)" stroke="#5a3214" stroke-width="1.1"/><path d="M14 21.5C12.2 23.4 11.2 25.5 10.9 27.3" fill="none" stroke="#fff" stroke-opacity=".85" stroke-width="2" stroke-linecap="round"/><text x="24" y="37.6" text-anchor="middle" font-family="Arial Black, Arial, sans-serif" font-weight="900" font-size="11" fill="#fff" stroke="#5b1fb8" stroke-width="2.4" paint-order="stroke">×2</text></svg>`,
+  x3: `<svg viewBox="0 0 48 48"><defs><radialGradient id="ix3-l" cx=".35" cy=".35" r=".8"><stop offset="0" stop-color="#ffe08a"/><stop offset=".55" stop-color="#ff8a2a"/><stop offset="1" stop-color="#c2361a"/></radialGradient><linearGradient id="ix3-k" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#d9a06a"/><stop offset="1" stop-color="#8a5328"/></linearGradient></defs><path d="M19 5H29V15.5C35.5 17.8 40 23.6 40 30.5C40 39.3 32.8 45.5 24 45.5S8 39.3 8 30.5C8 23.6 12.5 17.8 19 15.5Z" fill="#e9f2fb" fill-opacity=".55" stroke="#56627a" stroke-width="1.4" stroke-linejoin="round"/><path d="M10.6 27.5C13.8 25.6 18 26.8 24 27.8S34 28.4 37.4 26.6C37.9 28 38.1 29.2 38.1 30.5C38.1 38.2 31.8 43.6 24 43.6S9.9 38.2 9.9 30.5C9.9 29.5 10.1 28.4 10.6 27.5Z" fill="url(#ix3-l)"/><g fill="#fff" fill-opacity=".7"><circle cx="17" cy="33" r="1.4"/><circle cx="29.5" cy="36.5" r="1"/><circle cx="21" cy="38.5" r=".8"/><circle cx="31" cy="31" r="1.6" fill-opacity=".45"/></g><rect x="17.5" y="2.5" width="13" height="6" rx="2" fill="url(#ix3-k)" stroke="#5a3214" stroke-width="1.1"/><path d="M14 21.5C12.2 23.4 11.2 25.5 10.9 27.3" fill="none" stroke="#fff" stroke-opacity=".85" stroke-width="2" stroke-linecap="round"/><text x="24" y="37.6" text-anchor="middle" font-family="Arial Black, Arial, sans-serif" font-weight="900" font-size="11" fill="#fff" stroke="#c2361a" stroke-width="2.4" paint-order="stroke">×3</text><g fill="#ffd23a" stroke="#c98a00" stroke-width=".5"><path d="M38.5 6.5l1 2.4 2.4 1-2.4 1-1 2.4-1-2.4-2.4-1 2.4-1z"/><path d="M9 12l.7 1.6 1.6.7-1.6.7L9 16.6l-.7-1.6-1.6-.7 1.6-.7z"/></g></svg>`,
+};
+function shopIcon(id, cls) { const i = el("span", cls || "shop-ico"); i.innerHTML = SHOP_ICONS[id] || ""; i.setAttribute("aria-hidden", "true"); return i; }
 const SHOP = [
   { id: "shield", name: "连对护盾", price: 80, max: 3, auto: true, desc: `连对 ${SHIELD_MIN} 题以上时答错一次，自动用掉一个护盾，combo 不断。最多存 3 个。` },
   { id: "patch", name: "补签卡", price: 300, max: 2, desc: "昨天没达到每日目标时，用它补上昨天的打卡，保住连续天数。最多存 2 张。" },
@@ -3797,7 +3811,8 @@ function gameCard() {
     const own = st.led.inv[it.id];
     const box = el("div", "shop-item");
     const top = el("div", "shop-top");
-    top.append(el("b", null, it.name), coinEl(it.price));
+    const nm = el("span", "shop-name"); nm.append(shopIcon(it.id), el("b", null, it.name));
+    top.append(nm, coinEl(it.price));
     box.append(top, el("p", null, it.desc), el("span", "own", `拥有 ${own}`));
     const acts = el("div", "shop-acts");
     const buy = el("button", "btn ghost", "购买"); buy.type = "button"; buy.id = "buy-" + it.id;
@@ -3848,7 +3863,10 @@ function chestBox(n) {
       const loot = chestOpen();
       box.classList.remove("opening"); box.classList.add("opened");
       txt.innerHTML = "";
-      txt.append(el("b", "chest-loot", loot ? "获得 " + lootText(loot) + "！" : "宝箱是空的"), el("span", null, loot && loot.item ? "已放进道具栏" : "已加到余额"));
+      const lb = el("b", "chest-loot");
+      if (loot && loot.item) lb.append(shopIcon(loot.item, "loot-ico"));
+      lb.append(document.createTextNode(loot ? "获得 " + lootText(loot) + "！" : "宝箱是空的"));
+      txt.append(lb, el("span", null, loot && loot.item ? "已放进道具栏" : "已加到余额"));
       if (loot) xpToast("宝箱里是：" + lootText(loot), "打开宝箱！");
       setTimeout(() => drawBook(), 1800);
     }, 700);
