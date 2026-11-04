@@ -15158,7 +15158,7 @@ function cosEquip(slot, id) {
 // 背景区域的手感：往外拉有阻力（只跟手 35%–40%），松手时如果没拉到头，就自动回弹到内容边上；拉到头就停在背景全貌
 const COS_DRAG = .38, COS_WHEEL = .35, COS_SNAP = .5, COS_BACK = .3;
 let cosFull = null;   // 当前停在哪一边的背景全貌（"top" / "bot"），用来判断是“拉出去”还是“往回滑”
-let cosTouch = null, cosSnapT = 0;
+let cosTouch = null, cosSnapT = 0, cosWheel = null;
 function cosZone() {
   const top = document.getElementById("skinRevealTop"), bot = document.getElementById("skinReveal");
   if (!top || !bot) return null;
@@ -15201,14 +15201,36 @@ function cosSnapLater(ms) {
   }, ms);
 }
 const cosSkipTarget = t => t && t.closest && t.closest(".pc-overlay, textarea, input, select, .tabs, .tour-map");
-window.addEventListener("scroll", () => { if (document.getElementById("skinReveal")) cosSnapLater(260); }, { passive: true });
+// 去掉“冲进”背景区域的惯性：手指甩一下松开后，页面靠惯性从内容里滑过边缘时，停在边缘上
+// （要看背景就在边缘处再拉一下；在背景区域里拖动本来就是我们自己控制的，没有惯性）
+let cosLastY = null;
+function cosHalt(edge) {
+  const r = document.documentElement, ov = r.style.overflow;
+  r.style.overflow = "hidden";          // iOS 上改 overflow 能立刻掐断系统惯性
+  window.scrollTo({ top: edge, behavior: "instant" });
+  requestAnimationFrame(() => { r.style.overflow = ov; window.scrollTo({ top: edge, behavior: "instant" }); });
+}
+window.addEventListener("scroll", () => {
+  const z = cosZone();
+  if (!z) { cosLastY = null; return; }
+  const was = cosLastY; cosLastY = z.y;
+  if (!cosTouch && was != null && was > z.topEdge + 1 && was < z.botEdge - 1) {
+    if (z.inTop) { cosLastY = z.topEdge; cosHalt(z.topEdge); return; }
+    if (z.inBot) { cosLastY = z.botEdge; cosHalt(z.botEdge); return; }
+  }
+  cosSnapLater(260);
+}, { passive: true });
 window.addEventListener("wheel", e => {
   const z = cosZone();
   if (!z || e.ctrlKey || cosSkipTarget(e.target) || Math.abs(e.deltaX) > Math.abs(e.deltaY)) return;
   const dy = e.deltaMode === 1 ? e.deltaY * 16 : e.deltaY;
-  const next = z.y + dy;
+  const next = z.y + dy, now = e.timeStamp;
+  // 一串连续的滚轮事件（触控板甩动后的惯性也算在里面）：如果是从内容中间开始的，到边缘就停住，不带惯性冲进背景
+  if (!cosWheel || now - cosWheel.t > 160) cosWheel = { fromMid: z.y > z.topEdge + 1 && z.y < z.botEdge - 1 };
+  cosWheel.t = now;
   if (!(z.inTop || z.inBot || next < z.topEdge || next > z.botEdge)) return;
   e.preventDefault();
+  if (cosWheel.fromMid && !z.inTop && !z.inBot) { window.scrollTo(0, next < z.topEdge ? z.topEdge : z.botEdge); return; }
   window.scrollTo(0, cosResist(z, dy, COS_WHEEL));
   cosSnapLater(320);
 }, { passive: false });
