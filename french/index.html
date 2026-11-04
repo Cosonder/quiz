@@ -20421,9 +20421,17 @@ function spBossQs() {
   if (qs.length < SP_BOSS_N) vShuffle(SP_BOSS.filter(x => x.lv === lv && !qs.includes(x))).slice(0, SP_BOSS_N - qs.length).forEach(q => qs.push(q));
   return vShuffle(qs);
 }
+function spBossMore(f) {
+  const used = new Set(f.qs), lv = SP_ACTS[spRun.act].lv;
+  const fromSeen = vShuffle(spRun.seen.slice()).map(id => (SP_BOSS_BY.get(id) || []).find(x => x.lv === lv)).filter(q => q && !used.has(SP_BOSS.indexOf(q)));
+  let more = fromSeen.concat(vShuffle(SP_BOSS.filter(x => x.lv === lv && !used.has(SP_BOSS.indexOf(x)) && !fromSeen.includes(x)))).slice(0, SP_BOSS_N);
+  if (!more.length) more = vShuffle(SP_BOSS.filter(x => x.lv === lv)).slice(0, SP_BOSS_N);   // 题库都出过了：重新洗一遍
+  f.qs = f.qs.concat(more.map(q => SP_BOSS.indexOf(q)));
+  spSave();
+}
 function spBoss() {
   const r = spRun;
-  if (r.inFight && r.inFight.boss && r.inFight.qs && r.inFight.qs.length && r.inFight.i < r.inFight.qs.length) { spBossQ(); return; }   // 打到一半：接着打
+  if (r.inFight && r.inFight.boss && r.inFight.qs && r.inFight.qs.length && r.inFight.right < SP_BOSS_N) { spBossQ(); return; }   // 打到一半：接着打
   r.row = SP_ROWS; r.inFight = { boss: true, beret: false, qs: spBossQs().map(q => SP_BOSS.indexOf(q)), i: 0, right: 0 };
   spSave();
   spBossQ();
@@ -20431,7 +20439,8 @@ function spBoss() {
 function spBossQ() {
   vUnbindKeys();
   const r = spRun, f = r.inFight, act = SP_ACTS[r.act];
-  if (f.i >= f.qs.length) { spBossWin(); return; }
+  if (f.right >= SP_BOSS_N) { spBossWin(); return; }   // Boss 的血打到零才算赢
+  if (f.i >= f.qs.length) spBossMore(f);                 // 题用完了还没打死：再抽一批（先抽这一局见过的词，没出过的题优先）
   const q = SP_BOSS[f.qs[f.i]], w = vById.get(q.id);
   stage.innerHTML = "";
   spHud();
@@ -20440,8 +20449,8 @@ function spBossQ() {
   top.append(spIcon("boss", act.boss, "sp-bossimg"));
   const info = el("div", "sp-bossinfo");
   info.append(el("b", null, act.bossName), el("span", "sp-fr", act.bossFr));
-  const bar = el("div", "sp-bossbar"); for (let k = 0; k < f.qs.length; k++) bar.append(el("i", k < f.qs.length - f.right ? "on" : ""));
-  info.append(bar, el("span", "sub", `第 ${f.i + 1} / ${f.qs.length} 题 · 答对一题打掉一格，答错扣你 1 颗心`));
+  const bar = el("div", "sp-bossbar"); for (let k = 0; k < SP_BOSS_N; k++) bar.append(el("i", k < SP_BOSS_N - f.right ? "on" : ""));
+  info.append(bar, el("span", "sub", `第 ${f.i + 1} 题 · 血量还剩 ${SP_BOSS_N - f.right} / ${SP_BOSS_N} · 答对一题打掉一格，答错扣你 1 颗心`));
   top.append(info);
   card.append(top);
   const tags = el("div", "tagrow");
@@ -20484,7 +20493,7 @@ function spBossQ() {
       if (x.ok) {
         f.right++; spRight();
         if (spHas("drapeau") && f.right % 3 === 0 && spHeal(1)) spToast("三色旗：回 1 颗心");
-        bar.children[f.qs.length - f.right]?.classList.remove("on");
+        bar.children[SP_BOSS_N - f.right]?.classList.remove("on");
         top.querySelector(".sp-bossimg").classList.add("hurt");
       } else dead = spDamage();
       exp.className = "explain";
@@ -20492,7 +20501,7 @@ function spBossQ() {
       exp.append(el("b", x.ok ? "ok" : "no", x.ok ? "答对了！" : "答错了。"), el("p", null, q.zh), el("p", "sub", q.why));
       f.i++; spSave();
       if (dead) return;
-      const nx = el("button", "btn", f.i >= f.qs.length ? "看结果" : "下一题"); nx.type = "button"; nx.id = "spBossNext";
+      const nx = el("button", "btn", f.right >= SP_BOSS_N ? "打败 Boss！" : "下一题"); nx.type = "button"; nx.id = "spBossNext";
       nx.addEventListener("click", spBossQ);
       card.append(nx); nx.focus({ preventScroll: true });
     });
