@@ -326,7 +326,7 @@ h1 { font-family: var(--display); font-weight: 900; font-size: 1.6rem; line-heig
 .v-levels { display: grid; grid-template-columns: repeat(auto-fill, minmax(64px, 1fr)); gap: 6px; margin: 12px 0 4px; }
 .v-lv { display: flex; flex-direction: column; align-items: center; gap: 1px; padding: 6px 2px; border: 1px solid var(--line); border-radius: 10px; background: var(--card); color: var(--fg); font: inherit; cursor: pointer; }
 .v-lv b { font-size: 1.15rem; }
-.px-num { display: inline-flex; line-height: 0; padding: 3px 0 2px; } .px-num svg { display: block; }
+.px-num { display: inline-flex; line-height: 0; padding: 4px 0 3px; } .px-num svg { display: block; }
 .v-lv .st { font-size: .85rem; }
 .v-lv .px-stars { gap: 2px; margin: 2px 0; } .v-lv .px-star { width: 13px; height: 13px; }
 .v-lvstar .px-star { width: 11px; height: 11px; } .v-lvres .px-stars { gap: 3px; vertical-align: -3px; } .v-lvres .px-star { width: 15px; height: 15px; }
@@ -19028,7 +19028,7 @@ function pxNum(n, cls) {
   let d = "";
   ds.forEach((g, k) => { const bits = PX_DIGITS[g]; for (let i = 0; i < 35; i++) if (bits[i] === "1") d += `M${k * 6 + i % 5} ${Math.floor(i / 5)}h1v1h-1z`; });
   const s = el("span", "px-num" + (cls ? " " + cls : "")); s.setAttribute("aria-label", String(n));
-  s.innerHTML = `<svg viewBox="0 0 ${w} 7" width="${w * 3}" height="21" shape-rendering="crispEdges" aria-hidden="true"><path fill="currentColor" d="${d}"/></svg>`;
+  s.innerHTML = `<svg viewBox="0 0 ${w} 7" width="${w * 2}" height="14" shape-rendering="crispEdges" aria-hidden="true"><path fill="currentColor" d="${d}"/></svg>`;
   return s;
 }
 const vStars = n => pxStars(n, 3);   // 像素星星，和环法之旅一样（pxStars 在 tour.js）
