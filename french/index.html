@@ -15155,6 +15155,70 @@ function cosEquip(slot, id) {
   cosApply();
 }
 
+// 背景区域的手感：往外拉有阻力（只跟手 35%–40%），松手时如果没拉到头，就自动回弹到内容边上；拉到头就停在背景全貌
+const COS_DRAG = .38, COS_WHEEL = .35;
+let cosTouch = null, cosSnapT = 0;
+function cosZone() {
+  const top = document.getElementById("skinRevealTop"), bot = document.getElementById("skinReveal");
+  if (!top || !bot) return null;
+  const y = window.scrollY, topEdge = top.offsetHeight, botEdge = Math.max(topEdge, bot.offsetTop - window.innerHeight);   // 内容比屏幕短时，两边的边缘重合
+  const max = document.documentElement.scrollHeight - window.innerHeight;
+  return { y, topEdge, botEdge, max, inTop: y < topEdge - 1, inBot: y > botEdge + 1, topFull: y <= 2, botFull: y >= max - 2 };
+}
+// 往 delta 方向滚：在内容里照常滚，超出内容边缘、进入背景区域的那一段按 k 打折（阻力）
+function cosResist(z, delta, k) {
+  const y = z.y;
+  if (delta < 0) {
+    if (y <= z.topEdge) return y + delta * k;
+    const free = y - z.topEdge;
+    return -delta <= free ? y + delta : z.topEdge - (-delta - free) * k;
+  }
+  if (y >= z.botEdge) return y + delta * k;
+  const free = z.botEdge - y;
+  return delta <= free ? y + delta : z.botEdge + (delta - free) * k;
+}
+function cosSnapLater(ms) {
+  clearTimeout(cosSnapT);
+  cosSnapT = setTimeout(() => {
+    if (cosTouch) return;
+    const z = cosZone();
+    if (!z) return;
+    const smooth = matchMedia("(prefers-reduced-motion: reduce)").matches ? "auto" : "smooth";
+    if (z.inTop && !z.topFull) window.scrollTo({ top: z.topEdge, behavior: smooth });
+    else if (z.inBot && !z.botFull) window.scrollTo({ top: z.botEdge, behavior: smooth });
+  }, ms);
+}
+const cosSkipTarget = t => t && t.closest && t.closest(".pc-overlay, textarea, input, select, .tabs, .tour-map");
+window.addEventListener("scroll", () => { if (document.getElementById("skinReveal")) cosSnapLater(260); }, { passive: true });
+window.addEventListener("wheel", e => {
+  const z = cosZone();
+  if (!z || e.ctrlKey || cosSkipTarget(e.target) || Math.abs(e.deltaX) > Math.abs(e.deltaY)) return;
+  const dy = e.deltaMode === 1 ? e.deltaY * 16 : e.deltaY;
+  const next = z.y + dy;
+  if (!(z.inTop || z.inBot || next < z.topEdge || next > z.botEdge)) return;
+  e.preventDefault();
+  window.scrollTo(0, cosResist(z, dy, COS_WHEEL));
+  cosSnapLater(320);
+}, { passive: false });
+window.addEventListener("touchstart", e => {
+  if (e.touches.length !== 1 || cosSkipTarget(e.target)) { cosTouch = null; return; }
+  cosTouch = { x: e.touches[0].clientX, y: e.touches[0].clientY };
+}, { passive: true });
+window.addEventListener("touchmove", e => {
+  if (!cosTouch || e.touches.length !== 1) return;
+  const z = cosZone();
+  if (!z) return;
+  const t = e.touches[0], dx = cosTouch.x - t.clientX, dy = cosTouch.y - t.clientY;
+  if (Math.abs(dx) > Math.abs(dy)) return;
+  const next = z.y + dy;
+  if (!(z.inTop || z.inBot || next < z.topEdge || next > z.botEdge)) { cosTouch.x = t.clientX; cosTouch.y = t.clientY; return; }
+  e.preventDefault();   // 在背景区域里自己滚：手指移动打个折扣，像拉着橡皮筋
+  window.scrollTo(0, cosResist(z, dy, COS_DRAG));
+  cosTouch.x = t.clientX; cosTouch.y = t.clientY;
+}, { passive: false });
+window.addEventListener("touchend", () => { if (cosTouch) { cosTouch = null; cosSnapLater(200); } }, { passive: true });
+window.addEventListener("touchcancel", () => { cosTouch = null; cosSnapLater(200); }, { passive: true });
+
 // 商店里的“外观”部分
 function cosPreview(it) {
   const box = el("div", "cos-prev");
