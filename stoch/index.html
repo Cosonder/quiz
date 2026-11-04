@@ -3055,7 +3055,7 @@ function inGroup(key, q) {
 function labelOf(key) {
   if (/^(rev|learn):/.test(key)) return progLabel(key);
   if (key.startsWith("plan:")) return planLabel(key);
-  if (key.startsWith("tour:")) return "环法之旅 · " + (typeof tourCity === "function" ? tourCity(key.slice(5))?.city : key.slice(5)) + " · 语法";
+  if (key.startsWith("tour:")) return "环法之旅 · " + (typeof tourStop === "function" && tourStop(key.slice(5)) ? stopName(tourStop(key.slice(5))) : key.slice(5)) + " · 语法";
   const p = parseTagKey(key);
   if (p) return tagLabel(p);
   if (key.startsWith("ch:")) { const c = CH.get(Number(key.slice(3))); return c ? chName(c) : "未归类"; }
