@@ -20037,6 +20037,7 @@ function spireHook() {
   if (r.hp <= 0) return true;
   let gold = elite ? spRand(30, 40) : spRand(12, 18);
   if (spHas("espresso")) gold = Math.round(gold * 1.5);
+  if (r.goldx2) { gold *= 2; r.goldx2 = false; }
   r.gold += gold;
   const got = [`${gold} 金币`];
   if (elite) {
@@ -20062,7 +20063,14 @@ function spReward(title, got) {
 }
 
 // ---------- 小题：事件、咖啡馆复习用的“看词选义” ----------
-function spMini(words, title, done) {
+// mode：mean 看词选义（默认）/ hard 看词选义但干扰项是易混词 / spell 看中文选正确拼写（干扰项是常见拼写错误）
+function spMisspell(fr) {
+  const out = new Set(), swaps = [[/é/, "e"], [/è/, "é"], [/ê/, "è"], [/oi/, "oa"], [/eau/, "au"], [/ill/, "il"], [/gn/, "ni"], [/r$/, "re"], [/(?<=[aeiou])r(?=[aeiou])/, "rr"], [/([lmnprst])\1/, "$1"], [/([^aeiouéèêl ])([aeiou])([lnrt])([aeiou])/, "$1$2$3$3$4"],
+    [/qu/, "c"], [/c(?=[aou])/, "qu"], [/an/, "en"], [/en/, "an"], [/ai/, "è"], [/au/, "o"], [/ph/, "f"], [/ç/, "c"], [/ss/, "s"], [/(?<=[aeiou])s(?=[aeiou])/, "ss"], [/x$/, "s"], [/s$/, ""], [/e$/, ""]];
+  vShuffle(swaps).forEach(([a, b]) => { const t = fr.replace(a, b); if (t !== fr && out.size < 3) out.add(t); });
+  return [...out];
+}
+function spMini(words, title, done, mode) {
   let i = 0, right = 0;
   const one = () => {
     if (i >= words.length) { done(right, words.length); return; }
@@ -20070,22 +20078,34 @@ function spMini(words, title, done) {
     stage.innerHTML = "";
     const card = el("section", "card sp-mini");
     card.append(el("span", "tag", `${title} · 第 ${i + 1} / ${words.length} 题`));
-    const h = el("h2", "q"); h.append(el("b", null, vLabel(w)), document.createTextNode(" 是什么意思？")); card.append(h);
-    const opts = vShuffle([w].concat(vDistract(w, x => vMean(x))));
+    const h = el("h2", "q");
+    let opts;
+    if (mode === "spell") {
+      h.append(document.createTextNode(`「${vMean(w)}」的法语怎么拼？`));
+      const bad = spMisspell(w.fr);
+      opts = vShuffle([{ t: w.fr, ok: true }].concat(bad.map(t => ({ t, ok: false }))));
+      if (opts.length < 3) opts = vShuffle([{ t: w.fr, ok: true }].concat(vDistract(w, x => x.fr).map(x => ({ t: x.fr, ok: false }))));
+    } else {
+      h.append(el("b", null, vLabel(w)), document.createTextNode(" 是什么意思？"));
+      const prev = vSet.hard; if (mode === "hard") vSet.hard = true;
+      opts = vShuffle([{ t: vMean(w), ok: true }].concat(vDistract(w, x => vMean(x)).map(x => ({ t: vMean(x), ok: false }))));
+      vSet.hard = prev;
+    }
+    card.append(h);
     const box = el("div", "opts");
     const exp = el("div", "explain pending", "选一个答案。");
     opts.forEach((x, k) => {
       const b = el("button", "opt"); b.type = "button";
-      b.append(el("span", "k", "ABCD"[k]), el("span", null, vMean(x)));
+      b.append(el("span", "k", "ABCD"[k]), el("span", null, x.t));
       b.addEventListener("click", () => {
         if (box.dataset.done) return; box.dataset.done = "1";
-        const ok = x === w;
+        const ok = x.ok;
         [...box.children].forEach(bb => bb.disabled = true);
         b.classList.add(ok ? "correct" : "wrong");
-        if (!ok) [...box.children][opts.indexOf(w)].classList.add("correct");
-        vRecord(w, 1, ok);
+        if (!ok) [...box.children][opts.findIndex(y => y.ok)].classList.add("correct");
+        vRecord(w, mode === "spell" ? 2 : 1, ok);
         if (ok) { right++; spRight(); } else { if (!spRun.wrong.includes(w.id)) spRun.wrong.push(w.id); }
-        exp.className = "explain"; exp.innerHTML = ""; exp.append(el("b", ok ? "ok" : "no", ok ? "答对了。" : "答错了。"), document.createTextNode(ok ? "" : ` 正确答案：${vMean(w)}`));
+        exp.className = "explain"; exp.innerHTML = ""; exp.append(el("b", ok ? "ok" : "no", ok ? "答对了。" : "答错了。"), document.createTextNode(ok ? "" : ` 正确答案：${mode === "spell" ? vLabel(w) : vMean(w)}`));
         const nx = el("button", "btn", i === words.length - 1 ? "看结果" : "下一题"); nx.type = "button"; nx.id = "spMiniNext";
         nx.addEventListener("click", () => { i++; one(); });
         card.append(nx); nx.focus({ preventScroll: true });
@@ -20138,7 +20158,8 @@ function spChest() {
 function spShop() {
   const r = spRun;
   if (!r.shop || r.shop.at !== r.row + ":" + r.col) r.shop = { at: r.row + ":" + r.col, items: vShuffle(spFreeRelics()).slice(0, 3), sold: [] };
-  const off = spHas("macaron") ? .75 : 1, price = k => Math.round([90, 110, 130][k] * off), heal = Math.round(30 * off);
+  if (r.shopHalf && r.shop.half === undefined) { r.shop.half = true; r.shopHalf = false; }
+  const off = (spHas("macaron") ? .75 : 1) * (r.shop.half ? .5 : 1), price = k => Math.round([90, 110, 130][k] * off), heal = Math.round(30 * off);
   const draw = () => {
     const ch = r.shop.items.map((id, k) => [`${SP_RELICS[id].name} · ${price(k)} 金币`, SP_RELICS[id].desc,
       () => { r.gold -= price(k); r.shop.sold.push(id); spGain(id); spSave(); draw(); }, r.shop.sold.includes(id) || r.gold < price(k)]);
@@ -20175,6 +20196,38 @@ const SP_EVENTS = [
       else if (!spDamage()) spReward("守卫摇了摇头", ["扣了 1 颗心"]); })],
     ["绕道走", "", spDone]] },
 ];
+// 更多通用事件（三层都会出现）：周杰伦《告白气球》里的塞纳河畔、左岸咖啡、花店玫瑰、告白气球、香榭落叶、“有点难追”，以及几个巴黎小场景
+SP_EVENTS.push(
+  { t: "塞纳河畔，左岸的咖啡", d: "河边的露天咖啡座，阳光正好。服务生问你要不要坐下来喝一杯。", c: () => [
+    ["点一杯（15 金币）", "回 1 颗心；下一场战斗赢得的金币翻倍", () => { spRun.gold -= 15; spRun.goldx2 = true; const n = spHeal(1); spReward("咖啡很香", [`回了 ${n} 颗心`, "下一场战斗金币翻倍"]); }, spRun.gold < 15],
+    ["只是路过", "", spDone]] },
+  { t: "花店的玫瑰", d: "你在花店订了一束玫瑰，店员却把卡片上的名字写错了。帮他把法语词拼对吧。", c: () => [
+    ["帮他改过来", "2 道拼写题：全对得 25 金币并回 1 颗心", () => spMini(spWords(2), "花店的玫瑰", (ok, n) => {
+      const got = ok === n ? (spRun.gold += 25, ["25 金币", `回了 ${spHeal(1)} 颗心`]) : ["卡片上的名字还是错的……"]; spSave(); spReward(ok === n ? "店员送了你一枝玫瑰" : "算了，花还是很好看", got); }, "spell")],
+    ["拿了花就走", "", spDone]] },
+  { t: "告白气球", d: "一只气球被风吹到了对街，上面好像挂着什么东西。", c: () => [
+    ["追过去", "一半机会得 40 金币，一半机会扑空", () => { const lucky = Math.random() < .5; if (lucky) spRun.gold += 40; spSave(); spReward(lucky ? "气球上挂着一个钱袋" : "气球飞上了天", [lucky ? "40 金币" : "什么也没得到"]); }],
+    ["看着它飞远", "", spDone]] },
+  { t: "香榭的落叶", d: "香榭丽舍大街上落满了叶子。礼物不必挑最贵的——你捡起一片，夹进了书里。", c: () => [
+    ["收好这片叶子", "下一个商人的东西全部半价", () => { spRun.shopHalf = true; spSave(); spReward("一片落叶", ["下一个商人半价"]); }]] },
+  { t: "你说你有点难追", d: "一个高傲的巴黎人说：“想和我交朋友？先答对我的三个问题——都是容易搞混的词。”", c: () => [
+    ["迎难而上", "3 道易混词：全对得一件遗物，答错扣 1 颗心", () => spMini(spWords(3), "你说你有点难追", (ok, n) => {
+      if (ok === n) spReward("对方终于笑了", ["遗物：" + spGain(spPick(spFreeRelics()))]);
+      else if (!spDamage()) spReward("知难而退", ["扣了 1 颗心"]); }, "hard")],
+    ["知难而退", "", spDone]] },
+  { t: "莎士比亚书店", d: "塞纳河左岸的老书店里，你翻到了自己的单词本。", c: () => {
+    const review = spRun.wrong.map(id => vById.get(id)).filter(Boolean).slice(-3);
+    return [
+      ["复习这局答错的词", review.length ? `${review.length} 道：每答对一道得 10 金币` : "这一局还没有答错的词", () => spMini(review, "莎士比亚书店", (ok, n) => {
+        spRun.gold += ok * 10; spRun.wrong = spRun.wrong.filter(id => !review.some(w => w.id === id) || ok < n); spSave(); spReward("合上了书", [`答对 ${ok} / ${n}`, `${ok * 10} 金币`]); }), !review.length],
+      ["随便看看", "", spDone]]; } },
+  { t: "地铁里的手风琴", d: "车厢里有人拉起了手风琴，是一首很老的香颂。", c: () => [
+    ["给 10 金币", "回 1 颗心", () => { spRun.gold -= 10; spReward("一曲终了", [`回了 ${spHeal(1)} 颗心`]); }, spRun.gold < 10],
+    ["静静听完", "", spDone]] },
+  { t: "跳蚤市场", d: "圣旺跳蚤市场的老板盯着你身上的一件东西：“换不换？”", c: () => [
+    ["拿一件遗物去换", "随机交出一件遗物，换一件新的", () => { const r = spRun, out = spPick(r.relics); r.relics = r.relics.filter(x => x !== out); if (out === "baguette") { r.max--; r.hp = Math.min(r.hp, r.max); } const g = spGain(spPick(spFreeRelics().filter(x => x !== out))); spReward("成交", [`交出：${SP_RELICS[out].name}`, `换来：${g}`]); }, !spRun.relics.length],
+    ["不换", "", spDone]] },
+);
 // 只在某几层出现的事件：act 是层的下标（0 起），weight 越大越容易遇到。
 // 王菲《巴黎塔尖》里的意象做成的事件：浪人、风中诗、无意的相遇、无需语言、灵魂如火、千亿晚，以及第三层的“不必攀登巴黎塔尖”
 SP_EVENTS.push(
