@@ -606,19 +606,23 @@ mjx-container.mjx-wide { display: block; overflow-x: auto; overflow-y: hidden; m
 .album-paris { grid-template-columns: repeat(auto-fill, minmax(84px, 1fr)); }
 .album-paris .album-slot.empty .pc-q { font-size: .9rem; }
 .shop-fold > .album-paris { margin: 0 12px 12px; }
-/* 背景全貌：页面最底下多一屏透明空间，拉到底就只剩背景 */
+/* 背景全貌：页面上下各多一屏透明空间，往外拉就只剩背景 */
 .skin-reveal { position: relative; height: 100vh; height: 100dvh; pointer-events: none; }
-.skin-reveal-hint { position: sticky; top: 14px; display: flex; justify-content: center; padding-top: 18px; }
-.skin-reveal-hint > span { pointer-events: auto; display: inline-flex; align-items: center; gap: 8px; padding: 8px 16px; border-radius: 999px; background: var(--card); color: var(--fg); border: 2px solid var(--accent); box-shadow: 0 4px 14px rgba(0, 0, 0, .2); font-size: .9rem; font-weight: 600; }
-.skin-reveal-done { display: none !important; }
-.skin-reveal.revealed .skin-reveal-more { display: none; }
-.skin-reveal.revealed .skin-reveal-done { display: inline-flex !important; animation: revealIn .5s ease; }
-.skin-reveal-done .btn { padding: 4px 12px; font-size: .8rem; }
+.skin-reveal-bot .skin-reveal-hint { position: sticky; top: 14px; display: flex; justify-content: center; padding-top: 18px; }
+.skin-reveal-top .skin-reveal-hint { position: absolute; left: 0; right: 0; bottom: 14px; display: flex; justify-content: center; }
+.skin-reveal-hint > span { display: inline-flex; align-items: center; gap: 8px; padding: 8px 16px; border-radius: 999px; background: var(--card); color: var(--fg); border: 2px solid var(--accent); box-shadow: 0 4px 14px rgba(0, 0, 0, .2); font-size: .9rem; font-weight: 600; }
+.skin-reveal-btn { display: none; justify-content: center; pointer-events: none; }
+.skin-reveal-btn .btn { pointer-events: auto; padding: 4px 12px; font-size: .8rem; background: var(--card); box-shadow: 0 2px 8px rgba(0, 0, 0, .2); }
+.skin-reveal-bot .skin-reveal-btn { position: sticky; top: 14px; padding-top: 18px; }
+.skin-reveal-top .skin-reveal-btn { position: absolute; left: 0; right: 0; top: 14px; }
+.skin-reveal.revealed .skin-reveal-hint { display: none; }
+.skin-reveal.revealed .skin-reveal-btn { display: flex; animation: revealIn .4s ease; }
 .skin-reveal-arr { font-style: normal; display: inline-block; animation: revealBounce 1.1s ease-in-out infinite; }
-.skin-reveal-end { position: absolute; left: 0; right: 0; bottom: 0; height: 1px; }
+.skin-reveal-end { position: absolute; left: 0; right: 0; height: 1px; }
+.skin-reveal-bot .skin-reveal-end { bottom: 0; } .skin-reveal-top .skin-reveal-end { top: 0; }
 @keyframes revealBounce { 0%, 100% { transform: translateY(-2px); } 50% { transform: translateY(4px); } }
 @keyframes revealIn { from { opacity: 0; transform: translateY(-6px); } to { opacity: 1; transform: none; } }
-@media (prefers-reduced-motion: reduce) { .skin-reveal-arr, .skin-reveal.revealed .skin-reveal-done { animation: none; } }
+@media (prefers-reduced-motion: reduce) { .skin-reveal-arr, .skin-reveal.revealed .skin-reveal-btn { animation: none; } }
 
 </style>
 
@@ -4120,35 +4124,49 @@ function cosApply() {
   COS_SLOTS.forEach(([slot]) => { const v = eq[slot]; if (v) root.dataset[COS_ATTR[slot]] = v; else delete root.dataset[COS_ATTR[slot]]; });
   cosRevealSync();
 }
-// 背景全貌：换上主题配色后，在页面最底下多留一屏透明的空间。拉到内容尽头时提示“继续下拉”，再往下拉内容就滑走了，只剩固定在后面的背景
+// 背景全貌：换上主题配色后，在页面最上面和最下面各多留一屏透明的空间（背景是固定在后面的）。
+// 在内容的顶端或底端继续往外拉会出现提示，再往外拉内容就滑走了，只剩背景；拉到头只显示一个小按钮，点了回到内容。
 let cosRevealObs = null;
+const cosTopH = () => { const t = document.getElementById("skinRevealTop"); return t ? t.offsetHeight : 0; };   // 内容从这里开始
+const cosSmooth = () => matchMedia("(prefers-reduced-motion: reduce)").matches ? "auto" : "smooth";
 function cosRevealSync() {
   const skin = document.documentElement.dataset.skin;
-  let r = document.getElementById("skinReveal");
-  if (!skin) { if (r) r.remove(); return; }
-  const name = (COSMETICS.find(c => c.id === skin) || {}).name || "背景";
-  if (!r) {
-    r = el("div", "skin-reveal"); r.id = "skinReveal"; r.setAttribute("aria-hidden", "true");
-    const hint = el("div", "skin-reveal-hint");
-    const end = el("div", "skin-reveal-end");
-    r.append(hint, end);
-    document.body.append(r);
-    if ("IntersectionObserver" in window) {
-      cosRevealObs = new IntersectionObserver(es => es.forEach(e => r.classList.toggle("revealed", e.isIntersecting)), { threshold: 1 });
-      cosRevealObs.observe(end);
-    }
+  let top = document.getElementById("skinRevealTop"), bot = document.getElementById("skinReveal");
+  if (!skin) {
+    if (top) { const h = top.offsetHeight; top.remove(); window.scrollBy(0, -h); }
+    if (bot) bot.remove();
+    return;
   }
-  if (r.dataset.skin === skin) return;
-  r.dataset.skin = skin;
-  const hint = r.querySelector(".skin-reveal-hint");
-  hint.innerHTML = "";
-  const more = el("span", "skin-reveal-more"); more.append(el("i", "skin-reveal-arr", "↓"), document.createTextNode(` 继续下拉，解锁「${name}」背景全貌`));
-  const done = el("span", "skin-reveal-done", `这就是「${name}」的全貌 `);
-  const up = el("button", "btn ghost", "↑ 回到顶部"); up.type = "button";
-  up.addEventListener("click", () => window.scrollTo({ top: 0, behavior: matchMedia("(prefers-reduced-motion: reduce)").matches ? "auto" : "smooth" }));
-  done.append(up);
-  hint.append(more, done);
+  const name = (COSMETICS.find(c => c.id === skin) || {}).name || "背景";
+  if (!top) {
+    try { history.scrollRestoration = "manual"; } catch (e) {}
+    top = el("div", "skin-reveal skin-reveal-top"); top.id = "skinRevealTop";
+    top.append(el("div", "skin-reveal-end"), el("div", "skin-reveal-hint"), el("div", "skin-reveal-btn"));
+    const back = el("button", "btn ghost", "↓ 回到页面"); back.type = "button";
+    back.addEventListener("click", () => window.scrollTo({ top: cosTopH(), behavior: cosSmooth() }));
+    top.lastChild.append(back);
+    document.body.prepend(top);
+    window.scrollBy(0, top.offsetHeight);   // 插在最前面后，把内容留在原来的位置
+  }
+  if (!bot) {
+    bot = el("div", "skin-reveal skin-reveal-bot"); bot.id = "skinReveal";
+    bot.append(el("div", "skin-reveal-hint"), el("div", "skin-reveal-btn"), el("div", "skin-reveal-end"));
+    const up = el("button", "btn ghost", "↑ 回到顶部"); up.type = "button";
+    up.addEventListener("click", () => window.scrollTo({ top: cosTopH(), behavior: cosSmooth() }));
+    bot.querySelector(".skin-reveal-btn").append(up);
+    document.body.append(bot);
+  }
+  if ("IntersectionObserver" in window && !cosRevealObs) {
+    cosRevealObs = new IntersectionObserver(es => es.forEach(e => e.target.parentNode.classList.toggle("revealed", e.isIntersecting)), { threshold: 1 });
+  }
+  [top, bot].forEach(z => { if (cosRevealObs && !z.dataset.obs) { cosRevealObs.observe(z.querySelector(".skin-reveal-end")); z.dataset.obs = "1"; } });
+  if (bot.dataset.skin === skin) return;
+  top.dataset.skin = bot.dataset.skin = skin;
+  const hint = (z, arr, text) => { const h = z.querySelector(".skin-reveal-hint"); h.innerHTML = ""; const sp = el("span"); sp.append(el("i", "skin-reveal-arr", arr), document.createTextNode(text)); h.append(sp); };
+  hint(top, "↑", ` 继续往上滑，解锁「${name}」背景全貌`);
+  hint(bot, "↓", ` 继续下拉，解锁「${name}」背景全貌`);
 }
+
 function cosBuy(id) {
   const it = COSMETICS.find(c => c.id === id), led = gameLedger();
   if (!it) return "没有这件商品";
