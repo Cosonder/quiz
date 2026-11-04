@@ -3873,7 +3873,7 @@ const QUESTS = [
 
 let gameRaw = [];   // game 集合的全部记录
 let potionCache = null, modeCache = null;
-function gameReset(docs) { gameRaw = docs || []; potionCache = null; modeCache = null; shieldCache = null; prog = null; gameApplyMode(); }
+function gameReset(docs) { gameRaw = docs || []; potionCache = null; modeCache = null; shieldCache = null; prog = null; gameApplyMode(); if (typeof spOnGameLoad === "function") spOnGameLoad(); }
 
 // ---------- 游戏模式（设置里开关）：金币、combo、每日任务、商店和道具，以及以后新加的游戏玩法，都只在打开时出现 ----------
 // 开关记成 game 记录（kind: "mode"），跟着账号同步；关掉期间答对不得金币。没有记录时默认打开。

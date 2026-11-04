@@ -14952,7 +14952,7 @@ const QUESTS = [
 
 let gameRaw = [];   // game 集合的全部记录
 let potionCache = null, modeCache = null;
-function gameReset(docs) { gameRaw = docs || []; potionCache = null; modeCache = null; shieldCache = null; prog = null; gameApplyMode(); }
+function gameReset(docs) { gameRaw = docs || []; potionCache = null; modeCache = null; shieldCache = null; prog = null; gameApplyMode(); if (typeof spOnGameLoad === "function") spOnGameLoad(); }
 
 // ---------- 游戏模式（设置里开关）：金币、combo、每日任务、商店和道具，以及以后新加的游戏玩法，都只在打开时出现 ----------
 // 开关记成 game 记录（kind: "mode"），跟着账号同步；关掉期间答对不得金币。没有记录时默认打开。
@@ -19940,8 +19940,25 @@ function spByLevel(pools, n, mix, taken) {
   return out;
 }
 const spWLv = w => Math.max(0, SP_LV.indexOf((typeof SP_WLV !== "undefined" && SP_WLV[w.id]) || "B1"));
-const spUnlocked = () => { try { return Math.min(5, Number(localStorage.getItem("fq-spire-unlock") || 0)); } catch (e) { return 0; } };   // 解锁到第几档（0 = 只有 A1）
-const spCleared = () => { try { return JSON.parse(localStorage.getItem("fq-spire-cleared") || "[]"); } catch (e) { return []; } };   // 打通过终局的难度
+// 打通过终局的难度：记在 game 记录里（kind "spire-clear"），跟着答题记录同步到别的设备；本机旧的记录也算
+const spClearedLocal = () => { try { return JSON.parse(localStorage.getItem("fq-spire-cleared") || "[]"); } catch (e) { return []; } };
+function spCleared() {
+  const set = new Set(spClearedLocal());
+  if (typeof gameRaw !== "undefined") gameRaw.forEach(d => { if (d && d.kind === "spire-clear" && d.diff >= 0) set.add(Number(d.diff)); });
+  return [...set].sort((a, b) => a - b);
+}
+const spUnlocked = () => Math.min(5, spCleared().reduce((m, d) => Math.max(m, d + 1), 0));   // 解锁到第几档（0 = 只有 A1）：通关某档终局就开下一档
+// game 记录读进来以后：补记本机旧的通关记录；正停在难度选择页就刷新一下
+function spOnGameLoad() {
+  spSyncCleared();
+  if (!spRun && typeof view !== "undefined" && view === "vocab" && vTheme === "spire" && document.querySelector(".sp-home")) spHome();
+}
+// 以前只存在本机的通关记录，补记到 game 记录里（只补一次）
+function spSyncCleared() {
+  if (typeof gameRaw === "undefined" || typeof gameAdd !== "function") return;
+  const have = new Set(gameRaw.filter(d => d && d.kind === "spire-clear").map(d => Number(d.diff)));
+  spClearedLocal().forEach(d => { if (!have.has(d)) gameAdd({ kind: "spire-clear", diff: d, at: new Date().toISOString() }); });
+}
 const SP_KEYS = [["red", "红钥匙", "在任意一家咖啡馆，不休息、改拿红钥匙"], ["green", "绿钥匙", "打败地图上带火的精英"], ["blue", "蓝钥匙", "在宝箱或 Boss 奖励里，不拿遗物、改拿蓝钥匙"]];
 const spKeys = () => spRun.keys || (spRun.keys = {});
 const spDiffSel = () => { try { const v = localStorage.getItem("fq-spire-diff"); return v == null ? spUnlocked() : Number(v); } catch (e) { return 0; } };
@@ -20672,11 +20689,10 @@ function spEnd(win, quit, ending) {
   const floor = spFloor(r), d = r.diff || 0;
   const coins = ending ? 500 + d * 100 : win ? 300 + d * 50 : Math.round(floor * 4 + r.bosses * 30);
   let unlockedNew = false;
-  if (ending) {   // 打通终局：记下这一档已通关，解锁下一档
-    try {
-      const cl = spCleared(); if (!cl.includes(d)) cl.push(d); localStorage.setItem("fq-spire-cleared", JSON.stringify(cl));
-      if (d < 5 && spUnlocked() < d + 1) { localStorage.setItem("fq-spire-unlock", String(d + 1)); localStorage.setItem("fq-spire-diff", String(d + 1)); unlockedNew = true; }
-    } catch (e) {}
+  if (ending) {   // 打通终局：记一条 spire-clear（会同步），解锁下一档
+    unlockedNew = d < 5 && spUnlocked() < d + 1;
+    if (!spCleared().includes(d)) gameAdd({ kind: "spire-clear", diff: d, run: r.id, at: new Date().toISOString() });
+    try { const cl = spClearedLocal(); if (!cl.includes(d)) cl.push(d); localStorage.setItem("fq-spire-cleared", JSON.stringify(cl)); if (unlockedNew) localStorage.setItem("fq-spire-diff", String(d + 1)); } catch (e) {}
   }
   const best = spBest();
   const better = !best || win || (!best.win && floor > (best.floor || 0));
