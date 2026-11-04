@@ -19805,7 +19805,7 @@ const SP_RELICS = {
   macaron: { name: "马卡龙", desc: "商人的东西打七五折。" },
   drapeau: { name: "三色旗", desc: "Boss 战每答对 3 题回 1 颗心。" },
 };
-let spRun = (() => { try { const r = JSON.parse(localStorage.getItem("fq-spire-run") || "null"); if (r) r.inFight = null; return r; } catch (e) { return null; } })();
+let spRun = (() => { try { return JSON.parse(localStorage.getItem("fq-spire-run") || "null"); } catch (e) { return null; } })();
 const spSave = () => { try { localStorage.setItem("fq-spire-run", JSON.stringify(spRun)); } catch (e) {} };
 const spBest = () => { try { return JSON.parse(localStorage.getItem("fq-spire-best") || "null"); } catch (e) { return null; } };
 const spRand = (a, b) => a + Math.floor(Math.random() * (b - a + 1));
@@ -19931,6 +19931,17 @@ function spHome() {
     spHud();
     return;
   }
+  spResume();
+}
+// 离开过（切到别的板块、刷新页面）再回来：正在打的 Boss / 战斗接着打，不会卡在地图上
+function spResume() {
+  const f = spRun.inFight;
+  if (f && f.boss) { if (f.qs && f.qs.length) spBossQ(); else spBoss(); return; }
+  if (f) {
+    if (vSess && vSess.spire && vSess.i < vSess.qs.length) { spHud(); vQuestion(); return; }
+    spFight(f.elite, f.hardPrev); return;
+  }
+  if (spRun.row >= SP_ROWS) { spBoss(); return; }   // 已经进了 Boss 战但没有题目记录：重新开始 Boss 战
   spMap();
 }
 function spMap() {
@@ -19984,7 +19995,7 @@ function spMap() {
   boss.style.left = "50%"; boss.style.top = (top / 2 + 6) + "px";
   boss.append(spIcon("boss", act.boss));
   boss.title = `Boss：${act.bossName}`;
-  if (r.row === SP_ROWS - 1) boss.classList.add("open"); else boss.disabled = true;
+  if (r.row >= SP_ROWS - 1) boss.classList.add("open"); else boss.disabled = true;
   boss.addEventListener("click", () => spBoss());
   map.append(boss, el("span", "sp-bosslabel", act.bossName));
   card.append(map);
@@ -20011,9 +20022,9 @@ function spWords(n) {
   const pool = (fresh.length >= n ? fresh : V_WORDS.filter(inBank));
   return vShuffle(pool).sort((a, b) => (order[vState(a)] ?? 1) - (order[vState(b)] ?? 1) + (Math.random() - .5) * 1.2).slice(0, n);
 }
-function spFight(elite) {
+function spFight(elite, hardPrev) {
   const r = spRun, words = spWords(elite ? 6 : 5);
-  r.inFight = { elite, beret: false, hardPrev: vSet.hard };
+  r.inFight = { elite, beret: false, hardPrev: hardPrev !== undefined ? hardPrev : vSet.hard };
   if (elite) vSet.hard = true;
   words.forEach(w => { if (!r.seen.includes(w.id)) r.seen.push(w.id); });
   spSave();
@@ -20272,6 +20283,7 @@ function spBossQs() {
 }
 function spBoss() {
   const r = spRun;
+  if (r.inFight && r.inFight.boss && r.inFight.qs && r.inFight.qs.length && r.inFight.i < r.inFight.qs.length) { spBossQ(); return; }   // 打到一半：接着打
   r.row = SP_ROWS; r.inFight = { boss: true, beret: false, qs: spBossQs().map(q => SP_BOSS.indexOf(q)), i: 0, right: 0 };
   spSave();
   spBossQ();
