@@ -3030,6 +3030,7 @@ const isListen = q => !!q.audio;
 function members(key) {
   if (/^(rev|learn):/.test(key)) return progMembers(key);
   if (key.startsWith("plan:")) return planMembers(key);
+  if (key.startsWith("tour:")) return typeof tourMembers === "function" ? tourMembers() : [];
   const p = parseTagKey(key);
   if (p) {
     const w = p.kind === "wrong" ? wrongIds() : null;
@@ -3043,7 +3044,7 @@ function members(key) {
 }
 function inGroup(key, q) {
   if (!q) return false;
-  if (key.startsWith("plan:")) return true;
+  if (key.startsWith("plan:") || key.startsWith("tour:")) return true;
   if (/^(rev|learn):/.test(key)) { const tags = key.split(":")[1].split("|").filter(Boolean); return !tags.length || tagMatch(q, tags, "any"); }
   const p = parseTagKey(key);
   if (p) return !p.tags.length || tagMatch(q, p.tags, p.mode);
@@ -3054,6 +3055,7 @@ function inGroup(key, q) {
 function labelOf(key) {
   if (/^(rev|learn):/.test(key)) return progLabel(key);
   if (key.startsWith("plan:")) return planLabel(key);
+  if (key.startsWith("tour:")) return "环法之旅 · " + (typeof tourCity === "function" ? tourCity(key.slice(5))?.city : key.slice(5)) + " · 语法";
   const p = parseTagKey(key);
   if (p) return tagLabel(p);
   if (key.startsWith("ch:")) { const c = CH.get(Number(key.slice(3))); return c ? chName(c) : "未归类"; }
@@ -3078,7 +3080,7 @@ const bEnd = () => per ? Math.min(bStart + per, set.qs.length) : set.qs.length;
 function calcScore() { let n = 0; for (let k = bStart; k < bEnd(); k++) if (answers[k] !== undefined && set.qs[k].a === answers[k]) n++; return n; }
 function startSet(key, fresh) {
   set = makeSet(key); score = 0; answers = {};
-  const saved = fresh || /^(rev|learn|plan):/.test(key) ? 0 : Number(loadPos()[key] || 0);   // 复习、学习题组每次重新挑题，从头做
+  const saved = fresh || /^(rev|learn|plan|tour):/.test(key) ? 0 : Number(loadPos()[key] || 0);   // 复习、学习题组每次重新挑题，从头做
   idx = saved > 0 && saved < set.qs.length ? saved : 0;
   bStart = idx;
   renderToc(); beginBatch();
@@ -3334,6 +3336,7 @@ function progReset(docs, voc) { ansRaw = docs; if (voc) vocRaw = voc; prog = nul
 
 // 做题时：记一条，弹出“+经验”提示
 function progLive(d, kind) {
+  if (typeof tourAnswer === "function") tourAnswer(d, kind);   // 环法之旅：答错扣心
   if (kind === "vocab") vocRaw.push(d); else if (ansRaw) ansRaw.push(d);
   if (!prog) return;
   const before = xpLevel(prog.xp).lv, todayBefore = prog.today;
