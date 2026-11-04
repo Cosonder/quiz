@@ -326,7 +326,9 @@ h1 { font-family: var(--display); font-weight: 900; font-size: 1.6rem; line-heig
 .v-levels { display: grid; grid-template-columns: repeat(auto-fill, minmax(64px, 1fr)); gap: 6px; margin: 12px 0 4px; }
 .v-lv { display: flex; flex-direction: column; align-items: center; gap: 1px; padding: 6px 2px; border: 1px solid var(--line); border-radius: 10px; background: var(--card); color: var(--fg); font: inherit; cursor: pointer; }
 .v-lv b { font-size: 1.15rem; }
-.v-lv .st { color: #e0a100; letter-spacing: 1px; font-size: .85rem; }
+.v-lv .st { font-size: .85rem; }
+.v-lv .px-stars { gap: 2px; margin: 2px 0; } .v-lv .px-star { width: 13px; height: 13px; }
+.v-lvstar .px-star { width: 11px; height: 11px; } .v-lvres .px-stars { gap: 3px; vertical-align: -3px; } .v-lvres .px-star { width: 15px; height: 15px; }
 .v-lv .n { color: var(--muted); font-size: .75rem; }
 .v-lv.clear { background: var(--good-soft); border-color: var(--good); }
 .v-lv.next { border: 2px solid var(--accent); background: var(--accent-soft); }
@@ -19014,7 +19016,7 @@ function vLevels() {
     return x;
   });
 }
-const vStars = n => "★".repeat(n) + "☆".repeat(3 - n);
+const vStars = n => pxStars(n, 3);   // 像素星星，和环法之旅一样（pxStars 在 tour.js）
 function vLevelMap() {
   vUnbindKeys();
   stage.innerHTML = "";
@@ -19029,7 +19031,7 @@ function vLevelMap() {
     const b = el("button", "v-lv" + (x.stars ? " clear" : "") + (x === next ? " next" : "") + (x.open ? "" : " locked"));
     b.type = "button"; b.id = "vLv" + (x.k + 1);
     b.disabled = !x.open || !vStats;
-    b.append(el("b", null, String(x.k + 1)), el("span", "st", x.open ? vStars(x.stars) : "🔒"), el("span", "n", x.open ? `${x.done}/${x.ws.length}` : "未解锁"));
+    b.append(el("b", null, String(x.k + 1)), x.open ? vStars(x.stars) : el("span", "st", "🔒"), el("span", "n", x.open ? `${x.done}/${x.ws.length}` : "未解锁"));
     b.addEventListener("click", () => { vTheme = "lv:" + x.k; vSess = null; vToc(); vStart(x.ws); });
     grid.append(b);
   });
@@ -19201,7 +19203,7 @@ function vPreview(picked) {
   const tags = el("div", "tagrow");
   tags.append(el("span", "tag", "预览 · " + vTitle()), el("span", "tag plain", `${picked.length} 个词`));
   const k = vLvNo();
-  if (k >= 0) { const x = vLevels()[k]; tags.append(el("span", "tag plain v-lvstar", vStars(x.stars))); }
+  if (k >= 0) { const x = vLevels()[k]; { const t = el("span", "tag plain v-lvstar"); t.append(vStars(x.stars)); tags.append(t); } }
   card.append(tags, el("p", "sub", "先看一遍这组要背的词，点 🔊 听读音。准备好了就开始练习；想一张一张看图和例句，点“逐个浏览”。"));
   const tbl = el("div", "v-table");
   picked.forEach(w => {
@@ -19624,7 +19626,8 @@ function vResult() {
   const lvs = S.lv >= 0 ? vLevels() : null, lx = lvs && lvs[S.lv];
   if (lx) {
     const msg = el("p", "v-lvres" + (lx.stars ? " clear" : ""));
-    msg.append(el("b", null, lx.stars ? `第 ${S.lv + 1} 关通关！ ${vStars(lx.stars)}` : `第 ${S.lv + 1} 关还没通关`),
+    const hd = el("b", null, lx.stars ? `第 ${S.lv + 1} 关通关！ ` : `第 ${S.lv + 1} 关还没通关`); if (lx.stars) hd.append(vStars(lx.stars));
+    msg.append(hd,
       document.createTextNode(lx.stars ? (lx.stars < 3 ? ` 已掌握 ${lx.done}/10，全部掌握可得三颗星。` : " 这关的词全部掌握了。") : ` 已掌握 ${lx.done}/10，掌握 ${V_PASS} 个就能通关。没掌握的词再练一次吧。`));
     card.append(msg);
   }
