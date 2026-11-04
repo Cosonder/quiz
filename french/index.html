@@ -15156,7 +15156,8 @@ function cosEquip(slot, id) {
 }
 
 // 背景区域的手感：往外拉有阻力（只跟手 35%–40%），松手时如果没拉到头，就自动回弹到内容边上；拉到头就停在背景全貌
-const COS_DRAG = .38, COS_WHEEL = .35, COS_SNAP = .5;
+const COS_DRAG = .38, COS_WHEEL = .35, COS_SNAP = .5, COS_BACK = .3;
+let cosFull = null;   // 当前停在哪一边的背景全貌（"top" / "bot"），用来判断是“拉出去”还是“往回滑”
 let cosTouch = null, cosSnapT = 0;
 function cosZone() {
   const top = document.getElementById("skinRevealTop"), bot = document.getElementById("skinReveal");
@@ -15184,9 +15185,19 @@ function cosSnapLater(ms) {
     const z = cosZone();
     if (!z) return;
     const smooth = matchMedia("(prefers-reduced-motion: reduce)").matches ? "auto" : "smooth";
-    // 拉过一半：松手后自动滑到背景全貌；没过一半：弹回内容边缘
-    if (z.inTop && !z.topFull) window.scrollTo({ top: (z.topEdge - z.y) / z.topEdge > COS_SNAP ? 0 : z.topEdge, behavior: smooth });
-    else if (z.inBot && !z.botFull) window.scrollTo({ top: (z.y - z.botEdge) / Math.max(1, z.max - z.botEdge) > COS_SNAP ? z.max : z.botEdge, behavior: smooth });
+    // 从内容拉出去：过一半松手自动滑到背景全貌，不到一半弹回内容边缘
+    // 从全貌往回滑：只要往回 30% 就回到内容
+    if (z.topFull) { cosFull = "top"; return; }
+    if (z.botFull) { cosFull = "bot"; return; }
+    if (z.inTop) {
+      const goFull = (z.topEdge - z.y) / z.topEdge > (cosFull === "top" ? 1 - COS_BACK : COS_SNAP);
+      cosFull = goFull ? "top" : null;
+      window.scrollTo({ top: goFull ? 0 : z.topEdge, behavior: smooth });
+    } else if (z.inBot) {
+      const goFull = (z.y - z.botEdge) / Math.max(1, z.max - z.botEdge) > (cosFull === "bot" ? 1 - COS_BACK : COS_SNAP);
+      cosFull = goFull ? "bot" : null;
+      window.scrollTo({ top: goFull ? z.max : z.botEdge, behavior: smooth });
+    } else cosFull = null;
   }, ms);
 }
 const cosSkipTarget = t => t && t.closest && t.closest(".pc-overlay, textarea, input, select, .tabs, .tour-map");
