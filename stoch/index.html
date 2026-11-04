@@ -663,6 +663,39 @@ mjx-container.mjx-wide { display: block; overflow-x: auto; overflow-y: hidden; m
 @keyframes bgBeam { 0% { transform: rotate(-8deg) scaleX(1); } 25% { transform: rotate(-8deg) scaleX(0); } 25.01% { transform: rotate(188deg) scaleX(0); } 50% { transform: rotate(188deg) scaleX(1); } 75% { transform: rotate(188deg) scaleX(0); } 75.01% { transform: rotate(-8deg) scaleX(0); } 100% { transform: rotate(-8deg) scaleX(1); } }
 @keyframes bgGlow { from { opacity: .45; transform: scale(.9); } to { opacity: 1; transform: scale(1.15); } }
 
+/* ---------- 做题全屏：一屏放下一道题，页面不能上下滚动；右上角返回 / 退出 ---------- */
+html.qf, html.qf body { overflow: hidden; height: 100%; overscroll-behavior: none; }
+html.qf header, html.qf .tocwrap, html.qf #progress, html.qf .keys-note, html.qf #saveNote, html.qf .plan-slot, html.qf .skin-reveal { display: none !important; }
+html.qf #stage { position: fixed; z-index: 5; inset: 0; display: flex; flex-direction: column; max-width: 860px; margin: 0 auto;
+  padding: calc(10px + env(safe-area-inset-top, 0px)) max(10px, env(safe-area-inset-right, 0px)) calc(10px + env(safe-area-inset-bottom, 0px)) max(10px, env(safe-area-inset-left, 0px)); }
+html.qf #stage > section.card { flex: 1 1 auto; min-height: 0; overflow: hidden; gap: clamp(6px, 1.4vh, 12px); padding: clamp(12px, 2.2vh, 20px) clamp(12px, 3vw, 20px); }
+html.qf #stage > section.card > * { flex: none; }
+html.qf #stage > section.card > .tagrow { padding-right: 44px; }   /* 给右上角的返回图标让位 */
+html.qf #stage .explain { flex: 1 1 0 !important; height: auto !important; min-height: 0; padding-block: clamp(6px, 1.2vh, 12px); }
+html.qf #stage .q { min-height: 0; font-size: clamp(1.05rem, 2.6vh, 1.3rem); }
+html.qf #stage .opts { height: auto; }
+html.qf #stage .opt { height: auto; min-height: clamp(2.2rem, 5.2vh, 3.25rem); padding-block: clamp(3px, .8vh, 8px); }
+html.qf #stage .actions { margin-top: 0; }
+html.qf body:has(#spHud) #stage, html.qf body:has(#tourHud) #stage { padding-bottom: calc(52px + env(safe-area-inset-bottom, 0px)); }
+html.qf .sp-hud { flex-wrap: nowrap; padding: 4px 10px; gap: 8px; bottom: calc(6px + env(safe-area-inset-bottom, 0px)); font-size: .78rem; }
+html.qf .sp-hud .px-heart { width: 13px; height: 13px; } html.qf .sp-hud-relics .sp-ico { width: 16px; height: 16px; }
+.qf-back { position: fixed; z-index: 35; top: calc(14px + env(safe-area-inset-top, 0px)); right: max(14px, calc((100vw - 860px) / 2 + 14px), env(safe-area-inset-right, 0px));
+  width: 36px; height: 36px; padding: 6px; border-radius: 10px; border: 1.5px solid var(--line); background: var(--card); color: var(--fg); cursor: pointer; display: grid; place-items: center; }
+.qf-back svg { width: 20px; height: 20px; display: block; }
+.qf-back:hover { border-color: var(--accent); }
+.qf-back.sure { width: auto; padding: 6px 10px; font-size: .8rem; font-weight: 700; color: var(--bad); border-color: var(--bad); }
+/* 题目卡片下面的附加内容（练习设置的链接等）全屏时不显示 */
+html.qf #stage > :not(section.card) { display: none !important; }
+/* 图片按屏幕高度缩放 */
+html.qf #stage .v-ex-img { max-height: 19vh; width: auto; max-width: 100%; margin: 0 auto; object-fit: contain; }
+html.qf #stage .v-pics7 .v-pic-img { height: clamp(60px, 14vh, 220px); width: 100%; aspect-ratio: auto; object-fit: cover; }
+html.qf #stage .v-pics7 { max-width: min(620px, 72vh); }
+html.qf #stage .v-pics:not(.v-pics7) { flex: 1 1 auto; min-height: 0; }
+html.qf #stage .sp-bossimg { width: clamp(56px, 9vh, 80px); height: clamp(56px, 9vh, 80px); }
+html.qf #stage .sp-sent { margin: 4px 0; font-size: clamp(1rem, 2.4vh, 1.15rem); }
+html.qf #stage .v-ans { height: auto !important; min-height: 0 !important; }
+html.qf #stage .v-ans:has(> .v-pics:not(.v-pics7)), html.qf #stage .v-ans:has(.v-pics:not(.v-pics7)) { flex: 3 1 0 !important; min-height: 0 !important; }
+html.qf .sp-hud-act { white-space: nowrap; }
 </style>
 
 <div class="wrap">
@@ -5337,7 +5370,7 @@ function renderQuestion() {
   savePos();
   updateProgress(idx);
   stage.innerHTML = "";
-  const card = el("section", "card");
+  const card = el("section", "card q-card");
   const tags = el("div", "tagrow");
   if (item.level) tags.append(el("span", "tag lv", item.level));
   tags.append(el("span", "tag", item.cat), el("span", "tag plain", chName(CH.get(item.ch))));
@@ -5646,6 +5679,57 @@ tabBook.addEventListener("click", () => { bookCache = null; switchView("book"); 
 tabSet.addEventListener("click", () => { if (view !== "settings") switchView("settings"); });
 
 startSet("p1-r1");
+// ---------- 做题全屏：出现题目卡片时进入（答题、背单词、变位、巴黎塔尖的战斗和 Boss），一屏放下，页面不能上下滚动 ----------
+// 右上角的小图标：返回上一级（答题 / 变位回到带目录的页面，背单词回到词表或关卡地图），战斗里是退出战斗（回到地图，战斗保留）。
+const QF_CARDS = ["q-card", "v-card", "cj-card", "sp-boss", "sp-mini"];
+const QF_ICON = {
+  back: "<svg viewBox='0 0 10 9' shape-rendering='crispEdges' aria-hidden='true'><path fill='currentColor' d='M4 1h1v1H4zM3 2h2v1H3zM2 3h7v1H2zM1 4h8v1H1zM2 5h7v1H2zM3 6h2v1H3zM4 7h1v1H4z'/></svg>",
+  exit: "<svg viewBox='0 0 10 10' shape-rendering='crispEdges' aria-hidden='true'><path fill='currentColor' d='M1 1h2v1H1zM7 1h2v1H7zM2 2h2v1H2zM6 2h2v1H6zM3 3h4v1H3zM4 4h2v2H4zM3 6h4v1H3zM2 7h2v1H2zM6 7h2v1H6zM1 8h2v1H1zM7 8h2v1H7z'/></svg>",
+};
+let qfOffCard = null;
+// 打开页面时自动显示的那道题不进全屏（不然一打开就看不到上面的标签栏）；点过、按过键之后出的题才进
+let qfArmed = false;
+["pointerdown", "keydown"].forEach(t => document.addEventListener(t, () => { qfArmed = true; }, true));   // 点了“返回”的那张卡片：在它被换掉之前不再进入全屏
+function qfKind() {
+  const c = stage.querySelector(":scope > section.card");
+  return c ? [c, QF_CARDS.find(x => c.classList.contains(x)) || null] : [null, null];
+}
+const qfInBattle = k => k === "sp-boss" || k === "sp-mini" || (k === "v-card" && typeof vSess !== "undefined" && vSess && vSess.spire);
+const qfInTour = () => typeof tourRun !== "undefined" && !!tourRun;
+function qfSync() {
+  const [card, k] = qfKind(), root = document.documentElement;
+  if (qfOffCard && card !== qfOffCard) qfOffCard = null;
+  const on = !!k && !qfOffCard && qfArmed && view !== "exam";
+  const was = root.classList.contains("qf");
+  root.classList.toggle("qf", on);
+  let b = $("qfBack");
+  if (!on) { if (b) b.remove(); if (was && typeof cosTopH === "function") window.scrollTo(0, cosTopH()); return; }
+  if (!b) { b = el("button", "qf-back"); b.type = "button"; b.id = "qfBack"; document.body.append(b); b.addEventListener("click", () => qfBack(b)); }
+  const exit = qfInBattle(k) || qfInTour();
+  b.classList.remove("sure"); delete b.dataset.sure;
+  b.innerHTML = exit ? QF_ICON.exit : QF_ICON.back;
+  b.title = qfInTour() ? "放弃这一站" : exit ? "退出战斗（回到地图，战斗保留）" : "返回上一级";
+  b.setAttribute("aria-label", b.title);
+}
+function qfBack(b) {
+  const [card, k] = qfKind();
+  if (qfInTour()) {   // 环法之旅：点两次才放弃
+    if (!b.dataset.sure) { b.dataset.sure = "1"; b.classList.add("sure"); b.textContent = "确定放弃？"; return; }
+    tourRun = null; tourHud(); switchView("tour"); return;
+  }
+  if (qfInBattle(k)) { vUnbindKeys(); spMap(); return; }
+  if (k === "v-card") {
+    const lv = vSess ? vSess.lv : -1;
+    vUnbindKeys(); vSess = null;
+    if (lv >= 0) vTheme = "levels";
+    vToc(); vList(); return;
+  }
+  // 答题、变位：回到带目录的普通页面（题目还在原处，点“下一题”或目录里的题组会重新进入全屏）
+  qfOffCard = card; qfSync();
+  const t = $("tocwrap"); if (t) t.open = true;
+  window.scrollTo(0, typeof cosTopH === "function" ? cosTopH() : 0);
+}
+new MutationObserver(qfSync).observe(stage, { childList: true });
 </script>
 
 </body></html>
