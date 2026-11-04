@@ -19951,7 +19951,10 @@ const spUnlocked = () => Math.min(5, spCleared().reduce((m, d) => Math.max(m, d 
 // game 记录读进来以后：补记本机旧的通关记录；正停在难度选择页就刷新一下
 function spOnGameLoad() {
   spSyncCleared();
-  if (!spRun && typeof view !== "undefined" && view === "vocab" && vTheme === "spire" && document.querySelector(".sp-home")) spHome();
+  const changed = spPull();
+  if (typeof view === "undefined" || view !== "vocab" || vTheme !== "spire") return;
+  if (changed && !document.querySelector(".v-card, .sp-boss, .sp-mini")) { vSess = null; spHome(); }   // 不打断正在做的题
+  else if (!spRun && document.querySelector(".sp-home")) spHome();
 }
 // 以前只存在本机的通关记录，补记到 game 记录里（只补一次）
 function spSyncCleared() {
@@ -19983,7 +19986,52 @@ const SP_RELICS = {
   drapeau: { name: "三色旗", desc: "Boss 战每答对 3 题回 1 颗心。" },
 };
 let spRun = (() => { try { return JSON.parse(localStorage.getItem("fq-spire-run") || "null"); } catch (e) { return null; } })();
-const spSave = () => { try { localStorage.setItem("fq-spire-run", JSON.stringify(spRun)); } catch (e) {} };
+const spSave = () => { if (spRun) spRun.savedAt = new Date().toISOString(); try { localStorage.setItem("fq-spire-run", JSON.stringify(spRun)); } catch (e) {} };
+// ---------- 进行中的一局跟着答题记录同步 ----------
+// 存储只能追加记录，所以在关键节点追加一条“快照”（kind "spire-run"，不含地图；词用序号存），每层地图单独存一条（kind "spire-map"）。
+// 读进记录后，比本机这一局更新的快照会接管：另一台设备打到哪里，这里就从哪里接着打。
+const spWIdx = new Map(V_WORDS.map((w, i) => [w.id, i]));
+function spPack(r) {
+  const o = Object.assign({}, r); delete o.map; delete o.lost;
+  o.seen = r.seen.map(id => spWIdx.get(id)).filter(i => i != null);
+  o.wrong = r.wrong.map(id => spWIdx.get(id)).filter(i => i != null);
+  if (o.inFight && !o.inFight.boss) o.inFight = { elite: o.inFight.elite, fire: o.inFight.fire, hardPrev: o.inFight.hardPrev };   // 普通战斗：换设备后重新开这一场
+  return o;
+}
+function spUnpack(o, map) {
+  const r = Object.assign({}, o);
+  r.seen = (o.seen || []).map(i => V_WORDS[i] && V_WORDS[i].id).filter(Boolean);
+  r.wrong = (o.wrong || []).map(i => V_WORDS[i] && V_WORDS[i].id).filter(Boolean);
+  r.map = map; return r;
+}
+let spSyncedMap = "";
+function spSync(force) {
+  if (!spRun || typeof gameAdd !== "function" || (typeof dbRef !== "undefined" && !dbRef)) return;
+  spSave();
+  const mk = spRun.id + ":" + spRun.act;
+  if (spSyncedMap !== mk) { gameAdd({ kind: "spire-map", id: spRun.id, act: spRun.act, map: spRun.map, at: spRun.savedAt }); spSyncedMap = mk; }
+  gameAdd({ kind: "spire-run", id: spRun.id, at: spRun.savedAt, s: spPack(spRun) });
+}
+// 读进 game 记录后：拿最新的一条快照和本机比
+function spPull() {
+  if (typeof gameRaw === "undefined") return false;
+  let last = null;
+  gameRaw.forEach(d => { if (d && d.kind === "spire-run" && (!last || String(d.at) > String(last.at))) last = d; });
+  if (!last) return false;
+  const local = spRun;
+  if (last.end) {   // 这一局在别的设备上已经结束了
+    if (local && local.id === last.id) { spRun = null; try { localStorage.removeItem("fq-spire-run"); } catch (e) {} return true; }
+    return false;
+  }
+  if (local && String(local.savedAt || "") >= String(last.at)) return false;   // 本机更新：不动
+  let map = null;
+  gameRaw.forEach(d => { if (d && d.kind === "spire-map" && d.id === last.id && d.act === last.s.act && (!map || String(d.at) > String(map.at))) map = d; });
+  if (!map) return false;
+  spRun = spUnpack(last.s, map.map);
+  spSyncedMap = spRun.id + ":" + spRun.act;
+  try { localStorage.setItem("fq-spire-run", JSON.stringify(spRun)); } catch (e) {}
+  return true;
+}
 const spBest = () => { try { return JSON.parse(localStorage.getItem("fq-spire-best") || "null"); } catch (e) { return null; } };
 const spRand = (a, b) => a + Math.floor(Math.random() * (b - a + 1));
 const spPick = arr => arr[Math.floor(Math.random() * arr.length)];
@@ -20037,6 +20085,7 @@ function spNewRun() {
   spRun = { id: Date.now().toString(36), diff, keys: {}, act: 0, row: -1, col: -1, map: [], hp: SP_HP, max: SP_HP, gold: 0, relics: [], seen: [], wrong: [], shield: 0, combo: 0,
     bosses: 0, inFight: null };
   spRun.map = spMakeMap();
+  spSync();
   spSave();
 }
 // 现在能去的节点
@@ -20274,10 +20323,10 @@ function spMap() {
 function spEnter(row, col) {
   const r = spRun, n = r.map[row][col];
   r.path = (r.path || []).concat([[row, col]]);
-  r.row = row; r.col = col; spSave();
+  r.row = row; r.col = col; spSync();
   ({ fight: () => spFight(false), elite: () => spFight(true, undefined, n.fire), shop: spShop, camp: spCamp, event: spEvent, chest: spChest })[n.t]();
 }
-function spDone() { spRun.inFight = null; spSave(); spMap(); }
+function spDone() { spRun.inFight = null; spSync(); spMap(); }
 
 // ---------- 战斗（用背单词的题） ----------
 function spWords(n, kind) {
@@ -20568,7 +20617,7 @@ function spBoss() {
   const r = spRun;
   if (r.inFight && r.inFight.boss && r.inFight.qs && r.inFight.qs.length && r.inFight.right < spBossHp()) { spBossQ(); return; }   // 打到一半：接着打
   r.row = spRows(); r.inFight = { boss: true, beret: false, qs: spBossQs(), i: 0, right: 0 };
-  spSave();
+  spSync();
   spBossQ();
 }
 function spBossQ() {
@@ -20635,7 +20684,7 @@ function spBossQ() {
       exp.className = "explain";
       exp.innerHTML = "";
       exp.append(el("b", x.ok ? "ok" : "no", x.ok ? "答对了！" : "答错了。"), el("p", null, q.zh), el("p", "sub", q.why));
-      f.i++; spSave();
+      f.i++; spSync();
       if (dead) return;
       const nx = el("button", "btn", f.right >= HP ? "打败 Boss！" : "下一题"); nx.type = "button"; nx.id = "spBossNext";
       nx.addEventListener("click", spBossQ);
@@ -20666,7 +20715,7 @@ function spBossWin() {
     else { r.act++; r.map = spMakeMap(); }
     r.row = -1; r.col = -1; r.path = []; r.shop = null;
     if (spHas("ticket")) r.hp = r.max;
-    spSave(); spMap();
+    spSync(); spMap();
   };
   if (!k.blue) pick.push("blue");
   (pick.length ? pick : [null]).forEach(id => {
@@ -20698,6 +20747,7 @@ function spEnd(win, quit, ending) {
   const better = !best || win || (!best.win && floor > (best.floor || 0));
   try { localStorage.setItem("fq-spire-best", JSON.stringify(win ? { win: true, wins: (best && best.wins || 0) + 1, act: 2, floor } : better ? { act: r.act, floor } : best)); } catch (e) {}
   if (typeof gameOn === "function" && gameOn() && coins > 0) gameAdd({ kind: "earn", key: "spire:" + r.id, coins, at: new Date().toISOString() });
+  if (typeof gameAdd === "function") gameAdd({ kind: "spire-run", id: r.id, at: new Date().toISOString(), end: true });
   spRun = null; try { localStorage.removeItem("fq-spire-run"); } catch (e) {}
   vSess = null;
   spHud();
