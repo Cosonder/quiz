@@ -15156,7 +15156,7 @@ function cosEquip(slot, id) {
 }
 
 // 背景区域的手感：往外拉有阻力（只跟手 35%–40%），松手时如果没拉到头，就自动回弹到内容边上；拉到头就停在背景全貌
-const COS_DRAG = .38, COS_WHEEL = .35;
+const COS_DRAG = .38, COS_WHEEL = .35, COS_SNAP = .5;
 let cosTouch = null, cosSnapT = 0;
 function cosZone() {
   const top = document.getElementById("skinRevealTop"), bot = document.getElementById("skinReveal");
@@ -15184,8 +15184,9 @@ function cosSnapLater(ms) {
     const z = cosZone();
     if (!z) return;
     const smooth = matchMedia("(prefers-reduced-motion: reduce)").matches ? "auto" : "smooth";
-    if (z.inTop && !z.topFull) window.scrollTo({ top: z.topEdge, behavior: smooth });
-    else if (z.inBot && !z.botFull) window.scrollTo({ top: z.botEdge, behavior: smooth });
+    // 拉过一半：松手后自动滑到背景全貌；没过一半：弹回内容边缘
+    if (z.inTop && !z.topFull) window.scrollTo({ top: (z.topEdge - z.y) / z.topEdge > COS_SNAP ? 0 : z.topEdge, behavior: smooth });
+    else if (z.inBot && !z.botFull) window.scrollTo({ top: (z.y - z.botEdge) / Math.max(1, z.max - z.botEdge) > COS_SNAP ? z.max : z.botEdge, behavior: smooth });
   }, ms);
 }
 const cosSkipTarget = t => t && t.closest && t.closest(".pc-overlay, textarea, input, select, .tabs, .tour-map");
