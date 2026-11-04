@@ -330,6 +330,7 @@ h1 { font-family: var(--display); font-weight: 900; font-size: 1.6rem; line-heig
 .v-lv .px-stars { gap: 2px; margin: 2px 0; } .v-lv .px-star { width: 13px; height: 13px; }
 .v-lvstar .px-star { width: 11px; height: 11px; } .v-lvres .px-stars { gap: 3px; vertical-align: -3px; } .v-lvres .px-star { width: 15px; height: 15px; }
 .v-lv .n { color: var(--muted); font-size: .75rem; }
+.px-lock { display: inline-block; width: 12px; height: 14px; margin: 2px 0; background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='9' height='10' viewBox='0 0 9 10' shape-rendering='crispEdges'%3E%3Cpath fill='%237d8394' d='M2 0h5v1h-5zM1 1h2v1h-2zM6 1h2v1h-2zM1 2h1v1h-1zM7 2h1v1h-1zM1 3h1v1h-1zM7 3h1v1h-1z'/%3E%3Cpath fill='%235a4214' d='M0 4h9v1h-9zM0 5h1v1h-1zM8 5h1v1h-1zM0 6h1v1h-1zM4 6h1v1h-1zM8 6h1v1h-1zM0 7h1v1h-1zM4 7h1v1h-1zM8 7h1v1h-1zM0 8h1v1h-1zM8 8h1v1h-1zM0 9h9v1h-9z'/%3E%3Cpath fill='%23f2c14e' d='M1 5h7v1h-7zM1 6h3v1h-3zM5 6h3v1h-3zM1 7h3v1h-3zM5 7h3v1h-3z'/%3E%3Cpath fill='%23c9922a' d='M1 8h7v1h-7z'/%3E%3C/svg%3E") center / 100% 100% no-repeat; image-rendering: pixelated; }
 .v-lv.clear { background: var(--good-soft); border-color: var(--good); }
 .v-lv.next { border: 2px solid var(--accent); background: var(--accent-soft); }
 .v-lv.locked { opacity: .5; cursor: default; }
@@ -19031,7 +19032,7 @@ function vLevelMap() {
     const b = el("button", "v-lv" + (x.stars ? " clear" : "") + (x === next ? " next" : "") + (x.open ? "" : " locked"));
     b.type = "button"; b.id = "vLv" + (x.k + 1);
     b.disabled = !x.open || !vStats;
-    b.append(el("b", null, String(x.k + 1)), x.open ? vStars(x.stars) : el("span", "st", "🔒"), el("span", "n", x.open ? `${x.done}/${x.ws.length}` : "未解锁"));
+    b.append(el("b", null, String(x.k + 1)), x.open ? vStars(x.stars) : el("i", "px-lock"), el("span", "n", x.open ? `${x.done}/${x.ws.length}` : "未解锁"));
     b.addEventListener("click", () => { vTheme = "lv:" + x.k; vSess = null; vToc(); vStart(x.ws); });
     grid.append(b);
   });
