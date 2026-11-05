@@ -14130,7 +14130,7 @@ const HINT_OF = {
   "fr-r9-8": "找 l'année prochaine 后面的 j'aimerais。",
   "fr-r9-9": "听 dure environ 后面；et quart 和 et demie 不一样。",
 };
-// 零基础题组：只考最最简单的法语——数字 0–100、星期、月份、问候、自我介绍、礼貌用语。难度标为“零基础”。
+// 零基础题组：只考最最简单的法语——数字 0–100（每个数字都有题）、星期、月份、季节、问候、自我介绍、礼貌用语。难度标为“零基础”。
 // 设置里难度等级选“零基础”时，只出这一组的题。
 (() => {
   const Z = [
@@ -14198,12 +14198,105 @@ const HINT_OF = {
     ["礼貌用语", 1, "« Oui » 和 « Non » 是什么意思？", ["是 / 不是", "好 / 坏", "大 / 小", "来 / 去"], 0, "oui = 是，non = 不。", "最基本的回答"],
     ["礼貌用语", 1, "“非常感谢！”用法语怎么说？", ["Merci beaucoup !", "Beaucoup merci !", "Très merci !", "Merci très !"], 0, "beaucoup = 很多，放在 merci 后面。", "merci + 很多"],
     ["礼貌用语", 1, "« Bon appétit ! » 什么时候说？", ["吃饭前", "睡觉前", "告别时", "生日时"], 0, "Bon appétit = 祝你胃口好。", "开饭了"],
+    // ---------- 第二批：问候 ----------
+    ["问候", 1, "« Bonne journée ! » 是什么意思？", ["祝你今天愉快！", "早上好！", "晚安！", "生日快乐！"], 0, "Bonne journée 用于白天告别时，journée = 一整天。", "告别时的祝福"],
+    ["问候", 1, "« À bientôt ! » 是什么意思？", ["回头见！", "明天见！", "好久不见！", "欢迎！"], 0, "bientôt = 不久，À bientôt = 回头见、再会。", "bientôt = 不久"],
+    ["问候", 1, "“一会儿见！”用法语怎么说？", ["À tout à l'heure !", "À demain !", "Au revoir !", "Bonne nuit !"], 0, "À tout à l'heure = 一会儿见（当天还会再见面）。", "当天还会见面"],
+    ["问候", 1, "« Comment allez-vous ? » 是什么意思？", ["您好吗？", "您去哪里？", "您叫什么？", "您几岁？"], 0, "Comment allez-vous ? 是礼貌地问“您好吗？”，熟人之间说 Ça va ?", "aller 在这里是“过得怎么样”"],
+    ["问候", 1, "别人问 Ça va ?，回答“很好，谢谢”：", ["Très bien, merci.", "Très bien, pardon.", "Bonjour, merci.", "De rien, merci."], 0, "Très bien, merci. Et toi ? / Et vous ?", "très bien = 很好"],
+    ["问候", 1, "« Bienvenue ! » 是什么意思？", ["欢迎！", "再见！", "谢谢！", "干杯！"], 0, "Bienvenue = 欢迎。", "迎接客人"],
+    // ---------- 第二批：自我介绍 ----------
+    ["自我介绍", 1, "“我是法国人（女）。”用法语怎么说？", ["Je suis française.", "Je suis français.", "Je suis France.", "J'ai française."], 0, "国籍形容词要和性别配合：français（男）/ française（女）。", "女性要加 e"],
+    ["自我介绍", 1, "« J'aime la musique. » 是什么意思？", ["我喜欢音乐。", "我会音乐。", "我听音乐。", "我是音乐家。"], 0, "aimer = 喜欢。", "aimer = 喜欢"],
+    ["自我介绍", 1, "“我来自上海。”用法语怎么说？", ["Je viens de Shanghai.", "Je vais à Shanghai.", "Je suis à Shanghai.", "J'habite Shanghai de."], 0, "venir de + 城市 = 来自某地。", "venir de = 来自"],
+    ["自我介绍", 1, "问别人“你几岁？”说？", ["Tu as quel âge ?", "Tu es quel âge ?", "Quel âge tu es ?", "Combien tu as ?"], 0, "法语用 avoir 问年龄：Tu as quel âge ? / Quel âge avez-vous ?", "用 avoir"],
+    ["自我介绍", 1, "“我有一个哥哥。”用法语怎么说？", ["J'ai un frère.", "J'ai une sœur.", "Je suis un frère.", "J'ai un père."], 0, "frère = 兄弟，sœur = 姐妹，père = 父亲。", "frère = 兄弟"],
+    ["自我介绍", 1, "« Je travaille. » 是什么意思？", ["我工作。", "我旅行。", "我学习。", "我休息。"], 0, "travailler = 工作。", "travail = 工作"],
+    // ---------- 第二批：礼貌用语 ----------
+    ["礼貌用语", 1, "« Je vous en prie. » 是什么意思？", ["不客气（礼貌）", "请原谅", "我求你", "没关系"], 0, "Je vous en prie 是比 De rien 更礼貌的“不客气”，也可以表示“请便”。", "回答别人的感谢"],
+    ["礼貌用语", 1, "“没关系。”用法语怎么说？", ["Ce n'est pas grave.", "C'est grave.", "Merci beaucoup.", "S'il te plaît."], 0, "Ce n'est pas grave = 没关系、不要紧。", "grave = 严重"],
+    ["礼貌用语", 1, "« Santé ! » 什么时候说？", ["干杯时", "吃饭前", "道歉时", "见面时"], 0, "Santé ! = 干杯（祝健康），也说 À votre santé !", "santé = 健康"],
+    ["礼貌用语", 1, "“生日快乐！”用法语怎么说？", ["Joyeux anniversaire !", "Bonne année !", "Joyeux Noël !", "Bon voyage !"], 0, "Joyeux anniversaire ! Bonne année = 新年快乐，Joyeux Noël = 圣诞快乐。", "anniversaire = 生日"],
+    ["礼貌用语", 1, "“新年快乐！”用法语怎么说？", ["Bonne année !", "Bon anniversaire !", "Bonne journée !", "Bonne chance !"], 0, "Bonne année ! année = 年。", "année = 年"],
+    ["礼貌用语", 1, "« Bonne chance ! » 是什么意思？", ["祝你好运！", "祝你健康！", "一路顺风！", "加油吃！"], 0, "chance = 运气。", "考试前说"],
+    ["礼貌用语", 1, "« Bon voyage ! » 是什么意思？", ["一路顺风！", "欢迎回来！", "祝你好运！", "旅行愉快地回家！"], 0, "voyage = 旅行，Bon voyage = 一路顺风、旅途愉快。", "送别时说"],
   ];
-  Z.forEach(([cat, ch, q, opts, a, exp, hint], i) => {
-    const id = "fr-r0-" + (i + 1);
+  const add = (id, cat, ch, q, opts, a, exp, hint) => {
     BANK.push({ id, ch, cat, q, opts, a, exp, hint });
     LEVEL_OF[id] = "零基础";
     TAGS_OF[id] = ["零基础入门", cat];
+  };
+  Z.forEach(([cat, ch, q, opts, a, exp, hint], i) => add("fr-r0-" + (i + 1), cat, ch, q, opts, a, exp, hint));
+
+  // ---------- 自动生成：0–100 每个数字一题，每个星期、每个月份各几题 ----------
+  // 固定种子的随机数：每次打开页面，干扰项都一样（题目 id 对应的内容不变）
+  let seed = 20261105;
+  const rnd = () => { seed = (seed * 1103515245 + 12345) % 2147483648; return seed / 2147483648; };
+  const shuffle = a => { for (let i = a.length - 1; i > 0; i--) { const j = Math.floor(rnd() * (i + 1)); [a[i], a[j]] = [a[j], a[i]]; } return a; };
+  const U = ["zéro", "un", "deux", "trois", "quatre", "cinq", "six", "sept", "huit", "neuf", "dix", "onze", "douze", "treize", "quatorze", "quinze", "seize"];
+  const T = { 20: "vingt", 30: "trente", 40: "quarante", 50: "cinquante", 60: "soixante" };
+  const fr = n => {
+    if (n < 17) return U[n];
+    if (n < 20) return "dix-" + U[n - 10];
+    if (n < 70) { const t = n - n % 10, u = n % 10; return u === 0 ? T[t] : u === 1 ? T[t] + " et un" : T[t] + "-" + U[u]; }
+    if (n < 80) return n === 71 ? "soixante et onze" : "soixante-" + fr(n - 60);
+    if (n === 80) return "quatre-vingts";
+    if (n < 100) return "quatre-vingt-" + fr(n - 80);
+    return "cent";
+  };
+  const why = n => {
+    if (n < 17) return `${n} = ${fr(n)}，0–16 要单独记。`;
+    if (n < 20) return `${n} = ${fr(n)}：17–19 是 dix + 个位。`;
+    if (n < 70) return n % 10 === 1 ? `${n} = ${fr(n)}：21、31、41、51、61 中间加 et。` : `${n} = ${fr(n)}：${n - n % 10} 是 ${T[n - n % 10]}，个位用连字符接上。`;
+    if (n < 80) return `${n} = ${fr(n)}：70–79 是 60 + 10–19（soixante + ${fr(n - 60)}）${n === 71 ? "，71 中间加 et" : ""}。`;
+    if (n === 80) return "80 = quatre-vingts（4 × 20），整 80 时 vingt 要加 s。";
+    if (n < 100) return `${n} = ${fr(n)}：80–99 是 4 × 20 + 个位或 10–19，后面跟数字时 vingt 不加 s。`;
+    return "100 = cent。";
+  };
+  // 容易混的数字：相邻、差 10、个位相同的几十、70/90 这类
+  const near = n => {
+    const c = [n - 1, n + 1, n - 10, n + 10, n + 20, n - 20, (n % 10) + 10, n < 20 ? n + 50 : n - 60, n >= 70 ? n - 10 : n + 60];
+    return shuffle([...new Set(c.filter(x => x >= 0 && x <= 100 && x !== n))]).slice(0, 3);
+  };
+  for (let n = 0; n <= 100; n++) {
+    const d = near(n), id = "fr-r0-n" + n;
+    if (n % 2 === 0) {
+      const opts = shuffle([n, ...d]);
+      add(id, "数字", 37, `« ${fr(n)} » 是数字几？`, opts.map(String), opts.indexOf(n), why(n), n >= 70 ? "70 以后要拆开算" : "先看几十，再看个位");
+    } else {
+      const opts = shuffle([n, ...d]);
+      add(id, "数字", 37, `${n} 用法语怎么说？`, opts.map(fr), opts.indexOf(n), why(n), n >= 70 ? "70 以后要拆开算" : "先说几十，再说个位");
+    }
+  }
+  const DAYS = [["lundi", "星期一"], ["mardi", "星期二"], ["mercredi", "星期三"], ["jeudi", "星期四"], ["vendredi", "星期五"], ["samedi", "星期六"], ["dimanche", "星期日"]];
+  DAYS.forEach(([f, z], i) => {
+    const others = shuffle(DAYS.filter((_, j) => j !== i)).slice(0, 3);
+    let o = shuffle([[f, z], ...others]);
+    add(`fr-r0-d${i + 1}a`, "星期", 37, `« ${f} » 是星期几？`, o.map(x => x[1]), o.findIndex(x => x[0] === f), `${f} = ${z}。法语的星期都是小写，顺序：lundi, mardi, mercredi, jeudi, vendredi, samedi, dimanche。`, "按顺序数一数");
+    o = shuffle([[f, z], ...shuffle(DAYS.filter((_, j) => j !== i)).slice(0, 3)]);
+    add(`fr-r0-d${i + 1}b`, "星期", 37, `${z}用法语怎么说？`, o.map(x => x[0]), o.findIndex(x => x[0] === f), `${z} = ${f}。`, "lundi 是一周的第一天");
+    const nx = DAYS[(i + 1) % 7];
+    o = shuffle([nx, ...shuffle(DAYS.filter(x => x !== nx)).slice(0, 3)]);
+    add(`fr-r0-d${i + 1}c`, "星期", 37, `« ${f} » 的后一天是？`, o.map(x => x[0]), o.indexOf(nx), `${f}（${z}）的后一天是 ${nx[0]}（${nx[1]}）。`, "想想中文是星期几");
+  });
+  const MONTHS = [["janvier", "一月"], ["février", "二月"], ["mars", "三月"], ["avril", "四月"], ["mai", "五月"], ["juin", "六月"], ["juillet", "七月"], ["août", "八月"], ["septembre", "九月"], ["octobre", "十月"], ["novembre", "十一月"], ["décembre", "十二月"]];
+  MONTHS.forEach(([f, z], i) => {
+    const pick = () => shuffle(MONTHS.filter((_, j) => j !== i)).slice(0, 3);
+    let o = shuffle([[f, z], ...pick()]);
+    add(`fr-r0-m${i + 1}a`, "月份", 37, `« ${f} » 是几月？`, o.map(x => x[1]), o.findIndex(x => x[0] === f), `${f} = ${z}。法语的月份都是小写。`, "按顺序数一数");
+    o = shuffle([[f, z], ...pick()]);
+    add(`fr-r0-m${i + 1}b`, "月份", 37, `${z}用法语怎么说？`, o.map(x => x[0]), o.findIndex(x => x[0] === f), `${z} = ${f}。`, "janvier 是一月");
+    const nx = MONTHS[(i + 1) % 12];
+    o = shuffle([nx, ...shuffle(MONTHS.filter(x => x !== nx)).slice(0, 3)]);
+    add(`fr-r0-m${i + 1}c`, "月份", 37, `« ${f} » 的下一个月是？`, o.map(x => x[0]), o.indexOf(nx), `${f}（${z}）的下一个月是 ${nx[0]}（${nx[1]}）。`, "想想中文是几月");
+  });
+  // 季节
+  const SEASONS = [["le printemps", "春天"], ["l'été", "夏天"], ["l'automne", "秋天"], ["l'hiver", "冬天"]];
+  SEASONS.forEach(([f, z], i) => {
+    let o = shuffle(SEASONS.slice());
+    add(`fr-r0-s${i + 1}a`, "季节", 37, `« ${f} » 是什么季节？`, o.map(x => x[1]), o.findIndex(x => x[0] === f), `${f} = ${z}。说“在某个季节”：au printemps，en été / en automne / en hiver。`, "四季之一");
+    o = shuffle(SEASONS.slice());
+    add(`fr-r0-s${i + 1}b`, "季节", 37, `${z}用法语怎么说？`, o.map(x => x[0]), o.findIndex(x => x[0] === f), `${z} = ${f}。`, "printemps 是春天");
   });
 })();
 // 题库整理：所有题库数据（含额外题库）载入后，把知识点、难度、标签、提示挂到每道题上
@@ -16532,7 +16625,7 @@ function setGoalSection(wrap) {
 const CHANGELOG = [
   { v: "3.5", d: "2026-11-05", p: "fr", items: [
     "设置里加了“难度等级”：零基础、A1–C2、关闭共 8 档，答题时按所选难度的比例出题（例如 A1 档 A1:A2 = 9:1）。",
-    "新增“第零轮 · 零基础入门”：58 道最基础的题——数字 0–100、星期、月份、问候、自我介绍、礼貌用语。"] },
+    "新增“第零轮 · 零基础入门”：243 道最基础的题——0–100 每个数字都有题，每个星期、月份、季节各有几道，再加问候、自我介绍、礼貌用语。"] },
   { v: "3.4", d: "2026-11-05", items: [
     "设置页加了版本号和更新记录（就是这里）。"] },
   { v: "3.3", d: "2026-11-04", p: "fr", items: [
