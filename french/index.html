@@ -520,6 +520,11 @@ h1 { font-family: var(--display); font-weight: 900; font-size: 1.6rem; line-heig
 .legacy > summary::-webkit-details-marker { display: none; }
 .legacy > summary::before { content: "▸ "; }
 .legacy[open] > summary::before { content: "▾ "; }
+.toc-fold > summary { display: flex; align-items: baseline; gap: 8px; font-size: .95rem; color: var(--fg); }
+.toc-fold > summary::before, .toc-fold[open] > summary::before { content: "▸"; color: var(--muted); }
+.toc-fold > summary > span:first-child { flex: 1; }
+.toc-fold-sub { font-size: .76rem; font-weight: 400; color: var(--muted); }
+.toc-fold[open] { padding-bottom: 6px; }
 .dist { display: flex; flex-direction: column; gap: 6px; }
 .dist h3 { margin: 0; font-size: 1rem; }
 .dist-row { display: grid; grid-template-columns: minmax(5.5em, 9em) minmax(0, 1fr) auto; gap: 10px; align-items: center; font: inherit; font-size: .88rem; text-align: left; background: transparent; border: 0; border-radius: 6px; padding: 3px 4px; color: var(--fg); cursor: pointer; }
@@ -619,6 +624,11 @@ h1 { font-family: var(--display); font-weight: 900; font-size: 1.6rem; line-heig
 .cj-table { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 2px 14px; font-size: .9rem; }
 .cj-table span { color: var(--muted); }
 .cj-table span.on { color: var(--fg); font-weight: 700; }
+.cj-rule { margin-top: 8px; padding: 8px 10px; border-radius: 10px; background: var(--chip, rgba(127,127,127,.08)); font-size: .86rem; line-height: 1.5; }
+.cj-rule b { display: block; font-size: .82rem; color: var(--accent); margin-bottom: 2px; }
+.cj-rule ul { margin: 0; padding-left: 1.1em; }
+.cj-rule li { margin: 2px 0; }
+html.qf #stage .cj-fb { overflow-y: auto; }
 .cj-say { font-size: .8rem; padding: 1px 8px; }
 @media (max-width: 520px) { .tab { padding: 6px 8px; font-size: .92rem; } .tabs { max-width: 100%; overflow-x: auto; scrollbar-width: none; } .tabs::-webkit-scrollbar { display: none; } }
 @media (max-width: 430px) { .tab { padding: 6px 5px; font-size: .84rem; } .tabs { gap: 1px; } }
@@ -16671,6 +16681,10 @@ function setGoalSection(wrap) {
 // ---------- 版本更新记录：设置页最下面，展开后能看到每个版本改了什么 ----------
 // p：哪个页面的更新（fr 法语页 / st 随机分析页 / 不写表示两个页面都有）。新版本加在最前面。
 const CHANGELOG = [
+  { v: "3.11", d: "2026-11-05", p: "fr", items: [
+    "目录整理成三个可折叠的栏：按标签选择、按书籍选择（Advanced French Grammar、A1、A2–B1 三本书，各自保留原来的分组）、零基础 · 听力。"] },
+  { v: "3.10", d: "2026-11-05", p: "fr", items: [
+    "变位题答完后，除了这个动词的变位表，还会回顾这一类动词在这个时态的变位规律（词尾、词干怎么来、拼写变化、不规则家族和过去分词）。"] },
   { v: "3.9", d: "2026-11-05", p: "fr", items: [
     "目录去掉了“按轮次”列表，零基础入门单独放在最上面；公开网站补上了 A2–B1 题组。"] },
   { v: "3.8", d: "2026-11-05", p: "fr", items: [
@@ -16997,63 +17011,78 @@ function folder(title, sub, keys, build) {
   return d;
 }
 
+// 三个大栏（按标签 / 按书籍 / 零基础与听力）可以折叠；用户手动开合后记住，直到刷新页面
+const tocFold = {};
+function tocSection(id, title, sub, autoOpen) {
+  const d = el("details", "legacy toc-fold"), s = el("summary");
+  s.append(el("span", null, title));
+  if (sub) s.append(el("span", "toc-fold-sub", sub));
+  d.append(s);
+  d.open = id in tocFold ? tocFold[id] : !!autoOpen;
+  d.addEventListener("toggle", () => { tocFold[id] = d.open; });
+  return d;
+}
+// 把几个子文件夹装进一个大文件夹（某个子文件夹展开时大文件夹也展开）
+function bookFolder(title, sub, subs) {
+  const top = folder(title, sub, [], null), box = top.querySelector("ul");
+  subs.forEach(f => { const li = el("li"); li.append(f); box.append(li); if (f.open) top.open = true; });
+  return top;
+}
 function renderToc() {
   toc.innerHTML = "";
-  toc.append(planTocItem(), tagPanel());
-  const legacy = el("details", "legacy"), lbox = el("div");
-  legacy.append(el("summary", null, "按书 / 章节浏览"), lbox);
-  const cur = view === "quiz" ? set?.key : bookFilter;
-  legacy.open = !!cur && cur !== "all" && !parseTagKey(cur);
-  toc.append(legacy);
-  renderOldToc(lbox);
-}
-function renderOldToc(toc) {
-  const ul = el("ul");
-  if (view === "quiz") {
-    // 原来的“按轮次”列表去掉了，只留零基础入门这一组
-    toc.append(el("div", "toc-sec", "零基础"));
-    ul.append(groupEntry("fr-r0", { title: "零基础入门", zh: "数字、星期、月份、问候与礼貌用语" }));
-  } else {
-    toc.append(el("div", "toc-sec", "错题"));
+  toc.append(planTocItem());
+  const quiz = view === "quiz";
+  const cur = quiz ? set?.key : bookFilter;
+  const isTag = !!cur && !!parseTagKey(cur);
+
+  // 按标签选择
+  const tagSec = tocSection("tags", "按标签选择", pickTags.size ? `已选 ${pickTags.size} 个` : "", isTag);
+  tagSec.append(tagPanel());
+  toc.append(tagSec);
+
+  // 按书籍选择：三本书各是一个文件夹，里面保留各自原来的分组
+  const books = [];
+  const afg = bookFolder("Advanced French Grammar · Monique L'Huillier", "按章节", PARTS.map(pt => {
+    const keys = pt.chs.map(([n]) => "ch:" + n);
+    return folder(`${pt.n} ${pt.t}`, `p.${pt.p}`, keys, k => {
+      const c = CH.get(Number(k.slice(3)));
+      return groupEntry(k, { no: String(c.n), title: c.t, zh: `${c.zh} · p.${c.p}` });
+    });
+  }));
+  books.push(afg);
+  if (quiz && typeof GPA1 !== "undefined" && GPA1.length) {
+    const parts = [[1, 9], [10, 20], [21, 27], [28, 34], [35, 42], [43, 49], [50, 54], [55, 60]];
+    books.push(bookFolder("Grammaire progressive du français · A1", `${GPA1.length} 个单元 · 每单元 10 题`, parts.map(([a, b], i) => {
+      const keys = GPA1.filter(u => u.unit >= a && u.unit <= b).map(u => "fr-ga" + u.unit);
+      return keys.length ? folder(`第 ${i + 1} 部分`, `第 ${a}–${b} 单元`, keys, k => { const u = GPA1.find(x => "fr-ga" + x.unit === k); return groupEntry(k, { no: String(u.unit), title: u.zh, zh: u.title }); }) : null;
+    }).filter(Boolean)));
+  }
+  if (quiz && typeof GPA2 !== "undefined" && GPA2.length) {
+    const chaps = [...new Set(GPA2.map(u => u.chap))];
+    books.push(bookFolder("Grammaire progressive du français · A2–B1", `${chaps.length} 章 · ${GPA2.length} 个小节`, chaps.map(c => {
+      const us = GPA2.filter(u => u.chap === c), keys = us.map(u => "fr-gb" + u.unit.replace(".", "s"));
+      return folder(`${c} · ${us[0].chapTitle}`, `${us.length} 个小节`, keys, k => { const u = us.find(x => "fr-gb" + x.unit.replace(".", "s") === k); return groupEntry(k, { no: u.unit, title: u.zh, zh: `${u.title} · ${u.lv}` }); });
+    })));
+  }
+  const bookSec = tocSection("books", "按书籍选择", `${books.length} 本书`, books.some(b => b.open));
+  const bul = el("ul", "toc-books");
+  books.forEach(b => { const li = el("li"); li.append(b); bul.append(li); });
+  bookSec.append(bul);
+
+  if (!quiz) {
+    // 错题本：“全部错题”放在最前面
     const total = bookCache ? bookCache.wrong.length : 0;
+    const ul = el("ul");
     ul.append(tocItem({ title: "全部错题", badge: bookCache ? `${total}` : "…", badgeCls: total ? "bad" : "zero",
       current: bookFilter === "all", onClick: () => { bookFilter = "all"; renderToc(); drawBook(); afterPick(); } }));
+    toc.append(ul);
   }
-  toc.append(ul);
+  toc.append(bookSec);
 
-  // A1 · Grammaire progressive：按原书的 8 个阶段（每个“Bilan”之前的单元）分小文件夹
-  if (view === "quiz" && typeof GPA1 !== "undefined" && GPA1.length) {
-    toc.append(el("div", "toc-sec", "A1 · Grammaire progressive"));
-    const parts = [[1, 9], [10, 20], [21, 27], [28, 34], [35, 42], [43, 49], [50, 54], [55, 60]];
-    const top = folder("Grammaire progressive du français · A1", `${GPA1.length} 个单元 · 每单元 10 题`, [], null);
-    const box = top.querySelector("ul");
-    parts.forEach(([a, b], i) => {
-      const keys = GPA1.filter(u => u.unit >= a && u.unit <= b).map(u => "fr-ga" + u.unit);
-      if (!keys.length) return;
-      const sub = folder(`第 ${i + 1} 部分`, `第 ${a}–${b} 单元`, keys, k => { const u = GPA1.find(x => "fr-ga" + x.unit === k); return groupEntry(k, { no: String(u.unit), title: u.zh, zh: u.title }); });
-      const li = el("li"); li.append(sub); box.append(li);
-      if (sub.open) top.open = true;
-    });
-    toc.append(top);
-  }
-
-  // A2–B1 · Grammaire progressive：按章分小文件夹，章里是各小节
-  if (view === "quiz" && typeof GPA2 !== "undefined" && GPA2.length) {
-    toc.append(el("div", "toc-sec", "A2–B1 · Grammaire progressive"));
-    const chaps = [...new Set(GPA2.map(u => u.chap))];
-    const top = folder("Grammaire progressive du français · A2–B1", `${chaps.length} 章 · ${GPA2.length} 个小节`, [], null);
-    const box = top.querySelector("ul");
-    chaps.forEach(c => {
-      const us = GPA2.filter(u => u.chap === c), keys = us.map(u => "fr-gb" + u.unit.replace(".", "s"));
-      const sub = folder(`${c} · ${us[0].chapTitle}`, `${us.length} 个小节`, keys, k => { const u = us.find(x => "fr-gb" + x.unit.replace(".", "s") === k); return groupEntry(k, { no: u.unit, title: u.zh, zh: `${u.title} · ${u.lv}` }); });
-      const li = el("li"); li.append(sub); box.append(li);
-      if (sub.open) top.open = true;
-    });
-    toc.append(top);
-  }
-
-  // 听力：所有听力题放在同一个文件夹里，废柴联盟是其中的子文件夹
-  toc.append(el("div", "toc-sec", "听力"));
+  // 零基础与听力
+  const other = el("div");
+  const oul = el("ul");
+  if (quiz) oul.append(groupEntry("fr-r0", { title: "零基础入门", zh: "数字、星期、月份、问候与礼貌用语" }));
   const listenKeys = ROUNDS.filter(r => r.kind === "listen").map(r => r.id);
   const epKeys = SHOW_EPS.map((_, k) => "ep:" + (k + 1));
   const showKeys = ["fr-r13", ...epKeys];
@@ -17071,20 +17100,12 @@ function renderOldToc(toc) {
     holder.append(show);
     listen.querySelector("ul").append(holder);
   }
-  // 听力文件夹默认展开；子文件夹在选中或有错题时展开
-  listen.open = true;
-  toc.append(listen);
-
-  // 按章节（只算语法题）
-  toc.append(el("div", "toc-book", "Advanced French Grammar · Monique L'Huillier"));
-  toc.append(el("div", "toc-sec", "按章节"));
-  PARTS.forEach(pt => {
-    const keys = pt.chs.map(([n]) => "ch:" + n);
-    toc.append(folder(`${pt.n} ${pt.t}`, `p.${pt.p}`, keys, k => {
-      const c = CH.get(Number(k.slice(3)));
-      return groupEntry(k, { no: String(c.n), title: c.t, zh: `${c.zh} · p.${c.p}` });
-    }));
-  });
+  listen.open = true;   // 听力文件夹在栏里默认展开
+  other.append(oul, listen);
+  const otherKeys = ["fr-r0", ...listenKeys, ...showKeys];
+  const otherSec = tocSection("other", quiz ? "零基础 · 听力" : "听力", "", !!cur && otherKeys.includes(cur));
+  otherSec.append(other);
+  toc.append(otherSec);
 }
 // ---------- 答题的难度等级（设置里选）：零基础 / A1–C2 / 关闭 ----------
 // 选某一档时，每个题组按下面的比例从各等级的题里抽（零基础只出零基础题；关闭时出全部题）。
@@ -21438,6 +21459,106 @@ const CJ_VERBS = [
   {"v":"plaire","zh":"使喜欢","g":"irr","t":{"pres":["plais","plais","plaît","plaisons","plaisez","plaisent"],"pc":["ai plu","as plu","a plu","avons plu","avez plu","ont plu"],"imp":["plaisais","plaisais","plaisait","plaisions","plaisiez","plaisaient"],"fut":["plairai","plairas","plaira","plairons","plairez","plairont"],"cond":["plairais","plairais","plairait","plairions","plairiez","plairaient"],"subj":["plaise","plaises","plaise","plaisions","plaisiez","plaisent"],"pqp":["avais plu","avais plu","avait plu","avions plu","aviez plu","avaient plu"],"fa":["aurai plu","auras plu","aura plu","aurons plu","aurez plu","auront plu"],"condp":["aurais plu","aurais plu","aurait plu","aurions plu","auriez plu","auraient plu"],"ps":["plus","plus","plut","plûmes","plûtes","plurent"],"impe":["","plais","","plaisons","plaisez",""]},"aux":"avoir"},
   {"v":"battre","zh":"打","g":"irr","t":{"pres":["bats","bats","bat","battons","battez","battent"],"pc":["ai battu","as battu","a battu","avons battu","avez battu","ont battu"],"imp":["battais","battais","battait","battions","battiez","battaient"],"fut":["battrai","battras","battra","battrons","battrez","battront"],"cond":["battrais","battrais","battrait","battrions","battriez","battraient"],"subj":["batte","battes","batte","battions","battiez","battent"],"pqp":["avais battu","avais battu","avait battu","avions battu","aviez battu","avaient battu"],"fa":["aurai battu","auras battu","aura battu","aurons battu","aurez battu","auront battu"],"condp":["aurais battu","aurais battu","aurait battu","aurions battu","auriez battu","auraient battu"],"ps":["battis","battis","battit","battîmes","battîtes","battirent"],"impe":["","bats","","battons","battez",""]},"aux":"avoir"},
 ];
+// ---------- 变位规律：答完一道变位题后，除了这个动词的变位表，再回顾这一类动词在这个时态的规律 ----------
+// cjRule(v, t) 返回 { title, lines }：lines 第一条是这个时态的通用构成，后面是这个动词所属类别的特点。
+
+const CJ_END = {
+  er: { pres: "-e, -es, -e, -ons, -ez, -ent", ps: "-ai, -as, -a, -âmes, -âtes, -èrent", pp: "-é" },
+  ir: { pres: "-is, -is, -it, -issons, -issez, -issent", ps: "-is, -is, -it, -îmes, -îtes, -irent", pp: "-i" },
+  re: { pres: "-s, -s, —, -ons, -ez, -ent", ps: "-is, -is, -it, -îmes, -îtes, -irent", pp: "-u" },
+};
+const CJ_MODEL = { er: "parler", ir: "finir", re: "attendre" };
+// 将来时 / 条件式的不规则词干
+const CJ_FUT_ST = { être: "ser-", avoir: "aur-", aller: "ir-", faire: "fer-", pouvoir: "pourr-", vouloir: "voudr-", savoir: "saur-", voir: "verr-",
+  venir: "viendr-", devenir: "deviendr-", revenir: "reviendr-", tenir: "tiendr-", obtenir: "obtiendr-", devoir: "devr-", recevoir: "recevr-",
+  courir: "courr-", mourir: "mourr-", envoyer: "enverr-" };
+// 虚拟式词干完全不规则的几个
+const CJ_SUBJ_IRR = { être: "que je sois, que nous soyons", avoir: "que j'aie, que nous ayons", aller: "que j'aille, que nous allions", faire: "que je fasse",
+  pouvoir: "que je puisse", savoir: "que je sache", vouloir: "que je veuille, que nous voulions" };
+// 不规则动词按变位模式分家族
+const CJ_FAMILY = [
+  [["partir", "sortir", "dormir", "servir", "sentir"], "partir 型：单数去掉词干末辅音再加 -s, -s, -t（je pars, je dors），复数保留（nous partons, nous dormons）。"],
+  [["ouvrir", "offrir", "découvrir"], "ouvrir 型：现在时像 -er 动词变（j'ouvre, tu ouvres, il ouvre），过去分词是 -ert（ouvert, offert）。"],
+  [["venir", "devenir", "revenir", "tenir", "obtenir"], "venir / tenir 型：je viens, nous venons, ils viennent（单数和 ils 变 -ien-），将来时 viendr- / tiendr-，过去分词 venu / tenu。"],
+  [["prendre", "apprendre", "comprendre"], "prendre 型：je prends, nous prenons, ils prennent（ils 双写 n），过去分词 pris。"],
+  [["mettre", "permettre", "promettre", "battre"], "mettre 型：单数只留一个 t（je mets, il met），复数双写 t（nous mettons），过去分词 mis（battre 是 battu）。"],
+  [["pouvoir", "vouloir"], "pouvoir / vouloir 型：je peux / veux 以 -x 结尾，nous pouvons / voulons，ils peuvent / veulent；将来时 pourr- / voudr-。"],
+  [["devoir", "recevoir", "boire"], "三个词干型：单数一个词干、nous / vous 一个、ils 一个（je dois, nous devons, ils doivent；je reçois, nous recevons, ils reçoivent；je bois, nous buvons, ils boivent）。"],
+  [["connaître", "paraître", "naître"], "connaître 型：复数加 -ss-（nous connaissons），il 的 i 戴帽 î（il connaît）。"],
+  [["craindre", "peindre"], "-indre 型：单数 -ains / -eins（je crains, je peins），复数变 -gn-（nous craignons, nous peignons），过去分词 craint / peint。"],
+  [["écrire", "lire", "conduire", "dire", "plaire"], "复数加辅音型：单数 -s, -s, -t，复数加一个辅音（écrire → nous écrivons，lire → nous lisons，conduire → nous conduisons，dire → nous disons, vous dites）。"],
+  [["croire", "voir"], "croire / voir 型：nous / vous 里 i 变 y（nous croyons, nous voyons），单数和 ils 保留 i（je crois, ils voient）。"],
+  [["courir", "rire", "vivre", "suivre"], "单数 -s, -s, -t 型：je cours / ris / vis / suis，复数照词干加 -ons, -ez, -ent（nous courons, nous vivons, nous suivons）；注意 suivre 的 « je suis » 和 être 同形。"],
+  [["mourir"], "mourir：单数和 ils 用 meur-（je meurs, ils meurent），nous / vous 用 mour-（nous mourons）；复合时态用 être，过去分词 mort。"],
+  [["être", "avoir", "aller", "faire", "savoir"], "最常用的五个不规则动词，没有家族可依，整张表要单独记；其中 être、avoir、aller、faire 的 ils 形式都以 -ont 结尾（sont, ont, vont, font）。"],
+];
+
+// -er 拼写变化动词：按词尾归类
+function cjEr2(v, t) {
+  const n = v.v;
+  if (n.endsWith("ger")) return "-ger 动词：在 a、o 前保留 e，让 g 读软音（nous mangeons, je mangeais, il mangea）。";
+  if (n.endsWith("cer")) return "-cer 动词：在 a、o 前把 c 写成 ç，让它读 [s]（nous commençons, je commençais）。";
+  if (n.endsWith("ayer")) return "-ayer 动词：不发音的 e 前 y 可以变 i，也可以不变（je paie / je paye，je paierai / je payerai）。";
+  if (n === "envoyer") return "-oyer 动词：不发音的 e 前 y 变 i（j'envoie, nous envoyons）；envoyer 的将来时特殊：j'enverrai。";
+  if (n.endsWith("oyer") || n.endsWith("uyer")) return "-oyer / -uyer 动词：不发音的 e 前 y 一定变 i（je nettoie, ils nettoient；je nettoierai），nous / vous 保留 y。";
+  if (["appeler", "jeter"].includes(n)) return "appeler / jeter 型：不发音的 e 前双写辅音（j'appelle, je jette；j'appellerai），nous / vous 不双写（nous appelons）。";
+  if (/é.er$/.test(n)) return "é…er 型（préférer, espérer）：词尾不发音时 é 变 è（je préfère, ils préfèrent），nous / vous 和将来时一般保留 é（nous préférons, je préférerai）。";
+  if (/e.er$/.test(n)) return "e…er 型（acheter, lever）：下一个音节是不发音的 e 时 e 变 è（j'achète, je lèverai），nous / vous 不变（nous achetons）。";
+  return "";
+}
+
+function cjRule(v, t) {
+  const g = v.g, end = v.v.endsWith("er") ? "er" : v.v.endsWith("ir") ? "ir" : "re";
+  const type = g === "irr" ? "不规则动词" : CJ_GROUPS.find(x => x[0] === g)[1] + "动词";
+  const lines = [];
+  const reg = g === "irr" ? null : g === "er2" ? "er" : g;   // 规则变位用哪套词尾
+  switch (t) {
+    case "pres":
+      if (reg) lines.push(`${type}现在时：去掉不定式词尾，加 ${CJ_END[reg].pres}（参照 ${CJ_MODEL[reg]}）。`);
+      else lines.push("现在时：不规则动词没有统一词尾，但大多按“家族”变，记住 je、nous、ils 三个形式就能推出整张表。");
+      if (reg === "er") lines.push("-e, -es, -e, -ent 四个形式发音相同，只有 nous / vous 听得出来。");
+      if (reg === "ir") lines.push("第二组（finir 型）复数加 -iss-；同样以 -ir 结尾的 partir、dormir 不属于这一组。");
+      if (reg === "re") lines.push("il 没有词尾（il attend），词尾的 d 不发音；ils 的 -ent 也不发音。");
+      break;
+    case "imp":
+      lines.push("未完成过去时：用现在时 nous 的形式去掉 -ons 作词干，加 -ais, -ais, -ait, -ions, -iez, -aient（nous finissons → je finissais）。所有动词都这样，唯一例外是 être → j'étais。");
+      break;
+    case "fut":
+      lines.push("简单将来时：不定式作词干（-re 动词去掉词尾 e），加 -ai, -as, -a, -ons, -ez, -ont——词尾就是 avoir 的现在时。");
+      if (CJ_FUT_ST[v.v]) lines.push(`${v.v} 的将来时词干不规则：${CJ_FUT_ST[v.v]}；将来时词干都以 r 结尾。`);
+      break;
+    case "cond":
+      lines.push("条件式现在时 = 将来时的词干 + 未完成过去时的词尾 -ais, -ais, -ait, -ions, -iez, -aient（je parlerais）。");
+      if (CJ_FUT_ST[v.v]) lines.push(`${v.v} 的词干和将来时一样不规则：${CJ_FUT_ST[v.v]}。`);
+      break;
+    case "subj":
+      lines.push("虚拟式现在时：用现在时 ils 的形式去掉 -ent 作词干，加 -e, -es, -e, -ions, -iez, -ent（ils finissent → que je finisse）；nous / vous 和未完成过去时同形。");
+      if (CJ_SUBJ_IRR[v.v]) lines.push(`${v.v} 的虚拟式要单独记：${CJ_SUBJ_IRR[v.v]}。`);
+      else if (g === "irr") lines.push("有两个词干的动词，nous / vous 用 nous 的词干（que je prenne, que nous prenions）。");
+      break;
+    case "pc": case "pqp": case "fa": case "condp": {
+      const aux = { pc: "现在时", pqp: "未完成过去时", fa: "简单将来时", condp: "条件式现在时" }[t];
+      lines.push(`${CJ_TZH[t]} = 助动词 avoir / être 的${aux} + 过去分词。`);
+      lines.push("用 être 的是表示位置移动或状态变化的不及物动词（aller, venir, arriver, partir, entrer, sortir, naître, mourir, rester, tomber…）和所有代词式动词，过去分词要和主语性数配合。");
+      const f = v.t.pc ? cjForm(v, "pc", 0, false).split(" ").pop() : "";
+      if (f) lines.push(reg ? `过去分词按规则变（-er → -é，-ir → -i，-re → -u）：${v.v} → ${f}。` : `${v.v} 的过去分词不规则：${f}。`);
+      break;
+    }
+    case "ps":
+      if (reg) lines.push(`简单过去时（书面语）：${type}去掉词尾，加 ${CJ_END[reg].ps}。`);
+      else lines.push("简单过去时（书面语）：不规则动词分三类词尾：-is 型（je fis, je pris）、-us 型（je fus, j'eus, je pus）、-ins 型（je vins, je tins）；nous / vous 带 ^（-îmes / -ûmes）。");
+      break;
+    case "impe":
+      lines.push("命令式：只有 tu、nous、vous，用现在时去掉主语（finis, finissons, finissez）。");
+      lines.push("-er 动词和像 -er 一样变的动词（ouvrir、offrir）tu 形式去掉 s：parle, va, ouvre；后面接 y / en 时加回 s（vas-y, parles-en）。");
+      if (["être", "avoir", "savoir", "vouloir"].includes(v.v)) lines.push("être, avoir, savoir, vouloir 的命令式借用虚拟式：sois, aie, sache, veuille。");
+      break;
+  }
+  // 类别特点
+  if (g === "er2") { const s = cjEr2(v, t); if (s) lines.push(s); }
+  if (g === "irr") { const f = CJ_FAMILY.find(([vs]) => vs.includes(v.v)); if (f && ["pres", "subj", "impe", "imp"].includes(t)) lines.push(f[1]); }
+  return { title: `变位规律 · ${type} · ${CJ_TZH[t]}`, lines };
+}
 // ---------- 动词变位无限练：动词 × 时态 × 人称随机出题（选择或填空），每个“动词 + 时态”按记忆等级跟踪 ----------
 // 出题顺序：到期该复习的优先，其次答错过的、没练过的，再随机巩固；记录和普通题一样存进答题记录（题号 cj:动词:时态），
 // 所以也算经验、做题日历和今日计划。
@@ -21711,6 +21832,11 @@ function cjAnswer(input, card, fb) {
     table.append(c);
   });
   fb.append(table);
+  // 这一类动词在这个时态的变位规律
+  const rule = cjRule(q.v, q.t), rb = el("div", "cj-rule");
+  rb.append(el("b", null, rule.title));
+  const ul = el("ul"); rule.lines.forEach(t => ul.append(el("li", null, t))); rb.append(ul);
+  fb.append(rb);
   const notes = [];
   if (CJ_COMPOUND.includes(q.t)) notes.push(`助动词用 ${q.v.aux}` + (q.v.aux === "être" ? "，过去分词与主语性数配合" : "") + (CJ_BOTH_AUX.includes(q.v.v) ? `；${q.v.v} 带直接宾语时改用 avoir` : "") + "。");
   if (q.v.v.endsWith("ayer")) notes.push("-ayer 动词 i / y 两种拼法都对（paie / paye）。");
