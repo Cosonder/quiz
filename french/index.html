@@ -1127,6 +1127,13 @@ html.qf #stage .sp-sent { margin: 4px 0; font-size: clamp(1rem, 2.4vh, 1.15rem);
 html.qf #stage .v-ans { height: auto !important; min-height: 0 !important; }
 html.qf #stage .v-ans:has(> .v-pics:not(.v-pics7)), html.qf #stage .v-ans:has(.v-pics:not(.v-pics7)) { flex: 3 1 0 !important; min-height: 0 !important; }
 html.qf .sp-hud-act { white-space: nowrap; }
+/* ---------- 设置页：版本更新记录 ---------- */
+.cl-fold > summary { cursor: pointer; color: var(--accent); font-weight: 600; padding: 4px 0; }
+.cl-ver { padding: 10px 0; border-top: 1px dashed var(--line); }
+.cl-ver:first-of-type { border-top: 0; }
+.cl-head { display: flex; align-items: baseline; gap: 10px; }
+.cl-head b { font-size: 1rem; } .cl-date { color: var(--muted); font-size: .82rem; font-variant-numeric: tabular-nums; }
+.cl-ver ul { margin: 6px 0 0; padding-left: 20px; display: grid; gap: 4px; font-size: .9rem; line-height: 1.55; }
 </style>
 
 <div class="wrap">
@@ -16442,6 +16449,103 @@ function setGoalSection(wrap) {
     xpGoal = Number(val); try { localStorage.setItem("fq-goal", String(xpGoal)); } catch (e) {} planRefresh();
   }));
 }
+// ---------- 版本更新记录：设置页最下面，展开后能看到每个版本改了什么 ----------
+// p：哪个页面的更新（fr 法语页 / st 随机分析页 / 不写表示两个页面都有）。新版本加在最前面。
+const CHANGELOG = [
+  { v: "3.4", d: "2026-11-05", items: [
+    "设置页加了版本号和更新记录（就是这里）。"] },
+  { v: "3.3", d: "2026-11-04", p: "fr", items: [
+    "巴黎塔尖加入药水：8 种药水，打怪有概率掉落，商人也卖；A1–B1 有 3 个药水栏，B2–C2 有 2 个。"] },
+  { v: "3.2", d: "2026-11-04", p: "fr", items: [
+    "巴黎塔尖加入 A1–C2 六档难度，每档按不同比例出各等级的题。",
+    "集齐红、绿、蓝三把钥匙可以进入第四层“终局”，通关终局才解锁下一档难度。",
+    "难度解锁进度和进行中的一局都跟着答题记录同步，可以换设备接着爬。"] },
+  { v: "3.1", d: "2026-11-04", items: [
+    "做题全屏：答题、背单词、变位一屏放下，不用上下滚动；右上角的小图标返回上一级。",
+    { p: "fr", t: "巴黎塔尖：Boss 要把血打到零才算赢；遗物图标移上去或点一下显示效果；修复 Boss 战中离开后回不去的问题。" }] },
+  { v: "3.0", d: "2026-11-04", p: "fr", items: [
+    "新模式“巴黎塔尖”（背单词里的肉鸽玩法）：三层地图，战斗、精英、商人、咖啡馆、事件、宝箱和遗物。",
+    "Boss 战有 800 道题：句子用你这一局背过的生词，再考一个语法点和一个动词变位。",
+    "按王菲《巴黎塔尖》和周杰伦《告白气球》的意象写的街头事件，一共 22 个。"] },
+  { v: "2.3", d: "2026-11-04", items: [
+    { p: "fr", t: "环法之旅：一张可以自由探索的像素法国地图，52 站从 A1 到 C1，每站考固定的知识点，题目随机抽。" },
+    { p: "fr", t: "53 张像素明信片（26 座城市 + 巴黎 20 个区和 7 个省），只能在环法之旅里获得。" },
+    "主题背景：页面拉到底能看到整幅背景，还有星星、流星、蝴蝶、海鸥等动态效果。",
+    "做题日历换成主题色，商店套上主题像素边框。",
+    { p: "fr", t: "背单词闯关的星星、锁和关卡数字换成像素风。" }] },
+  { v: "2.2", d: "2026-11-03", items: [
+    "公开网站可以用邮箱登录，在多台设备之间同步做题记录（文件备份 / 恢复随之去掉）。",
+    "新增“设置”页，账号与同步放在最上面。",
+    "设置里加了“游戏模式”开关：金币、每日任务、商店、宝箱只在打开时出现。",
+    "连对护盾、宝箱和开箱动画；商店分成道具和外观两部分。",
+    "外观：五款金币皮肤、四套主题配色、连对特效和音效、称号框。",
+    { p: "fr", t: "背单词：125 组易混词，困难模式优先用作干扰项；新增 40 关闯关，开练前先预览。" },
+    { p: "fr", t: "49 张新的例句配图。" }] },
+  { v: "2.1", d: "2026-11-02", items: [
+    "每日任务、金币和商店。",
+    "连对计数（combo）。",
+    { p: "fr", t: "背单词新题型“例句识图”；例句填空题显示配图。" }] },
+  { v: "2.0", d: "2026-10-31", items: [
+    "“错题本”升级为“学习进度”：间隔复习、经验值和等级。",
+    "每日计划：设定每天的经验目标，记录连续天数。",
+    "公开网站可以离线使用，也能添加到主屏幕。",
+    { p: "fr", t: "新增“变位”练习。" },
+    { p: "fr", t: "模拟卷只计算实际答题时间，可以暂停。" }] },
+  { v: "1.8", d: "2026-10-21", items: [
+    { p: "fr", t: "每道题标上 CEFR 难度（A1–C2）；685 道旧题补上提示。" },
+    { p: "st", t: "每道题标上难度（基础 / 中等 / 困难）。" },
+    "可以把做题记录备份成文件，再恢复回来。"] },
+  { v: "1.7", d: "2026-10-19", items: [
+    "做题日历和每日提醒。",
+    "按标签浏览题目，错题本也能按标签看；标签搜索可以随机顺序。"] },
+  { v: "1.6", d: "2026-10-15", items: [
+    "支持键盘操作，加了“上一题”按钮。",
+    "错题本里显示加粗和下划线标记。",
+    { p: "fr", t: "《Advanced French Grammar》每章约 40 道题。" },
+    "上线公开网站。"] },
+  { v: "1.5", d: "2026-10-14", items: [
+    "学习模式：每组题开始前先复习这组的知识点。",
+    { p: "st", t: "新增四章题组，并加入 Pascucci《Probability Theory I》。" }] },
+  { v: "1.4", d: "2026-10-13", p: "fr", items: [
+    "新题组：带提示的介词题；depuis / il y a / pendant；按词尾判断名词阴阳性。"] },
+  { v: "1.3", d: "2026-10-09", items: [
+    { p: "fr", t: "新题组：数字（第 37 章）。" },
+    { p: "fr", t: "背单词：每个词配图，新增看词选图题、逐个浏览和中文释义，词库扩到 400 个词。" },
+    { p: "st", t: "Le Gall 定义与定理题组，带提示。" }] },
+  { v: "1.2", d: "2026-10-08", items: [
+    { p: "fr", t: "新增模拟卷（B1 全国卷格式）：自动判分，作文由 Claude 批改。" },
+    { p: "fr", t: "新增三组介词题；可以设置每组题数。" },
+    { p: "fr", t: "新增“背单词”：200 个 B1–B2 词，四种题型，字母拼写，自动朗读。" },
+    { p: "st", t: "两套模拟考试（高考风格和大学期末），附解答。" }] },
+  { v: "1.1", d: "2026-10-07", p: "fr", items: [
+    "听力题：用设备的法语语音朗读，包括听写辨认和长篇听力。",
+    "可以跳到指定题号；每组记住上次做到哪里。"] },
+  { v: "1.0", d: "2026-10-07", items: [
+    { p: "fr", t: "第一个版本：按《Advanced French Grammar》分章答题。" },
+    { p: "st", t: "第一个版本：随机分析练习（Le Gall 第一轮）。" }] },
+];
+// 某个页面能看到的记录：去掉别的页面专属的条目，空了的版本不显示
+function changelogFor(page) {
+  return CHANGELOG.map(x => ({ v: x.v, d: x.d, items: (!x.p || x.p === page) ? x.items.map(it => typeof it === "string" ? it : (!it.p || it.p === page) ? it.t : null).filter(Boolean) : [] }))
+    .filter(x => x.items.length);
+}
+// 设置页最下面的“版本”卡片
+function changelogCard(wrap, page) {
+  const list = changelogFor(page), now = list[0];
+  const card = setSection(wrap, "版本", `当前版本 v${now.v} · ${now.d} 更新`);
+  card.classList.add("cl-card");
+  const d = el("details", "cl-fold");
+  const s = el("summary", null, `查看更新记录（共 ${list.length} 个版本）`);
+  d.append(s);
+  list.forEach(x => {
+    const box = el("div", "cl-ver");
+    const h = el("div", "cl-head"); h.append(el("b", null, "v" + x.v), el("span", "cl-date", x.d));
+    const ul = el("ul"); x.items.forEach(t => ul.append(el("li", null, t)));
+    box.append(h, ul); d.append(box);
+  });
+  card.append(d);
+  return card;
+}
 // ---------- 做题记录的公共定义（账号同步用） ----------
 // 记录分四类：答题、模拟卷、单词、金币和道具；每条记录按内容（键排序后）算指纹去重
 const REC_COLLS = ["answers", "exams", "vocab", "game"];
@@ -21333,6 +21437,7 @@ function renderSettings() {
     r.append(el("p", "sub", voice ? `朗读用的声音：${voice.name}（${voice.lang}）。想换更好听的声音，可以在系统设置的“辅助功能 → 朗读内容 → 声音”里下载法语的增强版声音。` : "这台设备上没找到法语朗读声音，可以在系统设置里添加法语语音。"));
   } else r.append(el("p", "sub", "这个浏览器不支持朗读。"));
 
+  changelogCard(wrap, "fr");   // 版本号和更新记录
   wrap.append(el("p", "sub set-foot", "设置只保存在这台设备的浏览器里，改动马上生效（背单词的题型从下一组开始）。"));
   stage.append(wrap);
 }
