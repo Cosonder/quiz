@@ -3167,7 +3167,7 @@ function homeOf(q) {
   return "ch:" + q.ch;
 }
 
-function makeSet(key) { return { key, label: labelOf(key), qs: members(key) }; }
+function makeSet(key) { const qs = members(key); return { key, label: labelOf(key), qs: typeof qlApply === "function" ? qlApply(qs, key) : qs }; }   // 法语页：按设置里的难度等级挑题
 // 记住每一组做到第几题（只存在这台设备的浏览器里）
 function loadPos() { try { return JSON.parse(localStorage.getItem("sq-pos") || "{}"); } catch (e) { return {}; } }
 function savePos() { try { const m = loadPos(); m[set.key] = idx; localStorage.setItem("sq-pos", JSON.stringify(m)); } catch (e) {} }
@@ -3182,6 +3182,7 @@ function startSet(key, fresh) {
   const saved = fresh || /^(rev|learn|plan|tour):/.test(key) ? 0 : Number(loadPos()[key] || 0);   // 复习、学习题组每次重新挑题，从头做
   idx = saved > 0 && saved < set.qs.length ? saved : 0;
   bStart = idx;
+  if (!set.qs.length && typeof qlEmpty === "function") { renderToc(); qlEmpty(); return; }   // 这一组在当前难度下没有题
   renderToc(); beginBatch();
 }
 // 从第 from 题（下标）开始新的一组
@@ -4989,6 +4990,9 @@ function setGoalSection(wrap) {
 // ---------- 版本更新记录：设置页最下面，展开后能看到每个版本改了什么 ----------
 // p：哪个页面的更新（fr 法语页 / st 随机分析页 / 不写表示两个页面都有）。新版本加在最前面。
 const CHANGELOG = [
+  { v: "3.5", d: "2026-11-05", p: "fr", items: [
+    "设置里加了“难度等级”：零基础、A1–C2、关闭共 8 档，答题时按所选难度的比例出题（例如 A1 档 A1:A2 = 9:1）。",
+    "新增“第零轮 · 零基础入门”：58 道最基础的题——数字 0–100、星期、月份、问候、自我介绍、礼貌用语。"] },
   { v: "3.4", d: "2026-11-05", items: [
     "设置页加了版本号和更新记录（就是这里）。"] },
   { v: "3.3", d: "2026-11-04", p: "fr", items: [

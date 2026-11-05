@@ -1199,6 +1199,7 @@ const CH = new Map();
 PARTS.forEach(pt => pt.chs.forEach(([n, t, zh, p]) => CH.set(n, { n, t, zh, p, part: pt.n })));
 const chName = c => `第 ${c.n} 章 · ${c.zh}`;
 const ROUNDS = [
+  { id: "fr-r0", kind: "grammar", name: "第零轮 · 零基础入门" },
   { id: "fr-r1", kind: "grammar", name: "第一轮 · 综合" },
   { id: "fr-r2", kind: "grammar", name: "第二轮 · 冠词" },
   { id: "fr-r3", kind: "grammar", name: "第三轮 · 人称代词" },
@@ -9126,7 +9127,7 @@ const KP_OF = {
   "fr-c41-42": "c41-firs",
 };
 // 标签：分组（目录里按组勾选）和每道题的标签
-const TAG_GROUPS = [{"g": "难度", "tags": ["A1", "A2", "B1", "B2", "C1", "C2"]}, {"g": "词类", "tags": ["名词", "冠词", "形容词", "副词", "人称代词", "关系代词", "指示词", "主有词", "泛指词", "疑问词", "介词", "连词", "数词"]}, {"g": "动词形式", "tags": ["直陈式现在时", "复合过去时", "未完成过去时", "愈过去时", "简单过去时", "简单将来时", "先将来时", "近将来时/近过去时", "条件式", "虚拟式", "命令式", "不定式", "现在分词/副动词", "过去分词"]}, {"g": "动词用法", "tags": ["助动词 être/avoir", "过去分词配合", "代词式动词", "被动态", "无人称结构", "情态动词", "savoir/connaître", "时态配合"]}, {"g": "句子结构", "tags": ["疑问句", "否定", "感叹句", "间接引语", "关系从句", "条件句 si", "比较级/最高级", "时间表达", "语序", "c'est / il est", "并列与连接", "强调"]}, {"g": "词形与书写", "tags": ["阴阳性", "单复数", "性数配合", "省音/缩合", "发音", "拼写", "标点", "语域"]}, {"g": "词汇", "tags": ["搭配", "固定表达", "词义辨析", "构词"]}, {"g": "常用小词", "tags": ["de", "à", "en", "y", "que", "ce/cela", "tout", "on", "ne"]}, {"g": "听力", "tags": ["听力理解", "听写辨音"]}];
+const TAG_GROUPS = [{"g": "难度", "tags": ["零基础", "A1", "A2", "B1", "B2", "C1", "C2"]}, {"g": "词类", "tags": ["名词", "冠词", "形容词", "副词", "人称代词", "关系代词", "指示词", "主有词", "泛指词", "疑问词", "介词", "连词", "数词"]}, {"g": "动词形式", "tags": ["直陈式现在时", "复合过去时", "未完成过去时", "愈过去时", "简单过去时", "简单将来时", "先将来时", "近将来时/近过去时", "条件式", "虚拟式", "命令式", "不定式", "现在分词/副动词", "过去分词"]}, {"g": "动词用法", "tags": ["助动词 être/avoir", "过去分词配合", "代词式动词", "被动态", "无人称结构", "情态动词", "savoir/connaître", "时态配合"]}, {"g": "句子结构", "tags": ["疑问句", "否定", "感叹句", "间接引语", "关系从句", "条件句 si", "比较级/最高级", "时间表达", "语序", "c'est / il est", "并列与连接", "强调"]}, {"g": "词形与书写", "tags": ["阴阳性", "单复数", "性数配合", "省音/缩合", "发音", "拼写", "标点", "语域"]}, {"g": "词汇", "tags": ["搭配", "固定表达", "词义辨析", "构词"]}, {"g": "常用小词", "tags": ["de", "à", "en", "y", "que", "ce/cela", "tout", "on", "ne"]}, {"g": "听力", "tags": ["听力理解", "听写辨音"]}];
 const TAGS_OF = {
   "fr-c1-1": ["单复数", "名词", "主有词"],
   "fr-c1-10": ["疑问词", "性数配合"],
@@ -13642,7 +13643,7 @@ const LEVEL_OF = {
   "fr-r9-8": "B1",
   "fr-r9-9": "A2",
 };
-const LEVELS = ["A1", "A2", "B1", "B2", "C1", "C2"];
+const LEVELS = ["零基础", "A1", "A2", "B1", "B2", "C1", "C2"];
 // 老题补写的提示（题目本身没有 hint 时使用）
 const HINT_OF = {
   "fr-r1-1": "aller 的复合过去时用哪个助动词？再看主语。",
@@ -14129,6 +14130,82 @@ const HINT_OF = {
   "fr-r9-8": "找 l'année prochaine 后面的 j'aimerais。",
   "fr-r9-9": "听 dure environ 后面；et quart 和 et demie 不一样。",
 };
+// 零基础题组：只考最最简单的法语——数字 0–100、星期、月份、问候、自我介绍、礼貌用语。难度标为“零基础”。
+// 设置里难度等级选“零基础”时，只出这一组的题。
+(() => {
+  const Z = [
+    // ---------- 数字 ----------
+    ["数字", 37, "« un » 是数字几？", ["1", "2", "3", "10"], 0, "un = 1，阴性是 une。", "最小的那个数"],
+    ["数字", 37, "« trois » 是数字几？", ["2", "3", "13", "30"], 1, "trois = 3。treize 是 13，trente 是 30。", "比 deux 大一"],
+    ["数字", 37, "5 用法语怎么说？", ["six", "cinq", "quatre", "sept"], 1, "cinq = 5，读音像“桑克”。", "c 开头"],
+    ["数字", 37, "« huit » 是数字几？", ["6", "7", "8", "9"], 2, "huit = 8，h 不发音。", "h 不发音"],
+    ["数字", 37, "10 用法语怎么说？", ["dix", "deux", "douze", "dix-huit"], 0, "dix = 10。deux 是 2，douze 是 12。", "三个字母"],
+    ["数字", 37, "« douze » 是数字几？", ["2", "11", "12", "20"], 2, "douze = 12（onze 11，douze 12，treize 13）。", "一打鸡蛋"],
+    ["数字", 37, "« quinze » 是数字几？", ["5", "14", "15", "50"], 2, "quinze = 15。cinquante 是 50。", "cinq 的“十几”"],
+    ["数字", 37, "17 用法语怎么说？", ["dix-sept", "sept", "soixante-dix-sept", "seize"], 0, "17–19 是 dix + 个位：dix-sept、dix-huit、dix-neuf。", "十 + 七"],
+    ["数字", 37, "« vingt » 是数字几？", ["2", "12", "20", "200"], 2, "vingt = 20，t 一般不发音。", "两个十"],
+    ["数字", 37, "21 用法语怎么说？", ["vingt-un", "vingt et un", "vingt-deux", "deux-un"], 1, "21、31、41、51、61 中间加 et：vingt et un、trente et un……", "中间有个 et"],
+    ["数字", 37, "« trente » 是数字几？", ["3", "13", "30", "33"], 2, "trente = 30。", "trois 的“几十”"],
+    ["数字", 37, "40 用法语怎么说？", ["quatorze", "quarante", "quatre", "quatre-vingts"], 1, "quarante = 40。quatorze 是 14，quatre-vingts 是 80。", "quatre 的“几十”"],
+    ["数字", 37, "« cinquante » 是数字几？", ["5", "15", "50", "55"], 2, "cinquante = 50。", "cinq 的“几十”"],
+    ["数字", 37, "60 用法语怎么说？", ["soixante", "seize", "six", "soixante-dix"], 0, "soixante = 60。soixante-dix 是 70。", "s 开头，很长"],
+    ["数字", 37, "« soixante-dix » 是数字几？", ["16", "60", "70", "76"], 2, "70 = soixante-dix（60 + 10），71 = soixante et onze。", "60 + 10"],
+    ["数字", 37, "80 用法语怎么说？", ["huitante", "quatre-vingts", "quatre-dix", "octante"], 1, "法国说 quatre-vingts（4 × 20）。比利时、瑞士有的地方说 huitante。", "4 个 20"],
+    ["数字", 37, "« quatre-vingt-dix » 是数字几？", ["14", "80", "90", "94"], 2, "90 = quatre-vingt-dix（4 × 20 + 10）。", "4 × 20 + 10"],
+    ["数字", 37, "100 用法语怎么说？", ["mille", "cent", "dix", "cents"], 1, "cent = 100，mille = 1000。", "c 开头"],
+    ["数字", 37, "« zéro » 是数字几？", ["0", "1", "10", "100"], 0, "zéro = 0。", "什么都没有"],
+    ["数字", 37, "J'ai ___ ans.（我 18 岁。）", ["dix-huit", "huit", "quatre-vingts", "dix-sept"], 0, "18 = dix-huit。说年龄用 avoir：J'ai 18 ans.", "十 + 八"],
+    // ---------- 星期 ----------
+    ["星期", 37, "« lundi » 是星期几？", ["星期一", "星期二", "星期六", "星期日"], 0, "lundi = 星期一（lune 月亮）。", "一周的第一天"],
+    ["星期", 37, "星期三用法语怎么说？", ["mardi", "mercredi", "jeudi", "samedi"], 1, "mercredi = 星期三。顺序：lundi, mardi, mercredi, jeudi, vendredi, samedi, dimanche。", "m 开头，较长"],
+    ["星期", 37, "« vendredi » 是星期几？", ["星期三", "星期四", "星期五", "星期六"], 2, "vendredi = 星期五。", "周末前一天"],
+    ["星期", 37, "星期日用法语怎么说？", ["samedi", "dimanche", "lundi", "jeudi"], 1, "dimanche = 星期日，samedi = 星期六。", "d 开头"],
+    ["星期", 37, "« mardi » 后面一天是？", ["lundi", "jeudi", "mercredi", "vendredi"], 2, "mardi（二）→ mercredi（三）。", "星期三"],
+    ["星期", 37, "« jeudi » 是星期几？", ["星期二", "星期四", "星期五", "星期日"], 1, "jeudi = 星期四。", "j 开头"],
+    ["星期", 37, "星期六用法语怎么说？", ["samedi", "dimanche", "semaine", "soir"], 0, "samedi = 星期六。semaine 是“一周”。", "s 开头"],
+    // ---------- 月份 ----------
+    ["月份", 37, "« janvier » 是几月？", ["一月", "六月", "七月", "十二月"], 0, "janvier = 一月。", "一年的开头"],
+    ["月份", 37, "三月用法语怎么说？", ["mai", "mars", "mardi", "avril"], 1, "mars = 三月（注意和 mardi 星期二区分）。", "和火星同名"],
+    ["月份", 37, "« mai » 是几月？", ["三月", "四月", "五月", "八月"], 2, "mai = 五月。", "只有三个字母"],
+    ["月份", 37, "« juillet » 是几月？", ["六月", "七月", "八月", "九月"], 1, "juin = 六月，juillet = 七月，容易混。", "法国国庆节在这个月"],
+    ["月份", 37, "八月用法语怎么说？", ["août", "avril", "automne", "octobre"], 0, "août = 八月，读音像“乌特”。", "带 û"],
+    ["月份", 37, "« décembre » 是几月？", ["十月", "十一月", "十二月", "一月"], 2, "décembre = 十二月，有圣诞节。", "一年的最后"],
+    ["月份", 37, "九月用法语怎么说？", ["septembre", "sept", "novembre", "octobre"], 0, "septembre = 九月（不是七月）。", "开学的月份"],
+    ["月份", 37, "« avril » 是几月？", ["二月", "四月", "五月", "十月"], 1, "avril = 四月。", "a 开头"],
+    // ---------- 问候 ----------
+    ["问候", 1, "« Bonjour » 是什么意思？", ["你好 / 早上好", "晚安", "再见", "谢谢"], 0, "Bonjour 白天见面时用。", "白天见面说"],
+    ["问候", 1, "晚上见面打招呼说？", ["Bonne nuit", "Bonsoir", "Bonjour", "Salut"], 1, "Bonsoir = 晚上好。Bonne nuit 是睡前说的“晚安”。", "soir = 晚上"],
+    ["问候", 1, "« Au revoir » 是什么意思？", ["你好", "再见", "请", "对不起"], 1, "Au revoir = 再见。", "分开时说"],
+    ["问候", 1, "和朋友随便打招呼，可以说？", ["Salut !", "Merci !", "Pardon !", "Bonne nuit !"], 0, "Salut 用于熟人之间，见面、告别都能说。", "很随意"],
+    ["问候", 1, "« Ça va ? » 是什么意思？", ["你好吗？", "你叫什么？", "多少钱？", "几点了？"], 0, "Ça va ? = 还好吗？回答 Ça va bien.（挺好的）", "问状态"],
+    ["问候", 1, "睡觉前说“晚安”是？", ["Bonsoir", "Bonne nuit", "Bonjour", "À demain"], 1, "Bonne nuit 用于睡前道别。", "nuit = 夜"],
+    ["问候", 1, "« À demain ! » 是什么意思？", ["明天见！", "一会儿见！", "下周见！", "欢迎！"], 0, "demain = 明天。", "demain = 明天"],
+    // ---------- 自我介绍 ----------
+    ["自我介绍", 1, "« Je m'appelle Marie. » 是什么意思？", ["我叫 Marie。", "我是法国人。", "我住在巴黎。", "我喜欢 Marie。"], 0, "s'appeler = 叫（名字）。", "说名字"],
+    ["自我介绍", 1, "问别人“你叫什么名字？”说？", ["Comment tu t'appelles ?", "Tu as quel âge ?", "Où tu habites ?", "Ça va ?"], 0, "Comment tu t'appelles ? / Comment vous appelez-vous ?（礼貌）", "comment = 怎么"],
+    ["自我介绍", 1, "« Je suis chinois. » 是什么意思？", ["我是中国人。", "我会说中文。", "我住在中国。", "我喜欢中国。"], 0, "chinois（男）/ chinoise（女）= 中国人。", "国籍"],
+    ["自我介绍", 1, "« J'habite à Paris. » 是什么意思？", ["我住在巴黎。", "我喜欢巴黎。", "我去巴黎。", "我来自巴黎。"], 0, "habiter = 居住。", "habiter = 住"],
+    ["自我介绍", 1, "“我 20 岁。”用法语怎么说？", ["J'ai vingt ans.", "Je suis vingt ans.", "J'ai vingt.", "Je vingt ans."], 0, "法语说年龄用 avoir：J'ai … ans.", "用 avoir"],
+    ["自我介绍", 1, "« Je suis étudiant. » 是什么意思？", ["我是学生。", "我是老师。", "我在学习。", "我是医生。"], 0, "étudiant（男）/ étudiante（女）= 大学生。", "在学校读书"],
+    ["自我介绍", 1, "“我说一点法语。”用法语怎么说？", ["Je parle un peu français.", "Je suis un peu français.", "J'ai un peu français.", "Je parle beaucoup français."], 0, "parler = 说，un peu = 一点。", "parler = 说"],
+    ["自我介绍", 1, "« Enchanté ! » 什么时候说？", ["初次见面时", "吃饭前", "道歉时", "睡觉前"], 0, "Enchanté(e) = 很高兴认识你。", "认识新朋友"],
+    // ---------- 礼貌用语 ----------
+    ["礼貌用语", 1, "« Merci » 是什么意思？", ["谢谢", "请", "对不起", "不客气"], 0, "Merci = 谢谢，Merci beaucoup = 非常感谢。", "感谢"],
+    ["礼貌用语", 1, "别人说 Merci，你回答“不客气”：", ["De rien.", "S'il vous plaît.", "Pardon.", "Bonjour."], 0, "De rien = 不客气（直译“没什么”）。", "rien = 没什么"],
+    ["礼貌用语", 1, "« S'il vous plaît » 是什么意思？", ["请", "谢谢", "再见", "没关系"], 0, "S'il vous plaît = 请（礼貌）；对熟人说 s'il te plaît。", "点餐时常用"],
+    ["礼貌用语", 1, "不小心撞到别人，说？", ["Pardon !", "Merci !", "Salut !", "Bravo !"], 0, "Pardon / Excusez-moi = 对不起、打扰了。", "道歉"],
+    ["礼貌用语", 1, "« Excusez-moi » 是什么意思？", ["打扰一下 / 对不起", "欢迎", "祝你好运", "干杯"], 0, "Excusez-moi 用来引起注意或道歉。", "问路前先说"],
+    ["礼貌用语", 1, "« Oui » 和 « Non » 是什么意思？", ["是 / 不是", "好 / 坏", "大 / 小", "来 / 去"], 0, "oui = 是，non = 不。", "最基本的回答"],
+    ["礼貌用语", 1, "“非常感谢！”用法语怎么说？", ["Merci beaucoup !", "Beaucoup merci !", "Très merci !", "Merci très !"], 0, "beaucoup = 很多，放在 merci 后面。", "merci + 很多"],
+    ["礼貌用语", 1, "« Bon appétit ! » 什么时候说？", ["吃饭前", "睡觉前", "告别时", "生日时"], 0, "Bon appétit = 祝你胃口好。", "开饭了"],
+  ];
+  Z.forEach(([cat, ch, q, opts, a, exp, hint], i) => {
+    const id = "fr-r0-" + (i + 1);
+    BANK.push({ id, ch, cat, q, opts, a, exp, hint });
+    LEVEL_OF[id] = "零基础";
+    TAGS_OF[id] = ["零基础入门", cat];
+  });
+})();
 // 题库整理：所有题库数据（含额外题库）载入后，把知识点、难度、标签、提示挂到每道题上
 const ROUND_NAMES = Object.fromEntries(ROUNDS.map(r => [r.id, r.name.split(" · ")[0]]));
 BANK.forEach(q => { q.kp = KP_OF[q.id]; });
@@ -14257,7 +14334,7 @@ function homeOf(q) {
   return "ch:" + q.ch;
 }
 
-function makeSet(key) { return { key, label: labelOf(key), qs: members(key) }; }
+function makeSet(key) { const qs = members(key); return { key, label: labelOf(key), qs: typeof qlApply === "function" ? qlApply(qs, key) : qs }; }   // 法语页：按设置里的难度等级挑题
 // 记住每一组做到第几题（只存在这台设备的浏览器里）
 function loadPos() { try { return JSON.parse(localStorage.getItem("fq-pos") || "{}"); } catch (e) { return {}; } }
 function savePos() { try { const m = loadPos(); m[set.key] = idx; localStorage.setItem("fq-pos", JSON.stringify(m)); } catch (e) {} }
@@ -14272,6 +14349,7 @@ function startSet(key, fresh) {
   const saved = fresh || /^(rev|learn|plan|tour):/.test(key) ? 0 : Number(loadPos()[key] || 0);   // 复习、学习题组每次重新挑题，从头做
   idx = saved > 0 && saved < set.qs.length ? saved : 0;
   bStart = idx;
+  if (!set.qs.length && typeof qlEmpty === "function") { renderToc(); qlEmpty(); return; }   // 这一组在当前难度下没有题
   renderToc(); beginBatch();
 }
 // 从第 from 题（下标）开始新的一组
@@ -16452,6 +16530,9 @@ function setGoalSection(wrap) {
 // ---------- 版本更新记录：设置页最下面，展开后能看到每个版本改了什么 ----------
 // p：哪个页面的更新（fr 法语页 / st 随机分析页 / 不写表示两个页面都有）。新版本加在最前面。
 const CHANGELOG = [
+  { v: "3.5", d: "2026-11-05", p: "fr", items: [
+    "设置里加了“难度等级”：零基础、A1–C2、关闭共 8 档，答题时按所选难度的比例出题（例如 A1 档 A1:A2 = 9:1）。",
+    "新增“第零轮 · 零基础入门”：58 道最基础的题——数字 0–100、星期、月份、问候、自我介绍、礼貌用语。"] },
   { v: "3.4", d: "2026-11-05", items: [
     "设置页加了版本号和更新记录（就是这里）。"] },
   { v: "3.3", d: "2026-11-04", p: "fr", items: [
@@ -16740,7 +16821,7 @@ function tocItem({ no, title, zh, badge, badgeCls, current, disabled, onClick })
 }
 function groupEntry(key, { no, title, zh }) {
   const quiz = view === "quiz";
-  const c = quiz ? members(key).length : (bookCache ? bookCache.wrong.filter(d => inGroup(key, BY_ID.get(d.qid))).length : 0);
+  const c = quiz ? qlApply(members(key), key).length : (bookCache ? bookCache.wrong.filter(d => inGroup(key, BY_ID.get(d.qid))).length : 0);
   return tocItem({
     no, title, zh,
     badge: quiz ? (c ? `${c} 题` : "—") : (c ? `${c} 错` : "—"),
@@ -16823,6 +16904,70 @@ function renderOldToc(toc) {
       return groupEntry(k, { no: String(c.n), title: c.t, zh: `${c.zh} · p.${c.p}` });
     }));
   });
+}
+// ---------- 答题的难度等级（设置里选）：零基础 / A1–C2 / 关闭 ----------
+// 选某一档时，每个题组按下面的比例从各等级的题里抽（零基础只出零基础题；关闭时出全部题）。
+// 只影响“答题”页的题组（轮次、章节、标签、听力）；复习、今日计划、环法之旅、巴黎塔尖不受影响。
+const QL_OPTS = [["zero", "零基础"], ["A1", "A1"], ["A2", "A2"], ["B1", "B1"], ["B2", "B2"], ["C1", "C1"], ["C2", "C2"], ["off", "关闭难度等级"]];
+const QL_MIX = {
+  zero: { "零基础": 1 },
+  A1: { A1: 9, A2: 1 },
+  A2: { A1: .5, A2: 9, B1: .5 },
+  B1: { A2: .5, B1: 9, B2: .5 },
+  B2: { B1: .5, B2: 9, C1: .5 },
+  C1: { B2: .5, C1: 9, C2: .5 },
+  C2: { C1: 1, C2: 9 },
+  off: null,
+};
+let qLevel = (() => { try { const v = localStorage.getItem("fq-qlevel"); return QL_MIX.hasOwnProperty(v) ? v : "off"; } catch (e) { return "off"; } })();
+const qlName = k => (QL_OPTS.find(x => x[0] === k) || [k, k])[1];
+function qlMixText(k) {
+  const m = QL_MIX[k];
+  if (!m) return "出题库里所有难度的题。";
+  const tot = Object.values(m).reduce((a, b) => a + b, 0);
+  return k === "zero" ? "只出“零基础”的题（数字、星期、月份、问候、自我介绍、礼貌用语）。" : "出题比例：" + Object.entries(m).map(([l, w]) => `${l} ${Math.round(w / tot * 100)}%`).join(" · ") + "。";
+}
+// 固定种子的随机数：同一个题组、同一档难度，每次排出来的题一样（这样“做到第几题”还对得上）
+function qlRng(str) { let h = 2166136261; for (const c of str) { h ^= c.charCodeAt(0); h = Math.imul(h, 16777619); } return () => { h += 0x6D2B79F5; let t = h; t = Math.imul(t ^ t >>> 15, t | 1); t ^= t + Math.imul(t ^ t >>> 7, t | 61); return ((t ^ t >>> 14) >>> 0) / 4294967296; }; }
+function qlApply(list, key) {
+  const mix = QL_MIX[qLevel];
+  if (!mix || /^(rev|learn|plan|tour):/.test(key)) return list;
+  const pools = {}; Object.keys(mix).forEach(l => { pools[l] = list.filter(q => q.level === l); });
+  const have = Object.keys(mix).filter(l => pools[l].length);
+  if (!have.length) return [];
+  // 按比例定每个等级出几道：总数取到“某个等级的题用完”为止，这样比例不走样
+  const W = have.reduce((a, l) => a + mix[l], 0);
+  const N = Math.min(...have.map(l => pools[l].length * W / mix[l]));
+  const want = {}; have.forEach(l => { want[l] = Math.max(1, Math.round(N * mix[l] / W)); want[l] = Math.min(want[l], pools[l].length); });
+  // 按权重交错排开（同一等级里保持题组原来的顺序）
+  const rnd = qlRng(key + "|" + qLevel), out = [], used = {}; have.forEach(l => { used[l] = 0; });
+  while (have.some(l => used[l] < want[l])) {
+    const left = have.filter(l => used[l] < want[l]), tot = left.reduce((a, l) => a + mix[l], 0);
+    let roll = rnd() * tot; const l = left.find(x => (roll -= mix[x]) < 0) || left[0];
+    out.push(pools[l][used[l]++]);
+  }
+  return out;
+}
+// 这一组在当前难度下没有题
+function qlEmpty() {
+  stage.innerHTML = "";
+  const card = el("section", "card");
+  card.append(el("h3", null, `这一组没有「${qlName(qLevel)}」难度的题`), el("p", "sub", qlMixText(qLevel) + " 可以换一组，或者在“设置”里换难度等级。"));
+  const row = el("div", "actions");
+  if (qLevel === "zero") { const b = el("button", "btn", "去做零基础入门"); b.type = "button"; b.addEventListener("click", () => startSet("fr-r0", true)); row.append(b); }
+  const s = el("button", "btn ghost", "去设置"); s.type = "button"; s.addEventListener("click", () => switchView("settings")); row.append(s);
+  card.append(row); stage.append(card);
+}
+// 设置页的“难度等级”
+function qlSection(wrap) {
+  const sec = setSection(wrap, "难度等级", "决定“答题”页每组题出哪些难度。不影响巴黎塔尖、环法之旅、复习和今日计划。");
+  const note = el("p", "sub");
+  sec.append(setSelectRow("setQLevel", "难度等级", QL_OPTS, qLevel, val => {
+    qLevel = val; try { localStorage.setItem("fq-qlevel", val); } catch (e) {}
+    note.textContent = qlMixText(val);
+    if (typeof set !== "undefined" && set && !/^(rev|learn|plan|tour):/.test(set.key)) { set = makeSet(set.key); idx = 0; bStart = 0; answers = {}; score = 0; }   // 回到答题页时按新难度重新排题
+  }), note);
+  note.textContent = qlMixText(qLevel);
 }
 // ---------- 答题 ----------
 function updateProgress(done) {
@@ -17190,6 +17335,7 @@ function switchView(v, setKey) {
   if (v === "book") { renderBook(); return; }
   if (setKey) { startSet(setKey); return; }
   renderToc();
+  if (set && !set.qs.length && typeof qlEmpty === "function") { qlEmpty(); return; }
   if (rv) { renderReview(); return; }
   if (answers[idx] !== undefined) idx++;
   idx < bEnd() ? renderQuestion() : renderResult();
@@ -21414,6 +21560,7 @@ function renderSettings() {
   setGameSection(wrap);
 
   setQuizSection(wrap);
+  qlSection(wrap);   // 难度等级
 
   // 背单词
   const v = section("背单词", "难度为“困难”时，干扰选项优先用易混词（意思、用法容易混，如 prêter / emprunter），再用拼写相近的词，答完显示辨析。");
