@@ -1001,6 +1001,14 @@ html[data-font="times"] body { font-size: 17px; }
 .px-lock.big { width: 36px; height: 40px; }
 .shop-hero { padding: 16px; gap: 10px; }
 .shop-hero .shop-name b { font-size: 1.15rem; }
+.feat-lock-h { display: flex; align-items: center; gap: 10px; font-size: 1.05rem; }
+.feat-lock-h .px-lock { width: 18px; height: 20px; margin: 0; }
+.feat-lock { border-style: dashed; }
+.feat-prev { background-size: 70% auto; background-position: center; background-repeat: no-repeat; }
+.feat-prev.feat-calendar { display: grid; grid-template-columns: repeat(7, 6px); grid-auto-rows: 6px; gap: 2px; place-content: center; }
+.feat-prev .fc { display: block; width: 6px; height: 6px; border-radius: 1px; background: var(--h0, #e3e8f0); }
+.feat-prev .fc.l1 { background: var(--h1, #c6d8ff); } .feat-prev .fc.l2 { background: var(--h2, #8fb2ff); } .feat-prev .fc.l3 { background: var(--h3, #4f7ef0); } .feat-prev .fc.l4 { background: var(--h4, #2e58c7); }
+.feat-prev.feat-wrongbook::after { content: "✗"; color: var(--bad); font-size: 1.3rem; font-weight: 700; }
 /* 外观商品（游戏模式里的商店购买）：由 quiz-common/cosmetics/build.py 生成，别手改 */
 :root[data-coin="tower"] .coin, :root .cos-prev .coin.cs-tower { background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Cdefs%3E%3ClinearGradient id='r' x1='0' y1='0' x2='1' y2='1'%3E%3Cstop offset='0' stop-color='%23ffe9a0'/%3E%3Cstop offset='.45' stop-color='%23f0b21a'/%3E%3Cstop offset='1' stop-color='%23a86a00'/%3E%3C/linearGradient%3E%3CradialGradient id='f' cx='.38' cy='.32' r='.8'%3E%3Cstop offset='0' stop-color='%23fff6c8'/%3E%3Cstop offset='.45' stop-color='%23ffcf3f'/%3E%3Cstop offset='1' stop-color='%23e09a00'/%3E%3C/radialGradient%3E%3ClinearGradient id='s' x1='0' y1='0' x2='0' y2='1'%3E%3Cstop offset='0' stop-color='%23b87700'/%3E%3Cstop offset='1' stop-color='%237e4b00'/%3E%3C/linearGradient%3E%3C/defs%3E%3Ccircle cx='16' cy='16' r='15.5' fill='url%28%23r%29'/%3E%3Ccircle cx='16' cy='16' r='14.3' fill='none' stroke='%238f5a00' stroke-opacity='.45' stroke-width='1.4' stroke-dasharray='.9 1.1'/%3E%3Ccircle cx='16' cy='16' r='12.4' fill='url%28%23f%29' stroke='%23b77800' stroke-width='.9'/%3E%3Ccircle cx='16' cy='16' r='10.6' fill='none' stroke='%23fff3c4' stroke-opacity='.7' stroke-width='.6'/%3E%3Cg transform='translate%28.35 .45%29' fill='%23fff6cf' fill-opacity='.7'%3E%3Cpath d='M9.40 24.80L10.52 23.35L11.35 22.05L12.03 20.81L12.60 19.60L14.80 19.60L14.40 20.81L13.88 22.05L13.22 23.35L12.30 24.80Z M12.80 18.70L13.51 17.50L14.01 16.43L14.40 15.40L15.78 15.40L15.82 16.43L15.76 17.50L15.55 18.70Z M22.60 24.80L21.48 23.35L20.65 22.05L19.97 20.81L19.40 19.60L17.20 19.60L17.60 20.81L18.12 22.05L18.78 23.35L19.70 24.80Z M19.20 18.70L18.49 17.50L17.99 16.43L17.60 15.40L16.22 15.40L16.18 16.43L16.24 17.50L16.45 18.70Z M14.55 14.60L14.86 13.16L15.05 12.09L15.19 11.13L15.31 10.23L15.40 9.38L15.48 8.56L15.54 7.77L15.60 7.00L16.40 7.00L16.46 7.77L16.52 8.56L16.60 9.38L16.69 10.23L16.81 11.13L16.95 12.09L17.14 13.16L17.45 14.60Z M12.20 24.80L12.52 24.41L12.83 24.05L13.15 23.73L13.47 23.44L13.78 23.18L14.10 22.96L14.42 22.78L14.73 22.62L15.05 22.50L15.37 22.42L15.68 22.37L16.00 22.35L16.32 22.37L16.63 22.42L16.95 22.50L17.27 22.62L17.58 22.78L17.90 22.96L18.22 23.18L18.53 23.44L18.85 23.73L19.17 24.05L19.48 24.41L19.80 24.80L19.00 24.80L18.75 24.54L18.50 24.30L18.25 24.08L18.00 23.88L17.75 23.71L17.50 23.56L17.25 23.44L17.00 23.33L16.75 23.25L16.50 23.20L16.25 23.16L16.00 23.15L15.75 23.16L15.50 23.20L15.25 23.25L15.00 23.33L14.75 23.44L14.50 23.56L14.25 23.71L14.00 23.88L13.75 24.08L13.50 24.30L13.25 24.54L13.00 24.80Z M11.80 18.7H20.20V19.6H11.80Z M13.95 14.6H18.05V15.4H13.95Z M15.3 6.4H16.7V7.0H15.3Z'/%3E%3C/g%3E%3Cpath d='M9.40 24.80L10.52 23.35L11.35 22.05L12.03 20.81L12.60 19.60L14.80 19.60L14.40 20.81L13.88 22.05L13.22 23.35L12.30 24.80Z M12.80 18.70L13.51 17.50L14.01 16.43L14.40 15.40L15.78 15.40L15.82 16.43L15.76 17.50L15.55 18.70Z M22.60 24.80L21.48 23.35L20.65 22.05L19.97 20.81L19.40 19.60L17.20 19.60L17.60 20.81L18.12 22.05L18.78 23.35L19.70 24.80Z M19.20 18.70L18.49 17.50L17.99 16.43L17.60 15.40L16.22 15.40L16.18 16.43L16.24 17.50L16.45 18.70Z M14.55 14.60L14.86 13.16L15.05 12.09L15.19 11.13L15.31 10.23L15.40 9.38L15.48 8.56L15.54 7.77L15.60 7.00L16.40 7.00L16.46 7.77L16.52 8.56L16.60 9.38L16.69 10.23L16.81 11.13L16.95 12.09L17.14 13.16L17.45 14.60Z M12.20 24.80L12.52 24.41L12.83 24.05L13.15 23.73L13.47 23.44L13.78 23.18L14.10 22.96L14.42 22.78L14.73 22.62L15.05 22.50L15.37 22.42L15.68 22.37L16.00 22.35L16.32 22.37L16.63 22.42L16.95 22.50L17.27 22.62L17.58 22.78L17.90 22.96L18.22 23.18L18.53 23.44L18.85 23.73L19.17 24.05L19.48 24.41L19.80 24.80L19.00 24.80L18.75 24.54L18.50 24.30L18.25 24.08L18.00 23.88L17.75 23.71L17.50 23.56L17.25 23.44L17.00 23.33L16.75 23.25L16.50 23.20L16.25 23.16L16.00 23.15L15.75 23.16L15.50 23.20L15.25 23.25L15.00 23.33L14.75 23.44L14.50 23.56L14.25 23.71L14.00 23.88L13.75 24.08L13.50 24.30L13.25 24.54L13.00 24.80Z M11.80 18.7H20.20V19.6H11.80Z M13.95 14.6H18.05V15.4H13.95Z M15.3 6.4H16.7V7.0H15.3Z' fill='url%28%23s%29'/%3E%3CclipPath id='sp'%3E%3Cpath d='M14.80 19.60L14.70 19.93L14.59 20.25L14.48 20.58L14.36 20.90L14.24 21.23L14.10 21.55L13.96 21.88L13.81 22.20L13.66 22.53L13.49 22.85L13.32 23.18L13.13 23.50L12.94 23.83L12.74 24.15L12.52 24.48L12.30 24.80L12.20 24.80L12.52 24.41L12.83 24.05L13.15 23.73L13.47 23.44L13.78 23.18L14.10 22.96L14.42 22.78L14.73 22.62L15.05 22.50L15.37 22.42L15.68 22.37L16.00 22.35L16.32 22.37L16.63 22.42L16.95 22.50L17.27 22.62L17.58 22.78L17.90 22.96L18.22 23.18L18.53 23.44L18.85 23.73L19.17 24.05L19.48 24.41L19.80 24.80L19.70 24.80L19.48 24.48L19.26 24.15L19.06 23.83L18.87 23.50L18.68 23.18L18.51 22.85L18.34 22.53L18.19 22.20L18.04 21.88L17.90 21.55L17.76 21.23L17.64 20.90L17.52 20.58L17.41 20.25L17.30 19.93L17.20 19.60Z'/%3E%3C/clipPath%3E%3Cpath d='M14.80 19.60L14.70 19.93L14.59 20.25L14.48 20.58L14.36 20.90L14.24 21.23L14.10 21.55L13.96 21.88L13.81 22.20L13.66 22.53L13.49 22.85L13.32 23.18L13.13 23.50L12.94 23.83L12.74 24.15L12.52 24.48L12.30 24.80L12.20 24.80L12.52 24.41L12.83 24.05L13.15 23.73L13.47 23.44L13.78 23.18L14.10 22.96L14.42 22.78L14.73 22.62L15.05 22.50L15.37 22.42L15.68 22.37L16.00 22.35L16.32 22.37L16.63 22.42L16.95 22.50L17.27 22.62L17.58 22.78L17.90 22.96L18.22 23.18L18.53 23.44L18.85 23.73L19.17 24.05L19.48 24.41L19.80 24.80L19.70 24.80L19.48 24.48L19.26 24.15L19.06 23.83L18.87 23.50L18.68 23.18L18.51 22.85L18.34 22.53L18.19 22.20L18.04 21.88L17.90 21.55L17.76 21.23L17.64 20.90L17.52 20.58L17.41 20.25L17.30 19.93L17.20 19.60Z' fill='%23c98a12' fill-opacity='.8'/%3E%3Cpath d='M3.45 25L11.45 18.5M11.45 25L3.45 18.5M4.40 25L12.40 18.5M12.40 25L4.40 18.5M5.35 25L13.35 18.5M13.35 25L5.35 18.5M6.30 25L14.30 18.5M14.30 25L6.30 18.5M7.25 25L15.25 18.5M15.25 25L7.25 18.5M8.20 25L16.20 18.5M16.20 25L8.20 18.5M9.15 25L17.15 18.5M17.15 25L9.15 18.5M10.10 25L18.10 18.5M18.10 25L10.10 18.5M11.05 25L19.05 18.5M19.05 25L11.05 18.5M12.00 25L20.00 18.5M20.00 25L12.00 18.5M12.95 25L20.95 18.5M20.95 25L12.95 18.5M13.90 25L21.90 18.5M21.90 25L13.90 18.5M14.85 25L22.85 18.5M22.85 25L14.85 18.5M15.80 25L23.80 18.5M23.80 25L15.80 18.5M16.75 25L24.75 18.5M24.75 25L16.75 18.5M17.70 25L25.70 18.5M25.70 25L17.70 18.5M18.65 25L26.65 18.5M26.65 25L18.65 18.5M19.60 25L27.60 18.5M27.60 25L19.60 18.5M20.55 25L28.55 18.5M28.55 25L20.55 18.5' stroke='%237e4b00' stroke-opacity='.55' stroke-width='.16' clip-path='url%28%23sp%29'/%3E%3Cpath d='M9.40 24.80L13.22 23.35M12.30 24.80L10.52 23.35M10.52 23.35L13.22 23.35M10.52 23.35L13.88 22.05M13.22 23.35L11.35 22.05M11.35 22.05L13.88 22.05M11.35 22.05L14.40 20.81M13.88 22.05L12.03 20.81M12.03 20.81L14.40 20.81M12.03 20.81L14.80 19.60M14.40 20.81L12.60 19.60M12.60 19.60L14.80 19.60M12.80 18.70L15.76 17.50M15.55 18.70L13.51 17.50M13.51 17.50L15.76 17.50M13.51 17.50L15.82 16.43M15.76 17.50L14.01 16.43M14.01 16.43L15.82 16.43M14.01 16.43L15.78 15.40M15.82 16.43L14.40 15.40M14.40 15.40L15.78 15.40M22.60 24.80L18.78 23.35M19.70 24.80L21.48 23.35M21.48 23.35L18.78 23.35M21.48 23.35L18.12 22.05M18.78 23.35L20.65 22.05M20.65 22.05L18.12 22.05M20.65 22.05L17.60 20.81M18.12 22.05L19.97 20.81M19.97 20.81L17.60 20.81M19.97 20.81L17.20 19.60M17.60 20.81L19.40 19.60M19.40 19.60L17.20 19.60M19.20 18.70L16.24 17.50M16.45 18.70L18.49 17.50M18.49 17.50L16.24 17.50M18.49 17.50L16.18 16.43M16.24 17.50L17.99 16.43M17.99 16.43L16.18 16.43M17.99 16.43L16.22 15.40M16.18 16.43L17.60 15.40M17.60 15.40L16.22 15.40M14.55 14.60L17.14 13.16M17.45 14.60L14.86 13.16M14.86 13.16L17.14 13.16M14.86 13.16L16.95 12.09M17.14 13.16L15.05 12.09M15.05 12.09L16.95 12.09M15.05 12.09L16.81 11.13M16.95 12.09L15.19 11.13M15.19 11.13L16.81 11.13M15.19 11.13L16.69 10.23M16.81 11.13L15.31 10.23M15.31 10.23L16.69 10.23M15.31 10.23L16.60 9.38M16.69 10.23L15.40 9.38M15.40 9.38L16.60 9.38M15.40 9.38L16.52 8.56M16.60 9.38L15.48 8.56M15.48 8.56L16.52 8.56M15.48 8.56L16.46 7.77M16.52 8.56L15.54 7.77M15.54 7.77L16.46 7.77M15.54 7.77L16.40 7.00M16.46 7.77L15.60 7.00M15.60 7.00L16.40 7.00M12.83 24.05L13.75 24.08M13.47 23.44L13.75 24.08M14.10 22.96L14.75 23.44M14.73 22.62L14.75 23.44M15.37 22.42L15.75 23.16M16.00 22.35L15.75 23.16M16.63 22.42L16.75 23.25M17.27 22.62L16.75 23.25M17.90 22.96L17.75 23.71M18.53 23.44L17.75 23.71M19.17 24.05L18.75 24.54' fill='none' stroke='%23f8d873' stroke-opacity='.75' stroke-width='.17' stroke-linecap='round'/%3E%3Cpath d='M9.40 24.80L10.52 23.35L11.35 22.05L12.03 20.81L12.60 19.60M12.30 24.80L13.22 23.35L13.88 22.05L14.40 20.81L14.80 19.60M12.80 18.70L13.51 17.50L14.01 16.43L14.40 15.40M15.55 18.70L15.76 17.50L15.82 16.43L15.78 15.40M22.60 24.80L21.48 23.35L20.65 22.05L19.97 20.81L19.40 19.60M19.70 24.80L18.78 23.35L18.12 22.05L17.60 20.81L17.20 19.60M19.20 18.70L18.49 17.50L17.99 16.43L17.60 15.40M16.45 18.70L16.24 17.50L16.18 16.43L16.22 15.40M14.55 14.60L14.86 13.16L15.05 12.09L15.19 11.13L15.31 10.23L15.40 9.38L15.48 8.56L15.54 7.77L15.60 7.00M17.45 14.60L17.14 13.16L16.95 12.09L16.81 11.13L16.69 10.23L16.60 9.38L16.52 8.56L16.46 7.77L16.40 7.00' fill='none' stroke='%236e4000' stroke-width='.22'/%3E%3Cpath d='M11.80 18.7H20.20M13.95 14.6H18.05' stroke='%23ffe9a8' stroke-width='.28'/%3E%3Cpath d='M12.00 19.18H20.00M14.15 15.02H17.85' stroke='%23f8d873' stroke-opacity='.8' stroke-width='.15' stroke-dasharray='.22 .22'/%3E%3Cpath d='M11.98 19.6A.42 .42 0 0 1 12.82 19.6M12.88 19.6A.42 .42 0 0 1 13.72 19.6M13.78 19.6A.42 .42 0 0 1 14.62 19.6M14.68 19.6A.42 .42 0 0 1 15.52 19.6M15.58 19.6A.42 .42 0 0 1 16.42 19.6M16.48 19.6A.42 .42 0 0 1 17.32 19.6M17.38 19.6A.42 .42 0 0 1 18.22 19.6M18.28 19.6A.42 .42 0 0 1 19.12 19.6M19.18 19.6A.42 .42 0 0 1 20.02 19.6' fill='none' stroke='%23f8d873' stroke-opacity='.85' stroke-width='.16'/%3E%3Cpath d='M16 6.4V4.1' stroke='%237a4700' stroke-width='.32' stroke-linecap='round'/%3E%3Ccircle cx='16' cy='4.0' r='.28' fill='%23ffe08a'/%3E%3Cpath d='M9.1 24.85H12.5M19.5 24.85H22.9' stroke='%236e4000' stroke-width='.4' stroke-linecap='round'/%3E%3Cpath d='M6.2 12.5A10.5 10.5 0 0 1 13 5.6' fill='none' stroke='%23fff' stroke-opacity='.75' stroke-width='1.6' stroke-linecap='round'/%3E%3C/svg%3E"); }
 :root[data-coin="arc"] .coin, :root .cos-prev .coin.cs-arc { background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Cdefs%3E%3ClinearGradient id='r' x1='0' y1='0' x2='1' y2='1'%3E%3Cstop offset='0' stop-color='%23ffe9a0'/%3E%3Cstop offset='.45' stop-color='%23f0b21a'/%3E%3Cstop offset='1' stop-color='%23a86a00'/%3E%3C/linearGradient%3E%3CradialGradient id='f' cx='.38' cy='.32' r='.8'%3E%3Cstop offset='0' stop-color='%23fff6c8'/%3E%3Cstop offset='.45' stop-color='%23ffcf3f'/%3E%3Cstop offset='1' stop-color='%23e09a00'/%3E%3C/radialGradient%3E%3ClinearGradient id='s' x1='0' y1='0' x2='0' y2='1'%3E%3Cstop offset='0' stop-color='%23b87700'/%3E%3Cstop offset='1' stop-color='%237e4b00'/%3E%3C/linearGradient%3E%3C/defs%3E%3Ccircle cx='16' cy='16' r='15.5' fill='url%28%23r%29'/%3E%3Ccircle cx='16' cy='16' r='14.3' fill='none' stroke='%238f5a00' stroke-opacity='.45' stroke-width='1.4' stroke-dasharray='.9 1.1'/%3E%3Ccircle cx='16' cy='16' r='12.4' fill='url%28%23f%29' stroke='%23b77800' stroke-width='.9'/%3E%3Ccircle cx='16' cy='16' r='10.6' fill='none' stroke='%23fff3c4' stroke-opacity='.7' stroke-width='.6'/%3E%3Cpath d='M8.6 10.2H23.4V12.6H22.6V23.4H24.6V24.6H7.4V23.4H9.4V12.6H8.6ZM13.1 23.4V17.6A2.9 2.9 0 0 1 18.9 17.6V23.4Z' fill='%23fff8d6' fill-opacity='.8' transform='translate%28.45 .55%29' fill-rule='evenodd'/%3E%3Cpath d='M8.6 10.2H23.4V12.6H22.6V23.4H24.6V24.6H7.4V23.4H9.4V12.6H8.6ZM13.1 23.4V17.6A2.9 2.9 0 0 1 18.9 17.6V23.4Z' fill='url%28%23s%29' fill-rule='evenodd'/%3E%3Cpath d='M9.4 13.4H22.6M10.6 15.2V21.6M21.4 15.2V21.6M12.2 11.4H19.8' stroke='%23f8d873' stroke-opacity='.8' fill='none' stroke-width='.35'/%3E%3Cpath d='M13.1 17.6A2.9 2.9 0 0 1 18.9 17.6' stroke='%23f8d873' stroke-opacity='.8' fill='none' stroke-width='.3'/%3E%3Cpath d='M6.2 12.5A10.5 10.5 0 0 1 13 5.6' fill='none' stroke='%23fff' stroke-opacity='.75' stroke-width='1.6' stroke-linecap='round'/%3E%3C/svg%3E"); }
@@ -18686,7 +18694,16 @@ if (UI_LANG === "en") i18nLoad({
 "英文界面和字体要先在“商店 · 设置”里用金币解锁。": "The English interface and fonts must first be unlocked with coins in Shop · Settings.",
 "英文界面要先在“商店 · 设置”里解锁": "Unlock the English interface first in Shop · Settings",
 "买一次永久拥有。也可以在“设置”页切换。": "Buy once, keep forever. You can also switch on the Settings page.",
-"界面、题目解析、知识点卡片、巴黎塔尖事件和 Boss 题都换成英文；英文模式下答对得到的金币翻倍。": "Interface, explanations, knowledge cards, Paris Spire events and boss questions in English; coins from correct answers are doubled in English mode."
+"界面、题目解析、知识点卡片、巴黎塔尖事件和 Boss 题都换成英文；英文模式下答对得到的金币翻倍。": "Interface, explanations, knowledge cards, Paris Spire events and boss questions in English; coins from correct answers are doubled in English mode.",
+"错题本": "Mistake book",
+"学习进度页最上面的做题日历：一年里每天做了多少题、连续天数，点格子看当天明细，还能设每日提醒。": "The practice calendar at the top of Progress: how many questions you did each day of the year, your streak, tap a day for details, plus daily reminders.",
+"学习进度页的错题本：所有答错过的题，按轮次、章节或标签筛选，一键重做错题。": "The mistake book in Progress: every question you got wrong, filterable by round, chapter or tag, with one-tap redo.",
+"去商店解锁 · ${a} 金币": "Unlock in shop · ${a} coins",
+"商店 · 功能": "Shop · Features",
+"做题日历、错题本 · 已拥有 ${a} / ${b}": "Practice calendar, mistake book · owned ${a} / ${b}",
+"去学习进度看看": "Open Progress",
+"解锁了：${a}": "Unlocked: ${a}",
+"买一次永久拥有，跟着答题记录同步。": "Buy once, keep forever; syncs with your records."
 });
 i18nStart();
 // ---------- 答题记录存储（错题本、学习进度、经验值都从这里算） ----------
@@ -19801,6 +19818,7 @@ function gameShopParts(card, led) {
   if (typeof modeShopItems === "function") modeShopItems(shop, led, note);   // 法语页：游戏模式的解锁
   shopSec.append(shop);
   if (typeof cosShop === "function") card.append(cosShop(note));
+  if (typeof featShop === "function") card.append(featShop(note));   // 法语页：做题日历、错题本
   if (typeof setShop === "function") card.append(setShop(note));   // 法语页：界面语言和字体
   card.append(note);
 }
@@ -21019,6 +21037,8 @@ function setGoalSection(wrap) {
 // ---------- 版本更新记录：设置页最下面，展开后能看到每个版本改了什么 ----------
 // p：哪个页面的更新（fr 法语页 / st 随机分析页 / 不写表示两个页面都有）。新版本加在最前面。
 const CHANGELOG = [
+  { v: "5.2", d: "2026-11-05", p: "fr", items: [
+    "商店新增“功能”分区：做题日历（200 金币）和错题本（300 金币），买了才在学习进度里显示。"] },
   { v: "5.1", d: "2026-11-05", p: "fr", items: [
     "英文界面涨价到 1000 金币；英文模式下答对得到的金币翻倍（从切换到英文的那一刻起算）。"] },
   { v: "5.0", d: "2026-11-05", p: "fr", items: [
@@ -21832,9 +21852,12 @@ function drawBook() {
   if (!bookCache) return;
   const { all, wrong } = bookCache;
   stage.innerHTML = "";
-  stage.append(heatCard(bookCache.raw || []), xpCard());   // 做题日历放最上面，等级紧跟在下面
+  // 法语页：做题日历和错题本要在商店买（featOwned / featLockCard 在 shop.js）
+  const featOk = id => typeof featOwned !== "function" || featOwned(id);
+  stage.append(featOk("calendar") ? heatCard(bookCache.raw || []) : featLockCard("calendar"), xpCard());   // 做题日历放最上面，等级紧跟在下面
   stage.append(planCard(), gameCard(), typeof albumCard === "function" ? albumCard() : "", progressCard());
   stage.append(tagDistCard());
+  if (!featOk("wrongbook")) { stage.append(featLockCard("wrongbook")); return; }
   const card = el("section", "card");
   stage.append(card);
   const tags = el("div", "tagrow");
@@ -21952,7 +21975,7 @@ function navSync() {
   tabGame.classList.toggle("locked", !gameOn());
   tabShop.classList.toggle("locked", typeof shopOpen === "function" && !shopOpen());
   tabSet.setAttribute("aria-selected", String(m === "settings"));
-  const solo = ["home", "exam", "settings", "tour", "shop"].includes(view) || (view === "vocab" && vIsGame()) || m === "game";
+  const solo = ["home", "exam", "settings", "tour", "shop"].includes(view) || (view === "book" && typeof featOwned === "function" && !featOwned("wrongbook")) || (view === "vocab" && vIsGame()) || m === "game";
   layoutEl.classList.toggle("solo", solo);
   const kn = document.querySelector(".keys-note"); if (kn) kn.hidden = view !== "quiz";
   boardBar.hidden = !b;
@@ -22251,6 +22274,61 @@ function renderGameLocked() {
     const on = el("button", "btn", "打开游戏模式"); on.type = "button"; on.addEventListener("click", () => { gameSetMode(true); goHome("game"); }); lock.append(on);
   }
   card.append(lock); stage.append(card);
+}
+
+// ---------- 商店 · 功能：做题日历、错题本 ----------
+// 买的记录是 game 记录（kind "buy"，item "feat-…"），买一次永久拥有。没买时学习进度里对应的位置显示一张锁着的卡片。
+const FEAT_ITEMS = [
+  { id: "calendar", name: "做题日历", desc: "学习进度页最上面的做题日历：一年里每天做了多少题、连续天数，点格子看当天明细，还能设每日提醒。", price: 200 },
+  { id: "wrongbook", name: "错题本", desc: "学习进度页的错题本：所有答错过的题，按轮次、章节或标签筛选，一键重做错题。", price: 300 },
+];
+const featOwned = id => typeof gameLedger === "function" && gameLedger().owned.has("feat-" + id);
+function featBuy(id) {
+  const it = FEAT_ITEMS.find(x => x.id === id), led = gameLedger();
+  if (led.owned.has("feat-" + id)) return "已经拥有";
+  if (led.coins < it.price) return "金币不够";
+  gameAdd({ kind: "buy", item: "feat-" + id, price: it.price, at: new Date().toISOString() });
+  return "";
+}
+function featLockCard(id) {
+  const it = FEAT_ITEMS.find(x => x.id === id);
+  const card = el("section", "card feat-lock");
+  const h = el("div", "feat-lock-h"); h.append(el("i", "px-lock"), el("b", null, it.name));
+  card.append(h, el("p", "sub", it.desc));
+  const row = el("div", "actions");
+  const go = el("button", "btn ghost", `去商店解锁 · ${it.price} 金币`); go.type = "button";
+  go.addEventListener("click", () => switchView("shop"));
+  row.append(go); card.append(row);
+  return card;
+}
+function featShop(note) {
+  const led = gameLedger(), ownN = FEAT_ITEMS.filter(x => led.owned.has("feat-" + x.id)).length;
+  const wrap = foldSec("featshop", "商店 · 功能", `做题日历、错题本 · 已拥有 ${ownN} / ${FEAT_ITEMS.length}`);
+  wrap.classList.add("cos-shop");
+  const grid = el("div", "cos-grid");
+  FEAT_ITEMS.forEach(it => {
+    const own = led.owned.has("feat-" + it.id);
+    const card = el("div", "cos-item" + (own ? " on" : ""));
+    const pv = el("div", "set-prev feat-prev feat-" + it.id);
+    if (it.id === "calendar") [0, 2, 1, 3, 0, 4, 2, 1, 3, 4, 0, 2, 4, 1].forEach(l => pv.append(el("i", "fc l" + l)));   // 小小的做题日历
+    card.append(pv, el("b", null, it.name), el("span", "cos-desc", it.desc));
+    const btn = el("button", "btn ghost"); btn.type = "button"; btn.id = "feat-" + it.id;
+    if (own) { btn.textContent = "去学习进度看看"; btn.addEventListener("click", () => { bookCache = null; switchView("book"); }); }
+    else {
+      btn.append(document.createTextNode("购买 "), coinEl(it.price));
+      btn.disabled = led.coins < it.price;
+      let sure = false;
+      btn.addEventListener("click", () => {
+        if (!sure) { sure = true; btn.textContent = `确认花 ${it.price} 金币`; return; }
+        const err = featBuy(it.id); if (err) { note.textContent = err; return; }
+        xpToast(`花了 ${it.price} 金币`, `解锁了：${it.name}`);
+        shopRedraw();
+      });
+    }
+    card.append(btn); grid.append(card);
+  });
+  wrap.append(grid, el("p", "shop-note", "买一次永久拥有，跟着答题记录同步。"));
+  return wrap;
 }
 // ---------- 做题全屏：出现题目卡片时进入（答题、背单词、变位、巴黎塔尖的战斗和 Boss），一屏放下，页面不能上下滚动 ----------
 // 右上角的小图标：返回上一级（答题 / 变位回到带目录的页面，背单词回到词表或关卡地图），战斗里是退出战斗（回到地图，战斗保留）。

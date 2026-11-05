@@ -4190,6 +4190,7 @@ function gameShopParts(card, led) {
   if (typeof modeShopItems === "function") modeShopItems(shop, led, note);   // 法语页：游戏模式的解锁
   shopSec.append(shop);
   if (typeof cosShop === "function") card.append(cosShop(note));
+  if (typeof featShop === "function") card.append(featShop(note));   // 法语页：做题日历、错题本
   if (typeof setShop === "function") card.append(setShop(note));   // 法语页：界面语言和字体
   card.append(note);
 }
@@ -5035,6 +5036,8 @@ function setGoalSection(wrap) {
 // ---------- 版本更新记录：设置页最下面，展开后能看到每个版本改了什么 ----------
 // p：哪个页面的更新（fr 法语页 / st 随机分析页 / 不写表示两个页面都有）。新版本加在最前面。
 const CHANGELOG = [
+  { v: "5.2", d: "2026-11-05", p: "fr", items: [
+    "商店新增“功能”分区：做题日历（200 金币）和错题本（300 金币），买了才在学习进度里显示。"] },
   { v: "5.1", d: "2026-11-05", p: "fr", items: [
     "英文界面涨价到 1000 金币；英文模式下答对得到的金币翻倍（从切换到英文的那一刻起算）。"] },
   { v: "5.0", d: "2026-11-05", p: "fr", items: [
@@ -5780,9 +5783,12 @@ function drawBook() {
   if (!bookCache) return;
   const { all, wrong } = bookCache;
   stage.innerHTML = "";
-  stage.append(heatCard(bookCache.raw || []), xpCard());   // 做题日历放最上面，等级紧跟在下面
+  // 法语页：做题日历和错题本要在商店买（featOwned / featLockCard 在 shop.js）
+  const featOk = id => typeof featOwned !== "function" || featOwned(id);
+  stage.append(featOk("calendar") ? heatCard(bookCache.raw || []) : featLockCard("calendar"), xpCard());   // 做题日历放最上面，等级紧跟在下面
   stage.append(planCard(), gameCard(), typeof albumCard === "function" ? albumCard() : "", progressCard());
   stage.append(tagDistCard());
+  if (!featOk("wrongbook")) { stage.append(featLockCard("wrongbook")); return; }
   const card = el("section", "card");
   stage.append(card);
   const tags = el("div", "tagrow");
