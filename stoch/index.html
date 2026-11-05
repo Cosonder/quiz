@@ -5064,6 +5064,8 @@ function setGoalSection(wrap) {
 // ---------- 版本更新记录：设置页最下面，展开后能看到每个版本改了什么 ----------
 // p：哪个页面的更新（fr 法语页 / st 随机分析页 / 不写表示两个页面都有）。新版本加在最前面。
 const CHANGELOG = [
+  { v: "5.4", d: "2026-11-05", p: "fr", items: [
+    "学习进度页不再有最上方的目录；错题的筛选（按标签 / 书籍章节）放进了错题本卡片里，可以折叠。"] },
   { v: "5.3", d: "2026-11-05", p: "fr", items: [
     "学习进度展板可以切换“按标签”和“按书籍章节”看百分比；点一章就复习或学习这一章的题。整个展板可以折叠，标题行显示总进度。"] },
   { v: "5.2", d: "2026-11-05", p: "fr", items: [
@@ -5824,6 +5826,7 @@ function drawBook() {
   const tags = el("div", "tagrow");
   tags.append(el("span", "tag", bookFilter === "all" ? "错题本 · 全部" : "错题本 · " + labelOf(bookFilter).replace(/^错题 · /, "")));
   card.append(tags);
+  if (typeof tocInBook === "function") tocInBook(card);   // 法语页：错题的筛选目录放在错题本里
 
   const scope = bookFilter === "all" ? all : all.filter(d => inGroup(bookFilter, BY_ID.get(d.qid)));
   const scopeWrong = scope.filter(d => !d.isCorrect);
