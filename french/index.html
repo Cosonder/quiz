@@ -14494,7 +14494,16 @@ function applyFont(f) {
 }
 function setUiFont(f) { UI_FONT = f; try { localStorage.setItem("fq-font", f); } catch (e) {} applyFont(f); }
 applyFont(UI_FONT);
-function setUiLang(l) { try { localStorage.setItem("fq-lang", l); } catch (e) {} location.reload(); }
+function setUiLang(l) { try { localStorage.setItem("fq-lang", l); } catch (e) {} langMark(l); location.reload(); }
+// 切换语言记成 game 记录（kind "lang"），答对得金币时按当时的语言算倍数：英文 ×2（以后法语 ×3）
+const LANG_COIN = { zh: 1, en: 2 };
+function langMark(l) { try { if (typeof gameAdd === "function" && gameLoaded && langAt(Date.now()) !== l) gameAdd({ kind: "lang", lang: l, at: new Date().toISOString() }); } catch (e) {} }
+let langCache = null;
+function langAt(t) {
+  if (!langCache || langCache.raw !== gameRaw || langCache.n !== gameRaw.length) langCache = { raw: gameRaw, n: gameRaw.length, list: gameRaw.filter(g => g && g.kind === "lang").map(g => [Date.parse(g.at), g.lang]).sort((a, b) => a[0] - b[0]) };
+  let l = "zh"; for (const [a, v] of langCache.list) { if (a <= t) l = v; else break; } return l;
+}
+const langCoinMult = t => LANG_COIN[langAt(t)] || 1;
 const I18N_CJK = /[㐀-鿿！-～　-〿]/;
 const i18nExact = new Map(), i18nRe = [];
 function i18nLoad(dict) {
@@ -14582,7 +14591,7 @@ function i18nStart() {
 // ---------- 商店 · 设置：英文界面和非默认字体要先用金币买 ----------
 // 买的记录是 game 记录（kind "buy"），和外观一样买一次永久拥有、跟着答题记录同步。关掉游戏模式时都能用（这时没有金币）。
 const SET_ITEMS = [
-  { id: "lang-en", name: "英文界面", desc: "界面、题目解析、知识点卡片、巴黎塔尖事件和 Boss 题都换成英文。", price: 600, prev: "EN" },
+  { id: "lang-en", name: "英文界面", desc: "界面、题目解析、知识点卡片、巴黎塔尖事件和 Boss 题都换成英文；英文模式下答对得到的金币翻倍。", price: 1000, prev: "EN" },
   { id: "font-times", name: "字体 · Times New Roman", desc: "英文和法语字母用 Times New Roman。", price: 200, prev: "Aa", font: "times" },
   { id: "font-kreon", name: "字体 · Kreon", desc: "英文和法语字母用 Kreon。", price: 200, prev: "Aa", font: "kreon" },
 ];
@@ -14591,6 +14600,7 @@ const setOwned = id => typeof gameLedger !== "function" || gameLedger().owned.ha
 function setGate() {
   if (!gameLoaded) return;
   if (UI_FONT !== "default" && !setOwned("font-" + UI_FONT)) setUiFont("default");
+  if (UI_LANG === "en" && setOwned("lang-en") && langAt(Date.now()) !== "en") { gameAdd({ kind: "lang", lang: "en", at: new Date().toISOString() }); prog = null; }   // 记下现在用的是英文（从这一刻起金币翻倍）
   if (UI_LANG === "en" && !setOwned("lang-en")) {
     try { localStorage.setItem("fq-lang", "zh"); } catch (e) {}
     if (typeof xpToast === "function") xpToast("英文界面要先在“商店 · 设置”里解锁", "已换回中文");
@@ -18675,7 +18685,8 @@ if (UI_LANG === "en") i18nLoad({
 "游戏模式要先在“商店”里购买（完成一次今日计划后商店开放）。": "Game mode must first be bought in the Shop (the shop opens after you finish one daily plan).",
 "英文界面和字体要先在“商店 · 设置”里用金币解锁。": "The English interface and fonts must first be unlocked with coins in Shop · Settings.",
 "英文界面要先在“商店 · 设置”里解锁": "Unlock the English interface first in Shop · Settings",
-"买一次永久拥有。也可以在“设置”页切换。": "Buy once, keep forever. You can also switch on the Settings page."
+"买一次永久拥有。也可以在“设置”页切换。": "Buy once, keep forever. You can also switch on the Settings page.",
+"界面、题目解析、知识点卡片、巴黎塔尖事件和 Boss 题都换成英文；英文模式下答对得到的金币翻倍。": "Interface, explanations, knowledge cards, Paris Spire events and boss questions in English; coins from correct answers are doubled in English mode."
 });
 i18nStart();
 // ---------- 答题记录存储（错题本、学习进度、经验值都从这里算） ----------
@@ -19420,7 +19431,7 @@ function coinStep(st, key, right, t) {
   }
   r.n++;
   if (dayKey(new Date(t)) < COIN_ANS_FROM) return { coins: 0, run: r.n };   // 游戏模式关着（或还没买）时金币也在后台照常积累
-  const c = coinFor(r.n) * coinMult(t);   // 金币药水生效时翻倍
+  const c = coinFor(r.n) * coinMult(t) * (typeof langCoinMult === "function" ? langCoinMult(t) : 1);   // 金币药水生效时翻倍；法语页英文模式下再翻倍
   st.coins += c;
   return { coins: c, run: r.n };
 }
@@ -21008,6 +21019,8 @@ function setGoalSection(wrap) {
 // ---------- 版本更新记录：设置页最下面，展开后能看到每个版本改了什么 ----------
 // p：哪个页面的更新（fr 法语页 / st 随机分析页 / 不写表示两个页面都有）。新版本加在最前面。
 const CHANGELOG = [
+  { v: "5.1", d: "2026-11-05", p: "fr", items: [
+    "英文界面涨价到 1000 金币；英文模式下答对得到的金币翻倍（从切换到英文的那一刻起算）。"] },
   { v: "5.0", d: "2026-11-05", p: "fr", items: [
     "商店从“学习进度”里分出来，成为顶部单独的模块：做题、游戏、商店、学习进度、设置。",
     "完成第一次今日计划后商店开放；开放后先只卖“游戏模式”（100 金币），买下后才有每日任务、宝箱、道具、外观和游戏模块。",

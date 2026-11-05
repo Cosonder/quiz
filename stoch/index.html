@@ -3820,7 +3820,7 @@ function coinStep(st, key, right, t) {
   }
   r.n++;
   if (dayKey(new Date(t)) < COIN_ANS_FROM) return { coins: 0, run: r.n };   // 游戏模式关着（或还没买）时金币也在后台照常积累
-  const c = coinFor(r.n) * coinMult(t);   // 金币药水生效时翻倍
+  const c = coinFor(r.n) * coinMult(t) * (typeof langCoinMult === "function" ? langCoinMult(t) : 1);   // 金币药水生效时翻倍；法语页英文模式下再翻倍
   st.coins += c;
   return { coins: c, run: r.n };
 }
@@ -5035,6 +5035,8 @@ function setGoalSection(wrap) {
 // ---------- 版本更新记录：设置页最下面，展开后能看到每个版本改了什么 ----------
 // p：哪个页面的更新（fr 法语页 / st 随机分析页 / 不写表示两个页面都有）。新版本加在最前面。
 const CHANGELOG = [
+  { v: "5.1", d: "2026-11-05", p: "fr", items: [
+    "英文界面涨价到 1000 金币；英文模式下答对得到的金币翻倍（从切换到英文的那一刻起算）。"] },
   { v: "5.0", d: "2026-11-05", p: "fr", items: [
     "商店从“学习进度”里分出来，成为顶部单独的模块：做题、游戏、商店、学习进度、设置。",
     "完成第一次今日计划后商店开放；开放后先只卖“游戏模式”（100 金币），买下后才有每日任务、宝箱、道具、外观和游戏模块。",
