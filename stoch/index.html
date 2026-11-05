@@ -3060,6 +3060,8 @@ const stage = $("stage"), toc = $("toc"), tocwrap = $("tocwrap"), tocTitle = $("
 const pSet = $("pSet"), pText = $("pText"), pBar = $("pBar"), pScore = $("pScore"), progressEl = $("progress");
 const tabQuiz = $("tabQuiz"), tabBook = $("tabBook"), tabSet = $("tabSet"), saveNote = $("saveNote");
 
+// 一段话由几块拼成时，每块各放一个文字节点（英文界面逐块翻译）
+function elParts(tag, parts, cls) { const e = el(tag, cls); parts.forEach(t => { if (t) e.append(document.createTextNode(t)); }); return e; }
 function el(tag, cls, text) {
   const e = document.createElement(tag);
   if (cls) e.className = cls;
@@ -3520,7 +3522,7 @@ function xpCard() {
   card.append(head);
   const rule = el("details", "xp-rule");
   rule.append(el("summary", null, "经验和进度怎么算"),
-    el("p", null, `经验：答对 +${XP_RIGHT}，答错 +${XP_WRONG}，每天第一题 +${XP_DAILY}，按时复习成功另加 ${XP_REVIEW}×新的记忆等级` + (vocRaw.length || typeof renderVocab === "function" ? `；背单词答对 +${XP_VOCAB_RIGHT}、答错 +${XP_VOCAB_WRONG}` : "") + `。经验药水生效期间，所有经验乘以 2 或 3。每升一级所需经验比上一级多 40。`),
+    elParts("p", [`经验：答对 +${XP_RIGHT}，答错 +${XP_WRONG}，每天第一题 +${XP_DAILY}，按时复习成功另加 ${XP_REVIEW}×新的记忆等级`, vocRaw.length || typeof renderVocab === "function" ? `；背单词答对 +${XP_VOCAB_RIGHT}、答错 +${XP_VOCAB_WRONG}` : "", `。经验药水生效期间，所有经验乘以 2 或 3。每升一级所需经验比上一级多 40。`]),
     el("p", null, "记忆等级（艾宾浩斯遗忘曲线）：第一次答对是 1 级；之后隔够遗忘周期再答对才升一级——1 级隔 1 天、2 级隔 2 天、3 级隔 4 天、4 级隔 7 天、5 级隔 15 天，6 级是长期记忆，每 30 天巩固一次。没到时间答对只算练习，答错退两级。"),
     el("p", null, "学习进度 = 标签下所有题的记忆等级之和 ÷（题数 × 6）。全部题都到 6 级就是 100%。"));
   card.append(rule);
@@ -3788,7 +3790,7 @@ function planCard() {
   if (st.patch) card.append(el("p", "plan-patch", `昨天没达到目标。今天拿到 ${2 * xpGoal} 经验（2 倍目标），或在下面的商店用一张补签卡，就能补上昨天，保住之前连续的 ${st.patch} 天。`));
   const rule = el("details", "xp-rule");
   rule.append(el("summary", null, "今日计划怎么配"),
-    el("p", null, `每天第一次打开时生成，当天不变：到期该复习的题（最多 ${PLAN_REVIEW_MAX} 道，最该复习的在前）、从最近做的那一轮接着往下的 ${PLAN_NEW} 道新题、最近 60 天答错比例最高的标签里 ${PLAN_WEAK} 道题` + (hasConj() ? `，再加 ${PLAN_CONJ} 道动词变位。` : "。") + "今天答过一次就算完成。"),
+    elParts("p", [`每天第一次打开时生成，当天不变：到期该复习的题（最多 ${PLAN_REVIEW_MAX} 道，最该复习的在前）、从最近做的那一轮接着往下的 ${PLAN_NEW} 道新题、最近 60 天答错比例最高的标签里 ${PLAN_WEAK} 道题`, hasConj() ? `，再加 ${PLAN_CONJ} 道动词变位。` : "。", "今天答过一次就算完成。"]),
     el("p", null, "连续打卡：当天经验达到每日目标算打卡。某天没达标，第二天达到 2 倍目标就能补签那一天（不能连着两天都缺），也可以用商店里的补签卡补昨天。做完今日计划奖励 30 金币。"));
   card.append(rule);
   return card;
@@ -3938,7 +3940,7 @@ function potionActive(now = Date.now()) {
 }
 // 余额、库存、已经领过的奖励、用补签卡补上的日子
 function gameLedger() {
-  const earned = new Set(), inv = { shield: 0, patch: 0, x2: 0, x3: 0, c2: 0 }, patched = new Set(), got = [], opened = new Set(), owned = new Set(), cards = new Set();
+  const earned = new Set(), inv = { shield: 0, patch: 0, x2: 0, x3: 0, c2: 0 }, patched = new Set(), got = [], opened = new Set(), owned = new Set(), cards = new Set(), unlocked = new Set();
   let coins = progEnsure() ? prog.coins || 0 : 0;   // 答对得的金币（由答题记录算出）
   [...gameRaw].sort((a, b) => String(a.at).localeCompare(String(b.at))).forEach(g => {
     if (g.kind === "earn") { if (earned.has(g.key)) return; earned.add(g.key); coins += g.coins || 0; }
@@ -3947,13 +3949,14 @@ function gameLedger() {
       else if (!owned.has(g.item)) { coins -= g.price || 0; owned.add(g.item); }   // 外观：买一次永久拥有（两台设备同时买只扣一次）
     }
     else if (g.kind === "use" && inv[g.item] != null) { inv[g.item]--; if (g.item === "patch" && g.day) patched.add(g.day); }
+    else if (g.kind === "unlock") { if (!unlocked.has(g.mode)) { coins -= g.price || 0; unlocked.add(g.mode); } }   // 模式解锁：同一个模式只算一次
     else if (g.kind === "card") { if (!cards.has(g.id)) { coins -= g.price || 0; cards.add(g.id); } }   // 明信片：同一张只算一次
     else if (g.kind === "chest") {
       if (!g.open) { if (!got.includes(g.key)) got.push(g.key); }
       else if (!opened.has(g.key)) { opened.add(g.key); const l = g.loot || {}; coins += l.coins || 0; if (l.item && inv[l.item] != null) inv[l.item]++; }
     }
   });
-  return { coins, inv, earned, patched, owned, cards, chests: got.filter(k => !opened.has(k)) };
+  return { coins, inv, earned, patched, owned, cards, unlocked, chests: got.filter(k => !opened.has(k)) };
 }
 const patchedDays = () => gameLedger().patched;
 function gameAdd(doc) {
@@ -4129,6 +4132,7 @@ function gameCard() {
     box.append(acts);
     shop.append(box);
   });
+  if (typeof modeShopItems === "function") modeShopItems(shop, st.led, note);   // 法语页：游戏模式的解锁
   shopSec.append(shop);
   if (typeof cosShop === "function") card.append(cosShop(note));
   card.append(note);
@@ -5020,6 +5024,12 @@ function setGoalSection(wrap) {
 // ---------- 版本更新记录：设置页最下面，展开后能看到每个版本改了什么 ----------
 // p：哪个页面的更新（fr 法语页 / st 随机分析页 / 不写表示两个页面都有）。新版本加在最前面。
 const CHANGELOG = [
+  { v: "4.4", d: "2026-11-05", p: "fr", items: [
+    "英文界面补齐正文：4157 道题的题干和解析、1164 张知识点卡片、800 道 Boss 题、巴黎塔尖事件、变位规律、模拟卷说明、环法站点和明信片介绍、更新记录都有了英文版。"] },
+  { v: "4.3", d: "2026-11-05", p: "fr", items: [
+    "巴黎塔尖加入两种新战斗：单词配对（左边法语词、右边释义，配对消掉）和例句拼造（按顺序点词块拼回例句）；苦艾酒、玛德琳、茴香酒在这两种战斗里变成提示一对 / 放好词块 / 跳过。",
+    "单词闯关、环法之旅、巴黎塔尖改为用金币解锁，一个比一个贵（300 / 800 / 1500）；已经玩过的模式自动保留，关掉游戏模式时全部开放。",
+    "设置里加了“界面语言”，可以切换成英文。题目解析、知识点卡片、巴黎塔尖事件和 Boss 题目暂时还是中文。"] },
   { v: "4.2", d: "2026-11-05", items: [
     "商店新增“金币药水”（150 金币）：喝下后 15 分钟内答对得到的金币翻倍，可以和经验药水同时生效。"] },
   { v: "4.1", d: "2026-11-05", p: "fr", items: [
@@ -5845,7 +5855,7 @@ tabSet.addEventListener("click", () => { if (view !== "settings") switchView("se
 startSet("p1-r1");
 // ---------- 做题全屏：出现题目卡片时进入（答题、背单词、变位、巴黎塔尖的战斗和 Boss），一屏放下，页面不能上下滚动 ----------
 // 右上角的小图标：返回上一级（答题 / 变位回到带目录的页面，背单词回到词表或关卡地图），战斗里是退出战斗（回到地图，战斗保留）。
-const QF_CARDS = ["q-card", "v-card", "cj-card", "sp-boss", "sp-mini"];
+const QF_CARDS = ["q-card", "v-card", "cj-card", "sp-boss", "sp-mini", "sp-pair", "sp-build"];
 const QF_ICON = {
   back: "<svg viewBox='0 0 10 9' shape-rendering='crispEdges' aria-hidden='true'><path fill='currentColor' d='M4 1h1v1H4zM3 2h2v1H3zM2 3h7v1H2zM1 4h8v1H1zM2 5h7v1H2zM3 6h2v1H3zM4 7h1v1H4z'/></svg>",
   exit: "<svg viewBox='0 0 10 10' shape-rendering='crispEdges' aria-hidden='true'><path fill='currentColor' d='M1 1h2v1H1zM7 1h2v1H7zM2 2h2v1H2zM6 2h2v1H6zM3 3h4v1H3zM4 4h2v2H4zM3 6h4v1H3zM2 7h2v1H2zM6 7h2v1H6zM1 8h2v1H1zM7 8h2v1H7z'/></svg>",
@@ -5858,7 +5868,7 @@ function qfKind() {
   const c = stage.querySelector(":scope > section.card");
   return c ? [c, QF_CARDS.find(x => c.classList.contains(x)) || null] : [null, null];
 }
-const qfInBattle = k => k === "sp-boss" || k === "sp-mini" || (k === "v-card" && typeof vSess !== "undefined" && vSess && vSess.spire);
+const qfInBattle = k => k === "sp-boss" || k === "sp-mini" || k === "sp-pair" || k === "sp-build" || (k === "v-card" && typeof vSess !== "undefined" && vSess && vSess.spire);
 const qfInTour = () => typeof tourRun !== "undefined" && !!tourRun;
 function qfSync() {
   const [card, k] = qfKind(), root = document.documentElement;
