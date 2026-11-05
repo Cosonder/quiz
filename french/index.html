@@ -1134,6 +1134,9 @@ html.qf .sp-hud-act { white-space: nowrap; }
 .cl-head { display: flex; align-items: baseline; gap: 10px; }
 .cl-head b { font-size: 1rem; } .cl-date { color: var(--muted); font-size: .82rem; font-variant-numeric: tabular-nums; }
 .cl-ver ul { margin: 6px 0 0; padding-left: 20px; display: grid; gap: 4px; font-size: .9rem; line-height: 1.55; }
+/* 答对后再点正确答案进入下一题：让点击穿过已经 disabled 的正确选项（见 focus.js） */
+.opt.correct:disabled, .v-pic.correct:disabled { pointer-events: none; }
+:is(.q-card, .v-card, .cj-card, .sp-boss, .sp-mini):not(:has(.opt.wrong, .v-pic.wrong)) :is(.opt, .v-pic).correct:disabled { cursor: pointer; }
 </style>
 
 <div class="wrap">
@@ -16643,6 +16646,9 @@ function setGoalSection(wrap) {
 // ---------- 版本更新记录：设置页最下面，展开后能看到每个版本改了什么 ----------
 // p：哪个页面的更新（fr 法语页 / st 随机分析页 / 不写表示两个页面都有）。新版本加在最前面。
 const CHANGELOG = [
+  { v: "3.6", d: "2026-11-05", items: [
+    "答对后再点一下正确答案，就直接进入下一题（答题、背单词、变位、巴黎塔尖都可以）；答错时不会跳。",
+    { p: "fr", t: "零基础入门的题配上知识点卡片，学习模式下每组开始前先复习。" }] },
   { v: "3.5", d: "2026-11-05", p: "fr", items: [
     "设置里加了“难度等级”：零基础、A1–C2、关闭共 8 档，答题时按所选难度的比例出题（例如 A1 档 A1:A2 = 9:1）。",
     "新增“第零轮 · 零基础入门”：243 道最基础的题——0–100 每个数字都有题，每个星期、月份、季节各有几道，再加问候、自我介绍、礼貌用语。"] },
@@ -17511,6 +17517,22 @@ function qfBack(b) {
   window.scrollTo(0, typeof cosTopH === "function" ? cosTopH() : 0);
 }
 new MutationObserver(qfSync).observe(stage, { childList: true });
+
+// ---------- 做对后再点一次正确答案：直接进入下一题 ----------
+// 答完后选项都是 disabled，浏览器不会把点击交给它；所以让“对的那个选项”不接收点击（CSS pointer-events: none），
+// 点击落到下面的卡片上，这里按坐标判断是不是点在了正确答案上，是就按“下一题”。只在答对时生效（卡片上没有答错的选项）。
+document.addEventListener("click", e => {
+  if (!e.target.closest || e.target.closest(".opt, .v-pic")) return;   // 点在选项本身上 = 正在作答的那一下，不算“再点一次”
+  const card = e.target.closest("#stage > section.card");
+  if (!card || !QF_CARDS.some(c => card.classList.contains(c))) return;
+  if (card.querySelector(".opt.wrong, .v-pic.wrong")) return;   // 答错了：不跳
+  const right = [...card.querySelectorAll(".opt.correct, .v-pic.correct")].find(b => b.disabled);
+  if (!right) return;
+  const r = right.getBoundingClientRect();
+  if (e.clientX < r.left || e.clientX > r.right || e.clientY < r.top || e.clientY > r.bottom) return;
+  const next = card.querySelector("#nextBtn, #cjNext, #spBossNext, #spMiniNext") || document.getElementById("nextBtn") || document.getElementById("cjNext");
+  if (next && !next.disabled) next.click();
+});
 // ---------- 模拟卷：仿 2016 年全国 I 卷英语题型的法语 B1 试卷 ----------
 const EX = {
   id: "fr-b1-1",
