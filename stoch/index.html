@@ -665,7 +665,7 @@ mjx-container.mjx-wide { display: block; overflow-x: auto; overflow-y: hidden; m
 
 /* ---------- 做题全屏：一屏放下一道题，页面不能上下滚动；右上角返回 / 退出 ---------- */
 html.qf, html.qf body { overflow: hidden; height: 100%; overscroll-behavior: none; }
-html.qf header, html.qf .tocwrap, html.qf #progress, html.qf .keys-note, html.qf #saveNote, html.qf .plan-slot, html.qf .skin-reveal { display: none !important; }
+html.qf header, html.qf .boards, html.qf .tocwrap, html.qf #progress, html.qf .keys-note, html.qf #saveNote, html.qf .plan-slot, html.qf .skin-reveal { display: none !important; }
 html.qf #stage { position: fixed; z-index: 5; inset: 0; display: flex; flex-direction: column; max-width: 860px; margin: 0 auto;
   padding: calc(10px + env(safe-area-inset-top, 0px)) max(10px, env(safe-area-inset-right, 0px)) calc(10px + env(safe-area-inset-bottom, 0px)) max(10px, env(safe-area-inset-left, 0px)); }
 html.qf #stage > section.card { flex: 1 1 auto; min-height: 0; overflow: hidden; gap: clamp(6px, 1.4vh, 12px); padding: clamp(12px, 2.2vh, 20px) clamp(12px, 3vw, 20px); }
@@ -3269,7 +3269,7 @@ studyChk.addEventListener("change", () => {
 // ---------- 键盘：↑↓ 移动光标，回车选择，← → 上一题 / 下一题，Shift 显示提示 ----------
 function goPrev() { if (idx > bStart) { idx--; renderQuestion(); } }
 document.addEventListener("keydown", e => {
-  if (view !== "quiz" || e.ctrlKey || e.metaKey || e.altKey) return;
+  if (view !== "quiz" || !set || e.ctrlKey || e.metaKey || e.altKey || stage.querySelector(".board-intro")) return;
   const t = e.target;
   if (t && /^(INPUT|SELECT|TEXTAREA)$/.test(t.tagName)) return;
   const k = e.key, click = id => { const b = document.getElementById(id); if (b && !b.disabled) { e.preventDefault(); b.click(); return true; } return false; };
@@ -4993,6 +4993,10 @@ function setGoalSection(wrap) {
 // ---------- 版本更新记录：设置页最下面，展开后能看到每个版本改了什么 ----------
 // p：哪个页面的更新（fr 法语页 / st 随机分析页 / 不写表示两个页面都有）。新版本加在最前面。
 const CHANGELOG = [
+  { v: "4.0", d: "2026-11-05", p: "fr", items: [
+    "界面重新分成四个模块：做题、游戏、学习进度、设置。",
+    "“做题”下先选板块：语法、词汇、变位、听力、模拟卷，选好后目录换成这个板块的样子；页面上方的板块条可以随时换板块。",
+    "“游戏”里放单词闯关、环法之旅和巴黎塔尖。"] },
   { v: "3.12", d: "2026-11-05", p: "fr", items: [
     "修复：变位页在目录里点时态、动词标签或出题方式时，不再直接跳进全屏答题。"] },
   { v: "3.11", d: "2026-11-05", p: "fr", items: [
