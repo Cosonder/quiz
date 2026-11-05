@@ -16700,6 +16700,8 @@ function setGoalSection(wrap) {
 // ---------- 版本更新记录：设置页最下面，展开后能看到每个版本改了什么 ----------
 // p：哪个页面的更新（fr 法语页 / st 随机分析页 / 不写表示两个页面都有）。新版本加在最前面。
 const CHANGELOG = [
+  { v: "4.1", d: "2026-11-05", p: "fr", items: [
+    "修复：点“变位”（或回到语法、听力板块）时不再直接跳进全屏答题，先停在带目录的页面；开始答题后才进全屏。"] },
   { v: "4.0", d: "2026-11-05", p: "fr", items: [
     "界面重新分成四个模块：做题、游戏、学习进度、设置。",
     "“做题”下先选板块：语法、词汇、变位、听力、模拟卷，选好后目录换成这个板块的样子；页面上方的板块条可以随时换板块。",
@@ -17647,6 +17649,11 @@ const curBoardMemo = {};   // 每个模块上次进的板块（板块选择页�
 function goBoard(id) {
   const mod = BOARDS.game.some(x => x.id === id) ? "game" : "practice";
   curBoardMemo[mod] = id;
+  goBoardTo(id);
+  // 只是换了板块：先停在带目录的普通页面（可以挑题组、改设置），开始答题后才进全屏
+  if (mod === "practice" && typeof qfStay === "function") qfStay();
+}
+function goBoardTo(id) {
   if (id === "grammar" || id === "listen") {
     qBoard = id;
     const same = set && boardOfKey(set.key) === id;

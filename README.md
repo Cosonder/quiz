@@ -17,5 +17,3 @@
 ## 发布
 
 仓库 Settings → Pages → Build and deployment 选 “Deploy from a branch”，分支选 `main`、目录选 `/ (root)`，保存后约一分钟生效，网址是 `https://<用户名>.github.io/quiz/`。
-
-如果网站部署卡在“Deploy to GitHub Pages”并超时，重新推送一次就会重新部署。
