@@ -14133,6 +14133,23 @@ const HINT_OF = {
 // 零基础题组：只考最最简单的法语——数字 0–100（每个数字都有题）、星期、月份、季节、问候、自我介绍、礼貌用语。难度标为“零基础”。
 // 设置里难度等级选“零基础”时，只出这一组的题。
 (() => {
+  // 学习模式里每组开始前复习的知识点卡片
+  Object.assign(KP, {
+    "z-num": { t: "数字 0–100 总览", b: "0–16 单独记；17–19 是 dix + 个位；20–69 是“几十 + 个位”（21、31…61 中间加 et）；70–79 是 soixante + 10–19；80 是 quatre-vingts，81–99 是 quatre-vingt- + 1–19；100 是 cent。" },
+    "z-num-0": { t: "0–16：单独记的数字", b: "zéro 0, un 1, deux 2, trois 3, quatre 4, cinq 5, six 6, sept 7, huit 8, neuf 9, dix 10, onze 11, douze 12, treize 13, quatorze 14, quinze 15, seize 16。" },
+    "z-num-17": { t: "17–19：dix + 个位", b: "dix-sept 17, dix-huit 18, dix-neuf 19（中间用连字符）。" },
+    "z-num-20": { t: "20–69：几十 + 个位", b: "vingt 20, trente 30, quarante 40, cinquante 50, soixante 60。个位用连字符接上：vingt-deux 22, quarante-cinq 45；但 21、31、41、51、61 中间加 et：vingt et un, trente et un……" },
+    "z-num-70": { t: "70–79：60 + 10–19", b: "soixante-dix 70（60 + 10）, soixante et onze 71, soixante-douze 72 … soixante-dix-neuf 79。注意 71 中间加 et。" },
+    "z-num-80": { t: "80–100：4 × 20", b: "quatre-vingts 80（整 80 时 vingt 加 s）；后面跟数字时不加 s：quatre-vingt-un 81（不加 et）, quatre-vingt-dix 90, quatre-vingt-onze 91, quatre-vingt-dix-neuf 99；cent 100。" },
+    "z-days": { t: "一周七天", b: "lundi 星期一, mardi 星期二, mercredi 星期三, jeudi 星期四, vendredi 星期五, samedi 星期六, dimanche 星期日。法语的星期都小写；le lundi = 每个星期一，lundi = 这个星期一。" },
+    "z-months": { t: "十二个月", b: "janvier, février, mars, avril, mai, juin, juillet, août, septembre, octobre, novembre, décembre。月份都小写；“在一月”说 en janvier 或 au mois de janvier。注意 juin（六月）和 juillet（七月），mars（三月）和 mardi（星期二）。" },
+    "z-seasons": { t: "四季", b: "le printemps 春, l'été 夏, l'automne 秋, l'hiver 冬。“在春天”说 au printemps，其余用 en：en été, en automne, en hiver。" },
+    "z-greet": { t: "问候和告别", b: "见面：Bonjour（白天）, Bonsoir（晚上）, Salut（熟人）。问好：Ça va ?（熟人）/ Comment allez-vous ?（礼貌），回答 Ça va bien / Très bien, merci。告别：Au revoir, À bientôt（回头见）, À demain（明天见）, À tout à l'heure（一会儿见）, Bonne nuit（睡前）, Bonne journée（祝你今天愉快）。" },
+    "z-intro": { t: "自我介绍", b: "Je m'appelle … 我叫……；Je suis chinois / chinoise 我是中国人（国籍、职业要和性别配合）；J'ai vingt ans 我 20 岁（用 avoir）；J'habite à Paris 我住在巴黎；Je viens de Shanghai 我来自上海；Je parle un peu français 我说一点法语；Enchanté(e) 很高兴认识你。" },
+    "z-polite": { t: "礼貌用语和祝福", b: "Merci (beaucoup) 谢谢 → De rien / Je vous en prie 不客气；S'il vous plaît（礼貌）/ s'il te plaît 请；Pardon / Excusez-moi 对不起、打扰一下；Ce n'est pas grave 没关系。祝福：Bon appétit 吃好, Bonne chance 好运, Bon voyage 一路顺风, Joyeux anniversaire 生日快乐, Bonne année 新年快乐, Santé ! 干杯。" },
+  });
+  const KP_CAT = { "星期": "z-days", "月份": "z-months", "季节": "z-seasons", "问候": "z-greet", "自我介绍": "z-intro", "礼貌用语": "z-polite" };
+  const kpNum = n => n < 17 ? "z-num-0" : n < 20 ? "z-num-17" : n < 70 ? "z-num-20" : n < 80 ? "z-num-70" : "z-num-80";
   const Z = [
     // ---------- 数字 ----------
     ["数字", 37, "« un » 是数字几？", ["1", "2", "3", "10"], 0, "un = 1，阴性是 une。", "最小的那个数"],
@@ -14225,6 +14242,9 @@ const HINT_OF = {
     BANK.push({ id, ch, cat, q, opts, a, exp, hint });
     LEVEL_OF[id] = "零基础";
     TAGS_OF[id] = ["零基础入门", cat];
+    // 知识点：数字按所在的段，其余按类别
+    const m = /^fr-r0-n(\d+)$/.exec(id);
+    KP_OF[id] = m ? kpNum(Number(m[1])) : KP_CAT[cat] || "z-num";
   };
   Z.forEach(([cat, ch, q, opts, a, exp, hint], i) => add("fr-r0-" + (i + 1), cat, ch, q, opts, a, exp, hint));
 
