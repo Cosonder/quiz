@@ -3740,7 +3740,8 @@ function planRefresh() {
   const old = $("planToc");
   if (old) old.replaceWith(planTocItem());
   planSlot.textContent = ""; planSlot.append(planTocItem("planMini"));
-  planSlot.hidden = view === "book" || view === "exam" || view === "settings";   // 学习进度页有完整的计划卡，模拟卷不打扰
+  planSlot.hidden = view === "book" || view === "exam" || view === "settings" || view === "shop";
+  if (typeof planDoneCheck === "function") planDoneCheck();   // 法语页：第一次做完今日计划时开放商店   // 学习进度页有完整的计划卡，模拟卷不打扰
 }
 planRefresh();
 
@@ -3818,7 +3819,7 @@ function coinStep(st, key, right, t) {
     return { coins: 0, run: 0 };
   }
   r.n++;
-  if (dayKey(new Date(t)) < COIN_ANS_FROM || !gameOnAt(t)) return { coins: 0, run: r.n };
+  if (dayKey(new Date(t)) < COIN_ANS_FROM) return { coins: 0, run: r.n };   // 游戏模式关着（或还没买）时金币也在后台照常积累
   const c = coinFor(r.n) * coinMult(t);   // 金币药水生效时翻倍
   st.coins += c;
   return { coins: c, run: r.n };
@@ -3890,8 +3891,9 @@ const QUESTS = [
 ];
 
 let gameRaw = [];   // game 集合的全部记录
+let gameLoaded = false;   // 已经读到过 game 记录
 let potionCache = null, modeCache = null;
-function gameReset(docs) { gameRaw = docs || []; potionCache = null; coinPotCache = null; modeCache = null; shieldCache = null; prog = null; gameApplyMode(); if (typeof spOnGameLoad === "function") spOnGameLoad(); }
+function gameReset(docs) { gameRaw = docs || []; gameLoaded = true; potionCache = null; coinPotCache = null; modeCache = null; shieldCache = null; prog = null; gameApplyMode(); if (typeof spOnGameLoad === "function") spOnGameLoad(); if (typeof setGate === "function") setGate(); if (typeof navSync === "function") navSync(); }
 
 // ---------- 游戏模式（设置里开关）：金币、combo、每日任务、商店和道具，以及以后新加的游戏玩法，都只在打开时出现 ----------
 // 开关记成 game 记录（kind: "mode"），跟着账号同步；关掉期间答对不得金币。没有记录时默认打开。
@@ -3901,6 +3903,7 @@ function modeList() {
 }
 function gameOnAt(t) { let on = true; for (const [a, v] of modeList()) { if (a <= t) on = v; else break; } return on; }
 function gameOn() {
+  if (typeof gameOwned === "function" && !gameOwned()) return false;   // 法语页：游戏模式要先在商店买
   const m = modeList();
   if (m.length) return m[m.length - 1][1];
   try { return localStorage.getItem("sq-game") !== "0"; } catch (e) { return true; }
@@ -4064,6 +4067,8 @@ function foldSec(key, title, hint) {
   d.addEventListener("toggle", () => { foldOpen[key] = d.open; try { localStorage.setItem("sq-fold-" + key, d.open ? "1" : "0"); } catch (e) {} });
   return d;
 }
+// 商店里的操作之后重画：商店单独成页时画商店，否则画学习进度
+const shopRedraw = () => view === "shop" && typeof renderShop === "function" ? renderShop() : drawBook();
 const coinEl = n => { const s = el("span", "coin-n"); s.append(el("i", "coin"), document.createTextNode(String(n))); return s; };
 const mmss = ms => `${Math.floor(ms / 60e3)}:${String(Math.floor(ms / 1e3) % 60).padStart(2, "0")}`;
 // 学习进度页：每日任务 + 商店
@@ -4093,49 +4098,7 @@ function gameCard() {
   bonus.append(document.createTextNode("三个任务全部完成得一个宝箱" + (st.allClaimed ? "（已领）" : "") + ` · 做完今日计划 +${COIN_PLAN}` + (st.planClaimed ? "（已领）" : "")));
   card.append(bonus);
   if (st.led.chests.length) card.append(chestBox(st.led.chests.length));
-  // 商店
-  const own = Object.values(st.led.inv).reduce((a, b) => a + b, 0);
-  const shopSec = foldSec("shop", "商店 · 道具", `连对护盾、补签卡、经验药水、金币药水${own ? ` · 拥有 ${own} 件` : ""}`);
-  card.append(shopSec);
-  const shop = el("div", "shop");
-  const note = el("p", "shop-note", "");
-  const pt = patchTarget();
-  SHOP.forEach(it => {
-    const own = st.led.inv[it.id];
-    const box = el("div", "shop-item");
-    const top = el("div", "shop-top");
-    const nm = el("span", "shop-name"); nm.append(shopIcon(it.id), el("b", null, it.name));
-    top.append(nm, coinEl(it.price));
-    box.append(top, el("p", null, it.desc), el("span", "own", `拥有 ${own}`));
-    const acts = el("div", "shop-acts");
-    const buy = el("button", "btn ghost", "购买"); buy.type = "button"; buy.id = "buy-" + it.id;
-    buy.disabled = st.led.coins < it.price || (it.max && own >= it.max);
-    let sure = false;
-    buy.addEventListener("click", () => {
-      if (!sure) { sure = true; buy.textContent = `确认花 ${it.price} 金币`; return; }
-      const err = gameBuy(it.id);
-      if (err) { note.textContent = err; return; }
-      xpToast(`花了 ${it.price} 金币`, `买到了：${it.name}`);
-      drawBook();
-    });
-    if (it.auto) { acts.append(buy, el("span", "shop-auto", "答错时自动生效")); box.append(acts); shop.append(box); return; }
-    const use = el("button", "btn", it.id === "patch" ? "补签昨天" : "喝下"); use.type = "button"; use.id = "use-" + it.id;
-    use.disabled = !own || (it.id === "patch" ? !pt : it.coin ? !!ca : !!pa);
-    use.addEventListener("click", () => {
-      const err = gameUse(it.id);
-      if (err) { note.textContent = err; return; }
-      xpToast(it.id === "patch" ? "已用补签卡补上昨天的打卡" : it.coin ? `答对得到的金币 ×${it.coin}，${POTION_MIN} 分钟内有效` : `${it.mult} 倍经验，${POTION_MIN} 分钟内有效`, it.id === "patch" ? "补签成功！" : "药水生效！");
-      drawBook();
-      if (typeof planRefresh === "function") planRefresh();
-    });
-    acts.append(buy, use);
-    box.append(acts);
-    shop.append(box);
-  });
-  if (typeof modeShopItems === "function") modeShopItems(shop, st.led, note);   // 法语页：游戏模式的解锁
-  shopSec.append(shop);
-  if (typeof cosShop === "function") card.append(cosShop(note));
-  card.append(note);
+  if (typeof renderShop !== "function") gameShopParts(card, st.led);   // 法语页的商店单独成页
   const rule = el("details", "xp-rule");
   rule.append(el("summary", null, "任务和金币怎么算"),
     el("p", null, `每答对一题 +1 金币，连对越多给得越多：combo 5 起每题 2 个，10 起 3 个，20 起 4 个，30 起 5 个。答错、或隔 10 分钟以上没答，连对重新算；答题、变位、背单词分开算。`),
@@ -4184,20 +4147,66 @@ function chestBox(n) {
   box.append(stage, txt, btn);
   return box;
 }
+// 商店的三块：道具、外观、（法语页）设置
+function gameShopParts(card, led) {
+  const own = Object.values(led.inv).reduce((a, b) => a + b, 0);
+  const shopSec = foldSec("shop", "商店 · 道具", `连对护盾、补签卡、经验药水、金币药水${own ? ` · 拥有 ${own} 件` : ""}`);
+  card.append(shopSec);
+  const shop = el("div", "shop");
+  const note = el("p", "shop-note", "");
+  const pt = patchTarget();
+  SHOP.forEach(it => {
+    const own = led.inv[it.id];
+    const box = el("div", "shop-item");
+    const top = el("div", "shop-top");
+    const nm = el("span", "shop-name"); nm.append(shopIcon(it.id), el("b", null, it.name));
+    top.append(nm, coinEl(it.price));
+    box.append(top, el("p", null, it.desc), el("span", "own", `拥有 ${own}`));
+    const acts = el("div", "shop-acts");
+    const buy = el("button", "btn ghost", "购买"); buy.type = "button"; buy.id = "buy-" + it.id;
+    buy.disabled = led.coins < it.price || (it.max && own >= it.max);
+    let sure = false;
+    buy.addEventListener("click", () => {
+      if (!sure) { sure = true; buy.textContent = `确认花 ${it.price} 金币`; return; }
+      const err = gameBuy(it.id);
+      if (err) { note.textContent = err; return; }
+      xpToast(`花了 ${it.price} 金币`, `买到了：${it.name}`);
+      shopRedraw();
+    });
+    if (it.auto) { acts.append(buy, el("span", "shop-auto", "答错时自动生效")); box.append(acts); shop.append(box); return; }
+    const use = el("button", "btn", it.id === "patch" ? "补签昨天" : "喝下"); use.type = "button"; use.id = "use-" + it.id;
+    use.disabled = !own || (it.id === "patch" ? !pt : it.coin ? !!coinPotionActive() : !!potionActive());
+    use.addEventListener("click", () => {
+      const err = gameUse(it.id);
+      if (err) { note.textContent = err; return; }
+      xpToast(it.id === "patch" ? "已用补签卡补上昨天的打卡" : it.coin ? `答对得到的金币 ×${it.coin}，${POTION_MIN} 分钟内有效` : `${it.mult} 倍经验，${POTION_MIN} 分钟内有效`, it.id === "patch" ? "补签成功！" : "药水生效！");
+      shopRedraw();
+      if (typeof planRefresh === "function") planRefresh();
+    });
+    acts.append(buy, use);
+    box.append(acts);
+    shop.append(box);
+  });
+  if (typeof modeShopItems === "function") modeShopItems(shop, led, note);   // 法语页：游戏模式的解锁
+  shopSec.append(shop);
+  if (typeof cosShop === "function") card.append(cosShop(note));
+  if (typeof setShop === "function") card.append(setShop(note));   // 法语页：界面语言和字体
+  card.append(note);
+}
 // 药水倒计时
 setInterval(() => {
   const els = document.querySelectorAll(".potion-left");
   if (!els.length) return;
   const pa = potionActive();
   els.forEach(e => { e.textContent = pa ? mmss(pa.left) : "0:00"; });
-  if (!pa && view === "book") drawBook();
+  if (!pa && (view === "book" || view === "shop")) shopRedraw();
 }, 1000);
 setInterval(() => {
   const els = document.querySelectorAll(".potion-left-c");
   if (!els.length) return;
   const ca = coinPotionActive();
   els.forEach(e => { e.textContent = ca ? mmss(ca.left) : "0:00"; });
-  if (!ca && view === "book") drawBook();
+  if (!ca && (view === "book" || view === "shop")) shopRedraw();
 }, 1000);
 // 外观商店的预览小图（由 quiz-common/cosmetics/build.py 生成）
 const COS_PX = {"fx_confetti": "<svg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12' shape-rendering='crispEdges'><rect x='2' y='1' width='1' height='1' fill='#ef476f'/><rect x='8' y='1' width='1' height='1' fill='#118ab2'/><rect x='2' y='2' width='1' height='1' fill='#ef476f'/><rect x='7' y='3' width='1' height='1' fill='#ffd166'/><rect x='4' y='4' width='1' height='1' fill='#06d6a0'/><rect x='11' y='5' width='1' height='1' fill='#9b5de5'/><rect x='1' y='6' width='1' height='1' fill='#118ab2'/><rect x='7' y='6' width='1' height='1' fill='#ef476f'/><rect x='1' y='7' width='1' height='1' fill='#118ab2'/><rect x='5' y='8' width='1' height='1' fill='#ffd166'/><rect x='2' y='9' width='1' height='1' fill='#9b5de5'/><rect x='10' y='9' width='1' height='1' fill='#06d6a0'/><rect x='10' y='10' width='1' height='1' fill='#06d6a0'/><rect x='6' y='11' width='1' height='1' fill='#118ab2'/></svg>", "fx_tricolor": "<svg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12' shape-rendering='crispEdges'><rect x='5' y='0' width='1' height='1' fill='#cfd6e6'/><rect x='1' y='1' width='1' height='1' fill='#1f4fd8'/><rect x='5' y='1' width='1' height='1' fill='#cfd6e6'/><rect x='9' y='1' width='1' height='1' fill='#e5243b'/><rect x='2' y='2' width='1' height='1' fill='#1f4fd8'/><rect x='8' y='2' width='1' height='1' fill='#e5243b'/><rect x='3' y='4' width='2' height='1' fill='#1f4fd8'/><rect x='7' y='4' width='2' height='1' fill='#e5243b'/><rect x='0' y='5' width='1' height='1' fill='#cfd6e6'/><rect x='3' y='5' width='1' height='1' fill='#1f4fd8'/><rect x='5' y='5' width='2' height='1' fill='#cfd6e6'/><rect x='8' y='5' width='1' height='1' fill='#e5243b'/><rect x='11' y='5' width='1' height='1' fill='#cfd6e6'/><rect x='0' y='6' width='1' height='1' fill='#cfd6e6'/><rect x='3' y='6' width='1' height='1' fill='#1f4fd8'/><rect x='5' y='6' width='2' height='1' fill='#cfd6e6'/><rect x='8' y='6' width='1' height='1' fill='#e5243b'/><rect x='11' y='6' width='1' height='1' fill='#cfd6e6'/><rect x='3' y='7' width='2' height='1' fill='#1f4fd8'/><rect x='7' y='7' width='2' height='1' fill='#e5243b'/><rect x='2' y='9' width='1' height='1' fill='#1f4fd8'/><rect x='8' y='9' width='1' height='1' fill='#e5243b'/><rect x='1' y='10' width='1' height='1' fill='#1f4fd8'/><rect x='5' y='10' width='1' height='1' fill='#cfd6e6'/><rect x='9' y='10' width='1' height='1' fill='#e5243b'/><rect x='6' y='11' width='1' height='1' fill='#cfd6e6'/></svg>", "fx_sound": "<svg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12' shape-rendering='crispEdges'><rect x='6' y='1' width='5' height='1' fill='#3b2a00'/><rect x='6' y='2' width='1' height='1' fill='#3b2a00'/><rect x='7' y='2' width='3' height='1' fill='#ffd23a'/><rect x='10' y='2' width='1' height='1' fill='#3b2a00'/><rect x='6' y='3' width='5' height='1' fill='#3b2a00'/><rect x='6' y='4' width='1' height='1' fill='#3b2a00'/><rect x='10' y='4' width='1' height='1' fill='#3b2a00'/><rect x='6' y='5' width='1' height='1' fill='#3b2a00'/><rect x='10' y='5' width='1' height='1' fill='#3b2a00'/><rect x='6' y='6' width='1' height='1' fill='#3b2a00'/><rect x='10' y='6' width='1' height='1' fill='#3b2a00'/><rect x='2' y='7' width='5' height='1' fill='#3b2a00'/><rect x='8' y='7' width='4' height='1' fill='#3b2a00'/><rect x='1' y='8' width='1' height='1' fill='#3b2a00'/><rect x='2' y='8' width='4' height='1' fill='#ffd23a'/><rect x='6' y='8' width='2' height='1' fill='#3b2a00'/><rect x='8' y='8' width='3' height='1' fill='#ffd23a'/><rect x='11' y='8' width='1' height='1' fill='#3b2a00'/><rect x='1' y='9' width='1' height='1' fill='#3b2a00'/><rect x='2' y='9' width='4' height='1' fill='#ffd23a'/><rect x='6' y='9' width='2' height='1' fill='#3b2a00'/><rect x='8' y='9' width='3' height='1' fill='#ffd23a'/><rect x='11' y='9' width='1' height='1' fill='#3b2a00'/><rect x='2' y='10' width='4' height='1' fill='#3b2a00'/><rect x='8' y='10' width='3' height='1' fill='#3b2a00'/></svg>", "sky_midnight": {"wide": {"w": 96, "h": 64, "stars": [[10, 8, 3], [29, 6, 2], [47, 9, 3], [55, 18, 2], [73, 14, 3], [16, 30, 2], [50, 36, 2], [80, 32, 2], [34, 40, 2]], "moon": [86, 10, 6], "swirls": [[38.0, 24.0, 15.0, 1], [62.0, 28.0, 11.0, -1], [20.0, 12.0, 8.0, 1]]}, "tall": {"w": 56, "h": 100, "stars": [[5, 12, 3], [16, 9, 2], [27, 14, 3], [32, 28, 2], [42, 21, 3], [29, 56, 2], [46, 50, 2], [19, 62, 2]], "moon": [50, 15, 6], "swirls": [[22.2, 37.5, 8.8, 1], [36.2, 43.8, 6.4, -1], [11.7, 18.8, 4.7, 1]]}}};
@@ -4484,11 +4493,11 @@ function cosShop(note) {
           const err = cosBuy(it.id);
           if (err) { note.textContent = err; return; }
           xpToast(`花了 ${it.price} 金币，已经换上`, `买到了：${it.name}`);
-          drawBook();
+          shopRedraw();
         });
       } else {
         btn.textContent = on ? "卸下" : "换上";
-        btn.addEventListener("click", () => { cosEquip(slot, on ? null : it.id); drawBook(); });
+        btn.addEventListener("click", () => { cosEquip(slot, on ? null : it.id); shopRedraw(); });
       }
       card.append(btn);
       grid.append(card);
@@ -5012,8 +5021,10 @@ function setQuizSection(wrap) {
 }
 // 游戏模式：金币、combo、每日任务、商店和道具
 function setGameSection(wrap) {
-  const g = setSection(wrap, "游戏模式", "打开后：答对得金币、连对 combo 计数、每日任务、商店和道具（经验药水、补签卡）。关掉后这些都不显示，关掉期间答对也不得金币；已有的金币和道具会保留，重新打开还在。经验、等级、今日计划和闯关不受影响。这个开关跟着账号同步。");
-  g.append(setCheckRow("setGame", "打开游戏模式", gameOn(), v => gameSetMode(v)));
+  const g = setSection(wrap, "游戏模式", "打开后：答对得金币、连对 combo 计数、每日任务、商店和道具（经验药水、补签卡）。关掉后这些都不显示；答对得的金币照常在后台积累，已有的金币和道具会保留，重新打开还在。经验、等级、今日计划和闯关不受影响。这个开关跟着账号同步。");
+  const row = setCheckRow("setGame", "打开游戏模式", gameOn(), v => gameSetMode(v));
+  g.append(row);
+  if (typeof gameOwned === "function" && !gameOwned()) { row.querySelector("input").disabled = true; g.append(el("p", "sub", "游戏模式要先在“商店”里购买（完成一次今日计划后商店开放）。")); }   // 法语页
 }
 function setGoalSection(wrap) {
   const g = setSection(wrap, "学习进度", "当天经验达到目标算打卡；连续打卡和补签都按这个目标算。");
@@ -5024,6 +5035,14 @@ function setGoalSection(wrap) {
 // ---------- 版本更新记录：设置页最下面，展开后能看到每个版本改了什么 ----------
 // p：哪个页面的更新（fr 法语页 / st 随机分析页 / 不写表示两个页面都有）。新版本加在最前面。
 const CHANGELOG = [
+  { v: "5.0", d: "2026-11-05", p: "fr", items: [
+    "商店从“学习进度”里分出来，成为顶部单独的模块：做题、游戏、商店、学习进度、设置。",
+    "完成第一次今日计划后商店开放；开放后先只卖“游戏模式”（100 金币），买下后才有每日任务、宝箱、道具、外观和游戏模块。",
+    "答对题的金币在买游戏模式之前（以及关掉游戏模式时）也在后台照常积累。游戏模式没买或关着时，“游戏”模块锁着。"] },
+  { v: "4.6", d: "2026-11-05", p: "fr", items: [
+    "商店新增“设置”分区：英文界面（600 金币）和 Times New Roman、Kreon 两种字体（各 200 金币），买了才能在设置里选；关掉游戏模式时不用买。"] },
+  { v: "4.5", d: "2026-11-05", p: "fr", items: [
+    "设置里加了“字体”：默认、Times New Roman、Kreon，影响英文和法语字母，汉字仍用思源字体。"] },
   { v: "4.4", d: "2026-11-05", p: "fr", items: [
     "英文界面补齐正文：4157 道题的题干和解析、1164 张知识点卡片、800 道 Boss 题、巴黎塔尖事件、变位规律、模拟卷说明、环法站点和明信片介绍、更新记录都有了英文版。"] },
   { v: "4.3", d: "2026-11-05", p: "fr", items: [

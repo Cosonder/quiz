@@ -988,6 +988,19 @@ html[lang="en"] .tocwrap[open] > summary::after { content: "Hide"; }
 html[data-font="times"] { --body: "Times New Roman", Times, "Noto Serif SC", "Songti SC", serif; --display: "Times New Roman", Times, "Noto Serif SC", "Songti SC", serif; }
 html[data-font="kreon"] { --body: "Kreon", "Noto Sans SC", "PingFang SC", serif; --display: "Kreon", "Noto Serif SC", "Songti SC", serif; }
 html[data-font="times"] body { font-size: 17px; }
+.set-prev { width: 64px; height: 44px; margin: 0 auto 4px; display: grid; place-items: center; border-radius: 8px; background: var(--bg); border: 1.5px solid var(--line); font-weight: 700; font-size: 1.2rem; }
+.set-prev.f-times { font-family: "Times New Roman", Times, serif; }
+.set-prev.f-kreon { font-family: "Kreon", serif; }
+/* 商店单独成页；锁着的模块 */
+.tab.locked { color: var(--muted); opacity: .75; }
+.tab.locked::before { content: ""; display: inline-block; width: 9px; height: 10px; margin-right: 4px; vertical-align: -1px; background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='9' height='10' viewBox='0 0 9 10' shape-rendering='crispEdges'%3E%3Cpath fill='%237d8394' d='M2 0h5v1h-5zM1 1h2v1h-2zM6 1h2v1h-2zM1 2h1v2h-1zM7 2h1v2h-1zM0 4h9v6h-9z'/%3E%3C/svg%3E") center / 100% 100% no-repeat; image-rendering: pixelated; }
+.shop-page { gap: 12px; }
+.shop-lock { display: flex; flex-direction: column; align-items: center; text-align: center; gap: 10px; padding: 18px 8px; }
+.shop-lock > b { font-size: 1.15rem; }
+.shop-lock .plan-toc { width: 100%; text-align: left; }
+.px-lock.big { width: 36px; height: 40px; }
+.shop-hero { padding: 16px; gap: 10px; }
+.shop-hero .shop-name b { font-size: 1.15rem; }
 /* 外观商品（游戏模式里的商店购买）：由 quiz-common/cosmetics/build.py 生成，别手改 */
 :root[data-coin="tower"] .coin, :root .cos-prev .coin.cs-tower { background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Cdefs%3E%3ClinearGradient id='r' x1='0' y1='0' x2='1' y2='1'%3E%3Cstop offset='0' stop-color='%23ffe9a0'/%3E%3Cstop offset='.45' stop-color='%23f0b21a'/%3E%3Cstop offset='1' stop-color='%23a86a00'/%3E%3C/linearGradient%3E%3CradialGradient id='f' cx='.38' cy='.32' r='.8'%3E%3Cstop offset='0' stop-color='%23fff6c8'/%3E%3Cstop offset='.45' stop-color='%23ffcf3f'/%3E%3Cstop offset='1' stop-color='%23e09a00'/%3E%3C/radialGradient%3E%3ClinearGradient id='s' x1='0' y1='0' x2='0' y2='1'%3E%3Cstop offset='0' stop-color='%23b87700'/%3E%3Cstop offset='1' stop-color='%237e4b00'/%3E%3C/linearGradient%3E%3C/defs%3E%3Ccircle cx='16' cy='16' r='15.5' fill='url%28%23r%29'/%3E%3Ccircle cx='16' cy='16' r='14.3' fill='none' stroke='%238f5a00' stroke-opacity='.45' stroke-width='1.4' stroke-dasharray='.9 1.1'/%3E%3Ccircle cx='16' cy='16' r='12.4' fill='url%28%23f%29' stroke='%23b77800' stroke-width='.9'/%3E%3Ccircle cx='16' cy='16' r='10.6' fill='none' stroke='%23fff3c4' stroke-opacity='.7' stroke-width='.6'/%3E%3Cg transform='translate%28.35 .45%29' fill='%23fff6cf' fill-opacity='.7'%3E%3Cpath d='M9.40 24.80L10.52 23.35L11.35 22.05L12.03 20.81L12.60 19.60L14.80 19.60L14.40 20.81L13.88 22.05L13.22 23.35L12.30 24.80Z M12.80 18.70L13.51 17.50L14.01 16.43L14.40 15.40L15.78 15.40L15.82 16.43L15.76 17.50L15.55 18.70Z M22.60 24.80L21.48 23.35L20.65 22.05L19.97 20.81L19.40 19.60L17.20 19.60L17.60 20.81L18.12 22.05L18.78 23.35L19.70 24.80Z M19.20 18.70L18.49 17.50L17.99 16.43L17.60 15.40L16.22 15.40L16.18 16.43L16.24 17.50L16.45 18.70Z M14.55 14.60L14.86 13.16L15.05 12.09L15.19 11.13L15.31 10.23L15.40 9.38L15.48 8.56L15.54 7.77L15.60 7.00L16.40 7.00L16.46 7.77L16.52 8.56L16.60 9.38L16.69 10.23L16.81 11.13L16.95 12.09L17.14 13.16L17.45 14.60Z M12.20 24.80L12.52 24.41L12.83 24.05L13.15 23.73L13.47 23.44L13.78 23.18L14.10 22.96L14.42 22.78L14.73 22.62L15.05 22.50L15.37 22.42L15.68 22.37L16.00 22.35L16.32 22.37L16.63 22.42L16.95 22.50L17.27 22.62L17.58 22.78L17.90 22.96L18.22 23.18L18.53 23.44L18.85 23.73L19.17 24.05L19.48 24.41L19.80 24.80L19.00 24.80L18.75 24.54L18.50 24.30L18.25 24.08L18.00 23.88L17.75 23.71L17.50 23.56L17.25 23.44L17.00 23.33L16.75 23.25L16.50 23.20L16.25 23.16L16.00 23.15L15.75 23.16L15.50 23.20L15.25 23.25L15.00 23.33L14.75 23.44L14.50 23.56L14.25 23.71L14.00 23.88L13.75 24.08L13.50 24.30L13.25 24.54L13.00 24.80Z M11.80 18.7H20.20V19.6H11.80Z M13.95 14.6H18.05V15.4H13.95Z M15.3 6.4H16.7V7.0H15.3Z'/%3E%3C/g%3E%3Cpath d='M9.40 24.80L10.52 23.35L11.35 22.05L12.03 20.81L12.60 19.60L14.80 19.60L14.40 20.81L13.88 22.05L13.22 23.35L12.30 24.80Z M12.80 18.70L13.51 17.50L14.01 16.43L14.40 15.40L15.78 15.40L15.82 16.43L15.76 17.50L15.55 18.70Z M22.60 24.80L21.48 23.35L20.65 22.05L19.97 20.81L19.40 19.60L17.20 19.60L17.60 20.81L18.12 22.05L18.78 23.35L19.70 24.80Z M19.20 18.70L18.49 17.50L17.99 16.43L17.60 15.40L16.22 15.40L16.18 16.43L16.24 17.50L16.45 18.70Z M14.55 14.60L14.86 13.16L15.05 12.09L15.19 11.13L15.31 10.23L15.40 9.38L15.48 8.56L15.54 7.77L15.60 7.00L16.40 7.00L16.46 7.77L16.52 8.56L16.60 9.38L16.69 10.23L16.81 11.13L16.95 12.09L17.14 13.16L17.45 14.60Z M12.20 24.80L12.52 24.41L12.83 24.05L13.15 23.73L13.47 23.44L13.78 23.18L14.10 22.96L14.42 22.78L14.73 22.62L15.05 22.50L15.37 22.42L15.68 22.37L16.00 22.35L16.32 22.37L16.63 22.42L16.95 22.50L17.27 22.62L17.58 22.78L17.90 22.96L18.22 23.18L18.53 23.44L18.85 23.73L19.17 24.05L19.48 24.41L19.80 24.80L19.00 24.80L18.75 24.54L18.50 24.30L18.25 24.08L18.00 23.88L17.75 23.71L17.50 23.56L17.25 23.44L17.00 23.33L16.75 23.25L16.50 23.20L16.25 23.16L16.00 23.15L15.75 23.16L15.50 23.20L15.25 23.25L15.00 23.33L14.75 23.44L14.50 23.56L14.25 23.71L14.00 23.88L13.75 24.08L13.50 24.30L13.25 24.54L13.00 24.80Z M11.80 18.7H20.20V19.6H11.80Z M13.95 14.6H18.05V15.4H13.95Z M15.3 6.4H16.7V7.0H15.3Z' fill='url%28%23s%29'/%3E%3CclipPath id='sp'%3E%3Cpath d='M14.80 19.60L14.70 19.93L14.59 20.25L14.48 20.58L14.36 20.90L14.24 21.23L14.10 21.55L13.96 21.88L13.81 22.20L13.66 22.53L13.49 22.85L13.32 23.18L13.13 23.50L12.94 23.83L12.74 24.15L12.52 24.48L12.30 24.80L12.20 24.80L12.52 24.41L12.83 24.05L13.15 23.73L13.47 23.44L13.78 23.18L14.10 22.96L14.42 22.78L14.73 22.62L15.05 22.50L15.37 22.42L15.68 22.37L16.00 22.35L16.32 22.37L16.63 22.42L16.95 22.50L17.27 22.62L17.58 22.78L17.90 22.96L18.22 23.18L18.53 23.44L18.85 23.73L19.17 24.05L19.48 24.41L19.80 24.80L19.70 24.80L19.48 24.48L19.26 24.15L19.06 23.83L18.87 23.50L18.68 23.18L18.51 22.85L18.34 22.53L18.19 22.20L18.04 21.88L17.90 21.55L17.76 21.23L17.64 20.90L17.52 20.58L17.41 20.25L17.30 19.93L17.20 19.60Z'/%3E%3C/clipPath%3E%3Cpath d='M14.80 19.60L14.70 19.93L14.59 20.25L14.48 20.58L14.36 20.90L14.24 21.23L14.10 21.55L13.96 21.88L13.81 22.20L13.66 22.53L13.49 22.85L13.32 23.18L13.13 23.50L12.94 23.83L12.74 24.15L12.52 24.48L12.30 24.80L12.20 24.80L12.52 24.41L12.83 24.05L13.15 23.73L13.47 23.44L13.78 23.18L14.10 22.96L14.42 22.78L14.73 22.62L15.05 22.50L15.37 22.42L15.68 22.37L16.00 22.35L16.32 22.37L16.63 22.42L16.95 22.50L17.27 22.62L17.58 22.78L17.90 22.96L18.22 23.18L18.53 23.44L18.85 23.73L19.17 24.05L19.48 24.41L19.80 24.80L19.70 24.80L19.48 24.48L19.26 24.15L19.06 23.83L18.87 23.50L18.68 23.18L18.51 22.85L18.34 22.53L18.19 22.20L18.04 21.88L17.90 21.55L17.76 21.23L17.64 20.90L17.52 20.58L17.41 20.25L17.30 19.93L17.20 19.60Z' fill='%23c98a12' fill-opacity='.8'/%3E%3Cpath d='M3.45 25L11.45 18.5M11.45 25L3.45 18.5M4.40 25L12.40 18.5M12.40 25L4.40 18.5M5.35 25L13.35 18.5M13.35 25L5.35 18.5M6.30 25L14.30 18.5M14.30 25L6.30 18.5M7.25 25L15.25 18.5M15.25 25L7.25 18.5M8.20 25L16.20 18.5M16.20 25L8.20 18.5M9.15 25L17.15 18.5M17.15 25L9.15 18.5M10.10 25L18.10 18.5M18.10 25L10.10 18.5M11.05 25L19.05 18.5M19.05 25L11.05 18.5M12.00 25L20.00 18.5M20.00 25L12.00 18.5M12.95 25L20.95 18.5M20.95 25L12.95 18.5M13.90 25L21.90 18.5M21.90 25L13.90 18.5M14.85 25L22.85 18.5M22.85 25L14.85 18.5M15.80 25L23.80 18.5M23.80 25L15.80 18.5M16.75 25L24.75 18.5M24.75 25L16.75 18.5M17.70 25L25.70 18.5M25.70 25L17.70 18.5M18.65 25L26.65 18.5M26.65 25L18.65 18.5M19.60 25L27.60 18.5M27.60 25L19.60 18.5M20.55 25L28.55 18.5M28.55 25L20.55 18.5' stroke='%237e4b00' stroke-opacity='.55' stroke-width='.16' clip-path='url%28%23sp%29'/%3E%3Cpath d='M9.40 24.80L13.22 23.35M12.30 24.80L10.52 23.35M10.52 23.35L13.22 23.35M10.52 23.35L13.88 22.05M13.22 23.35L11.35 22.05M11.35 22.05L13.88 22.05M11.35 22.05L14.40 20.81M13.88 22.05L12.03 20.81M12.03 20.81L14.40 20.81M12.03 20.81L14.80 19.60M14.40 20.81L12.60 19.60M12.60 19.60L14.80 19.60M12.80 18.70L15.76 17.50M15.55 18.70L13.51 17.50M13.51 17.50L15.76 17.50M13.51 17.50L15.82 16.43M15.76 17.50L14.01 16.43M14.01 16.43L15.82 16.43M14.01 16.43L15.78 15.40M15.82 16.43L14.40 15.40M14.40 15.40L15.78 15.40M22.60 24.80L18.78 23.35M19.70 24.80L21.48 23.35M21.48 23.35L18.78 23.35M21.48 23.35L18.12 22.05M18.78 23.35L20.65 22.05M20.65 22.05L18.12 22.05M20.65 22.05L17.60 20.81M18.12 22.05L19.97 20.81M19.97 20.81L17.60 20.81M19.97 20.81L17.20 19.60M17.60 20.81L19.40 19.60M19.40 19.60L17.20 19.60M19.20 18.70L16.24 17.50M16.45 18.70L18.49 17.50M18.49 17.50L16.24 17.50M18.49 17.50L16.18 16.43M16.24 17.50L17.99 16.43M17.99 16.43L16.18 16.43M17.99 16.43L16.22 15.40M16.18 16.43L17.60 15.40M17.60 15.40L16.22 15.40M14.55 14.60L17.14 13.16M17.45 14.60L14.86 13.16M14.86 13.16L17.14 13.16M14.86 13.16L16.95 12.09M17.14 13.16L15.05 12.09M15.05 12.09L16.95 12.09M15.05 12.09L16.81 11.13M16.95 12.09L15.19 11.13M15.19 11.13L16.81 11.13M15.19 11.13L16.69 10.23M16.81 11.13L15.31 10.23M15.31 10.23L16.69 10.23M15.31 10.23L16.60 9.38M16.69 10.23L15.40 9.38M15.40 9.38L16.60 9.38M15.40 9.38L16.52 8.56M16.60 9.38L15.48 8.56M15.48 8.56L16.52 8.56M15.48 8.56L16.46 7.77M16.52 8.56L15.54 7.77M15.54 7.77L16.46 7.77M15.54 7.77L16.40 7.00M16.46 7.77L15.60 7.00M15.60 7.00L16.40 7.00M12.83 24.05L13.75 24.08M13.47 23.44L13.75 24.08M14.10 22.96L14.75 23.44M14.73 22.62L14.75 23.44M15.37 22.42L15.75 23.16M16.00 22.35L15.75 23.16M16.63 22.42L16.75 23.25M17.27 22.62L16.75 23.25M17.90 22.96L17.75 23.71M18.53 23.44L17.75 23.71M19.17 24.05L18.75 24.54' fill='none' stroke='%23f8d873' stroke-opacity='.75' stroke-width='.17' stroke-linecap='round'/%3E%3Cpath d='M9.40 24.80L10.52 23.35L11.35 22.05L12.03 20.81L12.60 19.60M12.30 24.80L13.22 23.35L13.88 22.05L14.40 20.81L14.80 19.60M12.80 18.70L13.51 17.50L14.01 16.43L14.40 15.40M15.55 18.70L15.76 17.50L15.82 16.43L15.78 15.40M22.60 24.80L21.48 23.35L20.65 22.05L19.97 20.81L19.40 19.60M19.70 24.80L18.78 23.35L18.12 22.05L17.60 20.81L17.20 19.60M19.20 18.70L18.49 17.50L17.99 16.43L17.60 15.40M16.45 18.70L16.24 17.50L16.18 16.43L16.22 15.40M14.55 14.60L14.86 13.16L15.05 12.09L15.19 11.13L15.31 10.23L15.40 9.38L15.48 8.56L15.54 7.77L15.60 7.00M17.45 14.60L17.14 13.16L16.95 12.09L16.81 11.13L16.69 10.23L16.60 9.38L16.52 8.56L16.46 7.77L16.40 7.00' fill='none' stroke='%236e4000' stroke-width='.22'/%3E%3Cpath d='M11.80 18.7H20.20M13.95 14.6H18.05' stroke='%23ffe9a8' stroke-width='.28'/%3E%3Cpath d='M12.00 19.18H20.00M14.15 15.02H17.85' stroke='%23f8d873' stroke-opacity='.8' stroke-width='.15' stroke-dasharray='.22 .22'/%3E%3Cpath d='M11.98 19.6A.42 .42 0 0 1 12.82 19.6M12.88 19.6A.42 .42 0 0 1 13.72 19.6M13.78 19.6A.42 .42 0 0 1 14.62 19.6M14.68 19.6A.42 .42 0 0 1 15.52 19.6M15.58 19.6A.42 .42 0 0 1 16.42 19.6M16.48 19.6A.42 .42 0 0 1 17.32 19.6M17.38 19.6A.42 .42 0 0 1 18.22 19.6M18.28 19.6A.42 .42 0 0 1 19.12 19.6M19.18 19.6A.42 .42 0 0 1 20.02 19.6' fill='none' stroke='%23f8d873' stroke-opacity='.85' stroke-width='.16'/%3E%3Cpath d='M16 6.4V4.1' stroke='%237a4700' stroke-width='.32' stroke-linecap='round'/%3E%3Ccircle cx='16' cy='4.0' r='.28' fill='%23ffe08a'/%3E%3Cpath d='M9.1 24.85H12.5M19.5 24.85H22.9' stroke='%236e4000' stroke-width='.4' stroke-linecap='round'/%3E%3Cpath d='M6.2 12.5A10.5 10.5 0 0 1 13 5.6' fill='none' stroke='%23fff' stroke-opacity='.75' stroke-width='1.6' stroke-linecap='round'/%3E%3C/svg%3E"); }
 :root[data-coin="arc"] .coin, :root .cos-prev .coin.cs-arc { background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Cdefs%3E%3ClinearGradient id='r' x1='0' y1='0' x2='1' y2='1'%3E%3Cstop offset='0' stop-color='%23ffe9a0'/%3E%3Cstop offset='.45' stop-color='%23f0b21a'/%3E%3Cstop offset='1' stop-color='%23a86a00'/%3E%3C/linearGradient%3E%3CradialGradient id='f' cx='.38' cy='.32' r='.8'%3E%3Cstop offset='0' stop-color='%23fff6c8'/%3E%3Cstop offset='.45' stop-color='%23ffcf3f'/%3E%3Cstop offset='1' stop-color='%23e09a00'/%3E%3C/radialGradient%3E%3ClinearGradient id='s' x1='0' y1='0' x2='0' y2='1'%3E%3Cstop offset='0' stop-color='%23b87700'/%3E%3Cstop offset='1' stop-color='%237e4b00'/%3E%3C/linearGradient%3E%3C/defs%3E%3Ccircle cx='16' cy='16' r='15.5' fill='url%28%23r%29'/%3E%3Ccircle cx='16' cy='16' r='14.3' fill='none' stroke='%238f5a00' stroke-opacity='.45' stroke-width='1.4' stroke-dasharray='.9 1.1'/%3E%3Ccircle cx='16' cy='16' r='12.4' fill='url%28%23f%29' stroke='%23b77800' stroke-width='.9'/%3E%3Ccircle cx='16' cy='16' r='10.6' fill='none' stroke='%23fff3c4' stroke-opacity='.7' stroke-width='.6'/%3E%3Cpath d='M8.6 10.2H23.4V12.6H22.6V23.4H24.6V24.6H7.4V23.4H9.4V12.6H8.6ZM13.1 23.4V17.6A2.9 2.9 0 0 1 18.9 17.6V23.4Z' fill='%23fff8d6' fill-opacity='.8' transform='translate%28.45 .55%29' fill-rule='evenodd'/%3E%3Cpath d='M8.6 10.2H23.4V12.6H22.6V23.4H24.6V24.6H7.4V23.4H9.4V12.6H8.6ZM13.1 23.4V17.6A2.9 2.9 0 0 1 18.9 17.6V23.4Z' fill='url%28%23s%29' fill-rule='evenodd'/%3E%3Cpath d='M9.4 13.4H22.6M10.6 15.2V21.6M21.4 15.2V21.6M12.2 11.4H19.8' stroke='%23f8d873' stroke-opacity='.8' fill='none' stroke-width='.35'/%3E%3Cpath d='M13.1 17.6A2.9 2.9 0 0 1 18.9 17.6' stroke='%23f8d873' stroke-opacity='.8' fill='none' stroke-width='.3'/%3E%3Cpath d='M6.2 12.5A10.5 10.5 0 0 1 13 5.6' fill='none' stroke='%23fff' stroke-opacity='.75' stroke-width='1.6' stroke-linecap='round'/%3E%3C/svg%3E"); }
@@ -1221,6 +1234,7 @@ html.qf .sp-hud-act { white-space: nowrap; }
     <div class="tabs" role="tablist">
       <button type="button" class="tab" role="tab" id="tabPractice" aria-selected="true">做题</button>
       <button type="button" class="tab" role="tab" id="tabGame" aria-selected="false">游戏</button>
+      <button type="button" class="tab" role="tab" id="tabShop" aria-selected="false">商店</button>
       <button type="button" class="tab" role="tab" id="tabBook" aria-selected="false">学习进度</button>
       <button type="button" class="tab" role="tab" id="tabSet" aria-selected="false">设置</button>
     </div>
@@ -14442,7 +14456,7 @@ const typeset = () => {};   // 法语页没有公式，不用排版（随机分�
 const $ = id => document.getElementById(id);
 const stage = $("stage"), toc = $("toc"), tocwrap = $("tocwrap"), tocTitle = $("tocTitle");
 const pSet = $("pSet"), pText = $("pText"), pBar = $("pBar"), pScore = $("pScore"), progressEl = $("progress");
-const tabPractice = $("tabPractice"), tabGame = $("tabGame"), tabBook = $("tabBook"), tabSet = $("tabSet"), boardBar = $("boardBar"), saveNote = $("saveNote");
+const tabPractice = $("tabPractice"), tabGame = $("tabGame"), tabShop = $("tabShop"), tabBook = $("tabBook"), tabSet = $("tabSet"), boardBar = $("boardBar"), saveNote = $("saveNote");
 const layoutEl = document.querySelector(".layout");
 
 // 一段话由几块拼成时，每块各放一个文字节点（英文界面逐块翻译）
@@ -14563,6 +14577,65 @@ function i18nStart() {
   i18nNode(document.body);
   const t = i18nStr(document.title); if (t) document.title = t;
   new MutationObserver(ms => ms.forEach(m => m.addedNodes.forEach(i18nNode))).observe(document.body, { childList: true, subtree: true });
+}
+
+// ---------- 商店 · 设置：英文界面和非默认字体要先用金币买 ----------
+// 买的记录是 game 记录（kind "buy"），和外观一样买一次永久拥有、跟着答题记录同步。关掉游戏模式时都能用（这时没有金币）。
+const SET_ITEMS = [
+  { id: "lang-en", name: "英文界面", desc: "界面、题目解析、知识点卡片、巴黎塔尖事件和 Boss 题都换成英文。", price: 600, prev: "EN" },
+  { id: "font-times", name: "字体 · Times New Roman", desc: "英文和法语字母用 Times New Roman。", price: 200, prev: "Aa", font: "times" },
+  { id: "font-kreon", name: "字体 · Kreon", desc: "英文和法语字母用 Kreon。", price: 200, prev: "Aa", font: "kreon" },
+];
+const setOwned = id => typeof gameLedger !== "function" || gameLedger().owned.has(id);
+// 答题记录读到后检查：没买的语言 / 字体换回默认
+function setGate() {
+  if (!gameLoaded) return;
+  if (UI_FONT !== "default" && !setOwned("font-" + UI_FONT)) setUiFont("default");
+  if (UI_LANG === "en" && !setOwned("lang-en")) {
+    try { localStorage.setItem("fq-lang", "zh"); } catch (e) {}
+    if (typeof xpToast === "function") xpToast("英文界面要先在“商店 · 设置”里解锁", "已换回中文");
+    setTimeout(() => location.reload(), 1800);
+  }
+}
+function setBuy(id) {
+  const it = SET_ITEMS.find(x => x.id === id), led = gameLedger();
+  if (led.owned.has(id)) return "已经拥有";
+  if (led.coins < it.price) return "金币不够";
+  gameAdd({ kind: "buy", item: id, price: it.price, at: new Date().toISOString() });
+  return "";
+}
+function setShop(note) {
+  const led = gameLedger(), ownN = SET_ITEMS.filter(x => led.owned.has(x.id)).length;
+  const wrap = foldSec("setshop", "商店 · 设置", `英文界面、字体 · 已拥有 ${ownN} / ${SET_ITEMS.length}`);
+  wrap.classList.add("cos-shop");
+  const grid = el("div", "cos-grid");
+  SET_ITEMS.forEach(it => {
+    const own = led.owned.has(it.id), on = it.font ? UI_FONT === it.font : UI_LANG === "en";
+    const card = el("div", "cos-item" + (on ? " on" : ""));
+    const pv = el("div", "set-prev" + (it.font ? " f-" + it.font : ""), it.prev);
+    card.append(pv, el("b", null, it.name), el("span", "cos-desc", it.desc));
+    const btn = el("button", own && !on ? "btn" : "btn ghost"); btn.type = "button"; btn.id = "set-" + it.id;
+    if (!own) {
+      btn.append(document.createTextNode("购买 "), coinEl(it.price));
+      btn.disabled = led.coins < it.price;
+      let sure = false;
+      btn.addEventListener("click", () => {
+        if (!sure) { sure = true; btn.textContent = `确认花 ${it.price} 金币`; return; }
+        const err = setBuy(it.id); if (err) { note.textContent = err; return; }
+        xpToast(`花了 ${it.price} 金币`, `买到了：${it.name}`);
+        shopRedraw();
+      });
+    } else {
+      btn.textContent = on ? (it.font ? "换回默认" : "换回中文") : "使用";
+      btn.addEventListener("click", () => {
+        if (it.font) { setUiFont(on ? "default" : it.font); shopRedraw(); }
+        else setUiLang(on ? "zh" : "en");
+      });
+    }
+    card.append(btn); grid.append(card);
+  });
+  wrap.append(grid, el("p", "shop-note", "买一次永久拥有。也可以在“设置”页切换。"));
+  return wrap;
 }
 // 界面文字的英文字典（由 french-quiz/tools/i18n/build.py 生成，别手改；要改就改 tools/i18n/en.json 或 extra.json）
 if (UI_LANG === "en") i18nLoad({
@@ -17875,6 +17948,7 @@ if (UI_LANG === "en") i18nLoad({
 "听音选义": "Listen → meaning",
 "例句填空": "Fill the sentence",
 "字母拼写": "Spell it",
+"三个游戏用金币解锁，第一个 ${MODE_PRICES[0]}、第二个 ${MODE_PRICES[1]}、第三个 ${MODE_PRICES[2]} 金币；也可以在“商店”里解锁。已经玩过的模式不用再买。": "The three games are unlocked with coins: ${MODE_PRICES[0]} for the first, ${MODE_PRICES[1]} for the second, ${MODE_PRICES[2]} for the third. You can also unlock them under \"the Shop\". Modes you've already played don't need to be bought.",
 "说话": "to speak",
 "喜欢；爱": "to like; to love",
 "工作": "to work",
@@ -18561,7 +18635,47 @@ if (UI_LANG === "en") i18nLoad({
 "+ 虚拟式": "+ subjunctive",
 "字体": "Font",
 "影响英文和法语字母；汉字仍用思源黑体 / 宋体。": "Applies to English and French letters; Chinese characters keep the Noto fonts.",
-"默认": "Default"
+"默认": "Default",
+"英文界面": "English interface",
+"界面、题目解析、知识点卡片、巴黎塔尖事件和 Boss 题都换成英文。": "Interface, explanations, knowledge cards, Paris Spire events and boss questions in English.",
+"字体 · Times New Roman": "Font · Times New Roman",
+"字体 · Kreon": "Font · Kreon",
+"英文和法语字母用 Times New Roman。": "English and French letters in Times New Roman.",
+"英文和法语字母用 Kreon。": "English and French letters in Kreon.",
+"商店 · 设置": "Shop · Settings",
+"英文界面、字体 · 已拥有 ${a} / ${b}": "English interface, fonts · owned ${a} / ${b}",
+"换回默认": "Back to default",
+"换回中文": "Back to Chinese",
+"买一次永久拥有。也可以在“设置”页切换。关掉游戏模式时不用买也能用。": "Buy once, keep forever. You can also switch on the Settings page. With game mode off, these are free.",
+"English（商店解锁）": "English (unlock in shop)",
+"Times New Roman（商店解锁）": "Times New Roman (unlock in shop)",
+"Kreon（商店解锁）": "Kreon (unlock in shop)",
+"英文界面和字体要先在“学习进度 → 商店 · 设置”里用金币解锁。": "The English interface and fonts must first be unlocked with coins in Progress → Shop · Settings.",
+"英文界面要先在“学习进度 → 商店 · 设置”里解锁": "Unlock the English interface first in Progress → Shop · Settings",
+"已换回中文": "Switched back to Chinese",
+"商店": "Shop",
+"完成一次今日计划后开放商店": "Finish one daily plan to open the shop",
+"答对题得到的金币已经在后台积累（现在 ${a} 金币）。做完今天的计划，商店就会开放。": "Coins from correct answers are already piling up in the background (${a} coins now). Finish today's plan and the shop opens.",
+"去做今日计划": "Do today's plan",
+"商店开放了。先买下游戏模式，才会有每日任务、宝箱、道具、外观和游戏。": "The shop is open. Buy game mode first to get daily quests, chests, items, cosmetics and games.",
+"打开金币、连对 combo、每日任务和宝箱、商店道具和外观，以及“游戏”模块（单词闯关、环法之旅、巴黎塔尖）。之后可以在设置里随时开关。": "Turns on coins, combo streaks, daily quests and chests, shop items and cosmetics, and the Games module (Word levels, Tour de France, Paris Spire). You can switch it on or off in Settings later.",
+"购买 · ${a} 金币": "Buy · ${a} coins",
+"还差 ${a} 金币，继续答题就能攒够。": "${a} more coins needed — keep answering to earn them.",
+"确认花 ${a} 金币": "Confirm: spend ${a} coins",
+"游戏模式已开启！": "Game mode is on!",
+"游戏模式现在关着，商店里的道具、外观和设置要打开游戏模式后才能用。": "Game mode is off; turn it on to use the shop's items, cosmetics and settings.",
+"游戏模块锁着": "Games are locked",
+"在“商店”用 ${a} 金币买下游戏模式后开放。": "Opens once you buy game mode in the Shop for ${a} coins.",
+"先完成一次今日计划开放商店，再在商店用 ${a} 金币买下游戏模式。": "First finish one daily plan to open the shop, then buy game mode there for ${a} coins.",
+"去商店": "Go to shop",
+"游戏模式现在关着。": "Game mode is off.",
+"商店开放了：去“商店”看看": "The shop is open — take a look",
+"完成了第一次今日计划！": "First daily plan done!",
+"金币不够（还差 ${a}）": "Not enough coins (${a} short)",
+"游戏模式要先在“商店”里购买（完成一次今日计划后商店开放）。": "Game mode must first be bought in the Shop (the shop opens after you finish one daily plan).",
+"英文界面和字体要先在“商店 · 设置”里用金币解锁。": "The English interface and fonts must first be unlocked with coins in Shop · Settings.",
+"英文界面要先在“商店 · 设置”里解锁": "Unlock the English interface first in Shop · Settings",
+"买一次永久拥有。也可以在“设置”页切换。": "Buy once, keep forever. You can also switch on the Settings page."
 });
 i18nStart();
 // ---------- 答题记录存储（错题本、学习进度、经验值都从这里算） ----------
@@ -19226,7 +19340,8 @@ function planRefresh() {
   const old = $("planToc");
   if (old) old.replaceWith(planTocItem());
   planSlot.textContent = ""; planSlot.append(planTocItem("planMini"));
-  planSlot.hidden = view === "book" || view === "exam" || view === "settings";   // 学习进度页有完整的计划卡，模拟卷不打扰
+  planSlot.hidden = view === "book" || view === "exam" || view === "settings" || view === "shop";
+  if (typeof planDoneCheck === "function") planDoneCheck();   // 法语页：第一次做完今日计划时开放商店   // 学习进度页有完整的计划卡，模拟卷不打扰
 }
 planRefresh();
 
@@ -19304,7 +19419,7 @@ function coinStep(st, key, right, t) {
     return { coins: 0, run: 0 };
   }
   r.n++;
-  if (dayKey(new Date(t)) < COIN_ANS_FROM || !gameOnAt(t)) return { coins: 0, run: r.n };
+  if (dayKey(new Date(t)) < COIN_ANS_FROM) return { coins: 0, run: r.n };   // 游戏模式关着（或还没买）时金币也在后台照常积累
   const c = coinFor(r.n) * coinMult(t);   // 金币药水生效时翻倍
   st.coins += c;
   return { coins: c, run: r.n };
@@ -19376,8 +19491,9 @@ const QUESTS = [
 ];
 
 let gameRaw = [];   // game 集合的全部记录
+let gameLoaded = false;   // 已经读到过 game 记录
 let potionCache = null, modeCache = null;
-function gameReset(docs) { gameRaw = docs || []; potionCache = null; coinPotCache = null; modeCache = null; shieldCache = null; prog = null; gameApplyMode(); if (typeof spOnGameLoad === "function") spOnGameLoad(); }
+function gameReset(docs) { gameRaw = docs || []; gameLoaded = true; potionCache = null; coinPotCache = null; modeCache = null; shieldCache = null; prog = null; gameApplyMode(); if (typeof spOnGameLoad === "function") spOnGameLoad(); if (typeof setGate === "function") setGate(); if (typeof navSync === "function") navSync(); }
 
 // ---------- 游戏模式（设置里开关）：金币、combo、每日任务、商店和道具，以及以后新加的游戏玩法，都只在打开时出现 ----------
 // 开关记成 game 记录（kind: "mode"），跟着账号同步；关掉期间答对不得金币。没有记录时默认打开。
@@ -19387,6 +19503,7 @@ function modeList() {
 }
 function gameOnAt(t) { let on = true; for (const [a, v] of modeList()) { if (a <= t) on = v; else break; } return on; }
 function gameOn() {
+  if (typeof gameOwned === "function" && !gameOwned()) return false;   // 法语页：游戏模式要先在商店买
   const m = modeList();
   if (m.length) return m[m.length - 1][1];
   try { return localStorage.getItem("fq-game") !== "0"; } catch (e) { return true; }
@@ -19550,6 +19667,8 @@ function foldSec(key, title, hint) {
   d.addEventListener("toggle", () => { foldOpen[key] = d.open; try { localStorage.setItem("fq-fold-" + key, d.open ? "1" : "0"); } catch (e) {} });
   return d;
 }
+// 商店里的操作之后重画：商店单独成页时画商店，否则画学习进度
+const shopRedraw = () => view === "shop" && typeof renderShop === "function" ? renderShop() : drawBook();
 const coinEl = n => { const s = el("span", "coin-n"); s.append(el("i", "coin"), document.createTextNode(String(n))); return s; };
 const mmss = ms => `${Math.floor(ms / 60e3)}:${String(Math.floor(ms / 1e3) % 60).padStart(2, "0")}`;
 // 学习进度页：每日任务 + 商店
@@ -19579,49 +19698,7 @@ function gameCard() {
   bonus.append(document.createTextNode("三个任务全部完成得一个宝箱" + (st.allClaimed ? "（已领）" : "") + ` · 做完今日计划 +${COIN_PLAN}` + (st.planClaimed ? "（已领）" : "")));
   card.append(bonus);
   if (st.led.chests.length) card.append(chestBox(st.led.chests.length));
-  // 商店
-  const own = Object.values(st.led.inv).reduce((a, b) => a + b, 0);
-  const shopSec = foldSec("shop", "商店 · 道具", `连对护盾、补签卡、经验药水、金币药水${own ? ` · 拥有 ${own} 件` : ""}`);
-  card.append(shopSec);
-  const shop = el("div", "shop");
-  const note = el("p", "shop-note", "");
-  const pt = patchTarget();
-  SHOP.forEach(it => {
-    const own = st.led.inv[it.id];
-    const box = el("div", "shop-item");
-    const top = el("div", "shop-top");
-    const nm = el("span", "shop-name"); nm.append(shopIcon(it.id), el("b", null, it.name));
-    top.append(nm, coinEl(it.price));
-    box.append(top, el("p", null, it.desc), el("span", "own", `拥有 ${own}`));
-    const acts = el("div", "shop-acts");
-    const buy = el("button", "btn ghost", "购买"); buy.type = "button"; buy.id = "buy-" + it.id;
-    buy.disabled = st.led.coins < it.price || (it.max && own >= it.max);
-    let sure = false;
-    buy.addEventListener("click", () => {
-      if (!sure) { sure = true; buy.textContent = `确认花 ${it.price} 金币`; return; }
-      const err = gameBuy(it.id);
-      if (err) { note.textContent = err; return; }
-      xpToast(`花了 ${it.price} 金币`, `买到了：${it.name}`);
-      drawBook();
-    });
-    if (it.auto) { acts.append(buy, el("span", "shop-auto", "答错时自动生效")); box.append(acts); shop.append(box); return; }
-    const use = el("button", "btn", it.id === "patch" ? "补签昨天" : "喝下"); use.type = "button"; use.id = "use-" + it.id;
-    use.disabled = !own || (it.id === "patch" ? !pt : it.coin ? !!ca : !!pa);
-    use.addEventListener("click", () => {
-      const err = gameUse(it.id);
-      if (err) { note.textContent = err; return; }
-      xpToast(it.id === "patch" ? "已用补签卡补上昨天的打卡" : it.coin ? `答对得到的金币 ×${it.coin}，${POTION_MIN} 分钟内有效` : `${it.mult} 倍经验，${POTION_MIN} 分钟内有效`, it.id === "patch" ? "补签成功！" : "药水生效！");
-      drawBook();
-      if (typeof planRefresh === "function") planRefresh();
-    });
-    acts.append(buy, use);
-    box.append(acts);
-    shop.append(box);
-  });
-  if (typeof modeShopItems === "function") modeShopItems(shop, st.led, note);   // 法语页：游戏模式的解锁
-  shopSec.append(shop);
-  if (typeof cosShop === "function") card.append(cosShop(note));
-  card.append(note);
+  if (typeof renderShop !== "function") gameShopParts(card, st.led);   // 法语页的商店单独成页
   const rule = el("details", "xp-rule");
   rule.append(el("summary", null, "任务和金币怎么算"),
     el("p", null, `每答对一题 +1 金币，连对越多给得越多：combo 5 起每题 2 个，10 起 3 个，20 起 4 个，30 起 5 个。答错、或隔 10 分钟以上没答，连对重新算；答题、变位、背单词分开算。`),
@@ -19670,20 +19747,66 @@ function chestBox(n) {
   box.append(stage, txt, btn);
   return box;
 }
+// 商店的三块：道具、外观、（法语页）设置
+function gameShopParts(card, led) {
+  const own = Object.values(led.inv).reduce((a, b) => a + b, 0);
+  const shopSec = foldSec("shop", "商店 · 道具", `连对护盾、补签卡、经验药水、金币药水${own ? ` · 拥有 ${own} 件` : ""}`);
+  card.append(shopSec);
+  const shop = el("div", "shop");
+  const note = el("p", "shop-note", "");
+  const pt = patchTarget();
+  SHOP.forEach(it => {
+    const own = led.inv[it.id];
+    const box = el("div", "shop-item");
+    const top = el("div", "shop-top");
+    const nm = el("span", "shop-name"); nm.append(shopIcon(it.id), el("b", null, it.name));
+    top.append(nm, coinEl(it.price));
+    box.append(top, el("p", null, it.desc), el("span", "own", `拥有 ${own}`));
+    const acts = el("div", "shop-acts");
+    const buy = el("button", "btn ghost", "购买"); buy.type = "button"; buy.id = "buy-" + it.id;
+    buy.disabled = led.coins < it.price || (it.max && own >= it.max);
+    let sure = false;
+    buy.addEventListener("click", () => {
+      if (!sure) { sure = true; buy.textContent = `确认花 ${it.price} 金币`; return; }
+      const err = gameBuy(it.id);
+      if (err) { note.textContent = err; return; }
+      xpToast(`花了 ${it.price} 金币`, `买到了：${it.name}`);
+      shopRedraw();
+    });
+    if (it.auto) { acts.append(buy, el("span", "shop-auto", "答错时自动生效")); box.append(acts); shop.append(box); return; }
+    const use = el("button", "btn", it.id === "patch" ? "补签昨天" : "喝下"); use.type = "button"; use.id = "use-" + it.id;
+    use.disabled = !own || (it.id === "patch" ? !pt : it.coin ? !!coinPotionActive() : !!potionActive());
+    use.addEventListener("click", () => {
+      const err = gameUse(it.id);
+      if (err) { note.textContent = err; return; }
+      xpToast(it.id === "patch" ? "已用补签卡补上昨天的打卡" : it.coin ? `答对得到的金币 ×${it.coin}，${POTION_MIN} 分钟内有效` : `${it.mult} 倍经验，${POTION_MIN} 分钟内有效`, it.id === "patch" ? "补签成功！" : "药水生效！");
+      shopRedraw();
+      if (typeof planRefresh === "function") planRefresh();
+    });
+    acts.append(buy, use);
+    box.append(acts);
+    shop.append(box);
+  });
+  if (typeof modeShopItems === "function") modeShopItems(shop, led, note);   // 法语页：游戏模式的解锁
+  shopSec.append(shop);
+  if (typeof cosShop === "function") card.append(cosShop(note));
+  if (typeof setShop === "function") card.append(setShop(note));   // 法语页：界面语言和字体
+  card.append(note);
+}
 // 药水倒计时
 setInterval(() => {
   const els = document.querySelectorAll(".potion-left");
   if (!els.length) return;
   const pa = potionActive();
   els.forEach(e => { e.textContent = pa ? mmss(pa.left) : "0:00"; });
-  if (!pa && view === "book") drawBook();
+  if (!pa && (view === "book" || view === "shop")) shopRedraw();
 }, 1000);
 setInterval(() => {
   const els = document.querySelectorAll(".potion-left-c");
   if (!els.length) return;
   const ca = coinPotionActive();
   els.forEach(e => { e.textContent = ca ? mmss(ca.left) : "0:00"; });
-  if (!ca && view === "book") drawBook();
+  if (!ca && (view === "book" || view === "shop")) shopRedraw();
 }, 1000);
 // 外观商店的预览小图（由 quiz-common/cosmetics/build.py 生成）
 const COS_PX = {"fx_confetti": "<svg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12' shape-rendering='crispEdges'><rect x='2' y='1' width='1' height='1' fill='#ef476f'/><rect x='8' y='1' width='1' height='1' fill='#118ab2'/><rect x='2' y='2' width='1' height='1' fill='#ef476f'/><rect x='7' y='3' width='1' height='1' fill='#ffd166'/><rect x='4' y='4' width='1' height='1' fill='#06d6a0'/><rect x='11' y='5' width='1' height='1' fill='#9b5de5'/><rect x='1' y='6' width='1' height='1' fill='#118ab2'/><rect x='7' y='6' width='1' height='1' fill='#ef476f'/><rect x='1' y='7' width='1' height='1' fill='#118ab2'/><rect x='5' y='8' width='1' height='1' fill='#ffd166'/><rect x='2' y='9' width='1' height='1' fill='#9b5de5'/><rect x='10' y='9' width='1' height='1' fill='#06d6a0'/><rect x='10' y='10' width='1' height='1' fill='#06d6a0'/><rect x='6' y='11' width='1' height='1' fill='#118ab2'/></svg>", "fx_tricolor": "<svg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12' shape-rendering='crispEdges'><rect x='5' y='0' width='1' height='1' fill='#cfd6e6'/><rect x='1' y='1' width='1' height='1' fill='#1f4fd8'/><rect x='5' y='1' width='1' height='1' fill='#cfd6e6'/><rect x='9' y='1' width='1' height='1' fill='#e5243b'/><rect x='2' y='2' width='1' height='1' fill='#1f4fd8'/><rect x='8' y='2' width='1' height='1' fill='#e5243b'/><rect x='3' y='4' width='2' height='1' fill='#1f4fd8'/><rect x='7' y='4' width='2' height='1' fill='#e5243b'/><rect x='0' y='5' width='1' height='1' fill='#cfd6e6'/><rect x='3' y='5' width='1' height='1' fill='#1f4fd8'/><rect x='5' y='5' width='2' height='1' fill='#cfd6e6'/><rect x='8' y='5' width='1' height='1' fill='#e5243b'/><rect x='11' y='5' width='1' height='1' fill='#cfd6e6'/><rect x='0' y='6' width='1' height='1' fill='#cfd6e6'/><rect x='3' y='6' width='1' height='1' fill='#1f4fd8'/><rect x='5' y='6' width='2' height='1' fill='#cfd6e6'/><rect x='8' y='6' width='1' height='1' fill='#e5243b'/><rect x='11' y='6' width='1' height='1' fill='#cfd6e6'/><rect x='3' y='7' width='2' height='1' fill='#1f4fd8'/><rect x='7' y='7' width='2' height='1' fill='#e5243b'/><rect x='2' y='9' width='1' height='1' fill='#1f4fd8'/><rect x='8' y='9' width='1' height='1' fill='#e5243b'/><rect x='1' y='10' width='1' height='1' fill='#1f4fd8'/><rect x='5' y='10' width='1' height='1' fill='#cfd6e6'/><rect x='9' y='10' width='1' height='1' fill='#e5243b'/><rect x='6' y='11' width='1' height='1' fill='#cfd6e6'/></svg>", "fx_sound": "<svg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12' shape-rendering='crispEdges'><rect x='6' y='1' width='5' height='1' fill='#3b2a00'/><rect x='6' y='2' width='1' height='1' fill='#3b2a00'/><rect x='7' y='2' width='3' height='1' fill='#ffd23a'/><rect x='10' y='2' width='1' height='1' fill='#3b2a00'/><rect x='6' y='3' width='5' height='1' fill='#3b2a00'/><rect x='6' y='4' width='1' height='1' fill='#3b2a00'/><rect x='10' y='4' width='1' height='1' fill='#3b2a00'/><rect x='6' y='5' width='1' height='1' fill='#3b2a00'/><rect x='10' y='5' width='1' height='1' fill='#3b2a00'/><rect x='6' y='6' width='1' height='1' fill='#3b2a00'/><rect x='10' y='6' width='1' height='1' fill='#3b2a00'/><rect x='2' y='7' width='5' height='1' fill='#3b2a00'/><rect x='8' y='7' width='4' height='1' fill='#3b2a00'/><rect x='1' y='8' width='1' height='1' fill='#3b2a00'/><rect x='2' y='8' width='4' height='1' fill='#ffd23a'/><rect x='6' y='8' width='2' height='1' fill='#3b2a00'/><rect x='8' y='8' width='3' height='1' fill='#ffd23a'/><rect x='11' y='8' width='1' height='1' fill='#3b2a00'/><rect x='1' y='9' width='1' height='1' fill='#3b2a00'/><rect x='2' y='9' width='4' height='1' fill='#ffd23a'/><rect x='6' y='9' width='2' height='1' fill='#3b2a00'/><rect x='8' y='9' width='3' height='1' fill='#ffd23a'/><rect x='11' y='9' width='1' height='1' fill='#3b2a00'/><rect x='2' y='10' width='4' height='1' fill='#3b2a00'/><rect x='8' y='10' width='3' height='1' fill='#3b2a00'/></svg>", "sky_midnight": {"wide": {"w": 96, "h": 64, "stars": [[10, 8, 3], [29, 6, 2], [47, 9, 3], [55, 18, 2], [73, 14, 3], [16, 30, 2], [50, 36, 2], [80, 32, 2], [34, 40, 2]], "moon": [86, 10, 6], "swirls": [[38.0, 24.0, 15.0, 1], [62.0, 28.0, 11.0, -1], [20.0, 12.0, 8.0, 1]]}, "tall": {"w": 56, "h": 100, "stars": [[5, 12, 3], [16, 9, 2], [27, 14, 3], [32, 28, 2], [42, 21, 3], [29, 56, 2], [46, 50, 2], [19, 62, 2]], "moon": [50, 15, 6], "swirls": [[22.2, 37.5, 8.8, 1], [36.2, 43.8, 6.4, -1], [11.7, 18.8, 4.7, 1]]}}};
@@ -19970,11 +20093,11 @@ function cosShop(note) {
           const err = cosBuy(it.id);
           if (err) { note.textContent = err; return; }
           xpToast(`花了 ${it.price} 金币，已经换上`, `买到了：${it.name}`);
-          drawBook();
+          shopRedraw();
         });
       } else {
         btn.textContent = on ? "卸下" : "换上";
-        btn.addEventListener("click", () => { cosEquip(slot, on ? null : it.id); drawBook(); });
+        btn.addEventListener("click", () => { cosEquip(slot, on ? null : it.id); shopRedraw(); });
       }
       card.append(btn);
       grid.append(card);
@@ -20871,8 +20994,10 @@ function setQuizSection(wrap) {
 }
 // 游戏模式：金币、combo、每日任务、商店和道具
 function setGameSection(wrap) {
-  const g = setSection(wrap, "游戏模式", "打开后：答对得金币、连对 combo 计数、每日任务、商店和道具（经验药水、补签卡）。关掉后这些都不显示，关掉期间答对也不得金币；已有的金币和道具会保留，重新打开还在。经验、等级、今日计划和闯关不受影响。这个开关跟着账号同步。");
-  g.append(setCheckRow("setGame", "打开游戏模式", gameOn(), v => gameSetMode(v)));
+  const g = setSection(wrap, "游戏模式", "打开后：答对得金币、连对 combo 计数、每日任务、商店和道具（经验药水、补签卡）。关掉后这些都不显示；答对得的金币照常在后台积累，已有的金币和道具会保留，重新打开还在。经验、等级、今日计划和闯关不受影响。这个开关跟着账号同步。");
+  const row = setCheckRow("setGame", "打开游戏模式", gameOn(), v => gameSetMode(v));
+  g.append(row);
+  if (typeof gameOwned === "function" && !gameOwned()) { row.querySelector("input").disabled = true; g.append(el("p", "sub", "游戏模式要先在“商店”里购买（完成一次今日计划后商店开放）。")); }   // 法语页
 }
 function setGoalSection(wrap) {
   const g = setSection(wrap, "学习进度", "当天经验达到目标算打卡；连续打卡和补签都按这个目标算。");
@@ -20883,6 +21008,12 @@ function setGoalSection(wrap) {
 // ---------- 版本更新记录：设置页最下面，展开后能看到每个版本改了什么 ----------
 // p：哪个页面的更新（fr 法语页 / st 随机分析页 / 不写表示两个页面都有）。新版本加在最前面。
 const CHANGELOG = [
+  { v: "5.0", d: "2026-11-05", p: "fr", items: [
+    "商店从“学习进度”里分出来，成为顶部单独的模块：做题、游戏、商店、学习进度、设置。",
+    "完成第一次今日计划后商店开放；开放后先只卖“游戏模式”（100 金币），买下后才有每日任务、宝箱、道具、外观和游戏模块。",
+    "答对题的金币在买游戏模式之前（以及关掉游戏模式时）也在后台照常积累。游戏模式没买或关着时，“游戏”模块锁着。"] },
+  { v: "4.6", d: "2026-11-05", p: "fr", items: [
+    "商店新增“设置”分区：英文界面（600 金币）和 Times New Roman、Kreon 两种字体（各 200 金币），买了才能在设置里选；关掉游戏模式时不用买。"] },
   { v: "4.5", d: "2026-11-05", p: "fr", items: [
     "设置里加了“字体”：默认、Times New Roman、Kreon，影响英文和法语字母，汉字仍用思源字体。"] },
   { v: "4.4", d: "2026-11-05", p: "fr", items: [
@@ -21784,13 +21915,14 @@ const inTour = () => typeof tourRun !== "undefined" && !!tourRun;
 function curMod() {
   if (view === "home") return homeMod;
   if (view === "book") return "book";
+  if (view === "shop") return "shop";
   if (view === "settings") return "settings";
   if (view === "tour" || (inTour() && ["quiz", "vocab", "conj"].includes(view))) return "game";
   if (view === "vocab" && vIsGame()) return "game";
   return "practice";
 }
 function curBoard() {
-  if (view === "home" || view === "book" || view === "settings") return null;
+  if (view === "home" || view === "book" || view === "settings" || view === "shop") return null;
   if (view === "tour" || (inTour() && ["quiz", "vocab", "conj"].includes(view))) return "tour";
   if (view === "vocab") return vIsGame() ? (vTheme === "spire" || (vSess && vSess.spire) ? "spire" : "levels") : "vocab";
   if (view === "quiz") return qBoard;
@@ -21802,8 +21934,12 @@ function navSync() {
   tabPractice.setAttribute("aria-selected", String(m === "practice"));
   tabGame.setAttribute("aria-selected", String(m === "game"));
   tabBook.setAttribute("aria-selected", String(m === "book"));
+  tabShop.setAttribute("aria-selected", String(m === "shop"));
+  // 锁着的模块：标签上加一把小锁（游戏模式没买或关着 → 游戏；还没做完第一次今日计划 → 商店）
+  tabGame.classList.toggle("locked", !gameOn());
+  tabShop.classList.toggle("locked", typeof shopOpen === "function" && !shopOpen());
   tabSet.setAttribute("aria-selected", String(m === "settings"));
-  const solo = ["home", "exam", "settings", "tour"].includes(view) || (view === "vocab" && vIsGame()) || m === "game";
+  const solo = ["home", "exam", "settings", "tour", "shop"].includes(view) || (view === "vocab" && vIsGame()) || m === "game";
   layoutEl.classList.toggle("solo", solo);
   const kn = document.querySelector(".keys-note"); if (kn) kn.hidden = view !== "quiz";
   boardBar.hidden = !b;
@@ -21856,7 +21992,7 @@ function modeShopItems(shop, led, note) {
       buy.addEventListener("click", () => {
         if (!sure) { sure = true; buy.textContent = `确认花 ${p} 金币`; return; }
         const err = modeBuy(id); if (err) { note.textContent = err; return; }
-        xpToast(`花了 ${p} 金币`, `解锁了：${MODE_NAME[id]}`); drawBook();
+        xpToast(`花了 ${p} 金币`, `解锁了：${MODE_NAME[id]}`); shopRedraw();
       });
       acts.append(buy); box.append(acts);
     }
@@ -21892,7 +22028,7 @@ function renderHome() {
     });
     grid.append(b);
   });
-  if (homeMod === "game" && gameOn()) card.append(el("p", "sub home-foot", `三个游戏用金币解锁，第一个 ${MODE_PRICES[0]}、第二个 ${MODE_PRICES[1]}、第三个 ${MODE_PRICES[2]} 金币；也可以在“学习进度 → 商店”里解锁。已经玩过的模式不用再买。`));
+  if (homeMod === "game" && gameOn()) card.append(el("p", "sub home-foot", `三个游戏用金币解锁，第一个 ${MODE_PRICES[0]}、第二个 ${MODE_PRICES[1]}、第三个 ${MODE_PRICES[2]} 金币；也可以在“商店”里解锁。已经玩过的模式不用再买。`));
   card.append(grid);
   stage.append(card);
 }
@@ -21907,6 +22043,7 @@ function goBoard(id) {
   if (mod === "practice" && typeof qfStay === "function") qfStay();
 }
 function goBoardTo(id) {
+  if (BOARDS.game.some(x => x.id === id) && !gameOn()) { goHome("game"); return; }   // 游戏模式没买或关着
   if (!modeOpen(id)) { goHome("game"); return; }   // 还没解锁的游戏：回游戏页（在卡片上解锁）
   if (id === "grammar" || id === "listen") {
     qBoard = id;
@@ -21965,7 +22102,8 @@ function switchView(v, setKey) {
   navSync();
   progressEl.hidden = v !== "quiz";
   if (tts) tts.cancel();
-  if (v === "home") { renderHome(); return; }
+  if (v === "home") { if (homeMod === "game" && !gameOn()) { renderGameLocked(); return; } renderHome(); return; }
+  if (v === "shop") { renderShop(); return; }
   if (v === "exam") { renderExam(); return; }
   if (v === "vocab") { renderVocab(); return; }
   if (v === "conj") { renderConj(); return; }
@@ -21985,6 +22123,122 @@ tabPractice.addEventListener("click", () => goHome("practice"));
 tabGame.addEventListener("click", () => goHome("game"));
 tabBook.addEventListener("click", () => { bookCache = null; switchView("book"); });
 tabSet.addEventListener("click", () => { if (view !== "settings") switchView("settings"); });
+tabShop.addEventListener("click", () => switchView("shop"));
+// ---------- 商店：单独一个模块 ----------
+// 1. 完成第一次今日计划之前商店锁着（答对得的金币照常在后台积累）。
+// 2. 商店开放后只卖一件东西：游戏模式（100 金币）。买了才有每日任务、宝箱、道具、外观、游戏模块等。
+// 3. 买了游戏模式、而且游戏模式开着时，才显示道具 / 外观 / 设置三块。
+// 买游戏模式记成 game 记录（kind "buy"，item "game"）；第一次做完今日计划记成 kind "plan-done"。都跟着答题记录同步。
+const GAME_PRICE = 100;
+// 老用户：这个版本之前打开过游戏模式、或者领过金币 / 买过东西的，算已经买了
+function gameOwned() {
+  let ls = false;
+  try { ls = localStorage.getItem("fq-game-owned") === "1"; } catch (e) {}
+  if (ls) return true;
+  const own = gameRaw.some(g => g && ((g.kind === "buy" && g.item === "game") || (g.kind === "mode" && g.on) || g.kind === "earn" || g.kind === "chest"));
+  if (own) { try { localStorage.setItem("fq-game-owned", "1"); } catch (e) {} }
+  return own;
+}
+function planDoneEver() {
+  let ls = false;
+  try { ls = localStorage.getItem("fq-plan-done") === "1"; } catch (e) {}
+  if (ls) return true;
+  const done = gameRaw.some(g => g && (g.kind === "plan-done" || (g.kind === "earn" && /:plan$/.test(g.key || ""))));
+  if (done) { try { localStorage.setItem("fq-plan-done", "1"); } catch (e) {} }
+  return done;
+}
+const shopOpen = () => gameOwned() || planDoneEver();
+// 今日计划做完时记一次（只记第一次）
+function planDoneCheck() {
+  try { if (!gameLoaded) return; } catch (e) { return; }   // 页面刚载入、game.js 还没跑到时
+  if (planDoneEver() || typeof planGet !== "function") return;
+  const p = planGet(); if (!p) return;
+  const s = planStatus(p);
+  if (s.n && s.d === s.n) {
+    gameAdd({ kind: "plan-done", day: p.day || "", at: new Date().toISOString() });
+    try { localStorage.setItem("fq-plan-done", "1"); } catch (e) {}
+    if (typeof xpToast === "function") xpToast("商店开放了：去“商店”看看", "完成了第一次今日计划！");
+    navSync();
+  }
+}
+function buyGame() {
+  const led = gameLedger();
+  if (led.coins < GAME_PRICE) return `金币不够（还差 ${GAME_PRICE - led.coins}）`;
+  gameAdd({ kind: "buy", item: "game", price: GAME_PRICE, at: new Date().toISOString() });
+  try { localStorage.setItem("fq-game-owned", "1"); } catch (e) {}
+  modeCache = null; prog = null;
+  if (!gameOn()) gameSetMode(true);
+  gameApplyMode(); planRefresh();
+  return "";
+}
+
+function renderShop() {
+  stage.innerHTML = "";
+  const led = gameLedger();
+  const card = el("section", "card shop-page");
+  const head = el("div", "plan-head"); head.append(el("h3", null, "商店"), coinEl(led.coins));
+  card.append(head);
+  const loading = !gameLoaded && !progEnsure();
+  if (loading) { card.append(el("p", "empty", "正在读取答题记录…")); stage.append(card); return; }
+  // 1. 锁着：先做完一次今日计划
+  if (!shopOpen()) {
+    const lock = el("div", "shop-lock");
+    lock.append(el("i", "px-lock big"), el("b", null, "完成一次今日计划后开放商店"), el("p", "sub", `答对题得到的金币已经在后台积累（现在 ${led.coins} 金币）。做完今天的计划，商店就会开放。`));
+    const go = el("button", "btn", "去做今日计划"); go.type = "button";
+    go.addEventListener("click", () => { const p = planGet(); const s = p && planStatus(p); const left = s && s.parts.find(x => x.d < x.n); planGo(left ? (left.k === "conj" ? "plan:conj" : "plan:") : "plan:"); });
+    lock.append(planTocItem("planShop"), go);
+    card.append(lock); stage.append(card); return;
+  }
+  // 2. 只卖游戏模式
+  if (!gameOwned()) {
+    card.append(el("p", "sub", "商店开放了。先买下游戏模式，才会有每日任务、宝箱、道具、外观和游戏。"));
+    const box = el("div", "shop-item shop-hero");
+    const top = el("div", "shop-top"); const nm = el("span", "shop-name"); nm.append(el("i", "coin"), el("b", null, "游戏模式"));
+    top.append(nm, coinEl(GAME_PRICE));
+    box.append(top, el("p", null, "打开金币、连对 combo、每日任务和宝箱、商店道具和外观，以及“游戏”模块（单词闯关、环法之旅、巴黎塔尖）。之后可以在设置里随时开关。"));
+    const note = el("p", "shop-note", "");
+    const buy = el("button", "btn", `购买 · ${GAME_PRICE} 金币`); buy.type = "button"; buy.id = "buy-game";
+    buy.disabled = led.coins < GAME_PRICE;
+    if (buy.disabled) note.textContent = `还差 ${GAME_PRICE - led.coins} 金币，继续答题就能攒够。`;
+    let sure = false;
+    buy.addEventListener("click", () => {
+      if (!sure) { sure = true; buy.textContent = `确认花 ${GAME_PRICE} 金币`; return; }
+      const err = buyGame(); if (err) { note.textContent = err; return; }
+      xpToast(`花了 ${GAME_PRICE} 金币`, "游戏模式已开启！");
+      navSync(); renderShop();
+    });
+    box.append(buy, note); card.append(box); stage.append(card); return;
+  }
+  // 3. 买了但关着
+  if (!gameOn()) {
+    card.append(el("p", "sub", "游戏模式现在关着，商店里的道具、外观和设置要打开游戏模式后才能用。"));
+    const on = el("button", "btn", "打开游戏模式"); on.type = "button";
+    on.addEventListener("click", () => { gameSetMode(true); navSync(); renderShop(); });
+    card.append(on); stage.append(card); return;
+  }
+  // 4. 完整商店
+  const st = questStatus(), pa = potionActive(), ca = coinPotionActive();
+  if (pa) { const b = el("p", "potion-on"); b.append(document.createTextNode(`${pa.mult} 倍经验生效中 · 还剩 `), el("b", "potion-left", mmss(pa.left))); card.append(b); }
+  if (ca) { const b = el("p", "potion-on coin-on"); b.append(document.createTextNode(`金币 ×${ca.mult} 生效中 · 还剩 `), el("b", "potion-left-c", mmss(ca.left))); card.append(b); }
+  gameShopParts(card, st ? st.led : led);
+  stage.append(card);
+}
+
+// 游戏模块锁着时（游戏模式没买或关着）的页面
+function renderGameLocked() {
+  stage.innerHTML = "";
+  const card = el("section", "card shop-page");
+  const lock = el("div", "shop-lock");
+  lock.append(el("i", "px-lock big"), el("b", null, "游戏模块锁着"));
+  if (!gameOwned()) {
+    lock.append(el("p", "sub", shopOpen() ? `在“商店”用 ${GAME_PRICE} 金币买下游戏模式后开放。` : `先完成一次今日计划开放商店，再在商店用 ${GAME_PRICE} 金币买下游戏模式。`));
+    const go = el("button", "btn", "去商店"); go.type = "button"; go.addEventListener("click", () => switchView("shop")); lock.append(go);
+  } else {
+    lock.append(el("p", "sub", "游戏模式现在关着。"));
+    const on = el("button", "btn", "打开游戏模式"); on.type = "button"; on.addEventListener("click", () => { gameSetMode(true); goHome("game"); }); lock.append(on);
+  }
+  card.append(lock); stage.append(card);
+}
 // ---------- 做题全屏：出现题目卡片时进入（答题、背单词、变位、巴黎塔尖的战斗和 Boss），一屏放下，页面不能上下滚动 ----------
 // 右上角的小图标：返回上一级（答题 / 变位回到带目录的页面，背单词回到词表或关卡地图），战斗里是退出战斗（回到地图，战斗保留）。
 const QF_CARDS = ["q-card", "v-card", "cj-card", "sp-boss", "sp-mini", "sp-pair", "sp-build"];
@@ -26475,11 +26729,15 @@ function renderSettings() {
 
   // 界面语言
   const lg = section("界面语言", "切换后页面会重新载入。选英文时，界面、题目解析、知识点卡片、巴黎塔尖的事件和 Boss 题都换成英文；题目里的法语不变。");
-  lg.append(selectRow("setLang", "Language", [["zh", "中文"], ["en", "English"]], UI_LANG, val => setUiLang(val)));
+  const lockNote = "（商店解锁）";
+  lg.append(selectRow("setLang", "Language", [["zh", "中文"], ["en", setOwned("lang-en") ? "English" : "English" + lockNote]], UI_LANG, val => setUiLang(val)));
 
   // 字体
   const ft = section("字体", "影响英文和法语字母；汉字仍用思源黑体 / 宋体。");
-  ft.append(selectRow("setFont", "字体", [["default", "默认"], ["times", "Times New Roman"], ["kreon", "Kreon"]], UI_FONT, val => setUiFont(val)));
+  ft.append(selectRow("setFont", "字体", [["default", "默认"], ["times", "Times New Roman" + (setOwned("font-times") ? "" : lockNote)], ["kreon", "Kreon" + (setOwned("font-kreon") ? "" : lockNote)]], UI_FONT, val => setUiFont(val)));
+  // 没买的选项不能选
+  [["setLang", "en", "lang-en"], ["setFont", "times", "font-times"], ["setFont", "kreon", "font-kreon"]].forEach(([sid, v, item]) => { const o = wrap.querySelector(`#${sid} option[value="${v}"]`); if (o && !setOwned(item)) o.disabled = true; });
+  if (!(setOwned("lang-en") && setOwned("font-times") && setOwned("font-kreon"))) lg.append(el("p", "sub", "英文界面和字体要先在“商店 · 设置”里用金币解锁。"));
 
   setGameSection(wrap);
 
