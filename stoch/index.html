@@ -4280,13 +4280,53 @@ function cosEquipped() {
     .forEach(g => { eq[g.slot] = g.item && owned.has(g.item) ? g.item : null; });
   return eq;
 }
+// 试用只保存在内存里；不写入购买、装备或同步记录。
+var cosTrialSkin = null, cosTrialObserver = null;
+function cosTrialAllowed() {
+  return typeof view !== "undefined" && (view === "shop" || (typeof renderShop !== "function" && view === "book"));
+}
+function cosTrialRefresh() {
+  document.querySelectorAll("[data-skin-trial]").forEach(btn => {
+    const active = btn.dataset.skinTrial === cosTrialSkin;
+    btn.textContent = active ? "结束试用" : "试用";
+    btn.setAttribute("aria-pressed", String(active));
+  });
+  document.querySelectorAll(".cos-trial-note").forEach(n => {
+    const it = COSMETICS.find(c => c.id === cosTrialSkin);
+    n.textContent = it ? "正在试用「" + it.name + "」· 仅在商店生效，离开后恢复原皮肤。" : "皮肤可免费试用，仅在商店生效，不扣金币。";
+  });
+}
+function cosTrialEnd() {
+  cosTrialSkin = null;
+  if (cosTrialObserver) { cosTrialObserver.disconnect(); cosTrialObserver = null; }
+}
+function cosTrialToggle(id) {
+  if (!cosTrialAllowed() || !gameOn() || !COSMETICS.some(c => c.id === id && c.slot === "skin") || cosOwned().has(id)) return;
+  if (cosTrialSkin === id) cosTrialEnd();
+  else {
+    cosTrialSkin = id;
+    if (!cosTrialObserver) {
+      cosTrialObserver = new MutationObserver(() => {
+        if (cosTrialSkin && (!cosTrialAllowed() || !document.querySelector(".cos-shop"))) {
+          cosTrialEnd(); cosApply();
+        }
+      });
+      cosTrialObserver.observe(document.body, { childList: true, subtree: true });
+    }
+  }
+  cosApply();
+}
+
 var cosReady = false;   // game.js 加载时就会调用 cosApply，那时这里的常量还没定义好
 function cosApply() {
   if (!cosReady) return;
   const root = document.documentElement, on = typeof gameOn === "function" && gameOn();
   const eq = on ? cosEquipped() : {};
+  if (cosTrialSkin && (!on || !cosTrialAllowed() || cosOwned().has(cosTrialSkin))) cosTrialEnd();
+  if (on && cosTrialSkin) eq.skin = cosTrialSkin;
   COS_SLOTS.forEach(([slot]) => { const v = eq[slot]; if (v) root.dataset[COS_ATTR[slot]] = v; else delete root.dataset[COS_ATTR[slot]]; });
   cosRevealSync();
+  cosTrialRefresh();
 }
 // 背景全貌：换上主题配色后，在页面最上面和最下面各多留一屏透明的空间（背景是固定在后面的）。
 // 在内容的顶端或底端继续往外拉会出现提示，再往外拉内容就滑走了，只剩背景；拉到头只显示一个小按钮，点了回到内容。
@@ -4400,6 +4440,7 @@ function cosBuy(id) {
   return "";
 }
 function cosEquip(slot, id) {
+  if (slot === "skin") cosTrialEnd();
   gameAdd({ kind: "equip", slot, item: id || null, at: new Date().toISOString() });
   cosApply();
 }
@@ -4516,6 +4557,12 @@ function cosShop(note) {
   const ownN = COSMETICS.filter(c => led.owned.has(c.id)).length;
   const wrap = foldSec("cos", "商店 · 外观", `金币皮肤、主题配色、连对特效、称号框 · 已拥有 ${ownN} / ${COSMETICS.length}`);
   wrap.classList.add("cos-shop");
+  if (cosTrialAllowed()) {
+    const hint = el("p", "shop-note cos-trial-note"); hint.setAttribute("role", "status");
+    wrap.append(hint);
+    queueMicrotask(cosTrialRefresh);
+  }
+  wrap.addEventListener("toggle", () => { if (!wrap.open && cosTrialSkin) { cosTrialEnd(); cosApply(); } });
   COS_SLOTS.forEach(([slot, label]) => {
     const items = COSMETICS.filter(c => c.slot === slot);
     wrap.append(el("div", "cos-sec", label));
@@ -4541,6 +4588,13 @@ function cosShop(note) {
         btn.addEventListener("click", () => { cosEquip(slot, on ? null : it.id); shopRedraw(); });
       }
       card.append(btn);
+      if (it.slot === "skin" && !own && cosTrialAllowed()) {
+        const trial = el("button", "btn ghost", cosTrialSkin === it.id ? "结束试用" : "试用");
+        trial.type = "button"; trial.dataset.skinTrial = it.id;
+        trial.setAttribute("aria-pressed", String(cosTrialSkin === it.id));
+        trial.addEventListener("click", () => cosTrialToggle(it.id));
+        card.append(trial);
+      }
       grid.append(card);
     });
     wrap.append(grid);
@@ -5908,6 +5962,7 @@ function renderSettings() {
 // ---------- 切换 ----------
 function switchView(v, setKey) {
   view = v;
+  if (typeof cosTrialSkin !== "undefined" && cosTrialSkin && !cosTrialAllowed()) { cosTrialEnd(); cosApply(); }
   planRefresh();
   tabQuiz.setAttribute("aria-selected", String(v === "quiz"));
   tabBook.setAttribute("aria-selected", String(v === "book"));
