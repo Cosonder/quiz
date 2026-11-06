@@ -1200,6 +1200,17 @@ html[data-font="times"] body { font-size: 17px; }
 @keyframes bgBeam { 0% { transform: rotate(-8deg) scaleX(1); } 25% { transform: rotate(-8deg) scaleX(0); } 25.01% { transform: rotate(188deg) scaleX(0); } 50% { transform: rotate(188deg) scaleX(1); } 75% { transform: rotate(188deg) scaleX(0); } 75.01% { transform: rotate(-8deg) scaleX(0); } 100% { transform: rotate(-8deg) scaleX(1); } }
 @keyframes bgGlow { from { opacity: .45; transform: scale(.9); } to { opacity: 1; transform: scale(1.15); } }
 
+
+/* C-137 Portal — generated artwork with readable learning cards. */
+:root[data-skin="c137"], .sk-c137 { --bg:#030f30; --card:#101f3b; --fg:#eef8ee; --muted:#adbed0; --line:#365468; --accent:#b6f64a; --accent-soft:#243c29; --good:#80df9c; --good-soft:#163a2b; --bad:#ff929f; --bad-soft:#452733; color-scheme:dark; }
+:root[data-skin="c137"] body { background:var(--bg); padding-bottom:120px; }
+:root[data-skin="c137"] body::before { content:""; position:fixed; inset:0; z-index:-1; pointer-events:none; background:#030f30 url("../skins/c137-portal.png") left bottom / cover no-repeat; }
+:root[data-skin="c137"] .card, :root[data-skin="c137"] .tabs, :root[data-skin="c137"] .shop-fold { border:3px solid #537c39; border-radius:2px; box-shadow:0 0 0 1px #152b29,inset 0 0 0 1px #91c953; background:var(--card); }
+:root[data-skin="c137"] .heat-card { --h0:#162b3a; --h1:#315942; --h2:#51864b; --h3:#85b83d; --h4:#b6f64a; }
+:root[data-skin="c137"] .chest-box { background:#243c29; color:#e5ffb1; border-color:#779b45; }
+.sk-swatch.sk-c137 { background:#030f30 url("../skins/c137-portal.png") center / cover no-repeat; padding:8px 8px 8px 48px; border:1px solid #779b45; }
+.sk-c137 .sk-card { border:1px solid #91c953; background:#101f3be8; }
+@media (max-width:600px) { :root[data-skin="c137"] body::before { background-size:auto 70%; background-position:left bottom; } }
 /* ---------- 做题全屏：一屏放下一道题，页面不能上下滚动；右上角返回 / 退出 ---------- */
 html.qf, html.qf body { overflow: hidden; height: 100%; overscroll-behavior: none; }
 html.qf header, html.qf .boards, html.qf .tocwrap, html.qf #progress, html.qf .keys-note, html.qf #saveNote, html.qf .plan-slot, html.qf .skin-reveal { display: none !important; }
@@ -19881,6 +19892,7 @@ const COS_PX = {"fx_confetti": "<svg xmlns='http://www.w3.org/2000/svg' width='1
 // 买：记成 buy 记录（和道具一样扣金币）；换上 / 卸下：记成 equip 记录（slot + item，item 为空就是默认）。
 // 都跟着账号同步。游戏模式关掉时一律显示默认外观（默认金币是五角星）。
 const COSMETICS = [
+  { id: "c137", slot: "skin", name: "C-137 传送门", price: 1500, desc: "Rick & Morty 像素冒险：荧光绿传送门、异星夜空与紫色岩原，搭配深蓝卡片和绿色边框。" },
   { id: "tower", slot: "coin", name: "埃菲尔铁塔金币", price: 800, desc: "金币中间换成带桁架细节的埃菲尔铁塔。" },
   { id: "arc", slot: "coin", name: "凯旋门金币", price: 600, desc: "金币中间换成凯旋门。" },
   { id: "croissant", slot: "coin", name: "可颂金币", price: 600, desc: "金币中间换成一只可颂。" },
