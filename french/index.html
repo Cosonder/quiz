@@ -1021,6 +1021,31 @@ html[data-font="times"] body { font-size: 17px; }
 .book-toc > summary::-webkit-details-marker { display: none; }
 .book-toc > summary::before { content: "▸ "; } .book-toc[open] > summary::before { content: "▾ "; }
 .book-toc .toc { padding: 0 0 8px; max-height: none; }
+
+/* ---------- 失声的巴黎（原型） ---------- */
+.lsp-card { display: flex; flex-direction: column; gap: 10px; }
+.lsp-head { display: flex; flex-wrap: wrap; align-items: baseline; gap: 4px 12px; }
+.lsp-sub { color: var(--muted, #888); font-size: .85em; }
+.lsp-hud { display: flex; flex-wrap: wrap; gap: 6px 10px; font-size: .85em; align-items: center; }
+.lsp-ab { display: inline-flex; align-items: center; gap: 5px; padding: 2px 8px; border-radius: 999px; border: 1px solid var(--line, #ccc); opacity: .45; }
+.lsp-ab i { width: 10px; height: 10px; border-radius: 2px; background: var(--c); }
+.lsp-ab.on { opacity: 1; border-color: var(--c); }
+.lsp-inv { margin-left: auto; color: var(--muted, #888); }
+.lsp-cv { width: 100%; max-width: 640px; align-self: center; image-rendering: pixelated; image-rendering: crisp-edges; border-radius: 6px; transition: filter .8s; }
+.lsp-dlg { min-height: 64px; padding: 10px 12px; border-radius: 8px; background: var(--soft, rgba(127,127,127,.08)); }
+.lsp-dlg:empty { display: none; }
+.lsp-text, .lsp-fr, .lsp-hint, .lsp-msg { margin: 0 0 8px; white-space: pre-line; }
+.lsp-fr { font-style: italic; font-size: 1.05em; }
+.lsp-hint { color: var(--muted, #888); font-size: .9em; }
+.lsp-msg { color: #c0392b; }
+.lsp-choices { display: flex; flex-wrap: wrap; gap: 6px; }
+.lsp-choices.col { flex-direction: column; align-items: stretch; }
+.lsp-in { padding: 6px 10px; font-size: 1em; width: 8em; }
+.lsp-thumb { display: block; width: 120px; height: 80px; object-fit: cover; border-radius: 6px; margin-bottom: 8px; }
+.lsp-pad { display: grid; grid-template-columns: repeat(3, 56px); grid-template-rows: repeat(3, 44px); gap: 4px; justify-content: center; }
+.lsp-btn { font-size: 1.1em; border-radius: 8px; border: 1px solid var(--line, #ccc); background: var(--card, #fff); color: inherit; touch-action: manipulation; }
+.lsp-u { grid-area: 1 / 2; } .lsp-l { grid-area: 2 / 1; } .lsp-a { grid-area: 2 / 2; font-size: .85em; } .lsp-r { grid-area: 2 / 3; } .lsp-d { grid-area: 3 / 2; }
+.lsp-reset { align-self: flex-end; font-size: .8em; }
 /* 外观商品（游戏模式里的商店购买）：由 quiz-common/cosmetics/build.py 生成，别手改 */
 :root[data-coin="tower"] .coin, :root .cos-prev .coin.cs-tower { background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Cdefs%3E%3ClinearGradient id='r' x1='0' y1='0' x2='1' y2='1'%3E%3Cstop offset='0' stop-color='%23ffe9a0'/%3E%3Cstop offset='.45' stop-color='%23f0b21a'/%3E%3Cstop offset='1' stop-color='%23a86a00'/%3E%3C/linearGradient%3E%3CradialGradient id='f' cx='.38' cy='.32' r='.8'%3E%3Cstop offset='0' stop-color='%23fff6c8'/%3E%3Cstop offset='.45' stop-color='%23ffcf3f'/%3E%3Cstop offset='1' stop-color='%23e09a00'/%3E%3C/radialGradient%3E%3ClinearGradient id='s' x1='0' y1='0' x2='0' y2='1'%3E%3Cstop offset='0' stop-color='%23b87700'/%3E%3Cstop offset='1' stop-color='%237e4b00'/%3E%3C/linearGradient%3E%3C/defs%3E%3Ccircle cx='16' cy='16' r='15.5' fill='url%28%23r%29'/%3E%3Ccircle cx='16' cy='16' r='14.3' fill='none' stroke='%238f5a00' stroke-opacity='.45' stroke-width='1.4' stroke-dasharray='.9 1.1'/%3E%3Ccircle cx='16' cy='16' r='12.4' fill='url%28%23f%29' stroke='%23b77800' stroke-width='.9'/%3E%3Ccircle cx='16' cy='16' r='10.6' fill='none' stroke='%23fff3c4' stroke-opacity='.7' stroke-width='.6'/%3E%3Cg transform='translate%28.35 .45%29' fill='%23fff6cf' fill-opacity='.7'%3E%3Cpath d='M9.40 24.80L10.52 23.35L11.35 22.05L12.03 20.81L12.60 19.60L14.80 19.60L14.40 20.81L13.88 22.05L13.22 23.35L12.30 24.80Z M12.80 18.70L13.51 17.50L14.01 16.43L14.40 15.40L15.78 15.40L15.82 16.43L15.76 17.50L15.55 18.70Z M22.60 24.80L21.48 23.35L20.65 22.05L19.97 20.81L19.40 19.60L17.20 19.60L17.60 20.81L18.12 22.05L18.78 23.35L19.70 24.80Z M19.20 18.70L18.49 17.50L17.99 16.43L17.60 15.40L16.22 15.40L16.18 16.43L16.24 17.50L16.45 18.70Z M14.55 14.60L14.86 13.16L15.05 12.09L15.19 11.13L15.31 10.23L15.40 9.38L15.48 8.56L15.54 7.77L15.60 7.00L16.40 7.00L16.46 7.77L16.52 8.56L16.60 9.38L16.69 10.23L16.81 11.13L16.95 12.09L17.14 13.16L17.45 14.60Z M12.20 24.80L12.52 24.41L12.83 24.05L13.15 23.73L13.47 23.44L13.78 23.18L14.10 22.96L14.42 22.78L14.73 22.62L15.05 22.50L15.37 22.42L15.68 22.37L16.00 22.35L16.32 22.37L16.63 22.42L16.95 22.50L17.27 22.62L17.58 22.78L17.90 22.96L18.22 23.18L18.53 23.44L18.85 23.73L19.17 24.05L19.48 24.41L19.80 24.80L19.00 24.80L18.75 24.54L18.50 24.30L18.25 24.08L18.00 23.88L17.75 23.71L17.50 23.56L17.25 23.44L17.00 23.33L16.75 23.25L16.50 23.20L16.25 23.16L16.00 23.15L15.75 23.16L15.50 23.20L15.25 23.25L15.00 23.33L14.75 23.44L14.50 23.56L14.25 23.71L14.00 23.88L13.75 24.08L13.50 24.30L13.25 24.54L13.00 24.80Z M11.80 18.7H20.20V19.6H11.80Z M13.95 14.6H18.05V15.4H13.95Z M15.3 6.4H16.7V7.0H15.3Z'/%3E%3C/g%3E%3Cpath d='M9.40 24.80L10.52 23.35L11.35 22.05L12.03 20.81L12.60 19.60L14.80 19.60L14.40 20.81L13.88 22.05L13.22 23.35L12.30 24.80Z M12.80 18.70L13.51 17.50L14.01 16.43L14.40 15.40L15.78 15.40L15.82 16.43L15.76 17.50L15.55 18.70Z M22.60 24.80L21.48 23.35L20.65 22.05L19.97 20.81L19.40 19.60L17.20 19.60L17.60 20.81L18.12 22.05L18.78 23.35L19.70 24.80Z M19.20 18.70L18.49 17.50L17.99 16.43L17.60 15.40L16.22 15.40L16.18 16.43L16.24 17.50L16.45 18.70Z M14.55 14.60L14.86 13.16L15.05 12.09L15.19 11.13L15.31 10.23L15.40 9.38L15.48 8.56L15.54 7.77L15.60 7.00L16.40 7.00L16.46 7.77L16.52 8.56L16.60 9.38L16.69 10.23L16.81 11.13L16.95 12.09L17.14 13.16L17.45 14.60Z M12.20 24.80L12.52 24.41L12.83 24.05L13.15 23.73L13.47 23.44L13.78 23.18L14.10 22.96L14.42 22.78L14.73 22.62L15.05 22.50L15.37 22.42L15.68 22.37L16.00 22.35L16.32 22.37L16.63 22.42L16.95 22.50L17.27 22.62L17.58 22.78L17.90 22.96L18.22 23.18L18.53 23.44L18.85 23.73L19.17 24.05L19.48 24.41L19.80 24.80L19.00 24.80L18.75 24.54L18.50 24.30L18.25 24.08L18.00 23.88L17.75 23.71L17.50 23.56L17.25 23.44L17.00 23.33L16.75 23.25L16.50 23.20L16.25 23.16L16.00 23.15L15.75 23.16L15.50 23.20L15.25 23.25L15.00 23.33L14.75 23.44L14.50 23.56L14.25 23.71L14.00 23.88L13.75 24.08L13.50 24.30L13.25 24.54L13.00 24.80Z M11.80 18.7H20.20V19.6H11.80Z M13.95 14.6H18.05V15.4H13.95Z M15.3 6.4H16.7V7.0H15.3Z' fill='url%28%23s%29'/%3E%3CclipPath id='sp'%3E%3Cpath d='M14.80 19.60L14.70 19.93L14.59 20.25L14.48 20.58L14.36 20.90L14.24 21.23L14.10 21.55L13.96 21.88L13.81 22.20L13.66 22.53L13.49 22.85L13.32 23.18L13.13 23.50L12.94 23.83L12.74 24.15L12.52 24.48L12.30 24.80L12.20 24.80L12.52 24.41L12.83 24.05L13.15 23.73L13.47 23.44L13.78 23.18L14.10 22.96L14.42 22.78L14.73 22.62L15.05 22.50L15.37 22.42L15.68 22.37L16.00 22.35L16.32 22.37L16.63 22.42L16.95 22.50L17.27 22.62L17.58 22.78L17.90 22.96L18.22 23.18L18.53 23.44L18.85 23.73L19.17 24.05L19.48 24.41L19.80 24.80L19.70 24.80L19.48 24.48L19.26 24.15L19.06 23.83L18.87 23.50L18.68 23.18L18.51 22.85L18.34 22.53L18.19 22.20L18.04 21.88L17.90 21.55L17.76 21.23L17.64 20.90L17.52 20.58L17.41 20.25L17.30 19.93L17.20 19.60Z'/%3E%3C/clipPath%3E%3Cpath d='M14.80 19.60L14.70 19.93L14.59 20.25L14.48 20.58L14.36 20.90L14.24 21.23L14.10 21.55L13.96 21.88L13.81 22.20L13.66 22.53L13.49 22.85L13.32 23.18L13.13 23.50L12.94 23.83L12.74 24.15L12.52 24.48L12.30 24.80L12.20 24.80L12.52 24.41L12.83 24.05L13.15 23.73L13.47 23.44L13.78 23.18L14.10 22.96L14.42 22.78L14.73 22.62L15.05 22.50L15.37 22.42L15.68 22.37L16.00 22.35L16.32 22.37L16.63 22.42L16.95 22.50L17.27 22.62L17.58 22.78L17.90 22.96L18.22 23.18L18.53 23.44L18.85 23.73L19.17 24.05L19.48 24.41L19.80 24.80L19.70 24.80L19.48 24.48L19.26 24.15L19.06 23.83L18.87 23.50L18.68 23.18L18.51 22.85L18.34 22.53L18.19 22.20L18.04 21.88L17.90 21.55L17.76 21.23L17.64 20.90L17.52 20.58L17.41 20.25L17.30 19.93L17.20 19.60Z' fill='%23c98a12' fill-opacity='.8'/%3E%3Cpath d='M3.45 25L11.45 18.5M11.45 25L3.45 18.5M4.40 25L12.40 18.5M12.40 25L4.40 18.5M5.35 25L13.35 18.5M13.35 25L5.35 18.5M6.30 25L14.30 18.5M14.30 25L6.30 18.5M7.25 25L15.25 18.5M15.25 25L7.25 18.5M8.20 25L16.20 18.5M16.20 25L8.20 18.5M9.15 25L17.15 18.5M17.15 25L9.15 18.5M10.10 25L18.10 18.5M18.10 25L10.10 18.5M11.05 25L19.05 18.5M19.05 25L11.05 18.5M12.00 25L20.00 18.5M20.00 25L12.00 18.5M12.95 25L20.95 18.5M20.95 25L12.95 18.5M13.90 25L21.90 18.5M21.90 25L13.90 18.5M14.85 25L22.85 18.5M22.85 25L14.85 18.5M15.80 25L23.80 18.5M23.80 25L15.80 18.5M16.75 25L24.75 18.5M24.75 25L16.75 18.5M17.70 25L25.70 18.5M25.70 25L17.70 18.5M18.65 25L26.65 18.5M26.65 25L18.65 18.5M19.60 25L27.60 18.5M27.60 25L19.60 18.5M20.55 25L28.55 18.5M28.55 25L20.55 18.5' stroke='%237e4b00' stroke-opacity='.55' stroke-width='.16' clip-path='url%28%23sp%29'/%3E%3Cpath d='M9.40 24.80L13.22 23.35M12.30 24.80L10.52 23.35M10.52 23.35L13.22 23.35M10.52 23.35L13.88 22.05M13.22 23.35L11.35 22.05M11.35 22.05L13.88 22.05M11.35 22.05L14.40 20.81M13.88 22.05L12.03 20.81M12.03 20.81L14.40 20.81M12.03 20.81L14.80 19.60M14.40 20.81L12.60 19.60M12.60 19.60L14.80 19.60M12.80 18.70L15.76 17.50M15.55 18.70L13.51 17.50M13.51 17.50L15.76 17.50M13.51 17.50L15.82 16.43M15.76 17.50L14.01 16.43M14.01 16.43L15.82 16.43M14.01 16.43L15.78 15.40M15.82 16.43L14.40 15.40M14.40 15.40L15.78 15.40M22.60 24.80L18.78 23.35M19.70 24.80L21.48 23.35M21.48 23.35L18.78 23.35M21.48 23.35L18.12 22.05M18.78 23.35L20.65 22.05M20.65 22.05L18.12 22.05M20.65 22.05L17.60 20.81M18.12 22.05L19.97 20.81M19.97 20.81L17.60 20.81M19.97 20.81L17.20 19.60M17.60 20.81L19.40 19.60M19.40 19.60L17.20 19.60M19.20 18.70L16.24 17.50M16.45 18.70L18.49 17.50M18.49 17.50L16.24 17.50M18.49 17.50L16.18 16.43M16.24 17.50L17.99 16.43M17.99 16.43L16.18 16.43M17.99 16.43L16.22 15.40M16.18 16.43L17.60 15.40M17.60 15.40L16.22 15.40M14.55 14.60L17.14 13.16M17.45 14.60L14.86 13.16M14.86 13.16L17.14 13.16M14.86 13.16L16.95 12.09M17.14 13.16L15.05 12.09M15.05 12.09L16.95 12.09M15.05 12.09L16.81 11.13M16.95 12.09L15.19 11.13M15.19 11.13L16.81 11.13M15.19 11.13L16.69 10.23M16.81 11.13L15.31 10.23M15.31 10.23L16.69 10.23M15.31 10.23L16.60 9.38M16.69 10.23L15.40 9.38M15.40 9.38L16.60 9.38M15.40 9.38L16.52 8.56M16.60 9.38L15.48 8.56M15.48 8.56L16.52 8.56M15.48 8.56L16.46 7.77M16.52 8.56L15.54 7.77M15.54 7.77L16.46 7.77M15.54 7.77L16.40 7.00M16.46 7.77L15.60 7.00M15.60 7.00L16.40 7.00M12.83 24.05L13.75 24.08M13.47 23.44L13.75 24.08M14.10 22.96L14.75 23.44M14.73 22.62L14.75 23.44M15.37 22.42L15.75 23.16M16.00 22.35L15.75 23.16M16.63 22.42L16.75 23.25M17.27 22.62L16.75 23.25M17.90 22.96L17.75 23.71M18.53 23.44L17.75 23.71M19.17 24.05L18.75 24.54' fill='none' stroke='%23f8d873' stroke-opacity='.75' stroke-width='.17' stroke-linecap='round'/%3E%3Cpath d='M9.40 24.80L10.52 23.35L11.35 22.05L12.03 20.81L12.60 19.60M12.30 24.80L13.22 23.35L13.88 22.05L14.40 20.81L14.80 19.60M12.80 18.70L13.51 17.50L14.01 16.43L14.40 15.40M15.55 18.70L15.76 17.50L15.82 16.43L15.78 15.40M22.60 24.80L21.48 23.35L20.65 22.05L19.97 20.81L19.40 19.60M19.70 24.80L18.78 23.35L18.12 22.05L17.60 20.81L17.20 19.60M19.20 18.70L18.49 17.50L17.99 16.43L17.60 15.40M16.45 18.70L16.24 17.50L16.18 16.43L16.22 15.40M14.55 14.60L14.86 13.16L15.05 12.09L15.19 11.13L15.31 10.23L15.40 9.38L15.48 8.56L15.54 7.77L15.60 7.00M17.45 14.60L17.14 13.16L16.95 12.09L16.81 11.13L16.69 10.23L16.60 9.38L16.52 8.56L16.46 7.77L16.40 7.00' fill='none' stroke='%236e4000' stroke-width='.22'/%3E%3Cpath d='M11.80 18.7H20.20M13.95 14.6H18.05' stroke='%23ffe9a8' stroke-width='.28'/%3E%3Cpath d='M12.00 19.18H20.00M14.15 15.02H17.85' stroke='%23f8d873' stroke-opacity='.8' stroke-width='.15' stroke-dasharray='.22 .22'/%3E%3Cpath d='M11.98 19.6A.42 .42 0 0 1 12.82 19.6M12.88 19.6A.42 .42 0 0 1 13.72 19.6M13.78 19.6A.42 .42 0 0 1 14.62 19.6M14.68 19.6A.42 .42 0 0 1 15.52 19.6M15.58 19.6A.42 .42 0 0 1 16.42 19.6M16.48 19.6A.42 .42 0 0 1 17.32 19.6M17.38 19.6A.42 .42 0 0 1 18.22 19.6M18.28 19.6A.42 .42 0 0 1 19.12 19.6M19.18 19.6A.42 .42 0 0 1 20.02 19.6' fill='none' stroke='%23f8d873' stroke-opacity='.85' stroke-width='.16'/%3E%3Cpath d='M16 6.4V4.1' stroke='%237a4700' stroke-width='.32' stroke-linecap='round'/%3E%3Ccircle cx='16' cy='4.0' r='.28' fill='%23ffe08a'/%3E%3Cpath d='M9.1 24.85H12.5M19.5 24.85H22.9' stroke='%236e4000' stroke-width='.4' stroke-linecap='round'/%3E%3Cpath d='M6.2 12.5A10.5 10.5 0 0 1 13 5.6' fill='none' stroke='%23fff' stroke-opacity='.75' stroke-width='1.6' stroke-linecap='round'/%3E%3C/svg%3E"); }
 :root[data-coin="arc"] .coin, :root .cos-prev .coin.cs-arc { background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Cdefs%3E%3ClinearGradient id='r' x1='0' y1='0' x2='1' y2='1'%3E%3Cstop offset='0' stop-color='%23ffe9a0'/%3E%3Cstop offset='.45' stop-color='%23f0b21a'/%3E%3Cstop offset='1' stop-color='%23a86a00'/%3E%3C/linearGradient%3E%3CradialGradient id='f' cx='.38' cy='.32' r='.8'%3E%3Cstop offset='0' stop-color='%23fff6c8'/%3E%3Cstop offset='.45' stop-color='%23ffcf3f'/%3E%3Cstop offset='1' stop-color='%23e09a00'/%3E%3C/radialGradient%3E%3ClinearGradient id='s' x1='0' y1='0' x2='0' y2='1'%3E%3Cstop offset='0' stop-color='%23b87700'/%3E%3Cstop offset='1' stop-color='%237e4b00'/%3E%3C/linearGradient%3E%3C/defs%3E%3Ccircle cx='16' cy='16' r='15.5' fill='url%28%23r%29'/%3E%3Ccircle cx='16' cy='16' r='14.3' fill='none' stroke='%238f5a00' stroke-opacity='.45' stroke-width='1.4' stroke-dasharray='.9 1.1'/%3E%3Ccircle cx='16' cy='16' r='12.4' fill='url%28%23f%29' stroke='%23b77800' stroke-width='.9'/%3E%3Ccircle cx='16' cy='16' r='10.6' fill='none' stroke='%23fff3c4' stroke-opacity='.7' stroke-width='.6'/%3E%3Cpath d='M8.6 10.2H23.4V12.6H22.6V23.4H24.6V24.6H7.4V23.4H9.4V12.6H8.6ZM13.1 23.4V17.6A2.9 2.9 0 0 1 18.9 17.6V23.4Z' fill='%23fff8d6' fill-opacity='.8' transform='translate%28.45 .55%29' fill-rule='evenodd'/%3E%3Cpath d='M8.6 10.2H23.4V12.6H22.6V23.4H24.6V24.6H7.4V23.4H9.4V12.6H8.6ZM13.1 23.4V17.6A2.9 2.9 0 0 1 18.9 17.6V23.4Z' fill='url%28%23s%29' fill-rule='evenodd'/%3E%3Cpath d='M9.4 13.4H22.6M10.6 15.2V21.6M21.4 15.2V21.6M12.2 11.4H19.8' stroke='%23f8d873' stroke-opacity='.8' fill='none' stroke-width='.35'/%3E%3Cpath d='M13.1 17.6A2.9 2.9 0 0 1 18.9 17.6' stroke='%23f8d873' stroke-opacity='.8' fill='none' stroke-width='.3'/%3E%3Cpath d='M6.2 12.5A10.5 10.5 0 0 1 13 5.6' fill='none' stroke='%23fff' stroke-opacity='.75' stroke-width='1.6' stroke-linecap='round'/%3E%3C/svg%3E"); }
@@ -21141,6 +21166,8 @@ function setGoalSection(wrap) {
 // ---------- 版本更新记录：设置页最下面，展开后能看到每个版本改了什么 ----------
 // p：哪个页面的更新（fr 法语页 / st 随机分析页 / 不写表示两个页面都有）。新版本加在最前面。
 const CHANGELOG = [
+  { v: "5.6", d: "2026-11-06", p: "fr", items: [
+    "游戏里新增《失声的巴黎》原型：一个像素街区解谜。三块石碑各考 5 道语法题（冠词、复合过去时、简单将来时），答对 4 题得到能力、打开新区域；六道知识锁要读懂法语线索（门牌、密码年份、看图拿东西、钥匙位置、将来时齿轮、鬼魂留言）才能解开，每道锁有两级提示。通关一次 50 金币。"] },
   { v: "5.5", d: "2026-11-06", p: "fr", items: [
     "背单词新增 60 个 B1–B2 词（20 个主题各 3 个，如 aspirateur、boussole、arc-en-ciel、dès que），每个词配一张按例句画的图，排进第 41–46 关；词库扩到 460 个词。"] },
   { v: "5.4", d: "2026-11-05", p: "fr", items: [
@@ -22066,6 +22093,7 @@ const BOARDS = {
   game: [
     { id: "levels", t: "单词闯关", d: "一关 10 个词，各主题混合，按星星解锁下一关。", n: () => `${V_LEVELS.length} 关` },
     { id: "tour", t: "环法之旅", d: "像素法国地图，52 站从 A1 到 C1，答题集明信片。", n: () => "52 站", game: true },
+    { id: "lsp", t: "失声的巴黎", d: "原型：像素街区解谜。学会语法得到能力、打开新区域；读懂法语线索才能解开谜题。", n: () => "原型" },
     { id: "spire", t: "巴黎塔尖", d: "肉鸽模式：选路线登塔，战斗、商人、事件和三层 Boss。", n: () => typeof spRun !== "undefined" && spRun ? "进行中" : "肉鸽" },
   ],
 };
@@ -22088,12 +22116,13 @@ function curMod() {
   if (view === "book") return "book";
   if (view === "shop") return "shop";
   if (view === "settings") return "settings";
-  if (view === "tour" || (inTour() && ["quiz", "vocab", "conj"].includes(view))) return "game";
+  if (view === "tour" || view === "lsp" || (inTour() && ["quiz", "vocab", "conj"].includes(view))) return "game";
   if (view === "vocab" && vIsGame()) return "game";
   return "practice";
 }
 function curBoard() {
   if (view === "home" || view === "book" || view === "settings" || view === "shop") return null;
+  if (view === "lsp") return "lsp";
   if (view === "tour" || (inTour() && ["quiz", "vocab", "conj"].includes(view))) return "tour";
   if (view === "vocab") return vIsGame() ? (vTheme === "spire" || (vSess && vSess.spire) ? "spire" : "levels") : "vocab";
   if (view === "quiz") return qBoard;
@@ -22282,6 +22311,7 @@ function switchView(v, setKey) {
   if (v === "conj") { renderConj(); return; }
   if (v === "settings") { renderSettings(); return; }
   if (v === "tour") { renderTour(); return; }
+  if (v === "lsp") { renderLsp(); return; }
   if (v === "book") { renderBook(); return; }
   if (setKey) { startSet(setKey); navSync(); return; }
   renderToc();
@@ -26560,6 +26590,322 @@ function spEnd(win, quit, ending) {
   stage.append(card);
 }
 function spDie(quit) { spEnd(false, quit === true); }
+// ---------- 失声的巴黎（原型）：能力锁 + 知识锁的像素解谜 ----------
+// 一个街区里，人们“失去了语法”。三块语法石碑各考 5 题，答对 4 题得到一项能力（能力锁）：
+//   冠词 → 能修好门牌；复合过去时 → 能看见“过去”（鬼魂的桥、鬼魂留下的字）；简单将来时 → 能转动刻着将来时的齿轮。
+// 另外有六道知识锁：读懂法语线索 / 用对法语形式才能过，答案就是学习目标本身。每道锁有两级提示（关键词 → 中文翻译）。
+// 进度存在本机（fq-lsp）；通关一次给 50 金币（游戏模式开着时）。
+
+const LSP_MAP = [
+  "####################",
+  "#HHH#....T....T....#",
+  "#HHH#.b..FF..b..3..#",
+  "#.G.#....FFb.......#",
+  "#......b......n....#",
+  "#.T..............T.#",
+  "~~~~~~~~~pp~~~~~~~~~",
+  "~~~~~~~~~pp~~~~~~~~~",
+  "#WWWWW.........WWWW#",
+  "#WWWWW.....T...#2.i#",
+  "#WWDWW.........X..i#",
+  "#.....1........#i.i#",
+  "#..T......S....#####",
+  "####################",
+];
+const LSP_W = 20, LSP_H = 14, LSP_T = 16;
+const LSP_AB = {
+  art: { name: "冠词之力", tag: "冠词", re: /冠词/, stone: "1", color: "#f2c14e", hint: "能修好消失的门牌" },
+  past: { name: "回望过去", tag: "复合过去时", re: /^(复合过去时|助动词|§9\.2\.\d 过去分词|过去分词)/, stone: "2", color: "#b48cff", hint: "能看见过去：鬼魂的桥、鬼魂留下的字" },
+  fut: { name: "预见将来", tag: "简单将来时", re: /^简单将来时/, stone: "3", color: "#5fd3c6", hint: "能转动刻着将来时的齿轮" },
+};
+// 花园里的四件东西（用背单词的配图）；面包师要的是 fouet 和 tablier
+const LSP_ITEMS = [[18, 9, "fouet"], [18, 10, "aspirateur"], [16, 11, "tablier"], [18, 11, "violon"]];
+const LSP_KEY_BENCH = [11, 3];   // “à côté de la fontaine” 的那张长椅
+let lsp = null, lspDlg = null, lspImgs = {}, lspKeysBound = false;
+
+function lspNew() { return { x: 10, y: 12, ab: {}, f: {}, inv: [], picked: [] }; }
+function lspLoad() { try { lsp = JSON.parse(localStorage.getItem("fq-lsp") || "null"); } catch (e) { lsp = null; } if (!lsp || !lsp.f) lsp = lspNew(); }
+function lspSave() { try { localStorage.setItem("fq-lsp", JSON.stringify(lsp)); } catch (e) {} }
+const lspTile = (x, y) => (LSP_MAP[y] || "")[x] || "#";
+
+// 能不能走
+function lspWalk(x, y) {
+  const t = lspTile(x, y);
+  if (t === "p") return !!lsp.ab.past;
+  if (t === "X") return !!lsp.f.code;
+  if (t === "D") return false;
+  if (t === "i") return lsp.picked.includes(x + "," + y);
+  return t === "." || t === "S";
+}
+
+// ---------- 画面 ----------
+function lspDraw() {
+  const cv = document.getElementById("lspCv"); if (!cv) return;
+  const c = cv.getContext("2d"), T = LSP_T;
+  const px = (x, y, w, h, col) => { c.fillStyle = col; c.fillRect(x, y, w, h); };
+  for (let y = 0; y < LSP_H; y++) for (let x = 0; x < LSP_W; x++) {
+    const t = lspTile(x, y), X = x * T, Y = y * T;
+    px(X, Y, T, T, "#6fa84f"); if ((x * 7 + y * 3) % 5 === 0) px(X + 4, Y + 9, 2, 2, "#5d9441");   // 草地
+    if (t === "#") { px(X, Y, T, T, "#5f6474"); px(X, Y + 7, T, 1, "#4b4f5d"); px(X + (y % 2 ? 4 : 11), Y, 1, 7, "#4b4f5d"); px(X + (y % 2 ? 11 : 4), Y + 8, 1, 8, "#4b4f5d"); }
+    else if (t === "W") { px(X, Y, T, T, "#d9a066"); px(X, Y + 12, T, 4, "#b97a45"); if (y === 8) px(X, Y, T, 5, "#a8432f"); }
+    else if (t === "D") {
+      px(X, Y, T, T, "#d9a066"); px(X + 4, Y + 5, 8, 11, lsp.f.sign ? "#6b3d1f" : "#3d2a1d");
+      px(X + 2, Y, 12, 4, lsp.f.sign ? "#fff3c4" : "#8b8b8b");   // 门牌：修好后亮起
+      if (lsp.f.sign) { px(X + 5, Y + 1, 6, 2, "#c98b2a"); }
+    }
+    else if (t === "H") { px(X, Y, T, T, "#7d728f"); px(X, Y + 14, T, 2, "#5f566e"); if (x === 2 && y === 1) { px(X + 3, Y + 3, 10, 10, "#f4ecd8"); px(X + 7, Y + 4, 2, 5, "#333"); px(X + 8, Y + 7, 4, 2, "#333"); } }
+    else if (t === "G") { px(X, Y, T, T, lsp.f.gear ? "#3a3347" : "#7d728f"); if (!lsp.f.gear) { px(X + 4, Y + 4, 8, 8, "#c9a227"); px(X + 6, Y + 6, 4, 4, "#7d728f"); px(X + 7, Y + 2, 2, 12, "#c9a227"); px(X + 2, Y + 7, 12, 2, "#c9a227"); } }
+    else if (t === "X") { if (!lsp.f.code) { px(X, Y, T, T, "#5f6474"); for (let k = 2; k < 16; k += 4) px(X + k, Y, 2, T, "#2c2f38"); px(X + 6, Y + 6, 4, 4, "#c9a227"); } }
+    else if (t === "~" || t === "p") {
+      px(X, Y, T, T, "#3f7fc4"); px(X + ((x + y) % 3) * 4, Y + 5, 5, 1, "#79b2ea"); px(X + ((x + 2 * y) % 3) * 4 + 2, Y + 11, 5, 1, "#79b2ea");
+      if (t === "p" && lsp.ab.past) { c.globalAlpha = .75; px(X, Y, T, T, "#cdbbff"); for (let k = 1; k < 16; k += 4) px(X, Y + k, T, 1, "#9b85e0"); c.globalAlpha = 1; }
+    }
+    else if (t === "F") { px(X, Y, T, T, "#9aa3b5"); px(X + 1, Y + 1, T - 2, T - 2, "#6cb6f0"); if ((x + y) % 2) px(X + 6, Y + 4, 3, 3, "#e8f6ff"); }
+    else if (t === "b") { px(X + 2, Y + 6, 12, 3, "#8a5a2b"); px(X + 2, Y + 3, 12, 2, "#a8743e"); px(X + 3, Y + 9, 2, 4, "#5b3a1b"); px(X + 11, Y + 9, 2, 4, "#5b3a1b"); }
+    else if (t === "T") { px(X + 6, Y + 10, 4, 6, "#6b4423"); px(X + 2, Y + 1, 12, 10, "#2f7a3a"); px(X + 4, Y + 3, 4, 3, "#46a356"); }
+    else if (t === "1" || t === "2" || t === "3") {
+      const ab = Object.values(LSP_AB).find(a => a.stone === t), got = lsp.ab[Object.keys(LSP_AB).find(k => LSP_AB[k].stone === t)];
+      px(X + 4, Y + 2, 8, 13, "#9aa0ad"); px(X + 5, Y + 3, 6, 11, got ? "#c3c7d0" : ab.color); px(X + 3, Y + 14, 10, 2, "#6b707c");
+      if (!got) { c.globalAlpha = .35 + .25 * Math.sin(Date.now() / 300); px(X + 2, Y, 12, 16, ab.color); c.globalAlpha = 1; }
+    }
+    else if (t === "i" && !lsp.picked.includes(x + "," + y)) {
+      const it = LSP_ITEMS.find(v => v[0] === x && v[1] === y), im = it && lspImgs[it[2]];
+      px(X + 1, Y + 1, 14, 14, "#fffbe8");
+      if (im && im.complete && im.naturalWidth) c.drawImage(im, X + 2, Y + 3, 12, 8 * 1.0); else px(X + 4, Y + 4, 8, 8, "#c9a227");
+    }
+    else if (t === "n") { lspPerson(c, X, Y, "#4a6fa5", "#d8d0c0", true); }
+    // 过去的字：鬼魂写在钟楼墙上
+    if (lsp.ab.past && x === 1 && y === 3) { c.globalAlpha = .8; px(X + 2, Y + 4, 12, 1, "#cdbbff"); px(X + 2, Y + 8, 9, 1, "#cdbbff"); c.globalAlpha = 1; }
+  }
+  lspPerson(c, lsp.x * T, lsp.y * T, "#d64545", "#f1c27d", false);
+  // 颜色：能力越多，城市越鲜艳；修好后全彩
+  const n = Object.keys(lsp.ab).length;
+  cv.style.filter = lsp.f.done ? "none" : `saturate(${[.25, .5, .75, .9][n]}) brightness(${[.85, .92, .97, 1][n]})`;
+}
+function lspPerson(c, X, Y, coat, skin, old) {
+  const px = (x, y, w, h, col) => { c.fillStyle = col; c.fillRect(X + x, Y + y, w, h); };
+  px(5, 2, 6, 5, skin); px(5, 1, 6, 2, old ? "#ddd" : "#3b2a20"); px(4, 7, 8, 6, coat); px(5, 13, 2, 3, "#2d2d3a"); px(9, 13, 2, 3, "#2d2d3a");
+  px(6, 4, 1, 1, "#222"); px(9, 4, 1, 1, "#222"); if (old) px(12, 6, 1, 9, "#7a5230");
+}
+
+// ---------- 页面 ----------
+function renderLsp() {
+  lspLoad();
+  LSP_ITEMS.forEach(([, , w]) => { if (!lspImgs[w]) { const im = new Image(); im.src = "img/" + (typeof V_IMG !== "undefined" && V_IMG[w] || w) + ".jpg"; im.onload = lspDraw; lspImgs[w] = im; } });
+  stage.innerHTML = "";
+  const card = el("section", "card lsp-card");
+  const head = el("div", "lsp-head");
+  head.append(el("b", null, "失声的巴黎 · 原型"), el("span", "lsp-sub", "方向键 / 下方按钮移动，靠近东西按“调查”。"));
+  const hud = el("div", "lsp-hud"); hud.id = "lspHud";
+  const cv = el("canvas", "lsp-cv"); cv.id = "lspCv"; cv.width = LSP_W * LSP_T; cv.height = LSP_H * LSP_T;
+  const box = el("div", "lsp-dlg"); box.id = "lspDlg";
+  const pad = el("div", "lsp-pad");
+  [["↑", 0, -1, "u"], ["←", -1, 0, "l"], ["调查", 0, 0, "a"], ["→", 1, 0, "r"], ["↓", 0, 1, "d"]].forEach(([t, dx, dy, k]) => {
+    const b = el("button", "lsp-btn lsp-" + k, t); b.type = "button";
+    b.addEventListener("click", () => k === "a" ? lspAct() : lspMove(dx, dy));
+    pad.append(b);
+  });
+  const reset = el("button", "btn ghost lsp-reset", "重新开始"); reset.type = "button";
+  let sure = false; reset.addEventListener("click", () => { if (!sure) { sure = true; reset.textContent = "确定重新开始？"; return; } lsp = lspNew(); lspSave(); renderLsp(); });
+  card.append(head, hud, cv, box, pad, reset);
+  stage.append(card);
+  if (!lspKeysBound) {
+    lspKeysBound = true;
+    document.addEventListener("keydown", e => {
+      if (view !== "lsp" || e.target.tagName === "INPUT") return;
+      const m = { ArrowUp: [0, -1], ArrowDown: [0, 1], ArrowLeft: [-1, 0], ArrowRight: [1, 0], w: [0, -1], s: [0, 1], a: [-1, 0], d: [1, 0] }[e.key];
+      if (m) { e.preventDefault(); if (!lspDlg || !lspDlg.lock) lspMove(...m); }
+      else if (e.key === " " || e.key === "Enter") { if (!lspDlg || !lspDlg.lock) { e.preventDefault(); lspAct(); } }
+    });
+    setInterval(() => { if (view === "lsp") lspDraw(); }, 120);   // 石碑的光一闪一闪
+  }
+  lspHud(); lspDraw();
+  if (!lsp.f.intro) lspSay("一夜之间，这个街区的人们说话缺了语法：门牌上的冠词掉了，钟楼停在了现在时。三块发光的石碑里藏着三种语法的力量——先去最近的那块看看。", [["出发", () => { lsp.f.intro = 1; lspSave(); lspClose(); }]], true);
+  else lspSay(lsp.f.done ? "街区已经恢复了声音。你可以随便逛逛，或者点“重新开始”再玩一遍。" : "继续探索：靠近发光的石碑、门、长椅、齿轮，按“调查”。");
+}
+function lspHud() {
+  const h = document.getElementById("lspHud"); if (!h) return;
+  h.textContent = "";
+  Object.entries(LSP_AB).forEach(([k, a]) => { const s = el("span", "lsp-ab" + (lsp.ab[k] ? " on" : "")); s.style.setProperty("--c", a.color); s.title = a.hint; s.append(el("i"), document.createTextNode(a.name)); h.append(s); });
+  const inv = lsp.inv.map(w => w === "clé" ? "钥匙" : w).join("、");
+  h.append(el("span", "lsp-inv", inv ? "背包：" + inv : "背包：空"));
+}
+function lspMove(dx, dy) {
+  if (lspDlg && lspDlg.lock) return;
+  const x = lsp.x + dx, y = lsp.y + dy;
+  lsp.face = [dx, dy];   // 面朝的方向：调查时先看面前那格
+  if (lspWalk(x, y)) { lsp.x = x; lsp.y = y; lspSave(); lspDraw(); }
+  // 走到鬼魂的桥边：没有“过去”就提示
+  if (!lsp.ab.past && lspTile(x, y) === "p" && !lsp.f.bridgeHint) { lsp.f.bridgeHint = 1; lspSay("河水湍急，过不去。传说这里以前有一座桥……要是能看见过去就好了。"); }
+}
+// 周围（上下左右和脚下）有什么能调查的
+function lspNear() {
+  for (const [dx, dy] of [[0, 0], lsp.face || [0, -1], [0, -1], [1, 0], [0, 1], [-1, 0]]) {
+    const x = lsp.x + dx, y = lsp.y + dy, t = lspTile(x, y);
+    if ("123DXGHbni".includes(t)) { if (t === "i" && lsp.picked.includes(x + "," + y)) continue; return { t, x, y }; }
+  }
+  return null;
+}
+
+// ---------- 对话框 ----------
+function lspSay(text, buttons, lock) {
+  const box = document.getElementById("lspDlg"); if (!box) return;
+  box.textContent = "";
+  box.append(el("p", "lsp-text", text));
+  if (buttons && buttons.length) {
+    const row = el("div", "lsp-choices");
+    buttons.forEach(([t, fn, cls]) => { const b = el("button", "btn" + (cls ? " " + cls : " ghost"), t); b.type = "button"; b.addEventListener("click", fn); row.append(b); });
+    box.append(row);
+  }
+  lspDlg = { lock: !!lock };
+}
+const lspClose = () => { lspDlg = null; lspSay("……"); const b = document.getElementById("lspDlg"); if (b) b.textContent = ""; };
+// 知识锁：一句法语线索 + 问题 + 选项；两级提示
+function lspLock({ fr, q, opts, ok, hints, done, input }) {
+  let hint = 0;
+  const show = (msg) => {
+    const box = document.getElementById("lspDlg"); box.textContent = "";
+    if (fr) box.append(el("p", "lsp-fr", fr));
+    box.append(el("p", "lsp-text", q));
+    if (hint) box.append(el("p", "lsp-hint", hints.slice(0, hint).join("　")));
+    if (msg) box.append(el("p", "lsp-msg", msg));
+    const row = el("div", "lsp-choices");
+    if (input) {
+      const inp = el("input", "lsp-in"); inp.type = "text"; inp.inputMode = "numeric"; inp.placeholder = "输入密码";
+      const go = el("button", "btn", "开门"); go.type = "button";
+      go.addEventListener("click", () => inp.value.trim() === ok ? (lspDlg = null, done()) : show("不对，门纹丝不动。"));
+      inp.addEventListener("keydown", e => { if (e.key === "Enter") go.click(); });
+      row.append(inp, go); setTimeout(() => inp.focus(), 50);
+    } else opts.forEach(o => { const b = el("button", "btn ghost", o); b.type = "button"; b.addEventListener("click", () => o === ok ? (lspDlg = null, done()) : show("不对。再读一遍线索。")); row.append(b); });
+    if (hint < hints.length) { const h = el("button", "btn ghost lsp-hbtn", hint ? "再给一点提示" : "提示"); h.type = "button"; h.addEventListener("click", () => { hint++; show(); }); row.append(h); }
+    const x = el("button", "btn ghost", "先离开"); x.type = "button"; x.addEventListener("click", lspClose); row.append(x);
+    box.append(row);
+    lspDlg = { lock: true };
+  };
+  show();
+}
+
+// ---------- 石碑：5 题答对 4 题得到能力 ----------
+function lspTrial(k) {
+  const a = LSP_AB[k];
+  const pool = BANK.filter(q => !isListen(q) && !q.title && !q.quote && a.re.test(q.cat || "") && q.opts && q.opts.length <= 6);
+  const qs = vShuffle(pool).slice(0, 5);
+  let i = 0, right = 0;
+  const one = () => {
+    const box = document.getElementById("lspDlg"); box.textContent = "";
+    if (i >= qs.length) {
+      if (right >= 4) {
+        lsp.ab[k] = 1; lspSave(); lspHud(); lspDraw();
+        lspSay(`石碑亮了起来——你得到了「${a.name}」！（${right}/5）${a.hint}。`, [["好", lspClose, ""]], true);
+      } else lspSay(`石碑闪了一下又暗了（${right}/5，要答对 4 题）。看看解析，再来一次吧。`, [["再试一次", () => lspTrial(k), ""], ["先离开", lspClose]], true);
+      return;
+    }
+    const q = qs[i];
+    box.append(el("p", "lsp-text", `「${a.tag}」试炼 · 第 ${i + 1} / 5 题`), el("p", "lsp-fr", q.q));
+    const row = el("div", "lsp-choices col");
+    q.opts.forEach((o, n) => {
+      const b = el("button", "btn ghost", o); b.type = "button";
+      b.addEventListener("click", () => {
+        const ok = n === q.a; if (ok) right++;
+        try { record(q, n, ok); } catch (e) {}
+        box.textContent = "";
+        box.append(el("p", "lsp-text", ok ? "✓ 答对了。" : `✗ 正确答案是：${q.opts[q.a]}`), el("p", "lsp-hint", q.exp || ""));
+        const nx = el("button", "btn", "继续"); nx.type = "button"; nx.addEventListener("click", () => { i++; one(); });
+        box.append(nx); nx.focus({ preventScroll: true });
+      });
+      row.append(b);
+    });
+    box.append(row);
+    lspDlg = { lock: true };
+  };
+  lspSay(`石碑上刻着：「${a.tag}」。答对 5 题中的 4 题，就能得到「${a.name}」——${a.hint}。`, [["开始试炼", one, ""], ["先离开", lspClose]], true);
+}
+
+// ---------- 调查 ----------
+function lspAct() {
+  if (lspDlg && lspDlg.lock) return;
+  const n = lspNear();
+  if (!n) { lspSay("这里什么也没有。"); return; }
+  const { t, x, y } = n;
+  if (t === "1" || t === "2" || t === "3") {
+    const k = Object.keys(LSP_AB).find(k => LSP_AB[k].stone === t);
+    if (lsp.ab[k]) lspSay(`石碑已经暗了。你已经有「${LSP_AB[k].name}」。`); else lspTrial(k);
+    return;
+  }
+  if (t === "D") {   // 面包店：门牌上的冠词掉了（能力锁：冠词；知识锁：选对冠词）
+    if (!lsp.f.sign) {
+      if (!lsp.ab.art) { lspSay("门牌上只剩一个词：« ___ boulangerie »。少了什么……你现在还修不好它。（需要「冠词之力」）"); return; }
+      lspLock({ fr: "« ___ boulangerie »", q: "门牌上缺一个冠词，填哪个？", opts: ["le", "la", "les", "l'"], ok: "la", hints: ["boulangerie（面包店）以 -erie 结尾。", "-erie 结尾的名词是阴性：la boulangerie。"],
+        done: () => { lsp.f.sign = 1; lspSave(); lspDraw(); lspAct(); } });
+      return;
+    }
+    if (!lsp.f.quest) {
+      lsp.f.quest = 1; lspSave();
+      lspSay("面包师：« Merci ! Apporte-moi un fouet et un tablier, s'il te plaît. Ils sont dans le jardin. Le code du jardin ? C'est l'année de naissance de mon grand-père : mille neuf cent quatre-vingt-dix-sept. »", [["记下了", lspClose, ""]], true);
+      return;
+    }
+    if (!lsp.f.delivered) {
+      const need = ["fouet", "tablier"], has = need.every(w => lsp.inv.includes(w)), wrong = lsp.inv.filter(w => !need.includes(w) && w !== "clé");
+      if (has && !wrong.length) {
+        lsp.f.delivered = 1; lsp.inv = lsp.inv.filter(w => !need.includes(w)); lspSave(); lspHud();
+        lspSay("面包师：« Parfait ! Pour traverser le canal, il faut se souvenir d'hier... La pierre du jardin peut t'aider. »（要过河，得“记得昨天”……花园里的石碑能帮你。）", [["谢谢", lspClose, ""]], true);
+      } else if (wrong.length) {
+        lspSay(`面包师：« Non, je n'ai pas besoin de ${wrong.map(w => (V_WORDS.find(v => v.fr === w) ? vLabel(V_WORDS.find(v => v.fr === w)) : w)).join(", ")}. » 她把不需要的东西还给你。`, [["好", () => { lsp.inv = lsp.inv.filter(w => !wrong.includes(w)); lsp.picked = lsp.picked.filter(p => { const it = LSP_ITEMS.find(v => v[0] + "," + v[1] === p); return !it || !wrong.includes(it[2]); }); lspSave(); lspHud(); lspDraw(); lspClose(); }, ""]], true);
+      } else lspSay("面包师：« Un fouet et un tablier, s'il te plaît ! »（她还在等这两样东西。）");
+      return;
+    }
+    lspSay("面包店里飘着可颂的香味。面包师冲你点点头。");
+    return;
+  }
+  if (t === "X") {   // 花园的门：密码是一个用法语说的年份
+    if (lsp.f.code) return;
+    if (!lsp.f.quest) { lspSay("铁门上有一个四位数的密码锁。也许有人知道密码。"); return; }
+    lspLock({ fr: "« mille neuf cent quatre-vingt-dix-sept »", q: "面包师说的年份，就是花园门的密码。", input: true, ok: "1997",
+      hints: ["mille = 1000，neuf cent = 900。", "quatre-vingt-dix-sept = 4×20 + 17 = 97。"], done: () => { lsp.f.code = 1; lspSave(); lspDraw(); lspSay("咔哒一声，花园的门开了。"); } });
+    return;
+  }
+  if (t === "i") {   // 花园里的东西：看图认词
+    const it = LSP_ITEMS.find(v => v[0] === x && v[1] === y);
+    const w = V_WORDS.find(v => v.fr === it[2]);
+    lspSay(`这里有一件东西（看图认一认）。要拿走吗？`, [["拿走", () => { lsp.inv.push(it[2]); lsp.picked.push(x + "," + y); lspSave(); lspHud(); lspDraw(); lspSay(`你拿起了 ${w ? vLabel(w) : it[2]}。`); }, ""], ["不要", lspClose]], true);
+    const box = document.getElementById("lspDlg"), im = el("img", "lsp-thumb"); im.src = "img/" + (V_IMG[it[2]] || it[2]) + ".jpg"; im.alt = ""; box.prepend(im);
+    return;
+  }
+  if (t === "n") {   // 老人：线索里藏着钥匙的位置（知识锁）
+    lspSay("老人：« J'ai perdu la clé de la tour. Je l'ai cachée sous le banc, à côté de la fontaine. »", [["好的", lspClose, ""], ["提示", () => lspSay("关键词：la clé 钥匙 · sous 在……下面 · le banc 长椅 · à côté de 在……旁边 · la fontaine 喷泉。", [["好", lspClose, ""], ["再给一点提示", () => lspSay("“我把塔楼的钥匙藏在了喷泉旁边的长椅下面。”", [["好", lspClose, ""]], true)]], true)]], true);
+    return;
+  }
+  if (t === "b") {   // 长椅：只有喷泉旁边那张下面有钥匙
+    if (x === LSP_KEY_BENCH[0] && y === LSP_KEY_BENCH[1]) {
+      if (lsp.inv.includes("clé") || lsp.f.gear) { lspSay("长椅下面已经空了。"); return; }
+      lsp.inv.push("clé"); lspSave(); lspHud(); lspSay("你在长椅下面摸到了一把旧钥匙！");
+    } else lspSay("长椅下面什么也没有。");
+    return;
+  }
+  if (t === "G") {   // 钟楼的门：钥匙 + 齿轮（能力锁：将来时；知识锁：选对将来时形式）
+    if (lsp.f.gear) { lspAct2Tower(); return; }
+    if (!lsp.inv.includes("clé")) { lspSay("钟楼的门锁着。门上还有一个大齿轮。"); return; }
+    if (!lsp.ab.fut) { lspSay("钥匙插进去了，可齿轮卡住了——齿轮上刻的句子都是将来时，你还转不动它。（需要「预见将来」）"); return; }
+    lspLock({ fr: "« Demain, nous ___ la réparation de l'horloge. »（finir）", q: "把齿轮转到正确的形式：", opts: ["finissons", "finirons", "avons fini", "finirions"], ok: "finirons",
+      hints: ["demain（明天）→ 简单将来时。", "简单将来时 = 不定式 + -ons：finir → nous finirons。"], done: () => { lsp.f.gear = 1; lsp.inv = lsp.inv.filter(w => w !== "clé"); lspSave(); lspHud(); lspDraw(); lspSay("齿轮转动起来，钟楼的门开了。"); } });
+    return;
+  }
+  if (t === "H") { lspAct2Tower(); return; }
+}
+// 钟楼里：鬼魂的字（只有“回望过去”看得见）→ 读懂才能找到钟
+function lspAct2Tower() {
+  if (!lsp.f.gear) { lspSay("钟楼的门还锁着。"); return; }
+  if (lsp.f.done) { lspSay("钟声在街区上空回荡，大家又能好好说话了。"); return; }
+  if (!lsp.ab.past) { lspSay("钟楼里空荡荡的，墙上好像有什么，可你看不见。（需要「回望过去」）"); return; }
+  lspLock({ fr: "鬼魂在墙上留下一行字：« Hier, le gardien a caché la cloche derrière la grande horloge. »", q: "钟藏在哪里？", opts: ["在大钟后面", "在喷泉下面", "在桥上", "在面包店里"], ok: "在大钟后面",
+    hints: ["la cloche 钟（敲的那种）· derrière 在……后面 · l'horloge 大钟（钟表）。", "“昨天，看守把钟藏在了大钟后面。”"],
+    done: () => {
+      lsp.f.done = 1; lspSave(); lspDraw();
+      let coins = "";
+      if (typeof gameOn === "function" && gameOn() && typeof gameAdd === "function" && !gameRaw.some(g => g.kind === "earn" && g.key === "lsp:proto")) { gameAdd({ kind: "earn", key: "lsp:proto", coins: 50, why: "失声的巴黎（原型）通关", at: new Date().toISOString() }); coins = "获得 50 金币。"; }
+      lspSay(`你在大钟后面找到了那口钟。钟声一响，整个街区重新有了颜色，人们又能好好说话了！${coins}\n\n原型到这里结束。觉得好玩的话，下一步可以做更多街区、更多语法能力。`, [["好", lspClose, ""]], true);
+    } });
+}
 // 动词变位表（由 french-quiz/tools/conj_build.py 用 verbecc 生成，不要手改）
 // 每个时态是 6 个人称（je tu il nous vous ils）的动词部分；阴阳性不同时是 [阳性, 阴性] 两组；命令式只有 tu nous vous
 const CJ_TENSES = [["pres", "直陈式现在时"], ["pc", "复合过去时"], ["imp", "未完成过去时"], ["fut", "简单将来时"], ["cond", "条件式现在时"], ["subj", "虚拟式现在时"], ["pqp", "愈过去时"], ["fa", "先将来时"], ["condp", "条件式过去时"], ["ps", "简单过去时"], ["impe", "命令式"]];
