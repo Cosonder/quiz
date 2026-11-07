@@ -4988,6 +4988,7 @@ async function syncNow(force) {
     syncState.last = Date.now(); syncState.err = "";
     syncState.lastUp = up.length; syncState.lastDown = added;
     if (added) await syncReload();
+    if (typeof socPushSoon === "function") socPushSoon();   // 好友排行榜上的资料跟着更新（只有法语页有）
   } catch (e) {
     syncState.err = e.code === "auth" ? "登录已过期，请重新登录" : "同步没成功（可能是网络问题），稍后会自动再试";
     if (e.code === "auth") syncSaveAuth(null);
@@ -5165,6 +5166,8 @@ function setGoalSection(wrap) {
 // ---------- 版本更新记录：设置页最下面，展开后能看到每个版本改了什么 ----------
 // p：哪个页面的更新（fr 法语页 / st 随机分析页 / 不写表示两个页面都有）。新版本加在最前面。
 const CHANGELOG = [
+  { v: "6.0", d: "2026-11-07", p: "fr", items: [
+    "新增“好友”页：登录账号后，可以在排行榜上按等级、金币、明信片数和其他同学比一比（只显示昵称，不显示邮箱；不想上榜可以关掉）；还能从自己的明信片里挑最多 6 张摆进橱窗，点别人那一行就能看 TA 的橱窗。"] },
   { v: "5.9", d: "2026-11-07", p: "fr", items: [
     "单词闯关会自动保存进度：一关做到一半退出（换板块、关掉页面都行），下次点这一关就从上次那题接着做；关卡地图上会显示做到第几题，题目上方可以“从头开始本关”。"] },
   { v: "5.8", d: "2026-11-06", p: "fr", items: [
