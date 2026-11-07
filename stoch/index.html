@@ -730,6 +730,9 @@ html.qf #stage .opts { height: auto; }
 html.qf #stage .opt { height: auto; min-height: clamp(2.2rem, 5.2vh, 3.25rem); padding-block: clamp(3px, .8vh, 8px); }
 html.qf #stage .actions { margin-top: 0; }
 html.qf body:has(#spHud) #stage, html.qf body:has(#tourHud) #stage { padding-bottom: calc(52px + env(safe-area-inset-bottom, 0px)); }
+html.qf body:has(.sp-hud-relrow) #stage { padding-bottom: calc(84px + env(safe-area-inset-bottom, 0px)); }   /* 遗物另起一排时状态条更高 */
+html.qf .sp-hud:has(.sp-hud-relrow) { flex-wrap: wrap; row-gap: 2px; }
+html.qf .sp-hud-act { display: none; }   /* 全屏时题卡上已经有层数 / Boss 名：状态条只留心、金币、药水、钥匙一排 + 遗物一排，不会超出屏幕 */
 html.qf .sp-hud { flex-wrap: nowrap; padding: 4px 10px; gap: 8px; bottom: calc(6px + env(safe-area-inset-bottom, 0px)); font-size: .78rem; }
 html.qf .sp-hud .px-heart { width: 13px; height: 13px; } html.qf .sp-hud-relics .sp-ico { width: 16px; height: 16px; }
 .qf-back { position: fixed; z-index: 35; top: calc(14px + env(safe-area-inset-top, 0px)); right: max(14px, calc((100vw - 860px) / 2 + 14px), env(safe-area-inset-right, 0px));
@@ -4544,7 +4547,8 @@ function cosSnapLater(ms) {
     } else cosFull = null;
   }, ms);
 }
-const cosSkipTarget = t => t && t.closest && t.closest(".pc-overlay, textarea, input, select, .tabs, .tour-map");
+// 全屏做题时页面本身不滚动，手势都交给题目里能滚的区域（解析框等），不要被背景拖动吃掉
+const cosSkipTarget = t => document.documentElement.classList.contains("qf") || (t && t.closest && t.closest(".pc-overlay, textarea, input, select, .tabs, .tour-map, .explain, .sp-hud"));
 // 去掉“冲进”背景区域的惯性：手指甩一下松开后，页面靠惯性从内容里滑过边缘时，停在边缘上
 // （要看背景就在边缘处再拉一下；在背景区域里拖动本来就是我们自己控制的，没有惯性）
 let cosLastY = null;
@@ -5185,6 +5189,8 @@ function setGoalSection(wrap) {
 // ---------- 版本更新记录：设置页最下面，展开后能看到每个版本改了什么 ----------
 // p：哪个页面的更新（fr 法语页 / st 随机分析页 / 不写表示两个页面都有）。新版本加在最前面。
 const CHANGELOG = [
+  { v: "6.6", d: "2026-11-07", p: "fr", items: [
+    "巴黎塔尖修复与调整：Boss 题上方的考点标签（语法 · …、变位 · …）只在 A1、A2 难度显示，B1 起隐藏，新增药水“马鞭草茶”可以看当前这道题的考点；遗物在状态条里单独一排，放不下可以左右拖动，不会超出屏幕；全屏答题时（尤其开着背景皮肤）答题后的解析区可以正常上下滑动了。"] },
   { v: "6.5", d: "2026-11-07", p: "fr", items: [
     "巴黎塔尖的 22 张事件插图全部重画：每个事件一幅不同的小场景（塞纳河岸、地铁站台、卢浮宫、蒙马特、香榭丽舍、塔顶夜景……），主体更大，有前后层次和不同时间的光线。"] },
   { v: "6.4", d: "2026-11-07", p: "fr", items: [
