@@ -3201,6 +3201,7 @@ function localDb(ns) {
     saveNote.textContent = wrong ? `已有 ${wrong} 条错题记录，答题记录会自动保存到学习进度。` : "答题记录会自动保存到学习进度。";
     if (LOCAL) saveNote.textContent += "记录保存在这台设备的浏览器里，换设备或清除浏览器数据后不会保留。";
     if (view === "book") renderBook();
+    if (view === "cafe" && typeof cafeEnter === "function") cafeEnter();
   } catch (e) { saveNote.textContent = "暂时无法读取答题记录，答题不受影响。"; }
 })();
 function record(item, i, right) {
@@ -5079,6 +5080,7 @@ async function syncReload() {
   if (typeof vStats !== "undefined") vStats = null;
   planRefresh();
   if (view === "book") renderBook();
+  else if (view === "cafe" && typeof renderCafe === "function") renderCafe(true);
   else if (view === "vocab" && typeof renderVocab === "function" && !vSess) renderVocab();
 }
 // 登录状态变了：重画“账号与同步”所在的设置页
@@ -5228,6 +5230,8 @@ function setGoalSection(wrap) {
 // p：哪个页面的更新（fr 法语页 / st 随机分析页 / 不写表示两个页面都有）。新版本加在最前面。
 // 版本号格式 1.x.y：平时只动 x、y；最前面的 1 未经用户同意不能改成 2。
 const CHANGELOG = [
+  { v: "1.7.3", d: "2026-11-08", p: "fr", items: [
+    "游戏里新增「塞纳河畔咖啡馆」：一个靠学法语经营的放置类小游戏。每个语法知识点是一件咖啡器具（时态是不同的萃取方式，代词是磨豆机……），器具等级就是你对这个知识点的真实掌握度；答题补充营业时间，小费用来排咖啡师班次，有到期复习时器具会结垢，每天有 3 份客人点单，攒够好评卡可以开分店。还能学 12 种咖啡的制作流程，每一步对应一个法语知识点。买了游戏模式即可免费游玩，小费不能换金币。"] },
   { v: "1.7.2", d: "2026-11-08", p: "fr", items: [
     "全屏做题时（手机、iPad、电脑），题目放在选项上方的空白里上下左右居中，不再贴着顶部；动词变位题改成“不定式 →时态→ 主语 ___”的写法，比如 avoir 箭头上写着“直陈式现在时”，后面是 il ___。"] },
   { v: "1.7.1", d: "2026-11-08", p: "fr", items: [
