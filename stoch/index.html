@@ -789,6 +789,13 @@ html.qf #stage > section.v-card > .v-q.v-stack > .v-layer { justify-content: cen
 html.qf #stage > section.q-card > .q, html.qf #stage > section.cj-card > .q { flex: 1 1 auto; min-height: 0; overflow-y: auto; overscroll-behavior: contain;
   display: flex; flex-direction: column; justify-content: safe center; align-items: center; text-align: center; }
 html.qf #stage > section.cj-card > .q.cj-q { flex-direction: row; flex-wrap: wrap; align-content: safe center; justify-content: center; align-items: baseline; }
+/* 巴黎塔尖：小题（sp-mini）、Boss 题的句子、选词造句的题干，同样在上方空白里居中 */
+html.qf #stage > section.sp-mini > .q, html.qf #stage > section.sp-boss > .sp-sent, html.qf #stage > section.sp-build > .sp-build-q {
+  flex: 1 1 auto; min-height: 0; overflow-y: auto; overscroll-behavior: contain; margin: 0;
+  display: flex; flex-direction: column; justify-content: safe center; align-items: center; text-align: center; }
+html.qf #stage > section.sp-boss > .sp-sent { display: block; align-content: center; }
+html.qf #stage > section.sp-build > .sp-build-ans { min-height: 2.6em; justify-content: center; }
+html.qf #stage > section.sp-build > .sp-build-pool { justify-content: center; }
 html.qf #stage > section.v-card > .explain { flex: none !important; height: clamp(4.5rem, 14vh, 8rem) !important; }
 html.qf #stage > section.cj-card > .explain { flex: none !important; height: clamp(6rem, 20vh, 11rem) !important; }
 html.qf #stage > section.q-card > .explain { flex: none !important; height: clamp(8rem, 28vh, 16rem) !important; }
@@ -5230,6 +5237,8 @@ function setGoalSection(wrap) {
 // p：哪个页面的更新（fr 法语页 / st 随机分析页 / 不写表示两个页面都有）。新版本加在最前面。
 // 版本号格式 1.x.y：平时只动 x、y；最前面的 1 未经用户同意不能改成 2。
 const CHANGELOG = [
+  { v: "1.7.4", d: "2026-11-09", p: "fr", items: [
+    "英文界面修复：背单词例句识图题图片下的意思改成英文，配图例句也有了英文翻译（460 句）；巴黎塔尖开局给 60 金币，商人卖的遗物涨价；Boss 题答完也有局外的经验、金币和连对；选词造句和配对战点错会扣心；选词造句、Boss 题和事件小题在全屏时居中显示。"] },
   { v: "1.7.3", d: "2026-11-08", p: "fr", items: [
     "游戏里新增「塞纳河畔咖啡馆」：一个靠学法语经营的放置类小游戏。每个语法知识点是一件咖啡器具（时态是不同的萃取方式，代词是磨豆机……），器具等级就是你对这个知识点的真实掌握度；答题补充营业时间，小费用来排咖啡师班次，有到期复习时器具会结垢，每天有 3 份客人点单，攒够好评卡可以开分店。还能学 12 种咖啡的制作流程，每一步对应一个法语知识点。买了游戏模式即可免费游玩，小费不能换金币。"] },
   { v: "1.7.2", d: "2026-11-08", p: "fr", items: [
