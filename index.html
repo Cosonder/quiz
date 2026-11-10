@@ -79,11 +79,14 @@ a.card:focus-visible { outline: 3px solid var(--accent); outline-offset: 2px; }
       navigator.serviceWorker.addEventListener("message", e => {
         const d = e.data;
         if (!d || d.type !== "status") return;
-        const pagesOk = d.pages >= d.files, imgOk = d.imgs >= d.images, ok = pagesOk && imgOk && d.mathjax;
+        // 单词配图包是可选的（在法语页“背单词”里下载），没下载也算可以离线做题
+        const pagesOk = d.pages >= d.files, imgOk = !d.pack || d.imgs >= d.images, ok = pagesOk && imgOk && d.mathjax;
+        const pic = d.pack ? (imgOk ? "单词配图包也已下载。" : "") : `单词配图包（约 ${d.mb} MB）没有自动下载，需要断网看图的话，可以在法语页“背单词”里下载。`;
+        const picNow = d.pack ? ` · 单词配图 ${d.imgs}/${d.images}` : "";
         box.classList.toggle("ok", ok);
-        if (ok) { box.textContent = "✓ 已可离线使用：所有题目、单词图片和公式排版都已存到这台设备，断网也能做题。"; return; }
-        if (!navigator.onLine) { box.textContent = `现在没有网络。已存好：页面${pagesOk ? " ✓" : "（未完成）"} · 单词图片 ${d.imgs}/${d.images} · 公式${d.mathjax ? " ✓" : "（未完成）"}。联网后打开本页会继续下载。`; return; }
-        box.textContent = `正在准备离线使用，请保持联网…… 页面${pagesOk ? " ✓" : "…"} · 单词图片 ${d.imgs}/${d.images} · 公式${d.mathjax ? " ✓" : "…"}`;
+        if (ok) { box.textContent = "✓ 已可离线使用：所有题目和公式排版都已存到这台设备，断网也能做题。" + pic; return; }
+        if (!navigator.onLine) { box.textContent = `现在没有网络。已存好：页面${pagesOk ? " ✓" : "（未完成）"}${picNow} · 公式${d.mathjax ? " ✓" : "（未完成）"}。联网后打开本页会继续下载。`; return; }
+        box.textContent = `正在准备离线使用，请保持联网…… 页面${pagesOk ? " ✓" : "…"}${picNow} · 公式${d.mathjax ? " ✓" : "…"}`;
         if (!d.busy && tries++ % 10 === 9) sw()?.postMessage("prefetch");
         setTimeout(ask, 1500);
       });
@@ -107,7 +110,7 @@ a.card:focus-visible { outline: 3px solid var(--accent); outline-offset: 2px; }
     <p>Le Gall《Brownian Motion, Martingales, and Stochastic Calculus》全部章节和附录，Pascucci《Probability Theory I》第 1–4 章，另有量化面试题。</p>
   </a>
   <p class="offline" id="offlineStatus">离线使用：用支持的浏览器打开本页后会自动把题目存到设备上。</p>
-  <p class="note">想断网也能做题：在 iPad / iPhone 的 Safari 里点“分享”→“添加到主屏幕”，以后从主屏幕图标打开，像 App 一样全屏使用，没网也能打开。电脑上的 Chrome / Edge 可以在地址栏点“安装”。第一次打开时要联网，等上面显示“已可离线使用”。</p>
+  <p class="note">想断网也能做题：在 iPad / iPhone 的 Safari 里点“分享”→“添加到主屏幕”，以后从主屏幕图标打开，像 App 一样全屏使用，没网也能打开。电脑上的 Chrome / Edge 可以在地址栏点“安装”。第一次打开时要联网，等上面显示“已可离线使用”。单词配图包（约 16 MB）不会自动下载，需要断网看图时在法语页“背单词”里点下载。</p>
   <p class="note">答题记录（学习进度、经验等级、错题本都由它算出）保存在你自己的浏览器里，换设备或清除浏览器数据后不会保留。在“设置”里用邮箱登录后，记录会在你的各个设备之间自动同步，云端只保存你的邮箱、做题记录，以及你在“好友”页设置的昵称和公开资料（不含邮箱），可以随时删除账号。主屏幕上的图标和 Safari 里的网页记录可能是分开的，可以用备份文件搬过去。打开“学习模式”后，每组题开始前会先复习本组涉及的知识点。</p>
 </main>
 </body>

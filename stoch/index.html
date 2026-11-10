@@ -41,11 +41,14 @@
       navigator.serviceWorker.addEventListener("message", e => {
         const d = e.data;
         if (!d || d.type !== "status") return;
-        const pagesOk = d.pages >= d.files, imgOk = d.imgs >= d.images, ok = pagesOk && imgOk && d.mathjax;
+        // 单词配图包是可选的（在法语页“背单词”里下载），没下载也算可以离线做题
+        const pagesOk = d.pages >= d.files, imgOk = !d.pack || d.imgs >= d.images, ok = pagesOk && imgOk && d.mathjax;
+        const pic = d.pack ? (imgOk ? "单词配图包也已下载。" : "") : `单词配图包（约 ${d.mb} MB）没有自动下载，需要断网看图的话，可以在法语页“背单词”里下载。`;
+        const picNow = d.pack ? ` · 单词配图 ${d.imgs}/${d.images}` : "";
         box.classList.toggle("ok", ok);
-        if (ok) { box.textContent = "✓ 已可离线使用：所有题目、单词图片和公式排版都已存到这台设备，断网也能做题。"; return; }
-        if (!navigator.onLine) { box.textContent = `现在没有网络。已存好：页面${pagesOk ? " ✓" : "（未完成）"} · 单词图片 ${d.imgs}/${d.images} · 公式${d.mathjax ? " ✓" : "（未完成）"}。联网后打开本页会继续下载。`; return; }
-        box.textContent = `正在准备离线使用，请保持联网…… 页面${pagesOk ? " ✓" : "…"} · 单词图片 ${d.imgs}/${d.images} · 公式${d.mathjax ? " ✓" : "…"}`;
+        if (ok) { box.textContent = "✓ 已可离线使用：所有题目和公式排版都已存到这台设备，断网也能做题。" + pic; return; }
+        if (!navigator.onLine) { box.textContent = `现在没有网络。已存好：页面${pagesOk ? " ✓" : "（未完成）"}${picNow} · 公式${d.mathjax ? " ✓" : "（未完成）"}。联网后打开本页会继续下载。`; return; }
+        box.textContent = `正在准备离线使用，请保持联网…… 页面${pagesOk ? " ✓" : "…"}${picNow} · 公式${d.mathjax ? " ✓" : "…"}`;
         if (!d.busy && tries++ % 10 === 9) sw()?.postMessage("prefetch");
         setTimeout(ask, 1500);
       });
@@ -5237,6 +5240,8 @@ function setGoalSection(wrap) {
 // p：哪个页面的更新（fr 法语页 / st 随机分析页 / 不写表示两个页面都有）。新版本加在最前面。
 // 版本号格式 1.x.y：平时只动 x、y；最前面的 1 未经用户同意不能改成 2。
 const CHANGELOG = [
+  { v: "1.7.7", d: "2026-11-10", p: "fr", items: [
+    "公开网站不再在打开时自动下载全部单词配图（约 16 MB）：平时看到哪张加载哪张，打开更快。需要断网看图的话，在“背单词”页点“下载配图包”；也可以随时删除。以前已经存好图片的设备会保留。"] },
   { v: "1.7.6", d: "2026-11-10", p: "fr", items: [
     "商店新上架「法语界面」（10000 金币）：买下后可以在设置里把整个网站切成法语，按钮、提示、题目解析、知识点讲解和游戏文字都是法语；法语界面下答题金币 ×3（英文界面 ×2）。",
     "英文和法语界面改成选用了才下载：没用这两种语言的话，页面从 8.8 MB 减到 4.2 MB，打开更快；用过的语言包会存在设备上，断网也能用。"] },
