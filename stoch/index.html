@@ -5237,6 +5237,9 @@ function setGoalSection(wrap) {
 // p：哪个页面的更新（fr 法语页 / st 随机分析页 / 不写表示两个页面都有）。新版本加在最前面。
 // 版本号格式 1.x.y：平时只动 x、y；最前面的 1 未经用户同意不能改成 2。
 const CHANGELOG = [
+  { v: "1.7.6", d: "2026-11-10", p: "fr", items: [
+    "商店新上架「法语界面」（10000 金币）：买下后可以在设置里把整个网站切成法语，按钮、提示、题目解析、知识点讲解和游戏文字都是法语；法语界面下答题金币 ×3（英文界面 ×2）。",
+    "英文和法语界面改成选用了才下载：没用这两种语言的话，页面从 8.8 MB 减到 4.2 MB，打开更快；用过的语言包会存在设备上，断网也能用。"] },
   { v: "1.7.5", d: "2026-11-09", p: "fr", items: [
     "“失声的巴黎”有了完整的英文版：剧情、对话、提示和谜题说明都翻译了；另外补齐了商店、皮肤试用和设置里几处漏翻的英文。",
     "巴黎塔尖：一局结束后点“再爬一次 · 选难度”会回到选难度的页面（以前会直接用上一局的难度开局，看不到新解锁的难度）。",
@@ -5417,15 +5420,19 @@ function changelogCard(wrap, page) {
   const d = el("details", "cl-fold");
   const s = el("summary", null, `查看更新记录（共 ${list.length} 个版本）`);
   d.append(s);
-  list.forEach(x => {
+  list.forEach((x, index) => {
     const box = el("div", "cl-ver");
     const h = el("div", "cl-head"); h.append(el("b", null, "v" + x.v), el("span", "cl-date", x.d));
-    const ul = el("ul"); x.items.forEach(t => ul.append(el("li", null, t)));
+    const ul = el("ul");
+    const french = typeof UI_LANG !== "undefined" && UI_LANG === "fr";
+    if (french && index >= 10) { ul.dataset.noi18n = ""; ul.dataset.i18nArchive = ""; }
+    x.items.forEach(t => ul.append(el("li", null, french && index < 10 ? tr(t) : t)));
     box.append(h, ul); d.append(box);
   });
   card.append(d);
   return card;
 }
+
 // ---------- 做题记录的公共定义（账号同步用） ----------
 // 记录分四类：答题、模拟卷、单词、金币和道具；每条记录按内容（键排序后）算指纹去重
 const REC_COLLS = ["answers", "exams", "vocab", "game"];
