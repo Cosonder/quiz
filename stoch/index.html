@@ -3206,6 +3206,7 @@ function localDb(ns) {
     try { voc = (await dbRef.collection("vocab").get()).docs.map(d => d.data()); } catch (e) {}
     try { gameReset((await dbRef.collection("game").get()).docs.map(d => d.data())); } catch (e) {}
     progReset(docs, voc); progEnsure(); planRefresh();
+    if (typeof petOnDataReady === "function") petOnDataReady();
     if (typeof syncNow === "function") syncNow(true);   // 公开网站登录后：和云端同步
     const wrong = docs.filter(d => !d.isCorrect).length;
     saveNote.textContent = wrong ? `已有 ${wrong} 条错题记录，答题记录会自动保存到学习进度。` : "答题记录会自动保存到学习进度。";
@@ -3381,6 +3382,7 @@ function goPrev() { if (idx > bStart) { idx--; renderQuestion(); } }
 document.addEventListener("keydown", e => {
   if (view !== "quiz" || !set || e.ctrlKey || e.metaKey || e.altKey || stage.querySelector(".board-intro")) return;
   const t = e.target;
+  if (t && t.closest && t.closest("#petWidget, #petLauncher, #petPage")) return;
   if (t && /^(INPUT|SELECT|TEXTAREA)$/.test(t.tagName)) return;
   const k = e.key, click = id => { const b = document.getElementById(id); if (b && !b.disabled) { e.preventDefault(); b.click(); return true; } return false; };
   if (rv) {   // 正在复习知识点
@@ -3565,6 +3567,7 @@ function progLive(d, kind) {
   else if (r.down >= 0) parts.push(`记忆退到 ${r.down} 级`);
   const note = typeof planNotice === "function" ? planNotice(d, todayBefore) : "";
   const coins = typeof gameCheck === "function" ? gameCheck() : [];   // 刚完成的每日任务 → 金币
+  if (typeof petOnAnswer === "function") petOnAnswer(d, kind, { run: r.run || 0, planCompleted: coins.some(c => /:plan$/.test(c.key || "")) });
   coins.forEach(c => parts.push(c.coins ? `${c.why} +${c.coins} 金币` : c.why));
   xpToast(parts.join(" · "), after > before ? `升级！Lv ${after} · ${xpTitle(after)}` : note || (coins.some(c => c.chest) ? "获得一个宝箱！" : coins.length ? "任务完成！" : shield ? "护盾生效！" : ""));
   if (typeof planRefresh === "function") planRefresh();
@@ -4989,7 +4992,18 @@ function syncHash(str) {
 }
 const syncKeyOf = d => syncHash(recKey(d));
 function syncAuth() { try { return JSON.parse(localStorage.getItem(SYNC_AUTH) || "null"); } catch (e) { return null; } }
-function syncSaveAuth(a) { try { if (a) localStorage.setItem(SYNC_AUTH, JSON.stringify(a)); else localStorage.removeItem(SYNC_AUTH); } catch (e) {} }
+function syncAccountChanged() {
+  clearTimeout(syncState.timer); syncState.timer = 0; syncState.queue = []; syncState.last = 0;
+  if (typeof petOnAccountChange === "function") petOnAccountChange();
+}
+function syncSaveAuth(a) {
+  const previous = syncAuth()?.uid || "";
+  try { if (a) localStorage.setItem(SYNC_AUTH, JSON.stringify(a)); else localStorage.removeItem(SYNC_AUTH); } catch (e) {}
+  if (previous !== (syncAuth()?.uid || "")) syncAccountChanged();
+}
+function syncAssertAccount(uid) {
+  if ((syncAuth()?.uid || "") !== uid) { const e = new Error("Account changed"); e.code = "account"; throw e; }
+}
 function syncSaveSession(j) {
   const old = syncAuth() || {};
   syncSaveAuth({ access_token: j.access_token, refresh_token: j.refresh_token, expires_at: j.expires_at || Math.floor(Date.now() / 1000) + (j.expires_in || 3600),
@@ -5003,14 +5017,19 @@ async function syncToken() {
   const r = await fetch(`${SYNC_URL}/auth/v1/token?grant_type=refresh_token`, {
     method: "POST", headers: { apikey: SYNC_KEY, "Content-Type": "application/json" }, body: JSON.stringify({ refresh_token: a.refresh_token }),
   });
+  syncAssertAccount(a.uid || "");
   if (!r.ok) { if (r.status >= 400 && r.status < 500) syncSaveAuth(null); return null; }
-  syncSaveSession(await r.json());
+  const session = await r.json();
+  syncAssertAccount(a.uid || "");
+  syncSaveSession(session);
   return syncAuth().access_token;
 }
-async function syncFetch(path, opt = {}, auth = true) {
+async function syncFetch(path, opt = {}, auth = true, uid = null) {
   const headers = { apikey: SYNC_KEY, "Content-Type": "application/json", ...(opt.headers || {}) };
   if (auth) {
+    if (uid !== null) syncAssertAccount(uid);
     const tok = await syncToken();
+    if (uid !== null) syncAssertAccount(uid);
     if (!tok) { const e = new Error("未登录"); e.code = "auth"; throw e; }
     headers.Authorization = "Bearer " + tok;
   }
@@ -5028,21 +5047,28 @@ async function syncFetch(path, opt = {}, auth = true) {
 const syncLocal = c => { try { return JSON.parse(localStorage.getItem(SYNC_NS + "db-" + c) || "[]"); } catch (e) { return []; } };
 const syncStore = (c, arr) => { try { localStorage.setItem(SYNC_NS + "db-" + c, JSON.stringify(arr)); } catch (e) {} };
 const syncRow = (c, d) => ({ app: REC_APP, coll: c, key: syncKeyOf(d), data: d });
-async function syncUpload(rows) {
-  for (let i = 0; i < rows.length; i += 500)
+// 只隔离新增伙伴配置；既有答案/金币继续沿用原站的本机合并规则。
+const syncPetAllowed = (c, d, uid) => c !== "game" || d?.kind !== "pet" || !!uid && d.scope === "user:" + uid;
+async function syncUpload(rows, uid = syncAuth()?.uid || "") {
+  const own = rows.filter(r => syncPetAllowed(r.coll, r.data, uid));
+  for (let i = 0; i < own.length; i += 500) {
+    syncAssertAccount(uid);
     await syncFetch("/rest/v1/records?on_conflict=user_id,app,coll,key", {
-      method: "POST", headers: { Prefer: "resolution=ignore-duplicates,return=minimal" }, body: JSON.stringify(rows.slice(i, i + 500)),
-    });
+      method: "POST", headers: { Prefer: "resolution=ignore-duplicates,return=minimal" }, body: JSON.stringify(own.slice(i, i + 500)),
+    }, true, uid);
+  }
 }
 // 完整同步：拉取云端全部记录合并进本机，再把本机有、云端没有的传上去
 async function syncNow(force) {
   if (!SYNC_ON || !syncAuth() || !navigator.onLine || syncState.busy) return;
   if (!force && Date.now() - syncState.last < 60e3) return;
+  const uid = syncAuth().uid || "";
   syncState.busy = true; syncDraw();
   try {
     const remote = [];
     for (let off = 0; ; off += 1000) {
-      const rows = await syncFetch(`/rest/v1/records?select=coll,key,data&app=eq.${REC_APP}&order=id.asc&limit=1000&offset=${off}`);
+      const rows = await syncFetch(`/rest/v1/records?select=coll,key,data&app=eq.${REC_APP}&order=id.asc&limit=1000&offset=${off}`, {}, true, uid);
+      syncAssertAccount(uid);
       remote.push(...rows);
       if (rows.length < 1000) break;
     }
@@ -5052,30 +5078,36 @@ async function syncNow(force) {
       const loc = syncLocal(c), lk = new Set(loc.map(syncKeyOf));
       const rk = new Set();
       let n = 0;
-      remote.forEach(r => { if (r.coll !== c) return; rk.add(r.key); if (!lk.has(r.key)) { loc.push(r.data); lk.add(r.key); n++; } });
+      remote.forEach(r => { if (r.coll !== c || !syncPetAllowed(c, r.data, uid)) return; rk.add(r.key); if (!lk.has(r.key)) { loc.push(r.data); lk.add(r.key); n++; } });
       if (n) { syncStore(c, loc); added += n; }
-      loc.forEach(d => { const k = syncKeyOf(d); if (!rk.has(k)) { up.push({ app: REC_APP, coll: c, key: k, data: d }); rk.add(k); } });
+      loc.forEach(d => { if (!syncPetAllowed(c, d, uid)) return; const k = syncKeyOf(d); if (!rk.has(k)) { up.push({ app: REC_APP, coll: c, key: k, data: d }); rk.add(k); } });
     }
-    await syncUpload(up);
+    await syncUpload(up, uid);
+    syncAssertAccount(uid);
     syncState.last = Date.now(); syncState.err = "";
     syncState.lastUp = up.length; syncState.lastDown = added;
     if (added) await syncReload();
     if (typeof socPushSoon === "function") socPushSoon();   // 好友排行榜上的资料跟着更新（只有法语页有）
   } catch (e) {
-    syncState.err = e.code === "auth" ? "登录已过期，请重新登录" : "同步没成功（可能是网络问题），稍后会自动再试";
-    if (e.code === "auth") syncSaveAuth(null);
+    if (e.code !== "account" && (syncAuth()?.uid || "") === uid) {
+      syncState.err = e.code === "auth" ? "登录已过期，请重新登录" : "同步没成功（可能是网络问题），稍后会自动再试";
+      if (e.code === "auth") syncSaveAuth(null);
+    }
   }
   syncState.busy = false; syncDraw();
+  if ((syncAuth()?.uid || "") !== uid && syncAuth()) setTimeout(() => syncNow(true), 0);
 }
 // 答完一题：把新记录攒一小会儿再一起传
 function syncPush(c, d) {
   if (!SYNC_ON || !syncAuth()) return;
+  const uid = syncAuth().uid || "";
+  if (!syncPetAllowed(c, d, uid)) return;
   syncState.queue.push(syncRow(c, d));
   clearTimeout(syncState.timer);
   syncState.timer = setTimeout(async () => {
     const rows = syncState.queue.splice(0);
     if (!rows.length || !navigator.onLine) return;   // 没网：下次完整同步时会补传
-    try { await syncUpload(rows); syncState.last = Date.now(); syncState.err = ""; } catch (e) {}
+    try { await syncUpload(rows, uid); syncAssertAccount(uid); syncState.last = Date.now(); syncState.err = ""; } catch (e) {}
     syncDraw();
   }, 1500);
 }
@@ -5086,6 +5118,7 @@ async function syncReload() {
   gameReset(await get("game"));
   progReset(await get("answers"), await get("vocab"));
   progEnsure();
+  if (typeof petOnDataReady === "function") petOnDataReady();
   bookCache = null;
   if (typeof vStats !== "undefined") vStats = null;
   planRefresh();
@@ -5101,6 +5134,12 @@ async function syncDeleteAccount() {
   syncLogout();
 }
 if (SYNC_ON) {
+  addEventListener("storage", e => {
+    if (e.key !== SYNC_AUTH) return;
+    let before = "", after = "";
+    try { before = JSON.parse(e.oldValue || "null")?.uid || ""; after = JSON.parse(e.newValue || "null")?.uid || ""; } catch (err) {}
+    if (before !== after) { syncAccountChanged(); syncNow(true); }
+  });
   addEventListener("online", () => syncNow(true));
   document.addEventListener("visibilitychange", () => { if (document.visibilityState === "visible") syncNow(false); });
   setInterval(() => { if (document.visibilityState === "visible") syncNow(false); }, 5 * 60e3);
@@ -5240,6 +5279,8 @@ function setGoalSection(wrap) {
 // p：哪个页面的更新（fr 法语页 / st 随机分析页 / 不写表示两个页面都有）。新版本加在最前面。
 // 版本号格式 1.x.y：平时只动 x、y；最前面的 1 未经用户同意不能改成 2。
 const CHANGELOG = [
+  { v: "1.7.9", d: "2026-11-11", p: "fr", items: [
+    "游戏新增「学习伙伴」：800 金币解锁 Ninon、Lison 和 Pia，可切换、试穿配饰、听法语例句；亲密度来自学习进步。支持拖动、关闭与减少动画，做题时自动避让，角色设置跟账号同步。"] },
   { v: "1.7.8", d: "2026-11-10", p: "fr", items: [
     "背单词新增 60 个常用动词和形容词（比如 se rendre compte、se débrouiller、compter sur、déçu、efficace），每个动词都带最常用的搭配，配图由 ChatGPT 按例句画成，画风更多样；单词闯关多了第 47–52 关。"] },
   { v: "1.7.7", d: "2026-11-10", p: "fr", items: [
