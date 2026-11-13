@@ -22721,6 +22721,8 @@ function vQuestion() {
   } else card.append(tags);
   const bar = el("div", "bar"); const bi = el("i"); bi.style.width = (S.i / S.qs.length * 100) + "%"; bar.append(bi); card.append(bar);
   const head = el("h2", "q v-q");
+  let feedbackActive = false;
+  const onFeedback = () => { feedbackActive = true; clearTimeout(vAdvanceTimer); };
   const first = S.qs.findIndex(x => x.w === w) === S.i;   // 这组里第一次考这个词：答完都停下，手动进下一题
   const exp = el("div", "explain pending", q.type === 4 ? "按顺序点字母，填满后点“确认”。也可以直接用键盘打字。" : first ? "选一个答案。答完看清楚再点“下一题”。" : "选一个答案。答对会自动进入下一题。");
   exp.id = "explain";
@@ -22748,10 +22750,6 @@ function vQuestion() {
     if (vSet.hard) vConfuseGroups(w).forEach(g => exp.append(el("span", "v-tip", "易混辨析：" + g.tip)));
     next.disabled = false;
     head.classList.add("v-done");
-    let feedbackActive = false;
-    if (vPic(w) && (q.type === 6 || q.type === 7 || (q.type === 5 && vPicEx(w)))) {
-      exp.append(pictureFeedback(w, false, () => { feedbackActive = true; clearTimeout(vAdvanceTimer); }));
-    }
     if (ok && !first) {
       next.textContent = S.i === S.qs.length - 1 ? "查看成绩" : "下一题 →";
       // 停留够设置的时间、并且读完单词，再进入下一题（朗读最多等 3 秒）
@@ -22876,7 +22874,7 @@ function vQuestion() {
       });
       ans.classList.add("v-ans7");
       ans.append(grid);
-      vStack(head, w, q.type, pe);
+      vStack(head, w, q.type, pe, onFeedback);
       card.append(head, ans);
       actions.append(next);
       card.append(exp, actions);
@@ -22902,7 +22900,7 @@ function vQuestion() {
         return b;
       });
       ans.append(grid);
-      vStack(head, w, q.type, ex);
+      vStack(head, w, q.type, ex, onFeedback);
       card.append(head, ans);
       say(vArt(w));
       actions.append(next);
@@ -22958,14 +22956,14 @@ function vQuestion() {
     ans.append(box);
     card.append(head, ans);
   }
-  vStack(head, w, q.type, q.type === 7 ? vPicEx(w) : ex);
+  vStack(head, w, q.type, q.type === 7 ? vPicEx(w) : ex, onFeedback);
   actions.append(next);
   card.append(exp, actions);
   stage.append(card, vSetLink());
 }
 // 题目区分两层叠在一起：题目层和答完后的解析层（单词、意思、例句、翻译）。两层一样占位，
 // 所以题目区一开始就按两者里高的那个留好空间，答完只是换一层显示，下面的选项不会跳。
-function vStack(head, w, type, shown) {
+function vStack(head, w, type, shown, onFeedback) {
   const qa = el("div", "v-layer v-qlayer");
   while (head.firstChild) qa.append(head.firstChild);
   const rv = el("div", "v-layer v-rvlayer");
@@ -22981,6 +22979,10 @@ function vStack(head, w, type, shown) {
     const sline = el("span", "v-rv-sent");
     sline.append(document.createTextNode(shown.before), el("b", "v-hl", shown.form), document.createTextNode(shown.after + " "), vSpeakBtn(w, "▶ 例句", shown.full));
     rv.append(sline, el("span", "v-rv-tr", shown.tr));
+  }
+  // 和例句一起预留位置；答完揭示解析层时，反馈紧跟例句与翻译显示。
+  if (vPic(w) && (type === 6 || type === 7 || (type === 5 && vPicEx(w)))) {
+    rv.append(pictureFeedback(w, false, onFeedback));
   }
   head.classList.add("v-stack");
   head.append(qa, rv);
