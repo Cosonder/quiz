@@ -1170,6 +1170,25 @@ html[data-font="times"] body { font-size: 17px; }
 .cj-study-zh { font-family: var(--body); font-size: .85rem; color: var(--muted); }
 .cj-study-head .cj-say { margin-left: auto; font-family: var(--body); }
 .cj-study .cj-rule ul { margin: 4px 0 0; padding-left: 1.2em; }
+.picture-feedback{display:flex;align-items:center;flex-wrap:wrap;gap:6px 12px;padding:10px 0;font-size:.78rem;color:var(--muted);font-weight:400;line-height:1.5}
+.fb-target{display:flex;align-items:center;gap:8px;flex-basis:100%;color:var(--fg)}
+.fb-thumb{width:72px;height:48px;object-fit:contain;border-radius:6px}
+.fb-votes{display:flex;gap:10px;align-items:center}
+.fb-vote{font:inherit;color:inherit;background:transparent;border:1px solid transparent;border-radius:8px;padding:6px 8px;white-space:nowrap}
+button.fb-vote{cursor:pointer;min-height:36px}
+button.fb-vote:hover,button.fb-vote:focus-visible{border-color:var(--accent)}
+button.fb-vote[aria-pressed=true]{background:var(--accent);color:white}
+button.fb-vote:disabled{cursor:default;opacity:.65}
+.fb-note{font-size:.8rem;color:var(--muted);line-height:1.6;overflow-wrap:anywhere}
+.fb-link{font:inherit;color:var(--accent);background:none;border:0;text-decoration:underline;cursor:pointer;padding:4px}
+.fb-settings{display:flex;flex-direction:column;gap:12px}
+.fb-settings textarea{box-sizing:border-box;width:100%;resize:vertical;min-height:120px;font:inherit;color:var(--fg);background:var(--card);border:1px solid var(--line,#ccc);border-radius:10px;padding:12px}
+.fb-settings>.btn{align-self:flex-start}
+.fb-admin{border-top:1px solid var(--line,#ddd);padding-top:16px;min-width:0}
+.fb-message{padding:12px 0;border-bottom:1px solid var(--line,#ddd)}
+.fb-message-author,.fb-message time{font-size:.78rem;color:var(--muted);overflow-wrap:anywhere}
+.fb-message-body{white-space:pre-wrap;overflow-wrap:anywhere;line-height:1.7}
+@media(max-width:520px){.picture-feedback{gap:5px 8px}.fb-vote{padding:6px}.fb-caption{flex-basis:100%}}
 /* 外观商品（游戏模式里的商店购买）：由 quiz-common/cosmetics/build.py 生成，别手改 */
 :root[data-coin="tower"] .coin, :root .cos-prev .coin.cs-tower { background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Cdefs%3E%3ClinearGradient id='r' x1='0' y1='0' x2='1' y2='1'%3E%3Cstop offset='0' stop-color='%23ffe9a0'/%3E%3Cstop offset='.45' stop-color='%23f0b21a'/%3E%3Cstop offset='1' stop-color='%23a86a00'/%3E%3C/linearGradient%3E%3CradialGradient id='f' cx='.38' cy='.32' r='.8'%3E%3Cstop offset='0' stop-color='%23fff6c8'/%3E%3Cstop offset='.45' stop-color='%23ffcf3f'/%3E%3Cstop offset='1' stop-color='%23e09a00'/%3E%3C/radialGradient%3E%3ClinearGradient id='s' x1='0' y1='0' x2='0' y2='1'%3E%3Cstop offset='0' stop-color='%23b87700'/%3E%3Cstop offset='1' stop-color='%237e4b00'/%3E%3C/linearGradient%3E%3C/defs%3E%3Ccircle cx='16' cy='16' r='15.5' fill='url%28%23r%29'/%3E%3Ccircle cx='16' cy='16' r='14.3' fill='none' stroke='%238f5a00' stroke-opacity='.45' stroke-width='1.4' stroke-dasharray='.9 1.1'/%3E%3Ccircle cx='16' cy='16' r='12.4' fill='url%28%23f%29' stroke='%23b77800' stroke-width='.9'/%3E%3Ccircle cx='16' cy='16' r='10.6' fill='none' stroke='%23fff3c4' stroke-opacity='.7' stroke-width='.6'/%3E%3Cg transform='translate%28.35 .45%29' fill='%23fff6cf' fill-opacity='.7'%3E%3Cpath d='M9.40 24.80L10.52 23.35L11.35 22.05L12.03 20.81L12.60 19.60L14.80 19.60L14.40 20.81L13.88 22.05L13.22 23.35L12.30 24.80Z M12.80 18.70L13.51 17.50L14.01 16.43L14.40 15.40L15.78 15.40L15.82 16.43L15.76 17.50L15.55 18.70Z M22.60 24.80L21.48 23.35L20.65 22.05L19.97 20.81L19.40 19.60L17.20 19.60L17.60 20.81L18.12 22.05L18.78 23.35L19.70 24.80Z M19.20 18.70L18.49 17.50L17.99 16.43L17.60 15.40L16.22 15.40L16.18 16.43L16.24 17.50L16.45 18.70Z M14.55 14.60L14.86 13.16L15.05 12.09L15.19 11.13L15.31 10.23L15.40 9.38L15.48 8.56L15.54 7.77L15.60 7.00L16.40 7.00L16.46 7.77L16.52 8.56L16.60 9.38L16.69 10.23L16.81 11.13L16.95 12.09L17.14 13.16L17.45 14.60Z M12.20 24.80L12.52 24.41L12.83 24.05L13.15 23.73L13.47 23.44L13.78 23.18L14.10 22.96L14.42 22.78L14.73 22.62L15.05 22.50L15.37 22.42L15.68 22.37L16.00 22.35L16.32 22.37L16.63 22.42L16.95 22.50L17.27 22.62L17.58 22.78L17.90 22.96L18.22 23.18L18.53 23.44L18.85 23.73L19.17 24.05L19.48 24.41L19.80 24.80L19.00 24.80L18.75 24.54L18.50 24.30L18.25 24.08L18.00 23.88L17.75 23.71L17.50 23.56L17.25 23.44L17.00 23.33L16.75 23.25L16.50 23.20L16.25 23.16L16.00 23.15L15.75 23.16L15.50 23.20L15.25 23.25L15.00 23.33L14.75 23.44L14.50 23.56L14.25 23.71L14.00 23.88L13.75 24.08L13.50 24.30L13.25 24.54L13.00 24.80Z M11.80 18.7H20.20V19.6H11.80Z M13.95 14.6H18.05V15.4H13.95Z M15.3 6.4H16.7V7.0H15.3Z'/%3E%3C/g%3E%3Cpath d='M9.40 24.80L10.52 23.35L11.35 22.05L12.03 20.81L12.60 19.60L14.80 19.60L14.40 20.81L13.88 22.05L13.22 23.35L12.30 24.80Z M12.80 18.70L13.51 17.50L14.01 16.43L14.40 15.40L15.78 15.40L15.82 16.43L15.76 17.50L15.55 18.70Z M22.60 24.80L21.48 23.35L20.65 22.05L19.97 20.81L19.40 19.60L17.20 19.60L17.60 20.81L18.12 22.05L18.78 23.35L19.70 24.80Z M19.20 18.70L18.49 17.50L17.99 16.43L17.60 15.40L16.22 15.40L16.18 16.43L16.24 17.50L16.45 18.70Z M14.55 14.60L14.86 13.16L15.05 12.09L15.19 11.13L15.31 10.23L15.40 9.38L15.48 8.56L15.54 7.77L15.60 7.00L16.40 7.00L16.46 7.77L16.52 8.56L16.60 9.38L16.69 10.23L16.81 11.13L16.95 12.09L17.14 13.16L17.45 14.60Z M12.20 24.80L12.52 24.41L12.83 24.05L13.15 23.73L13.47 23.44L13.78 23.18L14.10 22.96L14.42 22.78L14.73 22.62L15.05 22.50L15.37 22.42L15.68 22.37L16.00 22.35L16.32 22.37L16.63 22.42L16.95 22.50L17.27 22.62L17.58 22.78L17.90 22.96L18.22 23.18L18.53 23.44L18.85 23.73L19.17 24.05L19.48 24.41L19.80 24.80L19.00 24.80L18.75 24.54L18.50 24.30L18.25 24.08L18.00 23.88L17.75 23.71L17.50 23.56L17.25 23.44L17.00 23.33L16.75 23.25L16.50 23.20L16.25 23.16L16.00 23.15L15.75 23.16L15.50 23.20L15.25 23.25L15.00 23.33L14.75 23.44L14.50 23.56L14.25 23.71L14.00 23.88L13.75 24.08L13.50 24.30L13.25 24.54L13.00 24.80Z M11.80 18.7H20.20V19.6H11.80Z M13.95 14.6H18.05V15.4H13.95Z M15.3 6.4H16.7V7.0H15.3Z' fill='url%28%23s%29'/%3E%3CclipPath id='sp'%3E%3Cpath d='M14.80 19.60L14.70 19.93L14.59 20.25L14.48 20.58L14.36 20.90L14.24 21.23L14.10 21.55L13.96 21.88L13.81 22.20L13.66 22.53L13.49 22.85L13.32 23.18L13.13 23.50L12.94 23.83L12.74 24.15L12.52 24.48L12.30 24.80L12.20 24.80L12.52 24.41L12.83 24.05L13.15 23.73L13.47 23.44L13.78 23.18L14.10 22.96L14.42 22.78L14.73 22.62L15.05 22.50L15.37 22.42L15.68 22.37L16.00 22.35L16.32 22.37L16.63 22.42L16.95 22.50L17.27 22.62L17.58 22.78L17.90 22.96L18.22 23.18L18.53 23.44L18.85 23.73L19.17 24.05L19.48 24.41L19.80 24.80L19.70 24.80L19.48 24.48L19.26 24.15L19.06 23.83L18.87 23.50L18.68 23.18L18.51 22.85L18.34 22.53L18.19 22.20L18.04 21.88L17.90 21.55L17.76 21.23L17.64 20.90L17.52 20.58L17.41 20.25L17.30 19.93L17.20 19.60Z'/%3E%3C/clipPath%3E%3Cpath d='M14.80 19.60L14.70 19.93L14.59 20.25L14.48 20.58L14.36 20.90L14.24 21.23L14.10 21.55L13.96 21.88L13.81 22.20L13.66 22.53L13.49 22.85L13.32 23.18L13.13 23.50L12.94 23.83L12.74 24.15L12.52 24.48L12.30 24.80L12.20 24.80L12.52 24.41L12.83 24.05L13.15 23.73L13.47 23.44L13.78 23.18L14.10 22.96L14.42 22.78L14.73 22.62L15.05 22.50L15.37 22.42L15.68 22.37L16.00 22.35L16.32 22.37L16.63 22.42L16.95 22.50L17.27 22.62L17.58 22.78L17.90 22.96L18.22 23.18L18.53 23.44L18.85 23.73L19.17 24.05L19.48 24.41L19.80 24.80L19.70 24.80L19.48 24.48L19.26 24.15L19.06 23.83L18.87 23.50L18.68 23.18L18.51 22.85L18.34 22.53L18.19 22.20L18.04 21.88L17.90 21.55L17.76 21.23L17.64 20.90L17.52 20.58L17.41 20.25L17.30 19.93L17.20 19.60Z' fill='%23c98a12' fill-opacity='.8'/%3E%3Cpath d='M3.45 25L11.45 18.5M11.45 25L3.45 18.5M4.40 25L12.40 18.5M12.40 25L4.40 18.5M5.35 25L13.35 18.5M13.35 25L5.35 18.5M6.30 25L14.30 18.5M14.30 25L6.30 18.5M7.25 25L15.25 18.5M15.25 25L7.25 18.5M8.20 25L16.20 18.5M16.20 25L8.20 18.5M9.15 25L17.15 18.5M17.15 25L9.15 18.5M10.10 25L18.10 18.5M18.10 25L10.10 18.5M11.05 25L19.05 18.5M19.05 25L11.05 18.5M12.00 25L20.00 18.5M20.00 25L12.00 18.5M12.95 25L20.95 18.5M20.95 25L12.95 18.5M13.90 25L21.90 18.5M21.90 25L13.90 18.5M14.85 25L22.85 18.5M22.85 25L14.85 18.5M15.80 25L23.80 18.5M23.80 25L15.80 18.5M16.75 25L24.75 18.5M24.75 25L16.75 18.5M17.70 25L25.70 18.5M25.70 25L17.70 18.5M18.65 25L26.65 18.5M26.65 25L18.65 18.5M19.60 25L27.60 18.5M27.60 25L19.60 18.5M20.55 25L28.55 18.5M28.55 25L20.55 18.5' stroke='%237e4b00' stroke-opacity='.55' stroke-width='.16' clip-path='url%28%23sp%29'/%3E%3Cpath d='M9.40 24.80L13.22 23.35M12.30 24.80L10.52 23.35M10.52 23.35L13.22 23.35M10.52 23.35L13.88 22.05M13.22 23.35L11.35 22.05M11.35 22.05L13.88 22.05M11.35 22.05L14.40 20.81M13.88 22.05L12.03 20.81M12.03 20.81L14.40 20.81M12.03 20.81L14.80 19.60M14.40 20.81L12.60 19.60M12.60 19.60L14.80 19.60M12.80 18.70L15.76 17.50M15.55 18.70L13.51 17.50M13.51 17.50L15.76 17.50M13.51 17.50L15.82 16.43M15.76 17.50L14.01 16.43M14.01 16.43L15.82 16.43M14.01 16.43L15.78 15.40M15.82 16.43L14.40 15.40M14.40 15.40L15.78 15.40M22.60 24.80L18.78 23.35M19.70 24.80L21.48 23.35M21.48 23.35L18.78 23.35M21.48 23.35L18.12 22.05M18.78 23.35L20.65 22.05M20.65 22.05L18.12 22.05M20.65 22.05L17.60 20.81M18.12 22.05L19.97 20.81M19.97 20.81L17.60 20.81M19.97 20.81L17.20 19.60M17.60 20.81L19.40 19.60M19.40 19.60L17.20 19.60M19.20 18.70L16.24 17.50M16.45 18.70L18.49 17.50M18.49 17.50L16.24 17.50M18.49 17.50L16.18 16.43M16.24 17.50L17.99 16.43M17.99 16.43L16.18 16.43M17.99 16.43L16.22 15.40M16.18 16.43L17.60 15.40M17.60 15.40L16.22 15.40M14.55 14.60L17.14 13.16M17.45 14.60L14.86 13.16M14.86 13.16L17.14 13.16M14.86 13.16L16.95 12.09M17.14 13.16L15.05 12.09M15.05 12.09L16.95 12.09M15.05 12.09L16.81 11.13M16.95 12.09L15.19 11.13M15.19 11.13L16.81 11.13M15.19 11.13L16.69 10.23M16.81 11.13L15.31 10.23M15.31 10.23L16.69 10.23M15.31 10.23L16.60 9.38M16.69 10.23L15.40 9.38M15.40 9.38L16.60 9.38M15.40 9.38L16.52 8.56M16.60 9.38L15.48 8.56M15.48 8.56L16.52 8.56M15.48 8.56L16.46 7.77M16.52 8.56L15.54 7.77M15.54 7.77L16.46 7.77M15.54 7.77L16.40 7.00M16.46 7.77L15.60 7.00M15.60 7.00L16.40 7.00M12.83 24.05L13.75 24.08M13.47 23.44L13.75 24.08M14.10 22.96L14.75 23.44M14.73 22.62L14.75 23.44M15.37 22.42L15.75 23.16M16.00 22.35L15.75 23.16M16.63 22.42L16.75 23.25M17.27 22.62L16.75 23.25M17.90 22.96L17.75 23.71M18.53 23.44L17.75 23.71M19.17 24.05L18.75 24.54' fill='none' stroke='%23f8d873' stroke-opacity='.75' stroke-width='.17' stroke-linecap='round'/%3E%3Cpath d='M9.40 24.80L10.52 23.35L11.35 22.05L12.03 20.81L12.60 19.60M12.30 24.80L13.22 23.35L13.88 22.05L14.40 20.81L14.80 19.60M12.80 18.70L13.51 17.50L14.01 16.43L14.40 15.40M15.55 18.70L15.76 17.50L15.82 16.43L15.78 15.40M22.60 24.80L21.48 23.35L20.65 22.05L19.97 20.81L19.40 19.60M19.70 24.80L18.78 23.35L18.12 22.05L17.60 20.81L17.20 19.60M19.20 18.70L18.49 17.50L17.99 16.43L17.60 15.40M16.45 18.70L16.24 17.50L16.18 16.43L16.22 15.40M14.55 14.60L14.86 13.16L15.05 12.09L15.19 11.13L15.31 10.23L15.40 9.38L15.48 8.56L15.54 7.77L15.60 7.00M17.45 14.60L17.14 13.16L16.95 12.09L16.81 11.13L16.69 10.23L16.60 9.38L16.52 8.56L16.46 7.77L16.40 7.00' fill='none' stroke='%236e4000' stroke-width='.22'/%3E%3Cpath d='M11.80 18.7H20.20M13.95 14.6H18.05' stroke='%23ffe9a8' stroke-width='.28'/%3E%3Cpath d='M12.00 19.18H20.00M14.15 15.02H17.85' stroke='%23f8d873' stroke-opacity='.8' stroke-width='.15' stroke-dasharray='.22 .22'/%3E%3Cpath d='M11.98 19.6A.42 .42 0 0 1 12.82 19.6M12.88 19.6A.42 .42 0 0 1 13.72 19.6M13.78 19.6A.42 .42 0 0 1 14.62 19.6M14.68 19.6A.42 .42 0 0 1 15.52 19.6M15.58 19.6A.42 .42 0 0 1 16.42 19.6M16.48 19.6A.42 .42 0 0 1 17.32 19.6M17.38 19.6A.42 .42 0 0 1 18.22 19.6M18.28 19.6A.42 .42 0 0 1 19.12 19.6M19.18 19.6A.42 .42 0 0 1 20.02 19.6' fill='none' stroke='%23f8d873' stroke-opacity='.85' stroke-width='.16'/%3E%3Cpath d='M16 6.4V4.1' stroke='%237a4700' stroke-width='.32' stroke-linecap='round'/%3E%3Ccircle cx='16' cy='4.0' r='.28' fill='%23ffe08a'/%3E%3Cpath d='M9.1 24.85H12.5M19.5 24.85H22.9' stroke='%236e4000' stroke-width='.4' stroke-linecap='round'/%3E%3Cpath d='M6.2 12.5A10.5 10.5 0 0 1 13 5.6' fill='none' stroke='%23fff' stroke-opacity='.75' stroke-width='1.6' stroke-linecap='round'/%3E%3C/svg%3E"); }
 :root[data-coin="arc"] .coin, :root .cos-prev .coin.cs-arc { background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Cdefs%3E%3ClinearGradient id='r' x1='0' y1='0' x2='1' y2='1'%3E%3Cstop offset='0' stop-color='%23ffe9a0'/%3E%3Cstop offset='.45' stop-color='%23f0b21a'/%3E%3Cstop offset='1' stop-color='%23a86a00'/%3E%3C/linearGradient%3E%3CradialGradient id='f' cx='.38' cy='.32' r='.8'%3E%3Cstop offset='0' stop-color='%23fff6c8'/%3E%3Cstop offset='.45' stop-color='%23ffcf3f'/%3E%3Cstop offset='1' stop-color='%23e09a00'/%3E%3C/radialGradient%3E%3ClinearGradient id='s' x1='0' y1='0' x2='0' y2='1'%3E%3Cstop offset='0' stop-color='%23b87700'/%3E%3Cstop offset='1' stop-color='%237e4b00'/%3E%3C/linearGradient%3E%3C/defs%3E%3Ccircle cx='16' cy='16' r='15.5' fill='url%28%23r%29'/%3E%3Ccircle cx='16' cy='16' r='14.3' fill='none' stroke='%238f5a00' stroke-opacity='.45' stroke-width='1.4' stroke-dasharray='.9 1.1'/%3E%3Ccircle cx='16' cy='16' r='12.4' fill='url%28%23f%29' stroke='%23b77800' stroke-width='.9'/%3E%3Ccircle cx='16' cy='16' r='10.6' fill='none' stroke='%23fff3c4' stroke-opacity='.7' stroke-width='.6'/%3E%3Cpath d='M8.6 10.2H23.4V12.6H22.6V23.4H24.6V24.6H7.4V23.4H9.4V12.6H8.6ZM13.1 23.4V17.6A2.9 2.9 0 0 1 18.9 17.6V23.4Z' fill='%23fff8d6' fill-opacity='.8' transform='translate%28.45 .55%29' fill-rule='evenodd'/%3E%3Cpath d='M8.6 10.2H23.4V12.6H22.6V23.4H24.6V24.6H7.4V23.4H9.4V12.6H8.6ZM13.1 23.4V17.6A2.9 2.9 0 0 1 18.9 17.6V23.4Z' fill='url%28%23s%29' fill-rule='evenodd'/%3E%3Cpath d='M9.4 13.4H22.6M10.6 15.2V21.6M21.4 15.2V21.6M12.2 11.4H19.8' stroke='%23f8d873' stroke-opacity='.8' fill='none' stroke-width='.35'/%3E%3Cpath d='M13.1 17.6A2.9 2.9 0 0 1 18.9 17.6' stroke='%23f8d873' stroke-opacity='.8' fill='none' stroke-width='.3'/%3E%3Cpath d='M6.2 12.5A10.5 10.5 0 0 1 13 5.6' fill='none' stroke='%23fff' stroke-opacity='.75' stroke-width='1.6' stroke-linecap='round'/%3E%3C/svg%3E"); }
@@ -15893,7 +15912,11 @@ function gameLedger() {
   const earned = new Set(), inv = { shield: 0, patch: 0, rewind: 0, x2: 0, x3: 0, c2: 0 }, patched = new Set(), got = [], opened = new Set(), owned = new Set(), cards = new Set(), unlocked = new Set();
   let coins = progEnsure() ? prog.coins || 0 : 0;   // 答对得的金币（由答题记录算出）
   [...gameRaw].sort((a, b) => String(a.at).localeCompare(String(b.at))).forEach(g => {
-    if (g.kind === "earn") { if (earned.has(g.key)) return; earned.add(g.key); coins += g.coins || 0; }
+    if (g.kind === "feedback_reward") {
+      const uid = typeof syncAuth === "function" ? syncAuth()?.uid : null;
+      if (uid && g.scope === "user:" + uid && g.key === "feedback:first" && g.coins === 800 && !earned.has(g.key)) { earned.add(g.key); coins += 800; }
+    }
+    else if (g.kind === "earn") { if (earned.has(g.key)) return; earned.add(g.key); coins += g.coins || 0; }
     else if (g.kind === "buy") {
       if (inv[g.item] != null) { coins -= g.price || 0; inv[g.item]++; }
       else if (!owned.has(g.item)) { coins -= g.price || 0; owned.add(g.item); }   // 外观：买一次永久拥有（两台设备同时买只扣一次）
@@ -17208,6 +17231,7 @@ function syncAuth() { try { return JSON.parse(localStorage.getItem(SYNC_AUTH) ||
 function syncAccountChanged() {
   clearTimeout(syncState.timer); syncState.timer = 0; syncState.queue = []; syncState.last = 0;
   if (typeof petOnAccountChange === "function") petOnAccountChange();
+  if (typeof feedbackOnAccountChange === "function") feedbackOnAccountChange();
 }
 function syncSaveAuth(a) {
   const previous = syncAuth()?.uid || "";
@@ -17260,10 +17284,12 @@ async function syncFetch(path, opt = {}, auth = true, uid = null) {
 const syncLocal = c => { try { return JSON.parse(localStorage.getItem(SYNC_NS + "db-" + c) || "[]"); } catch (e) { return []; } };
 const syncStore = (c, arr) => { try { localStorage.setItem(SYNC_NS + "db-" + c, JSON.stringify(arr)); } catch (e) {} };
 const syncRow = (c, d) => ({ app: REC_APP, coll: c, key: syncKeyOf(d), data: d });
-// 只隔离新增伙伴配置；既有答案/金币继续沿用原站的本机合并规则。
-const syncPetAllowed = (c, d, uid) => c !== "game" || d?.kind !== "pet" || !!uid && d.scope === "user:" + uid;
+// 伙伴配置和留言奖励按账号隔离；既有答案/金币沿用原站的本机合并规则。
+const syncPetAllowed = (c, d, uid) => c !== "game" || !["pet", "feedback_reward"].includes(d?.kind) || !!uid && d.scope === "user:" + uid;
+// Reward records are issued by the server only; never upload them from any device.
+const syncServerRecord = (c, d) => c === "game" && d?.kind === "feedback_reward";
 async function syncUpload(rows, uid = syncAuth()?.uid || "") {
-  const own = rows.filter(r => syncPetAllowed(r.coll, r.data, uid));
+  const own = rows.filter(r => syncPetAllowed(r.coll, r.data, uid) && !syncServerRecord(r.coll, r.data));
   for (let i = 0; i < own.length; i += 500) {
     syncAssertAccount(uid);
     await syncFetch("/rest/v1/records?on_conflict=user_id,app,coll,key", {
@@ -17291,9 +17317,14 @@ async function syncNow(force) {
       const loc = syncLocal(c), lk = new Set(loc.map(syncKeyOf));
       const rk = new Set();
       let n = 0;
-      remote.forEach(r => { if (r.coll !== c || !syncPetAllowed(c, r.data, uid)) return; rk.add(r.key); if (!lk.has(r.key)) { loc.push(r.data); lk.add(r.key); n++; } });
+      remote.forEach(r => {
+        if (r.coll !== c || !syncPetAllowed(c, r.data, uid)) return;
+        rk.add(r.key);
+        const localKey = syncServerRecord(c, r.data) ? syncKeyOf(r.data) : r.key;
+        if (!lk.has(localKey)) { loc.push(r.data); lk.add(localKey); n++; }
+      });
       if (n) { syncStore(c, loc); added += n; }
-      loc.forEach(d => { if (!syncPetAllowed(c, d, uid)) return; const k = syncKeyOf(d); if (!rk.has(k)) { up.push({ app: REC_APP, coll: c, key: k, data: d }); rk.add(k); } });
+      loc.forEach(d => { if (!syncPetAllowed(c, d, uid) || syncServerRecord(c, d)) return; const k = syncKeyOf(d); if (!rk.has(k)) { up.push({ app: REC_APP, coll: c, key: k, data: d }); rk.add(k); } });
     }
     await syncUpload(up, uid);
     syncAssertAccount(uid);
@@ -17314,7 +17345,7 @@ async function syncNow(force) {
 function syncPush(c, d) {
   if (!SYNC_ON || !syncAuth()) return;
   const uid = syncAuth().uid || "";
-  if (!syncPetAllowed(c, d, uid)) return;
+  if (!syncPetAllowed(c, d, uid) || syncServerRecord(c, d)) return;
   syncState.queue.push(syncRow(c, d));
   clearTimeout(syncState.timer);
   syncState.timer = setTimeout(async () => {
@@ -17436,6 +17467,187 @@ async function syncVerify(email, token) {
   const j = await syncFetch("/auth/v1/verify", { method: "POST", body: JSON.stringify({ type: "email", email, token }) }, false);
   syncSaveSession(j);
   await syncNow(true);
+}
+// Picture feedback and private messages use the existing Supabase account.
+// No role, private count or message is cached in localStorage.
+const FB_COPY = {
+  zh: { picture: "这张配图合理吗？", like: "点赞", dislike: "不满意", optional: "自愿反馈，不影响做题", loading: "正在读取…", retry: "重试", failed: "暂时无法读取反馈，请重试。", saveFailed: "反馈未确认保存，请重试。", saved: "反馈已保存", removed: "已取消反馈", login: "登录后可以反馈", loginGo: "去设置登录", title: "站内留言", intro: "欢迎分享想法、评价与建议。首次成功留言可获得 800 金币，每个账号一次。", input: "写下你的想法（最多 2000 字）", submit: "提交留言", sending: "正在提交…", sent: "留言已收到，谢谢你的反馈！", bonus: "留言已收到，首次留言奖励 800 金币已到账！", claimed: "你已领取首次留言奖励，仍可继续留言。", empty: "请填写 1–2000 字的留言。", messageFailed: "提交结果未确认，内容已保留。请重试，不会重复发奖。", admin: "用户留言（管理员）", refresh: "刷新留言", more: "加载更多", none: "还没有留言。", unavailable: "请在公开网站登录后留言。", publicSite: "打开学习网站", adminFailed: "留言读取失败，请重试。", anonymous: "用户", statusFailed: "账号状态暂时无法读取，提交时会再次核验。", limit: "最多 2000 字" },
+  en: { picture: "Does this picture fit the word?", like: "Like", dislike: "Not satisfied", optional: "Optional; does not affect your practice", loading: "Loading…", retry: "Retry", failed: "Feedback is unavailable. Please retry.", saveFailed: "Saving is not confirmed. Please retry.", saved: "Feedback saved", removed: "Feedback removed", login: "Sign in to give feedback", loginGo: "Sign in in Settings", title: "Send feedback", intro: "Share your ideas, opinions and suggestions. Your first successful message earns 800 coins, once per account.", input: "Your thoughts (up to 2000 characters)", submit: "Send message", sending: "Sending…", sent: "Message received. Thank you!", bonus: "Message received. Your first-message reward of 800 coins is credited!", claimed: "You have received the first-message reward. You can still send feedback.", empty: "Please enter a message of 1–2000 characters.", messageFailed: "Submission is not confirmed. Your text is saved. Retry safely without a duplicate reward.", admin: "User messages (administrator)", refresh: "Refresh messages", more: "Load more", none: "No messages yet.", unavailable: "Sign in on the public website to send a message.", publicSite: "Open learning website", adminFailed: "Messages could not be loaded. Please retry.", anonymous: "User", statusFailed: "Account status is unavailable. It will be checked again on submission.", limit: "Up to 2000 characters" },
+  fr: { picture: "Cette image correspond-elle au mot ?", like: "J’aime", dislike: "Pas satisfait", optional: "Facultatif, sans effet sur vos exercices", loading: "Chargement…", retry: "Réessayer", failed: "Avis indisponibles. Veuillez réessayer.", saveFailed: "Enregistrement non confirmé. Veuillez réessayer.", saved: "Avis enregistré", removed: "Avis retiré", login: "Connectez-vous pour donner votre avis", loginGo: "Se connecter dans les réglages", title: "Envoyer un message", intro: "Partagez vos idées, votre avis et vos suggestions. Votre premier message envoyé avec succès rapporte 800 pièces, une seule fois par compte.", input: "Votre message (2000 caractères maximum)", submit: "Envoyer le message", sending: "Envoi…", sent: "Message reçu. Merci pour votre avis !", bonus: "Message reçu. Les 800 pièces de votre premier message ont été créditées !", claimed: "Vous avez reçu la récompense du premier message. Vous pouvez continuer à écrire.", empty: "Veuillez écrire un message de 1 à 2000 caractères.", messageFailed: "Envoi non confirmé. Votre texte est conservé. Réessayez : la récompense ne sera pas versée deux fois.", admin: "Messages des utilisateurs (administrateur)", refresh: "Actualiser les messages", more: "Afficher la suite", none: "Aucun message pour le moment.", unavailable: "Connectez-vous sur le site public pour envoyer un message.", publicSite: "Ouvrir le site d’apprentissage", adminFailed: "Impossible de charger les messages. Veuillez réessayer.", anonymous: "Utilisateur", statusFailed: "État du compte indisponible. Il sera vérifié lors de l’envoi.", limit: "2000 caractères maximum" }
+};
+const fbText = key => (FB_COPY[typeof UI_LANG === "undefined" ? "zh" : UI_LANG] || FB_COPY.zh)[key];
+let fbEpoch = 0;
+const fbPictures = new Set();
+const fbUid = () => SYNC_ON ? syncAuth()?.uid || "" : "";
+function fbCurrent(uid, epoch) { return fbEpoch === epoch && fbUid() === uid; }
+async function fbRpc(name, args = {}, publicRead = false) {
+  const uid = fbUid(), epoch = fbEpoch;
+  const controller = new AbortController(), timer = setTimeout(() => controller.abort(), 12000);
+  try {
+    const data = await syncFetch("/rest/v1/rpc/" + name, { method: "POST", body: JSON.stringify(args), signal: controller.signal }, !!uid || !publicRead, uid);
+    if (!fbCurrent(uid, epoch)) { const err = new Error("Account changed"); err.code = "account"; throw err; }
+    return data;
+  } finally { clearTimeout(timer); }
+}
+function fbButton(text, cls = "btn ghost") { const b = el("button", cls, text); b.type = "button"; return b; }
+function fbLoginLink() {
+  const b = fbButton(fbText("loginGo"), "fb-link");
+  b.addEventListener("click", () => tabSet.click()); return b;
+}
+function feedbackOnAccountChange() {
+  fbEpoch++;
+  // Remove private information synchronously, before another request can finish.
+  document.querySelectorAll(".fb-admin").forEach(n => n.remove());
+  fbPictures.forEach(item => { if (!item.root.isConnected) fbPictures.delete(item); else item.reload(); });
+  if (typeof view !== "undefined" && view === "settings") renderSettings();
+}
+function fbSaveReward(reward, uid) {
+  if (!uid || fbUid() !== uid || !reward || reward.kind !== "feedback_reward" || reward.scope !== "user:" + uid || reward.key !== "feedback:first" || reward.coins !== 800) return;
+  // Save the server-issued record locally without uploading it back as a client-created reward.
+  const list = syncLocal("game").filter(g => !(g.kind === "feedback_reward" && g.scope === reward.scope));
+  list.push(reward); syncStore("game", list);
+  if (typeof gameRaw !== "undefined") {
+    gameRaw = gameRaw.filter(g => !(g.kind === "feedback_reward" && g.scope === reward.scope));
+    gameRaw.push(reward);
+  }
+  if (typeof planRefresh === "function") planRefresh();
+  if (typeof socPushSoon === "function") socPushSoon();
+}
+
+// browse = counts only; the optional voting controls appear only after answering.
+function pictureFeedback(w, browse = false, onInteract = () => {}) {
+  const root = el("div", "picture-feedback"); root.dataset.noi18n = "";
+  const key = vPic(w); root.dataset.picture = key;
+  const heading = el("span", "fb-caption", fbText("picture"));
+  const votes = el("div", "fb-votes");
+  const up = browse ? el("span", "fb-vote") : fbButton("", "fb-vote");
+  const down = browse ? el("span", "fb-vote") : fbButton("", "fb-vote");
+  const note = el("span", "fb-note", fbText("loading")); note.setAttribute("role", "status");
+  const retry = fbButton(fbText("retry"), "fb-link"); retry.hidden = true;
+  let data = null, busy = false, revision = 0, desired = null;
+  const draw = () => {
+    up.textContent = "👍 " + fbText("like") + " " + (data ? data.likes : "—");
+    down.textContent = "😞 " + fbText("dislike") + (data && Object.hasOwn(data, "dislikes") ? " " + data.dislikes : "");
+    if (!browse) for (const [b, n] of [[up, 1], [down, -1]]) {
+      b.disabled = busy || !data;
+      b.setAttribute("aria-pressed", String(data?.mine === n));
+    }
+  };
+  const reload = async () => {
+    const run = ++revision; data = null; busy = true; desired = null; note.textContent = fbText("loading"); retry.hidden = true; draw();
+    try {
+      const next = await fbRpc("picture_feedback", { p_picture: key }, true);
+      if (run !== revision || !root.isConnected) return;
+      data = next; note.textContent = browse ? "" : fbText("optional");
+    } catch (e) {
+      if (run !== revision || e.code === "account" || !root.isConnected) return;
+      note.textContent = fbText("failed"); retry.hidden = false;
+    } finally { if (run === revision) { busy = false; draw(); } }
+  };
+  const save = async target => {
+    if (busy) return;
+    onInteract();
+    if (!fbUid()) { note.replaceChildren(document.createTextNode(fbText("login") + " · "), fbLoginLink()); return; }
+    const run = ++revision; busy = true; desired = target; retry.hidden = true; draw();
+    try {
+      const next = await fbRpc("set_picture_feedback", { p_picture: key, p_vote: target });
+      if (run !== revision || !root.isConnected) return;
+      data = next; desired = null; note.textContent = fbText(target ? "saved" : "removed");
+    } catch (e) {
+      if (run !== revision || e.code === "account" || !root.isConnected) return;
+      note.textContent = fbText("saveFailed"); retry.hidden = false;
+    } finally { if (run === revision) { busy = false; draw(); } }
+  };
+  if (!browse) {
+    up.addEventListener("click", () => save(data?.mine === 1 ? 0 : 1));
+    down.addEventListener("click", () => save(data?.mine === -1 ? 0 : -1));
+    const target = el("span", "fb-target"); target.append(vImg(w, "fb-thumb"), el("b", null, vLabel(w)));
+    root.append(target);
+  }
+  retry.addEventListener("click", () => desired === null ? reload() : save(desired));
+  votes.append(up, down); root.append(heading, votes, note, retry); draw();
+  const item = { root, reload }; fbPictures.forEach(x => { if (!x.root.isConnected) fbPictures.delete(x); }); fbPictures.add(item);
+  // Wait for the caller to attach the result before rendering an asynchronous response.
+  queueMicrotask(reload);
+  return root;
+}
+
+function feedbackSettings(wrap) {
+  const section = el("section", "card fb-settings"); section.dataset.noi18n = "";
+  section.append(el("h3", null, fbText("title")), el("p", "sub", fbText("intro"))); wrap.append(section);
+  if (!SYNC_ON) {
+    const link = el("a", null, fbText("publicSite")); link.href = "https://cosonder.github.io/quiz/french/";
+    section.append(el("p", "sub", fbText("unavailable")), link); return;
+  }
+  const uid = fbUid(), epoch = fbEpoch;
+  if (!uid) { section.append(el("p", "sub", fbText("login"))); return; }
+  const draftKey = "fq-feedback-draft:" + uid;
+  let draft = { body: "", request: null }, sending = false;
+  try { const saved = JSON.parse(localStorage.getItem(draftKey)); if (saved && typeof saved.body === "string") draft = saved; } catch (e) {}
+  const input = el("textarea"); input.id = "feedbackMessage"; input.rows = 4; input.maxLength = 2000;
+  input.value = draft.body; input.placeholder = fbText("input"); input.setAttribute("aria-label", fbText("input"));
+  const status = el("p", "fb-note"); status.setAttribute("role", "status");
+  const state = el("p", "fb-note"); state.setAttribute("role", "status");
+  const send = fbButton(fbText("submit"), "btn"); send.id = "feedbackSubmit";
+  const saveDraft = () => { try { localStorage.setItem(draftKey, JSON.stringify(draft)); } catch (e) {} };
+  input.addEventListener("input", () => { draft = { body: input.value, request: null }; saveDraft(); });
+  send.addEventListener("click", async () => {
+    if (sending || !fbCurrent(uid, epoch)) return;
+    const body = input.value.trim();
+    if (!body || [...body].length > 2000) { status.textContent = fbText("empty"); return; }
+    draft.body = input.value; draft.request ||= crypto.randomUUID(); saveDraft();
+    sending = true; input.disabled = send.disabled = true; send.textContent = fbText("sending"); status.textContent = "";
+    try {
+      const result = await fbRpc("submit_feedback", { p_request: draft.request, p_body: body });
+      if (!fbCurrent(uid, epoch)) return;
+      fbSaveReward(result.reward, uid);
+      draft = { body: "", request: null }; saveDraft();
+      if (!section.isConnected) return;
+      input.value = ""; status.textContent = fbText(result.rewarded_for_this_message ? "bonus" : "sent"); state.textContent = fbText("claimed");
+    } catch (e) {
+      if (e.code !== "account" && section.isConnected && fbCurrent(uid, epoch)) status.textContent = fbText("messageFailed");
+    } finally {
+      sending = false; input.disabled = send.disabled = false; send.textContent = fbText("submit");
+    }
+  });
+  section.append(state, input, el("span", "fb-note", fbText("limit")), send, status);
+  fbRpc("feedback_status").then(result => {
+    if (!fbCurrent(uid, epoch)) return;
+    fbSaveReward(result.reward, uid);
+    if (!section.isConnected) return;
+    state.textContent = result.reward ? fbText("claimed") : "";
+    if (result.is_admin) feedbackAdmin(section, uid, epoch);
+  }).catch(e => { if (e.code !== "account" && section.isConnected && fbCurrent(uid, epoch)) state.textContent = fbText("statusFailed"); });
+}
+
+function feedbackAdmin(parent, uid, epoch) {
+  const box = el("section", "fb-admin"); box.dataset.noi18n = "";
+  box.append(el("h4", null, fbText("admin")));
+  const refresh = fbButton(fbText("refresh")), more = fbButton(fbText("more"));
+  const list = el("div", "fb-messages"), status = el("p", "fb-note"); status.setAttribute("role", "status");
+  let before = null, busy = false;
+  const load = async reset => {
+    if (busy || !fbCurrent(uid, epoch)) return;
+    busy = true; refresh.disabled = more.disabled = true; status.textContent = fbText("loading");
+    try {
+      const rows = await fbRpc("admin_feedback_messages", { p_before: reset ? null : before });
+      if (!box.isConnected || !fbCurrent(uid, epoch)) return;
+      if (reset) { list.replaceChildren(); before = null; }
+      for (const row of rows) {
+        const item = el("article", "fb-message");
+        const identity = (row.nick || fbText("anonymous")) + " · " + row.user_id;
+        item.append(el("p", "fb-message-author", identity), el("time", null, new Date(row.created_at).toLocaleString(UI_LANG === "zh" ? "zh-CN" : UI_LANG)), el("p", "fb-message-body", row.body));
+        list.append(item); before = row.id;
+      }
+      more.hidden = rows.length < 50; status.textContent = list.children.length ? "" : fbText("none");
+    } catch (e) {
+      if (e.code !== "account" && box.isConnected && fbCurrent(uid, epoch)) {
+        list.replaceChildren(); before = null; more.hidden = true; status.textContent = fbText("adminFailed");
+      }
+    } finally { busy = false; refresh.disabled = more.disabled = false; }
+  };
+  refresh.addEventListener("click", () => load(true)); more.addEventListener("click", () => load(false));
+  box.append(refresh, list, more, status); parent.append(box); load(true);
 }
 // ---------- 设置页的公共部件：分区卡片、下拉、勾选，以及最上面的“账号与同步” ----------
 function setSection(wrap, title, sub) {
@@ -22279,7 +22491,7 @@ function vBrowse(words, i, pre) {
   const body = el("div", "v-bw");
   if (vPic(w)) {
     const fig = el("figure", "v-bw-fig");
-    fig.append(vImg(w, "v-bw-img"));
+    fig.append(vImg(w, "v-bw-img"), pictureFeedback(w, true));
     if (!V_IMG[w.fr]) fig.append(el("figcaption", "v-bw-cap", "图上画的是例句的意思"));
     body.append(fig);
   }
@@ -22536,11 +22748,15 @@ function vQuestion() {
     if (vSet.hard) vConfuseGroups(w).forEach(g => exp.append(el("span", "v-tip", "易混辨析：" + g.tip)));
     next.disabled = false;
     head.classList.add("v-done");
+    let feedbackActive = false;
+    if (vPic(w) && (q.type === 6 || q.type === 7 || (q.type === 5 && vPicEx(w)))) {
+      exp.append(pictureFeedback(w, false, () => { feedbackActive = true; clearTimeout(vAdvanceTimer); }));
+    }
     if (ok && !first) {
       next.textContent = S.i === S.qs.length - 1 ? "查看成绩" : "下一题 →";
       // 停留够设置的时间、并且读完单词，再进入下一题（朗读最多等 3 秒）
       let timed = false, spoken = !(vSet.read && tts && userActivated);
-      const tryGo = () => { if (timed && spoken) go(); };
+      const tryGo = () => { if (timed && spoken && !feedbackActive) go(); };
       vAdvanceTimer = setTimeout(() => { timed = true; tryGo(); }, vSet.pause + (q.type === 5 ? 300 : 0));
       if (!spoken) { speak(vArt(w), 0.9, null, () => { spoken = true; tryGo(); }); setTimeout(() => { spoken = true; tryGo(); }, 3000); }
     } else if (ok) {
@@ -25874,6 +26090,7 @@ function renderSettings() {
   const selectRow = setSelectRow, checkRow = setCheckRow;
 
   setAccountSection(wrap);   // 账号与同步放最上面
+  feedbackSettings(wrap);
 
   // 界面语言
   const lg = section("界面语言", "切换后页面会重新载入。界面和解析使用所选语言，题目里的法语不变。中文、英文、法语模式答对所得金币分别为 ×1、×2、×3；切换不影响过去的金币。");

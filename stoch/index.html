@@ -4105,7 +4105,11 @@ function gameLedger() {
   const earned = new Set(), inv = { shield: 0, patch: 0, rewind: 0, x2: 0, x3: 0, c2: 0 }, patched = new Set(), got = [], opened = new Set(), owned = new Set(), cards = new Set(), unlocked = new Set();
   let coins = progEnsure() ? prog.coins || 0 : 0;   // 答对得的金币（由答题记录算出）
   [...gameRaw].sort((a, b) => String(a.at).localeCompare(String(b.at))).forEach(g => {
-    if (g.kind === "earn") { if (earned.has(g.key)) return; earned.add(g.key); coins += g.coins || 0; }
+    if (g.kind === "feedback_reward") {
+      const uid = typeof syncAuth === "function" ? syncAuth()?.uid : null;
+      if (uid && g.scope === "user:" + uid && g.key === "feedback:first" && g.coins === 800 && !earned.has(g.key)) { earned.add(g.key); coins += 800; }
+    }
+    else if (g.kind === "earn") { if (earned.has(g.key)) return; earned.add(g.key); coins += g.coins || 0; }
     else if (g.kind === "buy") {
       if (inv[g.item] != null) { coins -= g.price || 0; inv[g.item]++; }
       else if (!owned.has(g.item)) { coins -= g.price || 0; owned.add(g.item); }   // 外观：买一次永久拥有（两台设备同时买只扣一次）
@@ -5047,6 +5051,7 @@ function syncAuth() { try { return JSON.parse(localStorage.getItem(SYNC_AUTH) ||
 function syncAccountChanged() {
   clearTimeout(syncState.timer); syncState.timer = 0; syncState.queue = []; syncState.last = 0;
   if (typeof petOnAccountChange === "function") petOnAccountChange();
+  if (typeof feedbackOnAccountChange === "function") feedbackOnAccountChange();
 }
 function syncSaveAuth(a) {
   const previous = syncAuth()?.uid || "";
@@ -5099,10 +5104,12 @@ async function syncFetch(path, opt = {}, auth = true, uid = null) {
 const syncLocal = c => { try { return JSON.parse(localStorage.getItem(SYNC_NS + "db-" + c) || "[]"); } catch (e) { return []; } };
 const syncStore = (c, arr) => { try { localStorage.setItem(SYNC_NS + "db-" + c, JSON.stringify(arr)); } catch (e) {} };
 const syncRow = (c, d) => ({ app: REC_APP, coll: c, key: syncKeyOf(d), data: d });
-// 只隔离新增伙伴配置；既有答案/金币继续沿用原站的本机合并规则。
-const syncPetAllowed = (c, d, uid) => c !== "game" || d?.kind !== "pet" || !!uid && d.scope === "user:" + uid;
+// 伙伴配置和留言奖励按账号隔离；既有答案/金币沿用原站的本机合并规则。
+const syncPetAllowed = (c, d, uid) => c !== "game" || !["pet", "feedback_reward"].includes(d?.kind) || !!uid && d.scope === "user:" + uid;
+// Reward records are issued by the server only; never upload them from any device.
+const syncServerRecord = (c, d) => c === "game" && d?.kind === "feedback_reward";
 async function syncUpload(rows, uid = syncAuth()?.uid || "") {
-  const own = rows.filter(r => syncPetAllowed(r.coll, r.data, uid));
+  const own = rows.filter(r => syncPetAllowed(r.coll, r.data, uid) && !syncServerRecord(r.coll, r.data));
   for (let i = 0; i < own.length; i += 500) {
     syncAssertAccount(uid);
     await syncFetch("/rest/v1/records?on_conflict=user_id,app,coll,key", {
@@ -5130,9 +5137,14 @@ async function syncNow(force) {
       const loc = syncLocal(c), lk = new Set(loc.map(syncKeyOf));
       const rk = new Set();
       let n = 0;
-      remote.forEach(r => { if (r.coll !== c || !syncPetAllowed(c, r.data, uid)) return; rk.add(r.key); if (!lk.has(r.key)) { loc.push(r.data); lk.add(r.key); n++; } });
+      remote.forEach(r => {
+        if (r.coll !== c || !syncPetAllowed(c, r.data, uid)) return;
+        rk.add(r.key);
+        const localKey = syncServerRecord(c, r.data) ? syncKeyOf(r.data) : r.key;
+        if (!lk.has(localKey)) { loc.push(r.data); lk.add(localKey); n++; }
+      });
       if (n) { syncStore(c, loc); added += n; }
-      loc.forEach(d => { if (!syncPetAllowed(c, d, uid)) return; const k = syncKeyOf(d); if (!rk.has(k)) { up.push({ app: REC_APP, coll: c, key: k, data: d }); rk.add(k); } });
+      loc.forEach(d => { if (!syncPetAllowed(c, d, uid) || syncServerRecord(c, d)) return; const k = syncKeyOf(d); if (!rk.has(k)) { up.push({ app: REC_APP, coll: c, key: k, data: d }); rk.add(k); } });
     }
     await syncUpload(up, uid);
     syncAssertAccount(uid);
@@ -5153,7 +5165,7 @@ async function syncNow(force) {
 function syncPush(c, d) {
   if (!SYNC_ON || !syncAuth()) return;
   const uid = syncAuth().uid || "";
-  if (!syncPetAllowed(c, d, uid)) return;
+  if (!syncPetAllowed(c, d, uid) || syncServerRecord(c, d)) return;
   syncState.queue.push(syncRow(c, d));
   clearTimeout(syncState.timer);
   syncState.timer = setTimeout(async () => {
