@@ -1502,15 +1502,17 @@ html.qf #stage > section.q-card > .explain { flex: none !important; height: clam
   html.qf #stage .v-rv-sent { font-size: .92rem; line-height: 1.4; }
   html.qf #stage .v-rv-tr { font-size: .82rem; line-height: 1.35; }
 }
-/* Companion art is fetched only when a sprite is explicitly mounted. */
+/* Shared sizing keeps the floating companion equal to the companion-page preview. */
+:root { --pet-display-width: 192px; }
 .pet-widget[hidden], .pet-launcher[hidden], .pet-trial-note[hidden] { display: none !important; }
-.pet-widget { position: fixed; z-index: 34; width: 108px; isolation: isolate; --pet-safe-top: env(safe-area-inset-top, 0px); --pet-safe-right: env(safe-area-inset-right, 0px); --pet-safe-bottom: env(safe-area-inset-bottom, 0px); --pet-safe-left: env(safe-area-inset-left, 0px); }
+.pet-widget { position: fixed; z-index: 34; width: calc(var(--pet-display-width) + 12px); isolation: isolate; --pet-safe-top: env(safe-area-inset-top, 0px); --pet-safe-right: env(safe-area-inset-right, 0px); --pet-safe-bottom: env(safe-area-inset-bottom, 0px); --pet-safe-left: env(safe-area-inset-left, 0px); }
 .pet-widget.pet-passive { opacity: .25; pointer-events: none; }
 .pet-widget.pet-passive .pet-avatar { pointer-events: none; }
-.pet-avatar { display: block; width: 108px; height: 132px; border: 0; padding: 6px; background: transparent; color: var(--fg); cursor: grab; touch-action: none; border-radius: 18px; }
+.pet-avatar { display: block; width: calc(var(--pet-display-width) + 12px); height: calc(var(--pet-display-width) * 1.25 + 12px); border: 0; padding: 6px; background: transparent; color: var(--fg); cursor: grab; touch-action: none; border-radius: 18px; }
 .pet-avatar:active { cursor: grabbing; }
 .pet-avatar:focus-visible, .pet-launcher:focus-visible, .pet-character:focus-visible, .pet-page button:focus-visible, .pet-bubble button:focus-visible { outline: 3px solid var(--accent); outline-offset: 3px; }
 .pet-sprite { display: block; position: relative; flex: none; width: 96px; aspect-ratio: 4 / 5; background-size: 400% 500%; background-repeat: no-repeat; background-position: 0 calc(var(--pet-row, 0) * 25%); animation: pet-frames 1.8s step-end infinite; filter: drop-shadow(0 4px 3px rgb(0 0 0 / .15)); }
+.pet-avatar .pet-sprite { width: var(--pet-display-width); }
 .pet-accessory { position: absolute; inset: 0; background-size: 300% 100%; background-repeat: no-repeat; pointer-events: none; }
 @keyframes pet-frames { 0% { background-position-x: 0; } 25% { background-position-x: 33.333333%; } 50% { background-position-x: 66.666667%; } 75% { background-position-x: 100%; } }
 .pet-static, .pet-paused { animation: none !important; background-position-x: 0; }
@@ -1518,8 +1520,8 @@ html.qf #stage > section.q-card > .explain { flex: none !important; height: clam
 .pet-bubble { position: fixed; width: min(300px, calc(100vw - 32px)); padding: 14px; border: 1.5px solid var(--line); border-radius: 16px; background: var(--card); color: var(--fg); box-shadow: 0 6px 24px rgb(0 0 0 / .13); text-align: left; max-height: min(430px, calc(100dvh - 32px)); overflow: auto; overflow-wrap: anywhere; }
 .pet-bubble[hidden] { display: none !important; }
 .pet-bubble.pet-compact { width: min(270px, calc(100vw - 104px)); padding: 9px 11px; pointer-events: none; border-radius: 12px; overflow: hidden; }
-.pet-compact .pet-words { gap: 3px; padding: 0; }
-.pet-compact .pet-words p { white-space: nowrap; font-size: .78rem; line-height: 1.45; }
+.pet-compact .pet-words { gap: 3px; padding: 0; grid-template-columns: minmax(0, 1fr); }
+.pet-compact .pet-words p { min-width: 0; white-space: nowrap; font-size: .78rem; line-height: 1.45; }
 .pet-compact .pet-words .pet-french { font-size: .84rem; }
 .pet-bubble-head { display: flex; align-items: center; justify-content: space-between; gap: 12px; }
 .pet-bubble-head .btn { font-size: .8rem; }
@@ -1538,7 +1540,7 @@ html.qf #stage > section.q-card > .explain { flex: none !important; height: clam
 .pet-age { font-size: .75rem; font-weight: 400; color: var(--muted); }
 .pet-hero { display: grid; grid-template-columns: minmax(150px, .65fr) minmax(0, 1fr); gap: 20px; align-items: center; padding: 18px; border-radius: 18px; background: var(--bg); border: 1px solid var(--line); }
 .pet-preview { display: grid; place-items: center; min-height: 250px; }
-.pet-preview .pet-sprite { width: 192px; max-width: 100%; }
+.pet-preview .pet-sprite { width: var(--pet-display-width); max-width: 100%; }
 .pet-info { display: flex; flex-direction: column; gap: 10px; min-width: 0; }
 .pet-info p, .pet-info h3 { margin: 0; }
 .pet-info progress { width: 100%; accent-color: var(--accent); }
@@ -1549,17 +1551,25 @@ html.qf #stage > section.q-card > .explain { flex: none !important; height: clam
 .pet-accessory-card .btn { white-space: normal; max-width: 100%; min-height: 44px; }
 .pet-trial-note { border-left: 3px solid var(--accent); padding: 8px 12px; font-size: .88rem; }
 .pet-page .set-card { margin: 0; box-shadow: none; }
-.pet-mobile { width: 64px; }
-.pet-mobile .pet-avatar { height: 78px; width: 64px; padding: 4px; border-radius: 12px; }
-.pet-mobile .pet-avatar .pet-sprite { width: 56px; }
+.pet-mobile { width: calc(var(--pet-display-width) + 8px); }
+.pet-mobile .pet-avatar { height: calc(var(--pet-display-width) * 1.25 + 8px); width: calc(var(--pet-display-width) + 8px); padding: 4px; border-radius: 12px; }
+
 /* This empty lane keeps the companion and its two-line bubble above the task. */
 @media (max-width: 600px) and (min-height: 520px) {
-  html.pet-question-space #stage > section.card::before { content: ''; display: block; height: 82px; min-height: 82px; flex: none; pointer-events: none; }
+  html.pet-question-space #stage > section.card::before { content: ''; display: block; height: calc(var(--pet-display-width) * 1.25 + 20px); min-height: calc(var(--pet-display-width) * 1.25 + 20px); flex: none; pointer-events: none; }
+}
+/* Preserve readable questions and reachable controls when the larger pet uses vertical space. */
+@media (max-width: 600px) and (min-height: 520px) {
+  html.qf.pet-question-space #stage > section.card { overflow-y: auto; overscroll-behavior: contain; }
+  html.qf.pet-question-space #stage > section.card > :is(.q, .v-q) { min-height: 3em; }
+}
+@media (max-width: 600px) and (min-height: 520px) and (max-height: 740px) {
+  html.qf.pet-question-space #stage > :is(section.q-card, section.cj-card) > .explain { height: clamp(3rem, 10dvh, 5rem) !important; }
 }
 @media (max-width: 600px) {
+  :root { --pet-display-width: 144px; }
   .pet-hero { grid-template-columns: 1fr; gap: 8px; padding: 14px; }
   .pet-preview { min-height: 200px; }
-  .pet-preview .pet-sprite { width: 144px; }
   .pet-characters { gap: 6px; }
   .pet-character { padding: 10px 8px; }
   .pet-character .sub { font-size: .74rem; }
@@ -14779,7 +14789,7 @@ GPA2.forEach(u => {
     LEVEL_OF[id] = u.lv; TAGS_OF[id] = q.tags; KP_OF[id] = "gb" + u.unit;
   });
 });
-const LANG_FILES = {"en": "lang-en.js?v=1598878ae5", "fr": "lang-fr.js?v=38d914348d"};
+const LANG_FILES = {"en": "lang-en.js?v=a9a1a0c11e", "fr": "lang-fr.js?v=7d5abd46e1"};
 (() => { let l = null; try { l = localStorage.getItem("fq-lang"); } catch (e) {}
   if (Object.hasOwn(LANG_FILES, l)) document.write('<script src="' + LANG_FILES[l] + '"><\/script>'); })();
 </script>
@@ -17846,6 +17856,7 @@ function setGoalSection(wrap) {
 // 每次用户可见更新都新增记录：普通更新 1.x.y → 1.x.(y+1)；较大功能变动 → 1.(x+1).0。
 // 首位保持 1，只有用户明确要求才可修改；历史记录保留。完整发布规则见根目录 AGENTS.md。
 const CHANGELOG = [
+  { v: "1.9.2", d: "2026-11-15", p: "fr", items: ["浮动学习伙伴放大到与伙伴页面相同的尺寸：手机 144×180、电脑 192×240。手机答题页同步增加人物留白，保留拖动吸边、分设备位置记忆和自动避让。"] },
   { v: "1.9.1", d: "2026-11-15", p: "fr", items: ["单词闯关的「基础功能词」更名为「基础虚词」，11 关基础虚词移到 52 关主题词汇上方；练习标题、词条分类和续关按钮同步更新，原有星数、存档与解锁进度保留。","学习伙伴修复手机与全屏答题时的显示，人物可拖动吸附边缘，手机和电脑分别记住位置；自动避开题目、选项和状态栏，考试、输入或弹窗时隐藏。","三位学习伙伴换上高清透明图集，每帧 384×480，保持原有动作与配饰；人物图片按需加载，不加入安装时的离线预下载。","每位伙伴新增到 48 句双语台词，会在问候、答题、连对、完成计划和休息时主动反馈；做题时每 3 题或 20 秒最多提示一次，重要反馈优先。设置中可独立关闭主动说话和法语朗读，朗读不会打断题目声音。"] },
   { v: "1.9.0", d: "2026-11-15", p: "fr", items: [
     "基础功能词新增 110 个词及 110 张例句配图，涵盖代词、介词、连词和限定词。词库共 630 个词；单词闯关新增独立的 11 关基础功能词，从第 1 关开始，不必先完成原有 52 关。",
