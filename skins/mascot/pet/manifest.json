@@ -1,7 +1,7 @@
 {
   "frame": [
-    128,
-    160
+    384,
+    480
   ],
   "columns": 4,
   "rows": [
@@ -15,41 +15,60 @@
     "lison": {
       "file": "lison.webp",
       "size": [
-        512,
-        800
+        1536,
+        2400
       ],
-      "bytes": 134856
+      "bytes": 584502,
+      "quality": 90,
+      "sourceScale": 0.64864865,
+      "minSourceFrame": [
+        561,
+        701
+      ]
     },
     "ninon": {
       "file": "ninon.webp",
       "size": [
-        512,
-        800
+        1536,
+        2400
       ],
-      "bytes": 95612
+      "bytes": 552904,
+      "quality": 90,
+      "sourceScale": 0.64767616,
+      "minSourceFrame": [
+        561,
+        701
+      ]
     },
     "pia": {
       "file": "pia.webp",
       "size": [
-        512,
-        800
+        1536,
+        2400
       ],
-      "bytes": 110006
+      "bytes": 586346,
+      "quality": 88,
+      "sourceScale": 0.65355522,
+      "minSourceFrame": [
+        561,
+        701
+      ]
     }
   },
-  "maxRuntimeBytes": 409600,
+  "maxCharacterBytes": 600000,
   "accessories": {
     "file": "accessories.webp",
     "size": [
-      384,
-      160
+      1152,
+      480
     ],
-    "bytes": 2112,
+    "bytes": 9078,
+    "quality": 92,
     "columns": [
       "pet-bookmark",
       "pet-hairpin",
       "pet-cape"
     ]
   },
-  "runtimeBytes": 342586
+  "runtimeBytes": 1732830
 }

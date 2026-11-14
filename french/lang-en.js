@@ -4630,6 +4630,20 @@ const LANG_DICT = {
 "新增 524 道语法题。每站先学规则、对比例句和常见错误，再完成 4 道目标题、2 道复习题、2 道新情景题；至少答对 6/8 且新情景至少对 1 道才能通关，结算后可按知识点复习并换题重测。": "Added 524 grammar questions. Each stop introduces a rule, contrasting examples and a common mistake, followed by four target questions, two reviews and two new situations. Passing requires at least 6/8 and one correct new-situation answer. Results support rule-based review and retesting with variants.",
 "加入 7 个可跳过的章末口语任务，覆盖问路买票、安排旅行、改签、订房晚到、申诉和旅行叙述。先开口，再确认表达的意图；订房可追问便宜房型，并确认姓名、到达时间和短信或邮件门禁码。": "Added seven optional chapter speaking tasks covering directions and tickets, travel plans, rebooking, late hotel arrival, complaints and travel narratives. Speak first, then confirm your intended meaning. The hotel task lets you ask for a cheaper room and confirm a name, arrival time and an access code by text or email.",
 "口语练习支持分层提示、录音回听、重录、删除、即时重说和更换条件重测。录音仅保留在当前练习，离开时释放麦克风；不能录音时仍可使用文字与选项练习，不进行自动语音识别或发音评分。": "Speaking practice includes progressive hints, recording playback, rerecording, deletion, an immediate retry and a changed-condition retest. Recordings stay within the current practice and the microphone is released on leaving. Text and choices remain available without recording; there is no automatic speech recognition or pronunciation scoring.",
-"原有星数、明信片、购买记录和单词闯关进度保留，首通奖励不会重复发放。新界面支持中文、英文和法文，并适配手机；公开网页和离线缓存已同步更新。": "Existing stars, postcards, purchase history and vocabulary-level progress are preserved, and first-clear rewards are not paid twice. The new interface supports Chinese, English and French on mobile as well as desktop. The public website and offline cache have been updated."
+"原有星数、明信片、购买记录和单词闯关进度保留，首通奖励不会重复发放。新界面支持中文、英文和法文，并适配手机；公开网页和离线缓存已同步更新。": "Existing stars, postcards, purchase history and vocabulary-level progress are preserved, and first-clear rewards are not paid twice. The new interface supports Chinese, English and French on mobile as well as desktop. The public website and offline cache have been updated.",
+"基础虚词": "Basic function words",
+"基础虚词 · 代词": "Function words · Pronouns",
+"基础虚词 · 介词": "Function words · Prepositions",
+"基础虚词 · 连词": "Function words · Conjunctions",
+"基础虚词 · 限定词": "Function words · Determiners",
+"基础虚词 · 第 ${n} 关": "Basic function words · Level ${n}",
+"继续基础虚词：第 ${vDisplayLevel(next.k)} 关": "Continue function words: level ${vDisplayLevel(next.k)}",
+"继续主题词汇：第 ${vDisplayLevel(next.k)} 关": "Continue thematic vocabulary: level ${vDisplayLevel(next.k)}",
+"单词闯关的「基础功能词」更名为「基础虚词」，11 关基础虚词移到 52 关主题词汇上方；练习标题、词条分类和续关按钮同步更新，原有星数、存档与解锁进度保留。": "Renamed the basic function-word section and moved its 11 levels above the 52 thematic vocabulary levels. Practice titles, categories and continue buttons now match; existing stars, saved runs and unlock progress are preserved.",
+"主动说话": "Speak spontaneously",
+"说话时朗读法语": "Read French aloud when speaking",
+"学习伙伴修复手机与全屏答题时的显示，人物可拖动吸附边缘，手机和电脑分别记住位置；自动避开题目、选项和状态栏，考试、输入或弹窗时隐藏。": "Learning companions now remain visible on mobile and during full-screen practice. Drag them to an edge; mobile and desktop positions are saved separately. They avoid questions, answers and status bars, and hide during exams, text entry or dialogs.",
+"三位学习伙伴换上高清透明图集，每帧 384×480，保持原有动作与配饰；人物图片按需加载，不加入安装时的离线预下载。": "All three companions now use sharper transparent sprite sheets with 384×480 frames, preserving their actions and accessories. Images load on demand and are not downloaded when installing the offline cache.",
+"每位伙伴新增到 48 句双语台词，会在问候、答题、连对、完成计划和休息时主动反馈；做题时每 3 题或 20 秒最多提示一次，重要反馈优先。设置中可独立关闭主动说话和法语朗读，朗读不会打断题目声音。": "Each companion now has 48 bilingual lines for greetings, answers, streaks, completed plans and breaks. During practice, prompts appear at most once every three answers or 20 seconds, with important feedback taking priority. Spontaneous dialogue and French speech can be switched off separately in Settings; speech never interrupts question audio."
 };
 

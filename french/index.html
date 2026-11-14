@@ -1504,7 +1504,9 @@ html.qf #stage > section.q-card > .explain { flex: none !important; height: clam
 }
 /* Companion art is fetched only when a sprite is explicitly mounted. */
 .pet-widget[hidden], .pet-launcher[hidden], .pet-trial-note[hidden] { display: none !important; }
-.pet-widget { position: fixed; z-index: 20; width: 108px; isolation: isolate; }
+.pet-widget { position: fixed; z-index: 34; width: 108px; isolation: isolate; --pet-safe-top: env(safe-area-inset-top, 0px); --pet-safe-right: env(safe-area-inset-right, 0px); --pet-safe-bottom: env(safe-area-inset-bottom, 0px); --pet-safe-left: env(safe-area-inset-left, 0px); }
+.pet-widget.pet-passive { opacity: .25; pointer-events: none; }
+.pet-widget.pet-passive .pet-avatar { pointer-events: none; }
 .pet-avatar { display: block; width: 108px; height: 132px; border: 0; padding: 6px; background: transparent; color: var(--fg); cursor: grab; touch-action: none; border-radius: 18px; }
 .pet-avatar:active { cursor: grabbing; }
 .pet-avatar:focus-visible, .pet-launcher:focus-visible, .pet-character:focus-visible, .pet-page button:focus-visible, .pet-bubble button:focus-visible { outline: 3px solid var(--accent); outline-offset: 3px; }
@@ -1513,9 +1515,12 @@ html.qf #stage > section.q-card > .explain { flex: none !important; height: clam
 @keyframes pet-frames { 0% { background-position-x: 0; } 25% { background-position-x: 33.333333%; } 50% { background-position-x: 66.666667%; } 75% { background-position-x: 100%; } }
 .pet-static, .pet-paused { animation: none !important; background-position-x: 0; }
 .pet-launcher { display: inline-grid; place-items: center; width: 48px; height: 48px; flex: 0 0 48px; border: 2px solid var(--line); border-radius: 50%; background: var(--card); color: var(--fg); font: 700 1.2rem var(--display); cursor: pointer; }
-.pet-bubble { position: absolute; bottom: 132px; right: 0; width: min(300px, calc(100vw - 32px)); padding: 14px; border: 1.5px solid var(--line); border-radius: 16px; background: var(--card); color: var(--fg); box-shadow: 0 6px 24px rgb(0 0 0 / .13); text-align: left; max-height: min(430px, calc(100dvh - 170px)); overflow: auto; overflow-wrap: anywhere; }
-.pet-widget[data-side="left"] .pet-bubble { right: auto; left: 0; }
-.pet-widget[data-bubble="below"] .pet-bubble { top: 132px; bottom: auto; }
+.pet-bubble { position: fixed; width: min(300px, calc(100vw - 32px)); padding: 14px; border: 1.5px solid var(--line); border-radius: 16px; background: var(--card); color: var(--fg); box-shadow: 0 6px 24px rgb(0 0 0 / .13); text-align: left; max-height: min(430px, calc(100dvh - 32px)); overflow: auto; overflow-wrap: anywhere; }
+.pet-bubble[hidden] { display: none !important; }
+.pet-bubble.pet-compact { width: min(270px, calc(100vw - 104px)); padding: 9px 11px; pointer-events: none; border-radius: 12px; overflow: hidden; }
+.pet-compact .pet-words { gap: 3px; padding: 0; }
+.pet-compact .pet-words p { white-space: nowrap; font-size: .78rem; line-height: 1.45; }
+.pet-compact .pet-words .pet-french { font-size: .84rem; }
 .pet-bubble-head { display: flex; align-items: center; justify-content: space-between; gap: 12px; }
 .pet-bubble-head .btn { font-size: .8rem; }
 .pet-words { display: grid; gap: 8px; padding: 10px 0; }
@@ -1544,10 +1549,13 @@ html.qf #stage > section.q-card > .explain { flex: none !important; height: clam
 .pet-accessory-card .btn { white-space: normal; max-width: 100%; min-height: 44px; }
 .pet-trial-note { border-left: 3px solid var(--accent); padding: 8px 12px; font-size: .88rem; }
 .pet-page .set-card { margin: 0; box-shadow: none; }
-.pet-mobile { position: static; width: 100%; display: flex; align-items: flex-end; gap: 12px; margin: 0; }
-.pet-mobile .pet-avatar { flex: none; }
-.pet-mobile .pet-bubble { position: static; width: auto; flex: 1; max-height: none; }
-html.qf #petWidget, html.qf #petLauncher { display: none !important; }
+.pet-mobile { width: 64px; }
+.pet-mobile .pet-avatar { height: 78px; width: 64px; padding: 4px; border-radius: 12px; }
+.pet-mobile .pet-avatar .pet-sprite { width: 56px; }
+/* This empty lane keeps the companion and its two-line bubble above the task. */
+@media (max-width: 600px) and (min-height: 520px) {
+  html.pet-question-space #stage > section.card::before { content: ''; display: block; height: 82px; min-height: 82px; flex: none; pointer-events: none; }
+}
 @media (max-width: 600px) {
   .pet-hero { grid-template-columns: 1fr; gap: 8px; padding: 14px; }
   .pet-preview { min-height: 200px; }
@@ -1556,10 +1564,6 @@ html.qf #petWidget, html.qf #petLauncher { display: none !important; }
   .pet-character { padding: 10px 8px; }
   .pet-character .sub { font-size: .74rem; }
   .pet-accessories { grid-template-columns: 1fr; }
-  .pet-mobile { align-items: center; flex-direction: column-reverse; }
-  .pet-mobile .pet-bubble { width: 100%; }
-  .pet-mobile .pet-avatar { height: 112px; width: 92px; }
-  .pet-mobile .pet-avatar .pet-sprite { width: 80px; }
 }
 @media (prefers-reduced-motion: reduce) { .pet-sprite { animation: none !important; background-position-x: 0; } .pet-widget *, .pet-page * { transition: none !important; scroll-behavior: auto !important; } }
 /* Ordered route and oral tasks reuse the active theme's colours. */
@@ -14775,7 +14779,7 @@ GPA2.forEach(u => {
     LEVEL_OF[id] = u.lv; TAGS_OF[id] = q.tags; KP_OF[id] = "gb" + u.unit;
   });
 });
-const LANG_FILES = {"en": "lang-en.js?v=77b40f0f9e", "fr": "lang-fr.js?v=23772a26fc"};
+const LANG_FILES = {"en": "lang-en.js?v=1598878ae5", "fr": "lang-fr.js?v=38d914348d"};
 (() => { let l = null; try { l = localStorage.getItem("fq-lang"); } catch (e) {}
   if (Object.hasOwn(LANG_FILES, l)) document.write('<script src="' + LANG_FILES[l] + '"><\/script>'); })();
 </script>
@@ -17842,6 +17846,7 @@ function setGoalSection(wrap) {
 // 每次用户可见更新都新增记录：普通更新 1.x.y → 1.x.(y+1)；较大功能变动 → 1.(x+1).0。
 // 首位保持 1，只有用户明确要求才可修改；历史记录保留。完整发布规则见根目录 AGENTS.md。
 const CHANGELOG = [
+  { v: "1.9.1", d: "2026-11-15", p: "fr", items: ["单词闯关的「基础功能词」更名为「基础虚词」，11 关基础虚词移到 52 关主题词汇上方；练习标题、词条分类和续关按钮同步更新，原有星数、存档与解锁进度保留。","学习伙伴修复手机与全屏答题时的显示，人物可拖动吸附边缘，手机和电脑分别记住位置；自动避开题目、选项和状态栏，考试、输入或弹窗时隐藏。","三位学习伙伴换上高清透明图集，每帧 384×480，保持原有动作与配饰；人物图片按需加载，不加入安装时的离线预下载。","每位伙伴新增到 48 句双语台词，会在问候、答题、连对、完成计划和休息时主动反馈；做题时每 3 题或 20 秒最多提示一次，重要反馈优先。设置中可独立关闭主动说话和法语朗读，朗读不会打断题目声音。"] },
   { v: "1.9.0", d: "2026-11-15", p: "fr", items: [
     "基础功能词新增 110 个词及 110 张例句配图，涵盖代词、介词、连词和限定词。词库共 630 个词；单词闯关新增独立的 11 关基础功能词，从第 1 关开始，不必先完成原有 52 关。",
     "开启总游戏模式后，单词闯关和环法之旅免费开放，并排在游戏首页和切换条的前两项；金币为 0 也可进入，不再单独收费。",
@@ -20477,7 +20482,7 @@ const V_HASPIRE = new Set(["honte"]);   // 嘘音 h：前面不省音
 // Function words use theme-qualified IDs: homographs never share pictures or examples.
 const V_FUNCWORDS = [{"fr": "je", "pos": "pron", "en": "I (subject: the speaker)", "extra": "je / j'（元音或哑音 h 前省音）", "zh": "我（主语：说话人自己）", "pic": "fw-je", "example": ["[Je] porte un sac bleu.", "我正提着一个蓝色包。"], "sen": "I am carrying a blue bag.", "hook": "je 指正在说话的“我”；看谁开口、谁提包。"}, {"fr": "tu", "pos": "pron", "en": "you (singular familiar subject)", "extra": "tu", "zh": "你（主语：对一个熟悉的人说）", "pic": "fw-tu", "example": ["[Tu] portes un sac bleu.", "你正提着一个蓝色包。"], "sen": "You are carrying a blue bag.", "hook": "tu 是面对一个熟悉的人说“你”；提包的是听话的人。"}, {"fr": "il", "pos": "pron", "en": "he / she / it (third-person singular subject)", "extra": "il / elle（本条先学第三人称单数主语）", "zh": "他／她／它（第三人称单数主语）", "pic": "fw-il", "example": ["[Elle] porte un sac bleu.", "她正提着一个蓝色包。"], "sen": "She is carrying a blue bag.", "hook": "elle 是被谈到的“她”，既不是说话人，也不是听话人。"}, {"fr": "nous", "pos": "pron", "en": "we / us / to us (a group including the speaker)", "extra": "nous（主语、直接／间接宾语、重读和反身用法同形）", "zh": "我们／给我们（包括说话人的一组人）", "pic": "fw-nous", "example": ["[Nous] portons un grand sac.", "我们正一起提着一个大包。"], "sen": "We are carrying a large bag.", "hook": "nous 包括说话人自己；画中开口的 Ninon 也在提包。"}, {"fr": "vous", "pos": "pron", "en": "you / to you (plural or polite singular)", "extra": "vous（复数或礼貌单数；主语、宾语、重读和反身用法同形）", "zh": "你们／您（复数听者或礼貌称呼）", "pic": "fw-vous", "example": ["[Vous] portez un grand sac.", "你们正一起提着一个大包。"], "sen": "You are carrying a large bag.", "hook": "vous 在这里是“你们”；两个提包的人都是听话人。"}, {"fr": "ils", "pos": "pron", "en": "they (third-person plural subject)", "extra": "ils / elles（全为阴性时用 elles）", "zh": "他们／她们／它们（第三人称复数主语）", "pic": "fw-ils", "example": ["[Elles] portent un grand sac.", "她们正一起提着一个大包。"], "sen": "They are carrying a large bag.", "hook": "elles 指谈话之外的“她们”；只有女性的一组人用 elles。"}, {"fr": "on", "pos": "pron", "en": "people / we (indefinite subject with a singular verb)", "extra": "on（动词用第三人称单数；口语可指 nous）", "zh": "人们／咱们（泛指主语；动词用单数）", "pic": "fw-on", "example": ["Ici, [on] se lave les mains.", "在这里，人们会洗手。"], "sen": "Here, people wash their hands.", "hook": "on 可泛指“人们”；这里说一般做法，后面的动词仍用单数。"}, {"fr": "moi", "pos": "pron", "en": "me (stressed: after a preposition or for emphasis)", "extra": "moi（介词后、强调或单独回答；moi-même = 我自己）", "zh": "我（重读：用于介词后或强调自己）", "pic": "fw-moi", "example": ["Ce sac est à [moi].", "这个包是我的。"], "sen": "This bag belongs to me.", "hook": "介词 à 后用重读形式 moi；à moi 表示“属于我”。"}, {"fr": "toi", "pos": "pron", "en": "you (stressed singular familiar form)", "extra": "toi（介词后、强调或单独回答；toi-même = 你自己）", "zh": "你（重读：用于介词后或强调对方）", "pic": "fw-toi", "example": ["Ce cadeau est pour [toi].", "这份礼物是给你的。"], "sen": "This present is for you.", "hook": "pour 后用重读形式 toi；礼物给正在听话的“你”。"}, {"fr": "lui", "pos": "pron", "en": "to him / her (indirect object); him (stressed)", "extra": "lui（间接宾语：给他或她；重读阳性）；重读阴性 elle", "zh": "给他／她（间接宾语）；他（重读）", "pic": "fw-lui", "example": ["Ninon [lui] donne une pomme.", "Ninon 给她一个苹果。"], "sen": "Ninon gives her an apple.", "hook": "lui 在这里指“给她”，不是苹果；苹果是被递出的直接宾语。"}, {"fr": "eux", "pos": "pron", "en": "them (stressed: after a preposition or for emphasis)", "extra": "eux / elles（重读复数）", "zh": "他们／她们（重读：用于介词后或强调）", "pic": "fw-eux", "example": ["Pia marche avec [elles].", "Pia 和她们一起走。"], "sen": "Pia walks with them.", "hook": "avec 后用重读代词；elles 在这里指 Ninon 和 Lison 两个人。"}, {"fr": "me", "pos": "pron", "en": "me / to me / myself (object or reflexive before a verb)", "extra": "me / m'（动词前的直接、间接宾语或反身形式）", "zh": "我／给我／我自己（动词前宾语或反身）", "pic": "fw-me", "example": ["Ninon [me] donne une pomme.", "Ninon 给我一个苹果。"], "sen": "Ninon gives me an apple.", "hook": "me 在这里是“给我”；接苹果的人就是正在开口的 Pia。"}, {"fr": "te", "pos": "pron", "en": "you / to you / yourself (singular familiar object or reflexive)", "extra": "te / t'（动词前的直接、间接宾语或反身形式）", "zh": "你／给你／你自己（动词前单数熟称宾语或反身）", "pic": "fw-te", "example": ["Ninon [te] donne une pomme.", "Ninon 给你一个苹果。"], "sen": "Ninon gives you an apple.", "hook": "te 在这里是“给你”；苹果递给正在听话的 Lison。"}, {"fr": "le", "pos": "pron", "en": "him / her / it / them (direct object pronoun)", "extra": "le / la / l' / les（本条为代词；l' 是 le、la 的省音）", "zh": "他／她／它／他们等（直接宾语：动作直接作用的对象）", "pic": "fw-le-pron", "example": ["Ce gâteau, Pia [le] mange.", "这个蛋糕，Pia 正在吃。"], "sen": "Pia is eating this cake.", "hook": "le 代替前面的 gâteau；它直接承受“吃”这个动作。"}, {"fr": "leur", "pos": "pron", "en": "to them (plural indirect object)", "extra": "leur（代词不加 s；不同于 leur / leurs 限定词）", "zh": "给他们／她们（复数间接宾语）", "pic": "fw-leur-pron", "example": ["Ninon [leur] donne des pommes.", "Ninon 给她们苹果。"], "sen": "Ninon gives them apples.", "hook": "leur 指“给她们”，对应多个接受者；代词 leur 不加 s。"}, {"fr": "se", "pos": "pron", "en": "himself / herself / itself / themselves (third-person reflexive)", "extra": "se / s'（第三人称单复数共用）；相关重读形式 soi / soi-même（主语泛指时）", "zh": "他／她／它自己；他们自己（第三人称反身）", "pic": "fw-se", "example": ["Pia [se] lave les mains.", "Pia 正在洗自己的手。"], "sen": "Pia washes her hands.", "hook": "se 让动作回到主语自己：Pia 洗的是自己的手。"}, {"fr": "y", "pos": "pron", "en": "there / to it (replaces a place or à + a thing)", "extra": "y（代替地点，或 à + 事物）", "zh": "在那里／到那里；对此（代替地点或 à 引出的事物）", "pic": "fw-y", "example": ["Au parc, Ninon [y] joue.", "Ninon 在那里玩，也就是公园里。"], "sen": "Ninon plays there, in the park.", "hook": "y 代替前面已经提到的地点 au parc，避免重复说地点。"}, {"fr": "en", "pos": "pron", "en": "some / of it / from there (replaces de-phrases or a quantity referent)", "extra": "en（代替 de + 事物、来源或不定数量）", "zh": "其中一些／从那里／关于它（代替 de 短语或数量对象）", "pic": "fw-en-pron", "example": ["Des pommes, Pia [en] prend deux.", "这些苹果，Pia 从中拿了两个。"], "sen": "Pia takes two of the apples.", "hook": "en 接回前面的 pommes；deux 保留数量，意思是“其中两个”。"}, {"fr": "quelqu'un", "pos": "pron", "en": "someone; some of them (identity unspecified)", "extra": "quelqu'un / quelqu'une（少见）/ quelques-uns / quelques-unes（其中一些）", "zh": "某个人；其中一些人或物（身份未具体说明）", "pic": "fw-quelqu-un", "example": ["[Quelqu'un] frappe à notre porte.", "有人正在敲我们的门。"], "sen": "Someone is knocking at our door.", "hook": "quelqu'un 是“有人”，身份还不知道；不是某个物品。"}, {"fr": "quelque chose", "pos": "pron", "en": "something (an unspecified thing)", "extra": "quelque chose；quelque chose de + 形容词", "zh": "某个东西／某件事（非人，尚未具体说明）", "pic": "fw-quelque-chose", "example": ["Pia cache [quelque chose] dans sa main.", "Pia 把某个东西藏在手里。"], "sen": "Pia hides something in her hand.", "hook": "quelque chose 指身份未说明的东西；手里确实有物品，但看不清是什么。"}, {"fr": "personne", "pos": "pron", "en": "nobody / no one (negative pronoun)", "extra": "ne ... personne / personne ne ...（本条不是名词 une personne）", "zh": "没有人（否定代词）", "pic": "fw-personne", "example": ["Lison ne voit [personne] dehors.", "Lison 在外面没有看见任何人。"], "sen": "Lison sees nobody outside.", "hook": "personne 否定的是“人”；窗外有景物，但一个人也没有。"}, {"fr": "rien", "pos": "pron", "en": "nothing (no thing at all)", "extra": "ne ... rien / rien ne ...", "zh": "什么也没有（否定事物）", "pic": "fw-rien", "example": ["Pia ne trouve [rien] dedans.", "Pia 在里面什么也没找到。"], "sen": "Pia finds nothing inside.", "hook": "rien 是“什么东西也没有”；强调盒子里面完全空着。"}, {"fr": "chacun", "pos": "pron", "en": "each one (a pronoun considering individuals separately)", "extra": "chacun / chacune；chacun de ...", "zh": "每个人／每一个（单独代替名词，逐一看待）", "pic": "fw-chacun", "example": ["[Chacune] tient une petite pomme.", "她们每人都拿着一个小苹果。"], "sen": "Each of them holds a small apple.", "hook": "chacune 是“每个人”，逐个检查：Ninon、Lison、Pia 一人一个。"}, {"fr": "tout", "pos": "pron", "en": "everything / everyone / all of them (stand-alone pronoun)", "extra": "tout（全部事情）/ tous / toutes（所有已提及的人或物）", "zh": "一切／所有人或物（代词，单独使用）", "pic": "fw-tout-pron", "example": ["Pia met [tout] dans sa boîte.", "Pia 把所有东西都放进自己的盒子里。"], "sen": "Pia puts everything in her box.", "hook": "tout 强调整体一个不漏；桌上的三样东西全部进了盒子。"}, {"fr": "ce", "pos": "pron", "en": "this/that (neutral subject in c'est/ce sont, identifying someone or something)", "extra": "ce / c'；c'est / ce sont（代词作主语，后接 être）", "zh": "这／那（用于 c'est、ce sont，引出身份或事物）", "pic": "fw-ce-pron", "example": ["[C']est Ninon avec son sac bleu.", "这是 Ninon，带着她的蓝色包。"], "sen": "This is Ninon with her blue bag.", "hook": "c' 是 ce 在 est 前的省音；c'est 常用来介绍“这是谁／是什么”。"}, {"fr": "ça", "pos": "pron", "en": "this / that thing or situation (neutral demonstrative)", "extra": "ça / cela（较正式）；不按指代物的性数变化", "zh": "这件事／那个东西（中性指代，可作主语或宾语）", "pic": "fw-ca", "example": ["Pia montre [ça] à Ninon.", "Pia 把那个东西指给 Ninon 看。"], "sen": "Pia shows that to Ninon.", "hook": "ça 可以指“那个东西”，不用先说出它的名词；不是指人物。"}, {"fr": "celui-ci", "pos": "pron", "en": "this one / these ones (the nearer referent)", "extra": "celui-ci / celle-ci / ceux-ci / celles-ci", "zh": "这个／这些（较近者，代替已知名词）", "pic": "fw-celui-ci", "example": ["Je prends [celui-ci], près de moi.", "我拿靠近我的这一个。"], "sen": "I am taking this one, near me.", "hook": "-ci 指较近的这个；两本书中，手边这本被选中。"}, {"fr": "celui-là", "pos": "pron", "en": "that one / those ones (the farther referent)", "extra": "celui-là / celle-là / ceux-là / celles-là", "zh": "那个／那些（较远者，代替已知名词）", "pic": "fw-celui-la", "example": ["Je prends [celui-là], loin de moi.", "我拿离我较远的那一个。"], "sen": "I am taking that one, far from me.", "hook": "-là 在这句指较远的那个；不要选手边的近处书。"}, {"fr": "qui", "pos": "pron", "en": "who; who / which / that (relative subject, or a person after a preposition)", "extra": "qui（疑问：谁；关系：主语，或介词后指人）", "zh": "谁；……的（关系从句主语，或介词后指人）", "pic": "fw-qui", "example": ["Voici Lison [qui] pousse Pia.", "这是正在推 Pia 的 Lison。"], "sen": "Here is Lison, who is pushing Pia.", "hook": "qui 在关系从句里做主语：是 Lison 推 Pia。"}, {"fr": "que", "pos": "pron", "en": "what; whom / which / that (relative direct object)", "extra": "que / qu'（疑问：什么；关系：直接宾语）", "zh": "什么；……的（关系从句的直接宾语）", "pic": "fw-que-pron", "example": ["Voici Lison [que] pousse Pia.", "这是 Pia 正在推着的 Lison。"], "sen": "Here is Lison, whom Pia is pushing.", "hook": "que 在关系从句里做直接宾语：Lison 被推，真正推人的是 Pia。"}, {"fr": "quoi", "pos": "pron", "en": "what (stressed question form, often after a preposition)", "extra": "quoi；à quoi / de quoi / avec quoi（重读形式，常在介词后）", "zh": "什么（重读疑问形式，常用于介词后或口语句末）", "pic": "fw-quoi", "example": ["Avec [quoi] Ninon coupe ce pain ?", "Ninon 用什么切这个面包？"], "sen": "What does Ninon cut this bread with?", "hook": "avec quoi 问“用什么工具”；这里关注刀，不是问谁在切。"}, {"fr": "où", "pos": "pron", "en": "where / when (relative pronoun referring to a named place or time)", "extra": "où（本条学关系用法，指前面提到的地点或时间）", "zh": "在……的地方／在……的时候（连接已提及的地点或时间）", "pic": "fw-ou-pron", "example": ["Voici le parc [où] Pia joue.", "这就是 Pia 玩耍的公园。"], "sen": "Here is the park where Pia plays.", "hook": "où 把地点和里面发生的事连起来：Pia 玩耍的那个公园。"}, {"fr": "dont", "pos": "pron", "en": "whose / of which / of whom (replaces a de-complement)", "extra": "dont（代替关系从句中的 de + 先行词）", "zh": "其……的／关于它的（关系从句中代替 de 结构）", "pic": "fw-dont", "example": ["Voici Pia [dont] le sac est bleu.", "这是 Pia，她的包是蓝色的。"], "sen": "Here is Pia, whose bag is blue.", "hook": "dont 在这里相当于“她的”：le sac de Pia → Pia dont le sac…。"}, {"fr": "lequel", "pos": "pron", "en": "which one / which ones (selecting from a known set; replaces a noun)", "extra": "lequel / laquelle / lesquels / lesquelles；与 à/de 结合的扩展形式（疑问或关系用法）：auquel / à laquelle / auxquels / auxquelles；duquel / de laquelle / desquels / desquelles", "zh": "哪一个／哪一些（从已知的一组中选择，代替名词）", "pic": "fw-lequel", "example": ["Parmi ces livres, [lequel] choisis-tu ?", "这些书中，你选哪一本？"], "sen": "Which of these books are you choosing?", "hook": "lequel 是“哪一个”，必须从已经摆出的这一组书中选择。"}, {"fr": "le mien", "pos": "pron", "en": "mine (replaces the noun for something belonging to me)", "extra": "le mien / la mienne / les miens / les miennes", "zh": "我的那个／那些（代替物品名词）", "pic": "fw-le-mien", "example": ["Ce sac bleu est [le mien].", "这个蓝色包是我的。"], "sen": "This blue bag is mine.", "hook": "le mien 单独代替“我的包”；说话人指向自己，后面不再接 sac。"}, {"fr": "le tien", "pos": "pron", "en": "yours (one familiar addressee; replaces the noun)", "extra": "le tien / la tienne / les tiens / les tiennes", "zh": "你的那个／那些（一个熟悉听者所有，代替名词）", "pic": "fw-le-tien", "example": ["Ce sac bleu est [le tien].", "这个蓝色包是你的。"], "sen": "This blue bag is yours.", "hook": "le tien 是“你的那个”；蓝包属于正在听话的 Pia。"}, {"fr": "le sien", "pos": "pron", "en": "his / hers (one third-person owner; replaces the noun)", "extra": "le sien / la sienne / les siens / les siennes", "zh": "他／她的那个／那些（一个第三人称所有，代替名词）", "pic": "fw-le-sien", "example": ["Ce sac bleu est [le sien].", "这个蓝色包是她的。"], "sen": "This blue bag is hers.", "hook": "le sien 指第三个人的物品；蓝包主人 Pia 不在这轮对话的说话人、听话人之中。"}, {"fr": "le nôtre", "pos": "pron", "en": "ours (the speaker's group owns it; replaces the noun)", "extra": "le nôtre / la nôtre / les nôtres", "zh": "我们的那个／那些（说话人所在群体所有，代替名词）", "pic": "fw-le-notre", "example": ["Ce grand sac est [le nôtre].", "这个大包是我们的。"], "sen": "This large bag is ours.", "hook": "le nôtre 的主人是一群人，而且包括正在说话的 Ninon。"}, {"fr": "le vôtre", "pos": "pron", "en": "yours (plural or polite owner; replaces the noun)", "extra": "le vôtre / la vôtre / les vôtres", "zh": "你们／您的那个／那些（代替名词，复数或敬称）", "pic": "fw-le-votre", "example": ["Ce grand sac est [le vôtre].", "这个大包是你们的。"], "sen": "This large bag is yours.", "hook": "le vôtre 在这里是“你们的那个”；两位听话人共同拥有大包。"}, {"fr": "le leur", "pos": "pron", "en": "theirs (third-person plural owners; replaces the noun)", "extra": "le leur / la leur / les leurs", "zh": "他们／她们的那个／那些（第三人称群体所有，代替名词）", "pic": "fw-le-leur", "example": ["Ce grand sac est [le leur].", "这个大包是她们的。"], "sen": "This large bag is theirs.", "hook": "le leur 的主人是被谈到的她们；不包括说话人，也不是在对主人说“你们的”。"}, {"fr": "à", "pos": "prep", "en": "at / to (a place or recipient)", "extra": "à / au / aux（à 与 le / les 缩合）；à Paris / à la maison", "zh": "在；到（地点、目的地）；给（接受者）", "pic": "fw-a", "example": ["Lison donne une fleur [à] Pia.", "Lison 把一朵花递给 Pia。"], "sen": "Lison gives a flower to Pia.", "hook": "à 在这里指出接受者：花直接交到谁手里。"}, {"fr": "de", "pos": "prep", "en": "from / of (origin or possession)", "extra": "de / d' / du / des（de 与 le / les 缩合）；venir de / le livre de", "zh": "从；……的（来源、所属）", "pic": "fw-de", "example": ["Lison sort [de] la maison.", "Lison 从房子里走出来。"], "sen": "Lison comes out of the house.", "hook": "de 指出起点：从房子里出来，而不是朝房子走去。"}, {"fr": "en", "pos": "prep", "en": "in / by / made of / within (country, transport, material or completion time)", "extra": "en France / en train / en bois / en cinq minutes", "zh": "在；乘；用……制成；在……内完成（看搭配）", "pic": "fw-en-prep", "example": ["Ninon voyage [en] train.", "Ninon 乘火车旅行。"], "sen": "Ninon travels by train.", "hook": "en train 是“乘火车”，en 在这里引出交通方式。"}, {"fr": "avec", "pos": "prep", "en": "with (accompaniment or having something)", "extra": "avec quelqu'un / quelque chose", "zh": "和……一起；带有……", "pic": "fw-avec", "example": ["Ninon marche [avec] Pia.", "Ninon 和 Pia 一起散步。"], "sen": "Ninon walks with Pia.", "hook": "avec 表示有同伴一起：两个人同行。"}, {"fr": "sans", "pos": "prep", "en": "without (lacking something or not doing something)", "extra": "sans + 名词或不定式", "zh": "没有；不带；不做……", "pic": "fw-sans", "example": ["Pia marche [sans] parapluie.", "Pia 没有打伞，在雨中行走。"], "sen": "Pia walks without an umbrella.", "hook": "sans 是“没有、没带”：雨落到 Pia 身上，她没有伞。"}, {"fr": "pour", "pos": "prep", "en": "for / in order to (purpose or beneficiary)", "extra": "pour quelqu'un / pour + 不定式", "zh": "为了；给……用（目的、受益者）", "pic": "fw-pour", "example": ["Lison prépare un cadeau [pour] Pia.", "Lison 为 Pia 准备一份礼物。"], "sen": "Lison prepares a gift for Pia.", "hook": "pour Pia 指“为 Pia 准备的”：礼物的预定接受者是 Pia。"}, {"fr": "par", "pos": "prep", "en": "via / through / by (route, means or agent)", "extra": "passer par / envoyé par", "zh": "经由；通过；由……（路径、方式或施事者）", "pic": "fw-par", "example": ["Lison entre [par] la fenêtre.", "Lison 从窗户进入屋里。"], "sen": "Lison comes in through the window.", "hook": "par 指经过的通道：走的是窗户这条入口。"}, {"fr": "chez", "pos": "prep", "en": "at / to someone's home or workplace", "extra": "chez moi / chez Ninon / chez le médecin", "zh": "在／去某人家或某人的工作场所", "pic": "fw-chez", "example": ["Pia dort [chez] Ninon.", "Pia 在 Ninon 家睡觉。"], "sen": "Pia sleeps at Ninon's home.", "hook": "chez + 人：在某人家里，这里主人是 Ninon。"}, {"fr": "dans", "pos": "prep", "en": "inside (an enclosed object or space)", "extra": "dans + 名词；dans la boîte", "zh": "在……内部（容器或空间内）", "pic": "fw-dans", "example": ["Le chat dort [dans] la boîte.", "猫睡在盒子里面。"], "sen": "The cat sleeps inside the box.", "hook": "dans 强调内部：猫被盒子的四面围住。"}, {"fr": "hors de", "pos": "prep", "en": "outside / out of (beyond an area or boundary)", "extra": "hors de / hors d'", "zh": "在……外面；离开……范围", "pic": "fw-hors-de", "example": ["Le chat joue [hors de] la boîte.", "猫在盒子外面玩。"], "sen": "The cat plays outside the box.", "hook": "hors de 是“在……外”：盒子里是空的，猫全部在外面。"}, {"fr": "sur", "pos": "prep", "en": "on / on top of (usually touching a surface)", "extra": "sur + 名词", "zh": "在……上面（通常接触表面）", "pic": "fw-sur", "example": ["Le chat dort [sur] la table.", "猫睡在桌子上面。"], "sen": "The cat sleeps on the table.", "hook": "sur 强调在表面上：猫的身体直接贴着桌面。"}, {"fr": "sous", "pos": "prep", "en": "under / beneath (at a lower position)", "extra": "sous + 名词", "zh": "在……下方（位置较低，也可位于遮盖物下）", "pic": "fw-sous", "example": ["Le chat dort [sous] la table.", "猫睡在桌子下面。"], "sen": "The cat sleeps under the table.", "hook": "sous 强调下方：猫在桌腿之间，桌面在它头顶。"}, {"fr": "devant", "pos": "prep", "en": "in front of (spatial position)", "extra": "devant + 名词", "zh": "在……前面（空间位置）", "pic": "fw-devant", "example": ["Pia est [devant] le canapé.", "Pia 在沙发前面。"], "sen": "Pia is in front of the sofa.", "hook": "devant 是前面：Pia 站在沙发正面这一侧。"}, {"fr": "derrière", "pos": "prep", "en": "behind (spatial position)", "extra": "derrière + 名词", "zh": "在……后面（空间位置）", "pic": "fw-derriere", "example": ["Lison se cache [derrière] le canapé.", "Lison 躲在沙发后面。"], "sen": "Lison hides behind the sofa.", "hook": "derrière 是后面：沙发靠背挡住了 Lison 的身体。"}, {"fr": "entre", "pos": "prep", "en": "between (two or more reference points)", "extra": "entre ... et ...", "zh": "在两者或多个分隔对象之间", "pic": "fw-entre", "example": ["Pia est [entre] Ninon et Lison.", "Pia 在 Ninon 和 Lison 之间。"], "sen": "Pia is between Ninon and Lison.", "hook": "entre ... et ...：Pia 一边是 Ninon，另一边是 Lison。"}, {"fr": "à côté de", "pos": "prep", "en": "beside / next to (at one side)", "extra": "à côté de / à côté d'", "zh": "在……旁边（紧邻一侧）", "pic": "fw-a-cote-de", "example": ["Pia s'assoit [à côté de] Ninon.", "Pia 坐到 Ninon 旁边。"], "sen": "Pia sits down next to Ninon.", "hook": "à côté de 表示紧挨一侧：两人并排，朝向相同。"}, {"fr": "en face de", "pos": "prep", "en": "opposite / facing (across from a reference point)", "extra": "en face de / en face d'", "zh": "在……正对面（彼此相对）", "pic": "fw-en-face-de", "example": ["Pia s'assoit [en face de] Ninon.", "Pia 坐到 Ninon 正对面。"], "sen": "Pia sits down opposite Ninon.", "hook": "en face de 强调正对面：两人隔桌相对。"}, {"fr": "près de", "pos": "prep", "en": "near (a short distance from)", "extra": "près de / près d'", "zh": "离……近（距离短）", "pic": "fw-pres-de", "example": ["Ninon habite [près de] la gare.", "Ninon 住在车站附近。"], "sen": "Ninon lives near the station.", "hook": "près de 看距离：家到车站只有一小段路。"}, {"fr": "loin de", "pos": "prep", "en": "far from (a long distance from)", "extra": "loin de / loin d'", "zh": "离……远（距离长）", "pic": "fw-loin-de", "example": ["Pia habite [loin de] la gare.", "Pia 住得离车站很远。"], "sen": "Pia lives far from the station.", "hook": "loin de 看距离：家和车站之间隔着很长一段路。"}, {"fr": "contre", "pos": "prep", "en": "against (touching or leaning on)", "extra": "contre + 名词", "zh": "紧靠；贴着（接触、倚靠）", "pic": "fw-contre", "example": ["Lison pose le vélo [contre] le mur.", "Lison 把自行车靠在墙上。"], "sen": "Lison leans the bicycle against the wall.", "hook": "contre 强调贴靠：自行车接触墙面，靠墙支撑。"}, {"fr": "autour de", "pos": "prep", "en": "around (surrounding or circling)", "extra": "autour de / autour d'", "zh": "在……周围；绕着……", "pic": "fw-autour-de", "example": ["Les amies dansent [autour de] la table.", "朋友们围着桌子跳舞。"], "sen": "The friends dance around the table.", "hook": "autour de 是围绕：三个人分布在桌子四周。"}, {"fr": "au-dessus de", "pos": "prep", "en": "above (higher than, without implying contact)", "extra": "au-dessus de / au-dessus d'", "zh": "在……上方（位置更高，不要求接触）", "pic": "fw-au-dessus-de", "example": ["Le ballon flotte [au-dessus de] Pia.", "气球飘在 Pia 上方。"], "sen": "The balloon floats above Pia.", "hook": "au-dessus de 表示更高的位置：头顶与气球之间留着空气。"}, {"fr": "à droite de", "pos": "prep", "en": "to the right of", "extra": "à droite de / à droite d'", "zh": "在……右边", "pic": "fw-a-droite-de", "example": ["Ninon est [à droite de] la porte.", "Ninon 在门的右边。"], "sen": "Ninon is to the right of the door.", "hook": "以画面为参照：Ninon 在门的右手边。"}, {"fr": "à gauche de", "pos": "prep", "en": "to the left of", "extra": "à gauche de / à gauche d'", "zh": "在……左边", "pic": "fw-a-gauche-de", "example": ["Pia est [à gauche de] la porte.", "Pia 在门的左边。"], "sen": "Pia is to the left of the door.", "hook": "以画面为参照：Pia 在门的左手边。"}, {"fr": "au milieu de", "pos": "prep", "en": "in the middle / centre of", "extra": "au milieu de / au milieu d'", "zh": "在……中间／中央", "pic": "fw-au-milieu-de", "example": ["Lison danse [au milieu de] la pièce.", "Lison 在房间中央跳舞。"], "sen": "Lison dances in the middle of the room.", "hook": "au milieu de 强调中央：Lison 与四周墙壁都留出空间。"}, {"fr": "vers", "pos": "prep", "en": "towards (direction, without implying arrival)", "extra": "vers + 地点（也可表示大约的时间）", "zh": "朝着……方向（不表示已抵达）", "pic": "fw-vers", "example": ["Pia marche [vers] la maison.", "Pia 朝房子走去。"], "sen": "Pia walks towards the house.", "hook": "vers 只指出方向：Pia 朝房子走，还没有走到。"}, {"fr": "jusqu'à", "pos": "prep", "en": "as far as / until (an endpoint)", "extra": "jusqu'à / jusqu'au / jusqu'aux", "zh": "一直到……为止（空间或时间终点）", "pic": "fw-jusqu-a", "example": ["Ninon marche [jusqu'à] la porte.", "Ninon 一直走到门口。"], "sen": "Ninon walks all the way to the door.", "hook": "jusqu'à 强调终点：路程一直延伸到门口，并在那里停下。"}, {"fr": "à travers", "pos": "prep", "en": "through / across (moving across an area or barrier)", "extra": "à travers + 名词", "zh": "穿过……内部或横贯……", "pic": "fw-a-travers", "example": ["Lison marche [à travers] la forêt.", "Lison 穿过森林。"], "sen": "Lison walks through the forest.", "hook": "à travers 是从内部穿过：路径横穿树林，两边都有树。"}, {"fr": "le long de", "pos": "prep", "en": "along (following the length of something)", "extra": "le long de / le long d'", "zh": "沿着……（顺着长形参照物）", "pic": "fw-le-long-de", "example": ["Ninon marche [le long de] la rivière.", "Ninon 沿着河边行走。"], "sen": "Ninon walks along the river.", "hook": "le long de 是沿着：路线顺着河流延伸，不横穿河面。"}, {"fr": "sauf", "pos": "prep", "en": "except / excluding", "extra": "sauf + 名词", "zh": "除了……以外（将其排除）", "pic": "fw-sauf", "example": ["Toutes les amies dansent [sauf] Pia.", "朋友们都在跳舞，只有 Pia 除外。"], "sen": "All the friends dance except Pia.", "hook": "sauf 把一项排除：大家跳舞，唯独 Pia 没有跳。"}, {"fr": "avant", "pos": "prep", "en": "before (earlier than a time or event)", "extra": "avant + 名词；avant de + 不定式", "zh": "在……之前（先于某时刻或事件）", "pic": "fw-avant", "example": ["Pia se lave les mains [avant] le repas.", "Pia 在吃饭前洗手。"], "sen": "Pia washes her hands before the meal.", "hook": "avant：先洗手，后吃饭；左格的动作发生得更早。"}, {"fr": "après", "pos": "prep", "en": "after (later than a time or event)", "extra": "après + 名词；après + 过去不定式", "zh": "在……之后（晚于某时刻或事件）", "pic": "fw-apres", "example": ["Pia se lave les mains [après] le repas.", "Pia 在吃完饭后洗手。"], "sen": "Pia washes her hands after the meal.", "hook": "après：先吃饭，后洗手；洗手发生在饭后。"}, {"fr": "pendant", "pos": "prep", "en": "during / for (a time interval or duration)", "extra": "pendant + 时间段或事件名词", "zh": "在……期间；持续……时间", "pic": "fw-pendant", "example": ["Ninon lit [pendant] le repas.", "Ninon 在吃饭的时候看书。"], "sen": "Ninon reads during the meal.", "hook": "pendant 强调同时：吃饭还在进行，看书也在进行。"}, {"fr": "depuis", "pos": "prep", "en": "since / for (continuing from a starting point)", "extra": "depuis + 起点或时长", "zh": "自从；已经……之久（延续到参照时刻）", "pic": "fw-depuis", "example": ["Pia attend [depuis] le matin.", "Pia 从早上就一直等到现在。"], "sen": "Pia has been waiting since the morning.", "hook": "depuis：从早上开始，一直延续到现在，还没有结束。"}, {"fr": "et", "pos": "conj", "en": "and (joining two items or facts)", "extra": "et", "zh": "和；并且（把两项一起连接）", "pic": "fw-et", "example": ["Pia prend du pain [et] du lait.", "Pia拿面包和牛奶。"], "sen": "Pia takes bread and milk.", "hook": "et 把两项一起加入；画面中的面包和牛奶都被拿走。"}, {"fr": "ou", "pos": "conj", "en": "or (offering alternatives)", "extra": "ou / ou bien", "zh": "或者（在选项之间选择）", "pic": "fw-ou-conj", "example": ["Tu veux du thé [ou] du café ?", "你想要茶还是咖啡？"], "sen": "Do you want tea or coffee?", "hook": "ou 表示可选的另一项；本句是茶或咖啡的选择。"}, {"fr": "mais", "pos": "conj", "en": "but (contrasting with an expectation or fact)", "extra": "mais", "zh": "但是（结果或事实与预期相反）", "pic": "fw-mais", "example": ["Il pleut, [mais] Ninon sourit dehors.", "外面下着雨，但是Ninon在外面微笑。"], "sen": "It is raining, but Ninon is smiling outside.", "hook": "mais 强调转折：灰暗的雨天，结果却是开心的笑脸。"}, {"fr": "ni", "pos": "conj", "en": "nor / neither ... nor (joining negative alternatives)", "extra": "ni；ne ... ni ... ni；ne ... pas ... ni", "zh": "也不；既不……也不……（否定并列）", "pic": "fw-ni", "example": ["Pia ne boit pas de thé [ni] de café.", "Pia既不喝茶，也不喝咖啡。"], "sen": "Pia drinks neither tea nor coffee.", "hook": "ne ... pas ... ni ... 把第二项也否定：茶不喝，咖啡也不喝。"}, {"fr": "donc", "pos": "conj", "en": "so / therefore (a result or conclusion)", "extra": "donc（项目归入 conj；现代语法常归为连接副词）", "zh": "所以；因此（推出结果或结论）", "pic": "fw-donc", "example": ["Il pleut, [donc] Ninon prend un parapluie.", "下雨了，所以Ninon拿起一把伞。"], "sen": "It is raining, so Ninon takes an umbrella.", "hook": "donc 后面是由前面情况推出的结果：下雨，所以拿伞。"}, {"fr": "parce que", "pos": "conj", "en": "because (giving the actual cause of something)", "extra": "parce que / parce qu'", "zh": "因为（说明事情发生的实际原因）", "pic": "fw-parce-que", "example": ["Lison boit [parce qu']elle a soif.", "Lison喝水，因为她口渴了。"], "sen": "Lison drinks because she is thirsty.", "hook": "parce que 解释动作发生的原因；元音前变 parce qu'。这里是口渴促成喝水。"}, {"fr": "si", "pos": "conj", "en": "if (a condition; also whether in indirect questions)", "extra": "si / s'（仅在 il / ils 前省音）；si + 现在时", "zh": "如果（提出条件；也用于间接疑问“是否”）", "pic": "fw-si", "example": ["Pia reste chez elle [s']il pleut.", "如果下雨，Pia就待在家里。"], "sen": "Pia stays at home if it rains.", "hook": "si 提出条件；在 il 前省音为 s'。想象中的雨，是留下来的条件。"}, {"fr": "quand", "pos": "conj", "en": "when (the time at which something happens)", "extra": "quand / lorsque / lorsqu'（lorsque 较书面，同义合并）", "zh": "当……的时候（某事发生的时间）", "pic": "fw-quand", "example": ["[Quand] le soleil se lève, Ninon se réveille.", "太阳升起的时候，Ninon醒来。"], "sen": "When the sun rises, Ninon wakes up.", "hook": "quand 给动作标出发生的时间：太阳升起的时候，人也醒来。"}, {"fr": "que", "pos": "conj", "en": "that (introducing what is said or thought)", "extra": "que / qu'；dire que / penser que", "zh": "引出所说、所想的内容（宾语从句）", "pic": "fw-que-conj", "example": ["Lison dit [que] Pia aime les chats.", "Lison说Pia喜欢猫。"], "sen": "Lison says that Pia likes cats.", "hook": "连词 que 引出“说的内容”：气泡里整件事是 Lison 说的话。"}, {"fr": "comme", "pos": "conj", "en": "as / like; since (comparison, or a cause placed first)", "extra": "comme；比较“像……一样”，句首也可表原因“由于”", "zh": "像……一样；由于（比较，或置于句首的原因）", "pic": "fw-comme", "example": ["Pia danse [comme] Ninon danse.", "Pia像Ninon那样跳舞。"], "sen": "Pia dances as Ninon does.", "hook": "comme 在这里比较做法：Pia照着Ninon的姿势跳。"}, {"fr": "car", "pos": "conj", "en": "for / because (justifying a preceding statement)", "extra": "car（通常接在前一个判断之后）", "zh": "因为；要知道（补充理由，解释前面的判断）", "pic": "fw-car", "example": ["Pia est là, [car] sa lumière est allumée.", "Pia在那里，因为她房间的灯亮着。"], "sen": "Pia is there, for her light is on.", "hook": "car 补充判断的理由：灯亮着是“Pia在家”的线索，不是让她在家的原因。"}, {"fr": "puisque", "pos": "conj", "en": "since / seeing that (an evident or shared reason)", "extra": "puisque / puisqu'", "zh": "既然（以显而易见或双方已知的原因作依据）", "pic": "fw-puisque", "example": ["[Puisque] tu es là, nous mangeons ensemble.", "既然你在这里，我们就一起吃饭。"], "sen": "Since you are here, we are eating together.", "hook": "puisque 从双方已经知道的事实出发：你已经在这里，那我们一起吃。"}, {"fr": "pendant que", "pos": "conj", "en": "while (two activities taking place at the same time)", "extra": "pendant que / pendant qu'", "zh": "在……的同时（两项活动同时进行）", "pic": "fw-pendant-que", "example": ["Ninon lit [pendant que] Pia dessine.", "Ninon读书的同时，Pia在画画。"], "sen": "Ninon reads while Pia draws.", "hook": "pendant que 强调两个动作同时进行：一个读，一个画。"}, {"fr": "alors que", "pos": "conj", "en": "whereas (contrasting two different facts)", "extra": "alors que / alors qu'（也可表示同时）", "zh": "而；却（对照两个不同的事实）", "pic": "fw-alors-que", "example": ["Ninon a chaud, [alors que] Pia a froid.", "Ninon觉得热，而Pia觉得冷。"], "sen": "Ninon feels hot, whereas Pia feels cold.", "hook": "alors que 在这里把相反的事实放在一起：这边热，那边冷。"}, {"fr": "même si", "pos": "conj", "en": "even if / even though (a condition that does not change the result)", "extra": "même si / même s'（仅在 il / ils 前省音）", "zh": "即使；尽管（条件不改变结果）", "pic": "fw-meme-si", "example": ["Pia sort [même s']il pleut.", "即使下雨，Pia也出门。"], "sen": "Pia goes out even if it rains.", "hook": "même si 表示这个条件也不改变结果；même s'il 中 si 省音。无论晴雨，她都出门。"}, {"fr": "depuis que", "pos": "conj", "en": "since (starting from the event in a clause)", "extra": "depuis que / depuis qu'", "zh": "自从……以来（用一个事件说明开始时间）", "pic": "fw-depuis-que", "example": ["Pia sourit [depuis que] Ninon est arrivée.", "自从Ninon来了，Pia就一直笑着。"], "sen": "Pia has been smiling since Ninon arrived.", "hook": "depuis que 用事件作起点：Ninon到来之后，Pia的笑容一直持续到现在。"}, {"fr": "le", "pos": "det", "en": "the (a person or thing already identified; definite article)", "extra": "le / la / l' / les；à + le → au，à + les → aux；de + le → du，de + les → des", "zh": "这／那（些）已知的人或物（定冠词）", "pic": "fw-le-det", "example": ["Pia prend [le] livre de Ninon.", "Pia拿起Ninon的那本书。"], "sen": "Pia takes Ninon's book.", "hook": "le 指已经知道是哪一本；先认过，再从其他书里找到同一本。"}, {"fr": "un", "pos": "det", "en": "a/an (one unspecified person or thing; singular indefinite article)", "extra": "un / une（单数）；复数 des 单列", "zh": "一个未特指的人或物（单数不定冠词）", "pic": "fw-un", "example": ["Pia prend [un] livre.", "Pia拿起一本书。"], "sen": "Pia takes a book.", "hook": "un 在这里是未指定的“一本”：闭眼随手拿，哪一本都可以。"}, {"fr": "des", "pos": "det", "en": "some (unspecified countable people or things; plural indefinite article)", "extra": "des（复数）；单数 un / une 单列；不是 de + les 的缩合用法", "zh": "一些可数的人或物（复数不定冠词）", "pic": "fw-des", "example": ["Lison achète [des] pommes au marché.", "Lison在市场买了一些苹果。"], "sen": "Lison buys some apples at the market.", "hook": "des 是可数名词前的复数不定冠词：不止一个，但没有说是哪几个。"}, {"fr": "du", "pos": "det", "en": "some/an amount of (an uncountable substance; partitive article)", "extra": "du / de la / de l'（本条学习不可数名词前的部分冠词）", "zh": "一些不可数的东西（部分冠词，如水、面包）", "pic": "fw-du", "example": ["Ninon verse [du] lait dans son bol.", "Ninon往自己的碗里倒了一些牛奶。"], "sen": "Ninon pours some milk into her bowl.", "hook": "du 在这里表示不可数食物的一部分：倒一些牛奶，而不是数几个瓶子。"}, {"fr": "ce", "pos": "det", "en": "this/that; these/those (pointing out a person or thing before a noun)", "extra": "ce / cet（阳性单数，紧接元音或哑音 h 开头的词时）/ cette / ces；可加 -ci / -là 区分近远", "zh": "这／那个，这／那些（指着名词所指的人或物）", "pic": "fw-ce-det", "example": ["Pia veut [ce] gâteau près d'elle.", "Pia想要她身边的这个蛋糕。"], "sen": "Pia wants this cake beside her.", "hook": "ce 直接指出某个东西；这里由手指和视线共同锁定近处这个蛋糕。"}, {"fr": "mon", "pos": "det", "en": "my (before a noun; belonging to the speaker)", "extra": "mon / ma / mes；阴性单数 ma 在紧接元音或哑音 h 开头的词前改用 mon；复数仍用 mes", "zh": "我的（名词前，物主是说话人自己）", "pic": "fw-mon", "example": ["Je porte [mon] sac rouge.", "我正拿着我自己的红色包。"], "sen": "I am carrying my red bag.", "hook": "mon 是说话人的“我的”；看谁在说话、谁指着自己，不只看包的颜色。"}, {"fr": "ton", "pos": "det", "en": "your (before a noun; belonging to one familiar addressee)", "extra": "ton / ta / tes；阴性单数 ta 在紧接元音或哑音 h 开头的词前改用 ton；复数仍用 tes", "zh": "你的（名词前，物主是一个熟悉的听话人）", "pic": "fw-ton", "example": ["Pia, je porte [ton] sac blanc.", "Pia，我正替你拿着你的白色包。"], "sen": "Pia, I am carrying your white bag.", "hook": "ton 指听话人的“你的”；Ninon拿着包，但所有者是她正对着说话的Pia。"}, {"fr": "son", "pos": "det", "en": "his/her (before a noun; belonging to one person being discussed)", "extra": "son / sa / ses；按所修饰名词的性数配合；阴性单数 sa 在紧接元音或哑音 h 开头的词前改用 son；复数仍用 ses", "zh": "他／她的（名词前，物主是谈到的一个人）", "pic": "fw-son", "example": ["Pia arrive avec [son] sac blanc.", "Pia带着她自己的白色包来了。"], "sen": "Pia arrives with her white bag.", "hook": "son 指谈到的那个人的东西；这里说话人与听话人之外，包属于Pia。"}, {"fr": "notre", "pos": "det", "en": "our (before a noun; belonging to a group including the speaker)", "extra": "notre / nos", "zh": "我们的（名词前，物主包括说话人在内的一群人）", "pic": "fw-notre", "example": ["Voici [notre] petite maison.", "这是我们的小房子。"], "sen": "Here is our little house.", "hook": "notre 的所有者包括说话人：Ninon把自己和Pia一起圈进“我们”。"}, {"fr": "votre", "pos": "det", "en": "your (before a noun; plural addressees or one formal addressee)", "extra": "votre / vos", "zh": "你们的／您的（名词前，复数或敬称物主）", "pic": "fw-votre", "example": ["Ninon, Pia, voici [votre] maison.", "Ninon、Pia，这是你们的房子。"], "sen": "Ninon, Pia, here is your house.", "hook": "votre 在这里是“你们的”：说话人Lison面对两个听者，但自己不属于物主群体。"}, {"fr": "leur", "pos": "det", "en": "their (before a noun; belonging to other people)", "extra": "leur / leurs；按被拥有的东西的单复数配合", "zh": "他们／她们的（名词前，物主是不含说话人的多人）", "pic": "fw-leur-det", "example": ["Ninon et Pia ouvrent [leur] porte.", "Ninon和Pia打开她们自己的门。"], "sen": "Ninon and Pia open their door.", "hook": "leur 在名词前表示“她们的”；门属于谈到的Ninon和Pia这两个人。"}, {"fr": "quel", "pos": "det", "en": "which/what (before a noun; asking for a choice or identity)", "extra": "quel / quelle / quels / quelles（后接名词）", "zh": "哪一个／哪些（名词前，询问选择或身份）", "pic": "fw-quel", "example": ["[Quel] gâteau veux-tu pour ton anniversaire ?", "你生日想要哪一个蛋糕？"], "sen": "Which cake do you want for your birthday?", "hook": "quel 后接名词提出选择问题；尚未指中任何一个，与 ce 的已确定指示不同。"}, {"fr": "chaque", "pos": "det", "en": "each/every (before a singular noun; considering members one by one)", "extra": "chaque + 单数名词", "zh": "每一个（后接单数名词，逐个看待）", "pic": "fw-chaque", "example": ["Ninon donne une tasse à [chaque] amie.", "Ninon给每位朋友一个杯子。"], "sen": "Ninon gives a cup to each friend.", "hook": "chaque 强调逐一：先给这一位，再给下一位，每一位都照顾到。"}, {"fr": "tout", "pos": "det", "en": "the whole/all (before a noun; covering the entire thing or group)", "extra": "tout / toute / tous / toutes；tout le / toute la / tous les / toutes les", "zh": "整个／全部的（名词前，涵盖整体或所有成员）", "pic": "fw-tout-det", "example": ["Pia prend [tous] les biscuits.", "Pia拿走了所有饼干。"], "sen": "Pia takes all the biscuits.", "hook": "tous 把已知的一整组全部包括：盘子空了，一块也没剩下。"}, {"fr": "quelques", "pos": "det", "en": "a few (before a plural noun; a small unspecified number)", "extra": "quelques + 复数名词（本条学“少量几个”；单数 quelque 表“某个”较偏书面）", "zh": "少量几个（名词前，数量不多但不精确）", "pic": "fw-quelques", "example": ["Il reste [quelques] biscuits dans la grande boîte.", "大盒子里只剩下少量几块饼干。"], "sen": "A few biscuits remain in the large box.", "hook": "quelques 强调数量不多，不规定几块以上或以下；留意大盒子里只剩少量。"}, {"fr": "plusieurs", "pos": "det", "en": "several/multiple (before a plural noun; more than one, with no fixed count)", "extra": "plusieurs + 复数名词（阴阳性同形）", "zh": "好几个／多个（名词前，不限定为少量）", "pic": "fw-plusieurs", "example": ["Ninon porte [plusieurs] livres dans ses bras.", "Ninon怀里抱着好几本书。"], "sen": "Ninon is carrying several books in her arms.", "hook": "plusieurs 强调不止一个、好几个；它与 quelques 的数量范围可以重叠，不能靠固定数字硬分。"}, {"fr": "aucun", "pos": "det", "en": "no/not a single (before a noun; zero instances)", "extra": "aucun / aucune；ne ... aucun(e) + 通常为单数的名词", "zh": "一个……也没有（名词前，数量为零）", "pic": "fw-aucun", "example": ["Pia ne trouve [aucun] biscuit.", "Pia找不到一块饼干。"], "sen": "Pia cannot find a single biscuit.", "hook": "aucun 是否定数量为零：盒内没有，手中也没有，一块都找不到。"}, {"fr": "autre", "pos": "det", "en": "another/other (before a noun; distinct from the one(s) already mentioned)", "extra": "autre / autres；un autre / une autre / d'autres / les autres + 名词", "zh": "另一个／别的（名词前，区别于刚才那个或那些）", "pic": "fw-autre", "example": ["Pia choisit un [autre] chapeau.", "Pia选了另一个帽子。"], "sen": "Pia chooses another hat.", "hook": "autre 要有参照：先前的是蓝帽子，后来换成另一个红帽子。"}, {"fr": "même", "pos": "det", "en": "the same (before a noun; identical in identity or kind)", "extra": "même / mêmes；le même / la même / les mêmes + 名词", "zh": "同一个／相同的（名词前，强调身份或样式一致）", "pic": "fw-meme", "example": ["Ninon et Pia lisent le [même] livre.", "Ninon和Pia读的是同一本书。"], "sen": "Ninon and Pia read the same book.", "hook": "même 强调同一个：两人的手和目光都落在唯一的那本书上。"}, {"fr": "certain", "pos": "det", "en": "a certain/some particular (before a noun; a specific but unnamed person, thing or subset)", "extra": "certain / certaine / certains / certaines；un certain / une certaine；certains / certaines + 复数名词", "zh": "某个／某些（名词前，指特定但未明说的人或物）", "pic": "fw-certain", "example": ["[Certaines] bananes sont jaunes, les autres sont vertes.", "其中一些香蕉是黄色的，其他的还是绿色的。"], "sen": "Some of the bananas are yellow; the others are green.", "hook": "certaines 选出一部分而非全部；这里用黄色这一特征标出其中那部分香蕉。"}];
 const V_FUNC_START = 52;
-Object.entries({"pron": "基础功能词 · 代词", "prep": "基础功能词 · 介词", "conj": "基础功能词 · 连词", "det": "基础功能词 · 限定词"}).forEach(([pos,t]) => VOCAB.push({id:"fw-"+pos,t,w:V_FUNCWORDS.filter(x=>x.pos===pos).map(x=>[x.fr,x.pos,x.en,x.extra,x])}));
+Object.entries({"pron": "基础虚词 · 代词", "prep": "基础虚词 · 介词", "conj": "基础虚词 · 连词", "det": "基础虚词 · 限定词"}).forEach(([pos,t]) => VOCAB.push({id:"fw-"+pos,t,w:V_FUNCWORDS.filter(x=>x.pos===pos).map(x=>[x.fr,x.pos,x.en,x.extra,x])}));
 const V_WORDS = [];
 VOCAB.forEach(th => th.w.forEach(([fr, pos, en, extra, meta]) => V_WORDS.push({ id: th.id + ":" + fr, th: th.id, fr, pos, en, extra, ...meta })));
 const V_BY_ID = new Map(V_WORDS.map(w => [w.id, w]));
@@ -22449,7 +22454,7 @@ function vThemeWords(id) {
   return id === "all" ? V_MIXED : id === "weak" ? V_MIXED.filter(w => vState(w) === "weak") : V_WORDS.filter(w => w.th === id);
 }
 const vLvNo = () => vTheme.startsWith("lv:") ? Number(vTheme.slice(3)) : -1;
-const vTitle = () => vTheme === "all" ? "全部单词（打乱）" : vTheme === "weak" ? "生词本" : vTheme === "levels" ? "闯关" : vTheme === "spire" ? "巴黎塔尖" : vLvNo() >= 0 ? `${vLvNo() >= V_FUNC_START ? "基础功能词" : "闯关"} · 第 ${vLvNo() >= V_FUNC_START ? vLvNo() - V_FUNC_START + 1 : vLvNo() + 1} 关` : VOCAB.find(t => t.id === vTheme).t;
+const vTitle = () => vTheme === "all" ? "全部单词（打乱）" : vTheme === "weak" ? "生词本" : vTheme === "levels" ? "闯关" : vTheme === "spire" ? "巴黎塔尖" : vLvNo() >= 0 ? `${vLvNo() >= V_FUNC_START ? "基础虚词" : "闯关"} · 第 ${vLvNo() >= V_FUNC_START ? vLvNo() - V_FUNC_START + 1 : vLvNo() + 1} 关` : VOCAB.find(t => t.id === vTheme).t;
 
 // ---------- 闯关：所有单词事先分好关（levels.js），每关 10 个词，来自不同主题 ----------
 // 做到一半退出也没关系：进度存在本机并跟着账号同步，再点这一关就从上次那题接着做（见 vLvSave）。
@@ -22524,11 +22529,13 @@ function vLevelMap() {
   const tags = el("div", "tagrow");
   tags.append(el("span", "tag", "背单词 · 闯关"), el("span", "tag plain", `已通关 ${vStats ? cleared : "…"} / ${lv.length}`));
   card.append(tags, el("p", "sub", "每关 10 个词，来自不同主题。整关做完一遍（每个词的每种题型各一题）就算通关、解锁下一关，并按错题数计星：最多错 1 题三颗星，错 2–3 题两颗星，错 4–5 题一颗星，错 6 题以上没有星星。每关记最好的一次。"));
-  card.append(el("h3", "", "主题词汇"));
+  card.append(el("h3", "", "基础虚词"));
   let grid = el("div", "v-levels");
-  const next = lv.find(x => x.open && !x.clear);
-  lv.forEach(x => {
-    if (x.k === V_FUNC_START) { card.append(grid, el("h3", "", "基础功能词")); grid = el("div", "v-levels"); }
+  // Change display order only: stored level indices, stars and saved runs keep their IDs.
+  const ordered = [...lv.slice(V_FUNC_START), ...lv.slice(0, V_FUNC_START)];
+  const next = ordered.find(x => x.open && !x.clear);
+  ordered.forEach(x => {
+    if (x.k === 0) { card.append(grid, el("h3", "", "主题词汇")); grid = el("div", "v-levels"); }
     const b = el("button", "v-lv" + (x.clear ? " clear" : "") + (x === next ? " next" : "") + (x.open ? "" : " locked"));
     b.type = "button"; b.id = "vLv" + (x.k + 1);
     b.disabled = !x.open || !vStats;
@@ -22541,7 +22548,7 @@ function vLevelMap() {
   card.append(grid);
   if (next) {
     const nsv = vLvSaved(next.k);
-    const go = el("button", "btn", `继续闯关：第 ${vDisplayLevel(next.k)} 关` + (nsv ? `（接着第 ${nsv.i + 1} 题）` : "")); go.type = "button"; go.id = "vLvGo";
+    const go = el("button", "btn", (next.k >= V_FUNC_START ? `继续基础虚词：第 ${vDisplayLevel(next.k)} 关` : `继续主题词汇：第 ${vDisplayLevel(next.k)} 关`) + (nsv ? `（接着第 ${nsv.i + 1} 题）` : "")); go.type = "button"; go.id = "vLvGo";
     go.addEventListener("click", () => { vTheme = "lv:" + next.k; vSess = null; vToc(); vStart(next.ws); });
     const row = el("div", "actions"); row.append(go); card.append(row);
   }
@@ -25798,40 +25805,154 @@ const PET_LEVEL_NAMES = ['初识', '熟悉', '默契', '伙伴', '老搭档'];
 // not inferred from the interface translator or generated online.
 const PET_LINES = {
   ninon: [
-    ['tap', 0, 'Prends ton temps, on va y arriver ensemble.', '慢慢来，我们一起弄明白。', "Take your time. We'll work it out together."],
-    ['tap', 1, 'Chaque petit pas compte. Je vois tes progrès.', '每一小步都算数。我看到了你的进步。', 'Every little step counts. I can see your progress.'],
-    ['tap', 2, 'Tu peux essayer sans avoir peur de te tromper.', '放心试试，答错也没关系。', 'You can try without being afraid of making mistakes.'],
-    ['tap', 3, 'On a trouvé notre rythme, tu ne trouves pas ?', '我们找到自己的节奏了，你觉得呢？', "We've found our rhythm, don't you think?"],
-    ['tap', 4, 'Quel chemin parcouru ! Et si on continuait tranquillement ?', '已经走了好远！我们继续慢慢来吧。', 'Look how far we have come! Shall we keep going at our own pace?'],
-    ['happy', 0, 'Bravo ! Tu as bien compris.', '真棒！你理解了。', 'Well done! You understood it.'],
-    ['sad', 0, 'Ce n\'est pas grave. Reprenons ce point ensemble.', '没关系，我们一起再看看这一点。', "It's all right. Let's go over this together."],
-    ['streak', 0, 'Quelle belle série ! Garde ton rythme.', '连对得真漂亮！保持自己的节奏。', 'What a lovely streak! Keep your own pace.'],
-    ['plan', 0, 'Ton programme est terminé. Tu peux être fier de toi.', '今天的计划完成了，你可以为自己骄傲。', 'Your plan is complete. You can be proud of yourself.'],
-    ['welcome', 0, 'Quel plaisir de te revoir ! On reprend doucement ?', '很高兴又见到你！我们慢慢继续吧？', "It's lovely to see you again! Shall we ease back into it?"]
+    ["enter", 0, "On commence à ton rythme.", "我们按你的节奏开始。", "Let's start at your own pace."],
+    ["enter", 0, "Une question à la fois, ça suffit.", "一次看一道题就好。", "One question at a time is enough."],
+    ["enter", 1, "Prends le temps de bien lire.", "慢慢把题目读清楚。", "Take your time to read it carefully."],
+    ["enter", 2, "Je suis là, on essaie ensemble.", "我在这里，我们一起试试。", "I'm here. Let's give it a try together."],
+    ["enter", 3, "On connaît notre rythme, maintenant.", "现在我们都熟悉自己的节奏了。", "We've found our rhythm now."],
+    ["enter", 4, "Notre petite équipe est prête.", "我们的小队准备好了。", "Our little team's ready."],
+    ["happy", 0, "Bravo, tu as bien compris !", "真棒，你理解了！", "Well done, you've got it!"],
+    ["happy", 0, "Oui, c'est la bonne réponse !", "对，这就是正确答案！", "Yes, that's the right answer!"],
+    ["happy", 1, "Bien joué, tu peux sourire !", "答得漂亮，可以开心一下啦！", "Well done, you've earned a smile!"],
+    ["happy", 2, "Tes efforts portent leurs fruits.", "你的努力有了收获。", "Your efforts are paying off."],
+    ["happy", 3, "Je vois comme tu progresses.", "我看到了你的进步。", "I can see how much you're improving."],
+    ["happy", 4, "Ça me fait plaisir de te voir réussir.", "看到你答对，我也很开心。", "I'm happy to see you doing well."],
+    ["sad", 0, "Ce n'est pas grave, on reprend.", "没关系，我们再看看。", "It's okay. Let's go over it again."],
+    ["sad", 0, "Une erreur, ça arrive à tout le monde.", "谁都会有答错的时候。", "Everyone makes mistakes."],
+    ["sad", 1, "On regarde l'explication ensemble ?", "一起看看讲解，好吗？", "Shall we read the explanation together?"],
+    ["sad", 2, "Tu as le droit de prendre ton temps.", "你可以慢慢来。", "It's okay to take your time."],
+    ["sad", 3, "Cette erreur n'efface pas tes progrès.", "这次答错不会抹去你的进步。", "This mistake doesn't erase your progress."],
+    ["sad", 4, "Je reste à tes côtés, sans te presser.", "我陪着你，不着急。", "I'm here with you. There's no rush."],
+    ["streak", 0, "Quelle belle série !", "连对得真漂亮！", "That's a lovely streak!"],
+    ["streak", 0, "Ça avance bien, garde ton rythme.", "很顺利，保持自己的节奏。", "It's going well. Keep your own pace."],
+    ["streak", 1, "Bravo, plusieurs bonnes réponses de suite !", "真棒，连续答对了好几题！", "Well done, you've got several right in a row!"],
+    ["streak", 2, "Tu peux être fier de cette série.", "你可以为这次连对骄傲。", "You've earned the right to feel proud."],
+    ["streak", 3, "On fête ça avec un grand sourire ?", "用一个大大的微笑庆祝吧？", "Let's celebrate with a big smile."],
+    ["streak", 4, "J'aime partager ces petites victoires.", "我喜欢和你分享这些小胜利。", "I love sharing these little wins with you."],
+    ["plan", 0, "Ton programme est terminé, bravo !", "今天的计划完成了，真棒！", "Your plan's complete. Well done!"],
+    ["plan", 0, "Tout est fait pour aujourd'hui.", "今天的计划都做完了。", "That's today's plan all done."],
+    ["plan", 1, "Tu as fini. Une pause te ferait du bien.", "完成啦，休息一下会很舒服。", "You're done. A break would do you good."],
+    ["plan", 2, "Tu peux profiter de ta pause.", "可以安心享受休息时间啦。", "You can enjoy your break now."],
+    ["plan", 3, "Mission accomplie, à ton rythme.", "按自己的节奏完成任务啦。", "Mission complete, at your own pace."],
+    ["plan", 4, "Merci pour ce moment passé ensemble.", "谢谢你和我一起度过这段时间。", "Thanks for spending this time with me."],
+    ["welcome", 0, "Bonjour ! Ça me fait plaisir de te voir.", "你好！见到你很开心。", "Hi! It's lovely to see you."],
+    ["welcome", 0, "Bienvenue, installe-toi tranquillement.", "欢迎，慢慢坐好吧。", "Welcome. Make yourself comfortable."],
+    ["welcome", 1, "Te voilà ! Comment vas-tu ?", "你来啦！最近好吗？", "There you are! How're you doing?"],
+    ["welcome", 2, "Contente de te retrouver !", "很高兴又见到你！", "I'm glad you're here again!"],
+    ["welcome", 3, "On reprend nos petites habitudes ?", "继续我们的小习惯，好吗？", "Shall we get back to our little routine?"],
+    ["welcome", 4, "Notre rendez-vous me fait toujours plaisir.", "每次见面我都很开心。", "I'm always happy when we meet."],
+    ["idle", 0, "Tu peux faire une pause, bien sûr.", "当然可以休息一下。", "It's fine to take a break."],
+    ["idle", 0, "Un peu d'eau te ferait du bien ?", "要不要喝点水？", "How about a little water?"],
+    ["idle", 1, "Repose tes yeux un instant.", "让眼睛休息一会儿吧。", "Let's rest our eyes for a moment."],
+    ["idle", 2, "Rien ne presse, prends ton temps.", "不着急，慢慢来。", "There's no rush. Take your time."],
+    ["idle", 3, "Je reste ici pendant ta pause.", "你休息的时候，我就在这里。", "I'll be here while you take a break."],
+    ["idle", 4, "Un moment de calme, ça fait du bien.", "安静一会儿也很舒服。", "A quiet moment feels good, doesn't it?"],
+    ["tap", 0, "On va y arriver ensemble.", "我们一起弄明白。", "We'll work it out together."],
+    ["tap", 0, "Je t'écoute, prends ton temps.", "我听着呢，慢慢来。", "I'm listening. Take your time."],
+    ["tap", 1, "Chaque petit pas compte.", "每一小步都算数。", "Every little step counts."],
+    ["tap", 2, "Tu peux essayer sans crainte.", "放心试试吧。", "You don't need to be afraid to try."],
+    ["tap", 3, "On forme une belle équipe, non ?", "我们是不错的搭档，对吧？", "We make a good team, don't we?"],
+    ["tap", 4, "Quel chemin on a parcouru ensemble !", "我们已经一起走了这么远！", "Look how far we've come together!"]
   ],
   lison: [
-    ['tap', 0, 'Et si on regardait ce petit détail ensemble ?', '要不要一起看看这个小细节？', 'Shall we look at this little detail together?'],
-    ['tap', 1, 'Tu as remarqué cet indice ? Je savais que tu le trouverais.', '发现这个线索了吗？我就知道你能找到。', 'Did you spot that clue? I knew you would find it.'],
-    ['tap', 2, 'Je te laisse deviner… mais je reste là pour t\'aider.', '先让你猜猜……不过我会在这里帮你。', "I'll let you guess, but I'm here to help."],
-    ['tap', 3, 'On fait une bonne équipe. Étonnant, non ?', '我们搭档得不错。是不是有点意外？', "We make a good team. Surprising, isn't it?"],
-    ['tap', 4, 'Même mes petits pièges ne te font plus peur.', '连我的小谜题都难不倒你了。', "Even my little puzzles don't scare you anymore."],
-    ['happy', 0, 'Bien joué. Rien ne t\'échappe aujourd\'hui !', '做得漂亮。今天什么都逃不过你的眼睛！', 'Well played. Nothing gets past you today!'],
-    ['sad', 0, 'Cette question cachait un piège. Regardons-le ensemble.', '这题藏了个陷阱。我们一起看清它。', "This question hid a trap. Let's look at it together."],
-    ['streak', 0, 'Encore juste ? Tu commences à me surprendre.', '又答对了？你开始让我惊讶了。', 'Correct again? You are starting to surprise me.'],
-    ['plan', 0, 'Tout est fait. Je t\'accorde une pause bien méritée.', '全部完成了。准你休息一下，当然是你应得的。', 'All done. I grant you a well-earned break.'],
-    ['welcome', 0, 'Te revoilà ! J\'ai gardé ta place, évidemment.', '你回来啦！当然给你留着位置。', 'There you are! I saved your place, of course.']
+    ["enter", 0, "Un petit défi, ça te tente ?", "来个小挑战，有兴趣吗？", "Fancy a little challenge?"],
+    ["enter", 0, "Voyons ce que cette question nous réserve.", "看看这道题给我们准备了什么。", "Let's see what this question has for us."],
+    ["enter", 1, "Je parie que tu vas trouver un indice.", "我猜你会找到线索。", "I bet you'll spot a clue."],
+    ["enter", 2, "On ouvre l'enquête ?", "开始调查，好吗？", "Shall we start our investigation?"],
+    ["enter", 3, "À nous deux, rien ne nous presse.", "咱们两个慢慢来，不着急。", "There's no rush when we're together."],
+    ["enter", 4, "Ton alliée est prête, comme toujours.", "你的盟友和往常一样准备好了。", "Your ally's ready, as always."],
+    ["happy", 0, "Bien joué, tu as trouvé !", "答得漂亮，你找到了！", "Well played, you've found it!"],
+    ["happy", 0, "Exactement. Je n'en attendais pas moins.", "完全正确。我就知道你可以。", "Exactly. I knew you had it in you."],
+    ["happy", 1, "Ah, tu as l'œil !", "啊，你眼睛真尖！", "You've got a sharp eye!"],
+    ["happy", 2, "Ce détail ne t'a pas échappé.", "这个细节没逃过你的眼睛。", "That detail didn't get past you."],
+    ["happy", 3, "Tu vois ? Mon pari était bon.", "看吧？我猜对了。", "See? I was right to bet on you."],
+    ["happy", 4, "Bien vu, partenaire. J'aime ton style.", "看得准，搭档。我喜欢你的风格。", "Good eye, partner. I like your style."],
+    ["sad", 0, "Ce détail était discret. On le revoit ?", "这个细节不显眼。再看看？", "That detail was easy to miss. Let's look again."],
+    ["sad", 0, "Pas de souci, on cherche ensemble.", "没关系，我们一起找答案。", "No worries. Let's work it out together."],
+    ["sad", 1, "L'explication va nous éclairer.", "讲解会帮我们弄清楚。", "The explanation will help us figure it out."],
+    ["sad", 2, "Une erreur peut nous donner un indice.", "答错也能给我们一个线索。", "A mistake can give us a clue."],
+    ["sad", 3, "On change d'angle, sans se presser.", "我们换个角度，慢慢看。", "Let's look at it another way. No rush."],
+    ["sad", 4, "Je suis ton alliée, même dans le doute.", "犹豫的时候，我也是你的盟友。", "I'm on your side, even when you're unsure."],
+    ["streak", 0, "Encore juste ? Bien joué !", "又答对了？漂亮！", "Right again? Well played!"],
+    ["streak", 0, "Une belle série, mine de rien.", "不声不响就连对了好几题。", "That's quite a streak, you know."],
+    ["streak", 1, "Tu collectionnes les bonnes réponses.", "你在收集正确答案呢。", "You're collecting correct answers."],
+    ["streak", 2, "Je note cette série, pour le plaisir.", "这次连对我记下了，开心一下。", "I'm noting this streak, just for fun."],
+    ["streak", 3, "Ton talent pour les détails se confirme.", "你发现细节的本领又被证明了。", "You've shown your eye for detail again."],
+    ["streak", 4, "Notre équipe a encore frappé !", "我们的搭档组合又成功了！", "Our team's done it again!"],
+    ["plan", 0, "Tout est fait. Beau travail !", "全部完成了。干得漂亮！", "It's all done. Nice work!"],
+    ["plan", 0, "Dossier terminé. Une pause ?", "任务档案结了。休息一下？", "Case closed. Fancy a break?"],
+    ["plan", 1, "Tu as rempli ton programme. Bravo !", "你完成计划了。真棒！", "You've finished your plan. Well done!"],
+    ["plan", 2, "Le repos fait aussi partie du plan.", "休息也是计划的一部分哦。", "Rest is part of the plan too."],
+    ["plan", 3, "Tout est réglé, tu peux souffler.", "都处理完了，可以松口气了。", "It's all sorted. You can relax."],
+    ["plan", 4, "Mission réussie, partenaire. On fête ça ?", "任务成功，搭档。庆祝一下？", "Mission complete, partner. Shall we celebrate?"],
+    ["welcome", 0, "Te voilà ! Ta place est libre.", "你来啦！位置给你留着。", "There you are! Your seat's free."],
+    ["welcome", 0, "Bonjour. On se retrouve enfin.", "你好。我们又见面了。", "Hello. Here we are again."],
+    ["welcome", 1, "Je savais qu'on se reverrait.", "我就知道还会再见到你。", "I knew we'd meet again."],
+    ["welcome", 2, "J'ai gardé ta place, évidemment.", "当然给你留着位置。", "I've saved your place, of course."],
+    ["welcome", 3, "Tiens, mon partenaire préféré !", "瞧，是我最喜欢的搭档！", "Well, it's my favorite partner!"],
+    ["welcome", 4, "Notre petite équipe est au complet.", "我们的小队到齐了。", "Our little team's all here."],
+    ["idle", 0, "Une pause ? Excellente stratégie.", "休息一下？好策略。", "Taking a break? Excellent strategy."],
+    ["idle", 0, "Même les détectives se reposent.", "侦探也要休息的。", "Even detectives need a break."],
+    ["idle", 1, "Je surveille les livres, va souffler.", "书本我看着，你休息吧。", "I'll watch the books. Go take a break."],
+    ["idle", 2, "Un verre d'eau, ça compte aussi.", "喝杯水也很有用哦。", "A glass of water helps too."],
+    ["idle", 3, "Le calme a parfois de bonnes idées.", "安静的时候，偶尔会有好点子。", "Quiet moments can bring good ideas."],
+    ["idle", 4, "Je garde notre coin au calme.", "我守着我们这个安静的小角落。", "I'll keep our little corner peaceful."],
+    ["tap", 0, "Et si on regardait ce petit détail ?", "要不要看看这个小细节？", "Shall we look at this little detail?"],
+    ["tap", 0, "Une idée ? Je suis tout ouïe.", "有想法吗？我洗耳恭听。", "Got an idea? I'm all ears."],
+    ["tap", 1, "J'aime les bonnes questions.", "我喜欢有意思的问题。", "I like a good question."],
+    ["tap", 2, "Je te laisse réfléchir. Je reste là.", "你先想想。我就在这里。", "I'll let you think. I'm staying right here."],
+    ["tap", 3, "On fait une bonne équipe, non ?", "我们搭档得不错，对吧？", "We make a good team, don't we?"],
+    ["tap", 4, "Notre secret ? Un peu de curiosité.", "我们的秘诀？一点点好奇心。", "Our secret? A little curiosity."]
   ],
   pia: [
-    ['tap', 0, 'Je peux te donner un indice… si tu veux.', '给你个提示也不是不行……你要的话。', 'I can give you a hint, if you want.'],
-    ['tap', 1, 'Tu progresses. Enfin, je dis ça comme ça.', '你有进步。嗯，我就是随口一说。', "You're making progress. Well, I'm just saying."],
-    ['tap', 2, 'Cette phrase m\'a fait penser à toi. C\'est tout.', '这句话让我想到你了。仅此而已。', 'This sentence reminded me of you. That is all.'],
-    ['tap', 3, 'Je préfère réviser avec toi. Ne me fais pas répéter.', '我更喜欢和你一起复习。别让我再说一遍。', "I prefer reviewing with you. Don't make me say it again."],
-    ['tap', 4, 'On continue ensemble, d\'accord ? Je me suis habituée.', '以后也一起学，好吗？我已经习惯了。', "We'll keep learning together, okay? I've got used to it."],
-    ['happy', 0, 'Pas mal ! Bon, c\'était même très bien.', '还不错！好吧，其实答得很棒。', 'Not bad! All right, it was actually very good.'],
-    ['sad', 0, 'Une erreur, ce n\'est rien. Je peux t\'aider à revoir.', '错一次不算什么。我可以陪你再看一遍。', 'One mistake is nothing. I can help you review it.'],
-    ['streak', 0, 'Encore une bonne réponse ! Tu peux sourire, tu sais.', '又答对了一题！你可以开心一下的。', "Another correct answer! You're allowed to smile, you know."],
-    ['plan', 0, 'Tu as fini ! Je suis contente… pour toi, bien sûr.', '你做完了！我很开心……当然是为你。', "You finished! I'm happy… for you, of course."],
-    ['welcome', 0, 'Tu es de retour. Bon… ça me fait plaisir.', '你回来了。嗯……见到你很高兴。', "You're back. Well… I'm glad to see you."]
+    ["enter", 0, "Bon, on essaie ? Je reste là.", "好啦，试试？我就在这里。", "Well, shall we try? I'm right here."],
+    ["enter", 0, "Lis tranquillement. Je peux attendre.", "慢慢读。我可以等。", "Take your time to read. I can wait."],
+    ["enter", 1, "On commence ensemble. Si tu veux.", "一起开始吧。你愿意的话。", "Let's start together. If you want."],
+    ["enter", 2, "Je suis prête. Pas besoin de te presser.", "我准备好了。你不用着急。", "I'm ready. You don't need to rush."],
+    ["enter", 3, "C'est plus sympa à deux, je trouve.", "我觉得两个人一起比较有意思。", "It's nicer with two of us, I think."],
+    ["enter", 4, "Bon, notre équipe est prête !", "好啦，我们的小队准备好了！", "Okay, our team's ready!"],
+    ["happy", 0, "Pas mal ! Même très bien, en fait.", "还不错！其实答得很棒。", "Not bad! Really good, actually."],
+    ["happy", 0, "Oui, c'est juste. Bravo !", "对，答对了。真棒！", "Yes, that's right. Well done!"],
+    ["happy", 1, "Tu as réussi. Je l'avais remarqué.", "你答对了。我可看到了。", "You've got it right. I noticed."],
+    ["happy", 2, "Tu progresses. Je dis ça comme ça.", "你有进步。我就是随口一说。", "You're improving. I'm just saying."],
+    ["happy", 3, "Je suis contente pour toi. Voilà.", "我为你开心。就是这样。", "I'm happy for you. There, I said it."],
+    ["happy", 4, "Je savais que tu pouvais y arriver.", "我就知道你能做到。", "I knew you could do it."],
+    ["sad", 0, "Une erreur, ce n'est pas grave.", "答错一次没什么。", "One mistake isn't a big deal."],
+    ["sad", 0, "On peut revoir ça. Ensemble.", "我们可以再看看。一起。", "We can go over it again. Together."],
+    ["sad", 1, "Prends ton temps, je reste avec toi.", "慢慢来，我陪着你。", "Take your time. I'm here with you."],
+    ["sad", 2, "Tu peux te tromper, tu sais.", "你也可以答错的，知道吗。", "It's okay to make mistakes, you know."],
+    ["sad", 3, "Tes progrès sont toujours là.", "你的进步还在那里。", "Your progress hasn't gone anywhere."],
+    ["sad", 4, "Je te soutiens. Tu peux compter sur moi.", "我支持你。你可以相信我。", "I'm on your side. You can count on me."],
+    ["streak", 0, "Encore juste ! Tu peux sourire.", "又答对了！可以开心一下。", "Right again! You're allowed to smile."],
+    ["streak", 0, "Une belle série. Oui, je l'ai vue.", "连对得不错。对，我看到了。", "Nice streak. Yes, I noticed."],
+    ["streak", 1, "Ça marche bien pour toi !", "你答得很顺利嘛！", "Things are going well for you!"],
+    ["streak", 2, "Je compte tes réussites, c'est tout.", "我就是在数你答对几题，仅此而已。", "I'm just counting your wins, that's all."],
+    ["streak", 3, "Bon, cette série est impressionnante.", "好吧，这次连对挺厉害的。", "Okay, that's an impressive streak."],
+    ["streak", 4, "Notre équipe assure, tu ne trouves pas ?", "我们的小队挺棒的，你说呢？", "Our team's doing great, don't you think?"],
+    ["plan", 0, "Tu as fini ! C'est bien.", "你做完了！挺好的。", "You're done! That's great."],
+    ["plan", 0, "Tout est terminé. Repose-toi un peu.", "都完成了。休息一会儿吧。", "It's all done. Take a little break."],
+    ["plan", 1, "Ton programme est fait. Bravo, donc.", "你的计划完成了。所以，真棒。", "Your plan's complete. So, well done."],
+    ["plan", 2, "Je suis contente... pour toi, bien sûr.", "我很开心……当然是为你。", "I'm happy... for you, of course."],
+    ["plan", 3, "Tu peux être fier. Moi, je le suis.", "你可以为自己骄傲。我是挺骄傲的。", "You can be proud. I know I am."],
+    ["plan", 4, "J'ai aimé ce moment avec toi. Voilà.", "我喜欢和你一起的这段时间。就是这样。", "I enjoyed this time with you. There."],
+    ["welcome", 0, "Tu es là. Ça me fait plaisir.", "你来了。见到你很开心。", "You're here. I'm glad to see you."],
+    ["welcome", 0, "Salut. Tu peux t'installer ici.", "嗨。你可以坐这里。", "Hi. You can sit here."],
+    ["welcome", 1, "Ah, te voilà. Bonjour, donc.", "啊，你来啦。那就，你好。", "Oh, there you are. Hi, then."],
+    ["welcome", 2, "J'ai gardé ce coin pour toi.", "这个小角落给你留着。", "I've saved this spot for you."],
+    ["welcome", 3, "Contente de te revoir. Vraiment.", "很高兴再见到你。真的。", "I'm glad to see you again. Really."],
+    ["welcome", 4, "Te retrouver, ça me met de bonne humeur.", "见到你，我心情就很好。", "Seeing you puts me in a good mood."],
+    ["idle", 0, "Tu peux faire une pause, tu sais.", "你可以休息一下的。", "You can take a break, you know."],
+    ["idle", 0, "Bois un peu d'eau. Si tu veux.", "喝点水吧。你愿意的话。", "Have some water. If you want."],
+    ["idle", 1, "Repose tes yeux. Moi aussi, je le fais.", "让眼睛歇一会儿。我也一样。", "Rest your eyes. I'm doing that too."],
+    ["idle", 2, "Je reste là. Prends ton temps.", "我就在这里。慢慢来。", "I'm staying here. Take your time."],
+    ["idle", 3, "Ce petit silence est agréable.", "这样安静一会儿也挺好。", "This quiet moment feels nice."],
+    ["idle", 4, "J'aime bien ces pauses avec toi.", "我挺喜欢和你一起休息的。", "I like these little breaks with you."],
+    ["tap", 0, "Tu voulais me parler ? Je t'écoute.", "你想和我说话？我听着。", "Did you want to talk? I'm listening."],
+    ["tap", 0, "Je peux rester avec toi. Si tu veux.", "我可以陪着你。你愿意的话。", "I can stay with you. If you want."],
+    ["tap", 1, "Je remarque tes efforts, tu sais.", "你的努力我都看到了。", "I notice your efforts, you know."],
+    ["tap", 2, "Cette phrase m'a fait penser à toi.", "这句话让我想到了你。", "This sentence reminded me of you."],
+    ["tap", 3, "J'aime réviser avec toi. C'est dit.", "我喜欢和你一起复习。说出来了。", "I like reviewing with you. There, I said it."],
+    ["tap", 4, "On continue ensemble, d'accord ?", "以后也一起学，好吗？", "We'll keep learning together, okay?"]
   ]
 };
 // ---------- 学习伙伴：配置、学习里程碑和已有金币账本 ----------
@@ -25848,7 +25969,7 @@ function petCleanConfig(x, scope) {
   if (!x || x.scope !== scope || x.version !== 1 || petTime(x.at) === null) return null;
   return { kind: "pet", version: 1, scope, character: ["ninon", "lison", "pia"].includes(x.character) ? x.character : "ninon",
     outfit: x.outfit !== "pet" && Object.hasOwn(PET_PRICES, x.outfit) ? x.outfit : "", enabled: x.enabled !== false,
-    feedback: x.feedback !== false, animation: x.animation !== false, at: x.at };
+    feedback: x.feedback !== false, voice: x.voice !== false, animation: x.animation !== false, at: x.at };
 }
 function petLocal(scope = petScope()) {
   if (scope === "claude") return null; // Claude 的数据库已经按账号隔离，不用无身份的浏览器缓存覆盖它。
@@ -25866,7 +25987,7 @@ function petConfig() {
   const scope = petScope(), loc = petLocal(scope), rem = petRemote(scope);
   const candidates = [loc, rem, petSessionConfig?.scope === scope ? petSessionConfig : null].filter(Boolean);
   const x = candidates.sort(petCompare).pop();
-  const cfg = x || { kind: "pet", version: 1, scope, enabled: true, feedback: true, animation: true, character: "ninon", outfit: "", at: "" };
+  const cfg = x || { kind: "pet", version: 1, scope, enabled: true, feedback: true, voice: true, animation: true, character: "ninon", outfit: "", at: "" };
   const outfit = cfg.outfit && typeof gameLoaded !== "undefined" && gameLoaded && gameLedger().owned.has(cfg.outfit) ? cfg.outfit : "";
   return { ...cfg, outfit };
 }
@@ -25877,7 +25998,7 @@ function petSet(patch) {
   if (Object.hasOwn(patch, "character") && !["ninon", "lison", "pia"].includes(patch.character)) return "unavailable";
   if (Object.hasOwn(patch, "outfit") && patch.outfit !== "" && (patch.outfit === "pet" || !Object.hasOwn(PET_PRICES, patch.outfit) || !gameLedger().owned.has(patch.outfit))) return "locked";
   ["character", "outfit"].forEach(k => { if (Object.hasOwn(patch, k)) x[k] = patch[k]; });
-  ["enabled", "feedback", "animation"].forEach(k => { if (typeof patch[k] === "boolean") x[k] = patch[k]; });
+  ["enabled", "feedback", "voice", "animation"].forEach(k => { if (typeof patch[k] === "boolean") x[k] = patch[k]; });
   x.at = new Date(Math.max(Date.now(), (petTime(x.at) || 0) + 1)).toISOString();
   petSessionConfig = x;
   if (x.scope !== "claude") { try { localStorage.setItem(petLocalKey(x.scope), JSON.stringify(x)); } catch (e) {} }
@@ -25979,15 +26100,18 @@ document.addEventListener("visibilitychange", () => { if (document.visibilitySta
 // Learning companion: no answer rewards or ownership state are written here.
 // Deploy skins beside the assembled page; never fetch anonymous private GitHub URLs.
 const PET_ASSET_BASE = '../skins/mascot/pet/';
+// Keep deployment filenames stable while invalidating cached low-resolution atlases.
+const PET_ASSET_VERSION = '1.9.1';
 const petText = (s, values = {}) => Object.entries(values).reduce((t, [k, v]) => t.split('${' + k + '}').join(v), tr(s));
 const petButton = (text, action, id, cls = 'btn ghost') => { const b = el('button', cls, tr(text)); b.type = 'button'; if (id) b.id = id; b.addEventListener('click', action); return b; };
-let petRuntime = { started: false, open: false, state: 'idle', line: null, language: UI_LANG === 'zh' ? 'zh' : 'en', trial: null, preview: false, previewCharacter: 'ninon', pendingPlan: false, lastFeedback: 0, touched: Date.now(), drag: null, dragged: false, scope: null, pendingWelcome: false };
-let petStateTimer = 0, petFrameRequest = 0;
-const petMobile = () => matchMedia('(max-width: 600px)').matches;
-const petQuestionActive = () => !!stage.querySelector('.q-card, .v-card, .cj-card, .sp-boss, .sp-mini, .sp-pair, .sp-build');
+let petRuntime = { started: false, open: false, state: 'idle', line: null, language: UI_LANG === 'zh' ? 'zh' : 'en', trial: null, preview: false, previewCharacter: 'ninon', touched: Date.now(), drag: null, dragged: false, scope: null, inQuestion: false, lastSpeech: 0, answersSinceSpeech: 3, pendingSpeech: null, lastIdle: 0, manual: false, greetingShown: false };
+let petStateTimer = 0, petFrameRequest = 0, petBubbleTimer = 0, petSpeechTimer = 0;
+// A phone in landscape retains its own position and compact character size.
+const petMobile = () => matchMedia('(max-width: 600px)').matches || (matchMedia('(pointer: coarse)').matches && Math.min(innerWidth, innerHeight) <= 600);
+const petQuestionActive = () => !!stage.querySelector('.q-card, .v-card, .cj-card, .sp-boss, .sp-mini, .sp-pair, .sp-build, .tour-drill');
 function petBlocked() {
   const a = document.activeElement;
-  return document.documentElement.classList.contains('qf') || view === 'exam' || document.hidden ||
+  return view === 'exam' || document.hidden ||
     !!document.querySelector('dialog[open], .pc-overlay, [aria-modal="true"]') ||
     !!(a && (a.matches('textarea, select, input:not([type=checkbox]):not([type=radio]):not([type=button]):not([type=submit]):not([type=range])') || a.isContentEditable)) ||
     !!(window.visualViewport && window.visualViewport.height < innerHeight * .72);
@@ -25995,48 +26119,134 @@ function petBlocked() {
 function petImage(character, state = 'idle', outfit = '') {
   const c = PET_CHARACTERS.find(x => x.id === character) || PET_CHARACTERS[0];
   const sprite = el('span', 'pet-sprite'); sprite.setAttribute('aria-hidden', 'true'); sprite.dataset.character = c.id;
-  sprite.style.backgroundImage = `url("${PET_ASSET_BASE}${c.id}.webp")`;
+  sprite.style.backgroundImage = `url("${PET_ASSET_BASE}${c.id}.webp?v=${PET_ASSET_VERSION}")`;
   sprite.style.setProperty('--pet-row', String(Math.max(0, PET_STATES.indexOf(state))));
   sprite.dataset.state = state;
   const it = PET_ACCESSORIES.find(x => x.id === outfit);
-  if (it) { const accessory = el('span', 'pet-accessory'); accessory.style.backgroundImage = `url("${PET_ASSET_BASE}accessories.webp")`; accessory.style.backgroundPosition = `${it.frame * 50}% 0`; sprite.append(accessory); }
+  if (it) { const accessory = el('span', 'pet-accessory'); accessory.style.backgroundImage = `url("${PET_ASSET_BASE}accessories.webp?v=${PET_ASSET_VERSION}")`; accessory.style.backgroundPosition = `${it.frame * 50}% 0`; sprite.append(accessory); }
   const cfg = petConfig(); sprite.classList.toggle('pet-static', !cfg.animation || document.hidden);
   return sprite;
 }
 function petPositionRead() {
-  try { const p = JSON.parse(localStorage.getItem('fq-pet-position') || 'null'); if (p && Number.isFinite(p.y) && ['left', 'right'].includes(p.side)) return { side: p.side, y: Math.max(0, Math.min(1, p.y)) }; } catch (e) {}
-  return { side: 'right', y: 1 };
+  try {
+    const key = 'fq-pet-position:' + (petMobile() ? 'mobile' : 'desktop');
+    const p = JSON.parse(localStorage.getItem(key) || (!petMobile() && localStorage.getItem('fq-pet-position')) || 'null');
+    if (p && Number.isFinite(p.y) && ['left', 'right'].includes(p.side)) {
+      const position = { side: p.side, y: Math.max(0, Math.min(1, p.y)) };
+      // Older saved corners have only side/y. Four-edge drags add edge/x without
+      // changing account data or invalidating an existing device preference.
+      if (['left','right','top','bottom'].includes(p.edge)) {
+        position.edge = p.edge;
+        position.x = Number.isFinite(p.x) ? Math.max(0,Math.min(1,p.x)) : p.side === 'left' ? 0 : 1;
+      }
+      return position;
+    }
+  } catch (e) {}
+  return { side: 'right', y: petMobile() && petQuestionActive() ? 0 : 1 };
 }
-function petPositionWrite(p) { try { localStorage.setItem('fq-pet-position', JSON.stringify(p)); } catch (e) {} }
+function petPositionWrite(p) { try { localStorage.setItem('fq-pet-position:' + (petMobile() ? 'mobile' : 'desktop'), JSON.stringify(p)); } catch (e) {} }
+function petViewport() {
+  const w = $('petWidget'), s = w && getComputedStyle(w), v = window.visualViewport;
+  const inset = side => (parseFloat(s?.getPropertyValue('--pet-safe-' + side)) || 0) + 8;
+  return { left: (v?.offsetLeft || 0) + inset('left'), top: (v?.offsetTop || 0) + inset('top'),
+    right: (v?.offsetLeft || 0) + (v?.width || innerWidth) - inset('right'), bottom: (v?.offsetTop || 0) + (v?.height || innerHeight) - inset('bottom') };
+}
+const petOverlap = (a, b, gap = 5) => a.right > b.left - gap && a.left < b.right + gap && a.bottom > b.top - gap && a.top < b.bottom + gap;
+function petObstacles() {
+  const selectors = 'header, #progress, #spHud, #tourHud, .sp-hud, .tour-hud, .ex-bar, .qf-back, #stage button, #stage input, #stage textarea, #stage select, #stage [role="button"], #stage .q, #stage .v-q, #stage .cj-prompt, #stage .sp-sent, #stage .sp-build-q, #stage .sp-bosstop, #stage .tagrow > *, #stage .explain, #stage .cj-fb';
+  return [...document.querySelectorAll(selectors)].filter(n => !n.closest('#petWidget') && n.getClientRects().length && getComputedStyle(n).visibility !== 'hidden').map(n => n.getBoundingClientRect()).filter(r => r.width > 0 && r.height > 0 && r.bottom > 0 && r.top < innerHeight);
+}
+function petPlaceBubble(obstacles, bounds) {
+  const b = $('petBubble'), a = $('petAvatar'); if (!b || !a) return true;
+  b.hidden = false; b.style.visibility = 'hidden';
+  const r = a.getBoundingClientRect(), gap = 7;
+  if (b.classList.contains('pet-compact')) {
+    b.style.width = Math.min(286,Math.max(150,Math.max(r.left-bounds.left,bounds.right-r.right)-gap)) + 'px';
+    for (const p of b.querySelectorAll('.pet-words p')) {
+      p.style.fontSize = ''; p.style.whiteSpace = '';
+      let size = parseFloat(getComputedStyle(p).fontSize);
+      while (p.scrollWidth > p.clientWidth + 1 && size > 11) { size = Math.max(11,size-.5); p.style.fontSize = size + 'px'; }
+      // Unusually large accessibility fonts still retain the entire sentence.
+      if (p.scrollWidth > p.clientWidth + 1) p.style.whiteSpace = 'normal';
+    }
+  } else if (!petQuestionActive()) {
+    // A manually opened home-page popover may cover ordinary content, like a
+    // settings menu. Automatic and question bubbles always avoid task content.
+    obstacles = [...document.querySelectorAll('header,#progress,#spHud,#tourHud,.sp-hud,.tour-hud,.ex-bar,.qf-back')].filter(n => n.getClientRects().length).map(n => n.getBoundingClientRect());
+  }
+  const size = b.getBoundingClientRect();
+  const positions = [
+    [r.left - size.width - gap, r.top + (r.height - size.height) / 2],
+    [r.right + gap, r.top + (r.height - size.height) / 2],
+    [r.right - size.width, r.top - size.height - gap],
+    [r.left, r.bottom + gap]
+  ];
+  const fits = positions.map(([x,y]) => ({ left: Math.max(bounds.left, Math.min(bounds.right - size.width,x)), top: Math.max(bounds.top, Math.min(bounds.bottom - size.height,y)) }))
+    .map(p => ({ ...p, right: p.left + size.width, bottom: p.top + size.height }))
+    .find(p => p.left >= bounds.left && p.right <= bounds.right && p.top >= bounds.top && p.bottom <= bounds.bottom && !petOverlap(p,r,0) && !obstacles.some(o => petOverlap(p,o)));
+  if (fits && !$('petWidget').classList.contains('pet-passive')) { b.style.left = fits.left + 'px'; b.style.top = fits.top + 'px'; b.style.visibility = ''; return true; }
+  else { b.hidden = true; b.style.visibility = ''; }
+  return false;
+}
 function petPlace() {
-  const w = $('petWidget'); if (!w || petMobile()) return;
-  const p = petPositionRead(), height = 132, margin = 12, maxY = Math.max(margin, innerHeight - height - margin);
-  w.style.left = p.side === 'left' ? 'max(12px, env(safe-area-inset-left, 0px))' : 'auto';
-  w.style.right = p.side === 'right' ? 'max(12px, env(safe-area-inset-right, 0px))' : 'auto';
-  const top = Math.round(margin + p.y * (maxY - margin));
-  w.style.top = top + 'px'; w.dataset.side = p.side;
-  w.dataset.bubble = top >= 330 ? 'above' : 'below';
-  const bubble = $('petBubble'); if (bubble) bubble.style.maxHeight = Math.max(110, (top >= 330 ? top - 20 : innerHeight - top - height - 20)) + 'px';
+  const w = $('petWidget'), a = $('petAvatar'); if (!w || !a || w.hidden) return;
+  const bounds = petViewport(), mobile = petMobile(), p = petPositionRead(), width = a.offsetWidth, height = a.offsetHeight;
+  const maxY = Math.max(bounds.top, bounds.bottom - height), minX = bounds.left, maxX = Math.max(minX, bounds.right - width);
+  const rect = (x,y) => ({ left: Math.max(minX,Math.min(maxX,x)), top: Math.max(bounds.top,Math.min(maxY,y)), right: Math.max(minX,Math.min(maxX,x))+width, bottom: Math.max(bounds.top,Math.min(maxY,y))+height });
+  const obstacles = petObstacles();
+  const horizontal = p.edge === 'top' || p.edge === 'bottom';
+  let candidates = [rect(horizontal ? minX + p.x*(maxX-minX) : p.side === 'left' ? minX : maxX,
+    horizontal ? p.edge === 'top' ? bounds.top : maxY : bounds.top + p.y*(maxY-bounds.top))];
+  if (petRuntime.drag) candidates = [rect(petRuntime.drag.left,petRuntime.drag.top)];
+  else {
+    const card = stage.querySelector(':scope > section.card'), cr = card?.getBoundingClientRect();
+    if (mobile && petQuestionActive() && cr && document.documentElement.classList.contains('pet-question-space')) {
+      const back = $('qfBack')?.getBoundingClientRect(), right = back && back.width ? Math.min(maxX,back.left-width-8) : maxX;
+      const lane = rect(right,cr.top + (parseFloat(getComputedStyle(card).paddingTop)||12));
+      // An explicit dragged preference is tried first; a new phone session prefers the upper right lane.
+      let saved = false; try { saved = !!localStorage.getItem('fq-pet-position:mobile'); } catch (e) {}
+      candidates[saved ? 'push' : 'unshift'](lane);
+    }
+    candidates.push(rect(maxX,bounds.top),rect(minX,bounds.top),rect(maxX,maxY),rect(minX,maxY));
+    // Check gaps adjacent to occupied controls before falling back to click-through.
+    for (const o of obstacles) for (const x of [maxX,minX]) { candidates.push(rect(x,o.bottom+7),rect(x,o.top-height-7)); }
+  }
+  const available = candidates.filter(r => !obstacles.some(o => petOverlap(r,o))), good = available[0];
+  let selected = good || candidates[0];
+  const move = r => { w.style.left = Math.round(r.left) + 'px'; w.style.top = Math.round(r.top) + 'px'; w.style.right = 'auto'; };
+  w.classList.toggle('pet-passive', !good && !petRuntime.drag);
+  if ($('petBubble') && !petRuntime.drag) {
+    const together = available.find(r => { move(r); return petPlaceBubble(obstacles,bounds); });
+    if (together) selected = together;
+  }
+  move(selected);
+  w.dataset.side = selected.left + width/2 < (bounds.left+bounds.right)/2 ? 'left' : 'right';
+  a.tabIndex = good || petRuntime.drag ? 0 : -1;
+  petPlaceBubble(obstacles,bounds);
 }
 function petTouchesContent() {
-  const a = $('petAvatar'); if (!a || petMobile()) return false;
-  const r = a.getBoundingClientRect();
-  return [...document.querySelectorAll('#stage > section.card, #stage .opt, #spHud, #tourHud, .sp-hud, .tour-hud, .ex-bar')].some(n => {
-    const b = n.getBoundingClientRect(); return b.width && b.height && r.right > b.left - 8 && r.left < b.right + 8 && r.bottom > b.top - 8 && r.top < b.bottom + 8;
-  });
+  const a = $('petAvatar'); return !!a && petObstacles().some(r => petOverlap(a.getBoundingClientRect(),r));
 }
 function petScheduleLayout() { if (!petFrameRequest) petFrameRequest = requestAnimationFrame(() => { petFrameRequest = 0; petRefresh(); }); }
 function petResetRuntime() {
-  clearTimeout(petStateTimer);
-  Object.assign(petRuntime, { open: false, state: 'idle', line: null, trial: null, preview: false, pendingPlan: false, lastFeedback: 0, scope: null, drag: null, pendingWelcome: false });
+  [petStateTimer,petBubbleTimer,petSpeechTimer].forEach(clearTimeout);
+  Object.assign(petRuntime, { open: false, state: 'idle', line: null, trial: null, preview: false, scope: null, drag: null, inQuestion: false, lastSpeech: 0, answersSinceSpeech: 3, pendingSpeech: null, lastIdle: 0, greetingShown: false });
   $('petBubble')?.remove(); $('petPreview')?.replaceChildren();
 }
 function petCloseBubble(focus = false) {
+  clearTimeout(petBubbleTimer);
   petRuntime.open = false; petRuntime.line = null; $('petBubble')?.remove();
-  if (focus) ($('petLauncher')?.hidden ? $('petAvatar') : $('petLauncher'))?.focus();
+  if (focus) $('petAvatar')?.focus({ preventScroll: true });
   petRefresh();
 }
-function petOnLeave() { petRuntime.trial = null; petRuntime.preview = false; petRuntime.open = false; petRuntime.line = null; $('petBubble')?.remove(); petScheduleLayout(); }
+function petOnLeave() {
+  clearTimeout(petBubbleTimer); clearTimeout(petSpeechTimer);
+  // Completing today's plan belongs to the learning session, not the old card.
+  // Carry it through ordinary navigation; blocked views/settings/reset clear it.
+  const pendingSpeech = petRuntime.pendingSpeech?.kind === 'plan' ? petRuntime.pendingSpeech : null;
+  Object.assign(petRuntime, { trial: null, preview: false, open: false, line: null, inQuestion: false, pendingSpeech });
+  $('petBubble')?.remove(); petScheduleLayout();
+}
 function petSetState(state, ms = 2600) {
   clearTimeout(petStateTimer); petRuntime.state = state; petRefresh();
   if (state !== 'idle' && state !== 'sleep') petStateTimer = setTimeout(() => { petRuntime.state = 'idle'; petRefresh(); }, ms);
@@ -26046,6 +26256,40 @@ function petLine(kind = 'tap') {
   const lines = PET_LINES[cfg.character].filter(x => x[0] === kind && x[1] <= level);
   const x = lines[Math.floor(Math.random() * lines.length)] || PET_LINES[cfg.character][0];
   return { fr: x[2], zh: x[3], en: x[4], word: '' };
+}
+const PET_SPEECH_PRIORITY = { plan: 4, streak: 3, sad: 2, enter: 2, welcome: 1, happy: 1, idle: 0, tap: 5 };
+function petSpeechReady(now = Date.now()) {
+  return !petQuestionActive() || !petRuntime.lastSpeech || petRuntime.answersSinceSpeech >= 3 || now - petRuntime.lastSpeech >= 20000;
+}
+function petTryVoice(line, button = null) {
+  const synth = typeof tts !== 'undefined' && tts;
+  if (!petConfig().voice || !synth || synth.speaking || synth.pending || typeof speak !== 'function') return false;
+  if (typeof userActivated !== 'undefined' && !userActivated) return false;
+  // iOS must be in a live click/key gesture; greetings and idle messages stay textual.
+  if (navigator.userActivation && !navigator.userActivation.isActive) return false;
+  if (document.querySelector('.play[aria-pressed="true"]:not(#petSpeak)')) return false;
+  if (!(typeof frVoice !== 'undefined' && frVoice) && !(typeof pickVoice === 'function' && pickVoice())) return false;
+  const previous = typeof lastAutoAudio !== 'undefined' ? lastAutoAudio : undefined;
+  try { return speak(line.fr,.85,button) !== false; }
+  catch (e) { return false; }
+  finally { if (typeof lastAutoAudio !== 'undefined') lastAutoAudio = previous; }
+}
+function petQueueLine(kind) {
+  if (!petOwned() || !petConfig().enabled || !petConfig().feedback || petBlocked()) return false;
+  const priority = PET_SPEECH_PRIORITY[kind] || 0;
+  if (!petSpeechReady()) {
+    if (!petRuntime.pendingSpeech || priority > petRuntime.pendingSpeech.priority) petRuntime.pendingSpeech = { kind, priority };
+    clearTimeout(petSpeechTimer);
+    petSpeechTimer = setTimeout(() => {
+      const pending = petRuntime.pendingSpeech; petRuntime.pendingSpeech = null;
+      if (pending) petQueueLine(pending.kind);
+    },Math.max(1,20000-(Date.now()-petRuntime.lastSpeech)));
+    return false;
+  }
+  const pending = petRuntime.pendingSpeech;
+  if (pending && pending.priority > priority) kind = pending.kind;
+  clearTimeout(petSpeechTimer); petRuntime.pendingSpeech = null;
+  return petShowLine(kind);
 }
 function petRecentLine() {
   if (typeof vocRaw === 'undefined' || typeof V_BY_ID === 'undefined' || typeof V_PICEX === 'undefined') return null;
@@ -26061,30 +26305,39 @@ function petRecentLine() {
   return null;
 }
 function petShowLine(kind = 'tap', manual = false) {
-  if (petBlocked() || petQuestionActive() || !petOwned() || !petConfig().enabled) return;
-  petRuntime.touched = Date.now(); petRuntime.open = true;
-  if (manual && petConfig().feedback && petRuntime.pendingPlan) { kind = 'plan'; petRuntime.pendingPlan = false; }
-  else if (manual && petConfig().feedback && petRuntime.pendingWelcome) { kind = 'welcome'; petRuntime.pendingWelcome = false; }
-  petRuntime.line = kind === 'tap' && Math.random() < .65 ? petRecentLine() || petLine(kind) : petLine(kind);
-  petSetState(kind === 'sad' ? 'sad' : kind === 'tap' ? 'tap' : 'happy');
+  if (petBlocked() || !petOwned() || !petConfig().enabled || (!manual && !petConfig().feedback)) return false;
+  if (!manual && !petSpeechReady()) return petQueueLine(kind);
+  if (manual && petRuntime.pendingSpeech) { kind = petRuntime.pendingSpeech.kind; petRuntime.pendingSpeech = null; clearTimeout(petSpeechTimer); }
+  if (manual) petRuntime.touched = Date.now();
+  petRuntime.open = true; petRuntime.manual = manual;
+  petRuntime.lastSpeech = Date.now(); petRuntime.answersSinceSpeech = 0;
+  // Learning lines stay short during a question; recent examples remain available off-task.
+  petRuntime.line = kind === 'tap' && !petQuestionActive() && Math.random() < .65 ? petRecentLine() || petLine(kind) : petLine(kind);
+  petSetState(kind === 'sad' ? 'sad' : kind === 'idle' ? 'sleep' : kind === 'tap' ? 'tap' : 'happy');
   petRenderBubble(); petRefresh();
   if (manual && $('petBubble')) $('petBubble').setAttribute('data-manual', 'true');
+  if (!$('petBubble')?.hidden) petTryVoice(petRuntime.line);
+  clearTimeout(petBubbleTimer); petBubbleTimer = setTimeout(() => petCloseBubble(),manual && !petQuestionActive() ? 12000 : 6500);
+  return true;
 }
 function petRenderBubble() {
   const w = $('petWidget'); if (!w || !petRuntime.line) return;
   $('petBubble')?.remove();
-  const line = petRuntime.line, b = el('section', 'pet-bubble'); b.id = 'petBubble'; b.setAttribute('aria-label', tr('伙伴的话'));
+  const line = petRuntime.line, compact = petQuestionActive() || !petRuntime.manual, b = el('section', 'pet-bubble' + (compact ? ' pet-compact' : '')); b.id = 'petBubble'; b.setAttribute('aria-label', tr('伙伴的话'));
   const head = el('div', 'pet-bubble-head'); head.append(el('b', null, petConfig().character[0].toUpperCase() + petConfig().character.slice(1)), petButton('收起对话', () => petCloseBubble(true), 'petClose'));
-  b.append(head);
-  if (line.word) b.append(el('span', 'tag', line.word));
+  if (!compact) b.append(head);
+  if (line.word && !compact) b.append(el('span', 'tag', line.word));
   const words = el('div', 'pet-words'); words.dataset.noi18n = '1'; words.setAttribute('aria-live', 'polite'); words.setAttribute('aria-atomic', 'true');
   const fr = el('p', 'pet-french', line.fr); fr.lang = 'fr';
   const translation = el('p', 'sub', line[petRuntime.language]); translation.lang = petRuntime.language === 'zh' ? 'zh-CN' : 'en';
   words.append(fr, translation); b.append(words);
+  if (compact) { w.prepend(b); return; }
   const actions = el('div', 'pet-actions');
   const audio = petButton('朗读', () => {
-    if (!tts || tts.speaking) { status.textContent = tr(tts ? '正在朗读题目，请稍后再试。' : '这个浏览器不支持朗读。'); return; }
-    speak(line.fr, .85, audio);
+    if (!tts || tts.speaking || tts.pending || document.querySelector('.play[aria-pressed="true"]:not(#petSpeak)')) { status.textContent = tr(tts ? '正在朗读题目，请稍后再试。' : '这个浏览器不支持朗读。'); return; }
+    // An explicit read click remains available even when automatic voice is off.
+    const previous = typeof lastAutoAudio !== 'undefined' ? lastAutoAudio : undefined;
+    try { speak(line.fr, .85, audio); } catch (e) {} finally { if (typeof lastAutoAudio !== 'undefined') lastAutoAudio = previous; }
   }, 'petSpeak', 'btn ghost play');
   const voiceAvailable = !!(tts && (frVoice || pickVoice()));
   audio.setAttribute('aria-pressed', 'false'); audio.disabled = !voiceAvailable;
@@ -26095,79 +26348,98 @@ function petRenderBubble() {
 function petReact(d, kind, info = {}) {
   petRuntime.touched = Date.now();
   if (!petOwned() || !petConfig().enabled || !petConfig().feedback) return;
-  if (info.planCompleted) petRuntime.pendingPlan = true;
+  petRuntime.answersSinceSpeech++;
   const ok = kind === 'vocab' ? d.ok : d.isCorrect;
-  if (petBlocked() || petQuestionActive()) {
-    // Keep a brief expression without queuing any speech over the next question.
-    petSetState(ok ? 'happy' : 'sad', [5, 10, 20].includes(info.run) ? 4500 : 2600); return;
-  }
-  if (Date.now() - petRuntime.lastFeedback < 18000) return;
-  petRuntime.lastFeedback = Date.now();
-  const completed = !!info.planCompleted;
-  petRuntime.pendingPlan = false; // Clear before rendering: refresh must not queue a second celebration.
-  petShowLine(completed ? 'plan' : ok ? [5, 10, 20].includes(info.run) ? 'streak' : 'happy' : 'sad');
+  petSetState(ok ? 'happy' : 'sad', [5, 10, 20].includes(info.run) ? 4500 : 2600);
+  petQueueLine(info.planCompleted ? 'plan' : ok ? [5,10,20].includes(info.run) ? 'streak' : 'happy' : 'sad');
 }
 function petRefresh() {
   if (!petRuntime.started) return;
-  const cfg = petConfig(), widget = $('petWidget'), launcher = $('petLauncher');
+  const cfg = petConfig(), widget = $('petWidget');
   const enabled = petOwned() && cfg.enabled && gameOn(), blocked = petBlocked();
   const mobile = petMobile(); widget.classList.toggle('pet-mobile', mobile);
-  if (petQuestionActive() && petRuntime.open) { petRuntime.open = false; petRuntime.line = null; $('petBubble')?.remove(); }
+  const question = petQuestionActive(), entered = question && !petRuntime.inQuestion;
+  petRuntime.inQuestion = question;
+  document.documentElement.classList.toggle('pet-question-space',enabled && !blocked && question && mobile && innerWidth <= 600 && innerHeight >= 520);
   document.querySelectorAll('.pet-sprite').forEach(n => n.classList.toggle('pet-static', !cfg.animation || document.hidden));
   if (enabled && petRuntime.scope !== cfg.scope) {
     petRuntime.scope = cfg.scope;
-    try { const key = 'fq-pet-visit:' + (cfg.scope || 'local'), previous = Number(localStorage.getItem(key)); petRuntime.pendingWelcome = previous > 0 && Date.now() - previous > 3 * 86400000; localStorage.setItem(key, String(Date.now())); } catch (e) {}
+    petRuntime.greetingShown = false;
   }
-  if (mobile && widget.parentElement !== document.querySelector('.wrap')) document.querySelector('header').after(widget);
-  else if (!mobile && widget.parentElement !== document.body) document.body.append(widget);
-  if (!enabled || blocked) { widget.hidden = true; launcher.hidden = true; widget.querySelectorAll('.pet-sprite').forEach(n => n.classList.add('pet-paused')); return; }
-  const avatar = $('petAvatar'); const wanted = [cfg.character, petRuntime.state, cfg.outfit, cfg.animation].join(':');
+  if (widget.parentElement !== document.body) document.body.append(widget);
+  if (!enabled || blocked) {
+    widget.hidden = true; widget.querySelectorAll('.pet-sprite').forEach(n => n.classList.add('pet-paused'));
+    clearTimeout(petBubbleTimer); clearTimeout(petSpeechTimer); petRuntime.pendingSpeech = null;
+    petRuntime.open = false; petRuntime.line = null; $('petBubble')?.remove(); return;
+  }
+  if (!cfg.feedback) {
+    clearTimeout(petSpeechTimer); petRuntime.pendingSpeech = null;
+    if (!petRuntime.manual) { clearTimeout(petBubbleTimer); petRuntime.open = false; petRuntime.line = null; $('petBubble')?.remove(); }
+  }
+  const avatar = $('petAvatar');
+  if (avatar.dataset.character && avatar.dataset.character !== cfg.character) {
+    clearTimeout(petBubbleTimer); clearTimeout(petSpeechTimer); clearTimeout(petStateTimer);
+    Object.assign(petRuntime,{ line: null, open: false, state: 'idle', pendingSpeech: null }); $('petBubble')?.remove();
+  }
+  avatar.dataset.character = cfg.character;
+  const wanted = [cfg.character, petRuntime.state, cfg.outfit, cfg.animation].join(':');
   if (avatar.dataset.render !== wanted) { avatar.replaceChildren(petImage(cfg.character, petRuntime.state, cfg.outfit)); avatar.dataset.render = wanted; }
   widget.querySelectorAll('.pet-sprite').forEach(n => n.classList.remove('pet-paused'));
-  petPlace(); widget.hidden = false;
-  const collision = !mobile && !petRuntime.drag && petTouchesContent();
-  widget.hidden = mobile ? !petRuntime.open : collision;
-  launcher.hidden = !mobile && !collision;
-  launcher.textContent = cfg.character[0].toUpperCase(); launcher.title = tr('打开学习伙伴'); launcher.setAttribute('aria-label', tr('打开学习伙伴')); launcher.setAttribute('aria-expanded', String(!widget.hidden && petRuntime.open));
-  if (collision && petRuntime.open) { petRuntime.open = false; $('petBubble')?.remove(); }
-  avatar.setAttribute('aria-expanded', String(petRuntime.open)); avatar.setAttribute('aria-controls', 'petBubble'); launcher.setAttribute('aria-controls', 'petBubble');
-  if (petRuntime.pendingPlan && !blocked && !petQuestionActive() && !mobile && !collision && cfg.feedback) { petRuntime.pendingPlan = false; setTimeout(() => petShowLine('plan'), 0); }
-  else if (petRuntime.pendingWelcome && !petQuestionActive() && !mobile && !collision && cfg.feedback) { petRuntime.pendingWelcome = false; setTimeout(() => petShowLine('welcome'), 0); }
+  widget.hidden = false;
+  if (petRuntime.open && $('petBubble')?.classList.contains('pet-compact') !== (question || !petRuntime.manual)) petRenderBubble();
+  petPlace();
+  avatar.setAttribute('aria-expanded', String(petRuntime.open && !$('petBubble')?.hidden)); avatar.setAttribute('aria-controls', 'petBubble');
+  if (cfg.feedback && !question && petRuntime.pendingSpeech?.kind === 'plan') {
+    // Consume before rendering, whose refresh must not celebrate a second time.
+    clearTimeout(petSpeechTimer); petRuntime.pendingSpeech = null; petRuntime.greetingShown = true;
+    petQueueLine('plan');
+  } else if (cfg.feedback && entered) { petRuntime.greetingShown = true; setTimeout(() => { if (petQuestionActive()) petQueueLine('enter'); },0); }
+  else if (cfg.feedback && !petRuntime.greetingShown) { petRuntime.greetingShown = true; setTimeout(() => petQueueLine('welcome'),0); }
 }
 function petDragStart(e) {
-  if (petMobile() || e.button !== 0 || petBlocked()) return;
+  if (e.button !== 0 || petBlocked()) return;
   const a = $('petAvatar'), r = $('petWidget').getBoundingClientRect();
-  petRuntime.drag = { x: e.clientX, y: e.clientY, top: r.top, moved: false };
+  petRuntime.drag = { x: e.clientX, y: e.clientY, originLeft: r.left, originTop: r.top, left: r.left, top: r.top, moved: false };
   a.setPointerCapture?.(e.pointerId);
 }
 function petDragMove(e) {
   const d = petRuntime.drag; if (!d) return;
   if (Math.hypot(e.clientX - d.x, e.clientY - d.y) < 6 && !d.moved) return;
   d.moved = true; petRuntime.dragged = true; petRuntime.open = false; $('petBubble')?.remove();
-  const maxY = Math.max(12, innerHeight - 144), y = Math.max(12, Math.min(maxY, d.top + e.clientY - d.y));
-  petPositionWrite({ side: e.clientX < innerWidth / 2 ? 'left' : 'right', y: maxY === 12 ? 0 : (y - 12) / (maxY - 12) }); petPlace();
+  d.left = d.originLeft + e.clientX - d.x; d.top = d.originTop + e.clientY - d.y; petPlace();
 }
-function petDragEnd() { petRuntime.drag = null; petRefresh(); }
+function petDragEnd() {
+  const d = petRuntime.drag;
+  if (d?.moved) {
+    const r = $('petAvatar').getBoundingClientRect(), bounds = petViewport(), rangeY = Math.max(0,bounds.bottom-bounds.top-r.height), rangeX = Math.max(0,bounds.right-bounds.left-r.width);
+    const distances = [['left',r.left-bounds.left],['right',bounds.right-r.right],['top',r.top-bounds.top],['bottom',bounds.bottom-r.bottom]];
+    const edge = distances.sort((a,b) => a[1]-b[1])[0][0];
+    petPositionWrite({ side: r.left+r.width/2 < (bounds.left+bounds.right)/2 ? 'left' : 'right', edge,
+      x: rangeX ? Math.max(0,Math.min(1,(r.left-bounds.left)/rangeX)) : 0,
+      y: rangeY ? Math.max(0,Math.min(1,(r.top-bounds.top)/rangeY)) : 0 });
+  }
+  petRuntime.drag = null; petRefresh();
+}
 function petInit() {
   if (petRuntime.started) return; petRuntime.started = true;
-  const launcher = petButton('打开学习伙伴', () => {
-    if (petRuntime.open) { petCloseBubble(); return; }
-    if (!petMobile()) { goBoard('pet'); return; }
-    petShowLine('tap', true);
-  }, 'petLauncher', 'pet-launcher'); launcher.hidden = true; document.querySelector('header').append(launcher);
   const widget = el('aside', 'pet-widget'); widget.id = 'petWidget'; widget.hidden = true; widget.setAttribute('aria-label', tr('学习伙伴'));
   const avatar = petButton('和伙伴说句话', () => { if (petRuntime.dragged) { petRuntime.dragged = false; return; } petShowLine('tap', true); }, 'petAvatar', 'pet-avatar'); avatar.setAttribute('aria-label', tr('和伙伴说句话'));
   avatar.addEventListener('pointerdown', petDragStart); avatar.addEventListener('pointermove', petDragMove); avatar.addEventListener('pointerup', petDragEnd); avatar.addEventListener('pointercancel', () => { petRuntime.dragged = false; petDragEnd(); });
   widget.append(avatar); document.body.append(widget);
-  [widget, launcher].forEach(n => n.addEventListener('keydown', e => { e.stopPropagation(); if (e.key === 'Escape') { e.preventDefault(); petCloseBubble(true); } }));
+  widget.addEventListener('keydown', e => { e.stopPropagation(); if (e.key === 'Escape') { e.preventDefault(); petCloseBubble(true); } });
   ['resize', 'scroll', 'focusin', 'focusout'].forEach(type => window.addEventListener(type, petScheduleLayout, { passive: true }));
   window.visualViewport?.addEventListener('resize', petScheduleLayout);
+  window.visualViewport?.addEventListener('scroll', petScheduleLayout);
   document.addEventListener('visibilitychange', petScheduleLayout);
   if (tts) tts.addEventListener?.('voiceschanged', () => { if ($('petBubble')) petRenderBubble(); });
   new MutationObserver(petScheduleLayout).observe(document.documentElement, { attributes: true, attributeFilter: ['class'] });
-  new MutationObserver(ms => { if (ms.some(m => m.type === 'attributes' || [...m.addedNodes, ...m.removedNodes].some(n => n.nodeType === 1 && !n.closest?.('#petWidget, #petPage, #petLauncher')))) petScheduleLayout(); }).observe(document.body, { childList: true, subtree: true, attributes: true, attributeFilter: ['open', 'aria-modal'] });
+  new MutationObserver(ms => { if (ms.some(m => !m.target.closest?.('#petWidget') && (m.type === 'attributes' || [...m.addedNodes, ...m.removedNodes].some(n => n.nodeType === 1 && n.id !== 'petWidget' && !n.closest?.('#petWidget, #petPage'))))) petScheduleLayout(); }).observe(document.body, { childList: true, subtree: true, attributes: true, attributeFilter: ['open', 'aria-modal'] });
   document.addEventListener('pointerdown', () => { petRuntime.touched = Date.now(); if (petRuntime.state === 'sleep') petSetState('idle'); }, { passive: true });
-  setInterval(() => { if (!document.hidden && Date.now() - petRuntime.touched > 90000 && petRuntime.state === 'idle') petSetState('sleep'); }, 30000);
+  document.addEventListener('keydown', () => { petRuntime.touched = Date.now(); }, { passive: true });
+  setInterval(() => {
+    const now = Date.now();
+    if (!document.hidden && now-petRuntime.touched > 90000 && now-petRuntime.lastIdle > 180000) { petRuntime.lastIdle = now; petQueueLine('idle'); }
+  },15000);
   petRefresh();
 }
 function petPurchaseButton(id, done) {
@@ -26183,7 +26455,7 @@ function petPurchaseButton(id, done) {
 function petSettings(wrap) {
   const s = setSection(wrap, tr('学习伙伴'), tr('只陪伴，不催促；关闭不会影响亲密度。')), cfg = petConfig(), own = petOwned();
   const changes = (key, value) => { petSet({ [key]: value }); if (key === 'enabled' && !value) petRuntime.preview = false; petRenderPreview(); petRefresh(); };
-  s.append(setCheckRow('petEnabled', tr('显示学习伙伴'), cfg.enabled && own, v => changes('enabled', v)), setCheckRow('petFeedback', tr('自动文字反馈'), cfg.feedback, v => changes('feedback', v)), setCheckRow('petAnimation', tr('角色动画'), cfg.animation, v => changes('animation', v)));
+  s.append(setCheckRow('petEnabled', tr('显示学习伙伴'), cfg.enabled && own, v => changes('enabled', v)), setCheckRow('petFeedback', tr('主动说话'), cfg.feedback, v => changes('feedback', v)), setCheckRow('petVoice', tr('说话时朗读法语'), cfg.voice, v => changes('voice', v)), setCheckRow('petAnimation', tr('角色动画'), cfg.animation, v => changes('animation', v)));
   if (!own) { s.querySelectorAll('input').forEach(n => n.disabled = true); s.append(el('p', 'sub', tr('在游戏里的“学习伙伴”查看预览和解锁。'))); }
   const positions = [['right-bottom', '右下角'], ['left-bottom', '左下角'], ['right-top', '右上角'], ['left-top', '左上角']];
   const pos = petPositionRead();
