@@ -4349,7 +4349,7 @@ const LANG_DICT = {
 "星期": "Jours",
 "月份": "Mois",
 "季节": "Saisons",
-"问候": "Salutations",
+"问候": "Salutation",
 "自我介绍": "Présentations",
 "礼貌用语": "Politesse",
 "第一层": "Étage 1",
@@ -4645,6 +4645,15 @@ const LANG_DICT = {
 "每关 10 个词，来自不同主题。整关做完一遍（每个词的每种题型各一题）就算通关、解锁下一关，并按错题数计星：最多错 1 题三颗星，错 2–3 题两颗星，错 4–5 题一颗星，错 6 题以上没有星星。每关记最好的一次。": "Chaque niveau compte 10 mots de thèmes différents. Terminer le niveau entier une fois (une question de chaque type pour chaque mot) le réussit et débloque le suivant, avec des étoiles selon les erreurs : 1 au plus pour trois étoiles, 2 à 3 pour deux, 4 à 5 pour une, aucune à partir de 6. Votre meilleur essai est conservé.",
 " 这次错了 ${runStar.wrong} 题，没有拿到星星（错题不超过 5 道才有星），下一关照样解锁。": " ${runStar.wrong} erreurs cette fois : pas d'étoile (il en faut 5 au plus), mais le niveau suivant est débloqué.",
 "单词闯关的星星改成看整关做一遍错了几题：最多错 1 题三颗星，错 2–3 题两颗星，错 4–5 题一颗星，错 6 题以上没有星星；整关做完就能进入下一关。每关记最好的一次；以前已经拿到的星星都保留。": "Les étoiles du parcours de vocabulaire dépendent désormais du nombre d'erreurs sur un essai complet du niveau : 1 au plus pour trois étoiles, 2 à 3 pour deux, 4 à 5 pour une, aucune à partir de 6 ; terminer un niveau débloque toujours le suivant. Le meilleur essai compte, et les étoiles déjà gagnées sont conservées.",
-"背单词（普通难度）的错误选项改成先从这一组正在考的词里挑（组里不够才用其他词）：四个选项都是刚学过的词，不能靠“只有这个眼熟”猜出答案。困难模式不变，还是挑易混词和形近词。": "En difficulté normale, les mauvaises réponses en vocabulaire viennent d'abord des mots de la série en cours (d'autres mots seulement si la série est trop petite) : les quatre choix sont des mots que vous venez d'étudier, impossible de deviner en prenant le seul mot familier. Le mode difficile ne change pas et utilise toujours des mots faciles à confondre ou d'orthographe proche."
+"背单词（普通难度）的错误选项改成先从这一组正在考的词里挑（组里不够才用其他词）：四个选项都是刚学过的词，不能靠“只有这个眼熟”猜出答案。困难模式不变，还是挑易混词和形近词。": "En difficulté normale, les mauvaises réponses en vocabulaire viennent d'abord des mots de la série en cours (d'autres mots seulement si la série est trop petite) : les quatre choix sont des mots que vous venez d'étudier, impossible de deviner en prenant le seul mot familier. Le mode difficile ne change pas et utilise toujours des mots faciles à confondre ou d'orthographe proche.",
+"AI 合成配音": "Voix générée par IA",
+"系统朗读": "Voix du système",
+"角色语音试听": "Écouter les voix des compagnes",
+"AI 合成配音 · 问候、答对、答错各一句；其他台词使用系统朗读。": "Voix générées par IA : une salutation, un encouragement et une réassurance par compagne. Les autres répliques utilisent la voix du système.",
+"请开启伙伴语音，或等题目朗读结束后再试。": "Activez la voix de la compagne, ou réessayez après la lecture de la question.",
+"答对": "Bonne réponse",
+"答错": "Réponse incorrecte",
+"学习伙伴加入 Gemini 角色配音：Ninon、Lison、Pia 各有问候、答对和答错 3 句，共 9 句；声音分别呈现成熟温暖、俏皮腹黑和傲娇少女感，角色原年龄不变。": "Les voix Gemini de Ninon, Lison et Pia proposent chacune une salutation, un encouragement et une réassurance, soit 9 répliques. Elles évoquent une maturité chaleureuse, une malice joueuse et une fierté timide ; les âges des personnages restent inchangés.",
+"伙伴面板新增语音试听；已有录音按当前法语台词精确匹配，其他台词使用系统朗读。配音按需加载，听过后可离线使用；关闭语音、切换角色、离开页面或开始题目朗读时立即停止。": "Le panneau des compagnes propose des extraits vocaux. Les enregistrements correspondent à la réplique française affichée ; les autres utilisent la voix du système. Les fichiers se chargent à la demande et restent disponibles hors ligne après écoute. Couper la voix, changer de compagne, quitter la page ou lancer la lecture d'une question arrête la voix de la compagne."
 };
 

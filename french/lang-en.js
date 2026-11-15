@@ -4444,7 +4444,7 @@ const LANG_DICT = {
 "星期": "Days",
 "月份": "Months",
 "季节": "Seasons",
-"问候": "Greetings",
+"问候": "Greeting",
 "自我介绍": "Introductions",
 "礼貌用语": "Politeness",
 "第一层": "Floor 1",
@@ -4645,6 +4645,15 @@ const LANG_DICT = {
 "学习伙伴修复手机与全屏答题时的显示，人物可拖动吸附边缘，手机和电脑分别记住位置；自动避开题目、选项和状态栏，考试、输入或弹窗时隐藏。": "Learning companions now remain visible on mobile and during full-screen practice. Drag them to an edge; mobile and desktop positions are saved separately. They avoid questions, answers and status bars, and hide during exams, text entry or dialogs.",
 "三位学习伙伴换上高清透明图集，每帧 384×480，保持原有动作与配饰；人物图片按需加载，不加入安装时的离线预下载。": "All three companions now use sharper transparent sprite sheets with 384×480 frames, preserving their actions and accessories. Images load on demand and are not downloaded when installing the offline cache.",
 "每位伙伴新增到 48 句双语台词，会在问候、答题、连对、完成计划和休息时主动反馈；做题时每 3 题或 20 秒最多提示一次，重要反馈优先。设置中可独立关闭主动说话和法语朗读，朗读不会打断题目声音。": "Each companion now has 48 bilingual lines for greetings, answers, streaks, completed plans and breaks. During practice, prompts appear at most once every three answers or 20 seconds, with important feedback taking priority. Spontaneous dialogue and French speech can be switched off separately in Settings; speech never interrupts question audio.",
-"浮动学习伙伴放大到与伙伴页面相同的尺寸：手机 144×180、电脑 192×240。手机答题页同步增加人物留白，保留拖动吸边、分设备位置记忆和自动避让。": "Floating companions now match the companion-page preview: 144×180 on phones and 192×240 on desktop. Mobile practice reserves more room for the character, while edge snapping, separate device positions and automatic avoidance remain available."
+"浮动学习伙伴放大到与伙伴页面相同的尺寸：手机 144×180、电脑 192×240。手机答题页同步增加人物留白，保留拖动吸边、分设备位置记忆和自动避让。": "Floating companions now match the companion-page preview: 144×180 on phones and 192×240 on desktop. Mobile practice reserves more room for the character, while edge snapping, separate device positions and automatic avoidance remain available.",
+"AI 合成配音": "AI-generated voice",
+"系统朗读": "System voice",
+"角色语音试听": "Character voice samples",
+"AI 合成配音 · 问候、答对、答错各一句；其他台词使用系统朗读。": "AI-generated voices: one greeting, one correct-answer line and one reassurance per character. Other lines use the system voice.",
+"请开启伙伴语音，或等题目朗读结束后再试。": "Enable companion speech, or try again once the question audio finishes.",
+"答对": "Correct answer",
+"答错": "Incorrect answer",
+"学习伙伴加入 Gemini 角色配音：Ninon、Lison、Pia 各有问候、答对和答错 3 句，共 9 句；声音分别呈现成熟温暖、俏皮腹黑和傲娇少女感，角色原年龄不变。": "Gemini character voices now cover a greeting, praise and reassurance for each of Ninon, Lison and Pia: 9 lines in total. Their voices convey warm maturity, playful mischief and shy pride; canonical character ages are unchanged.",
+"伙伴面板新增语音试听；已有录音按当前法语台词精确匹配，其他台词使用系统朗读。配音按需加载，听过后可离线使用；关闭语音、切换角色、离开页面或开始题目朗读时立即停止。": "The companion panel now offers voice samples. Recordings match the displayed French line exactly; other lines use the system voice. Audio loads on demand and remains available offline after playback. Muting, changing companions, leaving the page or starting question audio stops companion speech."
 };
 

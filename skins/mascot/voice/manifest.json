@@ -1,0 +1,127 @@
+{
+  "schema": 1,
+  "version": "1.9.3",
+  "provider": "Google AI Studio",
+  "model": "gemini-3.8-flash-tts",
+  "generatedDate": "2026-11-15",
+  "canonicalAgesUnchanged": {
+    "ninon": 27,
+    "lison": 24,
+    "pia": 21
+  },
+  "coverage": "9 approved sample lines; all other dialogue falls back to device French TTS",
+  "format": "AAC-LC, 24 kHz mono, 64 kbps, M4A; no background music added",
+  "characters": {
+    "ninon": {
+      "file": "ninon.m4a",
+      "voiceName": "Ninon 24 — jeune et chaleureuse 1",
+      "voiceId": null,
+      "voiceIdNote": "AI Studio saved voice name recorded; opaque API ID not exported.",
+      "perceivedAge": 24,
+      "selectedTake": 1,
+      "persona": "Native metropolitan French, female young adult aged 24. A bright, fresh, youthful anime heroine with a light clear mezzo in the middle register. Forward luminous resonance, soft smooth texture, buoyant melodic phrasing, an open sunny smile and spontaneous warmth. She is the mature member of her young friend group: emotionally steady, caring and confident, while sounding distinctly youthful and lively. Gentle relaxed confidence, no heavy chesty or husky weight, no formal presenter cadence. Warm greeting, sparkling sincere praise and soft reassurance. Natural French articulation and liaison; clean solo studio speech.",
+      "style": "Ninon, age 24. Fresh youthful feminine voice, bright light resonance and buoyant melodic phrasing. Warm, caring and emotionally mature, with the spontaneous sunny smile of a young friend. Keep the tone light and lively rather than deep or maternal. Three separate short game notifications; leave one second of silence between paragraphs. First: delighted smiling welcome. Second: sparkling sincere praise. Third: soft confident reassurance. Native metropolitan French; speak only the exact transcript, no added words or music.",
+      "cues": {
+        "Bonjour ! Ça me fait plaisir de te voir.": {
+          "event": "welcome",
+          "start": 0,
+          "end": 2.61
+        },
+        "Bravo, tu as bien compris !": {
+          "event": "happy",
+          "start": 2.61,
+          "end": 5.02
+        },
+        "Ce n'est pas grave, on reprend.": {
+          "event": "sad",
+          "start": 5.02,
+          "end": 7.44
+        }
+      },
+      "masterSha256": "62984ebbd652aacee13dbc8ab969a6a71cedfe696cef1c3023d4db9ccce8df8a",
+      "audioSha256": "fdbe9a3ff3685d650d2da7b958b817461b73d690c1bb0c43f340617b5ba98969",
+      "masterDurationSeconds": 7.44,
+      "gainDb": -3.944,
+      "regenerationNote": null,
+      "qa": {
+        "decodeCorrelation": 0.99801,
+        "segmentation": "Local French ASR timing checked against waveform silence; original pauses and speech retained.",
+        "listening": "User approved voice samples; no claim of a new human listening review."
+      }
+    },
+    "lison": {
+      "file": "lison.m4a",
+      "voiceName": "Lison 21 — jeune et malicieuse 1",
+      "voiceId": null,
+      "voiceIdNote": "AI Studio saved voice name recorded; opaque API ID not exported.",
+      "perceivedAge": 21,
+      "selectedTake": 1,
+      "persona": "Native metropolitan French, female young adult aged 21. A fresh youthful anime heroine with a light silky medium-high voice, bright focused resonance, playful melodic agility and a small knowing smile. Clever, mischievous and secretly kind. Make her teasing feel like a quick-witted young friend: tiny suspenseful pauses, lightly lifted questions, nimble emphasis, smiling soft endings. Youthful charm and lively curiosity rather than a deep sultry or formal mature voice. Her kindness emerges during reassurance. Clear authentic French articulation and liaison, clean solo studio speech.",
+      "style": "Lison, age 21. Fresh youthful light feminine voice, playful medium-high melodic turns and an audible knowing smile. Clever mischievous charm, like a quick-witted young friend. Keep the phrasing nimble and bright. Three separate short game notifications with one second of silence between paragraphs. First: a teasing smiling welcome, brief pause before the saved seat reveal. Second: amused impressed praise, lightly emphasize trouvé. Third: conspiratorial smile on discret followed by a kind upward invitation. Never contemptuous. Native metropolitan French, exact words only, no music.",
+      "cues": {
+        "Te voilà ! Ta place est libre.": {
+          "event": "welcome",
+          "start": 0,
+          "end": 2.83
+        },
+        "Bien joué, tu as trouvé !": {
+          "event": "happy",
+          "start": 2.83,
+          "end": 6.45
+        },
+        "Ce détail était discret. On le revoit ?": {
+          "event": "sad",
+          "start": 6.45,
+          "end": 11.6
+        }
+      },
+      "masterSha256": "14342ea22e8818a7c4d6ddf6d1d13f2ebe0c874441e0848bd1957f30cc7a9e8d",
+      "audioSha256": "737b977acbf7017c75724161949efd5104bc92c7778a63f459fba4cc7a2b6c41",
+      "masterDurationSeconds": 11.6,
+      "gainDb": -1.582,
+      "regenerationNote": "Original tab 21 was closed. Regenerated with the same saved voice 1, transcript and style on 2026-11-15; this is a new performance, not byte-identical to the approved original.",
+      "qa": {
+        "decodeCorrelation": 0.99848,
+        "segmentation": "Local French ASR timing checked against waveform silence; original pauses and speech retained.",
+        "listening": "User approved voice samples; no claim of a new human listening review."
+      }
+    },
+    "pia": {
+      "file": "pia.m4a",
+      "voiceName": "Pia 18 — vive et fière 1",
+      "voiceId": null,
+      "voiceIdNote": "AI Studio saved voice name recorded; opaque API ID not exported.",
+      "perceivedAge": 18,
+      "selectedTake": 1,
+      "persona": "Native metropolitan French, female young adult aged 18. A very youthful anime heroine with a light bright soprano, clear bell-like forward resonance, airy soft endings and lively spontaneous melodic movement. Proud, easily flustered and secretly kind: unmistakably tsundere. Brisk assertive starts give way to a tiny embarrassed hesitation and much softer shy warmth. Her youthful charm comes from nimble expressive phrasing and a sincere shy smile; a natural young-adult voice rather than a squeaky caricature. Crisp French vowels and liaison. Praise is a reluctant warm admission; reassurance hides tenderness beneath a brave start. Clean solo studio speech.",
+      "style": "Pia, age 18, a young-adult French anime heroine. Bright light soprano, fresh youthful charm, lively melodic rises and shy soft endings. Strong tsundere contrast: brisk proud opening, tiny embarrassed pause, then noticeably softer kind admission. Three separate game notifications; one second of silence between paragraphs. First: Tu es là is guarded and quick, Ça me fait plaisir is shy and warm. Second: Pas mal is proud restrained approval, Même très bien en fait admits delight with a flustered smile. Third: Une erreur starts bravely, ce n'est pas grave becomes gentle protective reassurance. Clear natural metropolitan French. Exact words only, no music, no squeaky exaggeration.",
+      "cues": {
+        "Tu es là. Ça me fait plaisir.": {
+          "event": "welcome",
+          "start": 0,
+          "end": 3.34
+        },
+        "Pas mal ! Même très bien, en fait.": {
+          "event": "happy",
+          "start": 3.34,
+          "end": 9.3
+        },
+        "Une erreur, ce n'est pas grave.": {
+          "event": "sad",
+          "start": 9.3,
+          "end": 12.84
+        }
+      },
+      "masterSha256": "3f667b3a51a259b72935e57c24b272f446b4e26523a203ff9d12e4f53aa5222a",
+      "audioSha256": "2740587af11c0b7c41b9e54d6aa44ed66d1f3be1063480905e58cb2a3027682e",
+      "masterDurationSeconds": 12.84,
+      "gainDb": 0.437,
+      "regenerationNote": null,
+      "qa": {
+        "decodeCorrelation": 0.99231,
+        "segmentation": "Local French ASR timing checked against waveform silence; original pauses and speech retained.",
+        "listening": "User approved voice samples; no claim of a new human listening review."
+      }
+    }
+  }
+}

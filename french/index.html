@@ -14789,7 +14789,7 @@ GPA2.forEach(u => {
     LEVEL_OF[id] = u.lv; TAGS_OF[id] = q.tags; KP_OF[id] = "gb" + u.unit;
   });
 });
-const LANG_FILES = {"en": "lang-en.js?v=a9a1a0c11e", "fr": "lang-fr.js?v=7d5abd46e1"};
+const LANG_FILES = {"en": "lang-en.js?v=0098101a6d", "fr": "lang-fr.js?v=9eaba83215"};
 (() => { let l = null; try { l = localStorage.getItem("fq-lang"); } catch (e) {}
   if (Object.hasOwn(LANG_FILES, l)) document.write('<script src="' + LANG_FILES[l] + '"><\/script>'); })();
 </script>
@@ -17074,6 +17074,7 @@ function tourOralResult(){
  const row=el('div','actions');row.append(tourButton(tourText('立即重说这一点','Repeat this point now','Reprendre ce point maintenant'),()=>{o.node='repair';o.ready=false;o.hints=0;tourOralRender();}),tourButton(tourText('换个条件重测','Try a changed condition','Essayer une nouvelle condition'),()=>tourOralStart(o.id,o.variant+1)),tourButton(tourText('稍后复练，返回地图','Practise later; back to map','Reprendre plus tard ; retour à la carte'),tourMapBack,true));card.append(row);stage.append(card);
 }
 async function tourRecord(){
+ if(typeof petStopVoice==='function')petStopVoice();
  const o=tourOral;if(!o)return;
  if(tourRecorder?.state==='recording'){tourRecorder.stop();if(tourMic)tourMic.getTracks().forEach(t=>t.stop());tourMic=null;clearTimeout(tourMicTimer);return;}
  tourAudioClear();const epoch=tourMicEpoch;
@@ -17856,6 +17857,7 @@ function setGoalSection(wrap) {
 // 每次用户可见更新都新增记录：普通更新 1.x.y → 1.x.(y+1)；较大功能变动 → 1.(x+1).0。
 // 首位保持 1，只有用户明确要求才可修改；历史记录保留。完整发布规则见根目录 AGENTS.md。
 const CHANGELOG = [
+  { v: "1.9.3", d: "2026-11-15", p: "fr", items: ["学习伙伴加入 Gemini 角色配音：Ninon、Lison、Pia 各有问候、答对和答错 3 句，共 9 句；声音分别呈现成熟温暖、俏皮腹黑和傲娇少女感，角色原年龄不变。", "伙伴面板新增语音试听；已有录音按当前法语台词精确匹配，其他台词使用系统朗读。配音按需加载，听过后可离线使用；关闭语音、切换角色、离开页面或开始题目朗读时立即停止。"] },
   { v: "1.9.2", d: "2026-11-15", p: "fr", items: ["浮动学习伙伴放大到与伙伴页面相同的尺寸：手机 144×180、电脑 192×240。手机答题页同步增加人物留白，保留拖动吸边、分设备位置记忆和自动避让。"] },
   { v: "1.9.1", d: "2026-11-15", p: "fr", items: ["单词闯关的「基础功能词」更名为「基础虚词」，11 关基础虚词移到 52 关主题词汇上方；练习标题、词条分类和续关按钮同步更新，原有星数、存档与解锁进度保留。","学习伙伴修复手机与全屏答题时的显示，人物可拖动吸附边缘，手机和电脑分别记住位置；自动避开题目、选项和状态栏，考试、输入或弹窗时隐藏。","三位学习伙伴换上高清透明图集，每帧 384×480，保持原有动作与配饰；人物图片按需加载，不加入安装时的离线预下载。","每位伙伴新增到 48 句双语台词，会在问候、答题、连对、完成计划和休息时主动反馈；做题时每 3 题或 20 秒最多提示一次，重要反馈优先。设置中可独立关闭主动说话和法语朗读，朗读不会打断题目声音。"] },
   { v: "1.9.0", d: "2026-11-15", p: "fr", items: [
@@ -18538,7 +18540,8 @@ function pickVoice() {
   return fr[0] || null;
 }
 if (tts) { frVoice = pickVoice(); tts.addEventListener?.("voiceschanged", () => { frVoice = pickVoice(); }); }
-function speak(text, rate, btn, done) {   // done：读完（或出错）时调用
+function speak(text, rate, btn, done, companion = false) {
+  if (!companion && typeof petStopVoice === "function") petStopVoice();   // done：读完（或出错）时调用
   if (!tts) { if (done) done(); return false; }
   lastAutoAudio = text;
   if (!frVoice) frVoice = pickVoice();   // 声音列表可能在页面打开后才加载好
@@ -26240,17 +26243,20 @@ function petTouchesContent() {
 }
 function petScheduleLayout() { if (!petFrameRequest) petFrameRequest = requestAnimationFrame(() => { petFrameRequest = 0; petRefresh(); }); }
 function petResetRuntime() {
+  petStopVoice();
   [petStateTimer,petBubbleTimer,petSpeechTimer].forEach(clearTimeout);
   Object.assign(petRuntime, { open: false, state: 'idle', line: null, trial: null, preview: false, scope: null, drag: null, inQuestion: false, lastSpeech: 0, answersSinceSpeech: 3, pendingSpeech: null, lastIdle: 0, greetingShown: false });
   $('petBubble')?.remove(); $('petPreview')?.replaceChildren();
 }
 function petCloseBubble(focus = false) {
+  petStopVoice();
   clearTimeout(petBubbleTimer);
   petRuntime.open = false; petRuntime.line = null; $('petBubble')?.remove();
   if (focus) $('petAvatar')?.focus({ preventScroll: true });
   petRefresh();
 }
 function petOnLeave() {
+  petStopVoice();
   clearTimeout(petBubbleTimer); clearTimeout(petSpeechTimer);
   // Completing today's plan belongs to the learning session, not the old card.
   // Carry it through ordinary navigation; blocked views/settings/reset clear it.
@@ -26272,19 +26278,90 @@ const PET_SPEECH_PRIORITY = { plan: 4, streak: 3, sad: 2, enter: 2, welcome: 1, 
 function petSpeechReady(now = Date.now()) {
   return !petQuestionActive() || !petRuntime.lastSpeech || petRuntime.answersSinceSpeech >= 3 || now - petRuntime.lastSpeech >= 20000;
 }
-function petTryVoice(line, button = null) {
-  const synth = typeof tts !== 'undefined' && tts;
-  if (!petConfig().voice || !synth || synth.speaking || synth.pending || typeof speak !== 'function') return false;
-  if (typeof userActivated !== 'undefined' && !userActivated) return false;
-  // iOS must be in a live click/key gesture; greetings and idle messages stay textual.
-  if (navigator.userActivation && !navigator.userActivation.isActive) return false;
-  if (document.querySelector('.play[aria-pressed="true"]:not(#petSpeak)')) return false;
-  if (!(typeof frVoice !== 'undefined' && frVoice) && !(typeof pickVoice === 'function' && pickVoice())) return false;
-  const previous = typeof lastAutoAudio !== 'undefined' ? lastAutoAudio : undefined;
-  try { return speak(line.fr,.85,button) !== false; }
-  catch (e) { return false; }
-  finally { if (typeof lastAutoAudio !== 'undefined') lastAutoAudio = previous; }
+// Approved recordings are keyed by exact French text, never by randomized line index.
+const PET_VOICE_BASE = '../skins/mascot/voice/';
+const PET_VOICE_VERSION = '1.9.3';
+let petVoiceIndex = null, petVoiceBuffer = null, petVoiceContext = null;
+let petVoiceSource = null, petVoiceAbort = null, petVoiceEpoch = 0;
+let petVoiceButton = null, petVoiceSystem = false, petVoiceManual = false;
+function petStopVoice() {
+  petVoiceEpoch++;
+  petVoiceAbort?.abort(); petVoiceAbort = null;
+  if (petVoiceSource) { petVoiceSource.onended = null; try { petVoiceSource.stop(); } catch (e) {} petVoiceSource.disconnect(); petVoiceSource = null; }
+  if (petVoiceSystem && typeof tts !== 'undefined' && tts) tts.cancel();
+  petVoiceSystem = false;
+  petVoiceButton?.setAttribute('aria-pressed', 'false'); petVoiceButton = null;
 }
+function petVoiceAllowed(manual = false) {
+  const cfg = petConfig(), synth = typeof tts !== 'undefined' && tts;
+  return petOwned() && gameOn() && cfg.enabled && cfg.voice && (manual || cfg.feedback) && !petBlocked() &&
+    !(typeof tourOral !== 'undefined' && tourOral) &&
+    !(synth && (synth.speaking || synth.pending)) &&
+    !document.querySelector('.play[aria-pressed="true"]:not([data-pet-audio])');
+}
+function petSystemVoice(line, button) {
+  if (typeof tts === 'undefined' || !tts || !(frVoice || pickVoice())) return false;
+  const previous = lastAutoAudio, epoch = petVoiceEpoch;
+  try {
+    const ok = speak(line.fr, .85, button, () => { if (epoch === petVoiceEpoch) { petVoiceSystem = false; petVoiceButton = null; } }, true) !== false;
+    petVoiceSystem = ok; if (ok) petVoiceButton = button;
+    return ok;
+  } catch (e) { return false; }
+  finally { lastAutoAudio = previous; }
+}
+async function petPlayVoice(line, button = null, manual = false) {
+  // Cancel our own prior clip first; never cancel another feature's speech.
+  petStopVoice();
+  if (!petVoiceAllowed(manual) || (typeof userActivated !== 'undefined' && !userActivated)) return false;
+  if (navigator.userActivation && !navigator.userActivation.isActive) return false;
+  petVoiceManual = manual;
+  const character = petConfig().character, page = view, epoch = petVoiceEpoch;
+  const valid = () => epoch === petVoiceEpoch && character === petConfig().character && page === view && petVoiceAllowed(manual);
+  const fallback = () => valid() && petSystemVoice(line, button);
+  const Context = window.AudioContext || window.webkitAudioContext;
+  if (!Context) return fallback();
+  try {
+    // Resume in the originating gesture, before network requests (Safari).
+    petVoiceContext ||= new Context();
+    await petVoiceContext.resume();
+    if (!valid() || petVoiceContext.state !== 'running') return false;
+  } catch (e) { return false; } // Autoplay rejection stays silent; no retry loop.
+  const controller = new AbortController(); petVoiceAbort = controller;
+  try {
+    if (!petVoiceIndex) {
+      const response = await fetch(PET_VOICE_BASE + 'manifest.json?v=' + PET_VOICE_VERSION, { signal: controller.signal });
+      if (!response.ok) throw new Error('Voice index unavailable');
+      const index = await response.json();
+      if (!valid()) return false;
+      petVoiceIndex = index;
+    }
+    const track = petVoiceIndex.characters?.[character], cue = track?.cues?.[line.fr];
+    if (!cue) return fallback();
+    if (!/^(ninon|lison|pia)\.m4a$/.test(track.file) || !Number.isFinite(cue.start) || !Number.isFinite(cue.end) || cue.start < 0 || cue.end <= cue.start) throw new Error('Invalid voice cue');
+    if (petVoiceBuffer?.character !== character) {
+      petVoiceBuffer = null; // Keep only the selected character's decoded audio.
+      const response = await fetch(PET_VOICE_BASE + track.file + '?v=' + PET_VOICE_VERSION, { signal: controller.signal });
+      if (!response.ok) throw new Error('Voice recording unavailable');
+      const buffer = await petVoiceContext.decodeAudioData(await response.arrayBuffer());
+      if (!valid()) return false;
+      petVoiceBuffer = { character, buffer };
+    }
+    if (!valid()) return false;
+    const buffer = petVoiceBuffer.buffer;
+    if (cue.end > buffer.duration + .03) throw new Error('Voice cue exceeds recording');
+    const source = petVoiceContext.createBufferSource(); source.buffer = buffer; source.connect(petVoiceContext.destination);
+    petVoiceSource = source; petVoiceButton = button; button?.setAttribute('aria-pressed', 'true');
+    source.onended = () => { source.disconnect(); if (petVoiceSource === source) { petVoiceSource = null; petVoiceButton = null; button?.setAttribute('aria-pressed', 'false'); } };
+    source.start(0, cue.start, cue.end - cue.start);
+    return true;
+  } catch (e) {
+    if (e.name === 'AbortError' || e.name === 'NotAllowedError') return false;
+    if (valid() && petVoiceSource) { petVoiceSource.onended = null; try { petVoiceSource.stop(); } catch (_) {} petVoiceSource.disconnect(); petVoiceSource = null; button?.setAttribute('aria-pressed', 'false'); }
+    return fallback();
+  } finally { if (petVoiceAbort === controller) petVoiceAbort = null; }
+}
+
+function petTryVoice(line, button = null) { return petPlayVoice(line, button); }
 function petQueueLine(kind) {
   if (!petOwned() || !petConfig().enabled || !petConfig().feedback || petBlocked()) return false;
   const priority = PET_SPEECH_PRIORITY[kind] || 0;
@@ -26345,15 +26422,12 @@ function petRenderBubble() {
   if (compact) { w.prepend(b); return; }
   const actions = el('div', 'pet-actions');
   const audio = petButton('朗读', () => {
-    if (!tts || tts.speaking || tts.pending || document.querySelector('.play[aria-pressed="true"]:not(#petSpeak)')) { status.textContent = tr(tts ? '正在朗读题目，请稍后再试。' : '这个浏览器不支持朗读。'); return; }
-    // An explicit read click remains available even when automatic voice is off.
-    const previous = typeof lastAutoAudio !== 'undefined' ? lastAutoAudio : undefined;
-    try { speak(line.fr, .85, audio); } catch (e) {} finally { if (typeof lastAutoAudio !== 'undefined') lastAutoAudio = previous; }
+    petPlayVoice(line, audio, true).then(ok => { status.textContent = tr(ok ? (petVoiceSystem ? '系统朗读' : 'AI 合成配音') : '请开启伙伴语音，或等题目朗读结束后再试。'); });
   }, 'petSpeak', 'btn ghost play');
-  const voiceAvailable = !!(tts && (frVoice || pickVoice()));
-  audio.setAttribute('aria-pressed', 'false'); audio.disabled = !voiceAvailable;
+  const voiceAvailable = petConfig().voice;
+  audio.dataset.petAudio = '1'; audio.setAttribute('aria-pressed', 'false'); audio.disabled = !voiceAvailable;
   actions.append(audio, petButton(petRuntime.language === 'zh' ? 'English' : '中文', () => { petRuntime.language = petRuntime.language === 'zh' ? 'en' : 'zh'; petRenderBubble(); }, 'petTranslate'), petButton('伙伴面板', () => { petCloseBubble(); goBoard('pet'); }, 'petHome'));
-  const status = el('p', 'sub'); status.id = 'petAudioStatus'; status.setAttribute('role', 'status'); if (!tts) status.textContent = tr('这个浏览器不支持朗读。'); else if (!voiceAvailable) status.textContent = tr('这台设备上没找到法语朗读声音，可以在系统设置里添加法语语音。');
+  const status = el('p', 'sub'); status.id = 'petAudioStatus'; status.setAttribute('role', 'status');
   b.append(actions, status); w.prepend(b);
 }
 function petReact(d, kind, info = {}) {
@@ -26368,6 +26442,8 @@ function petRefresh() {
   if (!petRuntime.started) return;
   const cfg = petConfig(), widget = $('petWidget');
   const enabled = petOwned() && cfg.enabled && gameOn(), blocked = petBlocked();
+  if (!enabled || blocked || !cfg.voice || (!cfg.feedback && !petVoiceManual) || (petVoiceBuffer && petVoiceBuffer.character !== cfg.character)) petStopVoice();
+  if (petVoiceBuffer?.character !== cfg.character) petVoiceBuffer = null;
   const mobile = petMobile(); widget.classList.toggle('pet-mobile', mobile);
   const question = petQuestionActive(), entered = question && !petRuntime.inQuestion;
   petRuntime.inQuestion = question;
@@ -26441,7 +26517,8 @@ function petInit() {
   ['resize', 'scroll', 'focusin', 'focusout'].forEach(type => window.addEventListener(type, petScheduleLayout, { passive: true }));
   window.visualViewport?.addEventListener('resize', petScheduleLayout);
   window.visualViewport?.addEventListener('scroll', petScheduleLayout);
-  document.addEventListener('visibilitychange', petScheduleLayout);
+  document.addEventListener('visibilitychange', () => { if (document.hidden) petStopVoice(); petScheduleLayout(); });
+  window.addEventListener('pagehide', petStopVoice);
   if (tts) tts.addEventListener?.('voiceschanged', () => { if ($('petBubble')) petRenderBubble(); });
   new MutationObserver(petScheduleLayout).observe(document.documentElement, { attributes: true, attributeFilter: ['class'] });
   new MutationObserver(ms => { if (ms.some(m => !m.target.closest?.('#petWidget') && (m.type === 'attributes' || [...m.addedNodes, ...m.removedNodes].some(n => n.nodeType === 1 && n.id !== 'petWidget' && !n.closest?.('#petWidget, #petPage'))))) petScheduleLayout(); }).observe(document.body, { childList: true, subtree: true, attributes: true, attributeFilter: ['open', 'aria-modal'] });
@@ -26465,7 +26542,7 @@ function petPurchaseButton(id, done) {
 }
 function petSettings(wrap) {
   const s = setSection(wrap, tr('学习伙伴'), tr('只陪伴，不催促；关闭不会影响亲密度。')), cfg = petConfig(), own = petOwned();
-  const changes = (key, value) => { petSet({ [key]: value }); if (key === 'enabled' && !value) petRuntime.preview = false; petRenderPreview(); petRefresh(); };
+  const changes = (key, value) => { petStopVoice(); petSet({ [key]: value }); if (key === 'enabled' && !value) petRuntime.preview = false; petRenderPreview(); petRefresh(); document.querySelectorAll('.pet-voice-preview button').forEach(b => { b.disabled = !petConfig().enabled || !petConfig().voice; }); };
   s.append(setCheckRow('petEnabled', tr('显示学习伙伴'), cfg.enabled && own, v => changes('enabled', v)), setCheckRow('petFeedback', tr('主动说话'), cfg.feedback, v => changes('feedback', v)), setCheckRow('petVoice', tr('说话时朗读法语'), cfg.voice, v => changes('voice', v)), setCheckRow('petAnimation', tr('角色动画'), cfg.animation, v => changes('animation', v)));
   if (!own) { s.querySelectorAll('input').forEach(n => n.disabled = true); s.append(el('p', 'sub', tr('在游戏里的“学习伙伴”查看预览和解锁。'))); }
   const positions = [['right-bottom', '右下角'], ['left-bottom', '左下角'], ['right-top', '右上角'], ['left-top', '左上角']];
@@ -26508,7 +26585,7 @@ function renderPet() {
   const chars = el('div', 'pet-characters'); chars.setAttribute('role', 'group'); chars.setAttribute('aria-label', tr('选择伙伴'));
   PET_CHARACTERS.forEach(c => {
     const selected = c.id === (own ? cfg.character : petRuntime.previewCharacter);
-    const button = petButton(c.name, () => { petRuntime.trial = null; if (own) petSet({ character: c.id }); else petRuntime.previewCharacter = c.id; renderPet(); }, 'pet-character-' + c.id, 'pet-character');
+    const button = petButton(c.name, () => { petStopVoice(); petRuntime.trial = null; if (own) petSet({ character: c.id }); else petRuntime.previewCharacter = c.id; renderPet(); }, 'pet-character-' + c.id, 'pet-character');
     button.style.setProperty('--pet-color', c.color); button.setAttribute('aria-pressed', String(selected));
     button.append(el('span', 'sub', tr(c.desc))); chars.append(button);
   }); root.append(chars);
@@ -26526,11 +26603,32 @@ function renderPet() {
   note.append(el('p', null, tr('正在试穿；离开面板后恢复已购装扮。')), petButton('结束试穿', () => { petRuntime.trial = null; note.hidden = true; petRenderPreview(); }, 'petTrialEnd')); info.append(note); root.append(hero);
   if (own) root.append(petButton('基础装扮', () => { petRuntime.trial = null; petSet({ outfit: '' }); renderPet(); }, 'pet-outfit-none'));
   const accessories = el('section'); accessories.append(el('h3', null, tr('伙伴配饰'))); petAccessoryCards(accessories); root.append(accessories);
-  petSettings(root); stage.append(root); petRenderPreview(); petRefresh();
+  petVoicePreview(root); petSettings(root); stage.append(root); petRenderPreview(); petRefresh();
 }
 
 // Called only for account/data changes, not on every answer or layout update.
 function petRefreshPage() { if (view === 'pet') { const y = scrollY; renderPet(); window.scrollTo(0, y); } }
+
+function petVoicePreview(root) {
+  if (!petOwned()) return;
+  const section = el('section', 'pet-voice-preview');
+  section.append(el('h3', null, tr('角色语音试听')), el('p', 'sub', tr('AI 合成配音 · 问候、答对、答错各一句；其他台词使用系统朗读。')));
+  const status = el('p', 'sub'); status.setAttribute('role', 'status');
+  const labels = { welcome: '问候', happy: '答对', sad: '答错' };
+  ['welcome', 'happy', 'sad'].forEach(kind => {
+    const x = PET_LINES[petConfig().character].find(x => x[0] === kind && x[1] === 0);
+    const button = petButton(labels[kind], () => {
+      status.textContent = x[2];
+      petPlayVoice({fr:x[2]}, button, true).then(ok => {
+        status.textContent = x[2] + ' · ' + tr(ok ? (petVoiceSystem ? '系统朗读' : 'AI 合成配音') : '请开启伙伴语音，或等题目朗读结束后再试。');
+      });
+    }, 'pet-voice-' + kind, 'btn ghost play');
+    button.dataset.petAudio = '1'; button.setAttribute('aria-pressed', 'false');
+    button.disabled = !petConfig().enabled || !petConfig().voice;
+    section.append(button);
+  });
+  section.append(status); root.append(section);
+}
 // ---------- 设置：集中管理各模块的练习设置（都记在本机浏览器里） ----------
 function renderSettings() {
   stage.innerHTML = "";
