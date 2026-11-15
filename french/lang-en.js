@@ -4662,6 +4662,14 @@ const LANG_DICT = {
 "休息提醒": "Take a break",
 "点击互动": "Chat",
 "三位学习伙伴新增 15 句 Gemini 配音，现有录音扩展到 24 句：每人覆盖问候、开始学习、答对、答错、连续答对、完成计划、休息提醒和点击互动 8 类场景，沿用已选定的角色声线。": "The three companions gain 15 Gemini voice lines, bringing the library to 24 recordings. Each character now covers eight situations: greeting, starting study, correct and incorrect answers, a correct-answer streak, completing a plan, taking a break and chatting, using the existing character voices.",
-"角色语音试听改为场景卡片，显示法语原句及翻译，播放后显示片段时长。原有录音、48 句随机台词和亲密度解锁规则保留；未配音台词仍使用系统朗读，音频继续按当前角色按需加载。": "Voice samples now appear as situation cards with the French line and its translation; playback shows the clip duration. Existing recordings, each character’s 48-line random dialogue pool and affinity unlocks are preserved. Unrecorded lines still use the system voice, and audio loads on demand for the selected character."
+"角色语音试听改为场景卡片，显示法语原句及翻译，播放后显示片段时长。原有录音、48 句随机台词和亲密度解锁规则保留；未配音台词仍使用系统朗读，音频继续按当前角色按需加载。": "Voice samples now appear as situation cards with the French line and its translation; playback shows the clip duration. Existing recordings, each character’s 48-line random dialogue pool and affinity unlocks are preserved. Unrecorded lines still use the system voice, and audio loads on demand for the selected character.",
+"修复做题时的伙伴语音：首次交互初始化音频，延迟反馈不再因缺少即时点击而被跳过；气泡暂时放不下也不会阻止声音。保留每 3 题或 20 秒限频，题目朗读和口语录音优先，切换题目取消过期配音。": "Companion audio now initializes on your first interaction, so delayed study feedback no longer requires another immediate click. A bubble that cannot fit no longer mutes the voice. The three-answer or twenty-second limit and priority for question audio and recording remain; changing questions cancels stale playback.",
+"学习伙伴改为自由拖动：可放在屏幕任意位置，松手、切页或弹出对话时不再自动贴边。位置按手机和电脑分别保存，屏幕改变时保持可见；设置中可用位置预设或重置回右下角。": "Drag a companion anywhere on the screen. Releasing, changing pages or opening a speech bubble no longer snaps her to an edge. Phone and desktop positions are saved separately and stay within the visible screen after resizing. Settings offer position presets and a reset to the bottom-right corner.",
+"自由位置": "Free position",
+"位置预设": "Position presets",
+"拖动伙伴可放在屏幕任意位置，松手后不再自动贴边。位置在本设备保存；重置可回到右下角。": "Drag your companion anywhere; she stays where you release her. The position is saved on this device. Reset returns her to the bottom-right corner.",
+"${event}台词": "${event} line",
+"角色试听新增台词切换：可按 8 类场景浏览每位伙伴现有的 48 句台词，显示法语及翻译。已有的 24 句角色配音继续使用，其他台词明确使用系统朗读；后续补录不影响亲密度解锁。": "Voice previews now let you browse each companion’s 48 existing lines across 8 situations, with French text and translation. The 24 existing character recordings are retained; other lines are clearly played with the system voice. Future recordings will preserve affinity unlocks.",
+"每位伙伴 48 句台词，覆盖 8 类场景；已有角色配音优先，未配音使用系统朗读。实际互动仍按亲密度解锁。": "48 lines per companion across 8 situations. Existing character recordings take priority; unrecorded lines use the system voice. Interactions still unlock with affinity."
 };
 

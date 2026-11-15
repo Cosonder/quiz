@@ -1582,6 +1582,8 @@ html.qf #stage > section.q-card > .explain { flex: none !important; height: clam
 .pet-voice-card{border:1px solid var(--line,#d8dde8);border-radius:12px;padding:12px;min-width:0}
 .pet-voice-card p{margin:8px 0 0;overflow-wrap:anywhere}
 .pet-voice-french{font-weight:600}
+
+.pet-voice-card select{display:block;width:100%;max-width:100%;margin-top:10px;min-height:36px}
 /* Ordered route and oral tasks reuse the active theme's colours. */
 .tour-pin.locked{filter:grayscale(.8);opacity:.65}.tour-pin.num{min-width:28px;min-height:28px;font-size:11px}.tour-chapters{margin-top:24px;display:grid;gap:12px}.tour-chapter{border:1px solid var(--line,#7894);border-radius:12px;padding:12px}.tour-chapter summary{cursor:pointer;font-weight:700;min-height:36px}.tour-route-row{display:grid;grid-template-columns:minmax(160px,1fr) 2fr auto;gap:8px;align-items:center;padding:10px 0;border-bottom:1px solid var(--line,#7893)}.tour-route-row small{grid-column:1/-1}.tour-lesson,.tour-drill,.tour-oral,.tour-result{max-width:900px;margin:auto}.tour-rule,.tour-task{padding:14px;border-left:3px solid var(--accent,#789);line-height:1.7}.tour-examples,.tour-review{padding:12px;border:1px solid var(--line,#7894);border-radius:10px;margin:12px 0}.tour-options{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;margin:16px 0}.tour-options button{white-space:normal;min-height:48px;text-align:left;overflow-wrap:anywhere}.tour-options .correct{outline:3px solid #35a675}.tour-options .wrong{outline:3px solid #d27973}.tour-drill .q{font-size:clamp(20px,3vw,28px);line-height:1.6;overflow-wrap:anywhere}.tour-oral h2{font-size:clamp(18px,3vw,25px);line-height:1.6}.tour-dialogue{font-size:1.2em;line-height:1.7;border-left:3px solid #6a9fd4;padding:12px}.tour-facts{display:grid;grid-template-columns:minmax(100px,1fr) 2fr;gap:12px}.tour-facts dt{font-weight:700}.tour-facts dd{margin:0;overflow-wrap:anywhere}.tour-facts .missing{color:#b76e55}.tour-oral input{display:block;width:min(100%,360px);padding:12px;font:inherit;margin:8px 0}.tour-oral audio{max-width:100%;display:block;margin:10px 0}.tour-hint{padding:10px;border:1px dashed var(--line,#7896)}.tour-oral .actions,.tour-result .actions{flex-wrap:wrap;gap:10px}.tour-oral .btn,.tour-result .btn{white-space:normal}.tour-oral .sub{line-height:1.6}
 @media(max-width:600px){.tour-route-row{grid-template-columns:1fr auto}.tour-route-row>span:not(.px-stars){grid-column:1/-1}.tour-options{grid-template-columns:1fr}.tour-facts{grid-template-columns:1fr}.tour-facts dd{padding-bottom:10px}.tour-chapter{padding:8px}.tour-pin.num{min-width:24px;min-height:24px}.tour-oral,.tour-lesson,.tour-drill{padding:16px}}
@@ -14795,7 +14797,7 @@ GPA2.forEach(u => {
     LEVEL_OF[id] = u.lv; TAGS_OF[id] = q.tags; KP_OF[id] = "gb" + u.unit;
   });
 });
-const LANG_FILES = {"en": "lang-en.js?v=9b181eafa3", "fr": "lang-fr.js?v=85c4fa5c56"};
+const LANG_FILES = {"en": "lang-en.js?v=0f24265562", "fr": "lang-fr.js?v=4a2e36643b"};
 (() => { let l = null; try { l = localStorage.getItem("fq-lang"); } catch (e) {}
   if (Object.hasOwn(LANG_FILES, l)) document.write('<script src="' + LANG_FILES[l] + '"><\/script>'); })();
 </script>
@@ -17863,6 +17865,7 @@ function setGoalSection(wrap) {
 // 每次用户可见更新都新增记录：普通更新 1.x.y → 1.x.(y+1)；较大功能变动 → 1.(x+1).0。
 // 首位保持 1，只有用户明确要求才可修改；历史记录保留。完整发布规则见根目录 AGENTS.md。
 const CHANGELOG = [
+  { v: "1.9.5", d: "2026-11-15", p: "fr", items: ["角色试听新增台词切换：可按 8 类场景浏览每位伙伴现有的 48 句台词，显示法语及翻译。已有的 24 句角色配音继续使用，其他台词明确使用系统朗读；后续补录不影响亲密度解锁。", "修复做题时的伙伴语音：首次交互初始化音频，延迟反馈不再因缺少即时点击而被跳过；气泡暂时放不下也不会阻止声音。保留每 3 题或 20 秒限频，题目朗读和口语录音优先，切换题目取消过期配音。", "学习伙伴改为自由拖动：可放在屏幕任意位置，松手、切页或弹出对话时不再自动贴边。位置按手机和电脑分别保存，屏幕改变时保持可见；设置中可用位置预设或重置回右下角。"] },
   { v: "1.9.4", d: "2026-11-15", p: "fr", items: ["三位学习伙伴新增 15 句 Gemini 配音，现有录音扩展到 24 句：每人覆盖问候、开始学习、答对、答错、连续答对、完成计划、休息提醒和点击互动 8 类场景，沿用已选定的角色声线。", "角色语音试听改为场景卡片，显示法语原句及翻译，播放后显示片段时长。原有录音、48 句随机台词和亲密度解锁规则保留；未配音台词仍使用系统朗读，音频继续按当前角色按需加载。"] },
   { v: "1.9.3", d: "2026-11-15", p: "fr", items: ["学习伙伴加入 Gemini 角色配音：Ninon、Lison、Pia 各有问候、答对和答错 3 句，共 9 句；声音分别呈现成熟温暖、俏皮腹黑和傲娇少女感，角色原年龄不变。", "伙伴面板新增语音试听；已有录音按当前法语台词精确匹配，其他台词使用系统朗读。配音按需加载，听过后可离线使用；关闭语音、切换角色、离开页面或开始题目朗读时立即停止。"] },
   { v: "1.9.2", d: "2026-11-15", p: "fr", items: ["浮动学习伙伴放大到与伙伴页面相同的尺寸：手机 144×180、电脑 192×240。手机答题页同步增加人物留白，保留拖动吸边、分设备位置记忆和自动避让。"] },
@@ -26129,7 +26132,8 @@ let petRuntime = { started: false, open: false, state: 'idle', line: null, langu
 let petStateTimer = 0, petFrameRequest = 0, petBubbleTimer = 0, petSpeechTimer = 0;
 // A phone in landscape retains its own position and compact character size.
 const petMobile = () => matchMedia('(max-width: 600px)').matches || (matchMedia('(pointer: coarse)').matches && Math.min(innerWidth, innerHeight) <= 600);
-const petQuestionActive = () => !!stage.querySelector('.q-card, .v-card, .cj-card, .sp-boss, .sp-mini, .sp-pair, .sp-build, .tour-drill');
+const petQuestionCard = () => stage.querySelector('.q-card, .v-card, .cj-card, .sp-boss, .sp-mini, .sp-pair, .sp-build, .tour-drill');
+const petQuestionActive = () => !!petQuestionCard();
 function petBlocked() {
   const a = document.activeElement;
   return view === 'exam' || document.hidden ||
@@ -26152,15 +26156,13 @@ function petPositionRead() {
   try {
     const key = 'fq-pet-position:' + (petMobile() ? 'mobile' : 'desktop');
     const p = JSON.parse(localStorage.getItem(key) || (!petMobile() && localStorage.getItem('fq-pet-position')) || 'null');
-    if (p && Number.isFinite(p.y) && ['left', 'right'].includes(p.side)) {
-      const position = { side: p.side, y: Math.max(0, Math.min(1, p.y)) };
-      // Older saved corners have only side/y. Four-edge drags add edge/x without
-      // changing account data or invalidating an existing device preference.
-      if (['left','right','top','bottom'].includes(p.edge)) {
-        position.edge = p.edge;
-        position.x = Number.isFinite(p.x) ? Math.max(0,Math.min(1,p.x)) : p.side === 'left' ? 0 : 1;
-      }
-      return position;
+    if (p && Number.isFinite(p.y) && (Number.isFinite(p.x) || ['left', 'right'].includes(p.side))) {
+      const clamp = n => Math.max(0, Math.min(1, n));
+      // Migrate legacy edge/corner preferences to a free position without moving them.
+      const x = p.free || p.edge === 'top' || p.edge === 'bottom'
+        ? (Number.isFinite(p.x) ? p.x : p.side === 'left' ? 0 : 1) : p.side === 'left' ? 0 : 1;
+      const y = !p.free && p.edge === 'top' ? 0 : !p.free && p.edge === 'bottom' ? 1 : p.y;
+      return { free: true, x: clamp(x), y: clamp(y), side: x < .5 ? 'left' : 'right' };
     }
   } catch (e) {}
   return { side: 'right', y: petMobile() && petQuestionActive() ? 0 : 1 };
@@ -26215,6 +26217,15 @@ function petPlace() {
   const maxY = Math.max(bounds.top, bounds.bottom - height), minX = bounds.left, maxX = Math.max(minX, bounds.right - width);
   const rect = (x,y) => ({ left: Math.max(minX,Math.min(maxX,x)), top: Math.max(bounds.top,Math.min(maxY,y)), right: Math.max(minX,Math.min(maxX,x))+width, bottom: Math.max(bounds.top,Math.min(maxY,y))+height });
   const obstacles = petObstacles();
+  // An explicit position belongs to the user: never snap or reroute it for content/bubbles.
+  if (p.free || petRuntime.drag) {
+    const r = petRuntime.drag ? rect(petRuntime.drag.left,petRuntime.drag.top)
+      : rect(minX+p.x*(maxX-minX),bounds.top+p.y*(maxY-bounds.top));
+    w.style.left = Math.round(r.left)+'px'; w.style.top = Math.round(r.top)+'px'; w.style.right = 'auto';
+    w.classList.remove('pet-passive');
+    w.dataset.side = r.left+width/2 < (bounds.left+bounds.right)/2 ? 'left' : 'right';
+    a.tabIndex = 0; petPlaceBubble(obstacles,bounds); return;
+  }
   const horizontal = p.edge === 'top' || p.edge === 'bottom';
   let candidates = [rect(horizontal ? minX + p.x*(maxX-minX) : p.side === 'left' ? minX : maxX,
     horizontal ? p.edge === 'top' ? bounds.top : maxY : bounds.top + p.y*(maxY-bounds.top))];
@@ -26287,7 +26298,7 @@ function petSpeechReady(now = Date.now()) {
 }
 // Approved recordings are keyed by exact French text, never by randomized line index.
 const PET_VOICE_BASE = '../skins/mascot/voice/';
-const PET_VOICE_VERSION = '1.9.4';
+const PET_VOICE_VERSION = '1.9.5';
 let petVoiceIndex = null, petVoiceBuffer = null, petVoiceContext = null;
 let petVoiceSource = null, petVoiceAbort = null, petVoiceEpoch = 0;
 let petVoiceButton = null, petVoiceSystem = false, petVoiceManual = false;
@@ -26316,21 +26327,32 @@ function petSystemVoice(line, button) {
   } catch (e) { return false; }
   finally { lastAutoAudio = previous; }
 }
+// Unlock silently in a real user gesture, before timers/network work. Once running,
+// the context can play delayed feedback; a new transient click is not required.
+function petPrimeVoice() {
+  const cfg = petConfig(), Context = window.AudioContext || window.webkitAudioContext;
+  if (!Context || !petOwned() || !gameOn() || !cfg.enabled || !cfg.voice || document.hidden) return;
+  try {
+    petVoiceContext ||= new Context();
+    if (petVoiceContext.state !== 'running') petVoiceContext.resume().catch(() => {});
+  } catch (e) {} // A rejected gesture is retried only on a later user interaction.
+}
 async function petPlayVoice(line, button = null, manual = false) {
   // Cancel our own prior clip first; never cancel another feature's speech.
   petStopVoice();
   if (!petVoiceAllowed(manual) || (typeof userActivated !== 'undefined' && !userActivated)) return false;
-  if (navigator.userActivation && !navigator.userActivation.isActive) return false;
+  const activeGesture = !navigator.userActivation || navigator.userActivation.isActive;
+  if (!activeGesture && petVoiceContext?.state !== 'running') return false;
   petVoiceManual = manual;
-  const character = petConfig().character, page = view, epoch = petVoiceEpoch;
-  const valid = () => epoch === petVoiceEpoch && character === petConfig().character && page === view && petVoiceAllowed(manual);
+  const character = petConfig().character, page = view, card = petQuestionCard(), epoch = petVoiceEpoch;
+  const valid = () => epoch === petVoiceEpoch && character === petConfig().character && page === view && card === petQuestionCard() && petVoiceAllowed(manual);
   const fallback = () => valid() && petSystemVoice(line, button);
   const Context = window.AudioContext || window.webkitAudioContext;
   if (!Context) return fallback();
   try {
     // Resume in the originating gesture, before network requests (Safari).
     petVoiceContext ||= new Context();
-    await petVoiceContext.resume();
+    if (petVoiceContext.state !== 'running') await petVoiceContext.resume();
     if (!valid() || petVoiceContext.state !== 'running') return false;
   } catch (e) { return false; } // Autoplay rejection stays silent; no retry loop.
   const controller = new AbortController(); petVoiceAbort = controller;
@@ -26368,7 +26390,7 @@ async function petPlayVoice(line, button = null, manual = false) {
   } finally { if (petVoiceAbort === controller) petVoiceAbort = null; }
 }
 
-function petTryVoice(line, button = null) { return petPlayVoice(line, button); }
+function petTryVoice(line, button = null, manual = false) { return petPlayVoice(line, button, manual); }
 function petQueueLine(kind) {
   if (!petOwned() || !petConfig().enabled || !petConfig().feedback || petBlocked()) return false;
   const priority = PET_SPEECH_PRIORITY[kind] || 0;
@@ -26411,7 +26433,9 @@ function petShowLine(kind = 'tap', manual = false) {
   petSetState(kind === 'sad' ? 'sad' : kind === 'idle' ? 'sleep' : kind === 'tap' ? 'tap' : 'happy');
   petRenderBubble(); petRefresh();
   if (manual && $('petBubble')) $('petBubble').setAttribute('data-manual', 'true');
-  if (!$('petBubble')?.hidden) petTryVoice(petRuntime.line);
+  // Compact bubbles may not fit beside a full-screen question. That layout
+  // decision must not mute otherwise eligible learning feedback.
+  petTryVoice(petRuntime.line, null, manual);
   clearTimeout(petBubbleTimer); petBubbleTimer = setTimeout(() => petCloseBubble(),manual && !petQuestionActive() ? 12000 : 6500);
   return true;
 }
@@ -26452,9 +26476,12 @@ function petRefresh() {
   if (!enabled || blocked || !cfg.voice || (!cfg.feedback && !petVoiceManual) || (petVoiceBuffer && petVoiceBuffer.character !== cfg.character)) petStopVoice();
   if (petVoiceBuffer?.character !== cfg.character) petVoiceBuffer = null;
   const mobile = petMobile(); widget.classList.toggle('pet-mobile', mobile);
-  const question = petQuestionActive(), entered = question && !petRuntime.inQuestion;
+  const card = petQuestionCard();
+  if (petRuntime.questionCard && petRuntime.questionCard !== card) petStopVoice();
+  petRuntime.questionCard = card;
+  const question = !!card, entered = question && !petRuntime.inQuestion;
   petRuntime.inQuestion = question;
-  document.documentElement.classList.toggle('pet-question-space',enabled && !blocked && question && mobile && innerWidth <= 600 && innerHeight >= 520);
+  document.documentElement.classList.toggle('pet-question-space',enabled && !blocked && question && mobile && !petPositionRead().free && innerWidth <= 600 && innerHeight >= 520);
   document.querySelectorAll('.pet-sprite').forEach(n => n.classList.toggle('pet-static', !cfg.animation || document.hidden));
   if (enabled && petRuntime.scope !== cfg.scope) {
     petRuntime.scope = cfg.scope;
@@ -26506,13 +26533,12 @@ function petDragEnd() {
   const d = petRuntime.drag;
   if (d?.moved) {
     const r = $('petAvatar').getBoundingClientRect(), bounds = petViewport(), rangeY = Math.max(0,bounds.bottom-bounds.top-r.height), rangeX = Math.max(0,bounds.right-bounds.left-r.width);
-    const distances = [['left',r.left-bounds.left],['right',bounds.right-r.right],['top',r.top-bounds.top],['bottom',bounds.bottom-r.bottom]];
-    const edge = distances.sort((a,b) => a[1]-b[1])[0][0];
-    petPositionWrite({ side: r.left+r.width/2 < (bounds.left+bounds.right)/2 ? 'left' : 'right', edge,
+    petPositionWrite({ free: true,
       x: rangeX ? Math.max(0,Math.min(1,(r.left-bounds.left)/rangeX)) : 0,
       y: rangeY ? Math.max(0,Math.min(1,(r.top-bounds.top)/rangeY)) : 0 });
   }
   petRuntime.drag = null; petRefresh();
+  if (d?.moved && $('petCorner')) $('petCorner').value = 'custom';
 }
 function petInit() {
   if (petRuntime.started) return; petRuntime.started = true;
@@ -26529,6 +26555,9 @@ function petInit() {
   if (tts) tts.addEventListener?.('voiceschanged', () => { if ($('petBubble')) petRenderBubble(); });
   new MutationObserver(petScheduleLayout).observe(document.documentElement, { attributes: true, attributeFilter: ['class'] });
   new MutationObserver(ms => { if (ms.some(m => !m.target.closest?.('#petWidget') && (m.type === 'attributes' || [...m.addedNodes, ...m.removedNodes].some(n => n.nodeType === 1 && n.id !== 'petWidget' && !n.closest?.('#petWidget, #petPage'))))) petScheduleLayout(); }).observe(document.body, { childList: true, subtree: true, attributes: true, attributeFilter: ['open', 'aria-modal'] });
+  document.addEventListener('pointerdown', petPrimeVoice, { capture: true, passive: true });
+  document.addEventListener('pointerup', petPrimeVoice, { capture: true, passive: true });
+  document.addEventListener('keydown', petPrimeVoice, { capture: true, passive: true });
   document.addEventListener('pointerdown', () => { petRuntime.touched = Date.now(); if (petRuntime.state === 'sleep') petSetState('idle'); }, { passive: true });
   document.addEventListener('keydown', () => { petRuntime.touched = Date.now(); }, { passive: true });
   setInterval(() => {
@@ -26552,9 +26581,11 @@ function petSettings(wrap) {
   const changes = (key, value) => { petStopVoice(); petSet({ [key]: value }); if (key === 'enabled' && !value) petRuntime.preview = false; petRenderPreview(); petRefresh(); document.querySelectorAll('.pet-voice-preview button').forEach(b => { b.disabled = !petConfig().enabled || !petConfig().voice; }); };
   s.append(setCheckRow('petEnabled', tr('显示学习伙伴'), cfg.enabled && own, v => changes('enabled', v)), setCheckRow('petFeedback', tr('主动说话'), cfg.feedback, v => changes('feedback', v)), setCheckRow('petVoice', tr('说话时朗读法语'), cfg.voice, v => changes('voice', v)), setCheckRow('petAnimation', tr('角色动画'), cfg.animation, v => changes('animation', v)));
   if (!own) { s.querySelectorAll('input').forEach(n => n.disabled = true); s.append(el('p', 'sub', tr('在游戏里的“学习伙伴”查看预览和解锁。'))); }
-  const positions = [['right-bottom', '右下角'], ['left-bottom', '左下角'], ['right-top', '右上角'], ['left-top', '左上角']];
+  const positions = [['custom', '自由位置'], ['right-bottom', '右下角'], ['left-bottom', '左下角'], ['right-top', '右上角'], ['left-top', '左上角']];
   const pos = petPositionRead();
-  s.append(setSelectRow('petCorner', tr('停靠位置'), positions.map(([k, t]) => [k, tr(t)]), pos.side + (pos.y < .5 ? '-top' : '-bottom'), v => { petPositionWrite({ side: v.startsWith('left') ? 'left' : 'right', y: v.endsWith('top') ? 0 : 1 }); petRefresh(); }), petButton('重置位置', () => { petPositionWrite({ side: 'right', y: 1 }); petRefresh(); const select = $('petCorner'); if (select) select.value = 'right-bottom'; }, 'petResetPosition'));
+  const preset = v => { if (v === 'custom') return; petPositionWrite({ free: true, x: v.startsWith('left') ? 0 : 1, y: v.endsWith('top') ? 0 : 1 }); petRefresh(); };
+  s.append(el('p', 'sub', tr('拖动伙伴可放在屏幕任意位置，松手后不再自动贴边。位置在本设备保存；重置可回到右下角。')));
+  s.append(setSelectRow('petCorner', tr('位置预设'), positions.map(([k, t]) => [k, tr(t)]), pos.free ? 'custom' : 'right-bottom', preset), petButton('重置位置', () => { preset('right-bottom'); const select = $('petCorner'); if (select) select.value = 'right-bottom'; }, 'petResetPosition'));
   return s;
 }
 function petRenderPreview() {
@@ -26620,19 +26651,18 @@ function petVoicePreview(root) {
   if (!petOwned()) return;
   const character = petConfig().character;
   const section = el('section', 'pet-voice-preview');
-  section.append(el('h3', null, tr('角色语音试听')), el('p', 'sub', tr('AI 合成配音 · 8 类常用场景；未配音的台词使用系统朗读。')));
+  section.append(el('h3', null, tr('角色语音试听')), el('p', 'sub', tr('每位伙伴 48 句台词，覆盖 8 类场景；已有角色配音优先，未配音使用系统朗读。实际互动仍按亲密度解锁。')));
   const status = el('p', 'sub'); status.setAttribute('role', 'status');
   const grid = el('div', 'pet-voice-grid');
   const events = [['welcome','问候'],['enter','开始学习'],['happy','答对'],['sad','答错'],['streak','连续答对'],['plan','完成计划'],['idle','休息提醒'],['tap','点击互动']];
   events.forEach(([kind,label]) => {
-    // Ninon's first-phase tap sample is explicitly selected in issue #22.
-    const x = PET_LINES[character].find(x => x[0] === kind && x[1] === 0 &&
-      !(character === 'ninon' && kind === 'tap' && x[2] !== "Je t'écoute, prends ton temps."));
-    if (!x) return;
+    const lines = PET_LINES[character].filter(x => x[0] === kind);
+    let x = lines[0]; if (!x) return;
     const row = el('article', 'pet-voice-card');
     const button = petButton(label, () => {
-      status.textContent = x[2];
+      const selected = x; status.textContent = x[2];
       petPlayVoice({fr:x[2]}, button, true).then(ok => {
+        if (x !== selected || character !== petConfig().character) return;
         const cue = petVoiceIndex?.characters?.[character]?.cues?.[x[2]];
         const seconds = ok && !petVoiceSystem && cue ? ' · ' + (cue.end-cue.start).toFixed(1) + ' s' : '';
         status.textContent = x[2] + ' · ' + tr(ok ? (petVoiceSystem ? '系统朗读' : 'AI 合成配音') : '请开启伙伴语音，或等题目朗读结束后再试。') + seconds;
@@ -26643,7 +26673,14 @@ function petVoicePreview(root) {
     const fr = el('p', 'pet-voice-french', x[2]); fr.lang = 'fr'; fr.dataset.noi18n = '1';
     const translation = el('p', 'sub', UI_LANG === 'zh' ? x[3] : x[4]); translation.dataset.noi18n = '1';
     translation.lang = UI_LANG === 'zh' ? 'zh-CN' : 'en';
-    row.append(button,fr,translation); grid.append(row);
+    const select = el('select'); select.id = 'pet-voice-line-' + kind;
+    select.setAttribute('aria-label', petText('${event}台词', {event:tr(label)}));
+    lines.forEach((line,i) => { const option = el('option', null, tr(PET_LEVEL_NAMES[line[1]])+' · '+(i+1)); option.value = String(i); select.append(option); });
+    select.addEventListener('change', () => {
+      petStopVoice(); x = lines[Number(select.value)] || lines[0];
+      fr.textContent = x[2]; translation.textContent = UI_LANG === 'zh' ? x[3] : x[4]; status.textContent = '';
+    });
+    row.append(button,select,fr,translation); grid.append(row);
   });
   section.append(grid,status); root.append(section);
 }
