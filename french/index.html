@@ -1589,6 +1589,10 @@ html.qf #stage > section.q-card > .explain { flex: none !important; height: clam
 .pet-voice-french{font-weight:600}
 
 .pet-voice-card select{display:block;width:100%;max-width:100%;margin-top:10px;min-height:36px}
+
+.survey-form { display:grid;gap:20px;max-width:850px }.survey-form fieldset{border:1px solid var(--line,#ddd);border-radius:12px;padding:16px;display:grid;gap:12px}.survey-field{display:grid;gap:6px}.survey-usage{display:grid;grid-template-columns:1fr 1fr;gap:12px}.survey-form select,.survey-form input:not([type=checkbox]),.survey-form textarea{max-width:100%;padding:9px;border:1px solid var(--line,#ddd);border-radius:8px;background:var(--card,#fff);color:inherit}.survey-form input[type=checkbox]{margin-right:8px}.survey-form [hidden]{display:none!important}.study-audio-status{display:block;flex-basis:100%;font-size:12px}.pet-domain-panel progress{width:100%}@media(max-width:600px){.survey-usage{grid-template-columns:1fr}.survey-form fieldset{padding:12px}}
+
+.pet-wardrobe .pet-dress-thumbnail{width:144px;max-width:100%;margin:0 auto;filter:none;animation:none;background-position-x:0}
 /* Ordered route and oral tasks reuse the active theme's colours. */
 .tour-pin.locked{filter:grayscale(.8);opacity:.65}.tour-pin.num{min-width:28px;min-height:28px;font-size:11px}.tour-chapters{margin-top:24px;display:grid;gap:12px}.tour-chapter{border:1px solid var(--line,#7894);border-radius:12px;padding:12px}.tour-chapter summary{cursor:pointer;font-weight:700;min-height:36px}.tour-route-row{display:grid;grid-template-columns:minmax(160px,1fr) 2fr auto;gap:8px;align-items:center;padding:10px 0;border-bottom:1px solid var(--line,#7893)}.tour-route-row small{grid-column:1/-1}.tour-lesson,.tour-drill,.tour-oral,.tour-result{max-width:900px;margin:auto}.tour-rule,.tour-task{padding:14px;border-left:3px solid var(--accent,#789);line-height:1.7}.tour-examples,.tour-review{padding:12px;border:1px solid var(--line,#7894);border-radius:10px;margin:12px 0}.tour-options{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;margin:16px 0}.tour-options button{white-space:normal;min-height:48px;text-align:left;overflow-wrap:anywhere}.tour-options .correct{outline:3px solid #35a675}.tour-options .wrong{outline:3px solid #d27973}.tour-drill .q{font-size:clamp(20px,3vw,28px);line-height:1.6;overflow-wrap:anywhere}.tour-oral h2{font-size:clamp(18px,3vw,25px);line-height:1.6}.tour-dialogue{font-size:1.2em;line-height:1.7;border-left:3px solid #6a9fd4;padding:12px}.tour-facts{display:grid;grid-template-columns:minmax(100px,1fr) 2fr;gap:12px}.tour-facts dt{font-weight:700}.tour-facts dd{margin:0;overflow-wrap:anywhere}.tour-facts .missing{color:#b76e55}.tour-oral input{display:block;width:min(100%,360px);padding:12px;font:inherit;margin:8px 0}.tour-oral audio{max-width:100%;display:block;margin:10px 0}.tour-hint{padding:10px;border:1px dashed var(--line,#7896)}.tour-oral .actions,.tour-result .actions{flex-wrap:wrap;gap:10px}.tour-oral .btn,.tour-result .btn{white-space:normal}.tour-oral .sub{line-height:1.6}
 @media(max-width:600px){.tour-route-row{grid-template-columns:1fr auto}.tour-route-row>span:not(.px-stars){grid-column:1/-1}.tour-options{grid-template-columns:1fr}.tour-facts{grid-template-columns:1fr}.tour-facts dd{padding-bottom:10px}.tour-chapter{padding:8px}.tour-pin.num{min-width:24px;min-height:24px}.tour-oral,.tour-lesson,.tour-drill{padding:16px}}
@@ -14804,7 +14808,7 @@ GPA2.forEach(u => {
     LEVEL_OF[id] = u.lv; TAGS_OF[id] = q.tags; KP_OF[id] = "gb" + u.unit;
   });
 });
-const LANG_FILES = {"en": "lang-en.js?v=1e6706dc6f", "fr": "lang-fr.js?v=4132c7e895"};
+const LANG_FILES = {"en": "lang-en.js?v=e2fde2c216", "fr": "lang-fr.js?v=8932cbaabc"};
 (() => { let l = null; try { l = localStorage.getItem("fq-lang"); } catch (e) {}
   if (Object.hasOwn(LANG_FILES, l)) document.write('<script src="' + LANG_FILES[l] + '"><\/script>'); })();
 </script>
@@ -15948,6 +15952,7 @@ function gameLedger() {
       const uid = typeof syncAuth === "function" ? syncAuth()?.uid : null;
       if (uid && g.scope === "user:" + uid && g.key === (g.kind === "share_reward" ? "share:first" : "feedback:first") && g.coins === 800 && !earned.has(g.key)) { earned.add(g.key); coins += 800; }
     }
+    else if (g.kind === "survey_reward") { const uid=typeof syncAuth === "function"?syncAuth()?.uid:null; if(uid && g.scope === "user:"+uid && g.key === "survey:2026-11-v1" && g.coins === 200 && !earned.has(g.key)){earned.add(g.key);coins+=200;} }
     else if (g.kind === "earn") { if (earned.has(g.key)) return; earned.add(g.key); coins += g.coins || 0; }
     else if (g.kind === "buy") {
       if (inv[g.item] != null) { coins -= g.price || 0; inv[g.item]++; }
@@ -15965,6 +15970,7 @@ function gameLedger() {
 }
 const patchedDays = () => gameLedger().patched;
 function gameAdd(doc) {
+  if (doc.kind === "tour-oral" && typeof petRecordStudy === "function") petRecordStudy(doc, "oral");
   gameRaw.push(doc); potionCache = null; rewindCache = null; coinPotCache = null; shieldCache = null;
   if (dbRef) dbRef.collection("game").add(doc).catch(() => {});
 }
@@ -17009,8 +17015,9 @@ const TOUR_ORAL_CONFIRMATIONS = {
 };
 for(const c of TOUR_ORAL_CASES)if(TOUR_ORAL_CONFIRMATIONS[c.id]) [c.altConfirm,c.changedConfirm]=TOUR_ORAL_CONFIRMATIONS[c.id];
 let tourOral=null, tourMic=null, tourRecorder=null, tourClip=null, tourMicEpoch=0, tourMicTimer=null;
-const tourOralLatest=id=>gameRaw.filter(g=>g.kind==='tour-oral'&&g.city===id&&(!g.scope||g.scope===oralScope())).sort((a,b)=>String(a.at).localeCompare(String(b.at))).pop();
+const tourOralLatest=id=>gameRaw.filter(g=>g.kind==='tour-oral'&&g.city===id&&(!g.scope||g.scope===oralScope()||(oralScope()==='claude'&&g.scope==='device'))).sort((a,b)=>String(a.at).localeCompare(String(b.at))).pop();
 function tourAudioClear(){
+  if(typeof studyAudioStop==='function')studyAudioStop();
   if(typeof tts!=="undefined"&&tts)tts.cancel();
   tourMicEpoch++;clearTimeout(tourMicTimer);
   if(tourRecorder){tourRecorder.ondataavailable=null;tourRecorder.onstop=null;if(tourRecorder.state!=='inactive')try{tourRecorder.stop();}catch(e){}}
@@ -17135,7 +17142,7 @@ function tourOralRender(){
 let oralLevel='all',oralStatus='all';
 const ORAL_SCENES={p5:['博物馆问路','At the museum','Au musée'],p15:['车站路线','Getting to the station','Aller à la gare'],d92:['预约参观','Booking a visit','Réserver une visite'],versailles:['车票改签','Changing tickets','Échanger un billet'],d95:['酒店晚到','Late hotel arrival','Arrivée tardive à l’hôtel'],annecy:['交通补偿','Travel compensation','Dédommagement de transport'],bonifacio:['旅行叙事','Travel storytelling','Récit de voyage']};
 const oralTaskId=id=>'tour-oral:'+id;
-const oralScope=()=>typeof syncAuth==='function'&&SYNC_ON&&syncAuth()?.uid?'user:'+syncAuth().uid:'device';
+const oralScope=()=>typeof petScope==='function'?petScope():typeof syncAuth==='function'&&SYNC_ON&&syncAuth()?.uid?'user:'+syncAuth().uid:'device';
 const oralStatusText=s=>s==='done'?tourText('已完成','Completed','Terminé'):s==='paused'?tourText('进行中','In progress','En cours'):s==='review'?tourText('待复练','Review due','À reprendre'):tourText('未开始','Not started','À commencer');
 function oralBack(){const origin=tourOral?.origin||'tour';tourOralLeave();if(origin==='oral'){view='oral';navSync();renderOral();}else tourMapBack();}
 function oralOnAccountChange(){tourAudioClear();tourOral=null;if(view==='oral')renderOral();}
@@ -17546,9 +17553,9 @@ const syncLocal = c => { try { return JSON.parse(localStorage.getItem(SYNC_NS + 
 const syncStore = (c, arr) => { try { localStorage.setItem(SYNC_NS + "db-" + c, JSON.stringify(arr)); } catch (e) {} };
 const syncRow = (c, d) => ({ app: REC_APP, coll: c, key: syncKeyOf(d), data: d });
 // 伙伴配置和留言奖励按账号隔离；既有答案/金币沿用原站的本机合并规则。
-const syncPetAllowed = (c, d, uid) => c !== "game" || !["pet", "feedback_reward", "share_reward"].includes(d?.kind) || !!uid && d.scope === "user:" + uid;
+const syncPetAllowed = (c, d, uid) => c !== "game" || !["pet", "pet-study", "pet-affinity-migration", "pet-unlock", "feedback_reward", "share_reward", "survey_reward"].includes(d?.kind) || !!uid && d.scope === "user:" + uid;
 // Reward records are issued by the server only; never upload them from any device.
-const syncServerRecord = (c, d) => c === "game" && ["feedback_reward", "share_reward"].includes(d?.kind);
+const syncServerRecord = (c, d) => c === "game" && ["feedback_reward", "share_reward", "survey_reward"].includes(d?.kind);
 async function syncUpload(rows, uid = syncAuth()?.uid || "") {
   const own = rows.filter(r => syncPetAllowed(r.coll, r.data, uid) && !syncServerRecord(r.coll, r.data));
   for (let i = 0; i < own.length; i += 500) {
@@ -17572,6 +17579,7 @@ async function syncNow(force) {
       remote.push(...rows);
       if (rows.length < 1000) break;
     }
+    if (typeof petMigrateRemote === "function") petMigrateRemote(remote, uid);
     let added = 0;
     const up = [];
     for (const c of REC_COLLS) {
@@ -18086,6 +18094,55 @@ function renderSharePage() {
   });
   controls();chooseImage();
 }
+// Voluntary questionnaire: no positive answer or payment preference is needed for the reward.
+const SURVEY_VERSION='2026-11-v1';
+const SURVEY_SECTIONS=[['grammar','语法','Grammar','Grammaire'],['conjugation','变位','Conjugation','Conjugaison'],['vocabulary','词汇','Vocabulary','Vocabulaire'],['listening','听力','Listening','Écoute'],['oral','口语（练习原型）','Speaking (practice prototype)','Oral (prototype)'],['exam','模拟卷','Mock exam','Examen blanc'],['levels','单词闯关','Word levels','Niveaux de vocabulaire'],['tour','环法之旅','Tour of France','Tour de France'],['spire','巴黎塔尖','Paris Spire','Flèche de Paris'],['cafe','塞纳河畔','Seine café','Café de la Seine'],['lsp','失声的巴黎（原型）','Voiceless Paris (prototype)','Paris sans voix (prototype)'],['pet','学习伙伴','Study companions','Compagnes']];
+const SURVEY_PRIORITIES=[['content','题库与讲解','Questions & explanations','Questions et explications'],['listening','听力配音','Listening voices','Voix des écoutes'],['oral','口语练习','Speaking practice','Expression orale'],['vocabulary','词汇与配图','Vocabulary & pictures','Vocabulaire et images'],['games','游戏玩法','Games','Jeux'],['outfits','角色与服装','Characters & outfits','Personnages et tenues'],['performance','速度与稳定性','Speed & reliability','Rapidité et fiabilité'],['accessibility','易用性与无障碍','Usability & accessibility','Ergonomie et accessibilité']];
+const surveyText=a=>a[UI_LANG==='zh'?0:UI_LANG==='fr'?2:1];
+function surveyReceipt(reward){
+ const uid=fbUid();if(!uid||reward?.kind!=='survey_reward'||reward.scope!=='user:'+uid||reward.key!=='survey:'+SURVEY_VERSION||reward.coins!==200)return;
+ const keep=g=>!(g.kind==='survey_reward'&&g.scope===reward.scope&&g.key===reward.key);
+ syncStore('game',[...syncLocal('game').filter(keep),reward]);gameRaw=[...gameRaw.filter(keep),reward];planRefresh();
+}
+function surveySettings(wrap){
+ const section=el('section','card survey-card');section.id='surveyCard';section.dataset.noi18n='';
+ section.append(el('h3',null,surveyText(['体验问卷','Experience survey','Questionnaire d’expérience'])),el('p','sub',surveyText(['自愿参与，约 3–5 分钟。本期完成后获得 200 金币，每个账号一次；任何评价都获得相同奖励。回答会关联账号，并非匿名。管理员页面只显示汇总；少于 5 份的数据不显示细分统计。','Optional, about 3–5 minutes. Complete this edition to earn 200 coins once per account, regardless of your opinions. Responses are linked to your account, not anonymous. Administrators see summaries only; categories with fewer than 5 responses are hidden.','Facultatif, environ 3 à 5 minutes. Cette édition rapporte 200 pièces par compte, quel que soit votre avis. Les réponses sont liées au compte, non anonymes. Les administrateurs voient des synthèses ; les catégories de moins de 5 réponses sont masquées.'])));
+ const uid=fbUid(),epoch=fbEpoch,status=el('p','sub');status.setAttribute('role','status');section.append(status);wrap.append(section);
+ if(!uid){status.textContent=surveyText(['请先在公开网页登录后参与。','Sign in on the public website to participate.','Connectez-vous au site public pour participer.']);return;}
+ const button=fbButton(surveyText(['开始问卷','Start survey','Commencer']));button.onclick=()=>surveyForm(section,uid,epoch);section.append(button);
+ const load=async()=>{status.textContent=surveyText(['正在读取…','Loading…','Chargement…']);try{const result=await fbRpc('survey_status',{p_version:SURVEY_VERSION});if(!fbCurrent(uid,epoch)||!section.isConnected)return;status.textContent=result.submitted?surveyText(['本期已完成，200 金币奖励已记入账号。','This edition is complete; 200 coins are credited.','Édition terminée ; 200 pièces créditées.']):'';if(result.reward)surveyReceipt(result.reward);button.hidden=result.submitted;if(result.is_admin)surveyAdmin(section,uid,epoch);}catch{if(fbCurrent(uid,epoch))status.textContent=surveyText(['暂时无法读取，可以稍后重试。','Unavailable for now; please retry later.','Indisponible ; réessayez plus tard.']);}};
+ queueMicrotask(load);
+}
+function surveySelect(parent,label,options,value=''){
+ const line=el('label','survey-field');line.append(el('span',null,label));const select=el('select');for(const [v,t]of options){const o=el('option',null,t);o.value=v;select.append(o);}select.value=value;line.append(select);parent.append(line);return select;
+}
+function surveyForm(section,uid,epoch){
+ const form=el('form','survey-form');form.noValidate=true;const controls={},ratings={};let busy=false,request=crypto.randomUUID();section.replaceChildren(form);
+ form.append(el('h3',null,surveyText(['告诉我们你的体验','Tell us about your experience','Partagez votre expérience'])),el('p','sub',surveyText(['未使用的栏目不用评价。每题都可以选择“不评价 / 不愿回答”，不影响奖励。','Do not rate sections you have not used. “Skip / prefer not to answer” never affects the reward.','N’évaluez pas les rubriques non utilisées. Passer une question ne change jamais la récompense.'])));
+ const used=el('fieldset');used.append(el('legend',null,surveyText(['1. 你使用过哪些栏目？','1. Which sections have you used?','1. Quelles rubriques avez-vous utilisées ?'])));form.append(used);
+ for(const [id,...name]of SURVEY_SECTIONS){const row=el('div','survey-usage'),label=el('label'),check=el('input');check.type='checkbox';label.append(check,document.createTextNode(surveyText(name)));row.append(label);const rate=surveySelect(row,surveyText(['体验评分','Experience rating','Votre avis']),[['',surveyText(['请选择','Choose','Choisir'])],['1','1 · '+surveyText(['很不满意','Very dissatisfied','Très insatisfait'])],['2','2'],['3','3'],['4','4'],['5','5 · '+surveyText(['很满意','Very satisfied','Très satisfait'])],['skip',surveyText(['不评价','Skip','Sans avis'])]]);rate.parentElement.hidden=true;check.onchange=()=>{rate.parentElement.hidden=!check.checked;if(!check.checked)rate.value='';};controls[id]=check;ratings[id]=rate;used.append(row);}
+ const skip=surveyText(['不愿回答','Prefer not to answer','Je préfère ne pas répondre']);
+ const details=el('fieldset');details.append(el('legend',null,surveyText(['2. 学习与偏好','2. Learning & preferences','2. Apprentissage et préférences'])));form.append(details);
+ const level=surveySelect(details,surveyText(['当前水平（选填）','Current level (optional)','Niveau actuel (facultatif)']),[['',skip],...['A0','A1','A2','B1','B2','C1+'].map(x=>[x,x])]);
+ const goalLabel=el('label','survey-field');goalLabel.append(el('span',null,surveyText(['学习目标（选填，最多 200 字）','Learning goal (optional, up to 200 characters)','Objectif (facultatif, 200 caractères maximum)'])));const goal=el('input');goal.maxLength=200;goalLabel.append(goal);details.append(goalLabel);
+ const voice=surveySelect(details,surveyText(['更喜欢哪种配音？','Which voice do you prefer?','Quelle voix préférez-vous ?']),[['',surveyText(['请选择','Choose','Choisir'])],['system',surveyText(['系统语音','System voice','Voix système'])],['ninon','Ninon'],['lison','Lison'],['pia','Pia'],['none',surveyText(['不需要配音','No voice','Aucune voix'])],['skip',skip]]);
+ const outfits=surveySelect(details,surveyText(['服装偏好','Outfit preference','Style de tenue']),[['',surveyText(['请选择','Choose','Choisir'])],['classic',surveyText(['典雅与文化元素','Classic & cultural','Classique et culturel'])],['retro',surveyText(['复古','Retro','Rétro'])],['modern',surveyText(['现代日常','Modern everyday','Moderne et quotidien'])],['none',surveyText(['不关注服装','No interest in outfits','Sans intérêt pour les tenues'])],['skip',skip]]);
+ const priority=el('fieldset');priority.append(el('legend',null,surveyText(['3. 最希望优先改善什么？（最多 3 项，可不选）','3. What should improve first? (Up to 3, optional)','3. Que faut-il améliorer ? (3 choix maximum, facultatif)'])));form.append(priority);const checks={};
+ for(const [id,...text]of SURVEY_PRIORITIES){const label=el('label'),check=el('input');check.type='checkbox';check.onchange=()=>{if(Object.values(checks).filter(x=>x.checked).length>3)check.checked=false;};label.append(check,document.createTextNode(surveyText(text)));priority.append(label);checks[id]=check;}
+ const paid=surveySelect(form,surveyText(['对未来可选付费内容的看法（不是购买承诺）','Opinion on optional paid content (no purchase commitment)','Avis sur des contenus payants facultatifs (sans engagement)']),[['',surveyText(['请选择','Choose','Choisir'])],['yes',surveyText(['可以考虑','Would consider it','Envisageable'])],['maybe',surveyText(['取决于内容和价格','Depends on content and price','Selon le contenu et le prix'])],['no',surveyText(['不支持，希望保持免费','Prefer everything free','Je souhaite que tout reste gratuit'])],['skip',skip]]);
+ const price=surveySelect(form,surveyText(['可接受的月费（选填，欧元）','Acceptable monthly price (optional, EUR)','Prix mensuel acceptable (facultatif, EUR)']),[['',skip],['0','0 €'],['1-3','1–3 €'],['4-6','4–6 €'],['7-10','7–10 €'],['10+','> 10 €']]);
+ const commentLabel=el('label','survey-field');commentLabel.append(el('span',null,surveyText(['其他建议（选填，最多 2000 字）','Other suggestions (optional, up to 2000 characters)','Autres suggestions (facultatif, 2000 caractères maximum)'])));const comment=el('textarea');comment.maxLength=2000;comment.rows=3;commentLabel.append(comment);form.append(commentLabel);
+ const consentLabel=el('label'),consent=el('input');consent.type='checkbox';consentLabel.append(consent,document.createTextNode(surveyText(['我了解回答关联账号，将用于产品改进；评价和付费意愿不影响奖励。','I understand responses are linked to my account for product improvement; opinions and payment preferences do not affect the reward.','Je comprends que les réponses sont liées au compte pour améliorer le produit ; mes avis ne modifient pas la récompense.'])));form.append(consentLabel);
+ const notice=el('p','sub');notice.setAttribute('role','status');const send=fbButton(surveyText(['提交并领取 200 金币','Submit & receive 200 coins','Envoyer et recevoir 200 pièces']));send.type='submit';const cancel=fbButton(surveyText(['稍后再说','Maybe later','Plus tard']));cancel.onclick=()=>{studyAudioStop();renderSettings();};form.append(notice,send,cancel);
+ form.onsubmit=async event=>{event.preventDefault();if(busy||!fbCurrent(uid,epoch))return;const selected=Object.keys(controls).filter(k=>controls[k].checked);if(!consent.checked||!voice.value||!outfits.value||!paid.value||selected.some(k=>!ratings[k].value)){notice.textContent=surveyText(['请完成已使用栏目的评分、偏好选项和知情确认；可以选择不评价。','Complete ratings for used sections, preference choices and consent; skipping ratings is allowed.','Complétez les rubriques utilisées, les choix et le consentement ; « sans avis » est possible.']);return;}
+ const answers={consent:true,used:selected,ratings:Object.fromEntries(selected.map(k=>[k,ratings[k].value==='skip'?'skip':Number(ratings[k].value)])),priorities:Object.keys(checks).filter(k=>checks[k].checked),level:level.value,goal:goal.value.trim(),voice:voice.value,outfits:outfits.value,paid:paid.value,price:price.value,comment:comment.value.trim()};busy=true;send.disabled=true;notice.textContent=surveyText(['正在提交…','Submitting…','Envoi…']);
+ try{const result=await fbRpc('submit_survey',{p_version:SURVEY_VERSION,p_request:request,p_answers:answers});if(!fbCurrent(uid,epoch)||!form.isConnected)return;surveyReceipt(result.reward);section.replaceChildren(el('h3',null,surveyText(['谢谢你的反馈','Thank you for your feedback','Merci pour votre avis'])),el('p',null,surveyText(['本期问卷已完成，200 金币奖励已记入账号。','Survey complete; 200 coins are credited.','Questionnaire terminé ; 200 pièces créditées.'])));}
+ catch{if(fbCurrent(uid,epoch))notice.textContent=surveyText(['提交未确认，内容保留在此页面。可以安全重试，不会重复发奖。','Submission not confirmed. Your answers remain on this page. Retry safely without duplicate rewards.','Envoi non confirmé. Vos réponses restent sur cette page. Réessayez sans récompense en double.']);}finally{busy=false;send.disabled=false;}
+ };
+}
+function surveyAdmin(section,uid,epoch){
+ const button=fbButton(surveyText(['查看问卷汇总（管理员）','Survey summary (administrator)','Synthèse (administrateur)'])),result=el('div','survey-summary');section.append(button,result);button.onclick=async()=>{button.disabled=true;try{const data=await fbRpc('survey_summary',{p_version:SURVEY_VERSION});if(!fbCurrent(uid,epoch)||!result.isConnected)return;result.replaceChildren(el('p',null,surveyText(['完成份数','Responses','Réponses'])+' : '+data.count));if(data.suppressed){result.append(el('p','sub',surveyText(['不足 5 份，暂不显示细分统计。','Fewer than 5 responses; detailed statistics are hidden.','Moins de 5 réponses ; statistiques détaillées masquées.'])));return;}for(const [id,v]of Object.entries(data.ratings||{})){const name=SURVEY_SECTIONS.find(s=>s[0]===id);result.append(el('p',null,(name?surveyText(name.slice(1)):id)+' · '+v.mean+' / 5 · n='+v.count));}for(const [field,values]of Object.entries(data.preferences||{})){const title={voice:['配音','Voice','Voix'],outfits:['服装','Outfits','Tenues'],paid:['付费意愿','Paid content','Contenu payant'],price:['价格','Price','Prix'],level:['水平','Level','Niveau']}[field];result.append(el('p',null,surveyText(title)+' · '+Object.entries(values).map(([k,n])=>k+': '+n).join(' / ')));}for(const [id,n]of Object.entries(data.priorities||{})){const p=SURVEY_PRIORITIES.find(x=>x[0]===id);result.append(el('p',null,surveyText(p.slice(1))+' : '+n));}}catch{if(fbCurrent(uid,epoch))result.textContent=surveyText(['读取失败，请重试。','Could not load. Please retry.','Échec du chargement. Réessayez.']);}finally{button.disabled=false;}};
+}
 // ---------- 设置页的公共部件：分区卡片、下拉、勾选，以及最上面的“账号与同步” ----------
 function setSection(wrap, title, sub) {
   const card = el("section", "card set-card");
@@ -18142,6 +18199,7 @@ function setGoalSection(wrap) {
 // 每次用户可见更新都新增记录：普通更新 1.x.y → 1.x.(y+1)；较大功能变动 → 1.(x+1).0。
 // 首位保持 1，只有用户明确要求才可修改；历史记录保留。完整发布规则见根目录 AGENTS.md。
 const CHANGELOG = [
+  {"v":"1.11.0","d":"2026-11-16","p":"fr","items":["学习伙伴新增九套羁绊服装，每套包含五种动作；支持面板试穿、解锁后穿戴和恢复原装，保留原配饰。三人的亲密度分别来自语法与变位、词汇、听力与口语，显示下一奖励及增长原因，保留旧版已解锁台词。","新增三人各三段羁绊故事及普通陪伴版本，可选择开启亲近剧情；仅点击播放，不打断做题。本批接入 34 段 Gemini 配音：17 段剧情与陪伴、17 段教学样本，另两段待重录。设置新增系统、Ninon、Lison、Pia 四种学习配音选项，支持慢速、停止与切题取消；未录制内容明确使用系统朗读。","设置新增自愿体验问卷，完成本期可获 200 金币，每账号一次；评分和付费意愿不影响奖励。服务端防止重复发奖，回答关联账号，管理员仅查看达到最小样本数的汇总。"]},
   {"v": "1.10.0", "d": "2026-11-15", "items": ["新增独立口语栏目：七个现有情景任务与环法共用进度，可筛选级别与完成情况；练习不绕过环法奖励条件。站内留言新增私密回复、我的留言、未读状态及管理员多次回复。登录续期遇到限流或服务故障会保留会话并退避重试，协调多标签续期，避免旧请求影响新账号。"]},
   {"v": "1.9.8", "d": "2026-11-15", "p": "fr", "items": ["分享新增书店、学园、电台、列车与咖啡馆五张学习伙伴海报，共六张。进入独立分享页时随机选图，可点“换一张”；预览、下载与分享附件同步切换，按需加载。首次分享 800 金币仍为每账号一次。"]},
   {"v": "1.9.7", "d": "2026-11-15", "p": "fr", "items": ["设置新增分享入口与三位学习伙伴分享图，支持系统分享、复制链接及下载图片。完成发送后确认，可领取首次分享 800 金币，每个账号一次；取消、复制或下载不会自动发奖，网络重试不会重复领取。"]},
@@ -18832,6 +18890,9 @@ function pickVoice() {
 }
 if (tts) { frVoice = pickVoice(); tts.addEventListener?.("voiceschanged", () => { frVoice = pickVoice(); }); }
 function speak(text, rate, btn, done, companion = false) {
+  return companion ? systemSpeak(text,rate,btn,done,true) : studySpeak(text,rate,btn,done);
+}
+function systemSpeak(text, rate, btn, done, companion = false) {
   if (!companion && typeof petStopVoice === "function") petStopVoice();   // done：读完（或出错）时调用
   if (!tts) { if (done) done(); return false; }
   lastAutoAudio = text;
@@ -18855,6 +18916,7 @@ let lastAutoAudio = null;   // 同一篇长文的几道题之间不重复自动�
 
 let hintUsed = false;
 function renderQuestion() {
+  if(typeof studyAudioStop === "function") studyAudioStop();
   const item = set.qs[idx];
   hintUsed = false;
   savePos();
@@ -18877,14 +18939,14 @@ function renderQuestion() {
     slow.type = "button";
     slow.id = "slowBtn";
     row.append(play, slow);
-    if (tts) {
+    if (tts || typeof Audio !== "undefined") {
       play.addEventListener("click", () => speak(item.audio, 0.95, play));
       slow.addEventListener("click", () => speak(item.audio, 0.7, slow));
       if (item.title) {
         const stop = el("button", "play slow", "停止");
         stop.type = "button";
         stop.id = "stopBtn";
-        stop.addEventListener("click", () => { tts.cancel(); row.querySelectorAll(".play").forEach(b => b.setAttribute("aria-pressed", "false")); });
+        stop.addEventListener("click", () => { studyAudioStop(); row.querySelectorAll(".play").forEach(b => b.setAttribute("aria-pressed", "false")); });
         row.append(stop, el("span", "listen-note", "同一篇录音的几道题共用"));
       } else {
         row.append(el("span", "listen-note", "可以反复听"));
@@ -18895,7 +18957,7 @@ function renderQuestion() {
     }
     head.append(row);
     card.append(tags, head);
-    if (tts && userActivated && item.audio !== lastAutoAudio) speak(item.audio, 0.95, play);
+    if ((tts || typeof Audio !== "undefined") && userActivated && item.audio !== lastAutoAudio) speak(item.audio, 0.95, play);
   } else {
     card.append(tags, el("h2", "q", item.q));
   }
@@ -19366,6 +19428,7 @@ startSet = function (key, fresh) {
 };
 
 function switchView(v, setKey) {
+  if(typeof studyAudioStop==='function')studyAudioStop();
   if (typeof tourOralLeave === "function" && (view !== v || v === "oral")) tourOralLeave();
   if (typeof tourRun !== "undefined" && view === "tour" && v !== "tour") tourRun = null;
   if (typeof petOnLeave === "function" && view !== v) petOnLeave();
@@ -20097,22 +20160,7 @@ function exVoices() {
   return { F: f || frVoice, M: m || frVoice };
 }
 function exSpeak(lines, rate, btn) {
-  if (!tts) return;
-  tts.cancel();
-  document.querySelectorAll('.play[aria-pressed="true"]').forEach(b => b.setAttribute("aria-pressed", "false"));
-  const v = exVoices(), same = v.F === v.M;
-  const queue = [];
-  lines.forEach(([who, text]) => (text.match(/[^.!?…]+[.!?…]+["»]?\s*|[^.!?…]+$/g) || [text]).forEach(p => queue.push([who, p.trim()])));
-  queue.forEach(([who, part], k) => {
-    const u = new SpeechSynthesisUtterance(part);
-    u.lang = "fr-FR";
-    if (v[who]) u.voice = v[who];
-    u.rate = rate;
-    u.pitch = same ? (who === "F" ? 1.15 : 0.85) : 1;
-    if (k === queue.length - 1) u.onend = u.onerror = () => btn.setAttribute("aria-pressed", "false");
-    tts.speak(u);
-  });
-  btn.setAttribute("aria-pressed", "true");
+  return studySpeakSequence(lines.map(([role,text])=>({role,text})),rate,btn);
 }
 
 // ---------- 通用小部件 ----------
@@ -20185,10 +20233,10 @@ function exListen() {
       const note = el("span", "listen-note");
       const showCount = () => { const c = exState.plays[t.id] || 0; note.textContent = `已播放 ${c} 遍 · 建议 ${s === 1 ? 1 : 2} 遍`; };
       showCount();
-      if (tts) {
+      if (tts || typeof Audio !== "undefined") {
         play.addEventListener("click", () => { exSpeak(t.lines, 0.95, play); exState.plays[t.id] = (exState.plays[t.id] || 0) + 1; exSave(); showCount(); });
         const stop = el("button", "play slow", "停止"); stop.type = "button";
-        stop.addEventListener("click", () => { tts.cancel(); play.setAttribute("aria-pressed", "false"); });
+        stop.addEventListener("click", () => { studyAudioStop(); play.setAttribute("aria-pressed", "false"); });
         head.append(play, stop, note);
       } else {
         play.disabled = true;
@@ -20468,6 +20516,7 @@ async function exSubmit() {
   clearInterval(exTimer);
   exPause();
   exResult = { parts: exScore(), essay: "pending", at: new Date().toISOString(), secs: Math.round(exUsed()) };
+  if (typeof petRecordExam === "function") petRecordExam({exam:EX.id,at:exResult.at,answers:exState.ans});
   exSave();
   renderExam();
   $("ex-result")?.scrollIntoView({ block: "start" });
@@ -22891,7 +22940,7 @@ function vSpeakBtn(w, label, text) {
   const b = el("button", "play slow say", label || "🔊");
   b.type = "button";
   b.setAttribute("aria-label", "朗读 " + (text || w.fr));
-  if (tts) b.addEventListener("click", () => speak(text || vArt(w), 0.85, b)); else b.disabled = true;
+  if (tts || typeof Audio !== "undefined") b.addEventListener("click", () => speak(text || vArt(w), 0.85, b)); else b.disabled = true;
   return b;
 }
 function vList() {
@@ -22928,7 +22977,7 @@ function vList() {
     map.addEventListener("click", () => { vTheme = "levels"; vToc(); vList(); });
     row.append(map, go, look);
   } else row.append(lab, go, look);
-  if (tts) {
+  if (tts || typeof Audio !== "undefined") {
     const v = frVoice || pickVoice();
     card.append(el("p", "sub v-voice", v ? `朗读用的声音：${v.name}（${v.lang}）` : "这台设备上没找到法语朗读声音，读音可能不准，可以在系统设置里添加法语语音。"));
   }
@@ -22999,11 +23048,11 @@ function vBrowse(words, i, pre) {
     if (e.target.closest && e.target.closest("input, select, textarea")) return;
     if (e.key === "ArrowRight") { e.preventDefault(); if (!last) vBrowse(words, i + 1, pre); }
     else if (e.key === "ArrowLeft") { e.preventDefault(); if (i > 0) vBrowse(words, i - 1, pre); }
-    else if (e.key === " ") { e.preventDefault(); if (tts) speak(vArt(w), 0.85, null); }
+    else if (e.key === " ") { e.preventDefault(); if (tts || typeof Audio !== "undefined") speak(vArt(w), 0.85, null); }
   };
   document.addEventListener("keydown", vKeyHandler);
   next.focus({ preventScroll: true });
-  if (tts && userActivated) speak(vArt(w), 0.85, null);
+  if ((tts || typeof Audio !== "undefined") && userActivated) speak(vArt(w), 0.85, null);
 }
 
 // ---------- 练习 ----------
@@ -23214,7 +23263,7 @@ function vQuestion() {
     S.i < S.qs.length ? vQuestion() : vResult();
   };
   next.addEventListener("click", go);
-  const say = text => { if (vSet.read && tts && userActivated) speak(text, 0.85, null); };
+  const say = text => { if (vSet.read && (tts || typeof Audio !== "undefined") && userActivated) speak(text, 0.85, null); };
   const finish = (ok, given) => {
     S.res[w.id + ":" + q.type] = { ok, given };
     vRecord(w, q.type, ok);
@@ -23231,7 +23280,7 @@ function vQuestion() {
     if (ok && !first) {
       next.textContent = S.i === S.qs.length - 1 ? "查看成绩" : "下一题 →";
       // 停留够设置的时间、并且读完单词，再进入下一题（朗读最多等 3 秒）
-      let timed = false, spoken = !(vSet.read && tts && userActivated);
+      let timed = false, spoken = !(vSet.read && (tts || typeof Audio !== "undefined") && userActivated);
       const tryGo = () => { if (timed && spoken && !feedbackActive) go(); };
       vAdvanceTimer = setTimeout(() => { timed = true; tryGo(); }, vSet.pause + (q.type === 5 ? 300 : 0));
       if (!spoken) { speak(vArt(w), 0.9, null, () => { spoken = true; tryGo(); }); setTimeout(() => { spoken = true; tryGo(); }, 3000); }
@@ -23248,7 +23297,7 @@ function vQuestion() {
     // 拼写：按顺序点字母块
     head.append(el("span", null, `拼出法语：${vMean(w)}`));
     const row = el("div", "listen-row");
-    if (tts) row.append(vSpeakBtn(w, "▶ 听读音"));
+    if (tts || typeof Audio !== "undefined") row.append(vSpeakBtn(w, "▶ 听读音"));
     row.append(el("span", "listen-note", V_POS[w.pos] + (vIsNoun(w) ? "，不含冠词" : "")));
     head.append(row);
     const chars = [...w.fr.toLowerCase()];
@@ -23331,7 +23380,7 @@ function vQuestion() {
       sent.append(document.createTextNode(pe.before), el("b", "v-hl", pe.form), document.createTextNode(pe.after));
       const row = el("div", "listen-row");
       row.append(el("span", "listen-note", "读例句，选出它描述的那张图"));
-      if (tts) row.append(vSpeakBtn(w, "▶ 读例句", pe.full));
+      if (tts || typeof Audio !== "undefined") row.append(vSpeakBtn(w, "▶ 读例句", pe.full));
       head.append(sent, row);
       const seen = new Set([vPic(w)]);
       const dis = (vSet.hard ? vHardPool(w).filter(x => vPic(x)).concat(vShuffle(V_WORDS.filter(x => x.id !== w.id && vPic(x)))) : vCandidates(w, x => !!vPic(x)))
@@ -23398,12 +23447,12 @@ function vQuestion() {
       const row = el("div", "listen-row");
       const play = el("button", "play", "▶ 播放"); play.type = "button"; play.id = "playBtn";
       const slow = el("button", "play slow", "慢速"); slow.type = "button";
-      if (tts) { play.addEventListener("click", () => speak(vArt(w), 0.85, play)); slow.addEventListener("click", () => speak(vArt(w), 0.6, slow)); }
+      if (tts || typeof Audio !== "undefined") { play.addEventListener("click", () => speak(vArt(w), 0.85, play)); slow.addEventListener("click", () => speak(vArt(w), 0.6, slow)); }
       else { play.disabled = slow.disabled = true; row.append(el("span", "listen-note", "这台设备不能朗读")); }
       row.prepend(play, slow);
       head.append(row);
       opts = [w, ...vDistract(w, x => x.en)]; show = x => vMean(x);
-      if (tts && userActivated) setTimeout(() => speak(vArt(w), 0.85, play), 120);
+      if ((tts || typeof Audio !== "undefined") && userActivated) setTimeout(() => { if(card.isConnected) speak(vArt(w), 0.85, play); }, 120);
     } else {
       // 例句填空：选出例句里空着的词形
       head.classList.add("v-exq");
@@ -25553,7 +25602,7 @@ function cjStudy() {
     head.append(el("b", "cj-inf", v.v));
     const arrow = el("span", "cj-arrow"); arrow.append(el("span", "cj-arrow-t", CJ_TZH[f.t]), el("span", "cj-arrow-line")); head.append(arrow);
     if (UI_LANG === "zh" && v.zh) head.append(el("span", "cj-study-zh", v.zh));
-    if (tts) { const say = el("button", "play cj-say", "▶ 读"); say.type = "button"; say.addEventListener("click", () => speak((f.t === "impe" ? [1, 3, 4] : [0, 1, 2, 3, 4, 5]).map(j => cjFull(f.t, j, false, cjForm(v, f.t, j, false)).replace(/ !$/, "")).join(", "), .9, say)); head.append(say); }
+    if (tts || typeof Audio !== "undefined") { const say = el("button", "play cj-say", "▶ 读"); say.type = "button"; say.addEventListener("click", () => speak((f.t === "impe" ? [1, 3, 4] : [0, 1, 2, 3, 4, 5]).map(j => cjFull(f.t, j, false, cjForm(v, f.t, j, false)).replace(/ !$/, "")).join(", "), .9, say)); head.append(say); }
     box.append(head);
     const table = el("div", "cj-table");
     (f.t === "impe" ? [1, 3, 4] : [0, 1, 2, 3, 4, 5]).forEach(j => table.append(el("span", null, cjFull(f.t, j, false, cjForm(v, f.t, j, false)))));
@@ -25671,13 +25720,13 @@ function cjAnswer(input, card, fb) {
   cjSess.lastKey = cjId(q.v.v, q.t);
   cjRecord(q, cjCfg.mode === "pick" ? input : cjStrip(input), right);
   comboHit("conj", right);
-  if (vSet.read && tts && userActivated) speak(cjFull(q.t, q.i, q.fem, q.ans).replace(/ !$/, ""), 0.9, null);   // 答完自动朗读（可在“设置”里关掉）
+  if (vSet.read && (tts || typeof Audio !== "undefined") && userActivated) speak(cjFull(q.t, q.i, q.fem, q.ans).replace(/ !$/, ""), 0.9, null);   // 答完自动朗读（可在“设置”里关掉）
   // 反馈：对错、完整形式（可朗读）、这个时态的整张变位表
   fb.className = "explain cj-fb";
   fb.textContent = "";
   const line = el("p");
   line.append(el("b", right ? "ok" : "no", right ? "答对了。" : accent ? "差在重音符号上。" : "答错了。"), document.createTextNode(" 正确："), el("b", null, cjFull(q.t, q.i, q.fem, q.ans)));
-  if (tts) {
+  if (tts || typeof Audio !== "undefined") {
     const say = el("button", "play cj-say", "▶ 读"); say.type = "button";
     say.addEventListener("click", () => speak(cjFull(q.t, q.i, q.fem, q.ans).replace(/ !$/, ""), .9, say));
     line.append(document.createTextNode(" "), say);
@@ -26275,6 +26324,7 @@ const petOwned = () => typeof gameLedger === "function" && gameLedger().owned.ha
 function petCleanConfig(x, scope) {
   if (!x || x.scope !== scope || x.version !== 1 || petTime(x.at) === null) return null;
   return { kind: "pet", version: 1, scope, character: ["ninon", "lison", "pia"].includes(x.character) ? x.character : "ninon",
+    romance:x.romance===true,dresses:Object.fromEntries(["ninon","lison","pia"].map(c=>[c,typeof x.dresses?.[c]==="string"&&/^(ninon|lison|pia)-[a-z]+$/.test(x.dresses[c])?x.dresses[c]:""])),
     outfit: x.outfit !== "pet" && Object.hasOwn(PET_PRICES, x.outfit) ? x.outfit : "", enabled: x.enabled !== false,
     feedback: x.feedback !== false, voice: x.voice !== false, animation: x.animation !== false, at: x.at };
 }
@@ -26305,7 +26355,8 @@ function petSet(patch) {
   if (Object.hasOwn(patch, "character") && !["ninon", "lison", "pia"].includes(patch.character)) return "unavailable";
   if (Object.hasOwn(patch, "outfit") && patch.outfit !== "" && (patch.outfit === "pet" || !Object.hasOwn(PET_PRICES, patch.outfit) || !gameLedger().owned.has(patch.outfit))) return "locked";
   ["character", "outfit"].forEach(k => { if (Object.hasOwn(patch, k)) x[k] = patch[k]; });
-  ["enabled", "feedback", "voice", "animation"].forEach(k => { if (typeof patch[k] === "boolean") x[k] = patch[k]; });
+  if (patch.dresses && typeof patch.dresses === "object") x.dresses=Object.fromEntries(["ninon","lison","pia"].map(c=>[c,typeof patch.dresses[c]==="string"?patch.dresses[c]:""]));
+  ["enabled", "feedback", "voice", "animation", "romance"].forEach(k => { if (typeof patch[k] === "boolean") x[k] = patch[k]; });
   x.at = new Date(Math.max(Date.now(), (petTime(x.at) || 0) + 1)).toISOString();
   petSessionConfig = x;
   if (x.scope !== "claude") { try { localStorage.setItem(petLocalKey(x.scope), JSON.stringify(x)); } catch (e) {} }
@@ -26376,27 +26427,31 @@ function petQuestionIds() {
   }
   return petKnownQuestions;
 }
-function petAffinity() {
-  const a = typeof ansRaw !== "undefined" && ansRaw || [], v = typeof vocRaw !== "undefined" && vocRaw || [];
-  const day = new Date().toISOString().slice(0, 10), scope = petScope();
-  if (!petAffinityCache || petAffinityCache.a !== a || petAffinityCache.v !== v || petAffinityCache.an !== a.length || petAffinityCache.vn !== v.length || petAffinityCache.day !== day || petAffinityCache.scope !== scope) {
-    const value = petComputeAffinity(a, v, petQuestionIds(), new Set(typeof V_BY_ID !== "undefined" ? V_BY_ID.keys() : []));
-    petAffinityCache = { a, v, an: a.length, vn: v.length, day, scope, value };
-  }
-  return { ...petAffinityCache.value };
-}
+function petAffinity(character) { return petDomainAffinity(character); }
 function petOnAnswer(d, kind, info) {
+  petRecordStudy(d, kind);
+  petRememberMilestones();
   petAffinityCache = null;
   if (typeof petReact === "function") petReact(d, kind, info);
 }
-function petOnDataReady() {
+async function petOnDataReady() {
   petAffinityCache = null;
   const scope = petScope(), loc = petLocal(scope), rem = petRemote(scope);
+  if(scope === "claude" && !gameRaw.some(x=>x.kind==='pet-affinity-migration'&&x.version===1&&x.scope===scope)) {
+    const sourceDb=dbRef;
+    try {
+      const exams=(await sourceDb.collection('exams').get()).docs.map(d=>({coll:'exams',data:d.data()}));
+      if(petScope()!==scope||dbRef!==sourceDb)return;
+      petMigrationRows([...((ansRaw||[]).map(data=>({coll:'answers',data}))),...vocRaw.map(data=>({coll:'vocab',data})),...gameRaw.map(data=>({coll:'game',data})),...exams],scope,gameRaw).forEach(gameAdd);
+    } catch {} // Retry on the next successful data load rather than recording an incomplete migration.
+  }
+  if(typeof petRememberMilestones === "function") petRememberMilestones();
   if (loc && scope !== "guest" && (!rem || petCompare(loc, rem) > 0)) { petPending = loc; petFlush(); }
   if (typeof petRefresh === "function") petRefresh();
   if (typeof petRefreshPage === "function") petRefreshPage();
 }
 function petOnAccountChange() {
+  if(typeof studyAudioStop === "function") studyAudioStop();
   clearTimeout(petWriteTimer); petWriteTimer = 0; petPending = null; petAffinityCache = null; petSessionConfig = null;
   if (typeof petResetRuntime === "function") petResetRuntime();
   if (typeof petRefresh === "function") petRefresh();
@@ -26404,6 +26459,123 @@ function petOnAccountChange() {
 }
 addEventListener("pagehide", petFlush);
 document.addEventListener("visibilitychange", () => { if (document.visibilityState === "hidden") petFlush(); });
+// Account-scoped, content-derived progress. Existing answer rows are never rewritten.
+const PET_DOMAIN_NAMES = {ninon:['语法与变位','Grammar & conjugation','Grammaire et conjugaison'],pia:['词汇与复习','Vocabulary & review','Vocabulaire et révision'],lison:['听力与口语','Listening & speaking','Écoute et expression orale']};
+const PET_REWARD_STEPS = [900,1200,1500,1800,2100,2400];
+const petI18n = a => a[UI_LANG === 'zh' ? 0 : UI_LANG === 'fr' ? 2 : 1];
+const petStudyKinds = ['pet-study','pet-affinity-migration'];
+function petStudyEvent(d, kind, scope = petScope()) {
+  if (!d || petTime(d.at) === null) return null;
+  let id, right, character, weight = 1, once = false;
+  if (kind === 'vocab' && typeof d.ok === 'boolean' && V_BY_ID.has(d.word)) { id='word:'+d.word; right=d.ok; character='pia'; }
+  else if (kind === 'ans' && typeof d.isCorrect === 'boolean' && petQuestionIds().has(d.qid)) {
+    id='question:'+d.qid; right=d.isCorrect;
+    character=BY_ID.get(d.qid)?.audio ? 'lison' : 'ninon'; weight=character==='lison'?3:1;
+  } else if (kind === 'oral' && d.kind === 'tour-oral' && d.scope === scope && d.status === 'done' && Number.isInteger(d.variant) && d.variant > 0 &&
+      typeof TOUR_ORAL_CASES !== 'undefined' && TOUR_ORAL_CASES.some(c => oralTaskId(c.id) === d.taskId)) {
+    // All changed-condition repeats share one stable milestone; no points for button/playback events.
+    id='oral:'+d.taskId+':transfer'; right=true; character='lison'; weight=6; once=true;
+  } else if (kind === 'exam' && d.exam === EX.id && typeof d.qid === 'string' && typeof d.isCorrect === 'boolean') {
+    const n=Number(d.qid), listening=EX.listen.some(t=>t.qs.some(q=>q.n===n));
+    const grammar=Object.hasOwn(EX.grammar.key,n);
+    if (!listening && !grammar) return null;
+    id='exam:'+EX.id+':'+n; right=d.isCorrect; character=listening?'lison':'ninon'; weight=listening?3:1;
+  } else return null;
+  return {kind:'pet-study',version:1,scope,id,right,character,weight,once,at:d.at};
+}
+function petValidStudy(e, scope) {
+  if (!e || e.kind!=='pet-study' || e.version!==1 || e.scope!==scope || typeof e.right!=='boolean') return false;
+  let rebuilt;
+  if(e.id?.startsWith('word:')) rebuilt=petStudyEvent({word:e.id.slice(5),ok:e.right,at:e.at},'vocab',scope);
+  else if(e.id?.startsWith('question:')) rebuilt=petStudyEvent({qid:e.id.slice(9),isCorrect:e.right,at:e.at},'ans',scope);
+  else if(e.id?.startsWith('oral:')) rebuilt=petStudyEvent({kind:'tour-oral',scope,taskId:e.id.slice(5,-9),variant:1,status:'done',at:e.at},'oral',scope);
+  else if(e.id?.startsWith('exam:'+EX.id+':')) rebuilt=petStudyEvent({exam:EX.id,qid:e.id.slice(('exam:'+EX.id+':').length),isCorrect:e.right,at:e.at},'exam',scope);
+  return !!rebuilt && rebuilt.character===e.character && rebuilt.weight===e.weight && rebuilt.once===e.once;
+}
+function petComputeDomains(events, scope, now=Date.now()) {
+  const points={ninon:0,pia:0,lison:0}, todayPoints={ninon:0,pia:0,lison:0}, daily=new Map(), memories=new Map(), seen=new Set(), lastGain={};
+  const ordered=events.filter(e=>petValidStudy(e,scope)&&petTime(e.at)<=now).sort(petCompare), today=new Date(now).toISOString().slice(0,10);
+  for(const e of ordered){
+    const key=JSON.stringify([e.id,e.at,e.right]);if(seen.has(key))continue;seen.add(key);
+    const t=petTime(e.at), m=memories.get(e.id)||{lv:0,peak:0,last:0,credited:0}, day=new Date(t).toISOString().slice(0,10);
+    let eligible=false;
+    if(e.right){
+      if(!m.lv){eligible=m.peak===0;m.lv=1;m.last=t;}else if(!e.once&&t>=m.last+MEM_DAYS[Math.min(m.lv,MEM_MAX)]*DAY_MS*MEM_EARLY){eligible=true;m.lv=Math.min(MEM_MAX,m.lv+1);m.last=t;}
+      m.peak=Math.max(m.peak,m.lv);
+    }else{m.lv=Math.max(0,m.lv-2);m.last=t;}
+    memories.set(e.id,m);
+    const totals=daily.get(day)||{ninon:0,pia:0,lison:0,total:0}, c=e.character;
+    // Daily limits delay earned credit; a later due review can collect it even at the memory ceiling.
+    // This keeps the smaller listening bank reachable without rewarding immediate repeated clicks.
+    const gain=eligible?Math.max(0,Math.min(m.peak*e.weight-m.credited,24-totals[c],48-totals.total,2400-points[c])):0;
+    if(gain){m.credited+=gain;totals[c]+=gain;totals.total+=gain;points[c]+=gain;lastGain[c]={id:e.id,at:e.at,gain};}
+    daily.set(day,totals);
+  }
+  const td=daily.get(today)||{ninon:0,pia:0,lison:0,total:0};
+  const result={};
+  for(const c of Object.keys(points))result[c]={points:points[c],max:2400,today:td[c],dailyCap:24,totalToday:td.total,totalDailyCap:48,level:PET_TIERS.filter(n=>points[c]>=n).length-1,nextReset:new Date(Date.parse(today+'T00:00:00.000Z')+DAY_MS).toISOString(),lastGain:lastGain[c]||null,nextReward:PET_REWARD_STEPS.find(n=>n>points[c])||null};
+  return result;
+}
+function petRecordStudy(d,kind){
+  const e=petStudyEvent(d,kind);if(!e||typeof gameAdd!=='function')return;
+  const key=petFingerprint(e);if(gameRaw.some(x=>x.kind==='pet-study'&&petFingerprint(x)===key))return;
+  gameAdd(e);petAffinityCache=null;
+}
+function petExamEvents(d,scope=petScope()){
+  let answers;try{answers=typeof d.answers==='string'?JSON.parse(d.answers):d.answers;}catch{return;}
+  if(!answers||d.exam!==EX.id)return [];
+  const events=[];
+  for(const q of [...EX.listen.flatMap(t=>t.qs),...Object.entries(EX.grammar.key).map(([n,a])=>({n:Number(n),a}))]){
+    if(!Object.hasOwn(answers,q.n))continue;
+    const correct=Array.isArray(q.a)?q.a.some(a=>exNorm(a)===exNorm(answers[q.n])):typeof q.a==='number'?answers[q.n]===q.a:exNorm(answers[q.n])===exNorm(q.a);
+    const event=petStudyEvent({exam:d.exam,qid:String(q.n),isCorrect:correct,at:d.at},'exam',scope);if(event)events.push(event);
+  }
+  return events;
+}
+function petRecordExam(d){
+  for(const e of petExamEvents(d)||[])if(!gameRaw.some(x=>x.kind==='pet-study'&&petFingerprint(x)===petFingerprint(e)))gameAdd(e);
+  petAffinityCache=null;
+  if(typeof petRememberMilestones==='function')petRememberMilestones();
+}
+// Migrate only records fetched for the authenticated user (or the already isolated Claude store).
+// A persistent marker makes this one-time. Never claim ownership of an unscoped browser cache.
+function petMigrationRows(rows,scope,existing){
+  if(existing.some(x=>x.kind==='pet-affinity-migration'&&x.version===1&&x.scope===scope))return [];
+  const answers=rows.filter(x=>x.coll==='answers').map(x=>x.data), vocab=rows.filter(x=>x.coll==='vocab').map(x=>x.data);
+  const events=[];for(const [list,kind]of[[answers,'ans'],[vocab,'vocab']])for(const d of list){const e=petStudyEvent(d,kind,scope);if(e)events.push(e);}
+  for(const r of rows.filter(x=>x.coll==='exams'))events.push(...(petExamEvents(r.data,scope)||[]));
+  for(const r of rows.filter(x=>x.coll==='game')){const d=scope==='claude'&&r.data.scope==='device'?{...r.data,scope}:r.data;const e=petStudyEvent(d,'oral',scope);if(e)events.push(e);}
+  const old=petComputeAffinity(answers,vocab,petQuestionIds(),new Set(V_BY_ID.keys()));
+  events.push({kind:'pet-affinity-migration',version:1,scope,legacyLevel:old.level,at:new Date().toISOString()});
+  const keys=new Set(existing.map(petFingerprint));return events.filter(e=>{const k=petFingerprint(e);if(keys.has(k))return false;keys.add(k);return true;});
+}
+function petMigrateRemote(rows,uid){
+  if(petScope()!=='user:'+uid)return;
+  const local=syncLocal('game'), remote=rows.filter(r=>r.coll==='game').map(r=>r.data), added=petMigrationRows(rows,'user:'+uid,[...local,...remote]);
+  if(added.length){syncStore('game',[...local,...added]);gameRaw.push(...added);petAffinityCache=null;if(typeof petRememberMilestones==='function')petRememberMilestones();}
+}
+function petDomainAffinity(character=petConfig().character){
+  const scope=petScope(), day=new Date().toISOString().slice(0,10);
+  if(!petAffinityCache||petAffinityCache.scope!==scope||petAffinityCache.day!==day||petAffinityCache.n!==gameRaw.length){
+    const values=petComputeDomains(gameRaw,scope),legacy=gameRaw.filter(x=>x.kind==='pet-affinity-migration'&&x.version===1&&x.scope===scope&&Number.isInteger(x.legacyLevel)&&x.legacyLevel>=0&&x.legacyLevel<=4).reduce((n,x)=>Math.max(n,x.legacyLevel),0);
+    Object.values(values).forEach(v=>{v.legacyLevel=legacy;v.dialogueLevel=Math.max(v.level,legacy);});
+    petAffinityCache={scope,day,n:gameRaw.length,values};
+  }
+  return {...petAffinityCache.values[character]};
+}
+function petDomainPanel(root,selected){
+  const section=el('section','pet-domain-panel');section.append(el('h3',null,petI18n(['学习与羁绊','Learning bonds','Liens et apprentissage'])));
+  const grid=el('div','pet-voice-grid');
+  for(const c of PET_CHARACTERS){const a=petAffinity(c.id),card=el('article','pet-voice-card');card.dataset.character=c.id;card.append(el('strong',null,c.name),el('p',null,petI18n(PET_DOMAIN_NAMES[c.id])),el('p',null,a.points+' / '+a.max));const bar=el('progress');bar.max=a.max;bar.value=a.points;bar.setAttribute('aria-label',c.name);card.append(bar,el('p','sub',petI18n(['今日','Today','Aujourd’hui'])+' '+a.today+' / 24'));petDomainDetails(card,c.id,a);if(a.legacyLevel>a.level)card.append(el('p','sub',petI18n(['已保留旧版台词解锁','Earlier dialogue unlocks preserved','Anciens dialogues débloqués conservés'])));grid.append(card);}
+  section.append(grid,el('p','sub',petI18n(['每位每天最多 24 点，三人合计最多 48 点（UTC 零点重置）。新学会或间隔复习提升记忆等级才加分；听力每级 3 点，语法和词汇每级 1 点。每日限额未计入的学习进步可在后续到期复习时补计。每个口语任务首次完成变更条件加 6 点，自评不代表发音评分。','Up to 24 points per companion and 48 total per UTC day. New learning or spaced memory advances earn points: listening 3, grammar/vocabulary 1. Progress limited by the daily cap can be credited during a later due review. Each oral task earns 6 once for completing changed conditions; self-assessment is not pronunciation grading.','Maximum de 24 points par compagne et de 48 au total par jour UTC. Progrès de mémorisation : écoute 3, grammaire/vocabulaire 1. Les progrès limités par le plafond quotidien peuvent être crédités lors d’une révision ultérieure à échéance. Chaque mission orale rapporte 6 points une seule fois après un changement de conditions ; l’autoévaluation ne note pas la prononciation.'])));root.append(section);
+}
+
+function petDomainDetails(card,c,a){
+ const next=PET_REWARD_STEPS.find(n=>!petHasMilestone(c,n));
+ if(next){const dress=PET_DRESSES.find(d=>d.character===c&&d.at===next),reward=dress?petI18n(dress.name):petI18n(['羁绊故事','Bond story','Histoire de complicité'])+' '+(1+(next-900)/600);card.append(el('p','sub',petI18n(['下一奖励','Next reward','Prochaine récompense'])+' · '+reward+' · '+Math.max(0,next-a.points)));}
+ else card.append(el('p','sub',petI18n(['所有羁绊奖励已解锁','All bond rewards unlocked','Toutes les récompenses sont débloquées'])));
+ if(a.lastGain){const g=a.lastGain,oral=g.id.startsWith('oral:'),reason=oral?['口语变更条件任务完成','Oral transfer task completed','Mission orale avec changement de conditions terminée']:['新学习或间隔复习进步','New learning or spaced review progress','Progrès en apprentissage ou en révision espacée'];card.append(el('p','sub',petI18n(reason)+' +'+g.gain+' · '+new Date(g.at).toLocaleDateString(UI_LANG==='zh'?'zh-CN':UI_LANG==='fr'?'fr-FR':'en-GB')));}
+}
 // Learning companion: no answer rewards or ownership state are written here.
 // Deploy skins beside the assembled page; never fetch anonymous private GitHub URLs.
 const PET_ASSET_BASE = '../skins/mascot/pet/';
@@ -26424,10 +26596,11 @@ function petBlocked() {
     !!(a && ((!a.readOnly && !a.disabled && a.matches('textarea, select, input:not([type=checkbox]):not([type=radio]):not([type=button]):not([type=submit]):not([type=range])')) || a.isContentEditable)) ||
     !!(window.visualViewport && window.visualViewport.height < innerHeight * .72);
 }
-function petImage(character, state = 'idle', outfit = '') {
+function petImage(character, state = 'idle', outfit = '', dressOverride = null) {
   const c = PET_CHARACTERS.find(x => x.id === character) || PET_CHARACTERS[0];
   const sprite = el('span', 'pet-sprite'); sprite.setAttribute('aria-hidden', 'true'); sprite.dataset.character = c.id;
-  sprite.style.backgroundImage = `url("${PET_ASSET_BASE}${c.id}.webp?v=${PET_ASSET_VERSION}")`;
+  const dress = dressOverride === null ? petDressFor(c.id) : dressOverride;
+  sprite.style.backgroundImage = dress ? `url("${PET_ASSET_BASE}wardrobe/${dress}.webp?v=1.11.0")` : `url("${PET_ASSET_BASE}${c.id}.webp?v=${PET_ASSET_VERSION}")`;
   sprite.style.setProperty('--pet-row', String(Math.max(0, PET_STATES.indexOf(state))));
   sprite.dataset.state = state;
   const it = PET_ACCESSORIES.find(x => x.id === outfit);
@@ -26558,6 +26731,7 @@ function petCloseBubble(focus = false) {
 }
 function petOnLeave() {
   petStopVoice();
+  petRuntime.dressTrial=null;
   clearTimeout(petBubbleTimer); clearTimeout(petSpeechTimer);
   // Completing today's plan belongs to the learning session, not the old card.
   // Carry it through ordinary navigation; blocked views/settings/reset clear it.
@@ -26570,7 +26744,7 @@ function petSetState(state, ms = 2600) {
   if (state !== 'idle' && state !== 'sleep') petStateTimer = setTimeout(() => { petRuntime.state = 'idle'; petRefresh(); }, ms);
 }
 function petLine(kind = 'tap') {
-  const cfg = petConfig(), level = petAffinity().level;
+  const cfg = petConfig(), level = petAffinity().dialogueLevel;
   const lines = PET_LINES[cfg.character].filter(x => x[0] === kind && x[1] <= level);
   const x = lines[Math.floor(Math.random() * lines.length)] || PET_LINES[cfg.character][0];
   return { fr: x[2], zh: x[3], en: x[4], word: '' };
@@ -26595,7 +26769,7 @@ function petStopVoice() {
 }
 function petVoiceAllowed(manual = false) {
   const cfg = petConfig(), synth = typeof tts !== 'undefined' && tts;
-  return petOwned() && gameOn() && cfg.enabled && cfg.voice && (manual || cfg.feedback) && !petBlocked() &&
+  return !(typeof studyAudioBusy !== 'undefined' && studyAudioBusy) && petOwned() && gameOn() && cfg.enabled && cfg.voice && (manual || cfg.feedback) && !petBlocked() &&
     !(typeof tourOral !== 'undefined' && tourOral) &&
     !(synth && (synth.speaking || synth.pending)) &&
     !document.querySelector('.play[aria-pressed="true"]:not([data-pet-audio])');
@@ -26787,7 +26961,7 @@ function petRefresh() {
   }
   avatar.dataset.character = cfg.character;
   const wanted = [cfg.character, petRuntime.state, cfg.outfit, cfg.animation].join(':');
-  if (avatar.dataset.render !== wanted) { avatar.replaceChildren(petImage(cfg.character, petRuntime.state, cfg.outfit)); avatar.dataset.render = wanted; }
+  if (avatar.dataset.dress !== petDressFor(cfg.character) || avatar.dataset.render !== wanted) { avatar.replaceChildren(petImage(cfg.character, petRuntime.state, cfg.outfit)); avatar.dataset.render = wanted; avatar.dataset.dress = petDressFor(cfg.character); }
   widget.querySelectorAll('.pet-sprite').forEach(n => n.classList.remove('pet-paused'));
   widget.hidden = false;
   if (petRuntime.open && $('petBubble')?.classList.contains('pet-compact') !== (question || !petRuntime.manual)) petRenderBubble();
@@ -26875,8 +27049,8 @@ function petRenderPreview() {
   const p = $('petPreview'); if (!p) return; p.replaceChildren();
   const cfg = petConfig(), character = petOwned() ? cfg.character : petRuntime.previewCharacter;
   if ((!petOwned() || !cfg.enabled) && !petRuntime.preview) { p.append(el('p', 'sub', tr('选择一位伙伴，看看她的表情。'))); return; }
-  p.append(petImage(character, p.dataset.state || 'idle', petRuntime.trial ?? cfg.outfit));
-  const note = $('petTrialNote'); if (note) note.hidden = !petRuntime.trial;
+  p.append(petImage(character, p.dataset.state || 'idle', petRuntime.trial ?? cfg.outfit, petRuntime.dressTrial ?? null));
+  const note = $('petTrialNote'); if (note) note.hidden = !petRuntime.trial && !petRuntime.dressTrial;
 }
 function petAccessoryCards(container, shop = false) {
   const cfg = petConfig(), grid = el('div', 'pet-accessories');
@@ -26906,7 +27080,7 @@ function renderPet() {
   const chars = el('div', 'pet-characters'); chars.setAttribute('role', 'group'); chars.setAttribute('aria-label', tr('选择伙伴'));
   PET_CHARACTERS.forEach(c => {
     const selected = c.id === (own ? cfg.character : petRuntime.previewCharacter);
-    const button = petButton(c.name, () => { petStopVoice(); petRuntime.trial = null; if (own) petSet({ character: c.id }); else petRuntime.previewCharacter = c.id; renderPet(); }, 'pet-character-' + c.id, 'pet-character');
+    const button = petButton(c.name, () => { petStopVoice(); petRuntime.trial = null; if (own) petSet({ character: c.id }); else petRuntime.previewCharacter = c.id; petRuntime.dressTrial = null; renderPet(); }, 'pet-character-' + c.id, 'pet-character');
     button.style.setProperty('--pet-color', c.color); button.setAttribute('aria-pressed', String(selected));
     button.append(el('span', 'sub', tr(c.desc))); chars.append(button);
   }); root.append(chars);
@@ -26921,9 +27095,10 @@ function renderPet() {
   }
   const actions = el('div', 'pet-actions'); PET_STATES.forEach((state, i) => actions.append(petButton(PET_STATE_NAMES[i], () => { petRuntime.preview = true; preview.dataset.state = state; petRenderPreview(); }, 'pet-state-' + state))); info.append(actions);
   const note = el('div', 'pet-trial-note'); note.id = 'petTrialNote'; note.hidden = !petRuntime.trial;
-  note.append(el('p', null, tr('正在试穿；离开面板后恢复已购装扮。')), petButton('结束试穿', () => { petRuntime.trial = null; note.hidden = true; petRenderPreview(); }, 'petTrialEnd')); info.append(note); root.append(hero);
+  note.append(el('p', null, tr('正在试穿；离开面板后恢复已购装扮。')), petButton('结束试穿', () => { petRuntime.trial = null; petRuntime.dressTrial = null; note.hidden = true; petRenderPreview(); }, 'petTrialEnd')); info.append(note); root.append(hero);
   if (own) root.append(petButton('基础装扮', () => { petRuntime.trial = null; petSet({ outfit: '' }); renderPet(); }, 'pet-outfit-none'));
   const accessories = el('section'); accessories.append(el('h3', null, tr('伙伴配饰'))); petAccessoryCards(accessories); root.append(accessories);
+  if(own) { petDomainPanel(root,cfg.character); petWardrobe(root); petStoryCards(root); }
   petVoicePreview(root); petSettings(root); stage.append(root); petRenderPreview(); petRefresh();
 }
 
@@ -26967,6 +27142,205 @@ function petVoicePreview(root) {
   });
   section.append(grid,status); root.append(section);
 }
+// Exact-text pre-recorded narration. No provider key or generation call reaches the client.
+const STUDY_AUDIO_BASE='../skins/mascot/study/';
+let studyAudioManifest=null, studyAudioLoad=null, studyAudioEpoch=0, studyAudio=null, studyAudioBusy=false, studyAudioAbort=null;
+function studyVoice(){try{const v=localStorage.getItem('fq-study-voice');return ['ninon','pia','lison'].includes(v)?v:'system';}catch{return 'system';}}
+function studyAudioStop(){
+  studyAudioEpoch++;studyAudioBusy=false;studyAudioAbort?.abort();studyAudioAbort=null;
+  if(studyAudio){studyAudio.onended=null;studyAudio.onerror=null;studyAudio.pause();studyAudio.removeAttribute('src');studyAudio.load();studyAudio=null;}
+  if(tts)tts.cancel();document.querySelectorAll('.play[aria-pressed="true"]:not([data-pet-audio])').forEach(b=>b.setAttribute('aria-pressed','false'));
+}
+function studyAudioLabel(btn,label){
+  if(!btn)return;let note=btn.parentElement?.querySelector('.study-audio-status');
+  if(!note){note=el('span','sub study-audio-status');note.setAttribute('role','status');btn.parentElement?.append(note);}if(note)note.textContent=label;
+}
+async function studyAudioIndex(){
+  if(studyAudioManifest)return studyAudioManifest;
+  if(studyAudioLoad)return studyAudioLoad;
+  studyAudioLoad=(async()=>{const controller=new AbortController(),timer=setTimeout(()=>controller.abort(),8000);try{const r=await fetch(STUDY_AUDIO_BASE+'manifest.json?v=1.11.0',{signal:controller.signal});if(!r.ok)throw Error('manifest');const m=await r.json();if(m.version!==1||!m.characters)throw Error('manifest');studyAudioManifest=m;return m;}finally{clearTimeout(timer);studyAudioLoad=null;}})();
+  return studyAudioLoad;
+}
+function studySystemPart(text,rate,btn,done,role){
+  if(!role)return systemSpeak(text,rate,btn,done);
+  if(!tts){done?.();return false;}const v=exVoices(),u=new SpeechSynthesisUtterance(text);u.lang='fr-FR';if(v[role])u.voice=v[role];u.rate=rate;u.pitch=v.F===v.M?(role==='F'?1.15:.85):1;u.onend=u.onerror=()=>{btn?.setAttribute('aria-pressed','false');done?.();};tts.speak(u);btn?.setAttribute('aria-pressed','true');return true;
+}
+// One epoch governs a whole exam dialogue, so stop/voice changes cannot start its next line.
+function studySpeakSequence(parts,rate,btn,done,voiceOverride=null){
+  studyAudioStop();if(typeof petStopVoice==='function')petStopVoice();
+  if(typeof tourRecorder!=='undefined'&&tourRecorder?.state==='recording'){done?.();return false;}
+  const epoch=studyAudioEpoch,voice=voiceOverride||studyVoice();let i=0;studyAudioBusy=true;btn?.setAttribute('aria-pressed','true');
+  const valid=()=>epoch===studyAudioEpoch&&!document.hidden&&(voiceOverride||voice===studyVoice());
+  const finish=()=>{if(!valid())return;studyAudioBusy=false;btn?.setAttribute('aria-pressed','false');done?.();};
+  const next=async()=>{
+    if(!valid())return;if(i>=parts.length){finish();return;}
+    const part=parts[i++],text=String(part.text||'').normalize('NFC').trim();
+    const fallback=()=>{if(!valid())return;studyAudioLabel(btn,petI18n(['系统朗读','System voice','Voix système'])+(voice!=='system'&&part.role!=='M'?' · '+petI18n(['本句暂无角色录音','No recording for this line','Cette phrase n’est pas enregistrée']):''));studySystemPart(text,rate,btn,next,part.role);};
+    if(voice==='system'||part.role==='M'){fallback();return;}
+    let entry;try{const m=await studyAudioIndex();entry=m.characters[voice]?.find(x=>x.text===text);}catch{fallback();return;}
+    if(!valid())return;
+    if(!entry||!/^[-a-z0-9/]+\.m4a$/.test(entry.file)||entry.file.includes('..')){fallback();return;}
+    const audio=new Audio(STUDY_AUDIO_BASE+entry.file);studyAudio=audio;audio.preload='auto';audio.playbackRate=Math.max(.5,Math.min(1.5,rate));audio.preservesPitch=true;audio.webkitPreservesPitch=true;
+    let settled=false;
+    audio.onended=()=>{if(!settled&&valid()){settled=true;studyAudio=null;next();}};
+    audio.onerror=()=>{if(!settled&&valid()){settled=true;audio.onended=null;audio.onerror=null;studyAudio=null;fallback();}};
+    studyAudioLabel(btn,voice[0].toUpperCase()+voice.slice(1)+' · '+petI18n(['AI 合成配音','AI narration','Voix de synthèse IA']));
+    try{await audio.play();}catch{if(!settled&&valid()){settled=true;audio.onended=null;audio.onerror=null;studyAudio=null;fallback();}}
+  };
+  queueMicrotask(()=>{if(valid())studyAudioOwner=btn||stage.firstElementChild;});
+  next();return true;
+}
+function studySpeak(text,rate,btn,done){lastAutoAudio=text;return studySpeakSequence([{text}],rate,btn,done);}
+function studyAudioSettings(wrap){
+  const section=el('section','card');section.append(el('h3',null,petI18n(['学习配音','Study narration','Voix des exercices'])));
+  const label=el('label');label.htmlFor='studyVoice';label.append(document.createTextNode(petI18n(['朗读人物','Narrator','Voix'])));const select=el('select');select.id='studyVoice';
+  for(const [id,name]of[['system',petI18n(['系统语音','System voice','Voix système'])],['ninon','Ninon'],['lison','Lison'],['pia','Pia']]){const option=el('option',null,name);option.value=id;select.append(option);}select.value=studyVoice();select.onchange=()=>{studyAudioStop();petStopVoice();try{localStorage.setItem('fq-study-voice',select.value);}catch{}if(select.value!=='system')studyAudioIndex().catch(()=>{});};
+  section.append(label,select,el('p','sub',petI18n(['独立于桌宠与主动提示。已录制的句子使用所选人物，缺少录音或加载失败时明确标注系统朗读。模拟卷保留男女对话分工，男声仍使用系统语音；影视原声保持不变。','Independent of the desktop companion and spontaneous speech. Recorded lines use your selected voice; missing or unavailable clips are labeled as system speech. Exam dialogues retain their male/female roles, with system male voices; original film audio is unchanged.','Indépendant de la compagne et de ses interventions. Les phrases enregistrées utilisent la voix choisie ; les autres indiquent la voix système. Les dialogues d’examen gardent leurs rôles, avec une voix système masculine ; les pistes originales des films restent inchangées.'])));
+  const tryIt=petButton(petI18n(['试听','Preview','Écouter']),()=>studySpeak('Il vient de partir.',.95,tryIt),null,'btn ghost play');const stop=petButton(petI18n(['停止','Stop','Arrêter']),studyAudioStop);section.append(tryIt,stop);wrap.append(section);
+}
+addEventListener('pagehide',studyAudioStop);document.addEventListener('visibilitychange',()=>{if(document.hidden)studyAudioStop();});
+
+// Stop a clip when its question/preview is removed, including vocabulary and game cards.
+let studyAudioOwner=null;
+new MutationObserver(()=>{if(studyAudioBusy&&studyAudioOwner&&!studyAudioOwner.isConnected)studyAudioStop();}).observe(stage,{childList:true,subtree:true});
+// Approved adult fiction; manually selected, never interrupts a lesson.
+const PET_STORIES = {
+  "ninon": {
+    "romance": [
+      [
+        "J'aime ces moments tranquilles avec toi. Un café après la leçon, ça te dirait ?",
+        "我喜欢和你一起度过这些安静的时刻。学完后一起喝杯咖啡，好吗？",
+        "I like these quiet moments with you. How about a coffee after the lesson?"
+      ],
+      [
+        "Je crois que nos rendez-vous sont devenus mes petits moments préférés. Aujourd'hui, j'avais envie de te le dire.",
+        "我们的见面，好像已经成了我最喜欢的小片刻。今天，我想把这件事告诉你。",
+        "I think our meetings have become my favorite little moments. Today, I wanted to tell you."
+      ],
+      [
+        "Tu me plais, tu sais. Si tu en as envie, on pourrait se promener un peu ensemble.",
+        "你知道吗，我喜欢你。如果你也愿意，我们可以一起散散步。",
+        "You know, I like you. If you'd like, we could take a walk together."
+      ]
+    ],
+    "neutral": [
+      [
+        "On a bien travaillé ensemble. Un café après la leçon, ça te dirait ?",
+        "我们一起学得很不错。学完后喝杯咖啡，好吗？",
+        "We've worked well together. How about a coffee after the lesson?"
+      ],
+      [
+        "Tu as trouvé ton rythme. J'aime voir tes efforts porter leurs fruits.",
+        "你找到了自己的节奏。看到你的努力有成果，我很开心。",
+        "You've found your rhythm. I like seeing your effort pay off."
+      ],
+      [
+        "Quel chemin parcouru ! Tu peux être fier de ton travail, à ton rythme.",
+        "走了这么远！你可以为自己按节奏完成的学习感到骄傲。",
+        "Look how far you've come! You can be proud of learning at your own pace."
+      ]
+    ]
+  },
+  "lison": {
+    "romance": [
+      [
+        "J'avais préparé une question difficile… puis j'ai préféré trouver une excuse pour discuter avec toi. Tu m'as démasquée ?",
+        "我本来准备了一道难题……后来觉得，找个借口和你聊天更好。被你看穿了？",
+        "I had prepared a difficult question… then I preferred finding an excuse to chat with you. Have you seen through me?"
+      ],
+      [
+        "Tu as remarqué que je souris davantage quand tu es là ? Pour une fois, je te laisse deviner pourquoi.",
+        "有没有发现，你在的时候，我笑得更多了？这次，理由就让你猜吧。",
+        "Have you noticed I smile more when you're here? For once, I'll let you guess why."
+      ],
+      [
+        "D'habitude, j'aime laisser planer le doute. Mais là, je vais être claire : tu me plais. Un rendez-vous, sans piège, ça te tente ?",
+        "平时我喜欢留点悬念。不过这次，我说清楚：我喜欢你。来一次没有圈套的约会，有兴趣吗？",
+        "Usually I like leaving a little mystery. But this time I'll be clear: I like you. Fancy a date, no tricks?"
+      ]
+    ],
+    "neutral": [
+      [
+        "J'avais préparé une question difficile. On cherche les indices ensemble ?",
+        "我准备了一道难题。一起找线索？",
+        "I've prepared a difficult question. Shall we look for clues together?"
+      ],
+      [
+        "Tu repères les pièges de plus en plus vite. Mon petit défi devient trop facile !",
+        "你发现陷阱越来越快了。我的小挑战都快变简单了！",
+        "You spot the traps faster and faster. My little challenge is becoming too easy!"
+      ],
+      [
+        "Cette fois, aucun piège : tu as fait de beaux progrès. À toi de choisir la prochaine étape.",
+        "这次没有圈套：你的进步很棒。下一步由你来选。",
+        "No tricks this time: you've made great progress. You choose the next step."
+      ]
+    ]
+  },
+  "pia": {
+    "romance": [
+      [
+        "J'ai trouvé un livre qui pourrait te plaire. Je l'ai pas choisi au hasard… enfin, prends-le si tu veux.",
+        "我找到一本你可能喜欢的书。可不是随便选的……总之，你想看的话就拿去。",
+        "I found a book you might like. I didn't pick it at random… anyway, take it if you want."
+      ],
+      [
+        "Je voulais te montrer un endroit que j'aime. Parce que… partager quelque chose avec toi, ça me fait plaisir.",
+        "我想带你看看我喜欢的地方。因为……能和你分享些什么，我很开心。",
+        "I wanted to show you a place I like. Because… sharing something with you makes me happy."
+      ],
+      [
+        "Bon, je vais le dire une fois : tu me plais. Et si tu veux qu'on passe un peu de temps ensemble… moi aussi.",
+        "好吧，我只说一次：我喜欢你。如果你也想一起待一会儿……我也想。",
+        "All right, I'll say it once: I like you. And if you want to spend a little time together… so do I."
+      ]
+    ],
+    "neutral": [
+      [
+        "J'ai trouvé un livre utile pour réviser. Tu peux le feuilleter si tu veux.",
+        "我找到一本复习有用的书。想看的话就翻翻吧。",
+        "I found a useful revision book. Have a look if you want."
+      ],
+      [
+        "Ta liste de mots connus a bien grandi. Bon… c'est du bon travail.",
+        "你认识的单词多了不少。好吧……做得不错。",
+        "Your list of familiar words has really grown. Well… good work."
+      ],
+      [
+        "Tu as tenu ton propre rythme. C'est ça qui compte. Et… bravo, vraiment.",
+        "你保持了自己的节奏。这才重要。还有……真的，做得很棒。",
+        "You kept your own pace. That's what matters. And… well done, really."
+      ]
+    ]
+  }
+};
+const PET_DRESSES = [
+ {id:'ninon-museum',character:'ninon',at:1200,name:['博物馆午后','Museum afternoon','Après-midi au musée']},
+ {id:'ninon-riviera',character:'ninon',at:1800,name:['蔚蓝海岸','Riviera holiday','Vacances sur la Riviera']},
+ {id:'ninon-iris',character:'ninon',at:2400,name:['鸢尾夜曲','Iris nocturne','Iris nocturne']},
+ {id:'lison-bookshop',character:'lison',at:1200,name:['旧书店谜语','Bookshop mystery','Mystère en librairie']},
+ {id:'lison-radio',character:'lison',at:1800,name:['午夜电台','Midnight radio','Radio de minuit']},
+ {id:'lison-opera',character:'lison',at:2400,name:['歌剧红幕','Opera curtain','Rideau d’opéra']},
+ {id:'pia-letters',character:'pia',at:1200,name:['海边来信','Seaside letters','Lettres du bord de mer']},
+ {id:'pia-winter',character:'pia',at:1800,name:['冬日温室','Winter conservatory','Serre d’hiver']},
+ {id:'pia-garden',character:'pia',at:2400,name:['瓷器花园','Porcelain garden','Jardin de porcelaine']}
+];
+function petHasMilestone(character,points){return petAffinity(character).points>=points||gameRaw.some(g=>g.kind==='pet-unlock'&&g.scope===petScope()&&g.character===character&&g.points===points&&PET_REWARD_STEPS.includes(points));}
+function petRememberMilestones(){
+ if(typeof gameRaw==='undefined'||typeof gameAdd!=='function')return;
+ for(const c of PET_CHARACTERS){const a=petAffinity(c.id);for(const points of PET_REWARD_STEPS)if(a.points>=points&&!gameRaw.some(g=>g.kind==='pet-unlock'&&g.scope===petScope()&&g.character===c.id&&g.points===points))gameAdd({kind:'pet-unlock',version:1,scope:petScope(),character:c.id,points,at:new Date().toISOString()});}
+}
+function petDressFor(character){const id=petConfig().dresses?.[character],dress=PET_DRESSES.find(x=>x.id===id&&x.character===character);return dress&&petHasMilestone(character,dress.at)?dress.id:'';}
+function petWearDress(id){const cfg=petConfig(),dress=PET_DRESSES.find(x=>x.id===id&&x.character===cfg.character);if(id&&(!dress||!petHasMilestone(cfg.character,dress.at)))return;petRuntime.dressTrial=null;petSet({dresses:{...cfg.dresses,[cfg.character]:id}});renderPet();}
+function petWardrobe(root){
+ const cfg=petConfig(),c=cfg.character,section=el('section','pet-wardrobe');section.append(el('h3',null,petI18n(['羁绊衣橱','Bond wardrobe','Garde-robe des liens'])),el('p','sub',petI18n(['通过对应领域的学习解锁；永久保留，不增加学习收益。原配饰可以继续佩戴。','Unlock through the associated learning domain. Permanent, cosmetic only; existing accessories remain available.','À débloquer dans le domaine associé. Tenues permanentes, sans bonus ; les accessoires restent disponibles.'])));
+ const grid=el('div','pet-voice-grid');for(const dress of PET_DRESSES.filter(x=>x.character===c)){const unlocked=petHasMilestone(c,dress.at),card=el('article','pet-voice-card');const thumbnail=petImage(c,'idle','',dress.id);thumbnail.classList.add('pet-static','pet-dress-thumbnail');card.append(thumbnail,el('h4',null,petI18n(dress.name)),el('p','sub',(unlocked?petI18n(['已解锁','Unlocked','Débloqué']):petI18n(['解锁所需亲密度','Required affinity','Affinité requise']))+' · '+dress.at));const preview=petButton(petI18n(['试穿','Preview','Essayer']),()=>{petRuntime.dressTrial=dress.id;petRuntime.preview=true;petRenderPreview();$('petPreview')?.scrollIntoView({block:'center',behavior:matchMedia('(prefers-reduced-motion: reduce)').matches?'auto':'smooth'});},'dress-preview-'+dress.id);card.append(preview);if(unlocked){const wear=petButton(petDressFor(c)===dress.id?petI18n(['已穿戴','Wearing','Portée']):petI18n(['穿戴','Wear','Porter']),()=>petWearDress(dress.id),'dress-wear-'+dress.id);card.append(wear);}grid.append(card);}section.append(grid,petButton(petI18n(['恢复基础服装','Use original dress','Remettre la tenue initiale']),()=>petWearDress('')));root.append(section);
+}
+function petStoryCards(root){
+ const cfg=petConfig(),c=cfg.character,section=el('section','pet-stories');section.append(el('h3',null,petI18n(['羁绊故事','Bond stories','Histoires de complicité'])));
+ const label=el('label'),toggle=el('input');toggle.type='checkbox';toggle.checked=cfg.romance===true;toggle.onchange=()=>{studyAudioStop();petSet({romance:toggle.checked});renderPet();};label.append(toggle,document.createTextNode(petI18n(['开启亲近剧情（可随时关闭）','Enable romantic fiction (optional)','Activer les scènes romantiques (facultatif)'])));section.append(label,el('p','sub',petI18n(['角色为虚构成年人。关闭后提供普通陪伴台词，解锁条件和奖励相同；只在你点击时播放，不打断学习。','The characters are fictional adults. With romance off, friendship lines use the same unlocks and rewards. Playback starts only when you choose it, never during a lesson.','Personnages adultes fictifs. Sans romance, les répliques amicales offrent les mêmes conditions et récompenses. Lecture uniquement à votre demande, sans interrompre les exercices.'])));
+ const grid=el('div','pet-voice-grid');for(let i=0;i<3;i++){const threshold=900+600*i,unlocked=petHasMilestone(c,threshold),card=el('article','pet-voice-card');card.append(el('h4',null,petI18n(['故事','Story','Histoire'])+' '+(i+1)),el('p','sub',threshold+' · '+(unlocked?petI18n(['可回听','Replay available','Réécoute disponible']):petI18n(['尚未解锁','Locked','Verrouillé']))));if(unlocked){const line=PET_STORIES[c][cfg.romance?'romance':'neutral'][i];card.append(el('p',null,line[0]));if(UI_LANG!=='fr')card.append(el('p','sub',line[UI_LANG==='zh'?1:2]));const play=petButton(petI18n(['播放','Play','Écouter']),()=>studySpeakSequence([{text:line[0]}],1,play,null,c),null,'btn ghost play');card.append(play,petButton(petI18n(['停止','Stop','Arrêter']),studyAudioStop));}grid.append(card);}section.append(grid);root.append(section);
+}
 // ---------- 设置：集中管理各模块的练习设置（都记在本机浏览器里） ----------
 function renderSettings() {
   stage.innerHTML = "";
@@ -26977,6 +27351,7 @@ function renderSettings() {
   setAccountSection(wrap);   // 账号与同步放最上面
   feedbackSettings(wrap);
   shareSettings(wrap);
+  surveySettings(wrap);
 
   // 界面语言
   const lg = section("界面语言", "切换后页面会重新载入。界面和解析使用所选语言，题目里的法语不变。中文、英文、法语模式答对所得金币分别为 ×1、×2、×3；切换不影响过去的金币。");
@@ -26992,6 +27367,7 @@ function renderSettings() {
 
   setGameSection(wrap);
   petSettings(wrap);
+  studyAudioSettings(wrap);
 
   setQuizSection(wrap);
   qlSection(wrap);   // 难度等级
