@@ -4670,6 +4670,9 @@ const LANG_DICT = {
 "拖动伙伴可放在屏幕任意位置，松手后不再自动贴边。位置在本设备保存；重置可回到右下角。": "Drag your companion anywhere; she stays where you release her. The position is saved on this device. Reset returns her to the bottom-right corner.",
 "${event}台词": "${event} line",
 "角色试听新增台词切换：可按 8 类场景浏览每位伙伴现有的 48 句台词，显示法语及翻译。已有的 24 句角色配音继续使用，其他台词明确使用系统朗读；后续补录不影响亲密度解锁。": "Voice previews now let you browse each companion’s 48 existing lines across 8 situations, with French text and translation. The 24 existing character recordings are retained; other lines are clearly played with the system voice. Future recordings will preserve affinity unlocks.",
-"每位伙伴 48 句台词，覆盖 8 类场景；已有角色配音优先，未配音使用系统朗读。实际互动仍按亲密度解锁。": "48 lines per companion across 8 situations. Existing character recordings take priority; unrecorded lines use the system voice. Interactions still unlock with affinity."
+"每位伙伴 48 句台词，覆盖 8 类场景；已有角色配音优先，未配音使用系统朗读。实际互动仍按亲密度解锁。": "48 lines per companion across 8 situations. Existing character recordings take priority; unrecorded lines use the system voice. Interactions still unlock with affinity.",
+"三位学习伙伴沿用现有声线补齐剩余 120 句固定台词：每人 48 句，共 144 句 Gemini 配音，覆盖 8 类场景与全部亲密度等级。试听区可逐句查看法语、翻译并播放对应片段；动态词汇例句仍使用系统朗读。": "The three companions keep their established voices and gain recordings for the remaining 120 fixed lines: 48 each, 144 Gemini recordings in total, covering eight situations and every affinity tier. You can preview every line with its French text and translation. Dynamic vocabulary examples still use the system voice.",
+"新增录音已完成台词转写核对、片段边界和音量检查，保留原有 24 句。三条角色音轨按需加载，未选中的角色不提前下载；继续保留声音开关、题目音频优先和自由拖动。": "The new recordings have undergone transcript, clip-boundary and volume checks; the original 24 recordings are preserved. The three character tracks load on demand, without preloading unselected characters. Voice controls, priority for question audio and free dragging are retained.",
+"AI 合成配音 · 每位伙伴 48 句固定台词，覆盖 8 类场景。可切换试听；实际互动仍按亲密度解锁，动态词汇例句使用系统朗读。": "AI-generated voices · 48 fixed lines per companion across 8 situations. Choose any line to preview; interactions still unlock with affinity, and dynamic vocabulary examples use the system voice."
 };
 

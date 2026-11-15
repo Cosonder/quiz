@@ -1,6 +1,6 @@
 {
   "schema": 1,
-  "version": "1.9.4",
+  "version": "1.9.6",
   "provider": "Google AI Studio",
   "model": "gemini-3.8-flash-tts",
   "generatedDate": "2026-11-15",
@@ -9,7 +9,7 @@
     "lison": 24,
     "pia": 21
   },
-  "coverage": "24 recorded lines: eight events per character; remaining 120 dialogue lines use device French TTS",
+  "coverage": "144 recorded fixed dialogue lines: 48 per character, six variants for each of eight events. Dynamic vocabulary examples and unavailable recordings use device French TTS.",
   "format": "AAC-LC, 24 kHz mono, 64 kbps, M4A; no background music added",
   "characters": {
     "ninon": {
@@ -76,15 +76,457 @@
           "end": 19.78,
           "zh": "我听着呢，慢慢来。",
           "en": "I'm listening. Take your time."
+        },
+        "Une question à la fois, ça suffit.": {
+          "event": "enter",
+          "level": 0,
+          "start": 20.18,
+          "end": 22.355,
+          "zh": "一次看一道题就好。",
+          "en": "One question at a time is enough.",
+          "sourceBatch": "remaining-40",
+          "sourceStart": 0.3,
+          "sourceEnd": 2.475,
+          "editNote": "Trim unsolicited initial Et at 0.30 s, verified by cropped French ASR; apply a 3 ms onset fade to avoid a click."
+        },
+        "Prends le temps de bien lire.": {
+          "event": "enter",
+          "level": 1,
+          "start": 22.475,
+          "end": 24.07,
+          "zh": "慢慢把题目读清楚。",
+          "en": "Take your time to read it carefully.",
+          "sourceBatch": "remaining-40",
+          "sourceStart": 2.475,
+          "sourceEnd": 4.07
+        },
+        "Je suis là, on essaie ensemble.": {
+          "event": "enter",
+          "level": 2,
+          "start": 24.19,
+          "end": 26.5725,
+          "zh": "我在这里，我们一起试试。",
+          "en": "I'm here. Let's give it a try together.",
+          "sourceBatch": "remaining-40",
+          "sourceStart": 4.07,
+          "sourceEnd": 6.4525
+        },
+        "On connaît notre rythme, maintenant.": {
+          "event": "enter",
+          "level": 3,
+          "start": 26.6925,
+          "end": 28.7375,
+          "zh": "现在我们都熟悉自己的节奏了。",
+          "en": "We've found our rhythm now.",
+          "sourceBatch": "remaining-40",
+          "sourceStart": 6.4525,
+          "sourceEnd": 8.4975
+        },
+        "Notre petite équipe est prête.": {
+          "event": "enter",
+          "level": 4,
+          "start": 28.8575,
+          "end": 31.21,
+          "zh": "我们的小队准备好了。",
+          "en": "Our little team's ready.",
+          "sourceBatch": "remaining-40",
+          "sourceStart": 8.4975,
+          "sourceEnd": 10.85
+        },
+        "Oui, c'est la bonne réponse !": {
+          "event": "happy",
+          "level": 0,
+          "start": 31.33,
+          "end": 33.53,
+          "zh": "对，这就是正确答案！",
+          "en": "Yes, that's the right answer!",
+          "sourceBatch": "remaining-40",
+          "sourceStart": 10.85,
+          "sourceEnd": 13.05
+        },
+        "Bien joué, tu peux sourire !": {
+          "event": "happy",
+          "level": 1,
+          "start": 33.65,
+          "end": 35.6675,
+          "zh": "答得漂亮，可以开心一下啦！",
+          "en": "Well done, you've earned a smile!",
+          "sourceBatch": "remaining-40",
+          "sourceStart": 13.05,
+          "sourceEnd": 15.0675
+        },
+        "Tes efforts portent leurs fruits.": {
+          "event": "happy",
+          "level": 2,
+          "start": 35.7875,
+          "end": 37.7925,
+          "zh": "你的努力有了收获。",
+          "en": "Your efforts are paying off.",
+          "sourceBatch": "remaining-40",
+          "sourceStart": 15.0675,
+          "sourceEnd": 17.0725
+        },
+        "Je vois comme tu progresses.": {
+          "event": "happy",
+          "level": 3,
+          "start": 37.9125,
+          "end": 39.745,
+          "zh": "我看到了你的进步。",
+          "en": "I can see how much you're improving.",
+          "sourceBatch": "remaining-40",
+          "sourceStart": 17.0725,
+          "sourceEnd": 18.905
+        },
+        "Ça me fait plaisir de te voir réussir.": {
+          "event": "happy",
+          "level": 4,
+          "start": 39.865,
+          "end": 42.2075,
+          "zh": "看到你答对，我也很开心。",
+          "en": "I'm happy to see you doing well.",
+          "sourceBatch": "remaining-40",
+          "sourceStart": 18.905,
+          "sourceEnd": 21.2475
+        },
+        "Une erreur, ça arrive à tout le monde.": {
+          "event": "sad",
+          "level": 0,
+          "start": 42.3275,
+          "end": 44.58,
+          "zh": "谁都会有答错的时候。",
+          "en": "Everyone makes mistakes.",
+          "sourceBatch": "remaining-40",
+          "sourceStart": 21.2475,
+          "sourceEnd": 23.5
+        },
+        "On regarde l'explication ensemble ?": {
+          "event": "sad",
+          "level": 1,
+          "start": 44.7,
+          "end": 46.5025,
+          "zh": "一起看看讲解，好吗？",
+          "en": "Shall we read the explanation together?",
+          "sourceBatch": "remaining-40",
+          "sourceStart": 23.5,
+          "sourceEnd": 25.3025
+        },
+        "Tu as le droit de prendre ton temps.": {
+          "event": "sad",
+          "level": 2,
+          "start": 46.6225,
+          "end": 48.6975,
+          "zh": "你可以慢慢来。",
+          "en": "It's okay to take your time.",
+          "sourceBatch": "remaining-40",
+          "sourceStart": 25.3025,
+          "sourceEnd": 27.3775
+        },
+        "Cette erreur n'efface pas tes progrès.": {
+          "event": "sad",
+          "level": 3,
+          "start": 48.8175,
+          "end": 50.97,
+          "zh": "这次答错不会抹去你的进步。",
+          "en": "This mistake doesn't erase your progress.",
+          "sourceBatch": "remaining-40",
+          "sourceStart": 27.3775,
+          "sourceEnd": 29.53
+        },
+        "Je reste à tes côtés, sans te presser.": {
+          "event": "sad",
+          "level": 4,
+          "start": 51.09,
+          "end": 53.5275,
+          "zh": "我陪着你，不着急。",
+          "en": "I'm here with you. There's no rush.",
+          "sourceBatch": "remaining-40",
+          "sourceStart": 29.53,
+          "sourceEnd": 31.9675
+        },
+        "Ça avance bien, garde ton rythme.": {
+          "event": "streak",
+          "level": 0,
+          "start": 53.6475,
+          "end": 56.1575,
+          "zh": "很顺利，保持自己的节奏。",
+          "en": "It's going well. Keep your own pace.",
+          "sourceBatch": "remaining-40",
+          "sourceStart": 31.9675,
+          "sourceEnd": 34.4775
+        },
+        "Bravo, plusieurs bonnes réponses de suite !": {
+          "event": "streak",
+          "level": 1,
+          "start": 56.2775,
+          "end": 59.04,
+          "zh": "真棒，连续答对了好几题！",
+          "en": "Well done, you've got several right in a row!",
+          "sourceBatch": "remaining-40",
+          "sourceStart": 34.4775,
+          "sourceEnd": 37.24
+        },
+        "Tu peux être fier de cette série.": {
+          "event": "streak",
+          "level": 2,
+          "start": 59.16,
+          "end": 61.0325,
+          "zh": "你可以为这次连对骄傲。",
+          "en": "You've earned the right to feel proud.",
+          "sourceBatch": "remaining-40",
+          "sourceStart": 37.24,
+          "sourceEnd": 39.1125
+        },
+        "On fête ça avec un grand sourire ?": {
+          "event": "streak",
+          "level": 3,
+          "start": 61.1525,
+          "end": 62.94,
+          "zh": "用一个大大的微笑庆祝吧？",
+          "en": "Let's celebrate with a big smile.",
+          "sourceBatch": "remaining-40",
+          "sourceStart": 39.1125,
+          "sourceEnd": 40.9
+        },
+        "J'aime partager ces petites victoires.": {
+          "event": "streak",
+          "level": 4,
+          "start": 63.06,
+          "end": 65.245,
+          "zh": "我喜欢和你分享这些小胜利。",
+          "en": "I love sharing these little wins with you.",
+          "sourceBatch": "remaining-40",
+          "sourceStart": 40.9,
+          "sourceEnd": 43.085
+        },
+        "Tout est fait pour aujourd'hui.": {
+          "event": "plan",
+          "level": 0,
+          "start": 65.365,
+          "end": 66.9625,
+          "zh": "今天的计划都做完了。",
+          "en": "That's today's plan all done.",
+          "sourceBatch": "remaining-40",
+          "sourceStart": 43.085,
+          "sourceEnd": 44.6825
+        },
+        "Tu as fini. Une pause te ferait du bien.": {
+          "event": "plan",
+          "level": 1,
+          "start": 67.0825,
+          "end": 69.8125,
+          "zh": "完成啦，休息一下会很舒服。",
+          "en": "You're done. A break would do you good.",
+          "sourceBatch": "remaining-40",
+          "sourceStart": 44.6825,
+          "sourceEnd": 47.4125
+        },
+        "Tu peux profiter de ta pause.": {
+          "event": "plan",
+          "level": 2,
+          "start": 69.9325,
+          "end": 71.725,
+          "zh": "可以安心享受休息时间啦。",
+          "en": "You can enjoy your break now.",
+          "sourceBatch": "remaining-40",
+          "sourceStart": 47.4125,
+          "sourceEnd": 49.205
+        },
+        "Mission accomplie, à ton rythme.": {
+          "event": "plan",
+          "level": 3,
+          "start": 71.845,
+          "end": 74.5675,
+          "zh": "按自己的节奏完成任务啦。",
+          "en": "Mission complete, at your own pace.",
+          "sourceBatch": "remaining-40",
+          "sourceStart": 49.205,
+          "sourceEnd": 51.9275
+        },
+        "Merci pour ce moment passé ensemble.": {
+          "event": "plan",
+          "level": 4,
+          "start": 74.6875,
+          "end": 76.9275,
+          "zh": "谢谢你和我一起度过这段时间。",
+          "en": "Thanks for spending this time with me.",
+          "sourceBatch": "remaining-40",
+          "sourceStart": 51.9275,
+          "sourceEnd": 54.1675
+        },
+        "Bienvenue, installe-toi tranquillement.": {
+          "event": "welcome",
+          "level": 0,
+          "start": 77.0475,
+          "end": 79.7175,
+          "zh": "欢迎，慢慢坐好吧。",
+          "en": "Welcome. Make yourself comfortable.",
+          "sourceBatch": "remaining-40",
+          "sourceStart": 54.1675,
+          "sourceEnd": 56.8375
+        },
+        "Te voilà ! Comment vas-tu ?": {
+          "event": "welcome",
+          "level": 1,
+          "start": 79.8375,
+          "end": 82.1075,
+          "zh": "你来啦！最近好吗？",
+          "en": "There you are! How're you doing?",
+          "sourceBatch": "remaining-40",
+          "sourceStart": 56.8375,
+          "sourceEnd": 59.1075
+        },
+        "Contente de te retrouver !": {
+          "event": "welcome",
+          "level": 2,
+          "start": 82.2275,
+          "end": 83.875,
+          "zh": "很高兴又见到你！",
+          "en": "I'm glad you're here again!",
+          "sourceBatch": "remaining-40",
+          "sourceStart": 59.1075,
+          "sourceEnd": 60.755
+        },
+        "On reprend nos petites habitudes ?": {
+          "event": "welcome",
+          "level": 3,
+          "start": 83.995,
+          "end": 85.79,
+          "zh": "继续我们的小习惯，好吗？",
+          "en": "Shall we get back to our little routine?",
+          "sourceBatch": "remaining-40",
+          "sourceStart": 60.755,
+          "sourceEnd": 62.55
+        },
+        "Notre rendez-vous me fait toujours plaisir.": {
+          "event": "welcome",
+          "level": 4,
+          "start": 85.91,
+          "end": 88.07,
+          "zh": "每次见面我都很开心。",
+          "en": "I'm always happy when we meet.",
+          "sourceBatch": "remaining-40",
+          "sourceStart": 62.55,
+          "sourceEnd": 64.71
+        },
+        "Un peu d'eau te ferait du bien ?": {
+          "event": "idle",
+          "level": 0,
+          "start": 88.19,
+          "end": 89.8425,
+          "zh": "要不要喝点水？",
+          "en": "How about a little water?",
+          "sourceBatch": "remaining-40",
+          "sourceStart": 64.71,
+          "sourceEnd": 66.3625
+        },
+        "Repose tes yeux un instant.": {
+          "event": "idle",
+          "level": 1,
+          "start": 89.9625,
+          "end": 91.8325,
+          "zh": "让眼睛休息一会儿吧。",
+          "en": "Let's rest our eyes for a moment.",
+          "sourceBatch": "remaining-40",
+          "sourceStart": 66.3625,
+          "sourceEnd": 68.2325
+        },
+        "Rien ne presse, prends ton temps.": {
+          "event": "idle",
+          "level": 2,
+          "start": 91.9525,
+          "end": 94.2675,
+          "zh": "不着急，慢慢来。",
+          "en": "There's no rush. Take your time.",
+          "sourceBatch": "remaining-40",
+          "sourceStart": 68.2325,
+          "sourceEnd": 70.5475
+        },
+        "Je reste ici pendant ta pause.": {
+          "event": "idle",
+          "level": 3,
+          "start": 94.3875,
+          "end": 96.0475,
+          "zh": "你休息的时候，我就在这里。",
+          "en": "I'll be here while you take a break.",
+          "sourceBatch": "remaining-40",
+          "sourceStart": 70.5475,
+          "sourceEnd": 72.2075
+        },
+        "Un moment de calme, ça fait du bien.": {
+          "event": "idle",
+          "level": 4,
+          "start": 96.1675,
+          "end": 98.3975,
+          "zh": "安静一会儿也很舒服。",
+          "en": "A quiet moment feels good, doesn't it?",
+          "sourceBatch": "remaining-40",
+          "sourceStart": 72.2075,
+          "sourceEnd": 74.4375
+        },
+        "On va y arriver ensemble.": {
+          "event": "tap",
+          "level": 0,
+          "start": 98.5175,
+          "end": 100.2,
+          "zh": "我们一起弄明白。",
+          "en": "We'll work it out together.",
+          "sourceBatch": "remaining-40",
+          "sourceStart": 74.4375,
+          "sourceEnd": 76.12
+        },
+        "Chaque petit pas compte.": {
+          "event": "tap",
+          "level": 1,
+          "start": 100.32,
+          "end": 102.195,
+          "zh": "每一小步都算数。",
+          "en": "Every little step counts.",
+          "sourceBatch": "remaining-40",
+          "sourceStart": 76.12,
+          "sourceEnd": 77.995
+        },
+        "Tu peux essayer sans crainte.": {
+          "event": "tap",
+          "level": 2,
+          "start": 102.315,
+          "end": 104.18,
+          "zh": "放心试试吧。",
+          "en": "You don't need to be afraid to try.",
+          "sourceBatch": "remaining-40",
+          "sourceStart": 77.995,
+          "sourceEnd": 79.86
+        },
+        "On forme une belle équipe, non ?": {
+          "event": "tap",
+          "level": 3,
+          "start": 104.3,
+          "end": 105.95,
+          "zh": "我们是不错的搭档，对吧？",
+          "en": "We make a good team, don't we?",
+          "sourceBatch": "remaining-40",
+          "sourceStart": 79.86,
+          "sourceEnd": 81.51
+        },
+        "Quel chemin on a parcouru ensemble !": {
+          "event": "tap",
+          "level": 4,
+          "start": 106.07,
+          "end": 108.16,
+          "zh": "我们已经一起走了这么远！",
+          "en": "Look how far we've come together!",
+          "sourceBatch": "remaining-40",
+          "sourceStart": 81.51,
+          "sourceEnd": 83.6
         }
       },
-      "audioSha256": "d798c262d798dd529db23ab22ad69821034445094f7310c6d56aeeb1fdd4b1a2",
-      "masterDurationSeconds": 19.78,
+      "audioSha256": "2f35729fbe5ee9d1c0f21494dad778a59b6feedaa198d89f7a46869722895a2f",
+      "masterDurationSeconds": 108.28,
       "regenerationNote": null,
       "qa": {
-        "decodeCorrelation": 0.9975,
-        "segmentation": "French ASR plus waveform pause boundaries checked locally; all old cue times preserved; codec delay validated by sample-aligned decode correlation.",
-        "listening": "Existing character voices approved by user. Automated transcript/timing checks; no claim of a new human listening review."
+        "decodeCorrelation": 0.99724,
+        "segmentation": "All 120 new lines aligned with local French word timestamps; cuts checked against waveform silence, except one ASR-verified onset trim with a 3 ms fade; original 24 cue times unchanged. Two unsolicited interjections excluded.",
+        "listening": "Existing saved character voices previously approved by user; no claim of a new human listening review.",
+        "transcriptReview": "Full-file Whisper small transcription plus isolated-clip small/base review of uncertain passages; French homophones reviewed against source text. Automated checks, not a human pronunciation certification."
       },
       "sourceBatches": [
         {
@@ -100,10 +542,18 @@
           "gainDb": -4.107,
           "offsetSeconds": 7.94,
           "originalDurationSeconds": 11.84
+        },
+        {
+          "kind": "remaining-40",
+          "masterSha256": "f2fae4ffec2ca3ed65f196ff4c9463a7f18eaa5f95cec252d051311eb53d10a0",
+          "style": "A sunny and caring young adult aged 24. Preserve this exact existing custom voice: bright youthful light mezzo, emotionally mature warmth. Natural, reassuring, smiling, never maternal or formal. Perform forty independent French game notifications, one paragraph per clip, in the exact supplied order. Give each paragraph its own expressive intonation: encouraging invitation, warm praise, gentle comfort, celebratory streak, satisfied completion, welcoming greeting, restful reassurance, friendly interaction. Leave about 1.2 seconds of clean silence BETWEEN paragraphs. Keep natural shorter pauses within each paragraph; do not merge paragraphs. Native metropolitan French, clear articulation and natural liaison. Speak ONLY the exact supplied French words. No numbering, introductions, extra words, added interjections, laughter, music, or sound effects. Do not read these directions aloud.",
+          "gainDb": -3.203,
+          "originalDurationSeconds": 83.6,
+          "segmentation": "Per-line extraction; see sourceStart/sourceEnd on each cue; 0.12 s guard silence between new clips."
         }
       ],
-      "masterSha256": "2c57e61523dbcc14c02dae3915fc97bd68b20ba4e258ad8c88a6d5f313133abf",
-      "audioBytes": 169938
+      "masterSha256": "cca7babeb6942d6435b90ea7d4d778438d8c48f8312b0e516657a2eb2ff6604a",
+      "audioBytes": 986883
     },
     "lison": {
       "file": "lison.m4a",
@@ -169,15 +619,457 @@
           "end": 28.74,
           "zh": "要不要看看这个小细节？",
           "en": "Shall we look at this little detail?"
+        },
+        "Voyons ce que cette question nous réserve.": {
+          "event": "enter",
+          "level": 0,
+          "start": 29.14,
+          "end": 31.66,
+          "zh": "看看这道题给我们准备了什么。",
+          "en": "Let's see what this question has for us.",
+          "sourceBatch": "remaining-40",
+          "sourceStart": 0.0,
+          "sourceEnd": 2.52
+        },
+        "Je parie que tu vas trouver un indice.": {
+          "event": "enter",
+          "level": 1,
+          "start": 31.78,
+          "end": 34.285,
+          "zh": "我猜你会找到线索。",
+          "en": "I bet you'll spot a clue.",
+          "sourceBatch": "remaining-40",
+          "sourceStart": 2.52,
+          "sourceEnd": 5.025
+        },
+        "On ouvre l'enquête ?": {
+          "event": "enter",
+          "level": 2,
+          "start": 34.405,
+          "end": 35.965,
+          "zh": "开始调查，好吗？",
+          "en": "Shall we start our investigation?",
+          "sourceBatch": "remaining-40",
+          "sourceStart": 5.025,
+          "sourceEnd": 6.585
+        },
+        "À nous deux, rien ne nous presse.": {
+          "event": "enter",
+          "level": 3,
+          "start": 36.085,
+          "end": 38.63,
+          "zh": "咱们两个慢慢来，不着急。",
+          "en": "There's no rush when we're together.",
+          "sourceBatch": "remaining-40",
+          "sourceStart": 6.585,
+          "sourceEnd": 9.13
+        },
+        "Ton alliée est prête, comme toujours.": {
+          "event": "enter",
+          "level": 4,
+          "start": 38.75,
+          "end": 41.42,
+          "zh": "你的盟友和往常一样准备好了。",
+          "en": "Your ally's ready, as always.",
+          "sourceBatch": "remaining-40",
+          "sourceStart": 9.13,
+          "sourceEnd": 11.8
+        },
+        "Exactement. Je n'en attendais pas moins.": {
+          "event": "happy",
+          "level": 0,
+          "start": 41.54,
+          "end": 44.365,
+          "zh": "完全正确。我就知道你可以。",
+          "en": "Exactly. I knew you had it in you.",
+          "sourceBatch": "remaining-40",
+          "sourceStart": 11.8,
+          "sourceEnd": 14.625
+        },
+        "Ah, tu as l'œil !": {
+          "event": "happy",
+          "level": 1,
+          "start": 44.485,
+          "end": 46.3625,
+          "zh": "啊，你眼睛真尖！",
+          "en": "You've got a sharp eye!",
+          "sourceBatch": "remaining-40",
+          "sourceStart": 14.625,
+          "sourceEnd": 16.5025
+        },
+        "Ce détail ne t'a pas échappé.": {
+          "event": "happy",
+          "level": 2,
+          "start": 46.4825,
+          "end": 48.9125,
+          "zh": "这个细节没逃过你的眼睛。",
+          "en": "That detail didn't get past you.",
+          "sourceBatch": "remaining-40",
+          "sourceStart": 16.5025,
+          "sourceEnd": 18.9325,
+          "editNote": "End preceding line in silence before unsolicited hum-hum at 19.28–19.62 s; next line begins after it at 19.6675 s."
+        },
+        "Tu vois ? Mon pari était bon.": {
+          "event": "happy",
+          "level": 3,
+          "start": 49.0325,
+          "end": 51.3575,
+          "zh": "看吧？我猜对了。",
+          "en": "See? I was right to bet on you.",
+          "sourceBatch": "remaining-40",
+          "sourceStart": 19.6675,
+          "sourceEnd": 21.9925
+        },
+        "Bien vu, partenaire. J'aime ton style.": {
+          "event": "happy",
+          "level": 4,
+          "start": 51.4775,
+          "end": 54.5475,
+          "zh": "看得准，搭档。我喜欢你的风格。",
+          "en": "Good eye, partner. I like your style.",
+          "sourceBatch": "remaining-40",
+          "sourceStart": 21.9925,
+          "sourceEnd": 25.0625
+        },
+        "Pas de souci, on cherche ensemble.": {
+          "event": "sad",
+          "level": 0,
+          "start": 54.6675,
+          "end": 57.0975,
+          "zh": "没关系，我们一起找答案。",
+          "en": "No worries. Let's work it out together.",
+          "sourceBatch": "remaining-40",
+          "sourceStart": 25.0625,
+          "sourceEnd": 27.4925
+        },
+        "L'explication va nous éclairer.": {
+          "event": "sad",
+          "level": 1,
+          "start": 57.2175,
+          "end": 59.3375,
+          "zh": "讲解会帮我们弄清楚。",
+          "en": "The explanation will help us figure it out.",
+          "sourceBatch": "remaining-40",
+          "sourceStart": 27.4925,
+          "sourceEnd": 29.6125
+        },
+        "Une erreur peut nous donner un indice.": {
+          "event": "sad",
+          "level": 2,
+          "start": 59.4575,
+          "end": 61.675,
+          "zh": "答错也能给我们一个线索。",
+          "en": "A mistake can give us a clue.",
+          "sourceBatch": "remaining-40",
+          "sourceStart": 29.6125,
+          "sourceEnd": 31.83
+        },
+        "On change d'angle, sans se presser.": {
+          "event": "sad",
+          "level": 3,
+          "start": 61.795,
+          "end": 64.3875,
+          "zh": "我们换个角度，慢慢看。",
+          "en": "Let's look at it another way. No rush.",
+          "sourceBatch": "remaining-40",
+          "sourceStart": 31.83,
+          "sourceEnd": 34.4225
+        },
+        "Je suis ton alliée, même dans le doute.": {
+          "event": "sad",
+          "level": 4,
+          "start": 64.5075,
+          "end": 67.24,
+          "zh": "犹豫的时候，我也是你的盟友。",
+          "en": "I'm on your side, even when you're unsure.",
+          "sourceBatch": "remaining-40",
+          "sourceStart": 34.4225,
+          "sourceEnd": 37.155
+        },
+        "Une belle série, mine de rien.": {
+          "event": "streak",
+          "level": 0,
+          "start": 67.36,
+          "end": 70.055,
+          "zh": "不声不响就连对了好几题。",
+          "en": "That's quite a streak, you know.",
+          "sourceBatch": "remaining-40",
+          "sourceStart": 37.155,
+          "sourceEnd": 39.85
+        },
+        "Tu collectionnes les bonnes réponses.": {
+          "event": "streak",
+          "level": 1,
+          "start": 70.175,
+          "end": 72.4775,
+          "zh": "你在收集正确答案呢。",
+          "en": "You're collecting correct answers.",
+          "sourceBatch": "remaining-40",
+          "sourceStart": 39.85,
+          "sourceEnd": 42.1525
+        },
+        "Je note cette série, pour le plaisir.": {
+          "event": "streak",
+          "level": 2,
+          "start": 72.5975,
+          "end": 75.4625,
+          "zh": "这次连对我记下了，开心一下。",
+          "en": "I'm noting this streak, just for fun.",
+          "sourceBatch": "remaining-40",
+          "sourceStart": 42.1525,
+          "sourceEnd": 45.0175
+        },
+        "Ton talent pour les détails se confirme.": {
+          "event": "streak",
+          "level": 3,
+          "start": 75.5825,
+          "end": 78.63,
+          "zh": "你发现细节的本领又被证明了。",
+          "en": "You've shown your eye for detail again.",
+          "sourceBatch": "remaining-40",
+          "sourceStart": 45.0175,
+          "sourceEnd": 48.065
+        },
+        "Notre équipe a encore frappé !": {
+          "event": "streak",
+          "level": 4,
+          "start": 78.75,
+          "end": 81.49,
+          "zh": "我们的搭档组合又成功了！",
+          "en": "Our team's done it again!",
+          "sourceBatch": "remaining-40",
+          "sourceStart": 48.065,
+          "sourceEnd": 50.805
+        },
+        "Dossier terminé. Une pause ?": {
+          "event": "plan",
+          "level": 0,
+          "start": 81.61,
+          "end": 84.355,
+          "zh": "任务档案结了。休息一下？",
+          "en": "Case closed. Fancy a break?",
+          "sourceBatch": "remaining-40",
+          "sourceStart": 50.805,
+          "sourceEnd": 53.55
+        },
+        "Tu as rempli ton programme. Bravo !": {
+          "event": "plan",
+          "level": 1,
+          "start": 84.475,
+          "end": 87.33,
+          "zh": "你完成计划了。真棒！",
+          "en": "You've finished your plan. Well done!",
+          "sourceBatch": "remaining-40",
+          "sourceStart": 53.55,
+          "sourceEnd": 56.405
+        },
+        "Le repos fait aussi partie du plan.": {
+          "event": "plan",
+          "level": 2,
+          "start": 87.45,
+          "end": 89.7725,
+          "zh": "休息也是计划的一部分哦。",
+          "en": "Rest is part of the plan too.",
+          "sourceBatch": "remaining-40",
+          "sourceStart": 56.405,
+          "sourceEnd": 58.7275
+        },
+        "Tout est réglé, tu peux souffler.": {
+          "event": "plan",
+          "level": 3,
+          "start": 89.8925,
+          "end": 92.6325,
+          "zh": "都处理完了，可以松口气了。",
+          "en": "It's all sorted. You can relax.",
+          "sourceBatch": "remaining-40",
+          "sourceStart": 58.7275,
+          "sourceEnd": 61.4675
+        },
+        "Mission réussie, partenaire. On fête ça ?": {
+          "event": "plan",
+          "level": 4,
+          "start": 92.7525,
+          "end": 96.195,
+          "zh": "任务成功，搭档。庆祝一下？",
+          "en": "Mission complete, partner. Shall we celebrate?",
+          "sourceBatch": "remaining-40",
+          "sourceStart": 61.4675,
+          "sourceEnd": 64.91
+        },
+        "Bonjour. On se retrouve enfin.": {
+          "event": "welcome",
+          "level": 0,
+          "start": 96.315,
+          "end": 99.035,
+          "zh": "你好。我们又见面了。",
+          "en": "Hello. Here we are again.",
+          "sourceBatch": "remaining-40",
+          "sourceStart": 64.91,
+          "sourceEnd": 67.63
+        },
+        "Je savais qu'on se reverrait.": {
+          "event": "welcome",
+          "level": 1,
+          "start": 99.155,
+          "end": 100.9225,
+          "zh": "我就知道还会再见到你。",
+          "en": "I knew we'd meet again.",
+          "sourceBatch": "remaining-40",
+          "sourceStart": 67.63,
+          "sourceEnd": 69.3975
+        },
+        "J'ai gardé ta place, évidemment.": {
+          "event": "welcome",
+          "level": 2,
+          "start": 101.0425,
+          "end": 103.6025,
+          "zh": "当然给你留着位置。",
+          "en": "I've saved your place, of course.",
+          "sourceBatch": "remaining-40",
+          "sourceStart": 69.3975,
+          "sourceEnd": 71.9575
+        },
+        "Tiens, mon partenaire préféré !": {
+          "event": "welcome",
+          "level": 3,
+          "start": 103.7225,
+          "end": 106.465,
+          "zh": "瞧，是我最喜欢的搭档！",
+          "en": "Well, it's my favorite partner!",
+          "sourceBatch": "remaining-40",
+          "sourceStart": 71.9575,
+          "sourceEnd": 74.7
+        },
+        "Notre petite équipe est au complet.": {
+          "event": "welcome",
+          "level": 4,
+          "start": 106.585,
+          "end": 108.8175,
+          "zh": "我们的小队到齐了。",
+          "en": "Our little team's all here.",
+          "sourceBatch": "remaining-40",
+          "sourceStart": 74.7,
+          "sourceEnd": 76.9325
+        },
+        "Même les détectives se reposent.": {
+          "event": "idle",
+          "level": 0,
+          "start": 108.9375,
+          "end": 111.2625,
+          "zh": "侦探也要休息的。",
+          "en": "Even detectives need a break.",
+          "sourceBatch": "remaining-40",
+          "sourceStart": 76.9325,
+          "sourceEnd": 79.2575
+        },
+        "Je surveille les livres, va souffler.": {
+          "event": "idle",
+          "level": 1,
+          "start": 111.3825,
+          "end": 114.0975,
+          "zh": "书本我看着，你休息吧。",
+          "en": "I'll watch the books. Go take a break.",
+          "sourceBatch": "remaining-40",
+          "sourceStart": 79.2575,
+          "sourceEnd": 81.9725
+        },
+        "Un verre d'eau, ça compte aussi.": {
+          "event": "idle",
+          "level": 2,
+          "start": 114.2175,
+          "end": 116.5225,
+          "zh": "喝杯水也很有用哦。",
+          "en": "A glass of water helps too.",
+          "sourceBatch": "remaining-40",
+          "sourceStart": 81.9725,
+          "sourceEnd": 84.2775
+        },
+        "Le calme a parfois de bonnes idées.": {
+          "event": "idle",
+          "level": 3,
+          "start": 116.6425,
+          "end": 119.055,
+          "zh": "安静的时候，偶尔会有好点子。",
+          "en": "Quiet moments can bring good ideas.",
+          "sourceBatch": "remaining-40",
+          "sourceStart": 84.2775,
+          "sourceEnd": 86.69
+        },
+        "Je garde notre coin au calme.": {
+          "event": "idle",
+          "level": 4,
+          "start": 119.175,
+          "end": 120.9975,
+          "zh": "我守着我们这个安静的小角落。",
+          "en": "I'll keep our little corner peaceful.",
+          "sourceBatch": "remaining-40",
+          "sourceStart": 86.69,
+          "sourceEnd": 88.5125
+        },
+        "Une idée ? Je suis tout ouïe.": {
+          "event": "tap",
+          "level": 0,
+          "start": 121.1175,
+          "end": 123.4825,
+          "zh": "有想法吗？我洗耳恭听。",
+          "en": "Got an idea? I'm all ears.",
+          "sourceBatch": "remaining-40",
+          "sourceStart": 88.5125,
+          "sourceEnd": 90.8775
+        },
+        "J'aime les bonnes questions.": {
+          "event": "tap",
+          "level": 1,
+          "start": 123.6025,
+          "end": 125.7025,
+          "zh": "我喜欢有意思的问题。",
+          "en": "I like a good question.",
+          "sourceBatch": "remaining-40",
+          "sourceStart": 90.8775,
+          "sourceEnd": 92.9775
+        },
+        "Je te laisse réfléchir. Je reste là.": {
+          "event": "tap",
+          "level": 2,
+          "start": 125.8225,
+          "end": 128.67,
+          "zh": "你先想想。我就在这里。",
+          "en": "I'll let you think. I'm staying right here.",
+          "sourceBatch": "remaining-40",
+          "sourceStart": 92.9775,
+          "sourceEnd": 95.825
+        },
+        "On fait une bonne équipe, non ?": {
+          "event": "tap",
+          "level": 3,
+          "start": 128.79,
+          "end": 130.5025,
+          "zh": "我们搭档得不错，对吧？",
+          "en": "We make a good team, don't we?",
+          "sourceBatch": "remaining-40",
+          "sourceStart": 95.825,
+          "sourceEnd": 97.5375
+        },
+        "Notre secret ? Un peu de curiosité.": {
+          "event": "tap",
+          "level": 4,
+          "start": 130.6225,
+          "end": 133.605,
+          "zh": "我们的秘诀？一点点好奇心。",
+          "en": "Our secret? A little curiosity.",
+          "sourceBatch": "remaining-40",
+          "sourceStart": 97.5375,
+          "sourceEnd": 100.52
         }
       },
-      "audioSha256": "b82c06acd57be693394ba6fec8084b6844853c3484752061741fb70b6705aee9",
-      "masterDurationSeconds": 28.74,
+      "audioSha256": "049a1e063ae221ce81849c985cb86b65f5460927c48bf8dab31a8a40670c6292",
+      "masterDurationSeconds": 133.725,
       "regenerationNote": "Original tab 21 was closed. Regenerated with the same saved voice 1, transcript and style on 2026-11-15; this is a new performance, not byte-identical to the approved original.",
       "qa": {
-        "decodeCorrelation": 0.99856,
-        "segmentation": "French ASR plus waveform pause boundaries checked locally; all old cue times preserved; codec delay validated by sample-aligned decode correlation.",
-        "listening": "Existing character voices approved by user. Automated transcript/timing checks; no claim of a new human listening review."
+        "decodeCorrelation": 0.998211,
+        "segmentation": "All 120 new lines aligned with local French word timestamps; cuts checked against waveform silence, except one ASR-verified onset trim with a 3 ms fade; original 24 cue times unchanged. Two unsolicited interjections excluded.",
+        "listening": "Existing saved character voices previously approved by user; no claim of a new human listening review.",
+        "transcriptReview": "Full-file Whisper small transcription plus isolated-clip small/base review of uncertain passages; French homophones reviewed against source text. Automated checks, not a human pronunciation certification."
       },
       "sourceBatches": [
         {
@@ -193,10 +1085,18 @@
           "gainDb": -1.425,
           "offsetSeconds": 12.1,
           "originalDurationSeconds": 16.64
+        },
+        {
+          "kind": "remaining-40",
+          "masterSha256": "8c064751ffdb8eb488d19b6a0735ed86ca5f143860284279f84b669c18585ca1",
+          "style": "A clever mischievous young adult aged 21. Preserve this exact existing custom voice: silky light feminine mid-to-high voice with a knowing smile. Benevolent playful wit; gentle rhetorical questions; never cruel or contemptuous. On errors, sincere reassurance. Perform forty independent French game notifications, one paragraph per clip, in the exact supplied order. Give each paragraph its own expressive intonation: encouraging invitation, warm praise, gentle comfort, celebratory streak, satisfied completion, welcoming greeting, restful reassurance, friendly interaction. Leave about 1.2 seconds of clean silence BETWEEN paragraphs. Keep natural shorter pauses within each paragraph; do not merge paragraphs. Native metropolitan French, clear articulation and natural liaison. Speak ONLY the exact supplied French words. No numbering, introductions, extra words, added interjections, laughter, music, or sound effects. Do not read these directions aloud.",
+          "gainDb": -1.486,
+          "originalDurationSeconds": 100.52,
+          "segmentation": "Per-line extraction; see sourceStart/sourceEnd on each cue; 0.12 s guard silence between new clips."
         }
       ],
-      "masterSha256": "917f56dc863fa0c4cfe2d7030f7ff53d0f4629dac521fd39e2ceedc27d368945",
-      "audioBytes": 245964
+      "masterSha256": "04d149ea15cf86123f7dc67eb845996e5de3e6f3ec98fddfaf78f9ba1658bfec",
+      "audioBytes": 1180368
     },
     "pia": {
       "file": "pia.m4a",
@@ -262,15 +1162,456 @@
           "end": 26.54,
           "zh": "你想和我说话？我听着。",
           "en": "Did you want to talk? I'm listening."
+        },
+        "Lis tranquillement. Je peux attendre.": {
+          "event": "enter",
+          "level": 0,
+          "start": 26.94,
+          "end": 29.4825,
+          "zh": "慢慢读。我可以等。",
+          "en": "Take your time to read. I can wait.",
+          "sourceBatch": "remaining-40",
+          "sourceStart": 0.0,
+          "sourceEnd": 2.5425
+        },
+        "On commence ensemble. Si tu veux.": {
+          "event": "enter",
+          "level": 1,
+          "start": 29.6025,
+          "end": 32.0225,
+          "zh": "一起开始吧。你愿意的话。",
+          "en": "Let's start together. If you want.",
+          "sourceBatch": "remaining-40",
+          "sourceStart": 2.5425,
+          "sourceEnd": 4.9625
+        },
+        "Je suis prête. Pas besoin de te presser.": {
+          "event": "enter",
+          "level": 2,
+          "start": 32.1425,
+          "end": 34.9475,
+          "zh": "我准备好了。你不用着急。",
+          "en": "I'm ready. You don't need to rush.",
+          "sourceBatch": "remaining-40",
+          "sourceStart": 4.9625,
+          "sourceEnd": 7.7675
+        },
+        "C'est plus sympa à deux, je trouve.": {
+          "event": "enter",
+          "level": 3,
+          "start": 35.0675,
+          "end": 37.275,
+          "zh": "我觉得两个人一起比较有意思。",
+          "en": "It's nicer with two of us, I think.",
+          "sourceBatch": "remaining-40",
+          "sourceStart": 7.7675,
+          "sourceEnd": 9.975
+        },
+        "Bon, notre équipe est prête !": {
+          "event": "enter",
+          "level": 4,
+          "start": 37.395,
+          "end": 39.575,
+          "zh": "好啦，我们的小队准备好了！",
+          "en": "Okay, our team's ready!",
+          "sourceBatch": "remaining-40",
+          "sourceStart": 9.975,
+          "sourceEnd": 12.155
+        },
+        "Oui, c'est juste. Bravo !": {
+          "event": "happy",
+          "level": 0,
+          "start": 39.695,
+          "end": 42.06,
+          "zh": "对，答对了。真棒！",
+          "en": "Yes, that's right. Well done!",
+          "sourceBatch": "remaining-40",
+          "sourceStart": 12.155,
+          "sourceEnd": 14.52
+        },
+        "Tu as réussi. Je l'avais remarqué.": {
+          "event": "happy",
+          "level": 1,
+          "start": 42.18,
+          "end": 44.4025,
+          "zh": "你答对了。我可看到了。",
+          "en": "You've got it right. I noticed.",
+          "sourceBatch": "remaining-40",
+          "sourceStart": 14.52,
+          "sourceEnd": 16.7425
+        },
+        "Tu progresses. Je dis ça comme ça.": {
+          "event": "happy",
+          "level": 2,
+          "start": 44.5225,
+          "end": 46.8875,
+          "zh": "你有进步。我就是随口一说。",
+          "en": "You're improving. I'm just saying.",
+          "sourceBatch": "remaining-40",
+          "sourceStart": 16.7425,
+          "sourceEnd": 19.1075
+        },
+        "Je suis contente pour toi. Voilà.": {
+          "event": "happy",
+          "level": 3,
+          "start": 47.0075,
+          "end": 50.0225,
+          "zh": "我为你开心。就是这样。",
+          "en": "I'm happy for you. There, I said it.",
+          "sourceBatch": "remaining-40",
+          "sourceStart": 19.1075,
+          "sourceEnd": 22.1225
+        },
+        "Je savais que tu pouvais y arriver.": {
+          "event": "happy",
+          "level": 4,
+          "start": 50.1425,
+          "end": 51.9475,
+          "zh": "我就知道你能做到。",
+          "en": "I knew you could do it.",
+          "sourceBatch": "remaining-40",
+          "sourceStart": 22.1225,
+          "sourceEnd": 23.9275
+        },
+        "On peut revoir ça. Ensemble.": {
+          "event": "sad",
+          "level": 0,
+          "start": 52.0675,
+          "end": 54.3575,
+          "zh": "我们可以再看看。一起。",
+          "en": "We can go over it again. Together.",
+          "sourceBatch": "remaining-40",
+          "sourceStart": 23.9275,
+          "sourceEnd": 26.2175
+        },
+        "Prends ton temps, je reste avec toi.": {
+          "event": "sad",
+          "level": 1,
+          "start": 54.4775,
+          "end": 56.7475,
+          "zh": "慢慢来，我陪着你。",
+          "en": "Take your time. I'm here with you.",
+          "sourceBatch": "remaining-40",
+          "sourceStart": 26.2175,
+          "sourceEnd": 28.4875
+        },
+        "Tu peux te tromper, tu sais.": {
+          "event": "sad",
+          "level": 2,
+          "start": 56.8675,
+          "end": 58.6,
+          "zh": "你也可以答错的，知道吗。",
+          "en": "It's okay to make mistakes, you know.",
+          "sourceBatch": "remaining-40",
+          "sourceStart": 28.4875,
+          "sourceEnd": 30.22
+        },
+        "Tes progrès sont toujours là.": {
+          "event": "sad",
+          "level": 3,
+          "start": 58.72,
+          "end": 60.075,
+          "zh": "你的进步还在那里。",
+          "en": "Your progress hasn't gone anywhere.",
+          "sourceBatch": "remaining-40",
+          "sourceStart": 30.22,
+          "sourceEnd": 31.575
+        },
+        "Je te soutiens. Tu peux compter sur moi.": {
+          "event": "sad",
+          "level": 4,
+          "start": 60.195,
+          "end": 62.5575,
+          "zh": "我支持你。你可以相信我。",
+          "en": "I'm on your side. You can count on me.",
+          "sourceBatch": "remaining-40",
+          "sourceStart": 31.575,
+          "sourceEnd": 33.9375
+        },
+        "Une belle série. Oui, je l'ai vue.": {
+          "event": "streak",
+          "level": 0,
+          "start": 62.6775,
+          "end": 65.3425,
+          "zh": "连对得不错。对，我看到了。",
+          "en": "Nice streak. Yes, I noticed.",
+          "sourceBatch": "remaining-40",
+          "sourceStart": 33.9375,
+          "sourceEnd": 36.6025
+        },
+        "Ça marche bien pour toi !": {
+          "event": "streak",
+          "level": 1,
+          "start": 65.4625,
+          "end": 67.105,
+          "zh": "你答得很顺利嘛！",
+          "en": "Things are going well for you!",
+          "sourceBatch": "remaining-40",
+          "sourceStart": 36.6025,
+          "sourceEnd": 38.245
+        },
+        "Je compte tes réussites, c'est tout.": {
+          "event": "streak",
+          "level": 2,
+          "start": 67.225,
+          "end": 69.655,
+          "zh": "我就是在数你答对几题，仅此而已。",
+          "en": "I'm just counting your wins, that's all.",
+          "sourceBatch": "remaining-40",
+          "sourceStart": 38.245,
+          "sourceEnd": 40.675
+        },
+        "Bon, cette série est impressionnante.": {
+          "event": "streak",
+          "level": 3,
+          "start": 69.775,
+          "end": 72.3775,
+          "zh": "好吧，这次连对挺厉害的。",
+          "en": "Okay, that's an impressive streak.",
+          "sourceBatch": "remaining-40",
+          "sourceStart": 40.675,
+          "sourceEnd": 43.2775
+        },
+        "Notre équipe assure, tu ne trouves pas ?": {
+          "event": "streak",
+          "level": 4,
+          "start": 72.4975,
+          "end": 74.9125,
+          "zh": "我们的小队挺棒的，你说呢？",
+          "en": "Our team's doing great, don't you think?",
+          "sourceBatch": "remaining-40",
+          "sourceStart": 43.2775,
+          "sourceEnd": 45.6925
+        },
+        "Tout est terminé. Repose-toi un peu.": {
+          "event": "plan",
+          "level": 0,
+          "start": 75.0325,
+          "end": 77.3575,
+          "zh": "都完成了。休息一会儿吧。",
+          "en": "It's all done. Take a little break.",
+          "sourceBatch": "remaining-40",
+          "sourceStart": 45.6925,
+          "sourceEnd": 48.0175
+        },
+        "Ton programme est fait. Bravo, donc.": {
+          "event": "plan",
+          "level": 1,
+          "start": 77.4775,
+          "end": 79.8925,
+          "zh": "你的计划完成了。所以，真棒。",
+          "en": "Your plan's complete. So, well done.",
+          "sourceBatch": "remaining-40",
+          "sourceStart": 48.0175,
+          "sourceEnd": 50.4325
+        },
+        "Je suis contente... pour toi, bien sûr.": {
+          "event": "plan",
+          "level": 2,
+          "start": 80.0125,
+          "end": 82.935,
+          "zh": "我很开心……当然是为你。",
+          "en": "I'm happy... for you, of course.",
+          "sourceBatch": "remaining-40",
+          "sourceStart": 50.4325,
+          "sourceEnd": 53.355
+        },
+        "Tu peux être fier. Moi, je le suis.": {
+          "event": "plan",
+          "level": 3,
+          "start": 83.055,
+          "end": 85.5625,
+          "zh": "你可以为自己骄傲。我是挺骄傲的。",
+          "en": "You can be proud. I know I am.",
+          "sourceBatch": "remaining-40",
+          "sourceStart": 53.355,
+          "sourceEnd": 55.8625
+        },
+        "J'ai aimé ce moment avec toi. Voilà.": {
+          "event": "plan",
+          "level": 4,
+          "start": 85.6825,
+          "end": 88.185,
+          "zh": "我喜欢和你一起的这段时间。就是这样。",
+          "en": "I enjoyed this time with you. There.",
+          "sourceBatch": "remaining-40",
+          "sourceStart": 55.8625,
+          "sourceEnd": 58.365
+        },
+        "Salut. Tu peux t'installer ici.": {
+          "event": "welcome",
+          "level": 0,
+          "start": 88.305,
+          "end": 90.74,
+          "zh": "嗨。你可以坐这里。",
+          "en": "Hi. You can sit here.",
+          "sourceBatch": "remaining-40",
+          "sourceStart": 58.365,
+          "sourceEnd": 60.8
+        },
+        "Ah, te voilà. Bonjour, donc.": {
+          "event": "welcome",
+          "level": 1,
+          "start": 90.86,
+          "end": 93.7975,
+          "zh": "啊，你来啦。那就，你好。",
+          "en": "Oh, there you are. Hi, then.",
+          "sourceBatch": "remaining-40",
+          "sourceStart": 60.8,
+          "sourceEnd": 63.7375
+        },
+        "J'ai gardé ce coin pour toi.": {
+          "event": "welcome",
+          "level": 2,
+          "start": 93.9175,
+          "end": 95.625,
+          "zh": "这个小角落给你留着。",
+          "en": "I've saved this spot for you.",
+          "sourceBatch": "remaining-40",
+          "sourceStart": 63.7375,
+          "sourceEnd": 65.445
+        },
+        "Contente de te revoir. Vraiment.": {
+          "event": "welcome",
+          "level": 3,
+          "start": 95.745,
+          "end": 97.985,
+          "zh": "很高兴再见到你。真的。",
+          "en": "I'm glad to see you again. Really.",
+          "sourceBatch": "remaining-40",
+          "sourceStart": 65.445,
+          "sourceEnd": 67.685
+        },
+        "Te retrouver, ça me met de bonne humeur.": {
+          "event": "welcome",
+          "level": 4,
+          "start": 98.105,
+          "end": 100.5225,
+          "zh": "见到你，我心情就很好。",
+          "en": "Seeing you puts me in a good mood.",
+          "sourceBatch": "remaining-40",
+          "sourceStart": 67.685,
+          "sourceEnd": 70.1025
+        },
+        "Bois un peu d'eau. Si tu veux.": {
+          "event": "idle",
+          "level": 0,
+          "start": 100.6425,
+          "end": 102.685,
+          "zh": "喝点水吧。你愿意的话。",
+          "en": "Have some water. If you want.",
+          "sourceBatch": "remaining-40",
+          "sourceStart": 70.1025,
+          "sourceEnd": 72.145
+        },
+        "Repose tes yeux. Moi aussi, je le fais.": {
+          "event": "idle",
+          "level": 1,
+          "start": 102.805,
+          "end": 105.405,
+          "zh": "让眼睛歇一会儿。我也一样。",
+          "en": "Rest your eyes. I'm doing that too.",
+          "sourceBatch": "remaining-40",
+          "sourceStart": 72.145,
+          "sourceEnd": 74.745
+        },
+        "Je reste là. Prends ton temps.": {
+          "event": "idle",
+          "level": 2,
+          "start": 105.525,
+          "end": 107.7775,
+          "zh": "我就在这里。慢慢来。",
+          "en": "I'm staying here. Take your time.",
+          "sourceBatch": "remaining-40",
+          "sourceStart": 74.745,
+          "sourceEnd": 76.9975
+        },
+        "Ce petit silence est agréable.": {
+          "event": "idle",
+          "level": 3,
+          "start": 107.8975,
+          "end": 109.9775,
+          "zh": "这样安静一会儿也挺好。",
+          "en": "This quiet moment feels nice.",
+          "sourceBatch": "remaining-40",
+          "sourceStart": 76.9975,
+          "sourceEnd": 79.0775
+        },
+        "J'aime bien ces pauses avec toi.": {
+          "event": "idle",
+          "level": 4,
+          "start": 110.0975,
+          "end": 112.3625,
+          "zh": "我挺喜欢和你一起休息的。",
+          "en": "I like these little breaks with you.",
+          "sourceBatch": "remaining-40",
+          "sourceStart": 79.0775,
+          "sourceEnd": 81.3425
+        },
+        "Je peux rester avec toi. Si tu veux.": {
+          "event": "tap",
+          "level": 0,
+          "start": 112.4825,
+          "end": 115.1325,
+          "zh": "我可以陪着你。你愿意的话。",
+          "en": "I can stay with you. If you want.",
+          "sourceBatch": "remaining-40",
+          "sourceStart": 81.3425,
+          "sourceEnd": 83.9925
+        },
+        "Je remarque tes efforts, tu sais.": {
+          "event": "tap",
+          "level": 1,
+          "start": 115.2525,
+          "end": 117.245,
+          "zh": "你的努力我都看到了。",
+          "en": "I notice your efforts, you know.",
+          "sourceBatch": "remaining-40",
+          "sourceStart": 83.9925,
+          "sourceEnd": 85.985
+        },
+        "Cette phrase m'a fait penser à toi.": {
+          "event": "tap",
+          "level": 2,
+          "start": 117.365,
+          "end": 119.5,
+          "zh": "这句话让我想到了你。",
+          "en": "This sentence reminded me of you.",
+          "sourceBatch": "remaining-40",
+          "sourceStart": 85.985,
+          "sourceEnd": 88.12
+        },
+        "J'aime réviser avec toi. C'est dit.": {
+          "event": "tap",
+          "level": 3,
+          "start": 119.62,
+          "end": 122.3,
+          "zh": "我喜欢和你一起复习。说出来了。",
+          "en": "I like reviewing with you. There, I said it.",
+          "sourceBatch": "remaining-40",
+          "sourceStart": 88.12,
+          "sourceEnd": 90.8
+        },
+        "On continue ensemble, d'accord ?": {
+          "event": "tap",
+          "level": 4,
+          "start": 122.42,
+          "end": 124.66,
+          "zh": "以后也一起学，好吗？",
+          "en": "We'll keep learning together, okay?",
+          "sourceBatch": "remaining-40",
+          "sourceStart": 90.8,
+          "sourceEnd": 93.04
         }
       },
-      "audioSha256": "249cd11a255fa6c480a462480b7f72346fc08f2fb25ceb9ad7b22edc30137d84",
-      "masterDurationSeconds": 26.54,
+      "audioSha256": "a58a9d601f97a2252053c424cf2e93ee6e60e2de17dea94748ce26251ef3290f",
+      "masterDurationSeconds": 124.78,
       "regenerationNote": null,
       "qa": {
-        "decodeCorrelation": 0.99346,
-        "segmentation": "French ASR plus waveform pause boundaries checked locally; all old cue times preserved; codec delay validated by sample-aligned decode correlation.",
-        "listening": "Existing character voices approved by user. Automated transcript/timing checks; no claim of a new human listening review."
+        "decodeCorrelation": 0.995094,
+        "segmentation": "All 120 new lines aligned with local French word timestamps; cuts checked against waveform silence, except one ASR-verified onset trim with a 3 ms fade; original 24 cue times unchanged. Two unsolicited interjections excluded.",
+        "listening": "Existing saved character voices previously approved by user; no claim of a new human listening review.",
+        "transcriptReview": "Full-file Whisper small transcription plus isolated-clip small/base review of uncertain passages; French homophones reviewed against source text. Automated checks, not a human pronunciation certification."
       },
       "sourceBatches": [
         {
@@ -286,10 +1627,18 @@
           "gainDb": -2.765,
           "offsetSeconds": 13.34,
           "originalDurationSeconds": 13.2
+        },
+        {
+          "kind": "remaining-40",
+          "masterSha256": "d69f09f6fa9e2b363cb5da34c5b90ad83aa36efca8168701e41790e84d971f21",
+          "style": "A proud but secretly caring young adult aged 18. Preserve this exact existing custom voice: bright light soprano, fresh youthful energy. Brisk confident openings followed by shy softer caring endings. Natural young-adult French, never squeaky or childish. Perform forty independent French game notifications, one paragraph per clip, in the exact supplied order. Give each paragraph its own expressive intonation: encouraging invitation, warm praise, gentle comfort, celebratory streak, satisfied completion, welcoming greeting, restful reassurance, friendly interaction. Leave about 1.2 seconds of clean silence BETWEEN paragraphs. Keep natural shorter pauses within each paragraph; do not merge paragraphs. Native metropolitan French, clear articulation and natural liaison. Speak ONLY the exact supplied French words. No numbering, introductions, extra words, added interjections, laughter, music, or sound effects. Do not read these directions aloud.",
+          "gainDb": -1.884,
+          "originalDurationSeconds": 93.04,
+          "segmentation": "Per-line extraction; see sourceStart/sourceEnd on each cue; 0.12 s guard silence between new clips."
         }
       ],
-      "masterSha256": "13e11c0a989317393e6fcee45648db311afbcda96e978b7cfa5fde98f052dd31",
-      "audioBytes": 223415
+      "masterSha256": "002e2060121d1db79c2c5a80c83a71fc6bcfe6737033a5f27a0b598b53eaa655",
+      "audioBytes": 1088567
     }
   }
 }
