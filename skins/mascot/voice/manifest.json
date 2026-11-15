@@ -1,6 +1,6 @@
 {
   "schema": 1,
-  "version": "1.9.3",
+  "version": "1.9.4",
   "provider": "Google AI Studio",
   "model": "gemini-3.8-flash-tts",
   "generatedDate": "2026-11-15",
@@ -9,7 +9,7 @@
     "lison": 24,
     "pia": 21
   },
-  "coverage": "9 approved sample lines; all other dialogue falls back to device French TTS",
+  "coverage": "24 recorded lines: eight events per character; remaining 120 dialogue lines use device French TTS",
   "format": "AAC-LC, 24 kHz mono, 64 kbps, M4A; no background music added",
   "characters": {
     "ninon": {
@@ -20,34 +20,90 @@
       "perceivedAge": 24,
       "selectedTake": 1,
       "persona": "Native metropolitan French, female young adult aged 24. A bright, fresh, youthful anime heroine with a light clear mezzo in the middle register. Forward luminous resonance, soft smooth texture, buoyant melodic phrasing, an open sunny smile and spontaneous warmth. She is the mature member of her young friend group: emotionally steady, caring and confident, while sounding distinctly youthful and lively. Gentle relaxed confidence, no heavy chesty or husky weight, no formal presenter cadence. Warm greeting, sparkling sincere praise and soft reassurance. Natural French articulation and liaison; clean solo studio speech.",
-      "style": "Ninon, age 24. Fresh youthful feminine voice, bright light resonance and buoyant melodic phrasing. Warm, caring and emotionally mature, with the spontaneous sunny smile of a young friend. Keep the tone light and lively rather than deep or maternal. Three separate short game notifications; leave one second of silence between paragraphs. First: delighted smiling welcome. Second: sparkling sincere praise. Third: soft confident reassurance. Native metropolitan French; speak only the exact transcript, no added words or music.",
       "cues": {
         "Bonjour ! Ça me fait plaisir de te voir.": {
           "event": "welcome",
           "start": 0,
-          "end": 2.61
+          "end": 2.61,
+          "zh": "你好！见到你很开心。",
+          "en": "Hi! It's lovely to see you."
         },
         "Bravo, tu as bien compris !": {
           "event": "happy",
           "start": 2.61,
-          "end": 5.02
+          "end": 5.02,
+          "zh": "真棒，你理解了！",
+          "en": "Well done, you've got it!"
         },
         "Ce n'est pas grave, on reprend.": {
           "event": "sad",
           "start": 5.02,
-          "end": 7.44
+          "end": 7.44,
+          "zh": "没关系，我们再看看。",
+          "en": "It's okay. Let's go over it again."
+        },
+        "On commence à ton rythme.": {
+          "event": "enter",
+          "start": 7.94,
+          "end": 9.8,
+          "zh": "我们按你的节奏开始。",
+          "en": "Let's start at your own pace."
+        },
+        "Quelle belle série !": {
+          "event": "streak",
+          "start": 9.8,
+          "end": 12.1,
+          "zh": "连对得真漂亮！",
+          "en": "That's a lovely streak!"
+        },
+        "Ton programme est terminé, bravo !": {
+          "event": "plan",
+          "start": 12.1,
+          "end": 15.14,
+          "zh": "今天的计划完成了，真棒！",
+          "en": "Your plan's complete. Well done!"
+        },
+        "Tu peux faire une pause, bien sûr.": {
+          "event": "idle",
+          "start": 15.14,
+          "end": 17.37,
+          "zh": "当然可以休息一下。",
+          "en": "It's fine to take a break."
+        },
+        "Je t'écoute, prends ton temps.": {
+          "event": "tap",
+          "start": 17.37,
+          "end": 19.78,
+          "zh": "我听着呢，慢慢来。",
+          "en": "I'm listening. Take your time."
         }
       },
-      "masterSha256": "62984ebbd652aacee13dbc8ab969a6a71cedfe696cef1c3023d4db9ccce8df8a",
-      "audioSha256": "fdbe9a3ff3685d650d2da7b958b817461b73d690c1bb0c43f340617b5ba98969",
-      "masterDurationSeconds": 7.44,
-      "gainDb": -3.944,
+      "audioSha256": "d798c262d798dd529db23ab22ad69821034445094f7310c6d56aeeb1fdd4b1a2",
+      "masterDurationSeconds": 19.78,
       "regenerationNote": null,
       "qa": {
-        "decodeCorrelation": 0.99801,
-        "segmentation": "Local French ASR timing checked against waveform silence; original pauses and speech retained.",
-        "listening": "User approved voice samples; no claim of a new human listening review."
-      }
+        "decodeCorrelation": 0.9975,
+        "segmentation": "French ASR plus waveform pause boundaries checked locally; all old cue times preserved; codec delay validated by sample-aligned decode correlation.",
+        "listening": "Existing character voices approved by user. Automated transcript/timing checks; no claim of a new human listening review."
+      },
+      "sourceBatches": [
+        {
+          "kind": "initial-3",
+          "masterSha256": "62984ebbd652aacee13dbc8ab969a6a71cedfe696cef1c3023d4db9ccce8df8a",
+          "style": "Ninon, age 24. Fresh youthful feminine voice, bright light resonance and buoyant melodic phrasing. Warm, caring and emotionally mature, with the spontaneous sunny smile of a young friend. Keep the tone light and lively rather than deep or maternal. Three separate short game notifications; leave one second of silence between paragraphs. First: delighted smiling welcome. Second: sparkling sincere praise. Third: soft confident reassurance. Native metropolitan French; speak only the exact transcript, no added words or music.",
+          "gainDb": -3.944
+        },
+        {
+          "kind": "additional-5",
+          "masterSha256": "c29b2fc565a1cd6fef8a566d95643b48d9507e5caca30fc43fda136991dd9f04",
+          "style": "A sunny and caring young adult aged 24. Preserve the existing bright, youthful light mezzo and emotionally mature warmth. First paragraph: a calm encouraging invitation at the learner’s pace. Second: delighted sincere praise, with a smile. Third: celebrate completion warmly. Fourth: gentle permission to rest, never pressuring. Fifth: patient attentive reassurance. Keep the tone light, natural and friendly, not maternal or formal. Perform five separate game notifications in the exact paragraph order. Leave about one second of silence between paragraphs, with shorter natural pauses inside sentences. Native metropolitan French, clear articulation and natural liaison. Speak ONLY the exact supplied French words: no introductions, interjections, laughter, extra words, music or sound effects. Do not read any directions aloud.",
+          "gainDb": -4.107,
+          "offsetSeconds": 7.94,
+          "originalDurationSeconds": 11.84
+        }
+      ],
+      "masterSha256": "2c57e61523dbcc14c02dae3915fc97bd68b20ba4e258ad8c88a6d5f313133abf",
+      "audioBytes": 169938
     },
     "lison": {
       "file": "lison.m4a",
@@ -57,34 +113,90 @@
       "perceivedAge": 21,
       "selectedTake": 1,
       "persona": "Native metropolitan French, female young adult aged 21. A fresh youthful anime heroine with a light silky medium-high voice, bright focused resonance, playful melodic agility and a small knowing smile. Clever, mischievous and secretly kind. Make her teasing feel like a quick-witted young friend: tiny suspenseful pauses, lightly lifted questions, nimble emphasis, smiling soft endings. Youthful charm and lively curiosity rather than a deep sultry or formal mature voice. Her kindness emerges during reassurance. Clear authentic French articulation and liaison, clean solo studio speech.",
-      "style": "Lison, age 21. Fresh youthful light feminine voice, playful medium-high melodic turns and an audible knowing smile. Clever mischievous charm, like a quick-witted young friend. Keep the phrasing nimble and bright. Three separate short game notifications with one second of silence between paragraphs. First: a teasing smiling welcome, brief pause before the saved seat reveal. Second: amused impressed praise, lightly emphasize trouvé. Third: conspiratorial smile on discret followed by a kind upward invitation. Never contemptuous. Native metropolitan French, exact words only, no music.",
       "cues": {
         "Te voilà ! Ta place est libre.": {
           "event": "welcome",
           "start": 0,
-          "end": 2.83
+          "end": 2.83,
+          "zh": "你来啦！位置给你留着。",
+          "en": "There you are! Your seat's free."
         },
         "Bien joué, tu as trouvé !": {
           "event": "happy",
           "start": 2.83,
-          "end": 6.45
+          "end": 6.45,
+          "zh": "答得漂亮，你找到了！",
+          "en": "Well played, you've found it!"
         },
         "Ce détail était discret. On le revoit ?": {
           "event": "sad",
           "start": 6.45,
-          "end": 11.6
+          "end": 11.6,
+          "zh": "这个细节不显眼。再看看？",
+          "en": "That detail was easy to miss. Let's look again."
+        },
+        "Un petit défi, ça te tente ?": {
+          "event": "enter",
+          "start": 12.1,
+          "end": 14.12,
+          "zh": "来个小挑战，有兴趣吗？",
+          "en": "Fancy a little challenge?"
+        },
+        "Encore juste ? Bien joué !": {
+          "event": "streak",
+          "start": 14.12,
+          "end": 17.45,
+          "zh": "又答对了？漂亮！",
+          "en": "Right again? Well played!"
+        },
+        "Tout est fait. Beau travail !": {
+          "event": "plan",
+          "start": 17.45,
+          "end": 21.04,
+          "zh": "全部完成了。干得漂亮！",
+          "en": "It's all done. Nice work!"
+        },
+        "Une pause ? Excellente stratégie.": {
+          "event": "idle",
+          "start": 21.04,
+          "end": 25.88,
+          "zh": "休息一下？好策略。",
+          "en": "Taking a break? Excellent strategy."
+        },
+        "Et si on regardait ce petit détail ?": {
+          "event": "tap",
+          "start": 25.88,
+          "end": 28.74,
+          "zh": "要不要看看这个小细节？",
+          "en": "Shall we look at this little detail?"
         }
       },
-      "masterSha256": "14342ea22e8818a7c4d6ddf6d1d13f2ebe0c874441e0848bd1957f30cc7a9e8d",
-      "audioSha256": "737b977acbf7017c75724161949efd5104bc92c7778a63f459fba4cc7a2b6c41",
-      "masterDurationSeconds": 11.6,
-      "gainDb": -1.582,
+      "audioSha256": "b82c06acd57be693394ba6fec8084b6844853c3484752061741fb70b6705aee9",
+      "masterDurationSeconds": 28.74,
       "regenerationNote": "Original tab 21 was closed. Regenerated with the same saved voice 1, transcript and style on 2026-11-15; this is a new performance, not byte-identical to the approved original.",
       "qa": {
-        "decodeCorrelation": 0.99848,
-        "segmentation": "Local French ASR timing checked against waveform silence; original pauses and speech retained.",
-        "listening": "User approved voice samples; no claim of a new human listening review."
-      }
+        "decodeCorrelation": 0.99856,
+        "segmentation": "French ASR plus waveform pause boundaries checked locally; all old cue times preserved; codec delay validated by sample-aligned decode correlation.",
+        "listening": "Existing character voices approved by user. Automated transcript/timing checks; no claim of a new human listening review."
+      },
+      "sourceBatches": [
+        {
+          "kind": "initial-3",
+          "masterSha256": "14342ea22e8818a7c4d6ddf6d1d13f2ebe0c874441e0848bd1957f30cc7a9e8d",
+          "style": "Lison, age 21. Fresh youthful light feminine voice, playful medium-high melodic turns and an audible knowing smile. Clever mischievous charm, like a quick-witted young friend. Keep the phrasing nimble and bright. Three separate short game notifications with one second of silence between paragraphs. First: a teasing smiling welcome, brief pause before the saved seat reveal. Second: amused impressed praise, lightly emphasize trouvé. Third: conspiratorial smile on discret followed by a kind upward invitation. Never contemptuous. Native metropolitan French, exact words only, no music.",
+          "gainDb": -1.582
+        },
+        {
+          "kind": "additional-5",
+          "masterSha256": "3f5368eb0c342e49596b797e1c72a88e5602bd979e48e257d0e1e609cc7bf904",
+          "style": "A clever mischievous young adult aged 21. Preserve the existing silky light feminine mid-to-high voice and knowing smile. First: playful inviting challenge, with a curious rising question. Second: amused admiration and warm praise, never sarcasm. Third: quiet satisfaction followed by sincere approval. Fourth: conspiratorial smile, as if resting is a clever strategy. Fifth: curious inviting suggestion, slightly emphasizing petit détail. Benevolent wit, never cruel or contemptuous. Perform five separate game notifications in the exact paragraph order. Leave about one second of silence between paragraphs, with shorter natural pauses inside sentences. Native metropolitan French, clear articulation and natural liaison. Speak ONLY the exact supplied French words: no introductions, interjections, laughter, extra words, music or sound effects. Do not read any directions aloud.",
+          "gainDb": -1.425,
+          "offsetSeconds": 12.1,
+          "originalDurationSeconds": 16.64
+        }
+      ],
+      "masterSha256": "917f56dc863fa0c4cfe2d7030f7ff53d0f4629dac521fd39e2ceedc27d368945",
+      "audioBytes": 245964
     },
     "pia": {
       "file": "pia.m4a",
@@ -94,34 +206,90 @@
       "perceivedAge": 18,
       "selectedTake": 1,
       "persona": "Native metropolitan French, female young adult aged 18. A very youthful anime heroine with a light bright soprano, clear bell-like forward resonance, airy soft endings and lively spontaneous melodic movement. Proud, easily flustered and secretly kind: unmistakably tsundere. Brisk assertive starts give way to a tiny embarrassed hesitation and much softer shy warmth. Her youthful charm comes from nimble expressive phrasing and a sincere shy smile; a natural young-adult voice rather than a squeaky caricature. Crisp French vowels and liaison. Praise is a reluctant warm admission; reassurance hides tenderness beneath a brave start. Clean solo studio speech.",
-      "style": "Pia, age 18, a young-adult French anime heroine. Bright light soprano, fresh youthful charm, lively melodic rises and shy soft endings. Strong tsundere contrast: brisk proud opening, tiny embarrassed pause, then noticeably softer kind admission. Three separate game notifications; one second of silence between paragraphs. First: Tu es là is guarded and quick, Ça me fait plaisir is shy and warm. Second: Pas mal is proud restrained approval, Même très bien en fait admits delight with a flustered smile. Third: Une erreur starts bravely, ce n'est pas grave becomes gentle protective reassurance. Clear natural metropolitan French. Exact words only, no music, no squeaky exaggeration.",
       "cues": {
         "Tu es là. Ça me fait plaisir.": {
           "event": "welcome",
           "start": 0,
-          "end": 3.34
+          "end": 3.34,
+          "zh": "你来了。见到你很开心。",
+          "en": "You're here. I'm glad to see you."
         },
         "Pas mal ! Même très bien, en fait.": {
           "event": "happy",
           "start": 3.34,
-          "end": 9.3
+          "end": 9.3,
+          "zh": "还不错！其实答得很棒。",
+          "en": "Not bad! Really good, actually."
         },
         "Une erreur, ce n'est pas grave.": {
           "event": "sad",
           "start": 9.3,
-          "end": 12.84
+          "end": 12.84,
+          "zh": "答错一次没什么。",
+          "en": "One mistake isn't a big deal."
+        },
+        "Bon, on essaie ? Je reste là.": {
+          "event": "enter",
+          "start": 13.34,
+          "end": 16.17,
+          "zh": "好啦，试试？我就在这里。",
+          "en": "Well, shall we try? I'm right here."
+        },
+        "Encore juste ! Tu peux sourire.": {
+          "event": "streak",
+          "start": 16.17,
+          "end": 18.81,
+          "zh": "又答对了！可以开心一下。",
+          "en": "Right again! You're allowed to smile."
+        },
+        "Tu as fini ! C'est bien.": {
+          "event": "plan",
+          "start": 18.81,
+          "end": 21.6,
+          "zh": "你做完了！挺好的。",
+          "en": "You're done! That's great."
+        },
+        "Tu peux faire une pause, tu sais.": {
+          "event": "idle",
+          "start": 21.6,
+          "end": 23.7,
+          "zh": "你可以休息一下的。",
+          "en": "You can take a break, you know."
+        },
+        "Tu voulais me parler ? Je t'écoute.": {
+          "event": "tap",
+          "start": 23.7,
+          "end": 26.54,
+          "zh": "你想和我说话？我听着。",
+          "en": "Did you want to talk? I'm listening."
         }
       },
-      "masterSha256": "3f667b3a51a259b72935e57c24b272f446b4e26523a203ff9d12e4f53aa5222a",
-      "audioSha256": "2740587af11c0b7c41b9e54d6aa44ed66d1f3be1063480905e58cb2a3027682e",
-      "masterDurationSeconds": 12.84,
-      "gainDb": 0.437,
+      "audioSha256": "249cd11a255fa6c480a462480b7f72346fc08f2fb25ceb9ad7b22edc30137d84",
+      "masterDurationSeconds": 26.54,
       "regenerationNote": null,
       "qa": {
-        "decodeCorrelation": 0.99231,
-        "segmentation": "Local French ASR timing checked against waveform silence; original pauses and speech retained.",
-        "listening": "User approved voice samples; no claim of a new human listening review."
-      }
+        "decodeCorrelation": 0.99346,
+        "segmentation": "French ASR plus waveform pause boundaries checked locally; all old cue times preserved; codec delay validated by sample-aligned decode correlation.",
+        "listening": "Existing character voices approved by user. Automated transcript/timing checks; no claim of a new human listening review."
+      },
+      "sourceBatches": [
+        {
+          "kind": "initial-3",
+          "masterSha256": "3f667b3a51a259b72935e57c24b272f446b4e26523a203ff9d12e4f53aa5222a",
+          "style": "Pia, age 18, a young-adult French anime heroine. Bright light soprano, fresh youthful charm, lively melodic rises and shy soft endings. Strong tsundere contrast: brisk proud opening, tiny embarrassed pause, then noticeably softer kind admission. Three separate game notifications; one second of silence between paragraphs. First: Tu es là is guarded and quick, Ça me fait plaisir is shy and warm. Second: Pas mal is proud restrained approval, Même très bien en fait admits delight with a flustered smile. Third: Une erreur starts bravely, ce n'est pas grave becomes gentle protective reassurance. Clear natural metropolitan French. Exact words only, no music, no squeaky exaggeration.",
+          "gainDb": 0.437
+        },
+        {
+          "kind": "additional-5",
+          "masterSha256": "f5603b14f5565e16948e19d205c37bf770644743c278db492871339fd719e7a6",
+          "style": "A proud but secretly caring young adult aged 18. Preserve the existing bright light soprano with fresh youthful energy. First: brisk Bon, a small shy pause, then soft reassurance on Je reste là. Second: spontaneous delight, then a gentle bashful permission to smile. Third: a burst of happy surprise, followed by restrained shy praise. Fourth: pretend casualness, with warmth on tu sais. Fifth: guarded curiosity turning into an attentive soft Je t’écoute. Clear natural young-adult French, never squeaky or childish. Perform five separate game notifications in the exact paragraph order. Leave about one second of silence between paragraphs, with shorter natural pauses inside sentences. Native metropolitan French, clear articulation and natural liaison. Speak ONLY the exact supplied French words: no introductions, interjections, laughter, extra words, music or sound effects. Do not read any directions aloud.",
+          "gainDb": -2.765,
+          "offsetSeconds": 13.34,
+          "originalDurationSeconds": 13.2
+        }
+      ],
+      "masterSha256": "13e11c0a989317393e6fcee45648db311afbcda96e978b7cfa5fde98f052dd31",
+      "audioBytes": 223415
     }
   }
 }

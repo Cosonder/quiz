@@ -4654,6 +4654,14 @@ const LANG_DICT = {
 "答对": "Bonne réponse",
 "答错": "Réponse incorrecte",
 "学习伙伴加入 Gemini 角色配音：Ninon、Lison、Pia 各有问候、答对和答错 3 句，共 9 句；声音分别呈现成熟温暖、俏皮腹黑和傲娇少女感，角色原年龄不变。": "Les voix Gemini de Ninon, Lison et Pia proposent chacune une salutation, un encouragement et une réassurance, soit 9 répliques. Elles évoquent une maturité chaleureuse, une malice joueuse et une fierté timide ; les âges des personnages restent inchangés.",
-"伙伴面板新增语音试听；已有录音按当前法语台词精确匹配，其他台词使用系统朗读。配音按需加载，听过后可离线使用；关闭语音、切换角色、离开页面或开始题目朗读时立即停止。": "Le panneau des compagnes propose des extraits vocaux. Les enregistrements correspondent à la réplique française affichée ; les autres utilisent la voix du système. Les fichiers se chargent à la demande et restent disponibles hors ligne après écoute. Couper la voix, changer de compagne, quitter la page ou lancer la lecture d'une question arrête la voix de la compagne."
+"伙伴面板新增语音试听；已有录音按当前法语台词精确匹配，其他台词使用系统朗读。配音按需加载，听过后可离线使用；关闭语音、切换角色、离开页面或开始题目朗读时立即停止。": "Le panneau des compagnes propose des extraits vocaux. Les enregistrements correspondent à la réplique française affichée ; les autres utilisent la voix du système. Les fichiers se chargent à la demande et restent disponibles hors ligne après écoute. Couper la voix, changer de compagne, quitter la page ou lancer la lecture d'une question arrête la voix de la compagne.",
+"AI 合成配音 · 8 类常用场景；未配音的台词使用系统朗读。": "Voix générées par IA pour 8 situations courantes. Les autres répliques utilisent la voix du système.",
+"开始学习": "Commencer à apprendre",
+"连续答对": "Série de bonnes réponses",
+"完成计划": "Programme terminé",
+"休息提醒": "Faire une pause",
+"点击互动": "Discuter",
+"三位学习伙伴新增 15 句 Gemini 配音，现有录音扩展到 24 句：每人覆盖问候、开始学习、答对、答错、连续答对、完成计划、休息提醒和点击互动 8 类场景，沿用已选定的角色声线。": "Les trois compagnes reçoivent 15 nouvelles répliques Gemini, portant la bibliothèque à 24 enregistrements. Chacune couvre huit situations : accueil, début de séance, bonne ou mauvaise réponse, série de bonnes réponses, programme terminé, pause et discussion, avec les voix déjà choisies.",
+"角色语音试听改为场景卡片，显示法语原句及翻译，播放后显示片段时长。原有录音、48 句随机台词和亲密度解锁规则保留；未配音台词仍使用系统朗读，音频继续按当前角色按需加载。": "Les extraits vocaux apparaissent sous forme de cartes avec la réplique française et sa traduction ; la durée du passage s'affiche après le lancement. Les enregistrements existants, les 48 répliques aléatoires par compagne et les déblocages liés à l'affinité sont conservés. Les répliques non enregistrées utilisent la voix du système, et l'audio se charge à la demande pour la compagne choisie."
 };
 

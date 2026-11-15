@@ -1576,6 +1576,12 @@ html.qf #stage > section.q-card > .explain { flex: none !important; height: clam
   .pet-accessories { grid-template-columns: 1fr; }
 }
 @media (prefers-reduced-motion: reduce) { .pet-sprite { animation: none !important; background-position-x: 0; } .pet-widget *, .pet-page * { transition: none !important; scroll-behavior: auto !important; } }
+
+/* Voice samples stay readable on narrow companion panels. */
+.pet-voice-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,230px),1fr));gap:12px;margin:12px 0}
+.pet-voice-card{border:1px solid var(--line,#d8dde8);border-radius:12px;padding:12px;min-width:0}
+.pet-voice-card p{margin:8px 0 0;overflow-wrap:anywhere}
+.pet-voice-french{font-weight:600}
 /* Ordered route and oral tasks reuse the active theme's colours. */
 .tour-pin.locked{filter:grayscale(.8);opacity:.65}.tour-pin.num{min-width:28px;min-height:28px;font-size:11px}.tour-chapters{margin-top:24px;display:grid;gap:12px}.tour-chapter{border:1px solid var(--line,#7894);border-radius:12px;padding:12px}.tour-chapter summary{cursor:pointer;font-weight:700;min-height:36px}.tour-route-row{display:grid;grid-template-columns:minmax(160px,1fr) 2fr auto;gap:8px;align-items:center;padding:10px 0;border-bottom:1px solid var(--line,#7893)}.tour-route-row small{grid-column:1/-1}.tour-lesson,.tour-drill,.tour-oral,.tour-result{max-width:900px;margin:auto}.tour-rule,.tour-task{padding:14px;border-left:3px solid var(--accent,#789);line-height:1.7}.tour-examples,.tour-review{padding:12px;border:1px solid var(--line,#7894);border-radius:10px;margin:12px 0}.tour-options{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;margin:16px 0}.tour-options button{white-space:normal;min-height:48px;text-align:left;overflow-wrap:anywhere}.tour-options .correct{outline:3px solid #35a675}.tour-options .wrong{outline:3px solid #d27973}.tour-drill .q{font-size:clamp(20px,3vw,28px);line-height:1.6;overflow-wrap:anywhere}.tour-oral h2{font-size:clamp(18px,3vw,25px);line-height:1.6}.tour-dialogue{font-size:1.2em;line-height:1.7;border-left:3px solid #6a9fd4;padding:12px}.tour-facts{display:grid;grid-template-columns:minmax(100px,1fr) 2fr;gap:12px}.tour-facts dt{font-weight:700}.tour-facts dd{margin:0;overflow-wrap:anywhere}.tour-facts .missing{color:#b76e55}.tour-oral input{display:block;width:min(100%,360px);padding:12px;font:inherit;margin:8px 0}.tour-oral audio{max-width:100%;display:block;margin:10px 0}.tour-hint{padding:10px;border:1px dashed var(--line,#7896)}.tour-oral .actions,.tour-result .actions{flex-wrap:wrap;gap:10px}.tour-oral .btn,.tour-result .btn{white-space:normal}.tour-oral .sub{line-height:1.6}
 @media(max-width:600px){.tour-route-row{grid-template-columns:1fr auto}.tour-route-row>span:not(.px-stars){grid-column:1/-1}.tour-options{grid-template-columns:1fr}.tour-facts{grid-template-columns:1fr}.tour-facts dd{padding-bottom:10px}.tour-chapter{padding:8px}.tour-pin.num{min-width:24px;min-height:24px}.tour-oral,.tour-lesson,.tour-drill{padding:16px}}
@@ -14789,7 +14795,7 @@ GPA2.forEach(u => {
     LEVEL_OF[id] = u.lv; TAGS_OF[id] = q.tags; KP_OF[id] = "gb" + u.unit;
   });
 });
-const LANG_FILES = {"en": "lang-en.js?v=0098101a6d", "fr": "lang-fr.js?v=9eaba83215"};
+const LANG_FILES = {"en": "lang-en.js?v=9b181eafa3", "fr": "lang-fr.js?v=85c4fa5c56"};
 (() => { let l = null; try { l = localStorage.getItem("fq-lang"); } catch (e) {}
   if (Object.hasOwn(LANG_FILES, l)) document.write('<script src="' + LANG_FILES[l] + '"><\/script>'); })();
 </script>
@@ -17857,6 +17863,7 @@ function setGoalSection(wrap) {
 // 每次用户可见更新都新增记录：普通更新 1.x.y → 1.x.(y+1)；较大功能变动 → 1.(x+1).0。
 // 首位保持 1，只有用户明确要求才可修改；历史记录保留。完整发布规则见根目录 AGENTS.md。
 const CHANGELOG = [
+  { v: "1.9.4", d: "2026-11-15", p: "fr", items: ["三位学习伙伴新增 15 句 Gemini 配音，现有录音扩展到 24 句：每人覆盖问候、开始学习、答对、答错、连续答对、完成计划、休息提醒和点击互动 8 类场景，沿用已选定的角色声线。", "角色语音试听改为场景卡片，显示法语原句及翻译，播放后显示片段时长。原有录音、48 句随机台词和亲密度解锁规则保留；未配音台词仍使用系统朗读，音频继续按当前角色按需加载。"] },
   { v: "1.9.3", d: "2026-11-15", p: "fr", items: ["学习伙伴加入 Gemini 角色配音：Ninon、Lison、Pia 各有问候、答对和答错 3 句，共 9 句；声音分别呈现成熟温暖、俏皮腹黑和傲娇少女感，角色原年龄不变。", "伙伴面板新增语音试听；已有录音按当前法语台词精确匹配，其他台词使用系统朗读。配音按需加载，听过后可离线使用；关闭语音、切换角色、离开页面或开始题目朗读时立即停止。"] },
   { v: "1.9.2", d: "2026-11-15", p: "fr", items: ["浮动学习伙伴放大到与伙伴页面相同的尺寸：手机 144×180、电脑 192×240。手机答题页同步增加人物留白，保留拖动吸边、分设备位置记忆和自动避让。"] },
   { v: "1.9.1", d: "2026-11-15", p: "fr", items: ["单词闯关的「基础功能词」更名为「基础虚词」，11 关基础虚词移到 52 关主题词汇上方；练习标题、词条分类和续关按钮同步更新，原有星数、存档与解锁进度保留。","学习伙伴修复手机与全屏答题时的显示，人物可拖动吸附边缘，手机和电脑分别记住位置；自动避开题目、选项和状态栏，考试、输入或弹窗时隐藏。","三位学习伙伴换上高清透明图集，每帧 384×480，保持原有动作与配饰；人物图片按需加载，不加入安装时的离线预下载。","每位伙伴新增到 48 句双语台词，会在问候、答题、连对、完成计划和休息时主动反馈；做题时每 3 题或 20 秒最多提示一次，重要反馈优先。设置中可独立关闭主动说话和法语朗读，朗读不会打断题目声音。"] },
@@ -26280,7 +26287,7 @@ function petSpeechReady(now = Date.now()) {
 }
 // Approved recordings are keyed by exact French text, never by randomized line index.
 const PET_VOICE_BASE = '../skins/mascot/voice/';
-const PET_VOICE_VERSION = '1.9.3';
+const PET_VOICE_VERSION = '1.9.4';
 let petVoiceIndex = null, petVoiceBuffer = null, petVoiceContext = null;
 let petVoiceSource = null, petVoiceAbort = null, petVoiceEpoch = 0;
 let petVoiceButton = null, petVoiceSystem = false, petVoiceManual = false;
@@ -26611,23 +26618,34 @@ function petRefreshPage() { if (view === 'pet') { const y = scrollY; renderPet()
 
 function petVoicePreview(root) {
   if (!petOwned()) return;
+  const character = petConfig().character;
   const section = el('section', 'pet-voice-preview');
-  section.append(el('h3', null, tr('角色语音试听')), el('p', 'sub', tr('AI 合成配音 · 问候、答对、答错各一句；其他台词使用系统朗读。')));
+  section.append(el('h3', null, tr('角色语音试听')), el('p', 'sub', tr('AI 合成配音 · 8 类常用场景；未配音的台词使用系统朗读。')));
   const status = el('p', 'sub'); status.setAttribute('role', 'status');
-  const labels = { welcome: '问候', happy: '答对', sad: '答错' };
-  ['welcome', 'happy', 'sad'].forEach(kind => {
-    const x = PET_LINES[petConfig().character].find(x => x[0] === kind && x[1] === 0);
-    const button = petButton(labels[kind], () => {
+  const grid = el('div', 'pet-voice-grid');
+  const events = [['welcome','问候'],['enter','开始学习'],['happy','答对'],['sad','答错'],['streak','连续答对'],['plan','完成计划'],['idle','休息提醒'],['tap','点击互动']];
+  events.forEach(([kind,label]) => {
+    // Ninon's first-phase tap sample is explicitly selected in issue #22.
+    const x = PET_LINES[character].find(x => x[0] === kind && x[1] === 0 &&
+      !(character === 'ninon' && kind === 'tap' && x[2] !== "Je t'écoute, prends ton temps."));
+    if (!x) return;
+    const row = el('article', 'pet-voice-card');
+    const button = petButton(label, () => {
       status.textContent = x[2];
       petPlayVoice({fr:x[2]}, button, true).then(ok => {
-        status.textContent = x[2] + ' · ' + tr(ok ? (petVoiceSystem ? '系统朗读' : 'AI 合成配音') : '请开启伙伴语音，或等题目朗读结束后再试。');
+        const cue = petVoiceIndex?.characters?.[character]?.cues?.[x[2]];
+        const seconds = ok && !petVoiceSystem && cue ? ' · ' + (cue.end-cue.start).toFixed(1) + ' s' : '';
+        status.textContent = x[2] + ' · ' + tr(ok ? (petVoiceSystem ? '系统朗读' : 'AI 合成配音') : '请开启伙伴语音，或等题目朗读结束后再试。') + seconds;
       });
     }, 'pet-voice-' + kind, 'btn ghost play');
     button.dataset.petAudio = '1'; button.setAttribute('aria-pressed', 'false');
     button.disabled = !petConfig().enabled || !petConfig().voice;
-    section.append(button);
+    const fr = el('p', 'pet-voice-french', x[2]); fr.lang = 'fr'; fr.dataset.noi18n = '1';
+    const translation = el('p', 'sub', UI_LANG === 'zh' ? x[3] : x[4]); translation.dataset.noi18n = '1';
+    translation.lang = UI_LANG === 'zh' ? 'zh-CN' : 'en';
+    row.append(button,fr,translation); grid.append(row);
   });
-  section.append(status); root.append(section);
+  section.append(grid,status); root.append(section);
 }
 // ---------- 设置：集中管理各模块的练习设置（都记在本机浏览器里） ----------
 function renderSettings() {

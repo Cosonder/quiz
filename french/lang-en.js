@@ -4654,6 +4654,14 @@ const LANG_DICT = {
 "答对": "Correct answer",
 "答错": "Incorrect answer",
 "学习伙伴加入 Gemini 角色配音：Ninon、Lison、Pia 各有问候、答对和答错 3 句，共 9 句；声音分别呈现成熟温暖、俏皮腹黑和傲娇少女感，角色原年龄不变。": "Gemini character voices now cover a greeting, praise and reassurance for each of Ninon, Lison and Pia: 9 lines in total. Their voices convey warm maturity, playful mischief and shy pride; canonical character ages are unchanged.",
-"伙伴面板新增语音试听；已有录音按当前法语台词精确匹配，其他台词使用系统朗读。配音按需加载，听过后可离线使用；关闭语音、切换角色、离开页面或开始题目朗读时立即停止。": "The companion panel now offers voice samples. Recordings match the displayed French line exactly; other lines use the system voice. Audio loads on demand and remains available offline after playback. Muting, changing companions, leaving the page or starting question audio stops companion speech."
+"伙伴面板新增语音试听；已有录音按当前法语台词精确匹配，其他台词使用系统朗读。配音按需加载，听过后可离线使用；关闭语音、切换角色、离开页面或开始题目朗读时立即停止。": "The companion panel now offers voice samples. Recordings match the displayed French line exactly; other lines use the system voice. Audio loads on demand and remains available offline after playback. Muting, changing companions, leaving the page or starting question audio stops companion speech.",
+"AI 合成配音 · 8 类常用场景；未配音的台词使用系统朗读。": "AI-generated voices for 8 common situations. Other lines use the system voice.",
+"开始学习": "Start studying",
+"连续答对": "Correct-answer streak",
+"完成计划": "Plan completed",
+"休息提醒": "Take a break",
+"点击互动": "Chat",
+"三位学习伙伴新增 15 句 Gemini 配音，现有录音扩展到 24 句：每人覆盖问候、开始学习、答对、答错、连续答对、完成计划、休息提醒和点击互动 8 类场景，沿用已选定的角色声线。": "The three companions gain 15 Gemini voice lines, bringing the library to 24 recordings. Each character now covers eight situations: greeting, starting study, correct and incorrect answers, a correct-answer streak, completing a plan, taking a break and chatting, using the existing character voices.",
+"角色语音试听改为场景卡片，显示法语原句及翻译，播放后显示片段时长。原有录音、48 句随机台词和亲密度解锁规则保留；未配音台词仍使用系统朗读，音频继续按当前角色按需加载。": "Voice samples now appear as situation cards with the French line and its translation; playback shows the clip duration. Existing recordings, each character’s 48-line random dialogue pool and affinity unlocks are preserved. Unrecorded lines still use the system voice, and audio loads on demand for the selected character."
 };
 
