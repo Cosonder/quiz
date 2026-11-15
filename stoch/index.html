@@ -5049,7 +5049,8 @@ function syncHash(str) {
 const syncKeyOf = d => syncHash(recKey(d));
 function syncAuth() { try { return JSON.parse(localStorage.getItem(SYNC_AUTH) || "null"); } catch (e) { return null; } }
 function syncAccountChanged() {
-  clearTimeout(syncState.timer); syncState.timer = 0; syncState.queue = []; syncState.last = 0;
+  clearTimeout(syncRetryTimer); clearTimeout(syncState.timer); syncState.timer = 0; syncState.queue = []; syncState.last = 0;
+  if (typeof oralOnAccountChange === "function") oralOnAccountChange();
   if (typeof petOnAccountChange === "function") petOnAccountChange();
   if (typeof feedbackOnAccountChange === "function") feedbackOnAccountChange();
 }
@@ -5066,38 +5067,103 @@ function syncSaveSession(j) {
   syncSaveAuth({ access_token: j.access_token, refresh_token: j.refresh_token, expires_at: j.expires_at || Math.floor(Date.now() / 1000) + (j.expires_in || 3600),
     email: (j.user && j.user.email) || old.email || "", uid: (j.user && j.user.id) || old.uid || "" });
 }
-// 取一个有效的登录令牌；快过期时用 refresh_token 换新的
-async function syncToken() {
-  const a = syncAuth();
-  if (!a) return null;
-  if (Date.now() / 1000 < a.expires_at - 60) return a.access_token;
-  const r = await fetch(`${SYNC_URL}/auth/v1/token?grant_type=refresh_token`, {
-    method: "POST", headers: { apikey: SYNC_KEY, "Content-Type": "application/json" }, body: JSON.stringify({ refresh_token: a.refresh_token }),
-  });
-  syncAssertAccount(a.uid || "");
-  if (!r.ok) { if (r.status >= 400 && r.status < 500) syncSaveAuth(null); return null; }
-  const session = await r.json();
-  syncAssertAccount(a.uid || "");
-  syncSaveSession(session);
-  return syncAuth().access_token;
+// Refresh failures are not all sign-outs: only a confirmed revoked/missing session is terminal.
+const syncAuthStamp = a => a ? JSON.stringify([a.uid,a.access_token,a.refresh_token]) : '';
+const syncFlights = new Map();
+let syncRetryTimer = 0;
+function syncAuthError(code, message='Session unavailable') { const e=new Error(message);e.code=code;return e; }
+function syncSameSession(a) { return syncAuthStamp(syncAuth())===syncAuthStamp(a); }
+function syncRetryState(a) {
+  try {const r=JSON.parse(localStorage.getItem('quiz-auth-retry')||'null');return r?.session===syncHash(syncAuthStamp(a))?r:null;}catch(e){return null;}
+}
+function syncRetryLater(a, response) {
+  if(!syncSameSession(a))return;
+  const prior=syncRetryState(a),count=Math.min(6,(prior?.count||0)+1);
+  const raw=response?.headers?.get('Retry-After');
+  const retry=raw?(Number.isFinite(Number(raw))?Number(raw)*1000:Date.parse(raw)-Date.now()):0;
+  const delay=Math.min(300000,Math.max(5000*Math.pow(2,count-1),Number.isFinite(retry)?retry:0));
+  const state={session:syncHash(syncAuthStamp(a)),count,until:Date.now()+delay};
+  try{localStorage.setItem('quiz-auth-retry',JSON.stringify(state));}catch(e){}
+  clearTimeout(syncRetryTimer);
+  syncRetryTimer=setTimeout(()=>{if(syncSameSession(a)&&navigator.onLine)syncNow(true);},delay+50);
+}
+// Web Locks coordinate French, stochastic and other tabs on the same origin.
+// Older browsers use a short-lived advisory lease; responses always compare the exact session.
+async function syncRefreshLock(run) {
+  if(navigator.locks?.request){
+    const ac=new AbortController(),timer=setTimeout(()=>ac.abort(),20000);
+    try{return await navigator.locks.request('quiz-auth-refresh',{signal:ac.signal},run);}
+    finally{clearTimeout(timer);}
+  }
+  const key='quiz-auth-refresh-lock',owner=crypto.randomUUID(),deadline=Date.now()+20000;
+  const read=()=>{try{return JSON.parse(localStorage.getItem(key)||'null');}catch(e){return null;}};
+  while(Date.now()<deadline){
+    const lease=read();
+    if(!lease||lease.until<Date.now()){
+      try{localStorage.setItem(key,JSON.stringify({owner,until:Date.now()+16000}));}catch(e){return run();}
+      await new Promise(resolve=>setTimeout(resolve,60+Math.random()*60));
+      if(read()?.owner===owner){
+        try{return await run();}finally{if(read()?.owner===owner)try{localStorage.removeItem(key);}catch(e){}}
+      }
+    }
+    await new Promise(resolve=>setTimeout(resolve,150));
+  }
+  throw syncAuthError('temporary','Refresh coordination timed out');
+}
+async function syncToken(force=false, rejectedToken=null) {
+  const initial=syncAuth();if(!initial)return null;
+  if(!force&&Date.now()/1000<initial.expires_at-60)return initial.access_token;
+  if(force&&rejectedToken&&initial.access_token!==rejectedToken&&Date.now()/1000<initial.expires_at-60)return initial.access_token;
+  const key=syncAuthStamp(initial);
+  if(syncFlights.has(key))return syncFlights.get(key);
+  const task=syncRefreshLock(async()=>{
+    syncAssertAccount(initial.uid||'');
+    const a=syncAuth();
+    if(!syncSameSession(initial))return a.access_token;
+    if(!force&&Date.now()/1000<a.expires_at-60)return a.access_token;
+    if((syncRetryState(a)?.until||0)>Date.now())throw syncAuthError('temporary','Refresh retry pending');
+    if(!a.refresh_token)throw syncAuthError('temporary','Missing refresh credentials');
+    const ac=new AbortController(),timer=setTimeout(()=>ac.abort(),12000);
+    let r,j;
+    try{
+      r=await fetch(`${SYNC_URL}/auth/v1/token?grant_type=refresh_token`,{method:'POST',headers:{apikey:SYNC_KEY,'Content-Type':'application/json'},body:JSON.stringify({refresh_token:a.refresh_token}),signal:ac.signal});
+      try{j=await r.json();}catch(e){j={};}
+    }catch(e){syncRetryLater(a);throw syncAuthError('temporary','Session refresh temporarily unavailable');}
+    finally{clearTimeout(timer);}
+    syncAssertAccount(a.uid||'');
+    if(!syncSameSession(a))return syncAuth()?.access_token;
+    if(!r.ok){
+      const terminal=['refresh_token_not_found','refresh_token_already_used','session_not_found','session_expired','user_not_found','user_banned'].includes(j.code||j.error_code);
+      if(r.status>=400&&r.status<500&&r.status!==429&&terminal){
+        syncSaveAuth(null);syncState.err='登录已过期，请重新登录';syncRefreshView();throw syncAuthError('auth');
+      }
+      syncRetryLater(a,r);throw syncAuthError(r.status===429?'rate':'temporary','Session refresh temporarily unavailable');
+    }
+    if(!j.access_token||!j.refresh_token||j.user?.id!==a.uid){syncRetryLater(a);throw syncAuthError('temporary','Incomplete refresh response');}
+    syncSaveSession(j);
+    try{localStorage.removeItem('quiz-auth-retry');}catch(e){}
+    clearTimeout(syncRetryTimer);return syncAuth()?.access_token;
+  }).catch(e=>{if(e.code!=='auth'&&e.code!=='account'&&e.code!=='rate'&&e.code!=='temporary'){syncRetryLater(initial);throw syncAuthError('temporary');}throw e;});
+  syncFlights.set(key,task);
+  try{return await task;}finally{if(syncFlights.get(key)===task)syncFlights.delete(key);}
 }
 async function syncFetch(path, opt = {}, auth = true, uid = null) {
-  const headers = { apikey: SYNC_KEY, "Content-Type": "application/json", ...(opt.headers || {}) };
-  if (auth) {
-    if (uid !== null) syncAssertAccount(uid);
-    const tok = await syncToken();
-    if (uid !== null) syncAssertAccount(uid);
-    if (!tok) { const e = new Error("未登录"); e.code = "auth"; throw e; }
-    headers.Authorization = "Bearer " + tok;
+  const expected=auth?(uid??syncAuth()?.uid??''):null;
+  const headers = { apikey: SYNC_KEY, 'Content-Type': 'application/json', ...(opt.headers || {}) };
+  let tok=null;
+  if(auth){syncAssertAccount(expected);tok=await syncToken();syncAssertAccount(expected);if(!tok)throw syncAuthError('auth','未登录');headers.Authorization='Bearer '+tok;}
+  let r=await fetch(SYNC_URL+path,{...opt,headers});
+  if(auth)syncAssertAccount(expected);
+  // A stale access token gets one coordinated refresh. A generic API 401 never erases a session.
+  if(auth&&r.status===401&&!opt.signal?.aborted){
+    const fresh=await syncToken(true,tok);syncAssertAccount(expected);
+    if(fresh){headers.Authorization='Bearer '+fresh;r=await fetch(SYNC_URL+path,{...opt,headers});syncAssertAccount(expected);}
   }
-  const r = await fetch(SYNC_URL + path, { ...opt, headers });
-  if (!r.ok) {
-    let msg = "";
-    try { const j = await r.json(); msg = j.msg || j.message || j.error_description || j.error || ""; } catch (e) {}
-    const e = new Error(msg || "HTTP " + r.status); e.status = r.status; e.code = r.status === 401 ? "auth" : r.status === 429 ? "rate" : ""; throw e;
+  if(!r.ok){
+    let msg='';try{const j=await r.json();msg=j.msg||j.message||j.error_description||j.error||'';}catch(e){}
+    const e=new Error(msg||'HTTP '+r.status);e.status=r.status;e.code=r.status===429?'rate':r.status===401?'permission':'';throw e;
   }
-  const text = await r.text();
-  return text ? JSON.parse(text) : null;
+  const text=await r.text();if(auth)syncAssertAccount(expected);return text?JSON.parse(text):null;
 }
 
 // 本机的记录（和公开网站的本地数据库同一份）
@@ -5155,7 +5221,7 @@ async function syncNow(force) {
   } catch (e) {
     if (e.code !== "account" && (syncAuth()?.uid || "") === uid) {
       syncState.err = e.code === "auth" ? "登录已过期，请重新登录" : "同步没成功（可能是网络问题），稍后会自动再试";
-      if (e.code === "auth") syncSaveAuth(null);
+      // Only the refresh endpoint can confirm terminal session invalidation.
     }
   }
   syncState.busy = false; syncDraw();
@@ -5195,15 +5261,16 @@ async function syncReload() {
 function syncRefreshView() { if (view === "settings" && typeof renderSettings === "function") renderSettings(); }
 function syncLogout() { syncSaveAuth(null); syncState.err = ""; syncDraw(); syncRefreshView(); }
 async function syncDeleteAccount() {
-  await syncFetch("/rest/v1/rpc/delete_my_account", { method: "POST", body: "{}" });
-  syncLogout();
+  const uid=syncAuth()?.uid||"";
+  await syncFetch("/rest/v1/rpc/delete_my_account", { method: "POST", body: "{}" },true,uid);
+  syncAssertAccount(uid);syncLogout();
 }
 if (SYNC_ON) {
   addEventListener("storage", e => {
     if (e.key !== SYNC_AUTH) return;
     let before = "", after = "";
     try { before = JSON.parse(e.oldValue || "null")?.uid || ""; after = JSON.parse(e.newValue || "null")?.uid || ""; } catch (err) {}
-    if (before !== after) { syncAccountChanged(); syncNow(true); }
+    if (before !== after) { syncAccountChanged(); syncRefreshView(); syncNow(true); }
   });
   addEventListener("online", () => syncNow(true));
   document.addEventListener("visibilitychange", () => { if (document.visibilityState === "visible") syncNow(false); });
@@ -5226,7 +5293,9 @@ function syncCard() {
   const head = el("div", "plan-head");
   head.append(el("h3", null, "账号与同步"));
   card.append(head);
+  card.append(el("p", "sub", "此设备会自动保持登录，无需保存密码。正常重新打开无需验证码；退出登录、清除网站数据或会话失效后需重新验证。无痕窗口、其他浏览器或不同设备需分别登录。"));
   const note = el("p", "sync-msg");
+  if(!a&&syncState.err)card.append(el("p","sync-msg",syncState.err));
   if (a) {
     head.append(el("span", "sync-status", syncStatusText()));
     card.append(el("p", "sync-who", `已登录：${a.email || "（邮箱）"}。在其他设备上用同一个邮箱登录，做题记录会自动同步。`));
@@ -5285,7 +5354,9 @@ function syncCard() {
 }
 async function syncSendCode(email) { await syncFetch("/auth/v1/otp", { method: "POST", body: JSON.stringify({ email, create_user: true }) }, false); }
 async function syncVerify(email, token) {
+  const started=syncAuthStamp(syncAuth());
   const j = await syncFetch("/auth/v1/verify", { method: "POST", body: JSON.stringify({ type: "email", email, token }) }, false);
+  if(syncAuthStamp(syncAuth())!==started)throw syncAuthError("account");
   syncSaveSession(j);
   await syncNow(true);
 }
@@ -5345,6 +5416,7 @@ function setGoalSection(wrap) {
 // 每次用户可见更新都新增记录：普通更新 1.x.y → 1.x.(y+1)；较大功能变动 → 1.(x+1).0。
 // 首位保持 1，只有用户明确要求才可修改；历史记录保留。完整发布规则见根目录 AGENTS.md。
 const CHANGELOG = [
+  {"v": "1.10.0", "d": "2026-11-15", "items": ["新增独立口语栏目：七个现有情景任务与环法共用进度，可筛选级别与完成情况；练习不绕过环法奖励条件。站内留言新增私密回复、我的留言、未读状态及管理员多次回复。登录续期遇到限流或服务故障会保留会话并退避重试，协调多标签续期，避免旧请求影响新账号。"]},
   {"v": "1.9.8", "d": "2026-11-15", "p": "fr", "items": ["分享新增书店、学园、电台、列车与咖啡馆五张学习伙伴海报，共六张。进入独立分享页时随机选图，可点“换一张”；预览、下载与分享附件同步切换，按需加载。首次分享 800 金币仍为每账号一次。"]},
   {"v": "1.9.7", "d": "2026-11-15", "p": "fr", "items": ["设置新增分享入口与三位学习伙伴分享图，支持系统分享、复制链接及下载图片。完成发送后确认，可领取首次分享 800 金币，每个账号一次；取消、复制或下载不会自动发奖，网络重试不会重复领取。"]},
   { v: "1.9.6", d: "2026-11-15", p: "fr", items: ["三位学习伙伴沿用现有声线补齐剩余 120 句固定台词：每人 48 句，共 144 句 Gemini 配音，覆盖 8 类场景与全部亲密度等级。试听区可逐句查看法语、翻译并播放对应片段；动态词汇例句仍使用系统朗读。", "新增录音已完成台词转写核对、片段边界和音量检查，保留原有 24 句。三条角色音轨按需加载，未选中的角色不提前下载；继续保留声音开关、题目音频优先和自由拖动。"] },

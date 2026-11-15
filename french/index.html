@@ -1189,6 +1189,8 @@ button.fb-vote:disabled{cursor:default;opacity:.65}
 .fb-message-author,.fb-message time{font-size:.78rem;color:var(--muted);overflow-wrap:anywhere}
 .fb-message-body{white-space:pre-wrap;overflow-wrap:anywhere;line-height:1.7}
 @media(max-width:520px){.picture-feedback{gap:5px 8px}.fb-vote{padding:6px}.fb-caption{flex-basis:100%}}
+
+.fb-private,.fb-admin{margin-top:20px}.fb-thread{padding:12px 0}.fb-reply{border-left:3px solid var(--accent);padding:12px;margin:12px 0;background:var(--soft,transparent)}.fb-reply time{display:block;font-size:.85em;margin-top:4px}.fb-thread textarea{display:block;width:100%;box-sizing:border-box;margin:12px 0;font:inherit;padding:10px}.fb-message-body{white-space:pre-wrap;overflow-wrap:anywhere}
 .share-panel{margin-top:16px}.share-panel[hidden],.share-panel [hidden]{display:none!important}.share-poster{display:block;width:min(100%,280px);height:auto;border-radius:12px;border:1px solid var(--line,#8885);margin:0 0 16px}.share-panel .actions{display:flex;flex-wrap:wrap;gap:10px}.share-panel .btn{white-space:normal;min-height:44px;text-align:center}.share-panel a.btn{text-decoration:none;display:inline-flex;align-items:center}.share-url{box-sizing:border-box;width:100%;padding:10px;margin-top:12px;font:inherit;min-width:0}.share-confirm{display:flex;align-items:center;gap:8px;margin:12px 0;line-height:1.5}.share-confirm input{width:20px;height:20px;flex-shrink:0}.share-panel p{overflow-wrap:anywhere}
 
 .share-page{max-width:760px;margin:0 auto}.share-page .share-poster{width:min(100%,360px);margin:16px auto}.share-picker{display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap}.share-caption{margin:0}.share-page .actions{justify-content:center}.share-page h2{margin-top:16px}
@@ -1590,13 +1592,15 @@ html.qf #stage > section.q-card > .explain { flex: none !important; height: clam
 /* Ordered route and oral tasks reuse the active theme's colours. */
 .tour-pin.locked{filter:grayscale(.8);opacity:.65}.tour-pin.num{min-width:28px;min-height:28px;font-size:11px}.tour-chapters{margin-top:24px;display:grid;gap:12px}.tour-chapter{border:1px solid var(--line,#7894);border-radius:12px;padding:12px}.tour-chapter summary{cursor:pointer;font-weight:700;min-height:36px}.tour-route-row{display:grid;grid-template-columns:minmax(160px,1fr) 2fr auto;gap:8px;align-items:center;padding:10px 0;border-bottom:1px solid var(--line,#7893)}.tour-route-row small{grid-column:1/-1}.tour-lesson,.tour-drill,.tour-oral,.tour-result{max-width:900px;margin:auto}.tour-rule,.tour-task{padding:14px;border-left:3px solid var(--accent,#789);line-height:1.7}.tour-examples,.tour-review{padding:12px;border:1px solid var(--line,#7894);border-radius:10px;margin:12px 0}.tour-options{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;margin:16px 0}.tour-options button{white-space:normal;min-height:48px;text-align:left;overflow-wrap:anywhere}.tour-options .correct{outline:3px solid #35a675}.tour-options .wrong{outline:3px solid #d27973}.tour-drill .q{font-size:clamp(20px,3vw,28px);line-height:1.6;overflow-wrap:anywhere}.tour-oral h2{font-size:clamp(18px,3vw,25px);line-height:1.6}.tour-dialogue{font-size:1.2em;line-height:1.7;border-left:3px solid #6a9fd4;padding:12px}.tour-facts{display:grid;grid-template-columns:minmax(100px,1fr) 2fr;gap:12px}.tour-facts dt{font-weight:700}.tour-facts dd{margin:0;overflow-wrap:anywhere}.tour-facts .missing{color:#b76e55}.tour-oral input{display:block;width:min(100%,360px);padding:12px;font:inherit;margin:8px 0}.tour-oral audio{max-width:100%;display:block;margin:10px 0}.tour-hint{padding:10px;border:1px dashed var(--line,#7896)}.tour-oral .actions,.tour-result .actions{flex-wrap:wrap;gap:10px}.tour-oral .btn,.tour-result .btn{white-space:normal}.tour-oral .sub{line-height:1.6}
 @media(max-width:600px){.tour-route-row{grid-template-columns:1fr auto}.tour-route-row>span:not(.px-stars){grid-column:1/-1}.tour-options{grid-template-columns:1fr}.tour-facts{grid-template-columns:1fr}.tour-facts dd{padding-bottom:10px}.tour-chapter{padding:8px}.tour-pin.num{min-width:24px;min-height:24px}.tour-oral,.tour-lesson,.tour-drill{padding:16px}}
+
+.oral-list{display:grid;gap:16px;margin-top:20px}.oral-task{border:1px solid var(--line);border-radius:12px;padding:16px}.oral-task h3{font-size:1.1em;line-height:1.6}.oral-catalogue select{padding:8px;font:inherit;max-width:100%}
 </style>
 
 <div class="wrap">
   <header>
     <div class="titles">
       <h1>法语语法小测验</h1>
-      <p class="sub">语法、词汇、变位、听力、模拟卷，答题记录自动计入学习进度。<a class="home" href="../">全部练习</a></p>
+      <p class="sub">语法、词汇、变位、听力、口语、模拟卷，答题记录自动计入学习进度。<a class="home" href="../">全部练习</a></p>
     </div>
     <div class="tabs" role="tablist">
       <button type="button" class="tab" role="tab" id="tabPractice" aria-selected="true">做题</button>
@@ -14800,7 +14804,7 @@ GPA2.forEach(u => {
     LEVEL_OF[id] = u.lv; TAGS_OF[id] = q.tags; KP_OF[id] = "gb" + u.unit;
   });
 });
-const LANG_FILES = {"en": "lang-en.js?v=b830b42b76", "fr": "lang-fr.js?v=79459e6356"};
+const LANG_FILES = {"en": "lang-en.js?v=1e6706dc6f", "fr": "lang-fr.js?v=4132c7e895"};
 (() => { let l = null; try { l = localStorage.getItem("fq-lang"); } catch (e) {}
   if (Object.hasOwn(LANG_FILES, l)) document.write('<script src="' + LANG_FILES[l] + '"><\/script>'); })();
 </script>
@@ -17005,8 +17009,9 @@ const TOUR_ORAL_CONFIRMATIONS = {
 };
 for(const c of TOUR_ORAL_CASES)if(TOUR_ORAL_CONFIRMATIONS[c.id]) [c.altConfirm,c.changedConfirm]=TOUR_ORAL_CONFIRMATIONS[c.id];
 let tourOral=null, tourMic=null, tourRecorder=null, tourClip=null, tourMicEpoch=0, tourMicTimer=null;
-const tourOralLatest=id=>gameRaw.filter(g=>g.kind==='tour-oral'&&g.city===id).sort((a,b)=>String(a.at).localeCompare(String(b.at))).pop();
+const tourOralLatest=id=>gameRaw.filter(g=>g.kind==='tour-oral'&&g.city===id&&(!g.scope||g.scope===oralScope())).sort((a,b)=>String(a.at).localeCompare(String(b.at))).pop();
 function tourAudioClear(){
+  if(typeof tts!=="undefined"&&tts)tts.cancel();
   tourMicEpoch++;clearTimeout(tourMicTimer);
   if(tourRecorder){tourRecorder.ondataavailable=null;tourRecorder.onstop=null;if(tourRecorder.state!=='inactive')try{tourRecorder.stop();}catch(e){}}
   tourRecorder=null;if(tourMic)tourMic.getTracks().forEach(t=>t.stop());tourMic=null;
@@ -17014,16 +17019,18 @@ function tourAudioClear(){
 }
 function tourOralSave(status='paused'){
  if(!tourOral)return;const o=tourOral;
- gameAdd({kind:'tour-oral',city:o.id,variant:o.variant,node:o.node,facts:{...o.facts},status,at:new Date().toISOString()});
+ const prior=tourOralLatest(o.id);
+ if(prior&&prior.status===status&&prior.variant===o.variant&&prior.node===o.node&&JSON.stringify(prior.facts)===JSON.stringify(o.facts))return;
+ gameAdd({kind:'tour-oral',taskId:oralTaskId(o.id),scope:oralScope(),city:o.id,variant:o.variant,node:o.node,facts:{...o.facts},status,at:new Date().toISOString()});
 }
 function tourOralLeave(){if(tourOral&&tourOral.node!=='result')tourOralSave();tourAudioClear();tourOral=null;}
 addEventListener('pagehide',tourOralLeave);
 document.addEventListener('visibilitychange',()=>{if(document.visibilityState==='hidden')tourAudioClear();});
-function tourOralStart(id,variant){
- const stop=tourStop(id);if(!stop||!tourChapterEnd(stop)||!tourCanStart(id))return false;
+function tourOralStart(id,variant,origin=tourOral?.origin||(view==='oral'?'oral':'tour')){
+ const stop=tourStop(id);if(!stop||!tourChapterEnd(stop)||!TOUR_ORAL_CASES.some(c=>c.id===id)||(origin!=='oral'&&!tourCanStart(id)))return false;
  tourOralLeave();tourRun=null;
  const prior=tourOralLatest(id),resume=variant===undefined&&prior&&prior.status==='paused';
- tourOral={id,variant:variant??(resume?prior.variant:0),node:resume?prior.node:'request',facts:resume?{...prior.facts}:{},ready:false,hints:0};
+ tourOral={id,origin,variant:variant??(resume?prior.variant:0),node:resume?prior.node:'request',facts:resume?{...prior.facts}:{},ready:false,hints:0};
  if(!Number.isInteger(tourOral.variant))tourOral.variant=0;
  tourOralRender();return true;
 }
@@ -17082,7 +17089,7 @@ function tourOralResult(){
   [tourText('主动追问','Proactive question','Question posée'),f.asked?tourText('已自行确认','Self-confirmed','Confirmé par vous'):null]
  ];const dl=el('dl','tour-facts');for(const [key,value]of rows)dl.append(el('dt',null,key),el('dd',value?'':'missing',value||tourText('未确认','Unconfirmed','Non confirmé')));card.append(dl);
  card.append(el('p','tour-rule',tourTr(c.grammar)),el('p',null,tourText('自评一项：这一轮我是否把这条规则说清楚了？没有转写，因此这里不判断你的发音或实际语法是否正确。','Self-check: did I express this rule clearly? Without a transcript, this does not judge your pronunciation or actual grammar.','Autoévaluation : ai-je exprimé cette règle clairement ? Sans transcription, ni la prononciation ni la grammaire réellement dite ne sont évaluées.')));
- const row=el('div','actions');row.append(tourButton(tourText('立即重说这一点','Repeat this point now','Reprendre ce point maintenant'),()=>{o.node='repair';o.ready=false;o.hints=0;tourOralRender();}),tourButton(tourText('换个条件重测','Try a changed condition','Essayer une nouvelle condition'),()=>tourOralStart(o.id,o.variant+1)),tourButton(tourText('稍后复练，返回地图','Practise later; back to map','Reprendre plus tard ; retour à la carte'),tourMapBack,true));card.append(row);stage.append(card);
+ const row=el('div','actions');row.append(tourButton(tourText('立即重说这一点','Repeat this point now','Reprendre ce point maintenant'),()=>{o.node='repair';o.ready=false;o.hints=0;tourOralRender();}),tourButton(tourText('换个条件重测','Try a changed condition','Essayer une nouvelle condition'),()=>tourOralStart(o.id,o.variant+1)),tourButton(tourOral.origin==='oral'?tourText('返回口语目录','Back to speaking tasks','Retour aux missions orales'):tourText('稍后复练，返回地图','Practise later; back to map','Reprendre plus tard ; retour à la carte'),oralBack,true));card.append(row);stage.append(card);
 }
 async function tourRecord(){
  if(typeof petStopVoice==='function')petStopVoice();
@@ -17093,7 +17100,7 @@ async function tourRecord(){
  if(!navigator.mediaDevices?.getUserMedia||typeof MediaRecorder==='undefined'){if(notice)notice.textContent=tourText('此设备无法录音；可自主开口或跳过录音后继续。','Recording unavailable; speak on your own or skip recording.','Enregistrement indisponible ; parlez librement ou passez cette étape.');return;}
  try{
   const stream=await navigator.mediaDevices.getUserMedia({audio:true});
-  if(epoch!==tourMicEpoch||tourOral!==o||view!=='tour'){stream.getTracks().forEach(t=>t.stop());return;}
+  if(epoch!==tourMicEpoch||tourOral!==o||!['tour','oral'].includes(view)){stream.getTracks().forEach(t=>t.stop());return;}
   tourMic=stream;const chunks=[];tourRecorder=new MediaRecorder(stream);const recorder=tourRecorder;
   recorder.ondataavailable=e=>{if(e.data.size)chunks.push(e.data);};
   recorder.onstop=()=>{stream.getTracks().forEach(t=>t.stop());tourMic=null;clearTimeout(tourMicTimer);if(epoch!==tourMicEpoch||tourOral!==o)return;tourClip=URL.createObjectURL(new Blob(chunks,{type:recorder.mimeType||'audio/webm'}));tourRecorder=null;o.ready=true;tourOralRender();};
@@ -17105,7 +17112,7 @@ async function tourRecord(){
 function tourOralRender(){
  const o=tourOral;if(!o)return;stage.innerHTML='';if(o.node==='result'){tourOralResult();return;}
  const c=tourOralCase(),node=tourOralNode(),card=el('section','card tour-oral');
- card.append(el('span','tag',tourNo(tourStop(o.id))+' · '+tourText('口语任务','Speaking task','Mission orale')),el('h2',null,tourTr(c.task)));
+ card.append(el('span','tag',(o.origin==='oral'?tourStop(o.id).lv+' · '+tourTr(ORAL_SCENES[o.id]):tourNo(tourStop(o.id)))+' · '+tourText('口语任务','Speaking task','Mission orale')),el('h2',null,tourTr(c.task)));
  if(o.variant)card.append(el('p','tour-task',c.hotel?tourText('新条件：手机无法接收短信，请确认邮件方案。','New condition: your phone cannot receive SMS; arrange email delivery.','Nouvelle condition : votre téléphone ne reçoit pas les SMS ; convenez d’un envoi par mail.'):tourText('新条件会在角色回复中出现。','A changed condition will appear in the character’s reply.','Une nouvelle condition apparaîtra dans la réponse du personnage.')));
  card.append(el('b',null,c.role),el('p','tour-dialogue',node.reply));
  const listen=tourButton(tourText('再听一遍','Listen again','Réécouter'),()=>{if(typeof speak==='function')speak(node.reply,0.85,null);},true);card.append(listen);
@@ -17121,7 +17128,33 @@ function tourOralRender(){
  let name=null;if(o.ready){if(node.name){const label=el('label',null,tourText('你刚才说的预订姓名','Booking name you just said','Nom de réservation que vous venez de dire'));name=el('input');name.type='text';name.maxLength=80;name.value=o.facts.name||'';label.append(name);card.append(label);}
   const options=el('div','tour-options');node.choices.forEach(choice=>options.append(tourButton(tourTr(choice.label),()=>{const result=tourOralChoose(choice.id,name?.value||'');if(result==='name'){notice.textContent=tourText('请填入刚才说的姓名，或返回补说。','Enter the name you said, or go back and say it.','Indiquez le nom que vous avez dit, ou reprenez votre réponse.');return;}if(result)tourOralRender();})));card.append(options);
  }
- card.append(tourButton(tourText('查看当前确认卡','View current confirmations','Voir les informations confirmées'),()=>{tourAudioClear();o.node='result';tourOralSave('review');tourOralRender();},true),tourButton(tourText('稍后继续，返回地图','Continue later; back to map','Continuer plus tard ; retour à la carte'),tourMapBack,true));stage.append(card);
+ card.append(tourButton(tourText('查看当前确认卡','View current confirmations','Voir les informations confirmées'),()=>{tourAudioClear();o.node='result';tourOralSave('review');tourOralRender();},true),tourButton(tourOral.origin==='oral'?tourText('保存进度，返回口语目录','Save progress; back to speaking tasks','Enregistrer ; retour aux missions orales'):tourText('稍后继续，返回地图','Continue later; back to map','Continuer plus tard ; retour à la carte'),oralBack,true));stage.append(card);
+}
+
+// One catalogue and one task ID for practice and journey entry points.
+let oralLevel='all',oralStatus='all';
+const ORAL_SCENES={p5:['博物馆问路','At the museum','Au musée'],p15:['车站路线','Getting to the station','Aller à la gare'],d92:['预约参观','Booking a visit','Réserver une visite'],versailles:['车票改签','Changing tickets','Échanger un billet'],d95:['酒店晚到','Late hotel arrival','Arrivée tardive à l’hôtel'],annecy:['交通补偿','Travel compensation','Dédommagement de transport'],bonifacio:['旅行叙事','Travel storytelling','Récit de voyage']};
+const oralTaskId=id=>'tour-oral:'+id;
+const oralScope=()=>typeof syncAuth==='function'&&SYNC_ON&&syncAuth()?.uid?'user:'+syncAuth().uid:'device';
+const oralStatusText=s=>s==='done'?tourText('已完成','Completed','Terminé'):s==='paused'?tourText('进行中','In progress','En cours'):s==='review'?tourText('待复练','Review due','À reprendre'):tourText('未开始','Not started','À commencer');
+function oralBack(){const origin=tourOral?.origin||'tour';tourOralLeave();if(origin==='oral'){view='oral';navSync();renderOral();}else tourMapBack();}
+function oralOnAccountChange(){tourAudioClear();tourOral=null;if(view==='oral')renderOral();}
+function renderOral(){
+ tourOralLeave();stage.replaceChildren();
+ const card=el('section','card oral-catalogue');card.dataset.noi18n='';
+ card.append(el('h2',null,tourText('口语练习','Speaking practice','Pratique orale')),el('p','sub',tourText('七个情景任务，与环法之旅共用练习进度。可直接练习，不要求解锁游戏；不会解锁环法关卡或额外发放章节奖励。','Seven scenarios share progress with the journey. Practise directly without unlocking games; this does not unlock journey stops or award chapter bonuses.','Sept situations partagent leur progression avec le voyage. Accès direct sans débloquer les jeux ; cet entraînement ne débloque ni étapes ni récompenses du voyage.')));
+ const filters=el('div','actions');
+ const select=(label,values,value,change)=>{const row=el('label',null,label+' '),s=el('select');values.forEach(([v,t])=>{const o=el('option',null,t);o.value=v;s.append(o);});s.setAttribute('aria-label',label);s.value=value;s.addEventListener('change',()=>{change(s.value);renderOral();});row.append(s);filters.append(row);};
+ select(tourText('级别','Level','Niveau'),[['all',tourText('全部','All','Tous')],...[...new Set(TOUR_ORAL_CASES.map(c=>tourStop(c.id).lv))].map(x=>[x,x])],oralLevel,v=>oralLevel=v);
+ select(tourText('完成情况','Progress','Progression'),[['all',tourText('全部','All','Tous')],...['new','paused','review','done'].map(x=>[x,oralStatusText(x)])],oralStatus,v=>oralStatus=v);
+ card.append(filters);const list=el('div','oral-list');let count=0;
+ for(const c of TOUR_ORAL_CASES){const stop=tourStop(c.id),prior=tourOralLatest(c.id),status=prior?.status||'new';if(oralLevel!=='all'&&stop.lv!==oralLevel||oralStatus!=='all'&&status!==oralStatus)continue;count++;
+  const row=el('article','oral-task');row.dataset.task=oralTaskId(c.id);
+  row.append(el('span','tag',stop.lv+' · '+tourTr(ORAL_SCENES[c.id])),el('h3',null,tourTr(c.task)),el('p','sub',oralStatusText(status)),el('p',null,tourTr(c.grammar)));
+  row.append(tourButton(status==='paused'?tourText('继续练习','Resume practice','Reprendre'):tourText('开始练习','Start practice','Commencer'),()=>tourOralStart(c.id,undefined,'oral')));list.append(row);
+ }
+ if(!count)list.append(el('p',null,tourText('这个筛选下暂无任务。','No tasks match these filters.','Aucune mission ne correspond à ces filtres.')));
+ card.append(list);stage.append(card);
 }
 // Ordered grammar journey; map artwork and all legacy IDs remain unchanged.
 const TOUR_N=8, TOUR_HEARTS=3, TOUR_ALL=800;
@@ -17391,7 +17424,8 @@ function syncHash(str) {
 const syncKeyOf = d => syncHash(recKey(d));
 function syncAuth() { try { return JSON.parse(localStorage.getItem(SYNC_AUTH) || "null"); } catch (e) { return null; } }
 function syncAccountChanged() {
-  clearTimeout(syncState.timer); syncState.timer = 0; syncState.queue = []; syncState.last = 0;
+  clearTimeout(syncRetryTimer); clearTimeout(syncState.timer); syncState.timer = 0; syncState.queue = []; syncState.last = 0;
+  if (typeof oralOnAccountChange === "function") oralOnAccountChange();
   if (typeof petOnAccountChange === "function") petOnAccountChange();
   if (typeof feedbackOnAccountChange === "function") feedbackOnAccountChange();
 }
@@ -17408,38 +17442,103 @@ function syncSaveSession(j) {
   syncSaveAuth({ access_token: j.access_token, refresh_token: j.refresh_token, expires_at: j.expires_at || Math.floor(Date.now() / 1000) + (j.expires_in || 3600),
     email: (j.user && j.user.email) || old.email || "", uid: (j.user && j.user.id) || old.uid || "" });
 }
-// 取一个有效的登录令牌；快过期时用 refresh_token 换新的
-async function syncToken() {
-  const a = syncAuth();
-  if (!a) return null;
-  if (Date.now() / 1000 < a.expires_at - 60) return a.access_token;
-  const r = await fetch(`${SYNC_URL}/auth/v1/token?grant_type=refresh_token`, {
-    method: "POST", headers: { apikey: SYNC_KEY, "Content-Type": "application/json" }, body: JSON.stringify({ refresh_token: a.refresh_token }),
-  });
-  syncAssertAccount(a.uid || "");
-  if (!r.ok) { if (r.status >= 400 && r.status < 500) syncSaveAuth(null); return null; }
-  const session = await r.json();
-  syncAssertAccount(a.uid || "");
-  syncSaveSession(session);
-  return syncAuth().access_token;
+// Refresh failures are not all sign-outs: only a confirmed revoked/missing session is terminal.
+const syncAuthStamp = a => a ? JSON.stringify([a.uid,a.access_token,a.refresh_token]) : '';
+const syncFlights = new Map();
+let syncRetryTimer = 0;
+function syncAuthError(code, message='Session unavailable') { const e=new Error(message);e.code=code;return e; }
+function syncSameSession(a) { return syncAuthStamp(syncAuth())===syncAuthStamp(a); }
+function syncRetryState(a) {
+  try {const r=JSON.parse(localStorage.getItem('quiz-auth-retry')||'null');return r?.session===syncHash(syncAuthStamp(a))?r:null;}catch(e){return null;}
+}
+function syncRetryLater(a, response) {
+  if(!syncSameSession(a))return;
+  const prior=syncRetryState(a),count=Math.min(6,(prior?.count||0)+1);
+  const raw=response?.headers?.get('Retry-After');
+  const retry=raw?(Number.isFinite(Number(raw))?Number(raw)*1000:Date.parse(raw)-Date.now()):0;
+  const delay=Math.min(300000,Math.max(5000*Math.pow(2,count-1),Number.isFinite(retry)?retry:0));
+  const state={session:syncHash(syncAuthStamp(a)),count,until:Date.now()+delay};
+  try{localStorage.setItem('quiz-auth-retry',JSON.stringify(state));}catch(e){}
+  clearTimeout(syncRetryTimer);
+  syncRetryTimer=setTimeout(()=>{if(syncSameSession(a)&&navigator.onLine)syncNow(true);},delay+50);
+}
+// Web Locks coordinate French, stochastic and other tabs on the same origin.
+// Older browsers use a short-lived advisory lease; responses always compare the exact session.
+async function syncRefreshLock(run) {
+  if(navigator.locks?.request){
+    const ac=new AbortController(),timer=setTimeout(()=>ac.abort(),20000);
+    try{return await navigator.locks.request('quiz-auth-refresh',{signal:ac.signal},run);}
+    finally{clearTimeout(timer);}
+  }
+  const key='quiz-auth-refresh-lock',owner=crypto.randomUUID(),deadline=Date.now()+20000;
+  const read=()=>{try{return JSON.parse(localStorage.getItem(key)||'null');}catch(e){return null;}};
+  while(Date.now()<deadline){
+    const lease=read();
+    if(!lease||lease.until<Date.now()){
+      try{localStorage.setItem(key,JSON.stringify({owner,until:Date.now()+16000}));}catch(e){return run();}
+      await new Promise(resolve=>setTimeout(resolve,60+Math.random()*60));
+      if(read()?.owner===owner){
+        try{return await run();}finally{if(read()?.owner===owner)try{localStorage.removeItem(key);}catch(e){}}
+      }
+    }
+    await new Promise(resolve=>setTimeout(resolve,150));
+  }
+  throw syncAuthError('temporary','Refresh coordination timed out');
+}
+async function syncToken(force=false, rejectedToken=null) {
+  const initial=syncAuth();if(!initial)return null;
+  if(!force&&Date.now()/1000<initial.expires_at-60)return initial.access_token;
+  if(force&&rejectedToken&&initial.access_token!==rejectedToken&&Date.now()/1000<initial.expires_at-60)return initial.access_token;
+  const key=syncAuthStamp(initial);
+  if(syncFlights.has(key))return syncFlights.get(key);
+  const task=syncRefreshLock(async()=>{
+    syncAssertAccount(initial.uid||'');
+    const a=syncAuth();
+    if(!syncSameSession(initial))return a.access_token;
+    if(!force&&Date.now()/1000<a.expires_at-60)return a.access_token;
+    if((syncRetryState(a)?.until||0)>Date.now())throw syncAuthError('temporary','Refresh retry pending');
+    if(!a.refresh_token)throw syncAuthError('temporary','Missing refresh credentials');
+    const ac=new AbortController(),timer=setTimeout(()=>ac.abort(),12000);
+    let r,j;
+    try{
+      r=await fetch(`${SYNC_URL}/auth/v1/token?grant_type=refresh_token`,{method:'POST',headers:{apikey:SYNC_KEY,'Content-Type':'application/json'},body:JSON.stringify({refresh_token:a.refresh_token}),signal:ac.signal});
+      try{j=await r.json();}catch(e){j={};}
+    }catch(e){syncRetryLater(a);throw syncAuthError('temporary','Session refresh temporarily unavailable');}
+    finally{clearTimeout(timer);}
+    syncAssertAccount(a.uid||'');
+    if(!syncSameSession(a))return syncAuth()?.access_token;
+    if(!r.ok){
+      const terminal=['refresh_token_not_found','refresh_token_already_used','session_not_found','session_expired','user_not_found','user_banned'].includes(j.code||j.error_code);
+      if(r.status>=400&&r.status<500&&r.status!==429&&terminal){
+        syncSaveAuth(null);syncState.err='登录已过期，请重新登录';syncRefreshView();throw syncAuthError('auth');
+      }
+      syncRetryLater(a,r);throw syncAuthError(r.status===429?'rate':'temporary','Session refresh temporarily unavailable');
+    }
+    if(!j.access_token||!j.refresh_token||j.user?.id!==a.uid){syncRetryLater(a);throw syncAuthError('temporary','Incomplete refresh response');}
+    syncSaveSession(j);
+    try{localStorage.removeItem('quiz-auth-retry');}catch(e){}
+    clearTimeout(syncRetryTimer);return syncAuth()?.access_token;
+  }).catch(e=>{if(e.code!=='auth'&&e.code!=='account'&&e.code!=='rate'&&e.code!=='temporary'){syncRetryLater(initial);throw syncAuthError('temporary');}throw e;});
+  syncFlights.set(key,task);
+  try{return await task;}finally{if(syncFlights.get(key)===task)syncFlights.delete(key);}
 }
 async function syncFetch(path, opt = {}, auth = true, uid = null) {
-  const headers = { apikey: SYNC_KEY, "Content-Type": "application/json", ...(opt.headers || {}) };
-  if (auth) {
-    if (uid !== null) syncAssertAccount(uid);
-    const tok = await syncToken();
-    if (uid !== null) syncAssertAccount(uid);
-    if (!tok) { const e = new Error("未登录"); e.code = "auth"; throw e; }
-    headers.Authorization = "Bearer " + tok;
+  const expected=auth?(uid??syncAuth()?.uid??''):null;
+  const headers = { apikey: SYNC_KEY, 'Content-Type': 'application/json', ...(opt.headers || {}) };
+  let tok=null;
+  if(auth){syncAssertAccount(expected);tok=await syncToken();syncAssertAccount(expected);if(!tok)throw syncAuthError('auth','未登录');headers.Authorization='Bearer '+tok;}
+  let r=await fetch(SYNC_URL+path,{...opt,headers});
+  if(auth)syncAssertAccount(expected);
+  // A stale access token gets one coordinated refresh. A generic API 401 never erases a session.
+  if(auth&&r.status===401&&!opt.signal?.aborted){
+    const fresh=await syncToken(true,tok);syncAssertAccount(expected);
+    if(fresh){headers.Authorization='Bearer '+fresh;r=await fetch(SYNC_URL+path,{...opt,headers});syncAssertAccount(expected);}
   }
-  const r = await fetch(SYNC_URL + path, { ...opt, headers });
-  if (!r.ok) {
-    let msg = "";
-    try { const j = await r.json(); msg = j.msg || j.message || j.error_description || j.error || ""; } catch (e) {}
-    const e = new Error(msg || "HTTP " + r.status); e.status = r.status; e.code = r.status === 401 ? "auth" : r.status === 429 ? "rate" : ""; throw e;
+  if(!r.ok){
+    let msg='';try{const j=await r.json();msg=j.msg||j.message||j.error_description||j.error||'';}catch(e){}
+    const e=new Error(msg||'HTTP '+r.status);e.status=r.status;e.code=r.status===429?'rate':r.status===401?'permission':'';throw e;
   }
-  const text = await r.text();
-  return text ? JSON.parse(text) : null;
+  const text=await r.text();if(auth)syncAssertAccount(expected);return text?JSON.parse(text):null;
 }
 
 // 本机的记录（和公开网站的本地数据库同一份）
@@ -17497,7 +17596,7 @@ async function syncNow(force) {
   } catch (e) {
     if (e.code !== "account" && (syncAuth()?.uid || "") === uid) {
       syncState.err = e.code === "auth" ? "登录已过期，请重新登录" : "同步没成功（可能是网络问题），稍后会自动再试";
-      if (e.code === "auth") syncSaveAuth(null);
+      // Only the refresh endpoint can confirm terminal session invalidation.
     }
   }
   syncState.busy = false; syncDraw();
@@ -17537,15 +17636,16 @@ async function syncReload() {
 function syncRefreshView() { if (view === "settings" && typeof renderSettings === "function") renderSettings(); }
 function syncLogout() { syncSaveAuth(null); syncState.err = ""; syncDraw(); syncRefreshView(); }
 async function syncDeleteAccount() {
-  await syncFetch("/rest/v1/rpc/delete_my_account", { method: "POST", body: "{}" });
-  syncLogout();
+  const uid=syncAuth()?.uid||"";
+  await syncFetch("/rest/v1/rpc/delete_my_account", { method: "POST", body: "{}" },true,uid);
+  syncAssertAccount(uid);syncLogout();
 }
 if (SYNC_ON) {
   addEventListener("storage", e => {
     if (e.key !== SYNC_AUTH) return;
     let before = "", after = "";
     try { before = JSON.parse(e.oldValue || "null")?.uid || ""; after = JSON.parse(e.newValue || "null")?.uid || ""; } catch (err) {}
-    if (before !== after) { syncAccountChanged(); syncNow(true); }
+    if (before !== after) { syncAccountChanged(); syncRefreshView(); syncNow(true); }
   });
   addEventListener("online", () => syncNow(true));
   document.addEventListener("visibilitychange", () => { if (document.visibilityState === "visible") syncNow(false); });
@@ -17568,7 +17668,9 @@ function syncCard() {
   const head = el("div", "plan-head");
   head.append(el("h3", null, "账号与同步"));
   card.append(head);
+  card.append(el("p", "sub", "此设备会自动保持登录，无需保存密码。正常重新打开无需验证码；退出登录、清除网站数据或会话失效后需重新验证。无痕窗口、其他浏览器或不同设备需分别登录。"));
   const note = el("p", "sync-msg");
+  if(!a&&syncState.err)card.append(el("p","sync-msg",syncState.err));
   if (a) {
     head.append(el("span", "sync-status", syncStatusText()));
     card.append(el("p", "sync-who", `已登录：${a.email || "（邮箱）"}。在其他设备上用同一个邮箱登录，做题记录会自动同步。`));
@@ -17627,7 +17729,9 @@ function syncCard() {
 }
 async function syncSendCode(email) { await syncFetch("/auth/v1/otp", { method: "POST", body: JSON.stringify({ email, create_user: true }) }, false); }
 async function syncVerify(email, token) {
+  const started=syncAuthStamp(syncAuth());
   const j = await syncFetch("/auth/v1/verify", { method: "POST", body: JSON.stringify({ type: "email", email, token }) }, false);
+  if(syncAuthStamp(syncAuth())!==started)throw syncAuthError("account");
   syncSaveSession(j);
   await syncNow(true);
 }
@@ -17660,7 +17764,7 @@ function fbLoginLink() {
 function feedbackOnAccountChange() {
   fbEpoch++;
   // Remove private information synchronously, before another request can finish.
-  document.querySelectorAll(".fb-admin").forEach(n => n.remove());
+  document.querySelectorAll(".fb-admin,.fb-private").forEach(n => n.remove());
   fbPictures.forEach(item => { if (!item.root.isConnected) fbPictures.delete(item); else item.reload(); });
   if (typeof view !== "undefined" && view === "settings") renderSettings();
 }
@@ -17766,7 +17870,7 @@ function feedbackSettings(wrap) {
       fbSaveReward(result.reward, uid);
       draft = { body: "", request: null }; saveDraft();
       if (!section.isConnected) return;
-      input.value = ""; status.textContent = fbText(result.rewarded_for_this_message ? "bonus" : "sent"); state.textContent = fbText("claimed");
+      input.value = ""; status.textContent = fbText(result.rewarded_for_this_message ? "bonus" : "sent"); state.textContent = fbText("claimed"); refreshMine();
     } catch (e) {
       if (e.code !== "account" && section.isConnected && fbCurrent(uid, epoch)) status.textContent = fbText("messageFailed");
     } finally {
@@ -17774,6 +17878,7 @@ function feedbackSettings(wrap) {
     }
   });
   section.append(state, input, el("span", "fb-note", fbText("limit")), send, status);
+  const refreshMine=feedbackThreads(section,uid,epoch);
   fbRpc("feedback_status").then(result => {
     if (!fbCurrent(uid, epoch)) return;
     fbSaveReward(result.reward, uid);
@@ -17783,34 +17888,69 @@ function feedbackSettings(wrap) {
   }).catch(e => { if (e.code !== "account" && section.isConnected && fbCurrent(uid, epoch)) state.textContent = fbText("statusFailed"); });
 }
 
-function feedbackAdmin(parent, uid, epoch) {
-  const box = el("section", "fb-admin"); box.dataset.noi18n = "";
-  box.append(el("h4", null, fbText("admin")));
-  const refresh = fbButton(fbText("refresh")), more = fbButton(fbText("more"));
-  const list = el("div", "fb-messages"), status = el("p", "fb-note"); status.setAttribute("role", "status");
-  let before = null, busy = false;
-  const load = async reset => {
-    if (busy || !fbCurrent(uid, epoch)) return;
-    busy = true; refresh.disabled = more.disabled = true; status.textContent = fbText("loading");
-    try {
-      const rows = await fbRpc("admin_feedback_messages", { p_before: reset ? null : before });
-      if (!box.isConnected || !fbCurrent(uid, epoch)) return;
-      if (reset) { list.replaceChildren(); before = null; }
-      for (const row of rows) {
-        const item = el("article", "fb-message");
-        const identity = (row.nick || fbText("anonymous")) + " · " + row.user_id;
-        item.append(el("p", "fb-message-author", identity), el("time", null, new Date(row.created_at).toLocaleString(UI_LANG === "zh" ? "zh-CN" : UI_LANG)), el("p", "fb-message-body", row.body));
-        list.append(item); before = row.id;
-      }
-      more.hidden = rows.length < 50; status.textContent = list.children.length ? "" : fbText("none");
-    } catch (e) {
-      if (e.code !== "account" && box.isConnected && fbCurrent(uid, epoch)) {
-        list.replaceChildren(); before = null; more.hidden = true; status.textContent = fbText("adminFailed");
-      }
-    } finally { busy = false; refresh.disabled = more.disabled = false; }
-  };
-  refresh.addEventListener("click", () => load(true)); more.addEventListener("click", () => load(false));
-  box.append(refresh, list, more, status); parent.append(box); load(true);
+Object.assign(FB_COPY.zh,{read:'已读回复',mine:'我的留言',thread:'查看回复',closeThread:'收起回复',reply:'管理员回复',replyInput:'回复此留言（最多 2000 字）',replySend:'发送回复',replySent:'回复已发送',replyFailed:'发送未确认，文字已保留。重试不会重复发送。',readFailed:'已读状态保存失败，请重新打开回复重试。',unread:'有未读回复',replied:'已回复',awaiting:'等待回复',noReplies:'暂时没有回复。',older:'更早的回复'});
+Object.assign(FB_COPY.en,{read:'Replies read',mine:'My messages',thread:'View replies',closeThread:'Hide replies',reply:'Administrator reply',replyInput:'Reply to this message (up to 2000 characters)',replySend:'Send reply',replySent:'Reply sent',replyFailed:'Sending is unconfirmed. Your text is retained; retrying will not send a duplicate.',readFailed:'Read status could not be saved. Reopen the thread to retry.',unread:'Unread replies',replied:'Replied',awaiting:'Awaiting reply',noReplies:'No replies yet.',older:'Older replies'});
+Object.assign(FB_COPY.fr,{read:'Réponses lues',mine:'Mes messages',thread:'Voir les réponses',closeThread:'Masquer les réponses',reply:'Réponse de l’administration',replyInput:'Répondre à ce message (2000 caractères maximum)',replySend:'Envoyer la réponse',replySent:'Réponse envoyée',replyFailed:'Envoi non confirmé. Le texte est conservé ; réessayez sans envoyer de doublon.',readFailed:'Impossible d’enregistrer la lecture. Rouvrez la discussion pour réessayer.',unread:'Réponses non lues',replied:'Répondu',awaiting:'En attente de réponse',noReplies:'Aucune réponse pour le moment.',older:'Réponses antérieures'});
+function feedbackAdmin(parent,uid,epoch){return feedbackThreads(parent,uid,epoch,true);}
+function feedbackThreads(parent,uid,epoch,admin=false){
+ const box=el('section',admin?'fb-admin':'fb-private');box.dataset.noi18n='';box.append(el('h4',null,fbText(admin?'admin':'mine')));
+ const refresh=fbButton(fbText('refresh')),more=fbButton(fbText('more')),list=el('div','fb-messages'),status=el('p','fb-note');status.setAttribute('role','status');
+ let before=null,busy=false;const current=()=>box.isConnected&&fbCurrent(uid,epoch);
+ const load=async reset=>{
+  if(busy||!current())return;busy=true;refresh.disabled=more.disabled=true;status.textContent=fbText('loading');
+  try{
+   const rows=await fbRpc('feedback_threads',{p_before:reset?null:before,p_admin:admin});if(!current())return;
+   if(reset){list.replaceChildren();before=null;}
+   for(const row of rows){list.append(feedbackThreadCard(row,uid,epoch,admin));before=row.id;}
+   more.hidden=rows.length<50;status.textContent=list.children.length?'':fbText('none');
+  }catch(e){if(e.code!=='account'&&current())status.textContent=fbText('adminFailed');}
+  finally{busy=false;refresh.disabled=more.disabled=false;}
+ };
+ refresh.addEventListener('click',()=>load(true));more.addEventListener('click',()=>load(false));more.hidden=true;
+ box.append(refresh,list,more,status);parent.append(box);load(true);return ()=>load(true);
+}
+function feedbackThreadCard(row,uid,epoch,admin){
+ const item=el('article','fb-message'),badge=el('p','fb-note');
+ const current=()=>item.isConnected&&fbCurrent(uid,epoch);
+ const drawBadge=()=>{badge.textContent=fbText(row.unread_count?'unread':row.reply_count?(admin?'replied':'read'):'awaiting')+(row.reply_count?' · '+row.reply_count:'');};drawBadge();
+ if(admin)item.append(el('p','fb-message-author',(row.nick||fbText('anonymous'))+' · '+row.user_id));
+ item.append(el('time',null,new Date(row.created_at).toLocaleString(UI_LANG==='zh'?'zh-CN':UI_LANG)),el('p','fb-message-body',row.body),badge);
+ const toggle=fbButton(fbText('thread')),panel=el('div','fb-thread'),list=el('div'),status=el('p','fb-note'),older=fbButton(fbText('older')),retry=fbButton(fbText('retry'));
+ panel.hidden=true;older.hidden=true;retry.hidden=true;toggle.setAttribute('aria-expanded','false');status.setAttribute('role','status');
+ let before=null,busy=false,run=0;
+ const load=async reset=>{
+  if(busy||!current())return;busy=true;const revision=++run;older.disabled=retry.disabled=true;status.textContent=fbText('loading');retry.hidden=true;
+  try{
+   const data=await fbRpc('feedback_thread',{p_message:row.id,p_before:reset?null:before});if(!current()||revision!==run||panel.hidden)return;
+   if(reset){list.replaceChildren();before=null;}
+   const block=el('div');for(const reply of data.replies){const card=el('article','fb-reply');card.append(el('b',null,fbText('reply')),el('time',null,new Date(reply.created_at).toLocaleString(UI_LANG==='zh'?'zh-CN':UI_LANG)),el('p','fb-message-body',reply.body));block.append(card);}
+   if(reset)list.append(block);else list.prepend(block);
+   if(data.replies.length)before=data.replies[0].id;
+   older.hidden=data.replies.length<50;status.textContent=list.querySelector('.fb-reply')?'':fbText('noReplies');
+   if(reset&&data.replies.length){
+    const last=data.replies[data.replies.length-1].id;
+    try{await fbRpc('mark_feedback_read',{p_message:row.id,p_reply:last});if(current()&&revision===run){row.unread_count=0;drawBadge();}}
+    catch(e){if(e.code!=='account'&&current()&&revision===run)status.textContent=fbText('readFailed');}
+   }
+  }catch(e){if(e.code!=='account'&&current()&&revision===run){status.textContent=fbText('adminFailed');retry.hidden=false;}}
+  finally{busy=false;older.disabled=retry.disabled=false;}
+ };
+ toggle.addEventListener('click',()=>{if(busy)return;panel.hidden=!panel.hidden;toggle.textContent=fbText(panel.hidden?'thread':'closeThread');toggle.setAttribute('aria-expanded',String(!panel.hidden));if(!panel.hidden)load(true);});
+ older.addEventListener('click',()=>load(false));retry.addEventListener('click',()=>load(before===null));
+ panel.append(older,list,status,retry);
+ if(admin){
+  const input=el('textarea');input.rows=3;input.maxLength=2000;input.placeholder=fbText('replyInput');input.setAttribute('aria-label',fbText('replyInput'));
+  const send=fbButton(fbText('replySend'),'btn'),note=el('p','fb-note');note.setAttribute('role','status');let request=null,sending=false;
+  input.addEventListener('input',()=>{request=null;});
+  send.addEventListener('click',async()=>{
+   if(sending||!current())return;const body=input.value.trim();if(!body||[...body].length>2000){note.textContent=fbText('empty');return;}
+   request ||= crypto.randomUUID();sending=true;send.disabled=input.disabled=true;note.textContent=fbText('sending');
+   try{await fbRpc('reply_feedback',{p_message:row.id,p_request:request,p_body:body});if(!current())return;request=null;input.value='';note.textContent=fbText('replySent');row.reply_count=Number(row.reply_count||0)+1;drawBadge();await load(true);}
+   catch(e){if(e.code!=='account'&&current())note.textContent=fbText('replyFailed');}
+   finally{sending=false;send.disabled=input.disabled=false;}
+  });panel.append(input,send,note);
+ }
+ item.append(toggle,panel);return item;
 }
 // Sharing never sends to a recipient without the user's own action.
 const SHARE_URL = 'https://cosonder.github.io/quiz/french/';
@@ -18002,6 +18142,7 @@ function setGoalSection(wrap) {
 // 每次用户可见更新都新增记录：普通更新 1.x.y → 1.x.(y+1)；较大功能变动 → 1.(x+1).0。
 // 首位保持 1，只有用户明确要求才可修改；历史记录保留。完整发布规则见根目录 AGENTS.md。
 const CHANGELOG = [
+  {"v": "1.10.0", "d": "2026-11-15", "items": ["新增独立口语栏目：七个现有情景任务与环法共用进度，可筛选级别与完成情况；练习不绕过环法奖励条件。站内留言新增私密回复、我的留言、未读状态及管理员多次回复。登录续期遇到限流或服务故障会保留会话并退避重试，协调多标签续期，避免旧请求影响新账号。"]},
   {"v": "1.9.8", "d": "2026-11-15", "p": "fr", "items": ["分享新增书店、学园、电台、列车与咖啡馆五张学习伙伴海报，共六张。进入独立分享页时随机选图，可点“换一张”；预览、下载与分享附件同步切换，按需加载。首次分享 800 金币仍为每账号一次。"]},
   {"v": "1.9.7", "d": "2026-11-15", "p": "fr", "items": ["设置新增分享入口与三位学习伙伴分享图，支持系统分享、复制链接及下载图片。完成发送后确认，可领取首次分享 800 金币，每个账号一次；取消、复制或下载不会自动发奖，网络重试不会重复领取。"]},
   { v: "1.9.6", d: "2026-11-15", p: "fr", items: ["三位学习伙伴沿用现有声线补齐剩余 120 句固定台词：每人 48 句，共 144 句 Gemini 配音，覆盖 8 类场景与全部亲密度等级。试听区可逐句查看法语、翻译并播放对应片段；动态词汇例句仍使用系统朗读。", "新增录音已完成台词转写核对、片段边界和音量检查，保留原有 24 句。三条角色音轨按需加载，未选中的角色不提前下载；继续保留声音开关、题目音频优先和自由拖动。"] },
@@ -19006,6 +19147,7 @@ const BOARDS = {
     { id: "vocab", t: "词汇", d: "B1–B2 主题词汇：看词选义、看图选词、例句填空等题型，答错的词进生词本。", n: () => `${V_WORDS.length} 个词` },
     { id: "conj", t: "变位", d: "动词 × 时态随机出题，可以选择或填空，按记忆等级安排复习。", n: () => `${CJ_VERBS.length} 个动词` },
     { id: "listen", t: "听力", d: "听写辨音、语义听力、长文听力和《废柴联盟》台词题。", n: () => `${BANK.filter(isListen).length} 题` },
+    { id: "oral", t: "口语", d: "七个情景任务：分层提示、录音回听、确认意图与换条件重练，与环法之旅共用进度。", n: () => `${TOUR_ORAL_CASES.length} 个任务` },
     { id: "exam", t: "模拟卷", d: "B1 全国卷格式，自动判分，作文由 Claude 批改。", n: () => "整套试卷" },
   ],
   game: [
@@ -19064,7 +19206,7 @@ function navSync() {
   tabShop.classList.toggle("locked", typeof shopOpen === "function" && !shopOpen());
   tabSet.setAttribute("aria-selected", String(m === "settings"));
   if (view !== "book" && toc.parentElement !== tocwrap) tocwrap.append(toc);   // 目录从错题本里放回原处
-  const solo = ["home", "exam", "settings", "tour", "shop", "book", "friends"].includes(view) || (view === "vocab" && vIsGame()) || m === "game";
+  const solo = ["home", "exam", "oral", "settings", "tour", "shop", "book", "friends"].includes(view) || (view === "vocab" && vIsGame()) || m === "game";
   layoutEl.classList.toggle("solo", solo);
   const kn = document.querySelector(".keys-note"); if (kn) kn.hidden = view !== "quiz";
   boardBar.hidden = !b;
@@ -19224,7 +19366,7 @@ startSet = function (key, fresh) {
 };
 
 function switchView(v, setKey) {
-  if (typeof tourOralLeave === "function" && v !== "tour") tourOralLeave();
+  if (typeof tourOralLeave === "function" && (view !== v || v === "oral")) tourOralLeave();
   if (typeof tourRun !== "undefined" && view === "tour" && v !== "tour") tourRun = null;
   if (typeof petOnLeave === "function" && view !== v) petOnLeave();
   if (view === "cafe" && v !== "cafe" && typeof cafeMarkAway === "function") cafeMarkAway();
@@ -19242,6 +19384,7 @@ function switchView(v, setKey) {
   if (v === "conj") { renderConj(); return; }
   if (v === "settings") { renderSettings(); return; }
   if (v === "tour") { renderTour(); return; }
+  if (v === "oral") { renderOral(); return; }
   if (v === "lsp") { renderLsp(); return; }
   if (v === "cafe") { cafeEnter(); return; }
   if (v === "pet") { renderPet(); return; }
