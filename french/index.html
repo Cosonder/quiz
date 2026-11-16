@@ -14822,7 +14822,7 @@ GPA2.forEach(u => {
     LEVEL_OF[id] = u.lv; TAGS_OF[id] = q.tags; KP_OF[id] = "gb" + u.unit;
   });
 });
-const LANG_FILES = {"en": "lang-en.js?v=3c568ff55e", "fr": "lang-fr.js?v=8bbba6bf55"};
+const LANG_FILES = {"en": "lang-en.js?v=0cf47b6be6", "fr": "lang-fr.js?v=237c836515"};
 (() => { let l = null; try { l = localStorage.getItem("fq-lang"); } catch (e) {}
   if (Object.hasOwn(LANG_FILES, l)) document.write('<script src="' + LANG_FILES[l] + '"><\/script>'); })();
 </script>
@@ -18233,6 +18233,7 @@ function setGoalSection(wrap) {
 // 每次用户可见更新都新增记录：默认只递增第三位 1.x.y → 1.x.(y+1)，超过 9 继续到 10、11；第二位升级需用户明确要求。
 // 首位保持 1，只有用户明确要求才可修改；历史记录保留。完整发布规则见根目录 AGENTS.md。
 const CHANGELOG = [
+  {"v": "1.9.16", "d": "2026-11-16", "p": "fr", "items": ["接入剩余 5 段 Pia 听力补录：Chen 长文、车站问句、外套打折对话、餐厅招呼和第二家咖啡馆计划。Pia 配音现覆盖全部 121 段普通听力和 18 段模拟卷女声；男女角色分工保持不变，男声录音待后续补齐。关键词填空、复原句子和理解选择继续共用同一材料录音。"]},
   {"v": "1.9.15", "d": "2026-11-16", "p": "fr", "items": ["扩充 Pia 的普通听力与模拟卷女声配音，保留男女对话分工。121 段普通听力材料新增关键词填空和复原句子：长文支持多空，词块可点击排列、撤回与清空。三种题型共用同一录音，每题只记录一次成绩，提交后可回听和查看答案。"]},
   {"v": "1.9.14", "d": "2026-11-16", "p": "fr", "items": ["接入 11 段 Gemini 角色录音：补齐 Lison 第一段亲近剧情与 Pia 长听力，并新增三位伙伴各三句番茄钟提示。开启角色朗读后，开始专注、专注完成和开始休息会播放对应录音；重复点击、多标签与暂停恢复不会重复开场，题目音频优先。伙伴继续只用角色录音，不回退系统声音。"]},
   {"v": "1.9.13", "d": "2026-11-16", "p": "fr", "items": ["学习伙伴的点击互动、固定语音试听、羁绊故事与番茄钟试听仅播放 Gemini 角色录音，缺少录音或加载失败时不再回退系统声音。互动例句只从当前人物已有录音的内容中选择，保留原台词、亲密度与题目音频优先规则；普通学习配音中的系统选项不变。"]},
@@ -28887,7 +28888,7 @@ function studyAudioLabel(btn,label){
 async function studyAudioIndex(){
   if(studyAudioManifest)return studyAudioManifest;
   if(studyAudioLoad)return studyAudioLoad;
-  studyAudioLoad=(async()=>{const controller=new AbortController(),timer=setTimeout(()=>controller.abort(),8000);try{const r=await fetch(STUDY_AUDIO_BASE+'manifest.json?v=1.9.15',{signal:controller.signal});if(!r.ok)throw Error('manifest');const m=await r.json();if(m.version!==1||!m.characters)throw Error('manifest');studyAudioManifest=m;return m;}finally{clearTimeout(timer);studyAudioLoad=null;}})();
+  studyAudioLoad=(async()=>{const controller=new AbortController(),timer=setTimeout(()=>controller.abort(),8000);try{const r=await fetch(STUDY_AUDIO_BASE+'manifest.json?v=1.9.16',{signal:controller.signal});if(!r.ok)throw Error('manifest');const m=await r.json();if(m.version!==1||!m.characters)throw Error('manifest');studyAudioManifest=m;return m;}finally{clearTimeout(timer);studyAudioLoad=null;}})();
   return studyAudioLoad;
 }
 function studySystemPart(text,rate,btn,done,role){

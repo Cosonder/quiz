@@ -1,12 +1,12 @@
 {
   "version": 1,
-  "release": "1.9.15",
+  "release": "1.9.16",
   "provider": "Google Gemini via AI Studio",
   "model": "gemini-3.8-flash-tts",
   "generatedDate": "2026-11-15",
   "integratedDate": "2026-11-16",
   "format": "AAC-LC, 24 kHz mono, 64 kbps M4A",
-  "qaMethod": "Two local French ASR passes, targeted checks for discrepancies, silent segment boundaries and AAC decoding. Five ambiguous clips withheld pending replacement. No human listening certification.",
+  "qaMethod": "Local small/base ASR, unprompted medium review of long-passage ambiguity, quiet segment boundaries, level normalization and AAC decoding. No human listening certification.",
   "characters": {
     "ninon": [
       {
@@ -3400,41 +3400,110 @@
         "generatedDate": "2026-11-16",
         "integratedDate": "2026-11-16",
         "qaNote": "Local full-master small ASR, independent base clip ASR, targeted small checks for discrepancies, silence boundaries and AAC decoding; no human listening certification."
+      },
+      {
+        "text": "Je m'appelle Chen, j'ai vingt-six ans et je suis arrivée en France il y a un an et demi. Au début, j'habitais à Paris chez une amie, mais les loyers étaient trop chers, alors j'ai déménagé à Lyon en septembre dernier. Maintenant, je partage un appartement avec deux étudiantes françaises, ce qui m'aide beaucoup à progresser en français. Le matin, je travaille à mi-temps dans une librairie, et l'après-midi, je suis des cours de gestion à l'université. Ce qui me manque le plus, c'est la cuisine de ma mère. Alors le dimanche, j'essaie de préparer des raviolis avec mes colocataires. Elles adorent ça ! L'année prochaine, j'aimerais trouver un stage dans une entreprise internationale.",
+        "textSha256": "a452a92662cd06db6bbf070d88c2b3dffb8c492347a14ebe54e7e772849379da",
+        "file": "pia/a452a92662cd06db6bbf.m4a",
+        "kind": "teaching",
+        "voiceName": "Pia 18 — vive et fière 1",
+        "voiceAgeImpression": 18,
+        "canonicalAge": 21,
+        "masterSha256": "5f30c13963328438963eeb1abf54dff44c67b314742fe3cda9c8ff747770868f",
+        "audioSha256": "f5edcece679ea9a9e4e67f5fdc5675a90be0045f632fd06960466b9a6fa0d3e1",
+        "sourceStart": 0.0,
+        "sourceEnd": 46.0725,
+        "durationSeconds": 46.0725,
+        "gainDb": 0.272,
+        "decodeCorrelation": 0.99653,
+        "bytes": 406101,
+        "generatedDate": "2026-11-16",
+        "integratedDate": "2026-11-16",
+        "qaNote": "New retake reviewed with local small/base French ASR. The long-passage spelling ambiguity was independently resolved by unprompted medium ASR on both the disputed sentence and full passage. Silence boundaries and AAC decoding checked; not human listening certification."
+      },
+      {
+        "text": "Où est la gare ?",
+        "textSha256": "4fda60c624c30903d7b42c3fea08a1df1371aad0e8e3447bcf39c9497d5dea3e",
+        "file": "pia/4fda60c624c30903d7b4.m4a",
+        "kind": "teaching",
+        "voiceName": "Pia 18 — vive et fière 1",
+        "voiceAgeImpression": 18,
+        "canonicalAge": 21,
+        "masterSha256": "5f30c13963328438963eeb1abf54dff44c67b314742fe3cda9c8ff747770868f",
+        "audioSha256": "b0debe7a8abc0f72c9a289deb66564ec662bf80aa86868a8a4f002a39fde2ad6",
+        "sourceStart": 46.0725,
+        "sourceEnd": 48.3825,
+        "durationSeconds": 2.31,
+        "gainDb": -2.353,
+        "decodeCorrelation": 0.98845,
+        "bytes": 19966,
+        "generatedDate": "2026-11-16",
+        "integratedDate": "2026-11-16",
+        "qaNote": "New retake reviewed with local small/base French ASR. The long-passage spelling ambiguity was independently resolved by unprompted medium ASR on both the disputed sentence and full passage. Silence boundaries and AAC decoding checked; not human listening certification."
+      },
+      {
+        "text": "Qu'est-ce que tu penses de ce manteau ? Il est en solde à soixante euros.",
+        "textSha256": "43b0dbaa6abd11c4e24f2f825aaade4b76c5817d6368be680cc07636423475a0",
+        "file": "pia/43b0dbaa6abd11c4e24f.m4a",
+        "kind": "teaching",
+        "voiceName": "Pia 18 — vive et fière 1",
+        "voiceAgeImpression": 18,
+        "canonicalAge": 21,
+        "masterSha256": "5f30c13963328438963eeb1abf54dff44c67b314742fe3cda9c8ff747770868f",
+        "audioSha256": "f7dac5ca7b17cdae4094ca18643be62a8a3f73e9455747d40e7cfb94676a2fca",
+        "sourceStart": 48.3825,
+        "sourceEnd": 53.485,
+        "durationSeconds": 5.1025,
+        "gainDb": 0.305,
+        "decodeCorrelation": 0.99277,
+        "bytes": 45648,
+        "generatedDate": "2026-11-16",
+        "integratedDate": "2026-11-16",
+        "qaNote": "New retake reviewed with local small/base French ASR. The long-passage spelling ambiguity was independently resolved by unprompted medium ASR on both the disputed sentence and full passage. Silence boundaries and AAC decoding checked; not human listening certification."
+      },
+      {
+        "text": "Restaurant Le Jardin, bonjour.",
+        "textSha256": "00d5aa5ccaec4b54780b2003d2f03d7d5b1652cf172370fec9382bb579fd2ced",
+        "file": "pia/00d5aa5ccaec4b54780b.m4a",
+        "kind": "teaching",
+        "voiceName": "Pia 18 — vive et fière 1",
+        "voiceAgeImpression": 18,
+        "canonicalAge": 21,
+        "masterSha256": "5f30c13963328438963eeb1abf54dff44c67b314742fe3cda9c8ff747770868f",
+        "audioSha256": "57abfc7765198ec7267d873f45d5bb834928f82bfd1de3f6af020534296944d0",
+        "sourceStart": 53.485,
+        "sourceEnd": 56.1775,
+        "durationSeconds": 2.6925,
+        "gainDb": -1.064,
+        "decodeCorrelation": 0.99479,
+        "bytes": 22759,
+        "generatedDate": "2026-11-16",
+        "integratedDate": "2026-11-16",
+        "qaNote": "New retake reviewed with local small/base French ASR. The long-passage spelling ambiguity was independently resolved by unprompted medium ASR on both the disputed sentence and full passage. Silence boundaries and AAC decoding checked; not human listening certification."
+      },
+      {
+        "text": "J'aimerais ouvrir un deuxième café, peut-être à Lyon, l'année prochaine.",
+        "textSha256": "47606bf92fa74ae44405603fd717eccc9728105213a5822a7160b9dc90abf91f",
+        "file": "pia/47606bf92fa74ae44405.m4a",
+        "kind": "teaching",
+        "voiceName": "Pia 18 — vive et fière 1",
+        "voiceAgeImpression": 18,
+        "canonicalAge": 21,
+        "masterSha256": "5f30c13963328438963eeb1abf54dff44c67b314742fe3cda9c8ff747770868f",
+        "audioSha256": "6fa6d19a423d2e7c05d223624714148d7169fed560a7bb83398be3be6adef3b1",
+        "sourceStart": 56.1775,
+        "sourceEnd": 61.44,
+        "durationSeconds": 5.2625,
+        "gainDb": -0.78,
+        "decodeCorrelation": 0.99786,
+        "bytes": 45763,
+        "generatedDate": "2026-11-16",
+        "integratedDate": "2026-11-16",
+        "qaNote": "New retake reviewed with local small/base French ASR. The long-passage spelling ambiguity was independently resolved by unprompted medium ASR on both the disputed sentence and full passage. Silence boundaries and AAC decoding checked; not human listening certification."
       }
     ]
   },
-  "pendingRetakes": [
-    {
-      "character": "pia",
-      "text": "Je m'appelle Chen, j'ai vingt-six ans et je suis arrivée en France il y a un an et demi. Au début, j'habitais à Paris chez une amie, mais les loyers étaient trop chers, alors j'ai déménagé à Lyon en septembre dernier. Maintenant, je partage un appartement avec deux étudiantes françaises, ce qui m'aide beaucoup à progresser en français. Le matin, je travaille à mi-temps dans une librairie, et l'après-midi, je suis des cours de gestion à l'université. Ce qui me manque le plus, c'est la cuisine de ma mère. Alors le dimanche, j'essaie de préparer des raviolis avec mes colocataires. Elles adorent ça ! L'année prochaine, j'aimerais trouver un stage dans une entreprise internationale.",
-      "textSha256": "a452a92662cd06db6bbf070d88c2b3dffb8c492347a14ebe54e7e772849379da",
-      "reason": "Repeated ASR pronunciation ambiguity; replacement generated, awaiting download and review."
-    },
-    {
-      "character": "pia",
-      "text": "Où est la gare ?",
-      "textSha256": "4fda60c624c30903d7b42c3fea08a1df1371aad0e8e3447bcf39c9497d5dea3e",
-      "reason": "Repeated ASR pronunciation ambiguity; replacement generated, awaiting download and review."
-    },
-    {
-      "character": "pia",
-      "text": "Qu'est-ce que tu penses de ce manteau ? Il est en solde à soixante euros.",
-      "textSha256": "43b0dbaa6abd11c4e24f2f825aaade4b76c5817d6368be680cc07636423475a0",
-      "reason": "Repeated ASR pronunciation ambiguity; replacement generated, awaiting download and review."
-    },
-    {
-      "character": "pia",
-      "text": "Restaurant Le Jardin, bonjour.",
-      "textSha256": "00d5aa5ccaec4b54780b2003d2f03d7d5b1652cf172370fec9382bb579fd2ced",
-      "reason": "Repeated ASR pronunciation ambiguity; replacement generated, awaiting download and review."
-    },
-    {
-      "character": "pia",
-      "text": "J'aimerais ouvrir un deuxième café, peut-être à Lyon, l'année prochaine.",
-      "textSha256": "47606bf92fa74ae44405603fd717eccc9728105213a5822a7160b9dc90abf91f",
-      "reason": "Repeated ASR pronunciation ambiguity; replacement generated, awaiting download and review."
-    }
-  ],
-  "clipCount": 175,
-  "totalBytes": 6160402
+  "pendingRetakes": [],
+  "clipCount": 180,
+  "totalBytes": 6700639
 }
