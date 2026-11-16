@@ -14815,7 +14815,7 @@ GPA2.forEach(u => {
     LEVEL_OF[id] = u.lv; TAGS_OF[id] = q.tags; KP_OF[id] = "gb" + u.unit;
   });
 });
-const LANG_FILES = {"en": "lang-en.js?v=d4e5812c69", "fr": "lang-fr.js?v=e690813843"};
+const LANG_FILES = {"en": "lang-en.js?v=59c84214ad", "fr": "lang-fr.js?v=7d0b0aca50"};
 (() => { let l = null; try { l = localStorage.getItem("fq-lang"); } catch (e) {}
   if (Object.hasOwn(LANG_FILES, l)) document.write('<script src="' + LANG_FILES[l] + '"><\/script>'); })();
 </script>
@@ -18226,6 +18226,7 @@ function setGoalSection(wrap) {
 // 每次用户可见更新都新增记录：默认只递增第三位 1.x.y → 1.x.(y+1)，超过 9 继续到 10、11；第二位升级需用户明确要求。
 // 首位保持 1，只有用户明确要求才可修改；历史记录保留。完整发布规则见根目录 AGENTS.md。
 const CHANGELOG = [
+  {"v": "1.9.13", "d": "2026-11-16", "p": "fr", "items": ["学习伙伴的点击互动、固定语音试听、羁绊故事与番茄钟试听仅播放 Gemini 角色录音，缺少录音或加载失败时不再回退系统声音。互动例句只从当前人物已有录音的内容中选择，保留原台词、亲密度与题目音频优先规则；普通学习配音中的系统选项不变。"]},
   {"v": "1.9.12", "d": "2026-11-16", "p": "fr", "items": ["新增免费番茄时钟：25 分钟专注、5 分钟短休息，每四轮安排 15 分钟长休息，可自定义、暂停、继续和提前结束。每阶段手动开始，刷新和切换栏目保留进度；学习伙伴、桌宠菜单与设置均可进入。", "专注时安静陪伴，阶段结束提醒避让听力、考试与录音。计时和近七日统计仅存本设备浏览器、按账号隔离，多标签去重；中止时长单列，不额外增加金币、亲密度或问卷学习天数。锁屏或关闭网页不保证准点响铃，返回时恢复。"]},
   {"v": "1.9.11", "d": "2026-11-16", "p": "fr", "items": ["问卷向所有人开放查看与提交，未登录提交后可登录领取奖励。基础反馈每账号奖励 500 金币；累计在 10 个不同 UTC 日期学习后，十日反馈再奖励 3000 金币，两档各一次、合计 3500，不要求连续。旧版 200 金币自动补足到 500；同日多次学习、重复提交、重试和跨设备不会重复发奖。"]},
   {"v":"1.9.10","d":"2026-11-16","p":"fr","items":["学习伙伴新增九套羁绊服装，每套包含五种动作；支持面板试穿、解锁后穿戴和恢复原装，保留原配饰。三人的亲密度分别来自语法与变位、词汇、听力与口语，显示下一奖励及增长原因，保留旧版已解锁台词。","新增三人各三段羁绊故事及普通陪伴版本，可选择开启亲近剧情；仅点击播放，不打断做题。本批接入 34 段 Gemini 配音：17 段剧情与陪伴、17 段教学样本，另两段待重录。设置新增系统、Ninon、Lison、Pia 四种学习配音选项，支持慢速、停止与切题取消；未录制内容明确使用系统朗读。","设置新增自愿体验问卷，完成本期可获 200 金币，每账号一次；评分和付费意愿不影响奖励。服务端防止重复发奖，回答关联账号，管理员仅查看达到最小样本数的汇总。"]},
@@ -26803,16 +26804,6 @@ function petVoiceAllowed(manual = false) {
     !(synth && (synth.speaking || synth.pending)) &&
     !document.querySelector('.play[aria-pressed="true"]:not([data-pet-audio])');
 }
-function petSystemVoice(line, button) {
-  if (typeof tts === 'undefined' || !tts || !(frVoice || pickVoice())) return false;
-  const previous = lastAutoAudio, epoch = petVoiceEpoch;
-  try {
-    const ok = speak(line.fr, .85, button, () => { if (epoch === petVoiceEpoch) { petVoiceSystem = false; petVoiceButton = null; } }, true) !== false;
-    petVoiceSystem = ok; if (ok) petVoiceButton = button;
-    return ok;
-  } catch (e) { return false; }
-  finally { lastAutoAudio = previous; }
-}
 // Unlock silently in a real user gesture, before timers/network work. Once running,
 // the context can play delayed feedback; a new transient click is not required.
 function petPrimeVoice() {
@@ -26832,7 +26823,7 @@ async function petPlayVoice(line, button = null, manual = false, recordedOnly = 
   petVoiceManual = manual;
   const character = petConfig().character, page = view, card = petQuestionCard(), epoch = petVoiceEpoch;
   const valid = () => epoch === petVoiceEpoch && character === petConfig().character && page === view && card === petQuestionCard() && petVoiceAllowed(manual);
-  const fallback = () => !recordedOnly && valid() && petSystemVoice(line, button);
+  const fallback = () => false; // Companion voices never use browser/system TTS.
   const Context = window.AudioContext || window.webkitAudioContext;
   if (!Context) return fallback();
   try {
@@ -26850,19 +26841,30 @@ async function petPlayVoice(line, button = null, manual = false, recordedOnly = 
       if (!valid()) return false;
       petVoiceIndex = index;
     }
-    const track = petVoiceIndex.characters?.[character], cue = track?.cues?.[line.fr];
-    if (!cue) return fallback();
-    if (!/^(ninon|lison|pia)\.m4a$/.test(track.file) || !Number.isFinite(cue.start) || !Number.isFinite(cue.end) || cue.start < 0 || cue.end <= cue.start) throw new Error('Invalid voice cue');
-    if (petVoiceBuffer?.character !== character) {
+    let track = petVoiceIndex.characters?.[character], cue = track?.cues?.[line.fr];
+    let base = PET_VOICE_BASE, file = track?.file, standalone = false;
+    if (!cue && typeof studyAudioIndex === 'function') {
+      const study = await studyAudioIndex();
+      if (!valid()) return false;
+      const entry = study.characters?.[character]?.find(x => x.text === line.fr);
+      if (entry && /^[-a-z0-9/]+\.m4a$/.test(entry.file) && !entry.file.includes('..')) {
+        base = STUDY_AUDIO_BASE; file = entry.file; standalone = true;
+      }
+    }
+    if (!cue && !standalone) return false;
+    if (!standalone && (!/^(ninon|lison|pia)\.m4a$/.test(file) || !Number.isFinite(cue.start) || !Number.isFinite(cue.end) || cue.start < 0 || cue.end <= cue.start)) throw new Error('Invalid voice cue');
+    const cacheKey = base + file;
+    if (petVoiceBuffer?.character !== character || petVoiceBuffer.key !== cacheKey) {
       petVoiceBuffer = null; // Keep only the selected character's decoded audio.
-      const response = await fetch(PET_VOICE_BASE + track.file + '?v=' + PET_VOICE_VERSION, { signal: controller.signal });
+      const response = await fetch(base + file + '?v=' + PET_VOICE_VERSION, { signal: controller.signal });
       if (!response.ok) throw new Error('Voice recording unavailable');
       const buffer = await petVoiceContext.decodeAudioData(await response.arrayBuffer());
       if (!valid()) return false;
-      petVoiceBuffer = { character, buffer };
+      petVoiceBuffer = { character, buffer, key: cacheKey };
     }
     if (!valid()) return false;
     const buffer = petVoiceBuffer.buffer;
+    if (standalone) cue = { start: 0, end: buffer.duration };
     if (cue.end > buffer.duration + .03) throw new Error('Voice cue exceeds recording');
     const source = petVoiceContext.createBufferSource(); source.buffer = buffer; source.connect(petVoiceContext.destination);
     petVoiceSource = source; petVoiceButton = button; button?.setAttribute('aria-pressed', 'true');
@@ -26903,7 +26905,13 @@ function petRecentLine() {
     if (seen.has(d.word)) continue; seen.add(d.word);
     const w = V_BY_ID.get(d.word); if (!w) continue;
     const e = (w.example || V_PICEX[w.fr]), en = typeof V_PICEX_EN !== 'undefined' && (w.sen || V_PICEX_EN[w.fr]);
-    if (e && typeof e[0] === 'string' && e[1] && en) return { word: w.fr, fr: e[0].replace(/\[([^\]]+)\]/g, '$1'), zh: e[1], en };
+    if (e && typeof e[0] === 'string' && e[1] && en) {
+      const fr = e[0].replace(/\[([^\]]+)\]/g, '$1'), character = petConfig().character;
+      // Only show a vocabulary example here when this character has its exact recording.
+      if (petVoiceIndex?.characters?.[character]?.cues?.[fr] ||
+          (typeof studyAudioManifest !== 'undefined' && studyAudioManifest?.characters?.[character]?.some(x => x.text === fr)))
+        return { word: w.fr, fr, zh: e[1], en };
+    }
     if (seen.size >= 20) break;
   }
   return null;
@@ -26941,7 +26949,7 @@ function petRenderBubble() {
   if (compact) { w.prepend(b); return; }
   const actions = el('div', 'pet-actions');
   const audio = petButton('朗读', () => {
-    petPlayVoice(line, audio, true).then(ok => { status.textContent = tr(ok ? (petVoiceSystem ? '系统朗读' : 'AI 合成配音') : '请开启伙伴语音，或等题目朗读结束后再试。'); });
+    petPlayVoice(line, audio, true).then(ok => { status.textContent = petI18n(ok ? ['Gemini 角色配音','Gemini character voice','Voix du personnage Gemini'] : ['录音暂不可用：请检查声音开关、网络，或等待题目音频结束。不会切换系统语音。','Recording unavailable: check sound and network, or wait for study audio to finish. No system voice is used.','Enregistrement indisponible : vérifiez le son et le réseau, ou attendez la fin de l’exercice audio. Aucune voix système.']); });
   }, 'petSpeak', 'btn ghost play');
   const voiceAvailable = petConfig().voice;
   audio.dataset.petAudio = '1'; audio.setAttribute('aria-pressed', 'false'); audio.disabled = !voiceAvailable;
@@ -27143,7 +27151,7 @@ function petVoicePreview(root) {
   if (!petOwned()) return;
   const character = petConfig().character;
   const section = el('section', 'pet-voice-preview');
-  section.append(el('h3', null, tr('角色语音试听')), el('p', 'sub', tr('AI 合成配音 · 每位伙伴 48 句固定台词，覆盖 8 类场景。可切换试听；实际互动仍按亲密度解锁，动态词汇例句使用系统朗读。')));
+  section.append(el('h3', null, tr('角色语音试听')), el('p', 'sub', petI18n(['Gemini 配音 · 每位伙伴 48 句固定台词，覆盖 8 类场景。点击互动只使用已有角色录音的台词与例句；缺少录音或加载失败时不会切换系统语音。','Gemini voices: 48 lines per companion across 8 situations. Tap interactions use recorded lines and examples only; missing or failed recordings never switch to system speech.','Voix Gemini : 48 répliques par compagne, dans 8 situations. Les interactions utilisent uniquement des répliques et exemples enregistrés, sans recours à la voix système.'])));
   const status = el('p', 'sub'); status.setAttribute('role', 'status');
   const grid = el('div', 'pet-voice-grid');
   const events = [['welcome','问候'],['enter','开始学习'],['happy','答对'],['sad','答错'],['streak','连续答对'],['plan','完成计划'],['idle','休息提醒'],['tap','点击互动']];
@@ -27157,7 +27165,7 @@ function petVoicePreview(root) {
         if (x !== selected || character !== petConfig().character) return;
         const cue = petVoiceIndex?.characters?.[character]?.cues?.[x[2]];
         const seconds = ok && !petVoiceSystem && cue ? ' · ' + (cue.end-cue.start).toFixed(1) + ' s' : '';
-        status.textContent = x[2] + ' · ' + tr(ok ? (petVoiceSystem ? '系统朗读' : 'AI 合成配音') : '请开启伙伴语音，或等题目朗读结束后再试。') + seconds;
+        status.textContent = x[2] + ' · ' + petI18n(ok ? ['Gemini 角色配音','Gemini character voice','Voix du personnage Gemini'] : ['录音暂不可用：请检查声音开关、网络，或等待题目音频结束。不会切换系统语音。','Recording unavailable: check sound and network, or wait for study audio to finish. No system voice is used.','Enregistrement indisponible : vérifiez le son et le réseau, ou attendez la fin de l’exercice audio. Aucune voix système.']) + seconds;
       });
     }, 'pet-voice-' + kind, 'btn ghost play');
     button.dataset.petAudio = '1'; button.setAttribute('aria-pressed', 'false');
@@ -27200,7 +27208,7 @@ function studySystemPart(text,rate,btn,done,role){
   if(!tts){done?.();return false;}const v=exVoices(),u=new SpeechSynthesisUtterance(text);u.lang='fr-FR';if(v[role])u.voice=v[role];u.rate=rate;u.pitch=v.F===v.M?(role==='F'?1.15:.85):1;u.onend=u.onerror=()=>{btn?.setAttribute('aria-pressed','false');done?.();};tts.speak(u);btn?.setAttribute('aria-pressed','true');return true;
 }
 // One epoch governs a whole exam dialogue, so stop/voice changes cannot start its next line.
-function studySpeakSequence(parts,rate,btn,done,voiceOverride=null){
+function studySpeakSequence(parts,rate,btn,done,voiceOverride=null,recordedOnly=false){
   studyAudioStop();if(typeof petStopVoice==='function')petStopVoice();
   if(typeof tourRecorder!=='undefined'&&tourRecorder?.state==='recording'){done?.();return false;}
   const epoch=studyAudioEpoch,voice=voiceOverride||studyVoice();let i=0;studyAudioBusy=true;btn?.setAttribute('aria-pressed','true');
@@ -27209,7 +27217,7 @@ function studySpeakSequence(parts,rate,btn,done,voiceOverride=null){
   const next=async()=>{
     if(!valid())return;if(i>=parts.length){finish();return;}
     const part=parts[i++],text=String(part.text||'').normalize('NFC').trim();
-    const fallback=()=>{if(!valid())return;studyAudioLabel(btn,petI18n(['系统朗读','System voice','Voix système'])+(voice!=='system'&&part.role!=='M'?' · '+petI18n(['本句暂无角色录音','No recording for this line','Cette phrase n’est pas enregistrée']):''));studySystemPart(text,rate,btn,next,part.role);};
+    const fallback=()=>{if(!valid())return;if(recordedOnly){studyAudioLabel(btn,petI18n(['Gemini 录音暂不可用，请稍后重试；不会使用系统语音。','Gemini recording unavailable. Try again later; system speech is disabled.','Enregistrement Gemini indisponible. Réessayez plus tard ; aucune voix système.']));finish();return;}studyAudioLabel(btn,petI18n(['系统朗读','System voice','Voix système'])+(voice!=='system'&&part.role!=='M'?' · '+petI18n(['本句暂无角色录音','No recording for this line','Cette phrase n’est pas enregistrée']):''));studySystemPart(text,rate,btn,next,part.role);};
     if(voice==='system'||part.role==='M'){fallback();return;}
     let entry;try{const m=await studyAudioIndex();entry=m.characters[voice]?.find(x=>x.text===text);}catch{fallback();return;}
     if(!valid())return;
@@ -27373,7 +27381,7 @@ function petWardrobe(root){
 function petStoryCards(root){
  const cfg=petConfig(),c=cfg.character,section=el('section','pet-stories');section.append(el('h3',null,petI18n(['羁绊故事','Bond stories','Histoires de complicité'])));
  const label=el('label'),toggle=el('input');toggle.type='checkbox';toggle.checked=cfg.romance===true;toggle.onchange=()=>{studyAudioStop();petSet({romance:toggle.checked});renderPet();};label.append(toggle,document.createTextNode(petI18n(['开启亲近剧情（可随时关闭）','Enable romantic fiction (optional)','Activer les scènes romantiques (facultatif)'])));section.append(label,el('p','sub',petI18n(['角色为虚构成年人。关闭后提供普通陪伴台词，解锁条件和奖励相同；只在你点击时播放，不打断学习。','The characters are fictional adults. With romance off, friendship lines use the same unlocks and rewards. Playback starts only when you choose it, never during a lesson.','Personnages adultes fictifs. Sans romance, les répliques amicales offrent les mêmes conditions et récompenses. Lecture uniquement à votre demande, sans interrompre les exercices.'])));
- const grid=el('div','pet-voice-grid');for(let i=0;i<3;i++){const threshold=900+600*i,unlocked=petHasMilestone(c,threshold),card=el('article','pet-voice-card');card.append(el('h4',null,petI18n(['故事','Story','Histoire'])+' '+(i+1)),el('p','sub',threshold+' · '+(unlocked?petI18n(['可回听','Replay available','Réécoute disponible']):petI18n(['尚未解锁','Locked','Verrouillé']))));if(unlocked){const line=PET_STORIES[c][cfg.romance?'romance':'neutral'][i];card.append(el('p',null,line[0]));if(UI_LANG!=='fr')card.append(el('p','sub',line[UI_LANG==='zh'?1:2]));const play=petButton(petI18n(['播放','Play','Écouter']),()=>studySpeakSequence([{text:line[0]}],1,play,null,c),null,'btn ghost play');card.append(play,petButton(petI18n(['停止','Stop','Arrêter']),studyAudioStop));}grid.append(card);}section.append(grid);root.append(section);
+ const grid=el('div','pet-voice-grid');for(let i=0;i<3;i++){const threshold=900+600*i,unlocked=petHasMilestone(c,threshold),card=el('article','pet-voice-card');card.append(el('h4',null,petI18n(['故事','Story','Histoire'])+' '+(i+1)),el('p','sub',threshold+' · '+(unlocked?petI18n(['可回听','Replay available','Réécoute disponible']):petI18n(['尚未解锁','Locked','Verrouillé']))));if(unlocked){const line=PET_STORIES[c][cfg.romance?'romance':'neutral'][i];card.append(el('p',null,line[0]));if(UI_LANG!=='fr')card.append(el('p','sub',line[UI_LANG==='zh'?1:2]));const play=petButton(petI18n(['播放','Play','Écouter']),()=>studySpeakSequence([{text:line[0]}],1,play,null,c,true),null,'btn ghost play');card.append(play,petButton(petI18n(['停止','Stop','Arrêter']),studyAudioStop));}grid.append(card);}section.append(grid);root.append(section);
 }
 // Pure, bounded state machine. No learning, currency, affinity or cloud writes.
 const POMO_LIMITS = { focus: [5,90,25], short: [1,15,5], long: [5,30,15] };
@@ -27450,8 +27458,8 @@ const POMO_COPY = {
  invalid:['请输入范围内的整数分钟。','Enter whole minutes within the shown ranges.','Saisissez un nombre entier de minutes dans les limites indiquées.'],
  quiet:['专注时安静陪伴（关闭答题闲聊）','Quiet companion during focus (no answer chatter)','Compagnie discrète pendant la concentration (sans commentaires)'],
  sound:['阶段结束提示音','End-of-phase chime','Signal sonore en fin d’étape'],voice:['角色朗读（仅已有录音）','Character speech (recorded lines only)','Voix du personnage (enregistrements existants uniquement)'],
- voicenote:['新提示目前仅显示文字。可主动试听系统朗读；不会冒用角色录音。','New prompts are text-only. You can preview them with the system voice.','Les nouveaux messages sont affichés uniquement. Écoute possible avec la voix système.'],
- preview:['试听：系统朗读','Preview: system voice','Écouter : voix système'],busy:['请等题目音频或录音结束后再试听。','Wait until study audio or recording has finished.','Attendez la fin de l’audio ou de l’enregistrement.'],
+ voicenote:['仅播放 Gemini 角色录音；尚未配音的提示保留文字，不使用系统语音。','Gemini recordings only. Prompts awaiting recordings remain text-only, without system speech.','Enregistrements Gemini uniquement. Les messages non enregistrés restent écrits, sans voix système.'],
+ preview:['试听：Gemini 角色录音','Preview: Gemini recording','Écouter : enregistrement Gemini'],busy:['请等题目音频或录音结束后再试听。','Wait until study audio or recording has finished.','Attendez la fin de l’audio ou de l’enregistrement.'],
  silent:['当前无法播放；文字提示仍可使用。','Playback unavailable; the text remains available.','Lecture indisponible ; le texte reste disponible.'],
  stats:['近七日 · 本设备','Last 7 days · this device','7 derniers jours · cet appareil'],today:['今日完成','Completed today','Terminées aujourd’hui'],timed:['计时专注时长','Timed focus duration','Durée chronométrée de concentration'],partial:['中止轮计时','Time in ended rounds','Temps des sessions interrompues'],date:['日期','Date','Date'],tomatoes:['完整番茄','Completed rounds','Sessions complètes'],
  local:['计时与统计仅保存在本设备浏览器，按账号隔离，不跨设备同步。时长不代表经验证的有效学习；不增加金币、亲密度或问卷学习天数。','Timer and statistics stay in this browser, separated by account, without cross-device sync. Timed duration is not verified study time and adds no coins, affinity or survey study days.','Minuteur et statistiques restent dans ce navigateur, séparés par compte, sans synchronisation entre appareils. Ce temps n’est pas une mesure vérifiée d’apprentissage et ne rapporte ni pièces, ni affinité, ni jours d’étude pour le questionnaire.'],
@@ -27607,7 +27615,7 @@ function pomoPanel(){
   if(pomoHasCompanion()){
     const line=pomoLine(),q=el('div','pomo-quote'),fr=el('p',null,line[0]);fr.lang='fr';q.append(petImage(petConfig().character,r?.phase==='focus'?'idle':'sleep',petConfig().outfit));q.append(el('b',null,petConfig().character[0].toUpperCase()+petConfig().character.slice(1)),fr);
     if(UI_LANG!=='fr')q.append(el('p','sub',line[UI_LANG==='zh'?1:2]));
-    const previewButton=pomoButton('preview',()=>{if(pomoAudioBusy()){status.textContent=pomoText('busy');return;}if(!petConfig().voice){status.textContent=pomoText('silent');return;}if(!tts){status.textContent=pomoText('silent');return;}studySpeakSequence([{text:line[0]}],.9,previewButton,null,'system');});q.append(previewButton);
+    const previewButton=pomoButton('preview',()=>{if(pomoAudioBusy()){status.textContent=pomoText('busy');return;}if(!petConfig().voice){status.textContent=pomoText('silent');return;}studySpeakSequence([{text:line[0]}],.9,previewButton,null,petConfig().character,true);});q.append(previewButton);
     const status=el('p','sub');status.setAttribute('role','status');q.append(status,el('p','sub',pomoText('voicenote')));d.append(q);
   }
   const details=el('details','pomo-config');details.open=expanded;details.append(el('summary',null,pomoText('config')));
