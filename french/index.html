@@ -82,6 +82,7 @@ html.qf #stage > section.q-card.listening-card > .explain{height:clamp(4rem,16vh
 html.qf #stage > section.q-card.listening-card > .listening-mode{margin:0}
 @media(max-height:520px){html.qf #stage > section.q-card.listening-card{overflow-y:auto}html.qf #stage > section.q-card.listening-card > .listening-exercise,html.qf #stage > section.q-card.listening-card > .opts:not(:empty){flex:none;overflow:visible}}
 
+
 </style></head><body>
 <title>法语语法小测验</title>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@600;900&family=Noto+Sans+SC:wght@400;500;700&display=swap">
@@ -14841,7 +14842,7 @@ GPA2.forEach(u => {
     LEVEL_OF[id] = u.lv; TAGS_OF[id] = q.tags; KP_OF[id] = "gb" + u.unit;
   });
 });
-const LANG_FILES = {"en": "lang-en.js?v=692b39ddc3", "fr": "lang-fr.js?v=c6550fc62c"};
+const LANG_FILES = {"en": "lang-en.js?v=26e00d60e5", "fr": "lang-fr.js?v=ab7c850dec"};
 (() => { let l = null; try { l = localStorage.getItem("fq-lang"); } catch (e) {}
   if (Object.hasOwn(LANG_FILES, l)) document.write('<script src="' + LANG_FILES[l] + '"><\/script>'); })();
 </script>
@@ -18261,6 +18262,7 @@ function setGoalSection(wrap) {
 // 每次用户可见更新都新增记录：默认只递增第三位 1.x.y → 1.x.(y+1)，超过 9 继续到 10、11；第二位升级需用户明确要求。
 // 首位保持 1，只有用户明确要求才可修改；历史记录保留。完整发布规则见根目录 AGENTS.md。
 const CHANGELOG = [
+  {"v": "1.9.18", "d": "2026-11-16", "p": "fr", "items": ["以 Claire Miquel《Communication progressive du français》初级教材的 40 章、57 个日常情境为主线，新增 57 段原创 A1–A2 听力材料和 171 道独立练习：理解选择、关键词填空、复原句子。听力目录新增教材筛选，标注对应章节与书页，保留原有题库。新材料沿用学习配音设置，尚未录制人物语音的内容明确使用系统朗读；不包含教材原版 CD 音频。"]},
   {"v": "1.9.17", "d": "2026-11-16", "p": "fr", "items": ["听力三种考法拆为独立题目，保留全部理解题并穿插不同材料与题型，成绩和错题分别记录。听力目录改为题型、难度、内容标签与关键词检索；单空填空直接点选答案，多空继续逐空作答。每题均提供居中的播放与慢速按钮，下一题自动播放录音，移除反复听提示。"]},
   {"v": "1.9.16", "d": "2026-11-16", "p": "fr", "items": ["接入剩余 5 段 Pia 听力补录：Chen 长文、车站问句、外套打折对话、餐厅招呼和第二家咖啡馆计划。Pia 配音现覆盖全部 121 段普通听力和 18 段模拟卷女声；男女角色分工保持不变，男声录音待后续补齐。关键词填空、复原句子和理解选择继续共用同一材料录音。"]},
   {"v": "1.9.15", "d": "2026-11-16", "p": "fr", "items": ["扩充 Pia 的普通听力与模拟卷女声配音，保留男女对话分工。121 段普通听力材料新增关键词填空和复原句子：长文支持多空，词块可点击排列、撤回与清空。三种题型共用同一录音，每题只记录一次成绩，提交后可回听和查看答案。"]},
@@ -20571,10 +20573,1889 @@ function listeningPaint(item,card){
  exp.append(el('p','sub',listeningLabel('locked')));const hb=card.querySelector('#hintBtn');if(hb)hb.disabled=true;
  const next=card.querySelector('#nextBtn');next.disabled=false;updateProgress(idx+1);next.focus({preventScroll:true});return true;
 }
+// Original listening companion to Claire Miquel’s beginner communication syllabus.
+const COMMUNICATION_BOOK = {
+  "id": "communication-beginner",
+  "title": "Communication progressive du français · Débutant",
+  "author": "Claire Miquel",
+  "edition": "CLE International, 2018",
+  "level": "A1–A2",
+  "sourceRepository": "Cosonder/Claude",
+  "sourceBranch": "main",
+  "sourceBlob": "58676a51d62fb872ac8648895a506e5ec76c8c39",
+  "chapters": 40,
+  "passages": 57,
+  "questions": 171,
+  "relationship": "Original practice aligned with the communicative objectives and situations on printed pages 8–120. Not the book’s exercise text or original CD audio."
+};
+const COMMUNICATION_PASSAGES = [
+  {
+    "unit": 1,
+    "page": 8,
+    "title": "À la boulangerie",
+    "level": "A1",
+    "audio": "Bonjour, je voudrais une baguette et trois croissants. Vous avez encore des pains aux raisins ? Ah, il n'y en a plus. Alors, je prends seulement la baguette et les croissants.",
+    "q": "Qu'est-ce que la cliente achète ?",
+    "opts": [
+      "Une baguette et trois croissants",
+      "Trois baguettes et un croissant",
+      "Une baguette et des pains aux raisins",
+      "Seulement trois croissants"
+    ],
+    "gaps": [
+      {
+        "start": 37,
+        "end": 42,
+        "options": [
+          "trois",
+          "deux",
+          "quatre",
+          "treize"
+        ]
+      }
+    ],
+    "evidence": "je prends seulement la baguette et les croissants",
+    "gloss": "顾客要一根法棍和三个牛角包；葡萄干面包已售完，因此没有购买。",
+    "unitTitle": "Demander des articles",
+    "section": "Faire les courses",
+    "id": "fr-cp01-p008"
+  },
+  {
+    "unit": 1,
+    "page": 10,
+    "title": "À la poste",
+    "level": "A1",
+    "audio": "Bonjour, je voudrais envoyer cette lettre en Belgique. Ce n'est pas urgent, le tarif normal me convient. Je vais aussi prendre deux timbres pour la France.",
+    "q": "Quel envoi la personne choisit-elle ?",
+    "opts": [
+      "Une lettre au tarif normal",
+      "Un colis urgent",
+      "Une lettre recommandée",
+      "Un colis pour la France"
+    ],
+    "gaps": [
+      {
+        "start": 85,
+        "end": 91,
+        "options": [
+          "normal",
+          "urgent",
+          "prioritaire",
+          "international"
+        ]
+      }
+    ],
+    "evidence": "le tarif normal me convient",
+    "gloss": "这封信寄往比利时，不着急，因此选择普通资费；另买两张法国国内邮票。",
+    "unitTitle": "Demander des articles",
+    "section": "Faire les courses",
+    "id": "fr-cp01-p010"
+  },
+  {
+    "unit": 2,
+    "page": 12,
+    "title": "Au marché",
+    "level": "A1",
+    "audio": "Pour la soupe, il me faut un demi-kilo de carottes et deux poireaux. Je ne prends pas de pommes de terre : il en reste à la maison. Ajoutez aussi un peu de persil, s'il vous plaît.",
+    "q": "Pourquoi la cliente n'achète-t-elle pas de pommes de terre ?",
+    "opts": [
+      "Elle en a encore chez elle",
+      "Elles sont trop chères",
+      "Elle ne les aime pas",
+      "Le marchand n’en a plus"
+    ],
+    "gaps": [
+      {
+        "start": 26,
+        "end": 38,
+        "options": [
+          "un demi-kilo",
+          "un kilo",
+          "deux kilos",
+          "un quart de kilo"
+        ]
+      },
+      {
+        "start": 54,
+        "end": 58,
+        "options": [
+          "deux",
+          "trois",
+          "douze",
+          "quatre"
+        ]
+      }
+    ],
+    "evidence": "il en reste à la maison",
+    "gloss": "土豆家里还有，所以不买；她要半公斤胡萝卜、两根韭葱和少量欧芹。",
+    "unitTitle": "Parler des quantités",
+    "section": "Faire les courses",
+    "id": "fr-cp02-p012"
+  },
+  {
+    "unit": 2,
+    "page": 14,
+    "title": "À l’épicerie",
+    "level": "A1",
+    "audio": "Il nous reste du riz, mais il n'y a plus de lait. Prends deux bouteilles de lait et un paquet de pâtes. Pour les œufs, une boîte de six suffit.",
+    "q": "Combien d'œufs faut-il acheter ?",
+    "opts": [
+      "Six",
+      "Deux",
+      "Douze",
+      "Aucun"
+    ],
+    "gaps": [
+      {
+        "start": 132,
+        "end": 135,
+        "options": [
+          "six",
+          "dix",
+          "douze",
+          "seize"
+        ]
+      }
+    ],
+    "evidence": "une boîte de six suffit",
+    "gloss": "米还有，牛奶没了；需要两瓶牛奶、一包意面和一盒六个装鸡蛋。",
+    "unitTitle": "Parler des quantités",
+    "section": "Faire les courses",
+    "id": "fr-cp02-p014"
+  },
+  {
+    "unit": 3,
+    "page": 16,
+    "title": "Dans une papeterie",
+    "level": "A1",
+    "audio": "Ce cahier rouge coûte quatre euros. Le bleu est à six euros, mais il contient plus de pages. Je préfère le rouge : son prix convient à mon budget.",
+    "q": "Quel cahier la personne choisit-elle ?",
+    "opts": [
+      "Le rouge à quatre euros",
+      "Le bleu à six euros",
+      "Le rouge à six euros",
+      "Le bleu à quatre euros"
+    ],
+    "gaps": [
+      {
+        "start": 22,
+        "end": 28,
+        "options": [
+          "quatre",
+          "six",
+          "cinq",
+          "quatorze"
+        ]
+      }
+    ],
+    "evidence": "Je préfère le rouge",
+    "gloss": "红色本子四欧元，蓝色六欧元；顾客根据预算选择红色。",
+    "unitTitle": "Demander le prix",
+    "section": "Faire les courses",
+    "id": "fr-cp03-p016"
+  },
+  {
+    "unit": 4,
+    "page": 18,
+    "title": "Chez le poissonnier",
+    "level": "A1",
+    "audio": "Je voudrais commander du poisson pour vendredi. Nous serons quatre à table. Préparez quatre filets de truite, s'il vous plaît ; je passerai les chercher vers dix-sept heures.",
+    "q": "Quand la commande sera-t-elle récupérée ?",
+    "opts": [
+      "Vendredi vers dix-sept heures",
+      "Jeudi vers dix-sept heures",
+      "Vendredi vers sept heures",
+      "Samedi vers quatre heures"
+    ],
+    "gaps": [
+      {
+        "start": 38,
+        "end": 46,
+        "options": [
+          "vendredi",
+          "jeudi",
+          "samedi",
+          "mercredi"
+        ]
+      },
+      {
+        "start": 158,
+        "end": 173,
+        "options": [
+          "dix-sept heures",
+          "sept heures",
+          "dix-huit heures",
+          "dix-neuf heures"
+        ]
+      }
+    ],
+    "evidence": "je passerai les chercher vers dix-sept heures",
+    "gloss": "为周五四人用餐预订四片鳟鱼鱼柳，下午五点左右来取。",
+    "unitTitle": "Passer une commande",
+    "section": "Faire les courses",
+    "id": "fr-cp04-p018"
+  },
+  {
+    "unit": 4,
+    "page": 20,
+    "title": "Au café",
+    "level": "A1",
+    "audio": "Un café allongé et un thé au citron, s'il vous plaît. Le thé est pour mon amie. Nous allons rester en terrasse ; est-ce que vous pouvez nous apporter aussi une carafe d'eau ?",
+    "q": "Où les clients vont-ils s'installer ?",
+    "opts": [
+      "En terrasse",
+      "Au comptoir",
+      "Dans la salle du fond",
+      "Chez eux"
+    ],
+    "gaps": [
+      {
+        "start": 99,
+        "end": 110,
+        "options": [
+          "en terrasse",
+          "au comptoir",
+          "à l’intérieur",
+          "à l’étage"
+        ]
+      }
+    ],
+    "evidence": "Nous allons rester en terrasse",
+    "gloss": "客人要一杯加水咖啡、一杯柠檬茶和一壶水，坐在露台。",
+    "unitTitle": "Passer une commande",
+    "section": "Faire les courses",
+    "id": "fr-cp04-p020"
+  },
+  {
+    "unit": 5,
+    "page": 22,
+    "title": "À l’hôtel",
+    "level": "A1",
+    "audio": "Bonsoir, je voudrais une chambre pour deux personnes, du dix au douze mai. Nous arriverons vers vingt et une heures. Le petit déjeuner n'est pas nécessaire, mais nous avons besoin d'une place de parking.",
+    "q": "De quel service les clients ont-ils besoin ?",
+    "opts": [
+      "D’une place de parking",
+      "Du petit déjeuner",
+      "D’un repas du soir",
+      "D’une troisième chambre"
+    ],
+    "gaps": [
+      {
+        "start": 38,
+        "end": 42,
+        "options": [
+          "deux",
+          "trois",
+          "dix",
+          "douze"
+        ]
+      },
+      {
+        "start": 96,
+        "end": 115,
+        "options": [
+          "vingt et une heures",
+          "vingt heures",
+          "dix-neuf heures",
+          "vingt-deux heures"
+        ]
+      }
+    ],
+    "evidence": "nous avons besoin d'une place de parking",
+    "gloss": "预订五月十日至十二日的双人房，约晚上九点抵达；不要早餐，但需要停车位。",
+    "unitTitle": "Faire une réservation",
+    "section": "Faire les courses",
+    "id": "fr-cp05-p022"
+  },
+  {
+    "unit": 5,
+    "page": 24,
+    "title": "À la gare",
+    "level": "A1",
+    "audio": "Je voudrais un aller-retour pour Tours. Je pars mardi matin et je reviens jeudi soir. Pour l'aller, je préfère le train de huit heures vingt, pas celui de huit heures cinquante.",
+    "q": "Quel train la personne souhaite-t-elle prendre à l'aller ?",
+    "opts": [
+      "Celui de huit heures vingt",
+      "Celui de huit heures cinquante",
+      "Celui de vingt heures huit",
+      "Celui de jeudi soir"
+    ],
+    "gaps": [
+      {
+        "start": 74,
+        "end": 84,
+        "options": [
+          "jeudi soir",
+          "mardi soir",
+          "jeudi matin",
+          "vendredi soir"
+        ]
+      },
+      {
+        "start": 123,
+        "end": 140,
+        "options": [
+          "huit heures vingt",
+          "huit heures cinquante",
+          "neuf heures vingt",
+          "huit heures trente"
+        ]
+      }
+    ],
+    "evidence": "je préfère le train de huit heures vingt",
+    "gloss": "乘客购买往返图尔车票，周二早上去、周四晚上回；去程选八点二十。",
+    "unitTitle": "Faire une réservation",
+    "section": "Faire les courses",
+    "id": "fr-cp05-p024"
+  },
+  {
+    "unit": 6,
+    "page": 26,
+    "title": "Dans une boutique de vêtements",
+    "level": "A1",
+    "audio": "Cette veste me plaît, mais les manches sont trop longues. Est-ce que je peux essayer la taille en dessous ? Je voudrais garder la même couleur, le vert foncé.",
+    "q": "Que veut essayer la cliente ?",
+    "opts": [
+      "Une taille plus petite dans la même couleur",
+      "Une taille plus grande en bleu",
+      "La même taille en rouge",
+      "Une veste avec des manches plus longues"
+    ],
+    "gaps": [
+      {
+        "start": 44,
+        "end": 56,
+        "options": [
+          "trop longues",
+          "trop courtes",
+          "assez courtes",
+          "très larges"
+        ]
+      }
+    ],
+    "evidence": "la taille en dessous",
+    "gloss": "袖子太长，顾客想试小一号，仍要深绿色。",
+    "unitTitle": "Faire des achats",
+    "section": "Faire les courses",
+    "id": "fr-cp06-p026"
+  },
+  {
+    "unit": 6,
+    "page": 28,
+    "title": "Dans un magasin de chaussures",
+    "level": "A1",
+    "audio": "Les chaussures noires sont jolies, mais elles me serrent. Vous avez ce modèle en trente-neuf ? J'ai essayé le trente-huit et je ne peux pas marcher confortablement.",
+    "q": "Pourquoi la personne demande-t-elle une autre pointure ?",
+    "opts": [
+      "Le trente-huit est trop petit",
+      "Le trente-neuf est trop grand",
+      "La couleur noire est indisponible",
+      "Elle cherche des chaussures pour un enfant"
+    ],
+    "gaps": [
+      {
+        "start": 81,
+        "end": 92,
+        "options": [
+          "trente-neuf",
+          "trente-huit",
+          "quarante",
+          "trente-sept"
+        ]
+      }
+    ],
+    "evidence": "elles me serrent",
+    "gloss": "三十八码挤脚、不舒适，因此想试三十九码的同款黑鞋。",
+    "unitTitle": "Faire des achats",
+    "section": "Faire les courses",
+    "id": "fr-cp06-p028"
+  },
+  {
+    "unit": 7,
+    "page": 30,
+    "title": "Choisir un ordinateur",
+    "level": "A2",
+    "audio": "J'hésite entre ces deux ordinateurs. Le premier est moins cher, mais le second est plus léger. Comme je voyage souvent, je vais choisir le second, même s'il coûte un peu plus cher.",
+    "q": "Quel critère est le plus important pour cette personne ?",
+    "opts": [
+      "Le poids",
+      "Le prix le plus bas",
+      "La couleur",
+      "La taille de l’écran"
+    ],
+    "gaps": [
+      {
+        "start": 83,
+        "end": 93,
+        "options": [
+          "plus léger",
+          "plus lourd",
+          "moins rapide",
+          "plus ancien"
+        ]
+      }
+    ],
+    "evidence": "Comme je voyage souvent",
+    "gloss": "两个电脑之间犹豫；因为经常旅行，最终优先考虑轻便，而不是最低价格。",
+    "unitTitle": "Hésiter",
+    "section": "Faire les courses",
+    "id": "fr-cp07-p030"
+  },
+  {
+    "unit": 8,
+    "page": 32,
+    "title": "Chez le dentiste",
+    "level": "A1",
+    "audio": "Le dentiste peut vous recevoir mardi à quatorze heures ou mercredi à dix-huit heures. Mardi, je travaille toute la journée. Je choisis donc mercredi, après mon travail.",
+    "q": "Quel rendez-vous est retenu ?",
+    "opts": [
+      "Mercredi à dix-huit heures",
+      "Mardi à quatorze heures",
+      "Mercredi à quatorze heures",
+      "Mardi à dix-huit heures"
+    ],
+    "gaps": [
+      {
+        "start": 58,
+        "end": 84,
+        "options": [
+          "mercredi à dix-huit heures",
+          "mardi à quatorze heures",
+          "vendredi à dix-huit heures",
+          "mercredi à huit heures"
+        ]
+      }
+    ],
+    "evidence": "Je choisis donc mercredi",
+    "gloss": "周二整天上班，因此选择周三十八点的牙医预约。",
+    "unitTitle": "Prendre rendez-vous",
+    "section": "Renseigner, se renseigner",
+    "id": "fr-cp08-p032"
+  },
+  {
+    "unit": 8,
+    "page": 34,
+    "title": "Au cabinet médical",
+    "level": "A2",
+    "audio": "Bonjour, j'avais rendez-vous vendredi matin, mais je dois déplacer ma consultation. Est-ce que lundi après-midi est possible ? Oui ? Très bien, je note quinze heures trente pour ce jour-là.",
+    "q": "Pourquoi la personne appelle-t-elle ?",
+    "opts": [
+      "Pour déplacer un rendez-vous",
+      "Pour annuler tous ses rendez-vous",
+      "Pour demander une ordonnance",
+      "Pour confirmer vendredi matin"
+    ],
+    "gaps": [
+      {
+        "start": 95,
+        "end": 100,
+        "options": [
+          "lundi",
+          "mardi",
+          "jeudi",
+          "vendredi"
+        ]
+      }
+    ],
+    "evidence": "je dois déplacer ma consultation",
+    "gloss": "原定周五上午的就诊改到周一十五点三十分。",
+    "unitTitle": "Prendre rendez-vous",
+    "section": "Renseigner, se renseigner",
+    "id": "fr-cp08-p034"
+  },
+  {
+    "unit": 9,
+    "page": 36,
+    "title": "Dans le métro",
+    "level": "A1",
+    "audio": "Pour aller au musée, prenez la ligne quatre jusqu'à la station République. Là, changez pour la ligne six et descendez à Parc. Il n'y a pas de métro direct depuis cette station.",
+    "q": "Où faut-il changer de ligne ?",
+    "opts": [
+      "À République",
+      "À Parc",
+      "Au musée",
+      "Il ne faut pas changer"
+    ],
+    "gaps": [
+      {
+        "start": 101,
+        "end": 104,
+        "options": [
+          "six",
+          "dix",
+          "quatre",
+          "sept"
+        ]
+      }
+    ],
+    "evidence": "Là, changez pour la ligne six",
+    "gloss": "先乘四号线到 République，换六号线到 Parc；不是直达。",
+    "unitTitle": "Demander des renseignements",
+    "section": "Renseigner, se renseigner",
+    "id": "fr-cp09-p036"
+  },
+  {
+    "unit": 9,
+    "page": 38,
+    "title": "Dans une association sportive",
+    "level": "A1",
+    "audio": "Le cours de natation pour débutants a lieu le jeudi, de dix-neuf heures à vingt heures. Pour vous inscrire, apportez une photo et remplissez ce formulaire. Le premier cours est gratuit.",
+    "q": "Quel jour a lieu le cours pour débutants ?",
+    "opts": [
+      "Le jeudi",
+      "Le mardi",
+      "Le vendredi",
+      "Le dimanche"
+    ],
+    "gaps": [
+      {
+        "start": 46,
+        "end": 51,
+        "options": [
+          "jeudi",
+          "mardi",
+          "vendredi",
+          "dimanche"
+        ]
+      },
+      {
+        "start": 56,
+        "end": 71,
+        "options": [
+          "dix-neuf heures",
+          "dix-huit heures",
+          "vingt heures",
+          "vingt et une heures"
+        ]
+      }
+    ],
+    "evidence": "a lieu le jeudi",
+    "gloss": "初级游泳课在周四十九点到二十点；报名需带照片并填写表格，第一节免费。",
+    "unitTitle": "Demander des renseignements",
+    "section": "Renseigner, se renseigner",
+    "id": "fr-cp09-p038"
+  },
+  {
+    "unit": 9,
+    "page": 40,
+    "title": "À l’office du tourisme",
+    "level": "A1",
+    "audio": "La visite du vieux quartier commence à dix heures devant la mairie. Elle dure une heure et demie. Vous pouvez acheter votre billet ici, mais le départ n'est pas devant l'office du tourisme.",
+    "q": "Où commence la visite ?",
+    "opts": [
+      "Devant la mairie",
+      "Devant l’office du tourisme",
+      "À la gare",
+      "Dans le musée"
+    ],
+    "gaps": [
+      {
+        "start": 78,
+        "end": 96,
+        "options": [
+          "une heure et demie",
+          "une demi-heure",
+          "deux heures",
+          "une heure"
+        ]
+      }
+    ],
+    "evidence": "devant la mairie",
+    "gloss": "老城区导览十点在市政厅前出发，持续一个半小时；售票处不是集合点。",
+    "unitTitle": "Demander des renseignements",
+    "section": "Renseigner, se renseigner",
+    "id": "fr-cp09-p040"
+  },
+  {
+    "unit": 10,
+    "page": 42,
+    "title": "Dans une administration",
+    "level": "A2",
+    "audio": "Pour déposer votre dossier, vous devez apporter l'original de votre passeport et une photocopie. Une photo sur votre téléphone ne suffit pas. Vous pouvez utiliser la photocopieuse au fond du couloir.",
+    "q": "Que faut-il présenter ?",
+    "opts": [
+      "Le passeport original et une photocopie",
+      "Seulement une photo sur téléphone",
+      "Seulement une photocopie",
+      "Un billet de train"
+    ],
+    "gaps": [
+      {
+        "start": 81,
+        "end": 95,
+        "options": [
+          "une photocopie",
+          "une photographie",
+          "une invitation",
+          "une facture"
+        ]
+      }
+    ],
+    "evidence": "l'original de votre passeport et une photocopie",
+    "gloss": "这个虚构办事场景要求护照原件和复印件；手机照片不够。",
+    "unitTitle": "Exprimer une obligation",
+    "section": "Renseigner, se renseigner",
+    "id": "fr-cp10-p042"
+  },
+  {
+    "unit": 11,
+    "page": 44,
+    "title": "À la station de ski",
+    "level": "A2",
+    "audio": "La piste verte est ouverte, mais la piste rouge est fermée à cause du vent. Vous pouvez skier sur la verte. Il est interdit de passer sous la barrière, même si vous êtes un bon skieur.",
+    "q": "Sur quelle piste peut-on skier ?",
+    "opts": [
+      "Sur la piste verte",
+      "Sur la piste rouge",
+      "Sur les deux pistes",
+      "Sur aucune piste"
+    ],
+    "gaps": [
+      {
+        "start": 52,
+        "end": 58,
+        "options": [
+          "fermée",
+          "ouverte",
+          "éclairée",
+          "réservée"
+        ]
+      }
+    ],
+    "evidence": "Vous pouvez skier sur la verte",
+    "gloss": "绿道开放，红道因风关闭；不能钻过围栏。",
+    "unitTitle": "Autoriser et interdire",
+    "section": "Renseigner, se renseigner",
+    "id": "fr-cp11-p044"
+  },
+  {
+    "unit": 12,
+    "page": 46,
+    "title": "À la piscine",
+    "level": "A1",
+    "audio": "Pardon, je voudrais vérifier l'horaire de la piscine. Elle ferme bien à vingt heures aujourd'hui ? Non, aujourd'hui c'est dix-neuf heures ; vingt heures, c'est seulement le samedi.",
+    "q": "À quelle heure la piscine ferme-t-elle aujourd'hui ?",
+    "opts": [
+      "À dix-neuf heures",
+      "À vingt heures",
+      "À dix-huit heures",
+      "À vingt et une heures"
+    ],
+    "gaps": [
+      {
+        "start": 122,
+        "end": 137,
+        "options": [
+          "dix-neuf heures",
+          "vingt heures",
+          "dix-huit heures",
+          "vingt et une heures"
+        ]
+      }
+    ],
+    "evidence": "aujourd'hui c'est dix-neuf heures",
+    "gloss": "今天十九点关门，只有周六才是二十点；注意对方纠正了最初的猜测。",
+    "unitTitle": "Vérifier",
+    "section": "Renseigner, se renseigner",
+    "id": "fr-cp12-p046"
+  },
+  {
+    "unit": 13,
+    "page": 48,
+    "title": "Au camping",
+    "level": "A2",
+    "audio": "Excusez-moi, nous avons réservé un emplacement calme. Pourtant, on entend de la musique très forte près de notre tente. Est-ce que vous pouvez nous proposer un autre emplacement pour cette nuit ?",
+    "q": "Que demandent les campeurs ?",
+    "opts": [
+      "De changer d’emplacement",
+      "De louer une tente plus grande",
+      "De commencer une fête",
+      "De rester une semaine de plus"
+    ],
+    "gaps": [
+      {
+        "start": 157,
+        "end": 177,
+        "options": [
+          "un autre emplacement",
+          "une autre tente",
+          "un autre repas",
+          "un autre concert"
+        ]
+      }
+    ],
+    "evidence": "nous proposer un autre emplacement",
+    "gloss": "原先预订安静营位，但附近音乐很响，因此要求今晚换位置。",
+    "unitTitle": "Protester",
+    "section": "Renseigner, se renseigner",
+    "id": "fr-cp13-p048"
+  },
+  {
+    "unit": 14,
+    "page": 50,
+    "title": "Louer des vélos",
+    "level": "A1",
+    "audio": "Demain, nous avons l'intention de faire le tour du lac à vélo. Nous voudrions louer deux vélos pour la matinée seulement. Nous les rendrons avant midi, car nous prenons le train à treize heures.",
+    "q": "Pour combien de temps les vélos sont-ils loués ?",
+    "opts": [
+      "Pour la matinée",
+      "Pour toute la journée",
+      "Pour deux jours",
+      "Pour la soirée"
+    ],
+    "gaps": [
+      {
+        "start": 140,
+        "end": 150,
+        "options": [
+          "avant midi",
+          "après midi",
+          "avant minuit",
+          "après treize heures"
+        ]
+      },
+      {
+        "start": 180,
+        "end": 193,
+        "options": [
+          "treize heures",
+          "douze heures",
+          "quatorze heures",
+          "quinze heures"
+        ]
+      }
+    ],
+    "evidence": "pour la matinée seulement",
+    "gloss": "只租用两个自行车一个上午，中午前归还，因为十三点要坐火车。",
+    "unitTitle": "Exprimer des intentions, des projets",
+    "section": "Renseigner, se renseigner",
+    "id": "fr-cp14-p050"
+  },
+  {
+    "unit": 14,
+    "page": 52,
+    "title": "À la banque",
+    "level": "A2",
+    "audio": "Je vais commencer un stage en septembre et je voudrais ouvrir un compte. Mon employeur y versera mon salaire. Je n'ai pas besoin de chéquier, mais je souhaite avoir une carte bancaire.",
+    "q": "Que souhaite la personne en plus du compte ?",
+    "opts": [
+      "Une carte bancaire",
+      "Un chéquier",
+      "Un prêt pour une maison",
+      "Un compte pour son employeur"
+    ],
+    "gaps": [
+      {
+        "start": 165,
+        "end": 183,
+        "options": [
+          "une carte bancaire",
+          "un chéquier",
+          "un prêt immobilier",
+          "une assurance voyage"
+        ]
+      }
+    ],
+    "evidence": "je souhaite avoir une carte bancaire",
+    "gloss": "为九月开始的实习开工资账户，想办银行卡，不需要支票簿。",
+    "unitTitle": "Exprimer des intentions, des projets",
+    "section": "Renseigner, se renseigner",
+    "id": "fr-cp14-p052"
+  },
+  {
+    "unit": 15,
+    "page": 54,
+    "title": "Dans un grand magasin",
+    "level": "A1",
+    "audio": "Le rayon des sacs est au deuxième étage, à côté des chaussures. Pour payer, allez à la caisse près de l'ascenseur. La caisse du rez-de-chaussée est fermée aujourd'hui.",
+    "q": "Quelle caisse faut-il utiliser ?",
+    "opts": [
+      "Celle près de l’ascenseur",
+      "Celle du rez-de-chaussée",
+      "Celle du parking",
+      "Celle du restaurant"
+    ],
+    "gaps": [
+      {
+        "start": 25,
+        "end": 33,
+        "options": [
+          "deuxième",
+          "premier",
+          "troisième",
+          "quatrième"
+        ]
+      },
+      {
+        "start": 94,
+        "end": 113,
+        "options": [
+          "près de l'ascenseur",
+          "près de l’entrée",
+          "près de la sortie",
+          "près du restaurant"
+        ]
+      }
+    ],
+    "evidence": "la caisse près de l'ascenseur",
+    "gloss": "包袋区在二楼鞋区旁；应到电梯附近的收银台，底层收银台今天关闭。",
+    "unitTitle": "Localiser",
+    "section": "Parler des lieux et des objets",
+    "id": "fr-cp15-p054"
+  },
+  {
+    "unit": 15,
+    "page": 56,
+    "title": "À la campagne",
+    "level": "A1",
+    "audio": "La maison que tu cherches est derrière l'église. Continue tout droit jusqu'à la fontaine, puis prends le petit chemin à gauche. C'est la maison qui a des volets jaunes.",
+    "q": "Comment reconnaître la maison ?",
+    "opts": [
+      "Elle a des volets jaunes",
+      "Elle a une porte rouge",
+      "Elle est devant la gare",
+      "Elle se trouve à droite de la fontaine"
+    ],
+    "gaps": [
+      {
+        "start": 118,
+        "end": 126,
+        "options": [
+          "à gauche",
+          "à droite",
+          "tout droit",
+          "en face"
+        ]
+      }
+    ],
+    "evidence": "la maison qui a des volets jaunes",
+    "gloss": "房子在教堂后面；到喷泉处向左走小路，找黄色百叶窗的房子。",
+    "unitTitle": "Localiser",
+    "section": "Parler des lieux et des objets",
+    "id": "fr-cp15-p056"
+  },
+  {
+    "unit": 15,
+    "page": 58,
+    "title": "Un objet perdu",
+    "level": "A2",
+    "audio": "J'ai perdu mon sac dans le bus ce matin. Il est gris, avec une petite poche rouge. J'avais mis mes clés à l'intérieur, mais pas mon téléphone : je l'avais dans la main.",
+    "q": "Quel objet était dans le sac ?",
+    "opts": [
+      "Les clés",
+      "Le téléphone",
+      "Un ordinateur",
+      "Un passeport"
+    ],
+    "gaps": [
+      {
+        "start": 95,
+        "end": 103,
+        "options": [
+          "mes clés",
+          "mon téléphone",
+          "mon ordinateur",
+          "mon passeport"
+        ]
+      }
+    ],
+    "evidence": "J'avais mis mes clés à l'intérieur",
+    "gloss": "灰色包带一个红色小口袋，早上丢在公交车上；钥匙在包里，手机当时拿在手上。",
+    "unitTitle": "Localiser",
+    "section": "Parler des lieux et des objets",
+    "id": "fr-cp15-p058"
+  },
+  {
+    "unit": 16,
+    "page": 60,
+    "title": "Téléphoner pour une location",
+    "level": "A2",
+    "audio": "Bonjour, je vous appelle pour l'appartement à louer. Vous indiquez qu'il y a deux chambres. Est-ce qu'il y a aussi un balcon ? Oui, mais pas de garage ? D'accord, le balcon est plus important pour nous.",
+    "q": "Quel équipement manque dans l'appartement ?",
+    "opts": [
+      "Un garage",
+      "Un balcon",
+      "Une deuxième chambre",
+      "Une cuisine"
+    ],
+    "gaps": [
+      {
+        "start": 77,
+        "end": 90,
+        "options": [
+          "deux chambres",
+          "trois chambres",
+          "une chambre",
+          "quatre chambres"
+        ]
+      }
+    ],
+    "evidence": "pas de garage",
+    "gloss": "来电咨询的公寓有两间卧室和阳台，但没有车库；租客更在意阳台。",
+    "unitTitle": "S’informer par téléphone",
+    "section": "Parler des lieux et des objets",
+    "id": "fr-cp16-p060"
+  },
+  {
+    "unit": 17,
+    "page": 62,
+    "title": "Comparer deux séjours",
+    "level": "A2",
+    "audio": "Le séjour à la mer coûte moins cher que le séjour à la montagne. Mais il y a beaucoup plus de monde sur la côte en août. Nous préférons payer un peu plus et passer une semaine au calme, à la montagne.",
+    "q": "Pourquoi les voyageurs choisissent-ils la montagne ?",
+    "opts": [
+      "Pour être plus tranquilles",
+      "Parce que c’est moins cher",
+      "Pour aller à la plage",
+      "Parce que le séjour dure deux semaines"
+    ],
+    "gaps": [
+      {
+        "start": 25,
+        "end": 35,
+        "options": [
+          "moins cher",
+          "plus cher",
+          "aussi cher",
+          "trop cher"
+        ]
+      }
+    ],
+    "evidence": "passer une semaine au calme",
+    "gloss": "海边更便宜，但八月人多；他们愿意多花一点钱到山里安静住一周。",
+    "unitTitle": "Comparer",
+    "section": "Parler des lieux et des objets",
+    "id": "fr-cp17-p062"
+  },
+  {
+    "unit": 18,
+    "page": 64,
+    "title": "Préparer une fête",
+    "level": "A1",
+    "audio": "Pour le gâteau, prends les petites assiettes blanches, pas les grandes bleues. Les verres qui sont sur l'étagère sont pour les enfants. Ceux qui sont dans le placard sont trop fragiles.",
+    "q": "Quelles assiettes faut-il prendre ?",
+    "opts": [
+      "Les petites blanches",
+      "Les grandes bleues",
+      "Les petites bleues",
+      "Les grandes blanches"
+    ],
+    "gaps": [
+      {
+        "start": 27,
+        "end": 53,
+        "options": [
+          "petites assiettes blanches",
+          "grandes assiettes bleues",
+          "petites assiettes bleues",
+          "grandes assiettes blanches"
+        ]
+      }
+    ],
+    "evidence": "les petites assiettes blanches, pas les grandes bleues",
+    "gloss": "蛋糕用白色小盘子，不用蓝色大盘子；架上的杯子给孩子，柜里的太易碎。",
+    "unitTitle": "Caractériser",
+    "section": "Parler des lieux et des objets",
+    "id": "fr-cp18-p064"
+  },
+  {
+    "unit": 19,
+    "page": 66,
+    "title": "Selon la météo",
+    "level": "A2",
+    "audio": "S'il fait beau dimanche, nous déjeunerons dans le jardin. S'il pleut, nous resterons à l'intérieur. Dans les deux cas, venez vers midi et apportez seulement quelque chose à boire.",
+    "q": "Que feront les invités s'il pleut ?",
+    "opts": [
+      "Ils déjeuneront à l’intérieur",
+      "Ils annuleront la rencontre",
+      "Ils iront au restaurant",
+      "Ils déjeuneront dans le jardin"
+    ],
+    "gaps": [
+      {
+        "start": 85,
+        "end": 98,
+        "options": [
+          "à l'intérieur",
+          "dans le jardin",
+          "au restaurant",
+          "sur la terrasse"
+        ]
+      }
+    ],
+    "evidence": "S'il pleut, nous resterons à l'intérieur",
+    "gloss": "周日晴天就在花园吃午饭，雨天则到室内；无论天气怎样都中午来，只需带饮料。",
+    "unitTitle": "Exprimer une condition",
+    "section": "Parler des lieux et des objets",
+    "id": "fr-cp19-p066"
+  },
+  {
+    "unit": 20,
+    "page": 68,
+    "title": "Dans un nouveau bureau",
+    "level": "A2",
+    "audio": "J'ai déjà une table et une chaise dans mon nouveau bureau. En revanche, il me manque une lampe pour travailler le soir. J'ai aussi besoin que l'on installe une connexion Internet avant lundi.",
+    "q": "Qu'est-ce qui est déjà disponible ?",
+    "opts": [
+      "Une table et une chaise",
+      "Une lampe et Internet",
+      "Une table et une imprimante",
+      "Une chaise et une lampe"
+    ],
+    "gaps": [
+      {
+        "start": 85,
+        "end": 94,
+        "options": [
+          "une lampe",
+          "une chaise",
+          "une table",
+          "une armoire"
+        ]
+      }
+    ],
+    "evidence": "J'ai déjà une table et une chaise",
+    "gloss": "新办公室已有桌椅，但缺台灯，还需要周一前安装网络。",
+    "unitTitle": "Parler d’un besoin",
+    "section": "Parler des lieux et des objets",
+    "id": "fr-cp20-p068"
+  },
+  {
+    "unit": 21,
+    "page": 70,
+    "title": "Présenter une collègue",
+    "level": "A1",
+    "audio": "Salut, Lina ! Je te présente Élodie, ma nouvelle collègue. Nous travaillons dans la même bibliothèque. Élodie, voici Lina, une amie que je connais depuis le lycée.",
+    "q": "Qui est Élodie ?",
+    "opts": [
+      "Une collègue de la personne qui parle",
+      "Une ancienne camarade de lycée de Lina",
+      "La sœur de Lina",
+      "La directrice du lycée"
+    ],
+    "gaps": [
+      {
+        "start": 49,
+        "end": 57,
+        "options": [
+          "collègue",
+          "voisine",
+          "cousine",
+          "professeure"
+        ]
+      }
+    ],
+    "evidence": "ma nouvelle collègue",
+    "gloss": "Élodie 是说话人的新同事，两人在同一家图书馆工作；Lina 则是高中起认识的朋友。",
+    "unitTitle": "Saluer et présenter",
+    "section": "Parler aux autres",
+    "id": "fr-cp21-p070"
+  },
+  {
+    "unit": 22,
+    "page": 72,
+    "title": "Présenter des excuses",
+    "level": "A2",
+    "audio": "Je suis désolée d'être arrivée en retard. J'avais noté le rendez-vous à dix heures trente au lieu de dix heures. Ce n'est pas la faute du bus ; c'est moi qui ai mal noté l'heure.",
+    "q": "Pourquoi la personne est-elle en retard ?",
+    "opts": [
+      "Elle a noté une mauvaise heure",
+      "Le bus est tombé en panne",
+      "Elle a oublié son sac",
+      "Le rendez-vous a été annulé"
+    ],
+    "gaps": [
+      {
+        "start": 72,
+        "end": 89,
+        "options": [
+          "dix heures trente",
+          "dix heures",
+          "neuf heures trente",
+          "onze heures"
+        ]
+      }
+    ],
+    "evidence": "c'est moi qui ai mal noté l'heure",
+    "gloss": "把十点误记成十点半导致迟到；说话人明确表示不是公交车的错。",
+    "unitTitle": "Excuser et s’excuser",
+    "section": "Parler aux autres",
+    "id": "fr-cp22-p072"
+  },
+  {
+    "unit": 23,
+    "page": 74,
+    "title": "Laisser un message à une amie",
+    "level": "A1",
+    "audio": "Bonjour, c'est Camille. Est-ce que tu peux dire à Nora que je l'attends devant le cinéma à dix-huit heures ? Pas devant le café comme prévu. Je lui ai envoyé un message, mais elle ne l'a pas encore lu.",
+    "q": "Quel changement faut-il transmettre à Nora ?",
+    "opts": [
+      "Le lieu du rendez-vous",
+      "La date du rendez-vous",
+      "Le prix de la séance",
+      "Le nom du film"
+    ],
+    "gaps": [
+      {
+        "start": 72,
+        "end": 88,
+        "options": [
+          "devant le cinéma",
+          "devant le café",
+          "derrière le cinéma",
+          "dans le café"
+        ]
+      }
+    ],
+    "evidence": "Pas devant le café comme prévu",
+    "gloss": "集合地点改为电影院门口，时间为十八点；不再是原定的咖啡馆门口。",
+    "unitTitle": "Téléphoner",
+    "section": "Parler aux autres",
+    "id": "fr-cp23-p074"
+  },
+  {
+    "unit": 23,
+    "page": 76,
+    "title": "Au standard d’une entreprise",
+    "level": "A2",
+    "audio": "Bonjour, je voudrais parler à Madame Laurent. Elle est en réunion jusqu'à onze heures. Pouvez-vous lui demander de me rappeler cet après-midi ? Je serai disponible après quatorze heures.",
+    "q": "Quand la personne souhaite-t-elle être rappelée ?",
+    "opts": [
+      "Après quatorze heures",
+      "Avant onze heures",
+      "Pendant la réunion",
+      "Demain matin"
+    ],
+    "gaps": [
+      {
+        "start": 164,
+        "end": 185,
+        "options": [
+          "après quatorze heures",
+          "avant quatorze heures",
+          "à onze heures",
+          "après dix-huit heures"
+        ]
+      }
+    ],
+    "evidence": "Je serai disponible après quatorze heures",
+    "gloss": "Laurent 女士开会到十一点；来电者请她下午回电，十四点后方便接听。",
+    "unitTitle": "Téléphoner",
+    "section": "Parler aux autres",
+    "id": "fr-cp23-p076"
+  },
+  {
+    "unit": 24,
+    "page": 78,
+    "title": "Au club de gym",
+    "level": "A1",
+    "audio": "Pour cet exercice, asseyez-vous sur le tapis. Levez doucement les bras, puis baissez-les. Ne vous levez pas encore : nous allons refaire le mouvement trois fois.",
+    "q": "Que faut-il faire d'abord ?",
+    "opts": [
+      "S’asseoir sur le tapis",
+      "Se mettre debout",
+      "Courir autour de la salle",
+      "Baisser la tête"
+    ],
+    "gaps": [
+      {
+        "start": 150,
+        "end": 160,
+        "options": [
+          "trois fois",
+          "deux fois",
+          "dix fois",
+          "une fois"
+        ]
+      }
+    ],
+    "evidence": "asseyez-vous sur le tapis",
+    "gloss": "先坐到垫子上，再慢慢举起和放下手臂；暂时别站起来，动作再做三次。",
+    "unitTitle": "Donner des instructions",
+    "section": "Parler aux autres",
+    "id": "fr-cp24-p078"
+  },
+  {
+    "unit": 24,
+    "page": 80,
+    "title": "Dans un jardin public",
+    "level": "A1",
+    "audio": "Léo, attends ton tour devant le toboggan. Laisse d'abord descendre la petite fille. Ensuite, monte par l'escalier et assieds-toi pour glisser.",
+    "q": "Que doit faire Léo avant de monter ?",
+    "opts": [
+      "Laisser la petite fille descendre",
+      "Passer devant tout le monde",
+      "Courir sur la pelouse",
+      "Monter par la pente"
+    ],
+    "gaps": [
+      {
+        "start": 99,
+        "end": 113,
+        "options": [
+          "par l'escalier",
+          "par la pente",
+          "sur le côté",
+          "par le jardin"
+        ]
+      }
+    ],
+    "evidence": "Laisse d'abord descendre la petite fille",
+    "gloss": "Léo 要先等小女孩滑下，再从楼梯上去，坐着滑下。",
+    "unitTitle": "Donner des instructions",
+    "section": "Parler aux autres",
+    "id": "fr-cp24-p080"
+  },
+  {
+    "unit": 25,
+    "page": 82,
+    "title": "Nier une action",
+    "level": "A2",
+    "audio": "Non, je n'ai pas déplacé ton vélo. Quand je suis arrivé, il était déjà près de la porte. J'ai seulement fermé la fenêtre parce qu'il faisait froid.",
+    "q": "Quelle action la personne reconnaît-elle avoir faite ?",
+    "opts": [
+      "Fermer la fenêtre",
+      "Déplacer le vélo",
+      "Ouvrir la porte",
+      "Casser le vélo"
+    ],
+    "gaps": [
+      {
+        "start": 104,
+        "end": 120,
+        "options": [
+          "fermé la fenêtre",
+          "déplacé ton vélo",
+          "ouvert la porte",
+          "lavé le vélo"
+        ]
+      }
+    ],
+    "evidence": "J'ai seulement fermé la fenêtre",
+    "gloss": "否认挪过自行车，只承认因为冷而关了窗户；到达时自行车已在门边。",
+    "unitTitle": "Nier",
+    "section": "Parler aux autres",
+    "id": "fr-cp25-p082"
+  },
+  {
+    "unit": 26,
+    "page": 84,
+    "title": "Inviter une voisine",
+    "level": "A1",
+    "audio": "Tu veux venir dîner chez nous samedi ? Merci, avec plaisir ! Je peux apporter un dessert. Parfait, mais ne prépare pas de gâteau : j'en fais déjà un. Une salade de fruits, ce serait très bien.",
+    "q": "Quel dessert l'invitée peut-elle apporter ?",
+    "opts": [
+      "Une salade de fruits",
+      "Un gâteau au chocolat",
+      "Une tarte aux pommes",
+      "Aucun dessert n’est accepté"
+    ],
+    "gaps": [
+      {
+        "start": 30,
+        "end": 36,
+        "options": [
+          "samedi",
+          "vendredi",
+          "dimanche",
+          "mardi"
+        ]
+      }
+    ],
+    "evidence": "Une salade de fruits, ce serait très bien",
+    "gloss": "接受周六晚餐邀请；主人已做蛋糕，客人可以带水果沙拉。",
+    "unitTitle": "Inviter, accepter, refuser",
+    "section": "Parler aux autres",
+    "id": "fr-cp26-p084"
+  },
+  {
+    "unit": 26,
+    "page": 86,
+    "title": "Refuser une invitation au travail",
+    "level": "A2",
+    "audio": "On va déjeuner ensemble vendredi, tu viens ? Merci de m'avoir invitée, mais vendredi je déjeune avec un client. En revanche, je suis libre lundi, si vous voulez.",
+    "q": "Comment la personne répond-elle ?",
+    "opts": [
+      "Elle refuse vendredi et propose lundi",
+      "Elle accepte pour vendredi",
+      "Elle refuse sans proposer un autre jour",
+      "Elle invite son client lundi"
+    ],
+    "gaps": [
+      {
+        "start": 139,
+        "end": 144,
+        "options": [
+          "lundi",
+          "vendredi",
+          "jeudi",
+          "samedi"
+        ]
+      }
+    ],
+    "evidence": "je suis libre lundi",
+    "gloss": "周五要和客户吃饭，礼貌谢绝同事邀请，并提出周一有空。",
+    "unitTitle": "Inviter, accepter, refuser",
+    "section": "Parler aux autres",
+    "id": "fr-cp26-p086"
+  },
+  {
+    "unit": 27,
+    "page": 88,
+    "title": "Demander un service au bureau",
+    "level": "A2",
+    "audio": "Tu pourrais imprimer ces documents avant la réunion ? Il nous faut cinq exemplaires, pas quinze. Je vais préparer la salle pendant ce temps. Merci, tu me rends vraiment service.",
+    "q": "Combien d'exemplaires faut-il imprimer ?",
+    "opts": [
+      "Cinq",
+      "Quinze",
+      "Cinquante",
+      "Trois"
+    ],
+    "gaps": [
+      {
+        "start": 67,
+        "end": 71,
+        "options": [
+          "cinq",
+          "quinze",
+          "cinquante",
+          "trois"
+        ]
+      }
+    ],
+    "evidence": "cinq exemplaires, pas quinze",
+    "gloss": "请同事会前打印五份，不是十五份；说话人同时准备会议室。",
+    "unitTitle": "Demander à quelqu’un de faire quelque chose",
+    "section": "Parler aux autres",
+    "id": "fr-cp27-p088"
+  },
+  {
+    "unit": 28,
+    "page": 90,
+    "title": "Proposer un pique-nique",
+    "level": "A2",
+    "audio": "Et si on faisait un pique-nique au bord de la rivière ? On pourrait se retrouver dimanche à onze heures. Chacun apporterait quelque chose : moi, je préparerais les sandwichs. Ça vous dirait ?",
+    "q": "Que propose la personne ?",
+    "opts": [
+      "Un pique-nique dimanche",
+      "Un dîner au restaurant samedi",
+      "Une promenade sans repas",
+      "Une réunion à la maison"
+    ],
+    "gaps": [
+      {
+        "start": 160,
+        "end": 173,
+        "options": [
+          "les sandwichs",
+          "les boissons",
+          "les desserts",
+          "les assiettes"
+        ]
+      }
+    ],
+    "evidence": "un pique-nique au bord de la rivière",
+    "gloss": "建议周日十一点在河边野餐，各带一些东西；说话人负责三明治。",
+    "unitTitle": "Proposer",
+    "section": "Parler aux autres",
+    "id": "fr-cp28-p090"
+  },
+  {
+    "unit": 29,
+    "page": 92,
+    "title": "Expliquer un problème à la pharmacie",
+    "level": "A1",
+    "audio": "Bonjour, j'ai mal à la gorge depuis hier. Je n'ai pas de fièvre, mais ma voix est fatiguée. Je voudrais demander conseil au pharmacien avant d'acheter quelque chose.",
+    "q": "Quel problème la personne décrit-elle ?",
+    "opts": [
+      "Un mal de gorge",
+      "Une douleur au genou",
+      "Une forte fièvre",
+      "Un mal de dents"
+    ],
+    "gaps": [
+      {
+        "start": 29,
+        "end": 40,
+        "options": [
+          "depuis hier",
+          "depuis lundi",
+          "depuis un mois",
+          "depuis ce matin"
+        ]
+      }
+    ],
+    "evidence": "j'ai mal à la gorge depuis hier",
+    "gloss": "从昨天起喉咙痛、声音疲劳，但没有发烧；购买前想先询问药剂师。",
+    "unitTitle": "Parler de sa santé",
+    "section": "Parler de soi",
+    "id": "fr-cp29-p092"
+  },
+  {
+    "unit": 29,
+    "page": 94,
+    "title": "Raconter un accident",
+    "level": "A2",
+    "audio": "Samedi, je suis tombée en descendant l'escalier. Je me suis blessée à la jambe et ma sœur m'a accompagnée à l'hôpital. Maintenant, je reste à la maison et je ne peux pas aller au travail cette semaine.",
+    "q": "Comment l'accident s'est-il produit ?",
+    "opts": [
+      "En descendant l’escalier",
+      "Pendant un trajet à vélo",
+      "Au travail devant un ordinateur",
+      "En montant dans un train"
+    ],
+    "gaps": [
+      {
+        "start": 68,
+        "end": 78,
+        "options": [
+          "à la jambe",
+          "au bras",
+          "à la main",
+          "à la tête"
+        ]
+      }
+    ],
+    "evidence": "je suis tombée en descendant l'escalier",
+    "gloss": "周六下楼时摔倒伤到腿，姐姐陪同去医院；本周待在家里，不能上班。",
+    "unitTitle": "Parler de sa santé",
+    "section": "Parler de soi",
+    "id": "fr-cp29-p094"
+  },
+  {
+    "unit": 29,
+    "page": 96,
+    "title": "Chez le médecin",
+    "level": "A2",
+    "audio": "Docteur, j'ai mal au dos quand je reste longtemps assise. La douleur diminue quand je marche. Elle a commencé il y a trois jours, après un long voyage en voiture.",
+    "q": "Dans quelle situation la douleur diminue-t-elle ?",
+    "opts": [
+      "Quand la personne marche",
+      "Quand elle reste longtemps assise",
+      "Quand elle conduit",
+      "Quand elle porte une valise"
+    ],
+    "gaps": [
+      {
+        "start": 117,
+        "end": 128,
+        "options": [
+          "trois jours",
+          "deux semaines",
+          "trois mois",
+          "un an"
+        ]
+      }
+    ],
+    "evidence": "La douleur diminue quand je marche",
+    "gloss": "久坐时背痛，走路时减轻；三天前长途乘车后开始不适。",
+    "unitTitle": "Parler de sa santé",
+    "section": "Parler de soi",
+    "id": "fr-cp29-p096"
+  },
+  {
+    "unit": 30,
+    "page": 98,
+    "title": "Parler de ses loisirs",
+    "level": "A1",
+    "audio": "J'aime bien sortir avec mes amis, mais je préfère les petits concerts aux grandes fêtes. Le dimanche, j'adore rester chez moi pour dessiner. En revanche, regarder le sport à la télévision ne m'intéresse pas.",
+    "q": "Quelle activité la personne aime-t-elle faire le dimanche ?",
+    "opts": [
+      "Dessiner chez elle",
+      "Regarder le sport à la télévision",
+      "Aller à une grande fête",
+      "Travailler au bureau"
+    ],
+    "gaps": [
+      {
+        "start": 131,
+        "end": 139,
+        "options": [
+          "dessiner",
+          "danser",
+          "nager",
+          "courir"
+        ]
+      }
+    ],
+    "evidence": "rester chez moi pour dessiner",
+    "gloss": "喜欢和朋友外出，更偏爱小型演出；周日喜欢在家画画，不爱看体育电视节目。",
+    "unitTitle": "Parler de ses goûts",
+    "section": "Parler de soi",
+    "id": "fr-cp30-p098"
+  },
+  {
+    "unit": 31,
+    "page": 100,
+    "title": "Présenter son expérience",
+    "level": "A2",
+    "audio": "J'ai gardé deux enfants de trois et six ans pendant les vacances. Je sais préparer leur repas et les accompagner à l'école. Cette année, je suis disponible le mercredi après-midi, mais pas le week-end.",
+    "q": "Quand la candidate est-elle disponible ?",
+    "opts": [
+      "Le mercredi après-midi",
+      "Tous les week-ends",
+      "Le lundi matin",
+      "Tous les soirs"
+    ],
+    "gaps": [
+      {
+        "start": 159,
+        "end": 167,
+        "options": [
+          "mercredi",
+          "mardi",
+          "vendredi",
+          "samedi"
+        ]
+      },
+      {
+        "start": 185,
+        "end": 200,
+        "options": [
+          "pas le week-end",
+          "tous les week-ends",
+          "le samedi matin",
+          "le dimanche soir"
+        ]
+      }
+    ],
+    "evidence": "disponible le mercredi après-midi, mais pas le week-end",
+    "gloss": "候选人有照看三岁和六岁儿童的经验，会做饭和接送；周三下午有空，周末不行。",
+    "unitTitle": "Parler de son curriculum vitae",
+    "section": "Parler de soi",
+    "id": "fr-cp31-p100"
+  },
+  {
+    "unit": 32,
+    "page": 102,
+    "title": "Donner son opinion entre collègues",
+    "level": "A2",
+    "audio": "À mon avis, nous devrions réparer l'imprimante plutôt qu'en acheter une nouvelle. Elle fonctionne encore bien, sauf pour les couleurs. Je viens de demander un devis ; attendons le prix de la réparation avant de décider.",
+    "q": "Que recommande la personne avant de décider ?",
+    "opts": [
+      "Attendre le prix de la réparation",
+      "Acheter immédiatement une imprimante",
+      "Ne plus imprimer de documents",
+      "Changer tous les ordinateurs"
+    ],
+    "gaps": [
+      {
+        "start": 26,
+        "end": 33,
+        "options": [
+          "réparer",
+          "remplacer",
+          "vendre",
+          "jeter"
+        ]
+      }
+    ],
+    "evidence": "attendons le prix de la réparation",
+    "gloss": "建议先考虑维修而非立刻换打印机；刚询价，等维修报价后再决定。",
+    "unitTitle": "Demander et donner son opinion",
+    "section": "Parler de soi",
+    "id": "fr-cp32-p102"
+  },
+  {
+    "unit": 33,
+    "page": 104,
+    "title": "Exprimer sa surprise",
+    "level": "A2",
+    "audio": "Vous avez préparé cette fête pour moi ? Je n'en reviens pas ! Je pensais venir simplement boire un café. Et vous avez même invité ma sœur qui habite loin !",
+    "q": "Pourquoi la personne est-elle surprise ?",
+    "opts": [
+      "Elle découvre une fête organisée pour elle",
+      "Elle a oublié de réserver un café",
+      "Sa sœur a annulé sa visite",
+      "La fête est déjà terminée"
+    ],
+    "gaps": [
+      {
+        "start": 130,
+        "end": 137,
+        "options": [
+          "ma sœur",
+          "ma cousine",
+          "ma voisine",
+          "ma collègue"
+        ]
+      }
+    ],
+    "evidence": "Vous avez préparé cette fête pour moi",
+    "gloss": "原以为只是来喝咖啡，却发现朋友准备了惊喜派对，还邀请了住得远的姐姐或妹妹。",
+    "unitTitle": "Exprimer la surprise",
+    "section": "Parler de soi",
+    "id": "fr-cp33-p104"
+  },
+  {
+    "unit": 34,
+    "page": 106,
+    "title": "Parler d’un projet scolaire",
+    "level": "A2",
+    "audio": "Ma fille veut étudier à Lille l'année prochaine. Elle a envoyé son dossier, mais elle n'a pas encore reçu de réponse. Elle est certaine de vouloir partir ; en revanche, nous ne savons pas encore si elle sera acceptée.",
+    "q": "Qu'est-ce qui reste incertain ?",
+    "opts": [
+      "Son admission",
+      "Son envie de partir",
+      "La ville choisie",
+      "L’envoi du dossier"
+    ],
+    "gaps": [
+      {
+        "start": 90,
+        "end": 105,
+        "options": [
+          "pas encore reçu",
+          "déjà reçu",
+          "jamais envoyé",
+          "déjà perdu"
+        ]
+      }
+    ],
+    "evidence": "nous ne savons pas encore si elle sera acceptée",
+    "gloss": "女儿确定想去里尔读书，也已寄出材料；仍不确定的是是否被录取。",
+    "unitTitle": "Exprimer la certitude ou l’incertitude",
+    "section": "Parler des autres",
+    "id": "fr-cp34-p106"
+  },
+  {
+    "unit": 34,
+    "page": 108,
+    "title": "Rapporter ce que l’on a vu",
+    "level": "A2",
+    "audio": "Je suis sûre d'avoir vu une voiture blanche devant l'immeuble vers vingt-deux heures. Pour le conducteur, je ne peux rien affirmer : il faisait trop sombre. Je n'ai pas vu son visage.",
+    "q": "De quoi la personne est-elle certaine ?",
+    "opts": [
+      "De la couleur de la voiture",
+      "De l’identité du conducteur",
+      "Du numéro de la plaque",
+      "De l’âge du conducteur"
+    ],
+    "gaps": [
+      {
+        "start": 36,
+        "end": 43,
+        "options": [
+          "blanche",
+          "noire",
+          "rouge",
+          "bleue"
+        ]
+      }
+    ],
+    "evidence": "une voiture blanche",
+    "gloss": "确定看到了白车；由于太暗，没有看清司机的脸，因此不能确认身份。",
+    "unitTitle": "Exprimer la certitude ou l’incertitude",
+    "section": "Parler des autres",
+    "id": "fr-cp34-p108"
+  },
+  {
+    "unit": 35,
+    "page": 110,
+    "title": "Décrire une personne",
+    "level": "A2",
+    "audio": "La personne que je cherche est assez grande et porte des lunettes rondes. Elle avait un manteau bleu et une écharpe jaune ce matin. Ses cheveux sont courts et bruns.",
+    "q": "Quelle description correspond à la personne ?",
+    "opts": [
+      "Un manteau bleu et des lunettes rondes",
+      "Un manteau jaune et de longs cheveux",
+      "Une écharpe bleue et des lunettes carrées",
+      "Des cheveux blonds et aucun manteau"
+    ],
+    "gaps": [
+      {
+        "start": 104,
+        "end": 121,
+        "options": [
+          "une écharpe jaune",
+          "une écharpe bleue",
+          "une veste jaune",
+          "une casquette jaune"
+        ]
+      }
+    ],
+    "evidence": "un manteau bleu et une écharpe jaune",
+    "gloss": "描述包括较高、圆眼镜、蓝大衣、黄围巾和棕色短发。",
+    "unitTitle": "Décrire",
+    "section": "Parler des autres",
+    "id": "fr-cp35-p110"
+  },
+  {
+    "unit": 36,
+    "page": 112,
+    "title": "Faire un compliment",
+    "level": "A1",
+    "audio": "Cette écharpe te va très bien ! La couleur fait ressortir tes yeux. Tu l'as achetée récemment ? Non ? C'est ta grand-mère qui l'a faite ? Elle est vraiment magnifique.",
+    "q": "Sur quoi porte le compliment ?",
+    "opts": [
+      "Une écharpe faite par la grand-mère",
+      "Une robe achetée hier",
+      "Un nouveau sac",
+      "Une coiffure"
+    ],
+    "gaps": [
+      {
+        "start": 108,
+        "end": 121,
+        "options": [
+          "ta grand-mère",
+          "ta sœur",
+          "ta mère",
+          "ta voisine"
+        ]
+      }
+    ],
+    "evidence": "C'est ta grand-mère qui l'a faite",
+    "gloss": "称赞围巾很衬对方的眼睛；围巾是祖母亲手做的，不是新买的。",
+    "unitTitle": "Faire des compliments",
+    "section": "Parler des autres",
+    "id": "fr-cp36-p112"
+  },
+  {
+    "unit": 37,
+    "page": 114,
+    "title": "Féliciter une amie",
+    "level": "A1",
+    "audio": "Tu as réussi ton examen de conduite ? Bravo, toutes mes félicitations ! Tu as beaucoup travaillé pour ça. Il faut qu'on fête cette bonne nouvelle ensemble.",
+    "q": "Quelle réussite est célébrée ?",
+    "opts": [
+      "La réussite à l’examen de conduite",
+      "L’obtention d’un nouveau travail",
+      "La naissance d’un enfant",
+      "La fin d’un concours de musique"
+    ],
+    "gaps": [
+      {
+        "start": 13,
+        "end": 35,
+        "options": [
+          "ton examen de conduite",
+          "ton examen de français",
+          "ton concours de musique",
+          "ton entretien de travail"
+        ]
+      }
+    ],
+    "evidence": "Tu as réussi ton examen de conduite",
+    "gloss": "祝贺朋友通过驾照考试，并肯定了她的努力。",
+    "unitTitle": "Féliciter",
+    "section": "Parler des autres",
+    "id": "fr-cp37-p114"
+  },
+  {
+    "unit": 38,
+    "page": 116,
+    "title": "Encourager après un match",
+    "level": "A2",
+    "audio": "Tu es déçue d'avoir perdu, je comprends. Mais tu as mieux joué que la semaine dernière. Ne renonce pas maintenant : continue l'entraînement, tu progresses vraiment.",
+    "q": "Quel est le but de ce message ?",
+    "opts": [
+      "Encourager la personne à continuer",
+      "Lui demander d’arrêter le sport",
+      "Se moquer de sa défaite",
+      "Annoncer l’annulation du prochain match"
+    ],
+    "gaps": [
+      {
+        "start": 116,
+        "end": 139,
+        "options": [
+          "continue l'entraînement",
+          "arrête l’entraînement",
+          "change de sport",
+          "annule le match"
+        ]
+      }
+    ],
+    "evidence": "continue l'entraînement, tu progresses vraiment",
+    "gloss": "虽然输了比赛，但比上周表现更好；说话人鼓励对方继续训练，不要放弃。",
+    "unitTitle": "Consoler et encourager",
+    "section": "Parler des autres",
+    "id": "fr-cp38-p116"
+  },
+  {
+    "unit": 39,
+    "page": 118,
+    "title": "Critiquer un match",
+    "level": "A2",
+    "audio": "J'ai trouvé le match décevant. Notre équipe a gardé le ballon, mais elle n'a presque jamais tiré au but. Ce n'est pas le résultat qui me gêne, c'est le manque d'initiative.",
+    "q": "Quelle est la critique principale ?",
+    "opts": [
+      "Le manque d’initiative de l’équipe",
+      "Le prix des billets",
+      "La durée du match",
+      "La couleur des maillots"
+    ],
+    "gaps": [
+      {
+        "start": 92,
+        "end": 103,
+        "options": [
+          "tiré au but",
+          "gardé le ballon",
+          "gagné le match",
+          "quitté le terrain"
+        ]
+      }
+    ],
+    "evidence": "c'est le manque d'initiative",
+    "gloss": "批评的重点不是比分，而是球队虽然控球却几乎不射门、缺乏主动性。",
+    "unitTitle": "Critiquer",
+    "section": "Parler des autres",
+    "id": "fr-cp39-p118"
+  },
+  {
+    "unit": 40,
+    "page": 120,
+    "title": "Admirer un spectacle",
+    "level": "A2",
+    "audio": "Le début du spectacle était assez lent, pourtant la dernière scène m'a vraiment impressionnée. Les danseurs bougeaient tous ensemble avec une précision incroyable. Je retournerais volontiers voir cette compagnie.",
+    "q": "Qu'est-ce qui a particulièrement impressionné la spectatrice ?",
+    "opts": [
+      "La précision des danseurs dans la dernière scène",
+      "La rapidité du début",
+      "Le décor du hall d’entrée",
+      "La durée de l’entracte"
+    ],
+    "gaps": [
+      {
+        "start": 49,
+        "end": 66,
+        "options": [
+          "la dernière scène",
+          "la première scène",
+          "la deuxième scène",
+          "la pause"
+        ]
+      }
+    ],
+    "evidence": "avec une précision incroyable",
+    "gloss": "虽然开场较慢，但最后一幕舞者整齐精准的动作给观众留下深刻印象，她愿意再次观看。",
+    "unitTitle": "Exprimer l’admiration",
+    "section": "Parler des autres",
+    "id": "fr-cp40-p120"
+  }
+];
+function communicationRegister(){
+ const language=UI_LANG==='fr'?'fr':UI_LANG==='en'?'en':'zh';
+ for(const row of COMMUNICATION_PASSAGES){
+  const round='fr-cp'+String(row.unit).padStart(2,'0');
+  if(!ROUNDS.some(r=>r.id===round))ROUNDS.push({id:round,kind:'listen',name:COMMUNICATION_BOOK.title+' · '+row.unit+'. '+row.unitTitle});
+  ROUND_NAMES[round]=COMMUNICATION_BOOK.title+' · '+row.unit+'. '+row.unitTitle;
+  const answer=row.opts[0];
+  const exp=language==='zh'?row.gloss+' 正确答案：'+answer+'。依据：« '+row.evidence+' »。':language==='en'?'Answer: '+answer+'. Listen for: « '+row.evidence+' ».':'Réponse : '+answer+'. Repère dans l’enregistrement : « '+row.evidence+' ».';
+  const q={id:row.id,ch:null,cat:row.section,title:row.title,q:row.q,audio:row.audio,opts:row.opts.slice(),a:0,exp,level:row.level,tags:[row.level,row.section,row.unitTitle,row.title,'Communication progressive'],listeningTopic:row.section,listeningSource:COMMUNICATION_BOOK.id,sourceBook:{id:COMMUNICATION_BOOK.id,unit:row.unit,unitTitle:row.unitTitle,page:row.page}};
+  LISTENING_GAPS[q.audio]=row.gaps;BANK.push(q);BY_ID.set(q.id,q);
+ }
+}
+communicationRegister();
 // Keep original comprehension IDs/history; add one gap and one ordering question per recording.
 // Long recordings retain every authored comprehension question.
 const LISTEN_MODES = ['comprehension','cloze','order'];
 Object.assign(LISTEN_LABELS,{
+ source:['教材','Material','Support'],general:['基础听力','General listening','Écoute générale'],
+ bookNote:['按教材 40 章、57 个情境编写的原创练习；不是教材原文或原版 CD 录音。','Original practice for the book’s 40 chapters and 57 situations; not the original exercises or CD audio.','Exercices originaux alignés sur les 40 chapitres et 57 situations du manuel ; ni transcription des exercices ni audio du CD.'],
  catalog:['听力标签检索','Find listening exercises','Rechercher des exercices d’écoute'],
  search:['搜索内容或标签','Search content or tags','Rechercher un contenu ou une étiquette'],
  type:['题型','Format','Type'],level:['难度','Level','Niveau'],topic:['内容标签','Content tags','Étiquettes'],
@@ -20588,7 +22469,7 @@ function listeningRegister(){
  const seen=new Set(),extra=[];
  BANK.forEach(q=>{
   if(!q.audio||!LISTENING_GAPS[q.audio])return;
-  q.listeningMode='comprehension';q.listeningTopic=q.cat.replace(/^(听力|长文|听写辨音)\s*[·：:]\s*/, '');
+  q.listeningMode='comprehension';q.listeningSource=q.listeningSource||'general';q.listeningTopic=q.listeningTopic||q.cat.replace(/^(听力|长文|听写辨音)\s*[·：:]\s*/, '');
   if(seen.has(q.audio))return;seen.add(q.audio);
   for(const mode of ['cloze','order']){
    const correct=mode==='cloze'?LISTENING_GAPS[q.audio].map(g=>g.options[0]).join(' / '):listeningSentences(q.audio)[0];
@@ -20599,16 +22480,18 @@ function listeningRegister(){
  BANK.push(...extra);
 }
 listeningRegister();
-function listeningFilter(key){try{const f=JSON.parse(decodeURIComponent(key.slice(7)||'%7B%7D'));return {modes:Array.isArray(f.modes)?f.modes:[],levels:Array.isArray(f.levels)?f.levels:[],topics:Array.isArray(f.topics)?f.topics:[],query:typeof f.query==='string'?f.query:''};}catch(e){return {modes:[],levels:[],topics:[],query:''};}}
-function listeningKey(f){return 'listen:'+encodeURIComponent(JSON.stringify({modes:[...f.modes].sort(),levels:[...f.levels].sort(),topics:[...f.topics].sort(),query:f.query.trim()}));}
+function listeningFilter(key){try{const f=JSON.parse(decodeURIComponent(key.slice(7)||'%7B%7D'));return {sources:Array.isArray(f.sources)?f.sources:[],modes:Array.isArray(f.modes)?f.modes:[],levels:Array.isArray(f.levels)?f.levels:[],topics:Array.isArray(f.topics)?f.topics:[],query:typeof f.query==='string'?f.query:''};}catch(e){return {sources:[],modes:[],levels:[],topics:[],query:''};}}
+function listeningKey(f){return 'listen:'+encodeURIComponent(JSON.stringify({sources:[...(f.sources||[])].sort(),modes:[...f.modes].sort(),levels:[...f.levels].sort(),topics:[...f.topics].sort(),query:f.query.trim()}));}
 function listeningMatches(q,f){
  if(!q.listeningMode)return false;
+ if(f.sources?.length&&!f.sources.includes(q.listeningSource))return false;
  if(f.modes.length&&!f.modes.includes(q.listeningMode)||f.levels.length&&!f.levels.includes(q.level)||f.topics.length&&!f.topics.includes(q.listeningTopic))return false;
  const norm=s=>s.normalize('NFD').replace(/\p{M}/gu,'').toLocaleLowerCase();
  return !f.query||norm([q.audio,q.q,q.cat,q.level,...(q.tags||[])].join(' ')).includes(norm(f.query.trim()));
 }
 function listeningMembers(key){const f=listeningFilter(key);return BANK.filter(q=>listeningMatches(q,f));}
-function listeningSetLabel(key){const f=listeningFilter(key);return [listeningLabel('catalog'),...f.modes.map(listeningLabel),...f.levels,...f.topics.map(tr),f.query].filter(Boolean).join(' · ');}
+function listeningSourceLabel(id){return id==='communication-beginner'?'Communication progressive · Débutant':listeningLabel('general');}
+function listeningSetLabel(key){const f=listeningFilter(key);return [listeningLabel('catalog'),...f.sources.map(listeningSourceLabel),...f.modes.map(listeningLabel),...f.levels,...f.topics.map(tr),f.query].filter(Boolean).join(' · ');}
 // Seeded ordering makes saved question positions reliable. Cycle formats and avoid adjacent
 // copies of a recording whenever an alternative exists, including in the remaining tail.
 function listeningInterleave(list,key){
@@ -20623,7 +22506,7 @@ function listeningInterleave(list,key){
  }
  return out;
 }
-let listeningPicker={modes:[],levels:[],topics:[],query:''};
+let listeningPicker={sources:typeof COMMUNICATION_BOOK!=='undefined'?[COMMUNICATION_BOOK.id]:[],modes:[],levels:[],topics:[],query:''};
 function listeningPanel(wrong=false){
  const panel=el('div','listening-catalog');panel.setAttribute('aria-label',listeningLabel('catalog'));
  const f=listeningPicker,search=el('input','listening-search');search.type='search';search.placeholder=listeningLabel('search');search.setAttribute('aria-label',listeningLabel('search'));search.value=f.query;
@@ -20633,15 +22516,16 @@ function listeningPanel(wrong=false){
  const update=()=>{const qs=eligible();info.textContent=qs.length?qs.length+' '+listeningLabel('found')+' · '+new Set(qs.map(q=>q.audio)).size+' '+listeningLabel('materials'):listeningLabel('empty');start.disabled=!qs.length;};
  const draw=()=>{
   choices.replaceChildren();
-  for(const [field,label,values] of [['modes','type',LISTEN_MODES],['levels','level',[...new Set(BANK.filter(q=>q.listeningMode).map(q=>q.level).filter(Boolean))].sort()],['topics','topic',[...new Set(BANK.filter(q=>q.listeningMode).map(q=>q.listeningTopic))].sort()]]){
+  for(const [field,label,values] of [['sources','source',[...new Set(BANK.filter(q=>q.listeningMode).map(q=>q.listeningSource))]],['modes','type',LISTEN_MODES],['levels','level',[...new Set(BANK.filter(q=>q.listeningMode&&(!f.sources.length||f.sources.includes(q.listeningSource))).map(q=>q.level).filter(Boolean))].sort()],['topics','topic',[...new Set(BANK.filter(q=>q.listeningMode&&(!f.sources.length||f.sources.includes(q.listeningSource))).map(q=>q.listeningTopic))].sort()]]){
    const group=el('fieldset','listening-filter'),legend=el('legend',null,listeningLabel(label));group.append(legend);
-   for(const value of ['',...values]){const b=el('button','listening-filter-chip',value?(field==='modes'?listeningLabel(value):tr(value)):listeningLabel('all'));b.type='button';b.setAttribute('aria-pressed',String(value?f[field].includes(value):!f[field].length));b.addEventListener('click',()=>{f[field]=!value?[]:f[field].includes(value)?f[field].filter(x=>x!==value):[...f[field],value];draw();update();Array.from(choices.querySelectorAll('fieldset'))[['modes','levels','topics'].indexOf(field)]?.querySelectorAll('button')[['',...values].indexOf(value)]?.focus();});group.append(b);}choices.append(group);
+   for(const value of ['',...values]){const b=el('button','listening-filter-chip',value?(field==='sources'?listeningSourceLabel(value):field==='modes'?listeningLabel(value):tr(value)):listeningLabel('all'));b.type='button';b.setAttribute('aria-pressed',String(value?f[field].includes(value):!f[field].length));b.addEventListener('click',()=>{f[field]=!value?[]:f[field].includes(value)?f[field].filter(x=>x!==value):[...f[field],value];if(field==='sources'){f.topics=[];f.levels=[];}draw();update();Array.from(choices.querySelectorAll('fieldset'))[['sources','modes','levels','topics'].indexOf(field)]?.querySelectorAll('button')[['',...values].indexOf(value)]?.focus();});group.append(b);}choices.append(group);
   }
  };
  search.addEventListener('input',()=>{f.query=search.value;update();});
  search.addEventListener('keydown',e=>{if(e.key==='Enter'&&!start.disabled){e.preventDefault();start.click();}});
- clear.addEventListener('click',()=>{f.modes=[];f.levels=[];f.topics=[];f.query='';search.value='';draw();update();search.focus();});
+ clear.addEventListener('click',()=>{f.sources=[];f.modes=[];f.levels=[];f.topics=[];f.query='';search.value='';draw();update();search.focus();});
  start.addEventListener('click',()=>{const key=listeningKey(f);if(wrong){bookFilter=key;renderToc();drawBook();}else startSet(key);afterPick();});
+ if(typeof COMMUNICATION_BOOK!=='undefined')panel.append(el('p','sub listening-book-note',listeningLabel('bookNote')));
  const actions=el('div','actions');actions.append(start,clear);panel.append(search,el('p','sub',listeningLabel('filterHelp')),choices,info,actions);draw();update();return panel;
 }
 // ---------- 答题 ----------
@@ -20725,7 +22609,9 @@ function renderQuestion(autoPlay = true) {
   const card = el("section", "card q-card" + (item.audio ? " listening-card" : ""));
   const tags = el("div", "tagrow");
   if (item.level) tags.append(el("span", "tag lv", item.level));
-  tags.append(el("span", "tag", item.cat), el("span", "tag plain", `第 ${item.ch} 章 · ${CH.get(item.ch).zh}`));
+  tags.append(el("span", "tag", item.cat));
+  if(item.sourceBook)tags.append(el('span','tag plain','Communication progressive · '+item.sourceBook.unit+'. '+item.sourceBook.unitTitle+' · p. '+item.sourceBook.page));
+  else if(CH.has(item.ch))tags.append(el("span", "tag plain", `第 ${item.ch} 章 · ${CH.get(item.ch).zh}`));
   tags.append(comboBadge("quiz"));
   if (item.audio) {
     if (tts) tts.cancel();
