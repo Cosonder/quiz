@@ -14815,7 +14815,7 @@ GPA2.forEach(u => {
     LEVEL_OF[id] = u.lv; TAGS_OF[id] = q.tags; KP_OF[id] = "gb" + u.unit;
   });
 });
-const LANG_FILES = {"en": "lang-en.js?v=59c84214ad", "fr": "lang-fr.js?v=7d0b0aca50"};
+const LANG_FILES = {"en": "lang-en.js?v=c712d1c09f", "fr": "lang-fr.js?v=86a3f2d13f"};
 (() => { let l = null; try { l = localStorage.getItem("fq-lang"); } catch (e) {}
   if (Object.hasOwn(LANG_FILES, l)) document.write('<script src="' + LANG_FILES[l] + '"><\/script>'); })();
 </script>
@@ -18226,6 +18226,7 @@ function setGoalSection(wrap) {
 // 每次用户可见更新都新增记录：默认只递增第三位 1.x.y → 1.x.(y+1)，超过 9 继续到 10、11；第二位升级需用户明确要求。
 // 首位保持 1，只有用户明确要求才可修改；历史记录保留。完整发布规则见根目录 AGENTS.md。
 const CHANGELOG = [
+  {"v": "1.9.14", "d": "2026-11-16", "p": "fr", "items": ["接入 11 段 Gemini 角色录音：补齐 Lison 第一段亲近剧情与 Pia 长听力，并新增三位伙伴各三句番茄钟提示。开启角色朗读后，开始专注、专注完成和开始休息会播放对应录音；重复点击、多标签与暂停恢复不会重复开场，题目音频优先。伙伴继续只用角色录音，不回退系统声音。"]},
   {"v": "1.9.13", "d": "2026-11-16", "p": "fr", "items": ["学习伙伴的点击互动、固定语音试听、羁绊故事与番茄钟试听仅播放 Gemini 角色录音，缺少录音或加载失败时不再回退系统声音。互动例句只从当前人物已有录音的内容中选择，保留原台词、亲密度与题目音频优先规则；普通学习配音中的系统选项不变。"]},
   {"v": "1.9.12", "d": "2026-11-16", "p": "fr", "items": ["新增免费番茄时钟：25 分钟专注、5 分钟短休息，每四轮安排 15 分钟长休息，可自定义、暂停、继续和提前结束。每阶段手动开始，刷新和切换栏目保留进度；学习伙伴、桌宠菜单与设置均可进入。", "专注时安静陪伴，阶段结束提醒避让听力、考试与录音。计时和近七日统计仅存本设备浏览器、按账号隔离，多标签去重；中止时长单列，不额外增加金币、亲密度或问卷学习天数。锁屏或关闭网页不保证准点响铃，返回时恢复。"]},
   {"v": "1.9.11", "d": "2026-11-16", "p": "fr", "items": ["问卷向所有人开放查看与提交，未登录提交后可登录领取奖励。基础反馈每账号奖励 500 金币；累计在 10 个不同 UTC 日期学习后，十日反馈再奖励 3000 金币，两档各一次、合计 3500，不要求连续。旧版 200 金币自动补足到 500；同日多次学习、重复提交、重试和跨设备不会重复发奖。"]},
@@ -27200,7 +27201,7 @@ function studyAudioLabel(btn,label){
 async function studyAudioIndex(){
   if(studyAudioManifest)return studyAudioManifest;
   if(studyAudioLoad)return studyAudioLoad;
-  studyAudioLoad=(async()=>{const controller=new AbortController(),timer=setTimeout(()=>controller.abort(),8000);try{const r=await fetch(STUDY_AUDIO_BASE+'manifest.json?v=1.11.0',{signal:controller.signal});if(!r.ok)throw Error('manifest');const m=await r.json();if(m.version!==1||!m.characters)throw Error('manifest');studyAudioManifest=m;return m;}finally{clearTimeout(timer);studyAudioLoad=null;}})();
+  studyAudioLoad=(async()=>{const controller=new AbortController(),timer=setTimeout(()=>controller.abort(),8000);try{const r=await fetch(STUDY_AUDIO_BASE+'manifest.json?v=1.9.14',{signal:controller.signal});if(!r.ok)throw Error('manifest');const m=await r.json();if(m.version!==1||!m.characters)throw Error('manifest');studyAudioManifest=m;return m;}finally{clearTimeout(timer);studyAudioLoad=null;}})();
   return studyAudioLoad;
 }
 function studySystemPart(text,rate,btn,done,role){
@@ -27458,7 +27459,7 @@ const POMO_COPY = {
  invalid:['请输入范围内的整数分钟。','Enter whole minutes within the shown ranges.','Saisissez un nombre entier de minutes dans les limites indiquées.'],
  quiet:['专注时安静陪伴（关闭答题闲聊）','Quiet companion during focus (no answer chatter)','Compagnie discrète pendant la concentration (sans commentaires)'],
  sound:['阶段结束提示音','End-of-phase chime','Signal sonore en fin d’étape'],voice:['角色朗读（仅已有录音）','Character speech (recorded lines only)','Voix du personnage (enregistrements existants uniquement)'],
- voicenote:['仅播放 Gemini 角色录音；尚未配音的提示保留文字，不使用系统语音。','Gemini recordings only. Prompts awaiting recordings remain text-only, without system speech.','Enregistrements Gemini uniquement. Les messages non enregistrés restent écrits, sans voix système.'],
+ voicenote:['三位伙伴的开始、完成与休息提示均使用 Gemini 录音；录音不可用时不切换系统语音。','All three companions have Gemini recordings for start, completion and break prompts. Unavailable recordings never switch to system speech.','Les trois compagnes disposent de voix Gemini pour le début, la fin et la pause. Aucune voix système en cas d’indisponibilité.'],
  preview:['试听：Gemini 角色录音','Preview: Gemini recording','Écouter : enregistrement Gemini'],busy:['请等题目音频或录音结束后再试听。','Wait until study audio or recording has finished.','Attendez la fin de l’audio ou de l’enregistrement.'],
  silent:['当前无法播放；文字提示仍可使用。','Playback unavailable; the text remains available.','Lecture indisponible ; le texte reste disponible.'],
  stats:['近七日 · 本设备','Last 7 days · this device','7 derniers jours · cet appareil'],today:['今日完成','Completed today','Terminées aujourd’hui'],timed:['计时专注时长','Timed focus duration','Durée chronométrée de concentration'],partial:['中止轮计时','Time in ended rounds','Temps des sessions interrompues'],date:['日期','Date','Date'],tomatoes:['完整番茄','Completed rounds','Sessions complètes'],
@@ -27519,11 +27520,14 @@ async function pomoDeleteAccount(uid) {
 async function pomoAction(action,patch) {
   pomoPrime();await pomoAccountChange();const scope=pomoScope;
   try {
-    const {s}=await pomoLocked(scope,s=>{if(pomoCurrentScope()!==scope)return;pomoStep(s,action,Date.now(),crypto.randomUUID(),patch);});
+    const {s,result:started}=await pomoLocked(scope,s=>{if(pomoCurrentScope()!==scope)return;const previous=s.run?.id;pomoStep(s,action,Date.now(),crypto.randomUUID(),patch);return action==='start'&&s.run?.status==='running'&&s.run.id!==previous;});
     if(scope===pomoScope){pomoState=s;pomoError='';pomoRenderKey='';pomoDraw();}
     if(['start','resume'].includes(action) && pomoFocusing()){petStopVoice();petRuntime.pendingSpeech=null;petRuntime.open=false;$('petBubble')?.remove();}
     if(action==='start'&&pomoHasCompanion())petSetState(s.run.phase==='focus'?'idle':'sleep');
     petScheduleLayout();
+    // Only the tab that actually starts a new phase speaks; resume/repeated clicks stay quiet.
+    if(started && scope===pomoCurrentScope() && s.config.voice && pomoHasCompanion() && petConfig().voice && !pomoAudioBusy())
+      await petPlayVoice({fr:pomoLine(s)[0]},null,true,true);
   }catch(e){pomoError=e.message==='unsupported'?'unsupported':'storage';pomoRenderKey='';pomoDraw();}
 }
 function pomoAudioBusy() {
@@ -27562,7 +27566,7 @@ async function pomoNotify(){
   }
   if(s.config.sound && (!petOwned() || petConfig().voice))pomoChime();
   if(s.config.voice && pomoHasCompanion() && petConfig().voice) {
-    // New text has no recording yet. Do not silently substitute system TTS.
+    // Exact Gemini recordings only; unavailable clips never substitute system speech.
     await petPlayVoice({fr:pomoLine(s)[0]},null,false,true);
   }
 }
