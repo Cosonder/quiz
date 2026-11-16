@@ -1593,6 +1593,13 @@ html.qf #stage > section.q-card > .explain { flex: none !important; height: clam
 .survey-form { display:grid;gap:20px;max-width:850px }.survey-form fieldset{border:1px solid var(--line,#ddd);border-radius:12px;padding:16px;display:grid;gap:12px}.survey-field{display:grid;gap:6px}.survey-usage{display:grid;grid-template-columns:1fr 1fr;gap:12px}.survey-form select,.survey-form input:not([type=checkbox]),.survey-form textarea{max-width:100%;padding:9px;border:1px solid var(--line,#ddd);border-radius:8px;background:var(--card,#fff);color:inherit}.survey-form input[type=checkbox]{margin-right:8px}.survey-form [hidden]{display:none!important}.study-audio-status{display:block;flex-basis:100%;font-size:12px}.pet-domain-panel progress{width:100%}@media(max-width:600px){.survey-usage{grid-template-columns:1fr}.survey-form fieldset{padding:12px}}
 
 .pet-wardrobe .pet-dress-thumbnail{width:144px;max-width:100%;margin:0 auto;filter:none;animation:none;background-position-x:0}
+.pomo-dialog{width:min(640px,calc(100vw - 28px));max-height:calc(100dvh - 40px);box-sizing:border-box;overflow:auto;border:1px solid #d8c9b9;border-radius:22px;background:var(--card,#fffaf2);color:var(--ink,#302b28);padding:24px;box-shadow:0 24px 70px #302b2840}
+.pomo-dialog::backdrop{background:#20293880;backdrop-filter:blur(3px)}
+.pomo-head,.pomo-actions,.pomo-bar{display:flex;align-items:center;gap:10px;flex-wrap:wrap}.pomo-head{justify-content:space-between}.pomo-head h2{margin:0}.pomo-clock{text-align:center;font-size:clamp(54px,12vw,82px);font-variant-numeric:tabular-nums;letter-spacing:.04em;line-height:1.25;margin:12px 0;color:#71563b}.pomo-phase{text-align:center;font-weight:700}.pomo-actions{justify-content:center;margin:12px 0 22px}.pomo-quote{padding:14px 18px;border-left:3px solid #ad805b;background:#ad805b10;border-radius:12px;margin:20px 0}.pomo-quote p{margin:8px 0}.pomo-config{border-block:1px solid #b398782e;padding:14px 0;margin:14px 0}.pomo-config summary{cursor:pointer;font-weight:700;min-height:32px}.pomo-field{display:flex;align-items:center;justify-content:space-between;gap:12px;margin:12px 0}.pomo-field input{box-sizing:border-box;max-width:100px;padding:9px;border:1px solid #b9a58d;border-radius:9px;font:inherit;background:transparent;color:inherit}.pomo-dialog .btn,.pomo-bar .btn{min-height:44px}.pomo-warning{padding:12px;border-radius:10px;background:#e6aa4320;color:#885418}.pomo-stats{width:100%;border-collapse:collapse;font-variant-numeric:tabular-nums;font-size:13px}.pomo-stats th,.pomo-stats td{padding:8px 5px;text-align:right;border-bottom:1px solid #b398782e}.pomo-stats th:first-child,.pomo-stats td:first-child{text-align:left}.pomo-stats th{font-weight:600}.pomo-entry{margin-block:16px}.pomo-bar{width:fit-content;max-width:100%;box-sizing:border-box;padding:5px 8px;border:1px solid #b3987860;border-radius:16px;background:var(--card,#fffaf2);margin-bottom:12px;box-shadow:0 4px 18px #302b2810;z-index:60}.pomo-bar[hidden]{display:none}.pomo-floating{position:fixed;max-width:340px;margin:0}.pomo-open{display:flex;gap:7px;align-items:center}.pomo-mini-phase{font-size:12px}.pomo-mini-time{font-size:18px;font-variant-numeric:tabular-nums;font-weight:700}.pomo-sr{position:absolute;clip-path:inset(50%);width:1px;height:1px;overflow:hidden;white-space:nowrap}.pomo-focusing #petWidget .pet-sprite,.pomo-focusing #petPreview .pet-sprite{animation-duration:12s!important}.pomo-dialog :focus-visible,.pomo-bar :focus-visible{outline:3px solid #577cb8;outline-offset:3px}
+@media(max-width:600px){.pomo-dialog{padding:18px 14px}.pomo-bar{gap:3px;padding:4px}.pomo-bar .btn{padding:6px 9px}.pomo-mini-phase{max-width:110px}.pomo-stats{font-size:12px}}
+@media(prefers-reduced-motion:reduce){.pomo-focusing .pet-sprite{animation:none!important}}
+
+.pomo-quote>.pet-sprite{float:right;width:80px;margin:0 0 8px 12px}.pomo-quote:after{content:"";display:block;clear:both}
 /* Ordered route and oral tasks reuse the active theme's colours. */
 .tour-pin.locked{filter:grayscale(.8);opacity:.65}.tour-pin.num{min-width:28px;min-height:28px;font-size:11px}.tour-chapters{margin-top:24px;display:grid;gap:12px}.tour-chapter{border:1px solid var(--line,#7894);border-radius:12px;padding:12px}.tour-chapter summary{cursor:pointer;font-weight:700;min-height:36px}.tour-route-row{display:grid;grid-template-columns:minmax(160px,1fr) 2fr auto;gap:8px;align-items:center;padding:10px 0;border-bottom:1px solid var(--line,#7893)}.tour-route-row small{grid-column:1/-1}.tour-lesson,.tour-drill,.tour-oral,.tour-result{max-width:900px;margin:auto}.tour-rule,.tour-task{padding:14px;border-left:3px solid var(--accent,#789);line-height:1.7}.tour-examples,.tour-review{padding:12px;border:1px solid var(--line,#7894);border-radius:10px;margin:12px 0}.tour-options{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;margin:16px 0}.tour-options button{white-space:normal;min-height:48px;text-align:left;overflow-wrap:anywhere}.tour-options .correct{outline:3px solid #35a675}.tour-options .wrong{outline:3px solid #d27973}.tour-drill .q{font-size:clamp(20px,3vw,28px);line-height:1.6;overflow-wrap:anywhere}.tour-oral h2{font-size:clamp(18px,3vw,25px);line-height:1.6}.tour-dialogue{font-size:1.2em;line-height:1.7;border-left:3px solid #6a9fd4;padding:12px}.tour-facts{display:grid;grid-template-columns:minmax(100px,1fr) 2fr;gap:12px}.tour-facts dt{font-weight:700}.tour-facts dd{margin:0;overflow-wrap:anywhere}.tour-facts .missing{color:#b76e55}.tour-oral input{display:block;width:min(100%,360px);padding:12px;font:inherit;margin:8px 0}.tour-oral audio{max-width:100%;display:block;margin:10px 0}.tour-hint{padding:10px;border:1px dashed var(--line,#7896)}.tour-oral .actions,.tour-result .actions{flex-wrap:wrap;gap:10px}.tour-oral .btn,.tour-result .btn{white-space:normal}.tour-oral .sub{line-height:1.6}
 @media(max-width:600px){.tour-route-row{grid-template-columns:1fr auto}.tour-route-row>span:not(.px-stars){grid-column:1/-1}.tour-options{grid-template-columns:1fr}.tour-facts{grid-template-columns:1fr}.tour-facts dd{padding-bottom:10px}.tour-chapter{padding:8px}.tour-pin.num{min-width:24px;min-height:24px}.tour-oral,.tour-lesson,.tour-drill{padding:16px}}
@@ -14808,7 +14815,7 @@ GPA2.forEach(u => {
     LEVEL_OF[id] = u.lv; TAGS_OF[id] = q.tags; KP_OF[id] = "gb" + u.unit;
   });
 });
-const LANG_FILES = {"en": "lang-en.js?v=9191107486", "fr": "lang-fr.js?v=1197e51851"};
+const LANG_FILES = {"en": "lang-en.js?v=d4e5812c69", "fr": "lang-fr.js?v=e690813843"};
 (() => { let l = null; try { l = localStorage.getItem("fq-lang"); } catch (e) {}
   if (Object.hasOwn(LANG_FILES, l)) document.write('<script src="' + LANG_FILES[l] + '"><\/script>'); })();
 </script>
@@ -17434,6 +17441,7 @@ function syncAccountChanged() {
   clearTimeout(syncRetryTimer); clearTimeout(syncState.timer); syncState.timer = 0; syncState.queue = []; syncState.last = 0;
   if (typeof oralOnAccountChange === "function") oralOnAccountChange();
   if (typeof petOnAccountChange === "function") petOnAccountChange();
+  if (typeof pomoAccountChange === "function") pomoAccountChange();
   if (typeof feedbackOnAccountChange === "function") feedbackOnAccountChange();
 }
 function syncSaveAuth(a) {
@@ -17646,7 +17654,8 @@ function syncLogout() { syncSaveAuth(null); syncState.err = ""; syncDraw(); sync
 async function syncDeleteAccount() {
   const uid=syncAuth()?.uid||"";
   await syncFetch("/rest/v1/rpc/delete_my_account", { method: "POST", body: "{}" },true,uid);
-  syncAssertAccount(uid);syncLogout();
+  syncAssertAccount(uid);
+  try { if (typeof pomoDeleteAccount === "function") await pomoDeleteAccount(uid); } finally { syncLogout(); }
 }
 if (SYNC_ON) {
   addEventListener("storage", e => {
@@ -18217,6 +18226,7 @@ function setGoalSection(wrap) {
 // 每次用户可见更新都新增记录：普通更新 1.x.y → 1.x.(y+1)；较大功能变动 → 1.(x+1).0。
 // 首位保持 1，只有用户明确要求才可修改；历史记录保留。完整发布规则见根目录 AGENTS.md。
 const CHANGELOG = [
+  {"v": "1.12.0", "d": "2026-11-16", "p": "fr", "items": ["新增免费番茄时钟：25 分钟专注、5 分钟短休息，每四轮安排 15 分钟长休息，可自定义、暂停、继续和提前结束。每阶段手动开始，刷新和切换栏目保留进度；学习伙伴、桌宠菜单与设置均可进入。", "专注时安静陪伴，阶段结束提醒避让听力、考试与录音。计时和近七日统计仅存本设备浏览器、按账号隔离，多标签去重；中止时长单列，不额外增加金币、亲密度或问卷学习天数。锁屏或关闭网页不保证准点响铃，返回时恢复。"]},
   {"v": "1.11.1", "d": "2026-11-16", "p": "fr", "items": ["问卷向所有人开放查看与提交，未登录提交后可登录领取奖励。基础反馈每账号奖励 500 金币；累计在 10 个不同 UTC 日期学习后，十日反馈再奖励 3000 金币，两档各一次、合计 3500，不要求连续。旧版 200 金币自动补足到 500；同日多次学习、重复提交、重试和跨设备不会重复发奖。"]},
   {"v":"1.11.0","d":"2026-11-16","p":"fr","items":["学习伙伴新增九套羁绊服装，每套包含五种动作；支持面板试穿、解锁后穿戴和恢复原装，保留原配饰。三人的亲密度分别来自语法与变位、词汇、听力与口语，显示下一奖励及增长原因，保留旧版已解锁台词。","新增三人各三段羁绊故事及普通陪伴版本，可选择开启亲近剧情；仅点击播放，不打断做题。本批接入 34 段 Gemini 配音：17 段剧情与陪伴、17 段教学样本，另两段待重录。设置新增系统、Ninon、Lison、Pia 四种学习配音选项，支持慢速、停止与切题取消；未录制内容明确使用系统朗读。","设置新增自愿体验问卷，完成本期可获 200 金币，每账号一次；评分和付费意愿不影响奖励。服务端防止重复发奖，回答关联账号，管理员仅查看达到最小样本数的汇总。"]},
   {"v": "1.10.0", "d": "2026-11-15", "items": ["新增独立口语栏目：七个现有情景任务与环法共用进度，可筛选级别与完成情况；练习不绕过环法奖励条件。站内留言新增私密回复、我的留言、未读状态及管理员多次回复。登录续期遇到限流或服务故障会保留会话并退避重试，协调多标签续期，避免旧请求影响新账号。"]},
@@ -26813,7 +26823,7 @@ function petPrimeVoice() {
     if (petVoiceContext.state !== 'running') petVoiceContext.resume().catch(() => {});
   } catch (e) {} // A rejected gesture is retried only on a later user interaction.
 }
-async function petPlayVoice(line, button = null, manual = false) {
+async function petPlayVoice(line, button = null, manual = false, recordedOnly = false) {
   // Cancel our own prior clip first; never cancel another feature's speech.
   petStopVoice();
   if (!petVoiceAllowed(manual) || (typeof userActivated !== 'undefined' && !userActivated)) return false;
@@ -26822,7 +26832,7 @@ async function petPlayVoice(line, button = null, manual = false) {
   petVoiceManual = manual;
   const character = petConfig().character, page = view, card = petQuestionCard(), epoch = petVoiceEpoch;
   const valid = () => epoch === petVoiceEpoch && character === petConfig().character && page === view && card === petQuestionCard() && petVoiceAllowed(manual);
-  const fallback = () => valid() && petSystemVoice(line, button);
+  const fallback = () => !recordedOnly && valid() && petSystemVoice(line, button);
   const Context = window.AudioContext || window.webkitAudioContext;
   if (!Context) return fallback();
   try {
@@ -26868,6 +26878,7 @@ async function petPlayVoice(line, button = null, manual = false) {
 
 function petTryVoice(line, button = null, manual = false) { return petPlayVoice(line, button, manual); }
 function petQueueLine(kind) {
+  if (typeof pomoSuppress === 'function' && pomoSuppress(kind)) return false;
   if (!petOwned() || !petConfig().enabled || !petConfig().feedback || petBlocked()) return false;
   const priority = PET_SPEECH_PRIORITY[kind] || 0;
   if (!petSpeechReady()) {
@@ -26898,6 +26909,7 @@ function petRecentLine() {
   return null;
 }
 function petShowLine(kind = 'tap', manual = false) {
+  if (!manual && typeof pomoSuppress === 'function' && pomoSuppress(kind)) return false;
   if (petBlocked() || !petOwned() || !petConfig().enabled || (!manual && !petConfig().feedback)) return false;
   if (!manual && !petSpeechReady()) return petQueueLine(kind);
   if (manual && petRuntime.pendingSpeech) { kind = petRuntime.pendingSpeech.kind; petRuntime.pendingSpeech = null; clearTimeout(petSpeechTimer); }
@@ -26935,11 +26947,13 @@ function petRenderBubble() {
   audio.dataset.petAudio = '1'; audio.setAttribute('aria-pressed', 'false'); audio.disabled = !voiceAvailable;
   actions.append(audio, petButton(petRuntime.language === 'zh' ? 'English' : '中文', () => { petRuntime.language = petRuntime.language === 'zh' ? 'en' : 'zh'; petRenderBubble(); }, 'petTranslate'), petButton('伙伴面板', () => { petCloseBubble(); goBoard('pet'); }, 'petHome'));
   const status = el('p', 'sub'); status.id = 'petAudioStatus'; status.setAttribute('role', 'status');
+  if (typeof pomoOpen === 'function') actions.append(pomoButton('title', () => { petCloseBubble(); pomoOpen(); }, 'petPomo'));
   b.append(actions, status); w.prepend(b);
 }
 function petReact(d, kind, info = {}) {
   petRuntime.touched = Date.now();
   if (!petOwned() || !petConfig().enabled || !petConfig().feedback) return;
+  if (typeof pomoSuppress === 'function' && pomoSuppress('happy')) return;
   petRuntime.answersSinceSpeech++;
   const ok = kind === 'vocab' ? d.ok : d.isCorrect;
   petSetState(ok ? 'happy' : 'sad', [5, 10, 20].includes(info.run) ? 4500 : 2600);
@@ -27118,6 +27132,7 @@ function renderPet() {
   if (own) root.append(petButton('基础装扮', () => { petRuntime.trial = null; petSet({ outfit: '' }); renderPet(); }, 'pet-outfit-none'));
   const accessories = el('section'); accessories.append(el('h3', null, tr('伙伴配饰'))); petAccessoryCards(accessories); root.append(accessories);
   if(own) { petDomainPanel(root,cfg.character); petWardrobe(root); petStoryCards(root); }
+  pomoEntry(root);
   petVoicePreview(root); petSettings(root); stage.append(root); petRenderPreview(); petRefresh();
 }
 
@@ -27360,6 +27375,294 @@ function petStoryCards(root){
  const label=el('label'),toggle=el('input');toggle.type='checkbox';toggle.checked=cfg.romance===true;toggle.onchange=()=>{studyAudioStop();petSet({romance:toggle.checked});renderPet();};label.append(toggle,document.createTextNode(petI18n(['开启亲近剧情（可随时关闭）','Enable romantic fiction (optional)','Activer les scènes romantiques (facultatif)'])));section.append(label,el('p','sub',petI18n(['角色为虚构成年人。关闭后提供普通陪伴台词，解锁条件和奖励相同；只在你点击时播放，不打断学习。','The characters are fictional adults. With romance off, friendship lines use the same unlocks and rewards. Playback starts only when you choose it, never during a lesson.','Personnages adultes fictifs. Sans romance, les répliques amicales offrent les mêmes conditions et récompenses. Lecture uniquement à votre demande, sans interrompre les exercices.'])));
  const grid=el('div','pet-voice-grid');for(let i=0;i<3;i++){const threshold=900+600*i,unlocked=petHasMilestone(c,threshold),card=el('article','pet-voice-card');card.append(el('h4',null,petI18n(['故事','Story','Histoire'])+' '+(i+1)),el('p','sub',threshold+' · '+(unlocked?petI18n(['可回听','Replay available','Réécoute disponible']):petI18n(['尚未解锁','Locked','Verrouillé']))));if(unlocked){const line=PET_STORIES[c][cfg.romance?'romance':'neutral'][i];card.append(el('p',null,line[0]));if(UI_LANG!=='fr')card.append(el('p','sub',line[UI_LANG==='zh'?1:2]));const play=petButton(petI18n(['播放','Play','Écouter']),()=>studySpeakSequence([{text:line[0]}],1,play,null,c),null,'btn ghost play');card.append(play,petButton(petI18n(['停止','Stop','Arrêter']),studyAudioStop));}grid.append(card);}section.append(grid);root.append(section);
 }
+// Pure, bounded state machine. No learning, currency, affinity or cloud writes.
+const POMO_LIMITS = { focus: [5,90,25], short: [1,15,5], long: [5,30,15] };
+const pomoConfig = c => ({ ...Object.fromEntries(Object.entries(POMO_LIMITS).map(([k,[min,max,def]]) => [k, Number.isInteger(c?.[k]) && c[k]>=min && c[k]<=max ? c[k] : def])), quiet:c?.quiet===true, sound:c?.sound===true, voice:c?.voice===true });
+const pomoEmpty = scope => ({version:1,scope,config:pomoConfig(),cycle:0,next:'focus',run:null,history:[],notice:null,warning:''});
+const pomoRemaining = (r,now) => !r ? 0 : Math.max(0,Math.min(r.duration,r.status==='running' ? r.deadline-now : r.remaining));
+function pomoDecode(raw,scope) {
+  if (!raw) return pomoEmpty(scope);
+  try {
+    const d=JSON.parse(raw);
+    if(d.version!==1 || d.scope!==scope || !Number.isInteger(d.cycle) || d.cycle<0 || d.cycle>4 || !Object.hasOwn(POMO_LIMITS,d.next) || !Array.isArray(d.history)) throw Error();
+    const s={...pomoEmpty(scope),config:pomoConfig(d.config),cycle:d.cycle,next:d.next,warning:['clock','account','corrupt'].includes(d.warning)?d.warning:''};
+    const seen=new Set();
+    s.history=d.history.filter(e=>e && e.kind==='pomodoro' && typeof e.id==='string' && !seen.has(e.id) && seen.add(e.id) && ['complete','aborted'].includes(e.result) && Number.isFinite(e.at) && e.at>0 && Number.isFinite(e.ms) && e.ms>=0 && e.ms<=90*60000).map(e=>({id:e.id,kind:'pomodoro',result:e.result,at:e.at,ms:e.ms}));
+    const r=d.run;
+    if(r) {
+      const lim=POMO_LIMITS[r.phase];
+      if(!lim || typeof r.id!=='string' || r.id.length>100 || !['running','paused','complete','aborted'].includes(r.status) || !Number.isFinite(r.duration) || r.duration<lim[0]*60000 || r.duration>lim[1]*60000 || !Number.isFinite(r.remaining) || r.remaining<0 || r.remaining>r.duration || !Number.isFinite(r.updated) || (r.status==='running' && (!Number.isFinite(r.deadline) || r.deadline-r.updated>r.remaining+1 || r.deadline<r.updated))) throw Error();
+      s.run={id:r.id,phase:r.phase,status:r.status,duration:r.duration,remaining:r.remaining,deadline:r.deadline,updated:r.updated};
+    }
+    if(d.notice && d.notice.id===r?.id && r.status==='complete' && Number.isFinite(d.notice.at)) s.notice={id:d.notice.id,at:d.notice.at,claimed:!!d.notice.claimed};
+    return s;
+  } catch { const s=pomoEmpty(scope);s.warning='corrupt';return s; }
+}
+function pomoFinish(s,now,result='complete') {
+  const r=s.run; if(!r || !['running','paused'].includes(r.status))return false;
+  const remaining=result==='complete'?0:pomoRemaining(r,now);
+  if(r.phase==='focus') {
+    if(!s.history.some(e=>e.id===r.id))s.history.push({kind:'pomodoro',id:r.id,result,ms:r.duration-remaining,at:result==='complete'&&r.status==='running'?r.deadline:now});
+    if(result==='complete') { s.cycle=Math.min(4,s.cycle+1);s.next=s.cycle===4?'long':'short'; }
+    else s.next='focus';
+  } else { if(r.phase==='long')s.cycle=0;s.next='focus'; }
+  r.remaining=remaining;r.status=result;r.updated=now;
+  s.notice=result==='complete'?{id:r.id,at:now,claimed:false}:null;
+  return true;
+}
+function pomoPause(s,now,warning='') {
+  if(s.run?.status==='running') {s.run.remaining=pomoRemaining(s.run,now);s.run.status='paused';s.run.updated=now;}
+  if(warning)s.warning=warning;
+  s.notice=null;
+}
+function pomoStep(s,action,now,id,patch) {
+  // Detect clocks moved backwards even after refresh; active-tab forward jumps
+  // are detected with performance.now by the runtime before calling this function.
+  if(s.run?.status==='running' && now<s.run.updated-2000) {pomoPause(s,s.run.updated,'clock');return;}
+  if(s.run?.status==='running' && now>=s.run.deadline)pomoFinish(s,now);
+  if(action==='tick')return;
+  if(action==='config') {s.config=pomoConfig({...s.config,...patch});return;}
+  if(action==='pause'){pomoPause(s,now);return;}
+  if(action==='resume' && s.run?.status==='paused') {s.run.status='running';s.run.deadline=now+s.run.remaining;s.run.updated=now;s.warning='';return;}
+  if(action==='abort'){pomoFinish(s,now,'aborted');return;}
+  if(action==='skip' && !['running','paused'].includes(s.run?.status) && s.next!=='focus') {if(s.next==='long')s.cycle=0;s.next='focus';s.run=null;s.notice=null;return;}
+  if(action==='start' && !['running','paused'].includes(s.run?.status)) {
+    const duration=s.config[s.next]*60000;
+    s.run={id,phase:s.next,status:'running',duration,remaining:duration,deadline:now+duration,updated:now};s.notice=null;s.warning='';
+  }
+}
+const pomoDay = t => {const d=new Date(t);return [d.getFullYear(),String(d.getMonth()+1).padStart(2,'0'),String(d.getDate()).padStart(2,'0')].join('-');};
+function pomoStats(s,now) {
+  const days=Array.from({length:7},(_,i)=>{const d=new Date(now);d.setDate(d.getDate()-6+i);return {day:pomoDay(d),count:0,ms:0,partial:0};});
+  const byDay=new Map(days.map(d=>[d.day,d])),seen=new Set();
+  for(const e of s.history) {if(seen.has(e.id))continue;seen.add(e.id);const d=byDay.get(pomoDay(e.at));if(!d)continue;if(e.result==='complete'){d.count++;d.ms+=e.ms;}else d.partial+=e.ms;}
+  return days;
+}
+// Local-only, account-scoped timer. Intentionally never enters gameRaw or sync.
+const POMO_COPY = {
+ title:['番茄时钟','Pomodoro timer','Minuteur Pomodoro'], focus:['专注','Focus','Concentration'],short:['短休息','Short break','Petite pause'],long:['长休息','Long break','Grande pause'],
+ start:['开始','Start','Commencer'],pause:['暂停','Pause','Pause'],resume:['继续','Resume','Reprendre'],end:['结束本轮','End this round','Terminer cette session'],skip:['跳过休息','Skip break','Passer la pause'],
+ ready:['待开始','Ready','Prêt'],running:['进行中','Running','En cours'],paused:['已暂停','Paused','En pause'],complete:['本轮完成','Round complete','Session terminée'],aborted:['本轮已结束','Round ended','Session arrêtée'],
+ open:['打开计时面板','Open timer','Ouvrir le minuteur'],close:['关闭','Close','Fermer'],collapse:['收起','Collapse','Réduire'],expand:['展开','Expand','Développer'],
+ intro:['按自己的节奏，专注一会儿。每四轮安排一次长休息。','Focus at your own pace. A long break follows every four rounds.','Concentrez-vous à votre rythme. Une grande pause toutes les quatre sessions.'],
+ next:['下一阶段','Next phase','Prochaine étape'],round:['本组完成','Completed this cycle','Sessions de ce cycle'],minutes:['分钟','minutes','minutes'],
+ config:['时长与提醒','Duration & reminders','Durées et rappels'],apply:['保存设置','Save settings','Enregistrer'],saved:['已保存，下个阶段使用新时长。','Saved. New durations apply to the next phase.','Enregistré. Les nouvelles durées s’appliquent à la prochaine étape.'],
+ invalid:['请输入范围内的整数分钟。','Enter whole minutes within the shown ranges.','Saisissez un nombre entier de minutes dans les limites indiquées.'],
+ quiet:['专注时安静陪伴（关闭答题闲聊）','Quiet companion during focus (no answer chatter)','Compagnie discrète pendant la concentration (sans commentaires)'],
+ sound:['阶段结束提示音','End-of-phase chime','Signal sonore en fin d’étape'],voice:['角色朗读（仅已有录音）','Character speech (recorded lines only)','Voix du personnage (enregistrements existants uniquement)'],
+ voicenote:['新提示目前仅显示文字。可主动试听系统朗读；不会冒用角色录音。','New prompts are text-only. You can preview them with the system voice.','Les nouveaux messages sont affichés uniquement. Écoute possible avec la voix système.'],
+ preview:['试听：系统朗读','Preview: system voice','Écouter : voix système'],busy:['请等题目音频或录音结束后再试听。','Wait until study audio or recording has finished.','Attendez la fin de l’audio ou de l’enregistrement.'],
+ silent:['当前无法播放；文字提示仍可使用。','Playback unavailable; the text remains available.','Lecture indisponible ; le texte reste disponible.'],
+ stats:['近七日 · 本设备','Last 7 days · this device','7 derniers jours · cet appareil'],today:['今日完成','Completed today','Terminées aujourd’hui'],timed:['计时专注时长','Timed focus duration','Durée chronométrée de concentration'],partial:['中止轮计时','Time in ended rounds','Temps des sessions interrompues'],date:['日期','Date','Date'],tomatoes:['完整番茄','Completed rounds','Sessions complètes'],
+ local:['计时与统计仅保存在本设备浏览器，按账号隔离，不跨设备同步。时长不代表经验证的有效学习；不增加金币、亲密度或问卷学习天数。','Timer and statistics stay in this browser, separated by account, without cross-device sync. Timed duration is not verified study time and adds no coins, affinity or survey study days.','Minuteur et statistiques restent dans ce navigateur, séparés par compte, sans synchronisation entre appareils. Ce temps n’est pas une mesure vérifiée d’apprentissage et ne rapporte ni pièces, ni affinité, ni jours d’étude pour le questionnaire.'],
+ background:['可以离开页面；回来后恢复计时。锁屏或关闭网页后不保证准点响铃。下一阶段需手动开始。','You can leave the page and restore the timer on return. Alarms are not guaranteed while locked or closed. Start each new phase manually.','Vous pouvez quitter la page et retrouver le minuteur au retour. Le signal n’est pas garanti lorsque l’écran est verrouillé ou la page fermée. Chaque étape démarre manuellement.'],
+ confirm:['结束本轮？已计时时长会保留，未完成的专注不计为完整番茄。','End this round? Timed focus is kept, but an unfinished round does not count as complete.','Terminer cette session ? Le temps est conservé, mais une session interrompue ne compte pas comme complète.'],
+ longskip:['跳过长休息会开始新一组四轮。','Skipping the long break starts a new four-round cycle.','Passer la grande pause lance un nouveau cycle de quatre sessions.'],
+ account:['账号已改变，计时已暂停并隔离。请选择继续或结束。','Account changed. Timers are paused and kept separate. Resume or end your round.','Compte modifié. Les minuteurs sont mis en pause et séparés. Reprenez ou terminez votre session.'],
+ clock:['检测到系统时间变化，已暂停计时。请确认时间后继续或重开。','Clock change detected. Timer paused. Check the clock, then resume or restart.','Changement d’heure détecté. Minuteur en pause. Vérifiez l’heure, puis reprenez ou recommencez.'],
+ corrupt:['计时存档损坏，已安全重置。原始存档留在本设备备份中。','Timer data was damaged and safely reset. Original data is backed up on this device.','Données du minuteur endommagées et réinitialisées. Une sauvegarde originale reste sur cet appareil.'],
+ storage:['无法保存计时。请允许浏览器本地存储后重试。','Unable to save the timer. Enable browser storage and retry.','Impossible d’enregistrer le minuteur. Autorisez le stockage local et réessayez.'],
+ unsupported:['此浏览器不支持安全的多标签计时，请使用新版浏览器。','This browser lacks safe multi-tab timing. Please use an updated browser.','Ce navigateur ne permet pas un minuteur fiable entre onglets. Veuillez le mettre à jour.'],
+};
+const pomoText = key => (POMO_COPY[key] || [key,key,key])[UI_LANG==='zh'?0:UI_LANG==='fr'?2:1];
+const POMO_LINES = {
+ ninon:[['On commence tranquillement, à ton rythme.','我们按你的节奏，慢慢开始。','Let’s begin calmly, at your pace.'],['Tu as bien travaillé. On fait une petite pause ?','学得很认真。休息一会儿好吗？','You worked well. Shall we take a little break?'],['Prends le temps de souffler.','放松一下，不用着急。','Take time to catch your breath.']],
+ lison:[['Un petit défi : on garde le cap jusqu’à la pause ?','来个小挑战：坚持到休息时间？','A little challenge: shall we stay on course until the break?'],['Défi relevé. Tu as bien mérité une pause.','挑战完成。你值得好好休息一下。','Challenge complete. You’ve earned a break.'],['Même les bonnes stratégies prévoient une pause.','再好的策略，也会留出休息时间。','Even good strategies allow for a break.']],
+ pia:[['Bon, on commence. Je me concentre aussi.','好啦，开始吧。我也会认真起来。','All right, let’s begin. I’m concentrating too.'],['C’est terminé. Tu as bien travaillé… voilà.','完成了。你学得挺认真……就是这样。','It’s done. You worked well… there.'],['Une pause, ça fait partie du travail aussi.','休息，也是学习的一部分。','A break is part of the work too.']]
+};
+let pomoScope=null,pomoState=null,pomoError='',pomoBusy=false,pomoStarted=false,pomoCollapsed=false,pomoRenderKey='',pomoContext=null,pomoLastClock=null,pomoLastAnnounce='';
+const pomoKey = scope => 'fq-pomodoro:'+scope;
+const pomoCurrentScope = () => petScope();
+const pomoHasCompanion = () => petOwned() && petConfig().enabled && gameOn();
+const pomoFocusing = () => pomoScope===pomoCurrentScope() && pomoState?.run?.phase==='focus' && pomoState.run.status==='running';
+const pomoSuppress = kind => pomoFocusing() && (pomoState.config.quiet || ['idle','welcome','enter','tap'].includes(kind));
+const pomoTime = ms => {const s=Math.ceil(ms/1000);return String(Math.floor(s/60)).padStart(2,'0')+':'+String(s%60).padStart(2,'0');};
+function pomoRead(scope) {
+  const raw=localStorage.getItem(pomoKey(scope)), s=pomoDecode(raw,scope);
+  if(s.warning==='corrupt' && raw) localStorage.setItem(pomoKey(scope)+':backup',raw);
+  return s;
+}
+async function pomoLocked(scope,fn) {
+  if(!navigator.locks?.request)throw Error('unsupported');
+  return navigator.locks.request(pomoKey(scope),()=>{
+    const s=pomoRead(scope),before=JSON.stringify(s),result=fn(s);
+    if(JSON.stringify(s)!==before)localStorage.setItem(pomoKey(scope),JSON.stringify(s));
+    return {s,result};
+  });
+}
+async function pomoAccountChange() {
+  const old=pomoScope,next=pomoCurrentScope();if(old===next)return;
+  pomoScope=next;pomoState=null;pomoLastClock=null;pomoRenderKey='';
+  try {
+    if(old)await pomoLocked(old,s=>pomoPause(s,Date.now(),'account'));
+    const {s}=await pomoLocked(next,s=>{if(old)pomoPause(s,Date.now(),'account');else pomoStep(s,'tick',Date.now());});
+    if(pomoScope===next)pomoState=s;
+  }catch(e){pomoError=e.message==='unsupported'?'unsupported':'storage';pomoState=pomoEmpty(next);}
+  pomoDraw();
+}
+async function pomoDeleteAccount(uid) {
+  const scope='user:'+uid;
+  // Account deletion can race another tab: an empty tombstone prevents stale
+  // in-memory state from being written back; every operation re-reads under lock.
+  try { await pomoLocked(scope,s=>{Object.assign(s,pomoEmpty(scope));}); }
+  catch { try { localStorage.removeItem(pomoKey(scope)); } catch {} }
+  try { localStorage.removeItem(pomoKey(scope)+':backup'); } catch {}
+}
+async function pomoAction(action,patch) {
+  pomoPrime();await pomoAccountChange();const scope=pomoScope;
+  try {
+    const {s}=await pomoLocked(scope,s=>{if(pomoCurrentScope()!==scope)return;pomoStep(s,action,Date.now(),crypto.randomUUID(),patch);});
+    if(scope===pomoScope){pomoState=s;pomoError='';pomoRenderKey='';pomoDraw();}
+    if(['start','resume'].includes(action) && pomoFocusing()){petStopVoice();petRuntime.pendingSpeech=null;petRuntime.open=false;$('petBubble')?.remove();}
+    if(action==='start'&&pomoHasCompanion())petSetState(s.run.phase==='focus'?'idle':'sleep');
+    petScheduleLayout();
+  }catch(e){pomoError=e.message==='unsupported'?'unsupported':'storage';pomoRenderKey='';pomoDraw();}
+}
+function pomoAudioBusy() {
+  return document.hidden || view==='exam' || (typeof studyAudioBusy!=='undefined'&&studyAudioBusy) ||
+    (typeof tourOral!=='undefined'&&!!tourOral) || (typeof tourRecorder!=='undefined'&&tourRecorder?.state==='recording') ||
+    (typeof tts!=='undefined'&&tts&&(tts.speaking||tts.pending)) || !!petVoiceSource ||
+    [...document.querySelectorAll('audio,video')].some(a=>!a.paused&&!a.ended) ||
+    !!document.querySelector('.play[aria-pressed="true"]:not([data-pet-audio])');
+}
+function pomoPrime(){
+  const C=window.AudioContext||window.webkitAudioContext;
+  if(!C || !pomoState?.config.sound)return;
+  try{pomoContext||=new C();if(pomoContext.state!=='running')pomoContext.resume().catch(()=>{});}catch{}
+}
+function pomoChime(){
+  if(pomoContext?.state!=='running'||pomoAudioBusy())return;
+  const o=pomoContext.createOscillator(),g=pomoContext.createGain(),t=pomoContext.currentTime;
+  o.frequency.value=660;g.gain.setValueAtTime(0,t);g.gain.linearRampToValueAtTime(.08,t+.02);g.gain.exponentialRampToValueAtTime(.001,t+.3);o.connect(g);g.connect(pomoContext.destination);o.start(t);o.stop(t+.32);o.onended=()=>{o.disconnect();g.disconnect();};
+}
+function pomoLine(s=pomoState){
+  const cfg=petConfig(),r=s?.run,index=(r?.phase||s?.next||'focus')!=='focus'?2:r?.status==='complete'?1:0;
+  return POMO_LINES[cfg.character]?.[index]||POMO_LINES.ninon[index];
+}
+async function pomoNotify(){
+  const s=pomoState,n=s?.notice,scope=pomoScope;
+  if(!n||n.claimed||pomoAudioBusy())return;
+  // Claim under the same origin-wide lock before any visible/audio reaction.
+  const {result}=await pomoLocked(scope,x=>{
+    if(pomoCurrentScope()!==scope || x.notice?.id!==n.id || x.notice.claimed)return false;
+    x.notice.claimed=true;return Date.now()-n.at<120000 && Date.now()>=n.at;
+  });
+  if(!result||pomoCurrentScope()!==scope||pomoAudioBusy())return;
+  if(pomoHasCompanion()){
+    petSetState(s.run.phase==='focus'?'happy':'idle');
+    if(!petBlocked()){const line=pomoLine(s);petRuntime.line={fr:line[0],zh:line[1],en:line[2]};petRuntime.open=true;petRuntime.manual=false;petRenderBubble();petRefresh();clearTimeout(petBubbleTimer);petBubbleTimer=setTimeout(()=>petCloseBubble(),6500);}
+  }
+  if(s.config.sound && (!petOwned() || petConfig().voice))pomoChime();
+  if(s.config.voice && pomoHasCompanion() && petConfig().voice) {
+    // New text has no recording yet. Do not silently substitute system TTS.
+    await petPlayVoice({fr:pomoLine(s)[0]},null,false,true);
+  }
+}
+async function pomoTick(){
+  if(pomoBusy)return;pomoBusy=true;
+  try{
+    await pomoAccountChange();const scope=pomoScope,now=Date.now(),mono=performance.now(),previous=pomoLastClock;
+    pomoLastClock={wall:now,mono};
+    const jump=previous && Math.abs((now-previous.wall)-(mono-previous.mono))>120000;
+    const {s}=await pomoLocked(scope,s=>{
+      if(pomoCurrentScope()!==scope)return;
+      if(jump && s.run?.status==='running'){pomoPause(s,previous.wall,'clock');return;}
+      pomoStep(s,'tick',now);
+    });
+    if(pomoScope===scope){pomoState=s;pomoDraw();await pomoNotify();}
+  }catch(e){pomoError=e.message==='unsupported'?'unsupported':'storage';pomoDraw();}
+  finally{pomoBusy=false;}
+}
+const pomoButton=(key,action,id,cls='btn ghost')=>{const b=el('button',cls,pomoText(key));b.type='button';if(id)b.id=id;b.addEventListener('click',action);return b;};
+function pomoEntry(root){
+  const c=el('section','card pomo-entry');c.dataset.noi18n='1';
+  c.append(el('h3',null,pomoText('title')),el('p','sub',pomoText('intro')),pomoButton('open',pomoOpen));root.append(c);
+}
+function pomoControls(root,compact=false){
+  const s=pomoState,r=s?.run,active=['running','paused'].includes(r?.status);
+  if(active){root.append(pomoButton(r.status==='running'?'pause':'resume',()=>pomoAction(r.status==='running'?'pause':'resume'),'pomo-'+(compact?'mini-':'')+'toggle'));
+    if(!compact)root.append(pomoButton('end',()=>{if(confirm(pomoText('confirm')))pomoAction('abort');},'pomo-end'));
+  }else if(!compact){
+    const b=pomoButton('start',()=>pomoAction('start'),'pomo-start','btn');b.textContent=pomoText('start')+' · '+pomoText(s?.next||'focus');root.append(b);
+    if(s?.next!=='focus'){root.append(pomoButton('skip',()=>pomoAction('skip'),'pomo-skip'));if(s.next==='long')root.append(el('p','sub',pomoText('longskip')));}
+  }
+}
+async function pomoOpen(){
+  await pomoAccountChange();await pomoTick();pomoPrime();
+  let d=$('pomoDialog');if(!d){d=el('dialog','pomo-dialog');d.id='pomoDialog';d.dataset.noi18n='1';d.setAttribute('aria-labelledby','pomoTitle');d.addEventListener('keydown',e=>e.stopPropagation());d.addEventListener('close',()=>{if(studyAudioOwner?.closest?.('#pomoDialog'))studyAudioStop();});document.body.append(d);}
+  pomoRenderKey='';pomoDraw();if(!d.open)d.showModal();$('pomo-close')?.focus();
+}
+function pomoPanel(){
+  const d=$('pomoDialog');if(!d||!pomoState)return;
+  const s=pomoState,r=s.run,key=JSON.stringify([s.run?.id,s.run?.status,s.next,s.cycle,s.config,s.warning,s.history.length,petConfig().character,pomoHasCompanion(),pomoError]);
+  if(key===pomoRenderKey)return;pomoRenderKey=key;
+  const focused=d.contains(document.activeElement)?document.activeElement.id:null, expanded=!!d.querySelector('.pomo-config')?.open;if(studyAudioOwner?.closest?.('#pomoDialog'))studyAudioStop();d.replaceChildren();
+  const head=el('div','pomo-head'),title=el('h2',null,pomoText('title'));title.id='pomoTitle';head.append(title,pomoButton('close',()=>d.close(),'pomo-close'));d.append(head);
+  d.append(el('p','sub',pomoText('intro')));
+  const phase=el('p','pomo-phase',pomoText(r?.phase||s.next)+' · '+pomoText(r?.status||'ready'));phase.setAttribute('role','status');d.append(phase);
+  const face=el('div','pomo-clock');face.dataset.pomoTime='1';face.setAttribute('aria-live','off');face.setAttribute('role','timer');face.textContent=pomoTime(r?pomoRemaining(r,Date.now()):s.config[s.next]*60000);d.append(face);
+  d.append(el('p','sub',pomoText('round')+' '+s.cycle+' / 4'));
+  if(pomoError||s.warning){const p=el('p','pomo-warning',pomoText(pomoError||s.warning));p.setAttribute('role','alert');d.append(p);}
+  const actions=el('div','pomo-actions');pomoControls(actions);d.append(actions);
+  if(pomoHasCompanion()){
+    const line=pomoLine(),q=el('div','pomo-quote'),fr=el('p',null,line[0]);fr.lang='fr';q.append(petImage(petConfig().character,r?.phase==='focus'?'idle':'sleep',petConfig().outfit));q.append(el('b',null,petConfig().character[0].toUpperCase()+petConfig().character.slice(1)),fr);
+    if(UI_LANG!=='fr')q.append(el('p','sub',line[UI_LANG==='zh'?1:2]));
+    const previewButton=pomoButton('preview',()=>{if(pomoAudioBusy()){status.textContent=pomoText('busy');return;}if(!petConfig().voice){status.textContent=pomoText('silent');return;}if(!tts){status.textContent=pomoText('silent');return;}studySpeakSequence([{text:line[0]}],.9,previewButton,null,'system');});q.append(previewButton);
+    const status=el('p','sub');status.setAttribute('role','status');q.append(status,el('p','sub',pomoText('voicenote')));d.append(q);
+  }
+  const details=el('details','pomo-config');details.open=expanded;details.append(el('summary',null,pomoText('config')));
+  const form=el('form');
+  for(const [k,[min,max]] of Object.entries(POMO_LIMITS)){
+    const label=el('label','pomo-field',pomoText(k)+' · '+min+'–'+max+' '+pomoText('minutes')),input=el('input');input.type='number';input.min=min;input.max=max;input.step=1;input.required=true;input.value=s.config[k];input.name=k;input.inputMode='numeric';label.append(input);form.append(label);
+  }
+  for(const k of ['quiet','sound','voice'])form.append(setCheckRow('pomo-'+k,pomoText(k),s.config[k],()=>{}));
+  const status=el('p','sub');status.setAttribute('role','status');
+  const save=pomoButton('apply',()=>{});save.type='submit';form.append(save,status);
+  form.addEventListener('submit',async e=>{e.preventDefault();const patch={};for(const [k,[min,max]]of Object.entries(POMO_LIMITS)){const v=Number(form.elements[k].value);if(!Number.isInteger(v)||v<min||v>max){status.textContent=pomoText('invalid');return;}patch[k]=v;}for(const k of ['quiet','sound','voice'])patch[k]=form.querySelector('#pomo-'+k).checked;await pomoAction('config',patch);pomoPrime();const msg=$('pomoMessage');if(msg)msg.textContent=pomoText('saved');});
+  details.append(form);d.append(details);const msg=el('p','sub');msg.id='pomoMessage';msg.setAttribute('role','status');d.append(msg);
+  const days=pomoStats(s,Date.now()),today=days[6];
+  d.append(el('h3',null,pomoText('stats')),el('p',null,pomoText('today')+' '+today.count+' · '+pomoText('timed')+' '+(today.ms/60000).toFixed(1)+' '+pomoText('minutes')),el('p','sub',pomoText('partial')+' '+(today.partial/60000).toFixed(1)+' '+pomoText('minutes')));
+  const table=el('table','pomo-stats'),thead=el('thead'),trh=el('tr');['date','tomatoes','timed','partial'].forEach(k=>{const th=el('th',null,pomoText(k));th.scope='col';trh.append(th);});thead.append(trh);table.append(thead);const body=el('tbody');
+  days.forEach(day=>{const row=el('tr');[day.day.slice(5),day.count,(day.ms/60000).toFixed(1),(day.partial/60000).toFixed(1)].forEach(x=>row.append(el('td',null,String(x))));body.append(row);});table.append(body);d.append(table,el('p','sub',pomoText('local')),el('p','sub',pomoText('background')));
+  if(focused)($(focused)||$('pomo-start')||$('pomo-close'))?.focus();
+}
+function pomoPlace(){
+  const bar=$('pomoBar');if(!bar||bar.hidden)return;
+  // Only float when there is a genuinely empty gap beside the freely dragged pet.
+  // Otherwise use the normal document flow: never relocate the user's pet.
+  bar.classList.remove('pomo-floating');bar.style.left='';bar.style.top='';
+  const a=$('petAvatar'),w=$('petWidget');if(!a||w?.hidden||petMobile())return;
+  const r=a.getBoundingClientRect(),size=bar.getBoundingClientRect(),bounds=petViewport(),obs=petObstacles();
+  for(const [x,y] of [[r.left-size.width-8,r.top],[r.right+8,r.top],[r.left,r.top-size.height-8]]){
+    const rect={left:x,top:y,right:x+size.width,bottom:y+size.height};
+    if(rect.left>=bounds.left&&rect.right<=bounds.right&&rect.top>=bounds.top&&rect.bottom<=bounds.bottom&&!obs.some(o=>petOverlap(o,rect))){bar.classList.add('pomo-floating');bar.style.left=x+'px';bar.style.top=y+'px';break;}
+  }
+}
+function pomoDraw(){
+  if(!pomoStarted||!pomoState)return;
+  pomoPanel();const s=pomoState,r=s.run,phase=r?.phase||s.next,status=r?.status||'ready',time=pomoTime(r?pomoRemaining(r,Date.now()):s.config[s.next]*60000);
+  document.querySelectorAll('[data-pomo-time]').forEach(n=>{if(n.textContent!==time)n.textContent=time;});
+  const bar=$('pomoBar');if(!bar)return;bar.hidden=!r;
+  const key=[r?.id,status,s.next,pomoCollapsed,pomoError].join(':');
+  if(bar.dataset.render!==key){
+    const focused=bar.contains(document.activeElement)?document.activeElement.id:null;bar.dataset.render=key;bar.replaceChildren();
+    const open=pomoButton('open',pomoOpen,'pomo-open','btn ghost pomo-open');open.title=pomoText('open');open.append(el('span','pomo-mini-phase',pomoText(phase)+' · '+pomoText(status)));open.firstChild.textContent='◷ ';const t=el('span','pomo-mini-time',time);t.dataset.pomoTime='1';t.setAttribute('aria-live','off');open.append(t);bar.append(open);
+    if(!pomoCollapsed)pomoControls(bar,true);
+    bar.append(pomoButton(pomoCollapsed?'expand':'collapse',()=>{pomoCollapsed=!pomoCollapsed;pomoDraw();},'pomo-collapse'));if(focused)($(focused)||$('pomo-open'))?.focus({preventScroll:true});
+  }
+  const announce=[r?.id,status].join(':');if(announce!==pomoLastAnnounce){pomoLastAnnounce=announce;$('pomoStatus').textContent=pomoText(phase)+' · '+pomoText(status);}
+  document.documentElement.classList.toggle('pomo-focusing',pomoFocusing());
+  pomoPlace();
+}
+function pomoInit(){
+  if(pomoStarted)return;pomoStarted=true;
+  const bar=el('aside','pomo-bar');bar.id='pomoBar';bar.hidden=true;bar.dataset.noi18n='1';bar.setAttribute('aria-label',pomoText('title'));bar.addEventListener('keydown',e=>e.stopPropagation());$('main').prepend(bar);
+  const status=el('span','pomo-sr');status.id='pomoStatus';status.setAttribute('role','status');document.body.append(status);
+  ['resize','scroll'].forEach(type=>addEventListener(type,pomoPlace,{passive:true}));
+  addEventListener('storage',e=>{if(e.key?.startsWith('fq-pomodoro:')||e.key==='quiz-auth')pomoTick();});
+  document.addEventListener('visibilitychange',()=>{if(!document.hidden)pomoTick();});
+  setInterval(pomoTick,1000);pomoTick();
+}
 // ---------- 设置：集中管理各模块的练习设置（都记在本机浏览器里） ----------
 function renderSettings() {
   stage.innerHTML = "";
@@ -27371,6 +27674,7 @@ function renderSettings() {
   feedbackSettings(wrap);
   shareSettings(wrap);
   surveySettings(wrap);
+  pomoEntry(wrap);
 
   // 界面语言
   const lg = section("界面语言", "切换后页面会重新载入。界面和解析使用所选语言，题目里的法语不变。中文、英文、法语模式答对所得金币分别为 ×1、×2、×3；切换不影响过去的金币。");
@@ -27422,6 +27726,7 @@ function renderSettings() {
 goHome("practice");
 
 petInit();
+pomoInit();
 </script>
 
 
