@@ -56,7 +56,14 @@
     } catch (e) {}
   });
 })();
-</script><style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}body{margin:0;padding:0}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style></head><body>
+</script><style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}body{margin:0;padding:0}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}
+/* Shared-recording listening formats. Word buttons work by touch and keyboard. */
+.listening-mode{display:flex;align-items:center;gap:12px;flex-wrap:wrap;margin:14px 0}.listening-mode select,.listening-sentence{max-width:100%;min-height:44px;padding:8px;border:1px solid var(--line,#c9cbd0);border-radius:9px;background:var(--card,#fff);color:inherit}
+.listening-gap-text{font-size:1.08rem;line-height:2.8;overflow-wrap:anywhere}.listening-gap{display:inline-block;max-width:100%;min-height:44px;margin:3px 5px;padding:5px;border:2px solid var(--accent,#6878cf);border-radius:8px;background:var(--card,#fff);color:inherit;font:inherit;vertical-align:middle}
+.listening-word-tray{display:flex;flex-wrap:wrap;gap:8px;min-height:58px;padding:12px;border:1px solid var(--line,#c9cbd0);border-radius:12px;margin:8px 0}.listening-built{border-style:dashed;background:rgba(100,120,210,.06)}
+.listening-word{min-height:44px;max-width:100%;padding:9px 13px;border:1px solid var(--line,#c9cbd0);border-radius:9px;background:var(--card,#fff);color:inherit;font:inherit;overflow-wrap:anywhere;cursor:pointer}.listening-word:disabled{opacity:.4;cursor:default}.listening-exercise h3{font-size:1rem;margin:16px 0 4px}.listening-exercise .actions{margin:12px 0}.listening-exercise button:focus-visible,.listening-exercise select:focus-visible,.listening-mode select:focus-visible{outline:3px solid var(--accent,#6878cf);outline-offset:3px}
+
+</style></head><body>
 <title>法语语法小测验</title>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@600;900&family=Noto+Sans+SC:wght@400;500;700&display=swap">
 <style>
@@ -14815,7 +14822,7 @@ GPA2.forEach(u => {
     LEVEL_OF[id] = u.lv; TAGS_OF[id] = q.tags; KP_OF[id] = "gb" + u.unit;
   });
 });
-const LANG_FILES = {"en": "lang-en.js?v=c712d1c09f", "fr": "lang-fr.js?v=86a3f2d13f"};
+const LANG_FILES = {"en": "lang-en.js?v=3c568ff55e", "fr": "lang-fr.js?v=8bbba6bf55"};
 (() => { let l = null; try { l = localStorage.getItem("fq-lang"); } catch (e) {}
   if (Object.hasOwn(LANG_FILES, l)) document.write('<script src="' + LANG_FILES[l] + '"><\/script>'); })();
 </script>
@@ -18226,6 +18233,7 @@ function setGoalSection(wrap) {
 // 每次用户可见更新都新增记录：默认只递增第三位 1.x.y → 1.x.(y+1)，超过 9 继续到 10、11；第二位升级需用户明确要求。
 // 首位保持 1，只有用户明确要求才可修改；历史记录保留。完整发布规则见根目录 AGENTS.md。
 const CHANGELOG = [
+  {"v": "1.9.15", "d": "2026-11-16", "p": "fr", "items": ["扩充 Pia 的普通听力与模拟卷女声配音，保留男女对话分工。121 段普通听力材料新增关键词填空和复原句子：长文支持多空，词块可点击排列、撤回与清空。三种题型共用同一录音，每题只记录一次成绩，提交后可回听和查看答案。"]},
   {"v": "1.9.14", "d": "2026-11-16", "p": "fr", "items": ["接入 11 段 Gemini 角色录音：补齐 Lison 第一段亲近剧情与 Pia 长听力，并新增三位伙伴各三句番茄钟提示。开启角色朗读后，开始专注、专注完成和开始休息会播放对应录音；重复点击、多标签与暂停恢复不会重复开场，题目音频优先。伙伴继续只用角色录音，不回退系统声音。"]},
   {"v": "1.9.13", "d": "2026-11-16", "p": "fr", "items": ["学习伙伴的点击互动、固定语音试听、羁绊故事与番茄钟试听仅播放 Gemini 角色录音，缺少录音或加载失败时不再回退系统声音。互动例句只从当前人物已有录音的内容中选择，保留原台词、亲密度与题目音频优先规则；普通学习配音中的系统选项不变。"]},
   {"v": "1.9.12", "d": "2026-11-16", "p": "fr", "items": ["新增免费番茄时钟：25 分钟专注、5 分钟短休息，每四轮安排 15 分钟长休息，可自定义、暂停、继续和提前结束。每阶段手动开始，刷新和切换栏目保留进度；学习伙伴、桌宠菜单与设置均可进入。", "专注时安静陪伴，阶段结束提醒避让听力、考试与录音。计时和近七日统计仅存本设备浏览器、按账号隔离，多标签去重；中止时长单列，不额外增加金币、亲密度或问卷学习天数。锁屏或关闭网页不保证准点响铃，返回时恢复。"]},
@@ -18876,6 +18884,1677 @@ function qlSection(wrap) {
   }), note);
   note.textContent = qlMixText(qLevel);
 }
+// Authored listening gaps: exact transcript spans, answer first, three distractors.
+const LISTENING_GAPS = {
+  "Je ne l'ai pas encore vu, ce film.": [
+    {
+      "start": 11,
+      "end": 21,
+      "options": [
+        "pas encore",
+        "plus jamais",
+        "déjà",
+        "toujours"
+      ]
+    }
+  ],
+  "Il vient de partir.": [
+    {
+      "start": 3,
+      "end": 11,
+      "options": [
+        "vient de",
+        "va bientôt",
+        "veut",
+        "vient pour"
+      ]
+    }
+  ],
+  "Je n'ai plus faim, merci.": [
+    {
+      "start": 8,
+      "end": 12,
+      "options": [
+        "plus",
+        "pas encore",
+        "jamais",
+        "que"
+      ]
+    }
+  ],
+  "Je n'ai que dix euros sur moi.": [
+    {
+      "start": 8,
+      "end": 15,
+      "options": [
+        "que dix",
+        "plus de dix",
+        "quatorze",
+        "deux"
+      ]
+    }
+  ],
+  "Ça fait deux ans que j'habite ici.": [
+    {
+      "start": 0,
+      "end": 16,
+      "options": [
+        "Ça fait deux ans",
+        "Dans deux ans",
+        "Il y a deux jours",
+        "Depuis deux mois"
+      ]
+    }
+  ],
+  "On se retrouve devant la gare à huit heures ?": [
+    {
+      "start": 15,
+      "end": 21,
+      "options": [
+        "devant",
+        "derrière",
+        "dans",
+        "loin de"
+      ]
+    }
+  ],
+  "Si j'avais su, je serais venu plus tôt.": [
+    {
+      "start": 18,
+      "end": 29,
+      "options": [
+        "serais venu",
+        "étais venu",
+        "suis venu",
+        "vais venir"
+      ]
+    }
+  ],
+  "Il faut que tu me rappelles ce soir.": [
+    {
+      "start": 18,
+      "end": 27,
+      "options": [
+        "rappelles",
+        "rappelleras",
+        "rappelais",
+        "rappeler"
+      ]
+    }
+  ],
+  "Tu as déjà mangé ?": [
+    {
+      "start": 6,
+      "end": 10,
+      "options": [
+        "déjà",
+        "jamais",
+        "demain",
+        "bientôt"
+      ]
+    }
+  ],
+  "Qu'est-ce que tu fais dans la vie ?": [
+    {
+      "start": 22,
+      "end": 33,
+      "options": [
+        "dans la vie",
+        "dans la ville",
+        "dans la rue",
+        "dans la nuit"
+      ]
+    }
+  ],
+  "Ça te dirait d'aller au cinéma ce soir ?": [
+    {
+      "start": 21,
+      "end": 30,
+      "options": [
+        "au cinéma",
+        "à la piscine",
+        "au théâtre",
+        "au musée"
+      ]
+    }
+  ],
+  "Tu pourrais me passer le sel, s'il te plaît ?": [
+    {
+      "start": 22,
+      "end": 28,
+      "options": [
+        "le sel",
+        "le ciel",
+        "le sucre",
+        "le sac"
+      ]
+    }
+  ],
+  "Depuis quand tu apprends le français ?": [
+    {
+      "start": 0,
+      "end": 12,
+      "options": [
+        "Depuis quand",
+        "Pendant combien",
+        "Jusqu'à quand",
+        "Pour quand"
+      ]
+    }
+  ],
+  "Tu es allé où pendant les vacances ?": [
+    {
+      "start": 14,
+      "end": 34,
+      "options": [
+        "pendant les vacances",
+        "avant les vacances",
+        "après les vacances",
+        "pour les vacances"
+      ]
+    }
+  ],
+  "Ça ne te dérange pas si j'ouvre la fenêtre ?": [
+    {
+      "start": 24,
+      "end": 31,
+      "options": [
+        "j'ouvre",
+        "je ferme",
+        "je trouve",
+        "je couvre"
+      ]
+    }
+  ],
+  "Il est à qui, ce parapluie ?": [
+    {
+      "start": 7,
+      "end": 12,
+      "options": [
+        "à qui",
+        "avec qui",
+        "pourquoi",
+        "où"
+      ]
+    }
+  ],
+  "Bonjour, je voudrais réserver une table pour quatre personnes, samedi soir, vers vingt heures.": [
+    {
+      "start": 45,
+      "end": 61,
+      "options": [
+        "quatre personnes",
+        "quatorze personnes",
+        "trois personnes",
+        "quarante personnes"
+      ]
+    }
+  ],
+  "Désolé, je ne pourrai pas venir demain : ma fille est malade. On peut remettre ça à la semaine prochaine ?": [
+    {
+      "start": 84,
+      "end": 104,
+      "options": [
+        "la semaine prochaine",
+        "la semaine dernière",
+        "demain matin",
+        "ce soir"
+      ]
+    }
+  ],
+  "Le train de neuf heures quinze à destination de Marseille partira avec vingt minutes de retard.": [
+    {
+      "start": 12,
+      "end": 30,
+      "options": [
+        "neuf heures quinze",
+        "neuf heures cinquante",
+        "dix heures quinze",
+        "neuf heures cinq"
+      ]
+    }
+  ],
+  "Prenez la deuxième rue à gauche, puis continuez tout droit. La pharmacie est en face de la poste.": [
+    {
+      "start": 23,
+      "end": 31,
+      "options": [
+        "à gauche",
+        "à droite",
+        "en haut",
+        "en bas"
+      ]
+    }
+  ],
+  "J'aurais bien aimé partir en vacances cet été, mais je n'avais pas assez d'argent.": [
+    {
+      "start": 63,
+      "end": 81,
+      "options": [
+        "pas assez d'argent",
+        "pas du tout d'argent",
+        "trop d'argent",
+        "assez d'argent"
+      ]
+    }
+  ],
+  "Marie est plus âgée que son frère, mais c'est lui qui est le plus grand.": [
+    {
+      "start": 10,
+      "end": 19,
+      "options": [
+        "plus âgée",
+        "moins âgée",
+        "aussi âgée",
+        "plus jeune"
+      ]
+    }
+  ],
+  "Je cherche quelqu'un qui puisse garder mon chat pendant le week-end.": [
+    {
+      "start": 25,
+      "end": 31,
+      "options": [
+        "puisse",
+        "peut",
+        "pourra",
+        "pourrait"
+      ]
+    }
+  ],
+  "Tu n'as pas oublié tes clés, j'espère ? — Non, je les ai mises dans mon sac.": [
+    {
+      "start": 63,
+      "end": 75,
+      "options": [
+        "dans mon sac",
+        "sur mon sac",
+        "dans ma poche",
+        "chez moi"
+      ]
+    }
+  ],
+  "Je suis fatigué, je vais me coucher.": [
+    {
+      "start": 8,
+      "end": 15,
+      "options": [
+        "fatigué",
+        "fatiguant",
+        "fâché",
+        "occupé"
+      ]
+    }
+  ],
+  "Il fait froid aujourd'hui.": [
+    {
+      "start": 8,
+      "end": 13,
+      "options": [
+        "froid",
+        "chaud",
+        "beau",
+        "gris"
+      ]
+    }
+  ],
+  "Je ne mange pas de viande.": [
+    {
+      "start": 19,
+      "end": 25,
+      "options": [
+        "viande",
+        "vin",
+        "pain",
+        "poisson"
+      ]
+    }
+  ],
+  "On va au restaurant ce soir ?": [
+    {
+      "start": 20,
+      "end": 27,
+      "options": [
+        "ce soir",
+        "hier soir",
+        "demain soir",
+        "ce matin"
+      ]
+    }
+  ],
+  "Ma sœur a deux ans de plus que moi.": [
+    {
+      "start": 19,
+      "end": 26,
+      "options": [
+        "de plus",
+        "de moins",
+        "de trop",
+        "à peine"
+      ]
+    }
+  ],
+  "Je suis né en mille neuf cent quatre-vingt-dix-huit.": [
+    {
+      "start": 14,
+      "end": 51,
+      "options": [
+        "mille neuf cent quatre-vingt-dix-huit",
+        "mille neuf cent quatre-vingt-huit",
+        "mille neuf cent quatre-vingt-dix-neuf",
+        "mille neuf cent soixante-dix-huit"
+      ]
+    }
+  ],
+  "Comment tu t'appelles ?": [
+    {
+      "start": 0,
+      "end": 7,
+      "options": [
+        "Comment",
+        "Combien",
+        "Quand",
+        "Pourquoi"
+      ]
+    }
+  ],
+  "Quel âge as-tu ?": [
+    {
+      "start": 0,
+      "end": 8,
+      "options": [
+        "Quel âge",
+        "Quelle heure",
+        "Quelle taille",
+        "Quel nom"
+      ]
+    }
+  ],
+  "Tu habites où ?": [
+    {
+      "start": 11,
+      "end": 13,
+      "options": [
+        "où",
+        "avec qui",
+        "depuis quand",
+        "comment"
+      ]
+    }
+  ],
+  "Il est quelle heure ?": [
+    {
+      "start": 7,
+      "end": 19,
+      "options": [
+        "quelle heure",
+        "quel jour",
+        "quel mois",
+        "quel âge"
+      ]
+    }
+  ],
+  "Combien coûte ce pull ?": [
+    {
+      "start": 0,
+      "end": 7,
+      "options": [
+        "Combien",
+        "Comment",
+        "Pourquoi",
+        "Quand"
+      ]
+    }
+  ],
+  "Pourquoi tu es en retard ?": [
+    {
+      "start": 15,
+      "end": 24,
+      "options": [
+        "en retard",
+        "en avance",
+        "en vacances",
+        "en colère"
+      ]
+    }
+  ],
+  "Tu veux un café ?": [
+    {
+      "start": 8,
+      "end": 15,
+      "options": [
+        "un café",
+        "un thé",
+        "un cadeau",
+        "un cahier"
+      ]
+    }
+  ],
+  "Qu'est-ce que tu as fait ce week-end ?": [
+    {
+      "start": 25,
+      "end": 36,
+      "options": [
+        "ce week-end",
+        "ce mercredi",
+        "le week-end prochain",
+        "ce matin"
+      ]
+    }
+  ],
+  "Tu as des frères et sœurs ?": [
+    {
+      "start": 10,
+      "end": 25,
+      "options": [
+        "frères et sœurs",
+        "fleurs et feuilles",
+        "amis et voisins",
+        "pères et mères"
+      ]
+    }
+  ],
+  "On se voit quand ?": [
+    {
+      "start": 11,
+      "end": 16,
+      "options": [
+        "quand",
+        "comment",
+        "pourquoi",
+        "avec qui"
+      ]
+    }
+  ],
+  "Le magasin ouvre à neuf heures et ferme à dix-neuf heures.": [
+    {
+      "start": 19,
+      "end": 30,
+      "options": [
+        "neuf heures",
+        "dix heures",
+        "dix-neuf heures",
+        "neuf heures et demie"
+      ]
+    }
+  ],
+  "Ça fait douze euros cinquante, s'il vous plaît.": [
+    {
+      "start": 8,
+      "end": 29,
+      "options": [
+        "douze euros cinquante",
+        "deux euros cinquante",
+        "douze euros quinze",
+        "vingt-deux euros cinquante"
+      ]
+    }
+  ],
+  "Mon numéro, c'est le zéro six, quarante-deux, dix-sept, quatre-vingt-trois, cinquante.": [
+    {
+      "start": 31,
+      "end": 44,
+      "options": [
+        "quarante-deux",
+        "quatorze",
+        "quarante-trois",
+        "quatre-vingt-deux"
+      ]
+    }
+  ],
+  "Le cours de français commence le mardi à quatorze heures.": [
+    {
+      "start": 30,
+      "end": 38,
+      "options": [
+        "le mardi",
+        "le jeudi",
+        "le mercredi",
+        "le lundi"
+      ]
+    }
+  ],
+  "Nous sommes le vingt-cinq décembre.": [
+    {
+      "start": 15,
+      "end": 34,
+      "options": [
+        "vingt-cinq décembre",
+        "vingt décembre",
+        "vingt-cinq septembre",
+        "quinze décembre"
+      ]
+    }
+  ],
+  "J'ai rendez-vous chez le médecin dans une demi-heure.": [
+    {
+      "start": 38,
+      "end": 52,
+      "options": [
+        "une demi-heure",
+        "une heure et demie",
+        "un quart d'heure",
+        "deux heures"
+      ]
+    }
+  ],
+  "Salut Thomas, c'est Julie. Je t'appelle pour samedi. Finalement, on ne va pas faire le pique-nique au parc, parce que la météo annonce de la pluie toute la journée. Je propose plutôt de se retrouver chez moi vers midi. Chacun apporte quelque chose : moi, je fais une salade et un gâteau au chocolat. Est-ce que tu pourrais apporter des boissons ? Paul viendra avec sa nouvelle copine, Inès. Tu ne la connais pas encore, elle est très sympa. Ah, et n'oublie pas : mon code d'entrée a changé. Rappelle-moi ce soir après dix-neuf heures, parce qu'avant, je suis au travail. Bisous !": [
+    {
+      "start": 199,
+      "end": 207,
+      "options": [
+        "chez moi",
+        "au parc",
+        "au restaurant",
+        "chez toi"
+      ]
+    },
+    {
+      "start": 208,
+      "end": 217,
+      "options": [
+        "vers midi",
+        "vers minuit",
+        "vers dix heures",
+        "vers midi et demi"
+      ]
+    },
+    {
+      "start": 332,
+      "end": 344,
+      "options": [
+        "des boissons",
+        "des poissons",
+        "des bonbons",
+        "des croissants"
+      ]
+    },
+    {
+      "start": 512,
+      "end": 533,
+      "options": [
+        "après dix-neuf heures",
+        "avant dix-neuf heures",
+        "après neuf heures",
+        "avant dix-sept heures"
+      ]
+    }
+  ],
+  "Je m'appelle Chen, j'ai vingt-six ans et je suis arrivée en France il y a un an et demi. Au début, j'habitais à Paris chez une amie, mais les loyers étaient trop chers, alors j'ai déménagé à Lyon en septembre dernier. Maintenant, je partage un appartement avec deux étudiantes françaises, ce qui m'aide beaucoup à progresser en français. Le matin, je travaille à mi-temps dans une librairie, et l'après-midi, je suis des cours de gestion à l'université. Ce qui me manque le plus, c'est la cuisine de ma mère. Alors le dimanche, j'essaie de préparer des raviolis avec mes colocataires. Elles adorent ça ! L'année prochaine, j'aimerais trouver un stage dans une entreprise internationale.": [
+    {
+      "start": 24,
+      "end": 37,
+      "options": [
+        "vingt-six ans",
+        "vingt-sept ans",
+        "trente-six ans",
+        "seize ans"
+      ]
+    },
+    {
+      "start": 189,
+      "end": 195,
+      "options": [
+        "à Lyon",
+        "à Lille",
+        "à Paris",
+        "à Nice"
+      ]
+    },
+    {
+      "start": 377,
+      "end": 390,
+      "options": [
+        "une librairie",
+        "une bibliothèque",
+        "une boulangerie",
+        "une épicerie"
+      ]
+    },
+    {
+      "start": 642,
+      "end": 650,
+      "options": [
+        "un stage",
+        "un étage",
+        "un voyage",
+        "un mariage"
+      ]
+    }
+  ],
+  "Bienvenue au château de Chenonceau, mesdames et messieurs. La visite d'aujourd'hui dure environ une heure et quart. Nous commencerons par la grande galerie, construite au-dessus de la rivière, puis nous monterons au premier étage pour voir les chambres. Je vous rappelle qu'il est interdit de prendre des photos avec flash à l'intérieur, mais vous pouvez photographier librement les jardins. À la fin de la visite, vous aurez trente minutes de temps libre. Le bus partira à seize heures précises du parking principal. Si vous vous perdez, appelez le numéro indiqué sur votre billet. Bonne visite !": [
+    {
+      "start": 96,
+      "end": 114,
+      "options": [
+        "une heure et quart",
+        "une heure et demie",
+        "un quart d'heure",
+        "trois quarts d'heure"
+      ]
+    },
+    {
+      "start": 168,
+      "end": 191,
+      "options": [
+        "au-dessus de la rivière",
+        "au-dessous de la rivière",
+        "à côté de la rivière",
+        "loin de la rivière"
+      ]
+    },
+    {
+      "start": 312,
+      "end": 322,
+      "options": [
+        "avec flash",
+        "sans flash",
+        "avec un guide",
+        "sans billet"
+      ]
+    },
+    {
+      "start": 474,
+      "end": 486,
+      "options": [
+        "seize heures",
+        "six heures",
+        "quinze heures",
+        "dix-sept heures"
+      ]
+    }
+  ],
+  "Depuis le premier avril, le centre-ville de Saint-Aubin est fermé aux voitures le week-end. La mairie a pris cette décision pour réduire la pollution et le bruit. Au début, beaucoup de commerçants étaient inquiets : ils avaient peur de perdre des clients. Mais trois mois plus tard, les résultats sont plutôt positifs. Selon la mairie, le nombre de visiteurs a augmenté de quinze pour cent, et les cafés ont installé plus de terrasses. Pourtant, tout le monde n'est pas content : certains habitants âgés trouvent difficile de se déplacer sans voiture. Pour les aider, la ville propose maintenant un petit bus électrique gratuit, qui passe toutes les dix minutes.": [
+    {
+      "start": 7,
+      "end": 23,
+      "options": [
+        "le premier avril",
+        "le premier mai",
+        "le trente avril",
+        "le premier juillet"
+      ]
+    },
+    {
+      "start": 373,
+      "end": 389,
+      "options": [
+        "quinze pour cent",
+        "cinquante pour cent",
+        "cinq pour cent",
+        "vingt pour cent"
+      ]
+    },
+    {
+      "start": 620,
+      "end": 627,
+      "options": [
+        "gratuit",
+        "payant",
+        "privé",
+        "complet"
+      ]
+    },
+    {
+      "start": 650,
+      "end": 661,
+      "options": [
+        "dix minutes",
+        "deux minutes",
+        "quinze minutes",
+        "vingt minutes"
+      ]
+    }
+  ],
+  "Il y a deux chats dans le jardin.": [
+    {
+      "start": 7,
+      "end": 17,
+      "options": [
+        "deux chats",
+        "deux chiens",
+        "douze chats",
+        "des chaises"
+      ]
+    }
+  ],
+  "Je vais au marché le samedi.": [
+    {
+      "start": 8,
+      "end": 17,
+      "options": [
+        "au marché",
+        "au musée",
+        "à la mairie",
+        "au magasin"
+      ]
+    }
+  ],
+  "Elle a mangé une pomme.": [
+    {
+      "start": 13,
+      "end": 22,
+      "options": [
+        "une pomme",
+        "une poire",
+        "une prune",
+        "une pêche"
+      ]
+    }
+  ],
+  "Nous avons rendez-vous à onze heures.": [
+    {
+      "start": 25,
+      "end": 36,
+      "options": [
+        "onze heures",
+        "douze heures",
+        "une heure",
+        "onze heures et demie"
+      ]
+    }
+  ],
+  "Tu peux fermer la fenêtre ?": [
+    {
+      "start": 8,
+      "end": 14,
+      "options": [
+        "fermer",
+        "ouvrir",
+        "fermerai",
+        "former"
+      ]
+    }
+  ],
+  "Il fait beau ce matin.": [
+    {
+      "start": 8,
+      "end": 12,
+      "options": [
+        "beau",
+        "chaud",
+        "froid",
+        "bon"
+      ]
+    }
+  ],
+  "Je n'aime pas le poisson.": [
+    {
+      "start": 14,
+      "end": 24,
+      "options": [
+        "le poisson",
+        "le poison",
+        "la boisson",
+        "le poulet"
+      ]
+    }
+  ],
+  "Mon frère habite à Lyon.": [
+    {
+      "start": 17,
+      "end": 23,
+      "options": [
+        "à Lyon",
+        "à Lille",
+        "à Paris",
+        "à Londres"
+      ]
+    }
+  ],
+  "On part dans dix minutes.": [
+    {
+      "start": 13,
+      "end": 24,
+      "options": [
+        "dix minutes",
+        "six minutes",
+        "deux minutes",
+        "dix mois"
+      ]
+    }
+  ],
+  "C'est au-dessus de la table.": [
+    {
+      "start": 6,
+      "end": 15,
+      "options": [
+        "au-dessus",
+        "au-dessous",
+        "à côté",
+        "en face"
+      ]
+    }
+  ],
+  "J'ai acheté un pull rouge.": [
+    {
+      "start": 20,
+      "end": 25,
+      "options": [
+        "rouge",
+        "rose",
+        "roux",
+        "orange"
+      ]
+    }
+  ],
+  "Il est à la maison.": [
+    {
+      "start": 7,
+      "end": 18,
+      "options": [
+        "à la maison",
+        "à la mairie",
+        "à la montagne",
+        "à la mer"
+      ]
+    }
+  ],
+  "Nous habitons au troisième étage.": [
+    {
+      "start": 14,
+      "end": 32,
+      "options": [
+        "au troisième étage",
+        "au treizième étage",
+        "au deuxième étage",
+        "au quatrième étage"
+      ]
+    }
+  ],
+  "Je voudrais un café, s'il vous plaît.": [
+    {
+      "start": 3,
+      "end": 11,
+      "options": [
+        "voudrais",
+        "veux",
+        "voudra",
+        "voudront"
+      ]
+    }
+  ],
+  "Le train part à quinze heures.": [
+    {
+      "start": 16,
+      "end": 29,
+      "options": [
+        "quinze heures",
+        "cinq heures",
+        "dix-sept heures",
+        "seize heures"
+      ]
+    }
+  ],
+  "Ce livre coûte vingt euros.": [
+    {
+      "start": 15,
+      "end": 26,
+      "options": [
+        "vingt euros",
+        "deux euros",
+        "trente euros",
+        "quatre-vingts euros"
+      ]
+    }
+  ],
+  "Il lit le journal le matin.": [
+    {
+      "start": 7,
+      "end": 17,
+      "options": [
+        "le journal",
+        "le journalier",
+        "le roman",
+        "le manuel"
+      ]
+    }
+  ],
+  "Elle a les cheveux longs.": [
+    {
+      "start": 19,
+      "end": 24,
+      "options": [
+        "longs",
+        "blonds",
+        "courts",
+        "blancs"
+      ]
+    }
+  ],
+  "J'ai perdu mes clés.": [
+    {
+      "start": 11,
+      "end": 19,
+      "options": [
+        "mes clés",
+        "mes cahiers",
+        "mes billets",
+        "mes lunettes"
+      ]
+    }
+  ],
+  "Tu viens avec nous ce soir ?": [
+    {
+      "start": 9,
+      "end": 18,
+      "options": [
+        "avec nous",
+        "avec vous",
+        "sans nous",
+        "chez nous"
+      ]
+    }
+  ],
+  "Je prends le bus tous les matins.": [
+    {
+      "start": 10,
+      "end": 16,
+      "options": [
+        "le bus",
+        "le métro",
+        "le train",
+        "le vélo"
+      ]
+    }
+  ],
+  "Ils ont deux enfants.": [
+    {
+      "start": 8,
+      "end": 20,
+      "options": [
+        "deux enfants",
+        "douze enfants",
+        "deux ans",
+        "deux parents"
+      ]
+    }
+  ],
+  "Il y a du poisson ce soir.": [
+    {
+      "start": 10,
+      "end": 17,
+      "options": [
+        "poisson",
+        "poison",
+        "poulet",
+        "pain"
+      ]
+    }
+  ],
+  "Tu veux un dessert ?": [
+    {
+      "start": 8,
+      "end": 18,
+      "options": [
+        "un dessert",
+        "un désert",
+        "des airs",
+        "un désir"
+      ]
+    }
+  ],
+  "Nous avons la réponse.": [
+    {
+      "start": 11,
+      "end": 21,
+      "options": [
+        "la réponse",
+        "la reprise",
+        "la raison",
+        "la dépense"
+      ]
+    }
+  ],
+  "Je voudrais une baguette.": [
+    {
+      "start": 12,
+      "end": 24,
+      "options": [
+        "une baguette",
+        "une bague",
+        "une bagarre",
+        "une bougie"
+      ]
+    }
+  ],
+  "J'aimerais partir en vacances.": [
+    {
+      "start": 11,
+      "end": 17,
+      "options": [
+        "partir",
+        "repartir",
+        "sortir",
+        "rester"
+      ]
+    }
+  ],
+  "Il a deux ans.": [
+    {
+      "start": 5,
+      "end": 13,
+      "options": [
+        "deux ans",
+        "douze ans",
+        "deux cents",
+        "deux enfants"
+      ]
+    }
+  ],
+  "Je mets le livre sur la table.": [
+    {
+      "start": 17,
+      "end": 29,
+      "options": [
+        "sur la table",
+        "sous la table",
+        "dans la table",
+        "devant la table"
+      ]
+    }
+  ],
+  "Tout le monde est là.": [
+    {
+      "start": 0,
+      "end": 13,
+      "options": [
+        "Tout le monde",
+        "Tout mon monde",
+        "Tous les mois",
+        "Toute la nuit"
+      ]
+    }
+  ],
+  "Elle vend sa voiture.": [
+    {
+      "start": 5,
+      "end": 9,
+      "options": [
+        "vend",
+        "vient",
+        "veut",
+        "voit"
+      ]
+    }
+  ],
+  "C'est le bureau de mon père.": [
+    {
+      "start": 19,
+      "end": 27,
+      "options": [
+        "mon père",
+        "ma mère",
+        "mon frère",
+        "mon oncle"
+      ]
+    }
+  ],
+  "Il boit du vin rouge.": [
+    {
+      "start": 11,
+      "end": 20,
+      "options": [
+        "vin rouge",
+        "vent rouge",
+        "vin blanc",
+        "pain rouge"
+      ]
+    }
+  ],
+  "On se voit à seize heures.": [
+    {
+      "start": 13,
+      "end": 25,
+      "options": [
+        "seize heures",
+        "six heures",
+        "quinze heures",
+        "seize heures trente"
+      ]
+    }
+  ],
+  "Le musée ouvre à dix heures.": [
+    {
+      "start": 17,
+      "end": 27,
+      "options": [
+        "dix heures",
+        "deux heures",
+        "six heures",
+        "douze heures"
+      ]
+    }
+  ],
+  "Ça coûte soixante euros.": [
+    {
+      "start": 9,
+      "end": 23,
+      "options": [
+        "soixante euros",
+        "soixante-dix euros",
+        "seize euros",
+        "cent euros"
+      ]
+    }
+  ],
+  "Il est né le douze mai.": [
+    {
+      "start": 13,
+      "end": 22,
+      "options": [
+        "douze mai",
+        "deux mai",
+        "douze mars",
+        "vingt-deux mai"
+      ]
+    }
+  ],
+  "Il pleut depuis ce matin.": [
+    {
+      "start": 9,
+      "end": 15,
+      "options": [
+        "depuis",
+        "pendant",
+        "pour",
+        "dans"
+      ]
+    }
+  ],
+  "Tu as vu le film ?": [
+    {
+      "start": 9,
+      "end": 16,
+      "options": [
+        "le film",
+        "le fils",
+        "le fil",
+        "la fille"
+      ]
+    }
+  ],
+  "Elle habite près de la poste.": [
+    {
+      "start": 12,
+      "end": 19,
+      "options": [
+        "près de",
+        "loin de",
+        "au-dessus de",
+        "au-dessous de"
+      ]
+    }
+  ],
+  "Nous allons au cinéma.": [
+    {
+      "start": 12,
+      "end": 21,
+      "options": [
+        "au cinéma",
+        "au séminaire",
+        "au théâtre",
+        "au cirque"
+      ]
+    }
+  ],
+  "Le chat est sous le lit.": [
+    {
+      "start": 12,
+      "end": 23,
+      "options": [
+        "sous le lit",
+        "sur le lit",
+        "dans le lit",
+        "devant le lit"
+      ]
+    }
+  ],
+  "Je veux un pain au chocolat.": [
+    {
+      "start": 11,
+      "end": 27,
+      "options": [
+        "pain au chocolat",
+        "pain aux raisins",
+        "pain de campagne",
+        "pain complet"
+      ]
+    }
+  ],
+  "Il faut prendre le métro.": [
+    {
+      "start": 16,
+      "end": 24,
+      "options": [
+        "le métro",
+        "le train",
+        "le tram",
+        "le vélo"
+      ]
+    }
+  ],
+  "Ma fille a quinze ans.": [
+    {
+      "start": 11,
+      "end": 21,
+      "options": [
+        "quinze ans",
+        "cinq ans",
+        "cinquante ans",
+        "seize ans"
+      ]
+    }
+  ],
+  "Nous partons demain matin.": [
+    {
+      "start": 13,
+      "end": 25,
+      "options": [
+        "demain matin",
+        "demain soir",
+        "ce matin",
+        "hier matin"
+      ]
+    }
+  ],
+  "Ce gâteau est très bon.": [
+    {
+      "start": 14,
+      "end": 22,
+      "options": [
+        "très bon",
+        "très beau",
+        "très blanc",
+        "très long"
+      ]
+    }
+  ],
+  "J'ai faim, on mange ?": [
+    {
+      "start": 5,
+      "end": 9,
+      "options": [
+        "faim",
+        "froid",
+        "chaud",
+        "peur"
+      ]
+    }
+  ],
+  "Il y a une boulangerie en face.": [
+    {
+      "start": 7,
+      "end": 22,
+      "options": [
+        "une boulangerie",
+        "une boucherie",
+        "une bijouterie",
+        "une blanchisserie"
+      ]
+    }
+  ],
+  "Elle porte une robe bleue.": [
+    {
+      "start": 20,
+      "end": 25,
+      "options": [
+        "bleue",
+        "blanche",
+        "brune",
+        "blonde"
+      ]
+    }
+  ],
+  "Le docteur vient demain.": [
+    {
+      "start": 17,
+      "end": 23,
+      "options": [
+        "demain",
+        "demain soir",
+        "ce matin",
+        "dimanche"
+      ]
+    }
+  ],
+  "Tu peux m'aider ?": [
+    {
+      "start": 8,
+      "end": 15,
+      "options": [
+        "m'aider",
+        "m'aimer",
+        "m'attendre",
+        "m'appeler"
+      ]
+    }
+  ],
+  "Où est la gare ?": [
+    {
+      "start": 7,
+      "end": 14,
+      "options": [
+        "la gare",
+        "la guerre",
+        "la garde",
+        "la carte"
+      ]
+    }
+  ],
+  "J'ai un rendez-vous lundi.": [
+    {
+      "start": 20,
+      "end": 25,
+      "options": [
+        "lundi",
+        "mardi",
+        "jeudi",
+        "vendredi"
+      ]
+    }
+  ],
+  "Il écoute la radio.": [
+    {
+      "start": 10,
+      "end": 18,
+      "options": [
+        "la radio",
+        "la vidéo",
+        "le rideau",
+        "le réseau"
+      ]
+    }
+  ],
+  "Elle attend le bus.": [
+    {
+      "start": 5,
+      "end": 11,
+      "options": [
+        "attend",
+        "entend",
+        "atteint",
+        "étend"
+      ]
+    }
+  ],
+  "Le vent est très fort.": [
+    {
+      "start": 17,
+      "end": 21,
+      "options": [
+        "fort",
+        "froid",
+        "frais",
+        "fou"
+      ]
+    }
+  ],
+  "Il est onze heures moins le quart.": [
+    {
+      "start": 7,
+      "end": 33,
+      "options": [
+        "onze heures moins le quart",
+        "onze heures et quart",
+        "douze heures moins le quart",
+        "onze heures et demie"
+      ]
+    }
+  ],
+  "Je cherche le numéro douze.": [
+    {
+      "start": 21,
+      "end": 26,
+      "options": [
+        "douze",
+        "deux",
+        "onze",
+        "treize"
+      ]
+    }
+  ],
+  "Il a perdu son chien.": [
+    {
+      "start": 11,
+      "end": 20,
+      "options": [
+        "son chien",
+        "son chat",
+        "son champ",
+        "son chêne"
+      ]
+    }
+  ],
+  "Je l'ai vu par hasard dans un cinéma.": [
+    {
+      "start": 11,
+      "end": 21,
+      "options": [
+        "par hasard",
+        "par erreur",
+        "par bonheur",
+        "par malheur"
+      ]
+    }
+  ],
+  "Nous sommes partis en plein hiver.": [
+    {
+      "start": 19,
+      "end": 33,
+      "options": [
+        "en plein hiver",
+        "en plein été",
+        "en plein air",
+        "au printemps"
+      ]
+    }
+  ],
+  "Je reviens juste de chez le coiffeur.": [
+    {
+      "start": 25,
+      "end": 36,
+      "options": [
+        "le coiffeur",
+        "le chauffeur",
+        "le professeur",
+        "le facteur"
+      ]
+    }
+  ],
+  "Il faut manger pour vivre et non vivre pour manger.": [
+    {
+      "start": 8,
+      "end": 25,
+      "options": [
+        "manger pour vivre",
+        "vivre pour manger",
+        "manger sans vivre",
+        "manger avant de vivre"
+      ]
+    }
+  ],
+  "Sous le règne d'Henri IV, la France a beaucoup changé.": [
+    {
+      "start": 14,
+      "end": 24,
+      "options": [
+        "d'Henri IV",
+        "d'Henri III",
+        "de Louis XIV",
+        "de Louis XVI"
+      ]
+    }
+  ],
+  "quatre-vingt-dix-sept": [
+    {
+      "start": 0,
+      "end": 21,
+      "options": [
+        "quatre-vingt-dix-sept",
+        "quatre-vingt-sept",
+        "soixante-dix-sept",
+        "quatre-vingt-dix-six"
+      ]
+    }
+  ],
+  "soixante-seize": [
+    {
+      "start": 0,
+      "end": 14,
+      "options": [
+        "soixante-seize",
+        "soixante-six",
+        "soixante-treize",
+        "quatre-vingt-seize"
+      ]
+    }
+  ],
+  "Il est né en mille neuf cent quatre-vingt-quatre.": [
+    {
+      "start": 13,
+      "end": 48,
+      "options": [
+        "mille neuf cent quatre-vingt-quatre",
+        "mille neuf cent quatre-vingt-quatorze",
+        "mille neuf cent soixante-quatre",
+        "mille neuf cent quatre-vingt-trois"
+      ]
+    }
+  ],
+  "Rendez-vous à dix-neuf heures quarante-cinq.": [
+    {
+      "start": 14,
+      "end": 43,
+      "options": [
+        "dix-neuf heures quarante-cinq",
+        "dix-neuf heures quinze",
+        "neuf heures quarante-cinq",
+        "dix-huit heures quarante-cinq"
+      ]
+    }
+  ],
+  "Ça fait trente-cinq euros soixante-dix.": [
+    {
+      "start": 8,
+      "end": 38,
+      "options": [
+        "trente-cinq euros soixante-dix",
+        "trente-cinq euros soixante",
+        "trente euros cinquante-sept",
+        "cinquante-trois euros soixante-dix"
+      ]
+    }
+  ],
+  "Il a eu dix-neuf ans le mois dernier.": [
+    {
+      "start": 8,
+      "end": 20,
+      "options": [
+        "dix-neuf ans",
+        "dix-neuf mois",
+        "neuf ans",
+        "dix-huit ans"
+      ]
+    }
+  ]
+};
+// One scored attempt per question, whichever listening format the learner selects.
+const listeningAttempts = new WeakMap();
+let listeningPreferred = 'comprehension';
+const LISTEN_LABELS = {
+ comprehension:['理解选择','Comprehension','Compréhension'],cloze:['关键词填空','Keyword gaps','Mots à compléter'],order:['复原句子','Rebuild the sentence','Reconstituer la phrase'],
+ pending:['完成练习后提交答案，查看对错与原文。','Complete the exercise, then submit to see the answer and original.','Terminez l’exercice puis validez pour voir la correction et le texte original.'],
+ mode:['听力题型','Listening format','Format d’écoute'],gap:['空','Gap','Trou'],select:['请选择','Choose','Choisissez'],submit:['提交答案','Check answer','Vérifier'],
+ clozeHelp:['听录音，选择每个空中实际听到的词语。','Listen and select the words you hear for each gap.','Écoutez et choisissez les mots entendus pour chaque trou.'],
+ orderHelp:['点击词块依次组成原句；点击已选词块可移回。标点在答案中恢复。','Select the words in the order heard; select a placed word to return it. Punctuation is restored in the answer.','Placez les mots dans l’ordre entendu ; cliquez sur un mot placé pour le retirer. La ponctuation revient dans la réponse.'],
+ longHelp:['长材料按句练习，播放按钮仍播放完整材料。','Practise one sentence at a time; the audio plays the full passage.','Travaillez phrase par phrase ; l’audio lit le texte complet.'],
+ sentence:['练习句子','Practice sentence','Phrase à travailler'],sentenceN:['第','Sentence','Phrase'],assembled:['已排列的句子','Your sentence','Votre phrase'],bank:['待选词块','Available words','Mots disponibles'],
+ add:['添加词块','Add word','Ajouter le mot'],remove:['移回词块','Return word','Retirer le mot'],undo:['撤回一步','Undo','Annuler'],reset:['清空排列','Clear','Effacer'],
+ correct:['回答正确！','Correct!','Bonne réponse !'],wrong:['再对照原句听一遍。','Listen again and compare with the original.','Réécoutez et comparez avec la phrase originale.'],
+ original:['原文：','Original:','Texte original :'],your:['你的答案：','Your answer:','Votre réponse :'],answer:['正确答案：','Correct answer:','Bonne réponse :'],
+ count:['已排列','Placed','Placés'],locked:['本题已提交，可回听录音；下一题可以更换题型。','Answer submitted. You can replay the audio and change format on the next question.','Réponse envoyée. Vous pouvez réécouter et changer de format à la prochaine question.']
+};
+function listeningLabel(k){return LISTEN_LABELS[k][UI_LANG==='fr'?2:UI_LANG==='en'?1:0];}
+function listeningShuffle(values){
+ const a=values.slice();for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]];}
+ if(a.length>1&&a.every((x,i)=>x===values[i]))a.push(a.shift());return a;
+}
+function listeningWords(text){return text.match(/[\p{L}\p{N}]+(?:[’'][\p{L}\p{N}]+)*/gu)||[];}
+function listeningSentences(text){return (text.match(/[^.!?…]+[.!?…]+["»]?|[^.!?…]+$/g)||[text]).map(s=>s.trim()).filter(s=>listeningWords(s).length>1);}
+function listeningWordKey(text){return text.normalize('NFC').replace(/’/g,"'").toLocaleLowerCase('fr');}
+function listeningMap(){if(!listeningAttempts.has(answers))listeningAttempts.set(answers,new Map());return listeningAttempts.get(answers);}
+function listeningRun(item){
+ if(!item.audio||!LISTENING_GAPS[item.audio])return null;
+ const map=listeningMap();let run=map.get(item.id);
+ if(run?.answered&&answers[idx]===undefined){map.delete(item.id);run=null;}
+ if(!run){run={mode:answers[idx]!==undefined?'comprehension':listeningPreferred,answered:false,sentence:0,chosen:[],gaps:[],options:LISTENING_GAPS[item.audio].map(b=>listeningShuffle(b.options))};map.set(item.id,run);}
+ return run;
+}
+function listeningToolbar(item,card,run){
+ if(!run)return;const wrap=el('div','listening-mode'),label=el('label',null,listeningLabel('mode')),select=el('select');select.id='listeningMode';label.htmlFor=select.id;
+ for(const k of ['comprehension','cloze','order']){const o=el('option',null,listeningLabel(k));o.value=k;select.append(o);}select.value=run.mode;select.disabled=answers[idx]!==undefined;
+ select.addEventListener('change',()=>{listeningPreferred=select.value;run.mode=select.value;run.chosen=[];run.gaps=[];renderQuestion();});wrap.append(label,select);card.append(wrap);
+}
+function listeningRecordText(item,run){
+ if(run.mode==='cloze')return {correct:LISTENING_GAPS[item.audio].map(b=>b.options[0]).join(' / '),chosen:run.gaps.join(' / ')};
+ const sentence=listeningSentences(item.audio)[run.sentence];return {correct:sentence,chosen:run.chosen.map(i=>run.words[i]).join(' ')};
+}
+function listeningIsCorrect(item,run){
+ if(run.mode==='cloze')return LISTENING_GAPS[item.audio].every((b,i)=>run.gaps[i]===b.options[0]);
+ return run.chosen.length===run.words.length&&run.chosen.every((id,i)=>listeningWordKey(run.words[id])===listeningWordKey(run.words[i]));
+}
+function listeningSubmit(item,run,card){
+ if(answers[idx]!==undefined||run.answered)return;
+ const complete=run.mode==='cloze'?LISTENING_GAPS[item.audio].every((b,i)=>run.gaps[i]):run.chosen.length===run.words.length;if(!complete)return;
+ const right=listeningIsCorrect(item,run),text=listeningRecordText(item,run);run.answered=true;run.right=right;run.result=text;
+ answers[idx]=right?item.a:(item.a+1)%item.opts.length;score=calcScore();
+ const kind=LISTEN_LABELS[run.mode][0];
+ record({...item,q:'（'+kind+'）'+item.q,cat:item.cat+' · '+kind,opts:[text.correct,text.chosen],a:0},right?0:1,right);comboHit('quiz',right);
+ paintAnswer(answers[idx],[],card,[]);
+}
+function listeningRender(item,card,run){
+ card._listeningRun=run;const area=el('div','listening-exercise');area.dataset.mode=run.mode;
+ const submit=el('button','btn',listeningLabel('submit'));submit.id='listeningSubmit';submit.type='button';submit.disabled=true;submit.addEventListener('click',()=>listeningSubmit(item,run,card));
+ if(run.mode==='cloze'){
+  area.append(el('p','sub',listeningLabel('clozeHelp')));const passage=el('div','listening-gap-text');passage.lang='fr';let cursor=0;
+  LISTENING_GAPS[item.audio].forEach((gap,i)=>{
+   passage.append(document.createTextNode(item.audio.slice(cursor,gap.start)));const select=el('select','listening-gap');select.setAttribute('aria-label',listeningLabel('gap')+' '+(i+1));
+   const placeholder=el('option',null,'['+(i+1)+'] '+listeningLabel('select'));placeholder.value='';select.append(placeholder);
+   run.options[i].forEach(value=>{const option=el('option',null,value);option.value=value;select.append(option);});select.value=run.gaps[i]||'';
+   select.addEventListener('change',()=>{run.gaps[i]=select.value;submit.disabled=!LISTENING_GAPS[item.audio].every((b,j)=>run.gaps[j]);});passage.append(select);cursor=gap.end;
+  });passage.append(document.createTextNode(item.audio.slice(cursor)));area.append(passage);submit.disabled=!LISTENING_GAPS[item.audio].every((b,i)=>run.gaps[i]);
+ }else{
+  const sentences=listeningSentences(item.audio);area.append(el('p','sub',listeningLabel('orderHelp')));
+  if(sentences.length>1){
+   const label=el('label',null,listeningLabel('sentence')),select=el('select','listening-sentence');select.id='listeningSentence';label.htmlFor=select.id;
+   sentences.forEach((text,i)=>{const option=el('option',null,listeningLabel('sentenceN')+' '+(i+1)+' / '+sentences.length);option.value=String(i);select.append(option);});select.value=String(run.sentence);
+   select.addEventListener('change',()=>{run.sentence=Number(select.value);run.chosen=[];run.words=null;renderQuestion();});area.append(el('p','sub',listeningLabel('longHelp')),label,select);
+  }
+  if(!run.words){run.words=listeningWords(sentences[run.sentence]);run.bank=listeningShuffle(run.words.map((_,i)=>i));}
+  const target=el('div','listening-word-tray listening-built'),bank=el('div','listening-word-tray'),count=el('p','sub');target.setAttribute('role','group');target.setAttribute('aria-label',listeningLabel('assembled'));bank.setAttribute('role','group');bank.setAttribute('aria-label',listeningLabel('bank'));target.lang=bank.lang='fr';count.setAttribute('aria-live','polite');
+  const controls=el('div','actions'),undo=el('button','btn ghost',listeningLabel('undo')),reset=el('button','btn ghost',listeningLabel('reset'));undo.type=reset.type='button';
+  const draw=()=>{
+   target.replaceChildren();bank.replaceChildren();
+   run.chosen.forEach((id,pos)=>{const b=el('button','listening-word',run.words[id]);b.type='button';b.setAttribute('aria-label',listeningLabel('remove')+' '+run.words[id]+' ('+(pos+1)+')');b.addEventListener('click',()=>{run.chosen.splice(pos,1);draw();bank.querySelector('button:not(:disabled)')?.focus?.();});target.append(b);});
+   run.bank.forEach(id=>{const b=el('button','listening-word',run.words[id]);b.type='button';b.disabled=run.chosen.includes(id);b.setAttribute('aria-label',listeningLabel('add')+' '+run.words[id]+' ('+(id+1)+')');b.addEventListener('click',()=>{run.chosen.push(id);draw();(bank.querySelector('button:not(:disabled)')||submit).focus?.();});bank.append(b);});
+   count.textContent=listeningLabel('count')+' '+run.chosen.length+' / '+run.words.length;submit.disabled=run.chosen.length!==run.words.length;undo.disabled=reset.disabled=!run.chosen.length;
+  };
+  undo.addEventListener('click',()=>{run.chosen.pop();draw();});reset.addEventListener('click',()=>{run.chosen=[];draw();});controls.append(undo,reset);area.append(el('h3',null,listeningLabel('assembled')),target,count,el('h3',null,listeningLabel('bank')),bank,controls);draw();
+ }
+ area.append(submit);card.append(area);
+}
+function listeningPaint(item,card){
+ const run=card._listeningRun;if(!run||run.mode==='comprehension')return false;
+ card.querySelectorAll('.listening-exercise button,.listening-exercise select,.listening-mode select').forEach(b=>b.disabled=true);
+ const exp=card.querySelector('#explain');exp.classList.remove('pending');exp.replaceChildren();const right=run.right;
+ exp.append(el('b',right?'ok':'no',listeningLabel(right?'correct':'wrong')));
+ const text=run.result||listeningRecordText(item,run);
+ exp.append(el('p',null,listeningLabel('your')+' '+text.chosen),el('p','transcript',listeningLabel('answer')+' '+text.correct));
+ if(run.mode==='cloze')exp.append(el('p','transcript',listeningLabel('original')+' '+item.audio));
+ exp.append(el('p','sub',listeningLabel('locked')));const hb=card.querySelector('#hintBtn');if(hb)hb.disabled=true;
+ const next=card.querySelector('#nextBtn');next.disabled=false;updateProgress(idx+1);next.focus({preventScroll:true});return true;
+}
 // ---------- 答题 ----------
 function updateProgress(done) {
   pSet.textContent = set.label;
@@ -18949,6 +20628,7 @@ let hintUsed = false;
 function renderQuestion() {
   if(typeof studyAudioStop === "function") studyAudioStop();
   const item = set.qs[idx];
+  const listening = listeningRun(item);
   hintUsed = false;
   savePos();
   updateProgress(idx);
@@ -18961,7 +20641,7 @@ function renderQuestion() {
   if (item.audio) {
     if (tts) tts.cancel();
     const head = el("h2", "q listen");
-    head.append(el("span", null, item.q));
+    head.append(el("span", null, listening && listening.mode!=='comprehension' ? listeningLabel(listening.mode) : item.q));
     const row = el("div", "listen-row");
     const play = el("button", "play", "▶ 播放");
     play.type = "button";
@@ -18992,12 +20672,14 @@ function renderQuestion() {
   } else {
     card.append(tags, el("h2", "q", item.q));
   }
+  listeningToolbar(item,card,listening);
   const opts = el("div", "opts");
   // 每次随机打乱选项顺序，避免记住答案位置
   const order = item.opts.map((_, i) => i);
   for (let k = order.length - 1; k > 0; k--) { const j = Math.floor(Math.random() * (k + 1)); [order[k], order[j]] = [order[j], order[k]]; }
   const buttons = [];
-  order.forEach((i, pos) => {
+  if(listening && listening.mode!=='comprehension') listeningRender(item,card,listening);
+  else order.forEach((i, pos) => {
     const b = el("button", "opt");
     b.type = "button";
     b.id = `${item.id}-opt${i}`;
@@ -19007,8 +20689,8 @@ function renderQuestion() {
     buttons[i] = b;
   });
   card.append(opts);
-  const exp = el("div", "explain pending", "选一个答案，这里会显示对错和解析。");
-  if (item.audio && !tts) { exp.textContent = ""; exp.append(el("span", "transcript", item.audio)); }
+  const exp = el("div", "explain pending", listening && listening.mode!=='comprehension' ? listeningLabel('pending') : "选一个答案，这里会显示对错和解析。");
+  if (item.audio && !tts && typeof Audio === "undefined") { exp.textContent = ""; exp.append(el("span", "transcript", item.audio)); }
   exp.id = "explain";
   const actions = el("div", "actions");
   const prev = el("button", "btn ghost", "上一题");
@@ -19022,7 +20704,7 @@ function renderQuestion() {
   next.id = "nextBtn";
   next.disabled = true;
   next.addEventListener("click", () => { idx++; idx < bEnd() ? renderQuestion() : renderResult(); });
-  if (item.hint) {
+  if (item.hint && (!listening || listening.mode==='comprehension')) {
     const hb = el("button", "btn ghost", "💡 提示");
     hb.type = "button";
     hb.id = "hintBtn";
@@ -19042,6 +20724,7 @@ function renderQuestion() {
 }
 
 function choose(i, buttons, card, order) {
+  if(answers[idx]!==undefined)return;
   const item = set.qs[idx];
   const right = i === item.a;
   answers[idx] = i;
@@ -19053,6 +20736,8 @@ function choose(i, buttons, card, order) {
 // 标出对错、显示解析（回看做过的题时也用）
 function paintAnswer(i, buttons, card, order) {
   const item = set.qs[idx];
+  if(listeningPaint(item,card))return;
+  card.querySelectorAll('.listening-mode select').forEach(s=>s.disabled=true);
   const right = i === item.a;
   buttons.forEach((b, j) => {
     b.disabled = true;
@@ -19106,7 +20791,8 @@ function renderResult() {
     const li = el("li");
     li.append(el("span", "mark " + (ok ? "ok" : done ? "no" : ""), ok ? "✓" : done ? "✗" : "–"));
     const t = el("span", null, item.q + " ");
-    t.append(el("span", "ans", `正确答案：${item.opts[item.a]}`));
+    const practice = listeningMap().get(item.id);
+    t.append(el("span", "ans", `正确答案：${practice?.answered ? practice.result.correct : item.opts[item.a]}`));
     li.append(t);
     list.append(li);
   });
@@ -27201,7 +28887,7 @@ function studyAudioLabel(btn,label){
 async function studyAudioIndex(){
   if(studyAudioManifest)return studyAudioManifest;
   if(studyAudioLoad)return studyAudioLoad;
-  studyAudioLoad=(async()=>{const controller=new AbortController(),timer=setTimeout(()=>controller.abort(),8000);try{const r=await fetch(STUDY_AUDIO_BASE+'manifest.json?v=1.9.14',{signal:controller.signal});if(!r.ok)throw Error('manifest');const m=await r.json();if(m.version!==1||!m.characters)throw Error('manifest');studyAudioManifest=m;return m;}finally{clearTimeout(timer);studyAudioLoad=null;}})();
+  studyAudioLoad=(async()=>{const controller=new AbortController(),timer=setTimeout(()=>controller.abort(),8000);try{const r=await fetch(STUDY_AUDIO_BASE+'manifest.json?v=1.9.15',{signal:controller.signal});if(!r.ok)throw Error('manifest');const m=await r.json();if(m.version!==1||!m.characters)throw Error('manifest');studyAudioManifest=m;return m;}finally{clearTimeout(timer);studyAudioLoad=null;}})();
   return studyAudioLoad;
 }
 function studySystemPart(text,rate,btn,done,role){
