@@ -4102,14 +4102,14 @@ function potionActive(now = Date.now()) {
 }
 // 余额、库存、已经领过的奖励、用补签卡补上的日子
 function gameLedger() {
-  const earned = new Set(), inv = { shield: 0, patch: 0, rewind: 0, x2: 0, x3: 0, c2: 0 }, patched = new Set(), got = [], opened = new Set(), owned = new Set(), cards = new Set(), unlocked = new Set();
+  const surveyEarned=new Map(), earned = new Set(), inv = { shield: 0, patch: 0, rewind: 0, x2: 0, x3: 0, c2: 0 }, patched = new Set(), got = [], opened = new Set(), owned = new Set(), cards = new Set(), unlocked = new Set();
   let coins = progEnsure() ? prog.coins || 0 : 0;   // 答对得的金币（由答题记录算出）
   [...gameRaw].sort((a, b) => String(a.at).localeCompare(String(b.at))).forEach(g => {
     if (["feedback_reward", "share_reward"].includes(g.kind)) {
       const uid = typeof syncAuth === "function" ? syncAuth()?.uid : null;
       if (uid && g.scope === "user:" + uid && g.key === (g.kind === "share_reward" ? "share:first" : "feedback:first") && g.coins === 800 && !earned.has(g.key)) { earned.add(g.key); coins += 800; }
     }
-    else if (g.kind === "survey_reward") { const uid=typeof syncAuth === "function"?syncAuth()?.uid:null; if(uid && g.scope === "user:"+uid && g.key === "survey:2026-11-v1" && g.coins === 200 && !earned.has(g.key)){earned.add(g.key);coins+=200;} }
+    else if (g.kind === "survey_reward") { const uid=typeof syncAuth === "function"?syncAuth()?.uid:null;const amount=g.key==="survey:2026-11-v1"&&[200,500].includes(g.coins)?g.coins:g.key==="survey:2026-11-v1:experienced"&&g.coins===3000?3000:0;if(uid&&g.scope==="user:"+uid&&amount){const prior=surveyEarned.get(g.key)||0;if(amount>prior){coins+=amount-prior;surveyEarned.set(g.key,amount);earned.add(g.key);}} }
     else if (g.kind === "earn") { if (earned.has(g.key)) return; earned.add(g.key); coins += g.coins || 0; }
     else if (g.kind === "buy") {
       if (inv[g.item] != null) { coins -= g.price || 0; inv[g.item]++; }
@@ -5419,6 +5419,7 @@ function setGoalSection(wrap) {
 // 每次用户可见更新都新增记录：普通更新 1.x.y → 1.x.(y+1)；较大功能变动 → 1.(x+1).0。
 // 首位保持 1，只有用户明确要求才可修改；历史记录保留。完整发布规则见根目录 AGENTS.md。
 const CHANGELOG = [
+  {"v": "1.11.1", "d": "2026-11-16", "p": "fr", "items": ["问卷向所有人开放查看与提交，未登录提交后可登录领取奖励。基础反馈每账号奖励 500 金币；累计在 10 个不同 UTC 日期学习后，十日反馈再奖励 3000 金币，两档各一次、合计 3500，不要求连续。旧版 200 金币自动补足到 500；同日多次学习、重复提交、重试和跨设备不会重复发奖。"]},
   {"v":"1.11.0","d":"2026-11-16","p":"fr","items":["学习伙伴新增九套羁绊服装，每套包含五种动作；支持面板试穿、解锁后穿戴和恢复原装，保留原配饰。三人的亲密度分别来自语法与变位、词汇、听力与口语，显示下一奖励及增长原因，保留旧版已解锁台词。","新增三人各三段羁绊故事及普通陪伴版本，可选择开启亲近剧情；仅点击播放，不打断做题。本批接入 34 段 Gemini 配音：17 段剧情与陪伴、17 段教学样本，另两段待重录。设置新增系统、Ninon、Lison、Pia 四种学习配音选项，支持慢速、停止与切题取消；未录制内容明确使用系统朗读。","设置新增自愿体验问卷，完成本期可获 200 金币，每账号一次；评分和付费意愿不影响奖励。服务端防止重复发奖，回答关联账号，管理员仅查看达到最小样本数的汇总。"]},
   {"v": "1.10.0", "d": "2026-11-15", "items": ["新增独立口语栏目：七个现有情景任务与环法共用进度，可筛选级别与完成情况；练习不绕过环法奖励条件。站内留言新增私密回复、我的留言、未读状态及管理员多次回复。登录续期遇到限流或服务故障会保留会话并退避重试，协调多标签续期，避免旧请求影响新账号。"]},
   {"v": "1.9.8", "d": "2026-11-15", "p": "fr", "items": ["分享新增书店、学园、电台、列车与咖啡馆五张学习伙伴海报，共六张。进入独立分享页时随机选图，可点“换一张”；预览、下载与分享附件同步切换，按需加载。首次分享 800 金币仍为每账号一次。"]},
