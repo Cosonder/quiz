@@ -14842,7 +14842,7 @@ GPA2.forEach(u => {
     LEVEL_OF[id] = u.lv; TAGS_OF[id] = q.tags; KP_OF[id] = "gb" + u.unit;
   });
 });
-const LANG_FILES = {"en": "lang-en.js?v=b2a033d051", "fr": "lang-fr.js?v=3f0bb95f57"};
+const LANG_FILES = {"en": "lang-en.js?v=3f82e5984e", "fr": "lang-fr.js?v=c447b64076"};
 (() => { let l = null; try { l = localStorage.getItem("fq-lang"); } catch (e) {}
   if (Object.hasOwn(LANG_FILES, l)) document.write('<script src="' + LANG_FILES[l] + '"><\/script>'); })();
 </script>
@@ -18262,6 +18262,7 @@ function setGoalSection(wrap) {
 // 每次用户可见更新都新增记录：默认只递增第三位 1.x.y → 1.x.(y+1)，超过 9 继续到 10、11；第二位升级需用户明确要求。
 // 首位保持 1，只有用户明确要求才可修改；历史记录保留。完整发布规则见根目录 AGENTS.md。
 const CHANGELOG = [
+  {"v": "1.9.20", "d": "2026-11-17", "p": "fr", "items": ["听力播放器新增暂停／继续和循环当前句：按播放位置定位当前句，句末自动截断并回到句首，关闭循环后继续后文。角色录音新增句子时间边界，系统朗读按句控制；普通听力三种题型和模拟卷均可使用，停止、切题、切换人物或离开页面时取消旧播放与循环。"]},
   {"v": "1.9.19", "d": "2026-11-17", "p": "fr", "items": ["教材情境听力新增 57 段 Pia 的 Gemini 录音，沿用已选定声线；覆盖 40 章、171 道理解选择、关键词填空和复原句子练习，同一材料三种考法共用录音，支持正常与慢速播放。材料按教材场景与交际目标原创改写，不使用教材原文或原版 CD 音频。"]},
   {"v": "1.9.18", "d": "2026-11-16", "p": "fr", "items": ["以 Claire Miquel《Communication progressive du français》初级教材的 40 章、57 个日常情境为主线，新增 57 段原创 A1–A2 听力材料和 171 道独立练习：理解选择、关键词填空、复原句子。听力目录新增教材筛选，标注对应章节与书页，保留原有题库。新材料沿用学习配音设置，尚未录制人物语音的内容明确使用系统朗读；不包含教材原版 CD 音频。"]},
   {"v": "1.9.17", "d": "2026-11-16", "p": "fr", "items": ["听力三种考法拆为独立题目，保留全部理解题并穿插不同材料与题型，成绩和错题分别记录。听力目录改为题型、难度、内容标签与关键词检索；单空填空直接点选答案，多空继续逐空作答。每题均提供居中的播放与慢速按钮，下一题自动播放录音，移除反复听提示。"]},
@@ -22629,6 +22630,7 @@ function renderQuestion(autoPlay = true) {
     if (tts || typeof Audio !== "undefined") {
       play.addEventListener("click", () => speak(item.audio, 0.95, play));
       slow.addEventListener("click", () => speak(item.audio, 0.7, slow));
+      studyAudioControls(row);
       if (item.title) {
         const stop = el("button", "play slow", "停止");
         stop.type = "button";
@@ -23928,7 +23930,9 @@ function exListen() {
         play.addEventListener("click", () => { exSpeak(t.lines, 0.95, play); exState.plays[t.id] = (exState.plays[t.id] || 0) + 1; exSave(); showCount(); });
         const stop = el("button", "play slow", "停止"); stop.type = "button";
         stop.addEventListener("click", () => { studyAudioStop(); play.setAttribute("aria-pressed", "false"); });
-        head.append(play, stop, note);
+        head.append(play, stop);
+        studyAudioControls(head);
+        head.append(note);
       } else {
         play.disabled = true;
         head.append(play, el("span", "listen-note", "这台设备不能朗读，可交卷后看原文"));
@@ -30847,13 +30851,34 @@ function petVoicePreview(root) {
 }
 // Exact-text pre-recorded narration. No provider key or generation call reaches the client.
 const STUDY_AUDIO_BASE='../skins/mascot/study/';
-let studyAudioManifest=null, studyAudioLoad=null, studyAudioEpoch=0, studyAudio=null, studyAudioBusy=false, studyAudioAbort=null;
+let studyAudioManifest=null, studyAudioLoad=null, studyAudioEpoch=0, studyAudio=null, studyAudioBusy=false, studyAudioAbort=null, studyAudioSession=null;
 function studyVoice(){try{const v=localStorage.getItem('fq-study-voice');return ['ninon','pia','lison'].includes(v)?v:'system';}catch{return 'system';}}
-function studyAudioStop(){
-  studyAudioEpoch++;studyAudioBusy=false;studyAudioOwner=null;studyAudioAbort?.abort();studyAudioAbort=null;
-  if(studyAudio){studyAudio.onended=null;studyAudio.onerror=null;studyAudio.pause();studyAudio.removeAttribute('src');studyAudio.load();studyAudio=null;}
-  if(tts)tts.cancel();document.querySelectorAll('.play[aria-pressed="true"]:not([data-pet-audio])').forEach(b=>b.setAttribute('aria-pressed','false'));
+function studySentenceTexts(text){
+  if(typeof Intl.Segmenter==='function')return Array.from(new Intl.Segmenter('fr',{granularity:'sentence'}).segment(text),s=>s.segment.trim()).filter(Boolean);
+  return (text.match(/[^.!?…]+[.!?…]+["»]?\s*|[^.!?…]+$/g)||[text]).map(s=>s.trim()).filter(Boolean);
 }
+function studyControlsSync(s){
+  if(!s?.row)return;
+  const pause=s.row.querySelector('[data-study-pause]'),loop=s.row.querySelector('[data-study-loop]'),note=s.row.querySelector('.study-sentence');
+  if(pause){pause.disabled=!!s.ended;const label=petI18n(s.paused?['继续','Resume','Reprendre']:['暂停','Pause','Pause']);if(pause.textContent!==label)pause.textContent=label;pause.setAttribute('aria-pressed',String(!!s.paused));}
+  if(loop){loop.disabled=!!s.ended||!s.segments?.length;loop.setAttribute('aria-pressed',String(!!s.loop));}
+  if(note){const label=!s.ended&&s.segments?.length?petI18n(['第 '+(s.index+1)+' / '+s.segments.length+' 句','Sentence '+(s.index+1)+' / '+s.segments.length,'Phrase '+(s.index+1)+' / '+s.segments.length]):'';if(note.textContent!==label)note.textContent=label;}
+}
+function studyAudioStop(){
+  const previous=studyAudioSession;studyAudioSession=null;
+  if(previous){clearTimeout(previous.timer);previous.ended=true;previous.paused=false;previous.loop=false;studyControlsSync(previous);}
+  studyAudioEpoch++;studyAudioBusy=false;studyAudioOwner=null;studyAudioAbort?.abort();studyAudioAbort=null;
+  if(studyAudio){studyAudio.onended=null;studyAudio.onerror=null;studyAudio.ontimeupdate=null;studyAudio.onseeked=null;studyAudio.pause();studyAudio.removeAttribute('src');studyAudio.load();studyAudio=null;}
+  if(tts){tts.cancel();tts.resume?.();}document.querySelectorAll('.play[aria-pressed="true"]:not([data-pet-audio])').forEach(b=>b.setAttribute('aria-pressed','false'));
+}
+function studyAudioControls(row){
+  const pause=el('button','play slow',petI18n(['暂停','Pause','Pause'])),loop=el('button','play slow',petI18n(['循环当前句','Loop sentence','Répéter la phrase']));
+  pause.type=loop.type='button';pause.dataset.studyPause='';loop.dataset.studyLoop='';pause.disabled=loop.disabled=true;pause.setAttribute('aria-pressed','false');loop.setAttribute('aria-pressed','false');
+  pause.onclick=()=>{const s=studyAudioSession;if(!s||s.row!==row||s.ended)return;s.paused=!s.paused;if(s.paused){clearTimeout(s.timer);if(studyAudio)studyAudio.pause();else if(s.mode==='system')tts?.pause?.();}else s.resume?.();studyControlsSync(s);};
+  loop.onclick=()=>{const s=studyAudioSession;if(!s||s.row!==row||s.ended||!s.segments?.length)return;s.loop=!s.loop;if(s.mode==='recorded'){s.index=studySentenceAt(s.segments,studyAudio?.currentTime||0);s.loopIndex=s.loop?s.index:null;s.arm?.();}studyControlsSync(s);};
+  row.append(pause,loop,el('span','sub study-sentence'));
+}
+function studySentenceAt(segments,time){let index=segments.findIndex(x=>time<x.end);return index<0?segments.length-1:index;}
 function studyAudioLabel(btn,label){
   if(!btn)return;let note=btn.parentElement?.querySelector('.study-audio-status');
   if(!note){note=el('span','sub study-audio-status');note.setAttribute('role','status');btn.parentElement?.append(note);}if(note)note.textContent=label;
@@ -30861,34 +30886,64 @@ function studyAudioLabel(btn,label){
 async function studyAudioIndex(){
   if(studyAudioManifest)return studyAudioManifest;
   if(studyAudioLoad)return studyAudioLoad;
-  studyAudioLoad=(async()=>{const controller=new AbortController(),timer=setTimeout(()=>controller.abort(),8000);try{const r=await fetch(STUDY_AUDIO_BASE+'manifest.json?v=1.9.19',{signal:controller.signal});if(!r.ok)throw Error('manifest');const m=await r.json();if(m.version!==1||!m.characters)throw Error('manifest');studyAudioManifest=m;return m;}finally{clearTimeout(timer);studyAudioLoad=null;}})();
+  studyAudioLoad=(async()=>{const controller=new AbortController(),timer=setTimeout(()=>controller.abort(),8000);try{const r=await fetch(STUDY_AUDIO_BASE+'manifest.json?v=1.9.20',{signal:controller.signal});if(!r.ok)throw Error('manifest');const m=await r.json();if(m.version!==1||!m.characters)throw Error('manifest');studyAudioManifest=m;return m;}finally{clearTimeout(timer);studyAudioLoad=null;}})();
   return studyAudioLoad;
 }
 function studySystemPart(text,rate,btn,done,role){
   if(!role)return systemSpeak(text,rate,btn,done);
   if(!tts){done?.();return false;}const v=exVoices(),u=new SpeechSynthesisUtterance(text);u.lang='fr-FR';if(v[role])u.voice=v[role];u.rate=rate;u.pitch=v.F===v.M?(role==='F'?1.15:.85):1;u.onend=u.onerror=()=>{btn?.setAttribute('aria-pressed','false');done?.();};tts.speak(u);btn?.setAttribute('aria-pressed','true');return true;
 }
-// One epoch governs a whole exam dialogue, so stop/voice changes cannot start its next line.
+function studyControlledSystem(s,text,rate,role,valid,next,finish){
+  if(!tts){finish();return;}s.mode='system';s.segments=studySentenceTexts(text).map(text=>({text}));let pending=null;
+  s.resume=()=>{if(pending){const action=pending;pending=null;action();}else tts.resume?.();};
+  const read=index=>{
+    if(!valid())return;if(index>=s.segments.length){next();return;}
+    s.index=index;studyControlsSync(s);
+    if(s.paused){pending=()=>read(index);return;}
+    const utterance=new SpeechSynthesisUtterance(s.segments[index].text);s.utterance=utterance;utterance.lang='fr-FR';utterance.rate=rate;
+    if(role){const voices=exVoices();if(voices[role])utterance.voice=voices[role];utterance.pitch=voices.F===voices.M?(role==='F'?1.15:.85):1;}
+    else{const voice=typeof frVoice!=='undefined'&&frVoice|| (typeof pickVoice==='function'?pickVoice():null);if(voice)utterance.voice=voice;}
+    utterance.onend=()=>{if(!valid()||s.utterance!==utterance)return;const advance=()=>read(s.loop?index:index+1);if(s.paused)pending=advance;else advance();};
+    utterance.onerror=()=>{if(valid()&&s.utterance===utterance)finish();};
+    tts.resume?.();tts.speak(utterance);
+  };read(s.index||0);
+}
+// One epoch governs a whole dialogue, so stop/voice/card changes cannot restart a sentence.
 function studySpeakSequence(parts,rate,btn,done,voiceOverride=null,recordedOnly=false){
   studyAudioStop();if(typeof petStopVoice==='function')petStopVoice();
   if(typeof tourRecorder!=='undefined'&&tourRecorder?.state==='recording'){done?.();return false;}
   const epoch=studyAudioEpoch,voice=voiceOverride||studyVoice();let i=0;studyAudioBusy=true;btn?.setAttribute('aria-pressed','true');
-  const valid=()=>epoch===studyAudioEpoch&&!document.hidden&&(voiceOverride||voice===studyVoice());
-  const finish=()=>{if(!valid())return;studyAudioBusy=false;btn?.setAttribute('aria-pressed','false');done?.();};
+  const row=btn?.parentElement?.querySelector('[data-study-pause]')?btn.parentElement:null;
+  const s=studyAudioSession={row,paused:false,loop:false,index:0,segments:null,mode:'loading',ended:false,timer:null};studyControlsSync(s);
+  const valid=()=>!s.ended&&epoch===studyAudioEpoch&&!document.hidden&&(voiceOverride||voice===studyVoice());
+  const finish=()=>{if(!valid())return;clearTimeout(s.timer);s.ended=true;s.paused=false;s.loop=false;studyAudioBusy=false;btn?.setAttribute('aria-pressed','false');studyControlsSync(s);done?.();};
   const next=async()=>{
-    if(!valid())return;if(i>=parts.length){finish();return;}
-    const part=parts[i++],text=String(part.text||'').normalize('NFC').trim();
-    const fallback=()=>{if(!valid())return;if(recordedOnly){studyAudioLabel(btn,petI18n(['Gemini 录音暂不可用，请稍后重试；不会使用系统语音。','Gemini recording unavailable. Try again later; system speech is disabled.','Enregistrement Gemini indisponible. Réessayez plus tard ; aucune voix système.']));finish();return;}studyAudioLabel(btn,petI18n(['系统朗读','System voice','Voix système'])+(voice!=='system'&&part.role!=='M'?' · '+petI18n(['本句暂无角色录音','No recording for this line','Cette phrase n’est pas enregistrée']):''));studySystemPart(text,rate,btn,next,part.role);};
+    if(!valid())return;clearTimeout(s.timer);if(i>=parts.length){finish();return;}
+    const part=parts[i++],text=String(part.text||'').normalize('NFC').trim();s.index=0;s.segments=null;s.mode='loading';s.resume=null;studyControlsSync(s);
+    const fallback=()=>{if(!valid())return;if(recordedOnly){studyAudioLabel(btn,petI18n(['Gemini 录音暂不可用，请稍后重试；不会使用系统语音。','Gemini recording unavailable. Try again later; system speech is disabled.','Enregistrement Gemini indisponible. Réessayez plus tard ; aucune voix système.']));finish();return;}studyAudioLabel(btn,petI18n(['系统朗读','System voice','Voix système'])+(voice!=='system'&&part.role!=='M'?' · '+petI18n(['本句暂无角色录音','No recording for this line','Cette phrase n’est pas enregistrée']):''));if(row)studyControlledSystem(s,text,rate,part.role,valid,next,finish);else studySystemPart(text,rate,btn,next,part.role);};
     if(voice==='system'||part.role==='M'){fallback();return;}
     let entry;try{const m=await studyAudioIndex();entry=m.characters[voice]?.find(x=>x.text===text);}catch{fallback();return;}
     if(!valid())return;
     if(!entry||!/^[-a-z0-9/]+\.m4a$/.test(entry.file)||entry.file.includes('..')){fallback();return;}
     const audio=new Audio(STUDY_AUDIO_BASE+entry.file);studyAudio=audio;audio.preload='auto';audio.playbackRate=Math.max(.5,Math.min(1.5,rate));audio.preservesPitch=true;audio.webkitPreservesPitch=true;
-    let settled=false;
-    audio.onended=()=>{if(!settled&&valid()){settled=true;studyAudio=null;next();}};
-    audio.onerror=()=>{if(!settled&&valid()){settled=true;audio.onended=null;audio.onerror=null;studyAudio=null;fallback();}};
-    studyAudioLabel(btn,voice[0].toUpperCase()+voice.slice(1)+' · '+petI18n(['AI 合成配音','AI narration','Voix de synthèse IA']));
-    try{await audio.play();}catch{if(!settled&&valid()){settled=true;audio.onended=null;audio.onerror=null;studyAudio=null;fallback();}}
+    let settled=false;const active=()=>!settled&&valid()&&studyAudio===audio;
+    s.mode='recorded';s.segments=Array.isArray(entry.sentences)&&entry.sentences.length?entry.sentences:null;
+    if(!s.segments&&studySentenceTexts(text).length===1&&entry.durationSeconds>0)s.segments=[{start:0,end:entry.durationSeconds,text}];
+    const failure=()=>{if(!active())return;settled=true;clearTimeout(s.timer);audio.onended=audio.onerror=audio.ontimeupdate=audio.onseeked=null;audio.pause();studyAudio=null;fallback();};
+    const play=()=>{if(active()&&!s.paused)audio.play().catch(failure);};
+    s.arm=()=>{
+      clearTimeout(s.timer);if(!active()||s.paused||!s.loop||!s.segments)return;
+      const segment=s.segments[s.loopIndex];if(!segment)return;
+      if(audio.currentTime>=segment.end-.012){audio.currentTime=segment.start;play();}
+      const remaining=Math.max(0,segment.end-audio.currentTime)/audio.playbackRate;
+      s.timer=setTimeout(s.arm,Math.max(10,Math.min(250,remaining*1000)));
+    };
+    s.resume=()=>{play();s.arm();};
+    audio.ontimeupdate=()=>{if(!active()||!s.segments)return;s.index=s.loop?s.loopIndex:studySentenceAt(s.segments,audio.currentTime);studyControlsSync(s);s.arm();};
+    audio.onseeked=()=>{if(active())s.arm();};
+    audio.onended=()=>{if(!active())return;if(s.loop&&s.segments){audio.currentTime=s.segments[s.loopIndex].start;play();s.arm();}else{settled=true;clearTimeout(s.timer);studyAudio=null;next();}};
+    audio.onerror=failure;
+    studyAudioLabel(btn,voice[0].toUpperCase()+voice.slice(1)+' · '+petI18n(['AI 合成配音','AI narration','Voix de synthèse IA']));studyControlsSync(s);play();
   };
   studyAudioOwner=btn||stage.firstElementChild;
   next();return true;
