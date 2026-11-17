@@ -150,6 +150,10 @@ html.qf #stage > section.q-card.listening-card > .listening-mode{margin:0}
 
 .usage-filters{display:flex;flex-wrap:wrap;gap:12px;align-items:end;margin:16px 0}.usage-filters label{display:grid;gap:6px;max-width:100%}.usage-filters input{font:inherit;color:var(--fg);background:var(--card);padding:8px;border:1px solid var(--line,#ccc);border-radius:8px;min-width:0}.usage-admin{min-width:0}.usage-summary{font-weight:700;line-height:1.8}.usage-distribution{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;margin:20px 0}.usage-bar{display:grid;gap:5px}.usage-bar progress{width:100%;accent-color:var(--accent)}.usage-table-wrap{max-width:100%;overflow-x:auto;border:1px solid var(--line,#ccc);border-radius:8px}.usage-table{border-collapse:collapse;width:100%;font-size:.86rem}.usage-table th,.usage-table td{padding:10px;text-align:left;border-bottom:1px solid var(--line,#ccc);white-space:nowrap}.usage-results>section{margin-top:24px}@media(max-width:520px){.usage-distribution{grid-template-columns:1fr}.usage-filters{align-items:stretch}.usage-filters label{flex:1 1 135px}}
 
+
+/* Daily administrator trends: SVG stays local; exact values are also available as text and tables. */
+.usage-presets{display:flex;gap:8px;flex-wrap:wrap;margin:20px 0 8px}.usage-presets button[aria-pressed="true"]{background:var(--accent);color:var(--bg);border-color:var(--accent);font-weight:700}.usage-trend-picker{display:flex;align-items:center;gap:12px;flex-wrap:wrap;margin:16px 0}.usage-trend-picker select{font:inherit;color:var(--fg);background:var(--card);border:1px solid var(--line,#888);padding:8px;border-radius:8px}.usage-trend-card{border:1px solid var(--line,#888);border-radius:12px;padding:16px;margin:16px 0;min-width:0}.usage-trend-card h4{margin:0 0 10px}.usage-trend-card svg{display:block;width:100%;height:auto;overflow:visible}.usage-chart-axis{font-size:17px;fill:var(--fg)}.usage-chart-grid{stroke:var(--fg);opacity:.14}.usage-chart-cursor{stroke:var(--fg);opacity:.45;stroke-dasharray:4 5}.usage-trend-legend{display:flex;flex-wrap:wrap;gap:8px 18px;font-size:.86rem}.usage-trend-legend span{display:inline-flex;gap:7px;align-items:center}.usage-trend-legend i{display:inline-block;width:22px;border-top:3px solid}.usage-trend-readout{font-size:.88rem;line-height:1.8;overflow-wrap:anywhere;margin-bottom:0}@media(max-width:520px){.usage-trend-card{padding:12px 8px}.usage-chart-axis{font-size:20px}.usage-trend-legend{gap:8px 12px}}
+
 </style></head><body>
 <title>法语语法小测验</title>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@600;900&family=Noto+Sans+SC:wght@400;500;700&display=swap">
@@ -14917,7 +14921,7 @@ GPA2.forEach(u => {
     LEVEL_OF[id] = u.lv; TAGS_OF[id] = q.tags; KP_OF[id] = "gb" + u.unit;
   });
 });
-const LANG_FILES = {"en": "lang-en.js?v=7f22b47aae", "fr": "lang-fr.js?v=cb47e66dc1"};
+const LANG_FILES = {"en": "lang-en.js?v=d72a71eaa5", "fr": "lang-fr.js?v=0a33a14913"};
 (() => { let l = null; try { l = localStorage.getItem("fq-lang"); } catch (e) {}
   if (Object.hasOwn(LANG_FILES, l)) document.write('<script src="' + LANG_FILES[l] + '"><\/script>'); })();
 </script>
@@ -18435,6 +18439,7 @@ function setFold(wrap, key, title, initialOpen = false) {
 // 每次用户可见更新都新增记录：默认只递增第三位 1.x.y → 1.x.(y+1)，超过 9 继续到 10、11；第二位升级需用户明确要求。
 // 首位保持 1，只有用户明确要求才可修改；历史记录保留。完整发布规则见根目录 AGENTS.md。
 const CHANGELOG = [
+  {"v": "1.9.36", "d": "2026-11-17", "p": "fr", "items": ["管理员统计新增最近 7 天、30 天快捷切换，以及每日活跃用户、可见时长和各板块做题数量趋势图；可按日期查看具体数值，支持单账号筛选。未记录时长留空，今天的数据标注为尚未结束。"]},
   {"v": "1.9.35", "d": "2026-11-17", "items": ["法语页新增管理员使用统计：按 UTC 日期查看每日页面可见时长、语法／变位／词汇／听力作答分布及账号明细，可查看单个账号，口语完成任务和模拟卷交卷份数单列。已有云端记录支持历史做题分布。", "登录后默认累计页面可见时长，可在功能设置中关闭；后台不计时，重叠标签页和设备时段去重，仅管理员可查看汇总，不收集输入内容或录音。时长从本版本开始估算，突然关闭可能少计最后约 30 秒。"]},
   {"v": "1.9.34", "d": "2026-11-17", "items": ["法语页设置重新分组：功能设置收纳学习进度、界面语言和字体；做题设置收纳难度、答题、词汇、变位和朗读；游戏模式、学习伙伴与番茄时钟归入靠后的游戏设置。留言板可折叠，各区块记住展开状态。", "公开留言默认按最新排列，可切换为点赞最多；按全部公开留言排序并分页加载，同赞数时较新的留言在前。学习进度中的错题本与错题分布合并为可折叠区块。"]},
   {"v": "1.9.33", "d": "2026-11-17", "items": ["修复零基础入口受难度过滤、直接开始练习后导航未切换、异常题号缓存和空题组跳题问题；修复词汇、变位设置及闯关缓存异常，保留已有学习记录。没有匹配题目时提供明确提示与返回入口。", "听力标签检索不再叠加全局语法难度过滤，以听力目录所选标签为准，修复有材料却显示无题目的问题。", "法语页：管理员回复过的留言及回复向所有人开放查看，不展示账号信息；新增登录点赞、取消点赞与总数显示，每个账号对同一留言最多计一次。未回复留言继续仅本人和管理员可见。"]},
@@ -31793,32 +31798,96 @@ function usageAdminEntry(wrap){
  }).catch(()=>{});
 }
 function usageDuration(value){const s=Math.max(0,Math.round(Number(value)||0));if(!s)return '—';return Math.floor(s/3600)+'h '+Math.floor(s%3600/60)+'m '+s%60+'s';}
+
+// UTC windows include today. Chart data uses the full daily report, never the paginated account list.
+function usageRecentRange(days,now=Date.now()){
+ const end=new Date(now).toISOString().slice(0,10),start=new Date(Date.parse(end)-(days-1)*86400000).toISOString().slice(0,10);
+ return {from:start,to:end};
+}
+function usageTrendRows(rows,from,to){
+ const byDay=new Map(rows.map(r=>[r.day,r])),out=[];
+ for(let t=Date.parse(from);t<=Date.parse(to);t+=86400000){
+  const day=new Date(t).toISOString().slice(0,10),r=byDay.get(day)||{},row={day};
+  for(const key of ['active_users','grammar','conjugation','vocabulary','listening','oral','exams'])row[key]=Math.max(0,Number(r[key])||0);
+  row.seconds=Number(r.timed_users)>0?Math.max(0,Number(r.seconds)||0):null;out.push(row);
+ }
+ return out;
+}
+function usageTrendCharts(daily,from,to){
+ const rows=usageTrendRows(daily,from,to),section=el('section','usage-trends');
+ section.append(el('h3',null,usageText('每日趋势','Daily trends','Évolution quotidienne')),
+  el('p','sub',usageText('活跃用户指当天有已同步作答、完成任务或可见时长的去重账号。今天尚未结束；时长仅覆盖开启统计的用户，空白表示没有时长记录。可选择日期查看三张图的具体数值，完整数据见下方每日分布。','Active users are distinct accounts with synced attempts, completed tasks or visible time that day. Today is incomplete. Time covers users who enabled measurement; gaps mean no time record. Select a date for exact values in all three charts; the daily table below contains all data.','Les utilisateurs actifs sont les comptes distincts ayant des tentatives synchronisées, des missions terminées ou du temps visible ce jour-là. Aujourd’hui est incomplet. Les durées concernent les utilisateurs ayant activé la mesure ; les lacunes indiquent l’absence de relevé. Choisissez une date pour les valeurs des trois graphiques ; le tableau quotidien contient toutes les données.')));
+ const picker=el('select'),label=el('label','usage-trend-picker',usageText('查看日期（UTC）','Inspect date (UTC)','Voir la date (UTC)'));
+ picker.setAttribute('aria-label',label.textContent);for(const row of rows){const option=el('option',null,row.day);option.value=row.day;picker.append(option);}picker.value=rows.at(-1)?.day||'';label.append(picker);section.append(label);
+ const svgNode=(tag,attrs={},text)=>{const n=document.createElementNS('http://www.w3.org/2000/svg',tag);for(const[k,v]of Object.entries(attrs))n.setAttribute(k,String(v));if(text!==undefined)n.textContent=text;return n;};
+ const specs=[
+  {id:'active',title:usageText('每日活跃用户','Daily active users','Utilisateurs actifs par jour'),unit:usageText('人','Users','Utilisateurs'),series:[['active_users',usageText('活跃用户','Active users','Utilisateurs actifs'),'#2584db']]},
+  {id:'time',title:usageText('每日使用时长','Daily visible time','Temps visible par jour'),unit:usageText('分钟','Minutes','Minutes'),series:[['seconds',usageText('可见时长','Visible time','Temps visible'),'#1a9a88']]},
+  {id:'practice',title:usageText('各板块每日做题数量','Daily practice by area','Exercices quotidiens par domaine'),unit:usageText('次数','Count','Nombre'),series:[
+   ['grammar',usageText('语法','Grammar','Grammaire'),'#2584db'],['conjugation',usageText('变位','Conjugation','Conjugaison'),'#c17a10'],['vocabulary',usageText('词汇','Vocabulary','Vocabulaire'),'#1a9a88'],['listening',usageText('听力','Listening','Écoute'),'#aa62d3'],['oral',usageText('口语任务','Speaking tasks','Missions orales'),'#dc6574'],['exams',usageText('模拟卷（份）','Exams (papers)','Examens (copies)'),'#829097']]}
+ ];
+ const updates=[];
+ for(const spec of specs){
+  const card=el('section','usage-trend-card');card.dataset.chart=spec.id;card.append(el('h4',null,spec.title));
+  const svg=svgNode('svg',{viewBox:'0 0 600 260',role:'img','aria-label':spec.title+' · '+from+' – '+to});svg.append(svgNode('title',{},spec.title));
+  const left=62,right=574,top=30,bottom=214,x=i=>rows.length===1?(left+right)/2:left+(right-left)*i/(rows.length-1);
+  const number=(row,key)=>row[key]===null?null:key==='seconds'?row[key]/60:row[key];
+  const observed=spec.series.flatMap(([key])=>rows.map(r=>number(r,key))).filter(v=>v!==null);
+  const maximum=Math.max(0,...observed),rawStep=maximum/4,power=10**Math.floor(Math.log10(rawStep||1)),step=maximum?([1,2,5,10].find(n=>n*power>=rawStep)||10)*power:1;
+  const tickStep=spec.id==='time'?step:Math.max(1,step),ceiling=Math.max(tickStep,Math.ceil(maximum/tickStep)*tickStep),y=v=>bottom-(bottom-top)*v/ceiling;
+  const fmt=v=>new Intl.NumberFormat(typeof UI_LANG==='undefined'?'zh':UI_LANG,{maximumFractionDigits:2}).format(v);
+  svg.append(svgNode('text',{x:left,y:18,class:'usage-chart-axis'},spec.unit));
+  for(let v=0;v<=ceiling+tickStep/100;v+=tickStep){svg.append(svgNode('line',{x1:left,x2:right,y1:y(v),y2:y(v),class:'usage-chart-grid'}),svgNode('text',{x:left-9,y:y(v)+5,'text-anchor':'end',class:'usage-chart-axis'},fmt(v)));}
+  for(const i of new Set([0,Math.floor((rows.length-1)/2),rows.length-1]))if(rows[i])svg.append(svgNode('text',{x:x(i),y:244,'text-anchor':i===0?'start':i===rows.length-1?'end':'middle',class:'usage-chart-axis'},rows[i].day.slice(5)));
+  const cursor=svgNode('line',{x1:right,x2:right,y1:top,y2:bottom,class:'usage-chart-cursor'});svg.append(cursor);
+  const legend=el('div','usage-trend-legend');
+  spec.series.forEach(([key,name,color],seriesIndex)=>{
+   let path='',connected=false;
+   rows.forEach((r,i)=>{const value=number(r,key);if(value===null){connected=false;return;}path+=(connected?' L ':' M ')+x(i)+','+y(value);connected=true;});
+   const attrs={d:path,fill:'none',stroke:color,'stroke-width':2.5,'stroke-linejoin':'round','stroke-linecap':'round','data-series':key};
+   if(seriesIndex>=4)attrs['stroke-dasharray']=seriesIndex===4?'7 4':'2 4';svg.append(svgNode('path',attrs));
+   rows.forEach((r,i)=>{const value=number(r,key);if(value===null)return;const dot=svgNode('circle',{cx:x(i),cy:y(value),r:rows.length>7?2:3,fill:color});dot.append(svgNode('title',{},r.day+' · '+name+': '+(key==='seconds'?usageDuration(r[key]):fmt(value))));svg.append(dot);});
+   const item=el('span'),swatch=el('i');swatch.style.borderColor=color;if(seriesIndex>=4)swatch.style.borderTopStyle=seriesIndex===4?'dashed':'dotted';swatch.setAttribute('aria-hidden','true');item.append(swatch,document.createTextNode(name));legend.append(item);
+  });
+  const readout=el('p','usage-trend-readout');readout.setAttribute('aria-live','polite');
+  updates.push(index=>{const row=rows[index];if(!row)return;cursor.setAttribute('x1',x(index));cursor.setAttribute('x2',x(index));readout.textContent=row.day+' · '+spec.series.map(([key,name])=>name+': '+(row[key]===null?'—':key==='seconds'?usageDuration(row[key]):fmt(row[key]))).join(' · ');});
+  card.append(svg,legend,readout);
+  if(!observed.length)card.append(el('p','sub',usageText('这段时间没有可见时长记录。','No visible-time records in this range.','Aucune durée visible enregistrée sur cette période.')));
+  section.append(card);
+ }
+ const select=()=>{const index=rows.findIndex(r=>r.day===picker.value);updates.forEach(update=>update(index));};picker.addEventListener('change',select);select();return section;
+}
+
 function renderUsageAdmin(){
  const uid=usageAccount(),epoch=fbEpoch;if(!uid)return;
  stage.innerHTML='';const root=el('section','card fb-admin usage-admin');root.dataset.noi18n='';stage.append(root);
  const current=()=>root.isConnected&&fbCurrent(uid,epoch);
  const back=fbButton(usageText('返回设置','Back to settings','Retour aux réglages'),'btn ghost');back.addEventListener('click',renderSettings);
  root.append(back,el('h2',null,usageText('每日使用与做题统计','Daily usage and practice','Utilisation et exercices par jour')),
-  el('p','sub',usageText('按 UTC 日期统计，仅包含已登录账号的云端数据。时长从本版本上线后开始，表示页面可见的估算停留时长，不等同于专注学习；突然关闭可能少计最后约 30 秒。无时长记录以 — 显示。做题按作答次数计，重做也计入；口语仅计已完成任务，模拟卷按交卷份数单列。','Dates use UTC; only signed-in cloud records are included. Time starts with this release and estimates visible-page duration, not focused study. An abrupt close may lose about 30 seconds. A dash means no time record. Practice counts attempts, including repeats; speaking counts completed tasks and exams count submitted papers separately.','Dates en UTC ; seules les données synchronisées des comptes connectés sont incluses. Les durées commencent avec cette version et estiment le temps de page visible, pas la concentration. Une fermeture brutale peut perdre environ 30 secondes. Un tiret indique l’absence de durée enregistrée. Les exercices comptent les tentatives, y compris répétées ; l’oral compte les missions terminées et les examens les copies remises.')));
+  el('p','sub',usageText('按 UTC 日期统计，仅包含已登录账号的云端数据。时长从 v1.9.35 上线后开始，表示页面可见的估算停留时长，不等同于专注学习；突然关闭可能少计最后约 30 秒。无时长记录以 — 显示。做题按作答次数计，重做也计入；口语仅计已完成任务，模拟卷按交卷份数单列。','Dates use UTC; only signed-in cloud records are included. Time starts with v1.9.35 and estimates visible-page duration, not focused study. An abrupt close may lose about 30 seconds. A dash means no time record. Practice counts attempts, including repeats; speaking counts completed tasks and exams count submitted papers separately.','Dates en UTC ; seules les données synchronisées des comptes connectés sont incluses. Les durées commencent avec la version 1.9.35 et estiment le temps de page visible, pas la concentration. Une fermeture brutale peut perdre environ 30 secondes. Un tiret indique l’absence de durée enregistrée. Les exercices comptent les tentatives, y compris répétées ; l’oral compte les missions terminées et les examens les copies remises.')));
  const form=el('div','usage-filters'),from=el('input'),to=el('input'),go=fbButton(usageText('查询','Load','Afficher'),'btn');from.type=to.type='date';
- to.value=new Date().toISOString().slice(0,10);from.value=new Date(Date.now()-6*86400000).toISOString().slice(0,10);
+ const initial=usageRecentRange(7);to.value=initial.to;from.value=initial.from;
+ const quick=el('div','usage-presets'),presets=[];quick.setAttribute('role','group');quick.setAttribute('aria-label',usageText('快捷日期范围','Quick date range','Période rapide'));
+ for(const days of [7,30]){const button=fbButton(usageText('最近 '+days+' 天','Last '+days+' days',days+' derniers jours'),'btn ghost');button.dataset.days=days;button.addEventListener('click',()=>{if(busy)return;const range=usageRecentRange(days);from.value=range.from;to.value=range.to;page=0;void load();});presets.push([days,button]);quick.append(button);}
+ const updatePresets=()=>{for(const [days,button]of presets){const range=usageRecentRange(days);button.setAttribute('aria-pressed',String(from.value===range.from&&to.value===range.to));}};from.addEventListener('change',updatePresets);to.addEventListener('change',updatePresets);updatePresets();
  for(const [input,label]of [[from,usageText('开始日期','Start date','Date de début')],[to,usageText('结束日期','End date','Date de fin')]]){const l=el('label',null,label);input.setAttribute('aria-label',label);l.append(input);form.append(l);}
- form.append(go);const status=el('p','sub'),content=el('div','usage-results');status.setAttribute('role','status');root.append(form,status,content);
+ form.append(go);const status=el('p','sub'),content=el('div','usage-results');status.setAttribute('role','status');root.append(quick,form,status,content);
  let selected=null,page=0,busy=false;
  const headings=[usageText('可见时长','Visible time','Temps visible'),usageText('语法','Grammar','Grammaire'),usageText('变位','Conjugation','Conjugaison'),usageText('词汇','Vocabulary','Vocabulaire'),usageText('听力','Listening','Écoute'),usageText('口语任务','Speaking tasks','Missions orales'),usageText('模拟卷（份）','Exams (papers)','Examens (copies)')];
  const values=r=>[usageDuration(r.seconds),r.grammar,r.conjugation,r.vocabulary,r.listening,r.oral,r.exams];
  function table(title,headers,rows){const section=el('section');section.append(el('h3',null,title));const scroll=el('div','usage-table-wrap'),t=el('table','usage-table'),head=el('thead'),tr=el('tr');for(const h of headers){const th=el('th',null,h);th.scope='col';tr.append(th);}head.append(tr);t.append(head);const body=el('tbody');for(const row of rows){const tr=el('tr');for(const value of row){const td=el('td');if(value?.nodeType)td.append(value);else td.textContent=String(value??0);tr.append(td);}body.append(tr);}t.append(body);scroll.append(t);section.append(scroll);content.append(section);}
  async function load(){
-  if(busy||!current())return;
+  if(busy||!current())return;updatePresets();
   const span=(Date.parse(to.value)-Date.parse(from.value))/86400000;
   if(!from.value||!to.value||!Number.isFinite(span)||span<0||span>30){content.replaceChildren();status.textContent=usageText('请选择不超过 31 天的日期范围。','Choose a range of up to 31 days.','Choisissez une période de 31 jours maximum.');return;}
-  busy=true;go.disabled=from.disabled=to.disabled=true;content.querySelectorAll('button').forEach(b=>b.disabled=true);status.textContent=fbText('loading');
+  busy=true;go.disabled=from.disabled=to.disabled=true;presets.forEach(([,b])=>b.disabled=true);content.querySelectorAll('button').forEach(b=>b.disabled=true);status.textContent=fbText('loading');
   try{
    const data=await fbRpc('admin_learning_usage',{p_from:from.value,p_to:to.value,p_user:selected,p_page:page});if(!current())return;
    content.replaceChildren();status.textContent='';
    const total=data.daily.reduce((a,r)=>{for(const k of ['seconds','grammar','conjugation','vocabulary','listening','oral','exams'])a[k]=(a[k]||0)+Number(r[k]);return a;},{});
    content.append(el('p','usage-summary',usageText('范围内账号：','Accounts in range: ','Comptes sur la période : ')+data.user_count+' · '+usageText('可见时长：','Visible time: ','Temps visible : ')+usageDuration(total.seconds)+' · '+usageText('作答次数：','Attempts: ','Tentatives : ')+(total.grammar+total.conjugation+total.vocabulary+total.listening)));
    if(selected){const clear=fbButton(usageText('查看全部账号','All accounts','Tous les comptes'));clear.addEventListener('click',()=>{selected=null;page=0;void load();});content.append(el('p','sub',usageText('当前账号：','Selected account: ','Compte sélectionné : ')+selected.slice(0,8)),clear);}
+   content.append(usageTrendCharts(data.daily,from.value,to.value));
    const chart=el('div','usage-distribution');const count=total.grammar+total.conjugation+total.vocabulary+total.listening;
    for(const [k,label]of [['grammar',headings[1]],['conjugation',headings[2]],['vocabulary',headings[3]],['listening',headings[4]]]){const row=el('div','usage-bar');row.append(el('span',null,label+' · '+total[k]));const bar=el('progress');bar.max=Math.max(1,count);bar.value=total[k];bar.setAttribute('aria-label',label);row.append(bar);chart.append(row);}content.append(chart);
    table(usageText('每日分布','Daily distribution','Répartition quotidienne'),[usageText('日期（UTC）','Date (UTC)','Date (UTC)'),usageText('活跃账号','Active accounts','Comptes actifs'),...headings],data.daily.map(r=>[r.day,r.active_users,...values(r)]));
@@ -31826,7 +31895,7 @@ function renderUsageAdmin(){
    if(!data.user_count)content.append(el('p','sub',usageText('此范围暂无统计数据。','No data in this range.','Aucune donnée sur cette période.')));
    const nav=el('div','actions');for(const [delta,label]of [[-1,usageText('上一页','Previous','Précédent')],[1,usageText('下一页','Next','Suivant')]]){const b=fbButton(label);b.disabled=delta<0?page===0:(page+1)*50>=data.user_count;b.addEventListener('click',()=>{page+=delta;void load();});nav.append(b);}content.append(nav);
   }catch(e){if(current()&&e.code!=='account'){content.replaceChildren();status.textContent=usageText('无法读取统计，请确认管理员权限后重试。','Unable to load statistics. Check administrator access and retry.','Impossible de charger les statistiques. Vérifiez vos droits administrateur et réessayez.');}}
-  finally{busy=false;if(current())go.disabled=from.disabled=to.disabled=false;}
+  finally{busy=false;if(current()){go.disabled=from.disabled=to.disabled=false;presets.forEach(([,b])=>b.disabled=false);}}
  }
  go.addEventListener('click',()=>{page=0;void usageFlush().then(load);});void usageFlush().then(load);
 }
