@@ -4726,6 +4726,8 @@ const LANG_DICT = {
 "新用户指南首次进入时默认展开，之后在当前浏览器记住展开或折叠选择；返回首页、刷新或再次打开网页时保留状态。": "The new user guide opens by default on the first visit, then remembers your expanded or collapsed preference in this browser when you return home, refresh or reopen the site.",
 "查看今日计划": "View today’s plan",
 "探索游戏": "Explore games",
-"新用户指南新增直达按钮：从零基础开始、查看今日计划和探索游戏。番茄时钟收进点击学习伙伴后打开的面板，计时或暂停时显示剩余时间，未开始或结束后只显示入口文字；点击进入时长与提醒设置，不再在页面上单独悬浮。": "The beginner guide now links directly to the introductory exercises, today’s plan and games. The Pomodoro timer appears only in the companion popover opened by a click: running or paused sessions show the remaining time; otherwise only the entry label is shown. Click it to open duration and reminder settings. The separate floating timer has been removed."
+"新用户指南新增直达按钮：从零基础开始、查看今日计划和探索游戏。番茄时钟收进点击学习伙伴后打开的面板，计时或暂停时显示剩余时间，未开始或结束后只显示入口文字；点击进入时长与提醒设置，不再在页面上单独悬浮。": "The beginner guide now links directly to the introductory exercises, today’s plan and games. The Pomodoro timer appears only in the companion popover opened by a click: running or paused sessions show the remaining time; otherwise only the entry label is shown. Click it to open duration and reminder settings. The separate floating timer has been removed.",
+"这一部分已完成，可继续今日计划的其他题目。": "This section is complete. You can continue with the other parts of today’s plan.",
+"今日计划自动修复失效题目、重复编号和异常缓存，保留仍有效的计划题目与已完成进度；可补充的题目自动补齐，不足时按实际可用题数显示。只剩动词变位时直接进入变位练习；修复不删除或重置答题记录、金币及其他学习数据。": "Daily Plans now repair missing questions, duplicate IDs and damaged caches automatically while retaining valid planned questions and completed progress. Available replacements are added; counts reflect the questions actually available. When only conjugation remains, the plan opens conjugation practice directly. Answer records, coins and other study data are never deleted or reset by this repair."
 };
 

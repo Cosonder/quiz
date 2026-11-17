@@ -14908,7 +14908,7 @@ GPA2.forEach(u => {
     LEVEL_OF[id] = u.lv; TAGS_OF[id] = q.tags; KP_OF[id] = "gb" + u.unit;
   });
 });
-const LANG_FILES = {"en": "lang-en.js?v=eb0e5cceba", "fr": "lang-fr.js?v=70e2909ead"};
+const LANG_FILES = {"en": "lang-en.js?v=1e824172e1", "fr": "lang-fr.js?v=be402bab62"};
 (() => { let l = null; try { l = localStorage.getItem("fq-lang"); } catch (e) {}
   if (Object.hasOwn(LANG_FILES, l)) document.write('<script src="' + LANG_FILES[l] + '"><\/script>'); })();
 </script>
@@ -15671,9 +15671,10 @@ function progressCard() {
   return card;
 }
 // ---------- 今日计划：每天自动配一组题（到期复习 + 新题 + 最弱标签），每日经验目标、连续打卡和补签 ----------
-// 计划在当天第一次打开时生成并记在本机，当天不变；做过的题（今天答过一次就算）自动打勾。
+// 计划在当天第一次打开时生成并记在本机；只修复损坏或失效的部分，保留有效题目与当天作答进度。
 // 连续打卡：当天经验达到目标算打卡。某天没达标，第二天达到 2 倍目标就能补签那一天（不能连着两天都缺）。
 const PLAN_REVIEW_MAX = 30, PLAN_NEW = 10, PLAN_WEAK = 5, PLAN_CONJ = 10;
+const PLAN_LIMITS = { review: PLAN_REVIEW_MAX, fresh: PLAN_NEW, weak: PLAN_WEAK };
 const GOAL_OPTS = [50, 100, 150, 250, 400];
 let xpGoal = (() => { try { const v = Number(localStorage.getItem("fq-goal")); return GOAL_OPTS.includes(v) ? v : 150; } catch (e) { return 150; } })();
 // 一条答题记录算哪一天（时光沙漏生效时算进昨天）
@@ -15698,9 +15699,9 @@ function weakestTag() {
   st.forEach(([n, w], t) => { if (n < 5 || !w) return; const r = w / n; if (!best || r > best.r || (r === best.r && w > best.w)) best = { t, r, w, n }; });
   return best;
 }
-function planBuild() {
-  const used = new Set();
-  const review = progMembers("rev:").slice(0, PLAN_REVIEW_MAX).map(q => q.id);
+function planBuild(reserved = new Set(), weakTag = null, limits = PLAN_LIMITS) {
+  const used = new Set(reserved);
+  const review = progMembers("rev:").filter(q => !used.has(q.id)).slice(0, limits.review).map(q => q.id);
   review.forEach(i => used.add(i));
   // 新题：从最近做的那一轮接着往下，挑还没做过的题
   const lastQ = [...(ansRaw || [])].sort((a, b) => String(a.at).localeCompare(String(b.at))).reverse().map(d => BY_ID.get(d.qid)).find(Boolean);
@@ -15712,37 +15713,74 @@ function planBuild() {
   const fresh = [];
   for (const r of order.slice(start).concat(order.slice(0, start))) {
     for (const q of byRound.get(r) || []) {
-      if (fresh.length >= PLAN_NEW) break;
+      if (fresh.length >= limits.fresh) break;
       if (memOf(q.id).last === 0 && !used.has(q.id)) { fresh.push(q.id); used.add(q.id); }
     }
-    if (fresh.length >= PLAN_NEW) break;
+    if (fresh.length >= limits.fresh) break;
   }
   // 弱项：最弱标签里先挑答错过的，再挑没做过的
-  const wk = weakestTag();
+  const wk = weakTag === null ? weakestTag() : weakTag ? { t: weakTag } : null;
   let weak = [];
   if (wk) {
     const score = q => { const m = memOf(q.id); return m.last && m.lv === 0 ? 0 : m.last === 0 ? 1 : 2 + m.lv; };
     weak = BANK.filter(q => q.tags.includes(wk.t) && !used.has(q.id)).map((q, k) => [q, score(q), k])
-      .sort((a, b) => a[1] - b[1] || a[2] - b[2]).slice(0, PLAN_WEAK).map(x => x[0].id);
+      .sort((a, b) => a[1] - b[1] || a[2] - b[2]).slice(0, limits.weak).map(x => x[0].id);
   }
   return { day: dayKey(new Date()), review, fresh, weak, weakTag: wk ? wk.t : "" };
 }
+const planValidId = id => typeof id === "string" && BY_ID.has(id);
+// Reserve every surviving id before replacing any section, so repair cannot
+// displace valid (including already answered) questions in another section.
+function planRepair(p, day) {
+  if (!p || typeof p !== "object" || Array.isArray(p) || p.day !== day) return planBuild();
+  const fixed = { day, review: [], fresh: [], weak: [], weakTag: typeof p.weakTag === "string" ? p.weakTag : "" };
+  const used = new Set(), damaged = [];
+  for (const [part, cap] of Object.entries(PLAN_LIMITS)) {
+    const ids = Array.isArray(p[part]) ? p[part] : [];
+    for (const id of ids) {
+      if (fixed[part].length >= cap) break;
+      if (planValidId(id) && !used.has(id)) { fixed[part].push(id); used.add(id); }
+    }
+    if (!Array.isArray(p[part]) || ids.length !== fixed[part].length)
+      damaged.push([part, Array.isArray(p[part]) ? Math.min(cap, ids.length) : cap]);
+  }
+  if (damaged.length) {
+    // Only reserve replacements actually needed; healthy sections must not
+    // consume potential replacement questions before a damaged weak section.
+    const limits = { review: 0, fresh: 0, weak: 0 };
+    for (const [part, target] of damaged) limits[part] = target - fixed[part].length;
+    const replacements = planBuild(used, fixed.weakTag || null, limits);
+    for (const [part, target] of damaged) {
+      for (const id of replacements[part]) {
+        if (fixed[part].length >= target) break;
+        if (planValidId(id) && !used.has(id)) { fixed[part].push(id); used.add(id); }
+      }
+    }
+    if (!fixed.weakTag) fixed.weakTag = replacements.weakTag;
+  }
+  return fixed;
+}
+// A failed local-storage write must not regenerate a different plan on every
+// render. This fallback only lives in memory; learning records are never edited.
+let planMemory = null;
 function planGet() {
   if (!progEnsure()) return null;
   const day = dayKey(new Date());
-  let p = null;
-  try { p = JSON.parse(localStorage.getItem("fq-plan") || "null"); } catch (e) {}
-  if (!p || p.day !== day || !Array.isArray(p.review)) {
-    p = planBuild();
-    try { localStorage.setItem("fq-plan", JSON.stringify(p)); } catch (e) {}
-  }
+  let p = null, raw = null, readable = true;
+  try { raw = localStorage.getItem("fq-plan"); } catch (e) { readable = false; }
+  if (planMemory?.day === day && (!readable || (planMemory.unsaved && planMemory.raw === raw))) p = planMemory.plan;
+  else { try { p = JSON.parse(raw || "null"); } catch (e) {} }
+  p = planRepair(p, day);
+  const next = JSON.stringify(p); let unsaved = false;
+  if (!readable || raw !== next) { try { localStorage.setItem("fq-plan", next); } catch (e) { unsaved = true; } }
+  planMemory = { day, plan: p, raw: unsaved ? raw : next, unsaved };
   return p;
 }
 const PLAN_PARTS = [["review", "复习到期题"], ["fresh", "新题"], ["weak", "弱项"]];
 function planStatus(p) {
   const done = answeredToday();
   const parts = PLAN_PARTS.filter(([k]) => p[k].length).map(([k, name]) => ({
-    k, name: k === "weak" ? `弱项「${p.weakTag}」` : name, n: p[k].length, d: p[k].filter(i => done.has(i)).length,
+    k, name: k === "weak" && p.weakTag ? `弱项「${p.weakTag}」` : name, n: p[k].length, d: p[k].filter(i => done.has(i)).length,
   }));
   if (hasConj()) parts.push({ k: "conj", name: "动词变位", n: PLAN_CONJ, d: Math.min(PLAN_CONJ, conjToday()) });
   const n = parts.reduce((s, x) => s + x.n, 0), d = parts.reduce((s, x) => s + x.d, 0);
@@ -15753,18 +15791,21 @@ function planMembers(key) {
   const p = planGet();
   if (!p) return [];
   const part = key.slice(5), done = answeredToday();
-  const ids = part ? p[part] || [] : [...p.review, ...p.fresh, ...p.weak];
+  const ids = part ? Object.hasOwn(PLAN_LIMITS, part) ? p[part] : [] : [...p.review, ...p.fresh, ...p.weak];
   return ids.filter(i => !done.has(i)).map(i => BY_ID.get(i)).filter(Boolean);
 }
 function planLabel(key) {
   const part = key.slice(5), p = planGet();
-  return "今日计划" + (part ? " · " + (part === "weak" && p ? `弱项「${p.weakTag}」` : (PLAN_PARTS.find(x => x[0] === part) || [, part])[1]) : "");
+  return "今日计划" + (part ? " · " + (part === "weak" && p?.weakTag ? `弱项「${p.weakTag}」` : (PLAN_PARTS.find(x => x[0] === part) || [, "今日计划"])[1]) : "");
 }
 function planGo(key) {
+  const p = planGet();
+  if (!p) { xpToast("正在读取答题记录…"); return; }
   if (key === "plan:conj") { switchView("conj"); return; }
   if (!planMembers(key).length) {
-    const s = planGet() && planStatus(planGet());
-    xpToast(s && hasConj() && s.parts.find(x => x.k === "conj" && x.d < x.n) ? "这些题都做完了，还差动词变位" : "今天计划里的题都做完了");
+    const s = planStatus(p), conjLeft = s.parts.some(x => x.k === "conj" && x.d < x.n);
+    if (key === "plan:" && conjLeft) { switchView("conj"); return; }
+    xpToast(s.d < s.n ? "这一部分已完成，可继续今日计划的其他题目。" : "今天计划里的题都做完了");
     return;
   }
   switchView("quiz", key);
@@ -15819,10 +15860,7 @@ function planTocItem(id = "planToc") {
   const ca = gm && typeof coinPotionActive === "function" ? coinPotionActive() : null;
   const ra = gm && typeof rewindActive === "function" ? rewindActive() : null;
   box.append(el("b", null, (s.d === s.n ? "今日计划 · 已完成" : "今日计划") + (pa ? ` · ${pa.mult} 倍经验中` : "") + (ca ? ` · 金币 ×${ca.mult} 中` : "") + (ra ? ` · 回到过去中（算进${rewindDayText(ra.day)}）` : "")), el("span", "n", `${s.d}/${s.n} 题 · 今日 ${st.today}/${xpGoal} 经验 · 连续 ${st.n} 天${coins}`), bar);
-  box.addEventListener("click", () => {
-    const left = s.parts.find(x => x.d < x.n);
-    planGo(left ? (left.k === "conj" ? "plan:conj" : "plan:") : "plan:");
-  });
+  box.addEventListener("click", () => planGo("plan:"));
   return box;
 }
 const planSlot = el("div", "plan-slot");
@@ -15865,8 +15903,7 @@ function planCard() {
   const act = el("div", "actions");
   const go = el("button", left ? "btn" : "btn ghost", left ? `开始今日计划（剩 ${left} 题）` : "今日计划已完成"); go.type = "button"; go.id = "planGo";
   go.disabled = !left;
-  const first = s.parts.find(x => x.d < x.n && x.k !== "conj");
-  go.addEventListener("click", () => planGo(first ? "plan:" : "plan:conj"));
+  go.addEventListener("click", () => planGo("plan:"));
   act.append(go);
   card.append(act);
   // 每日经验目标
@@ -18328,6 +18365,7 @@ function setGoalSection(wrap) {
 // 每次用户可见更新都新增记录：默认只递增第三位 1.x.y → 1.x.(y+1)，超过 9 继续到 10、11；第二位升级需用户明确要求。
 // 首位保持 1，只有用户明确要求才可修改；历史记录保留。完整发布规则见根目录 AGENTS.md。
 const CHANGELOG = [
+  {"v": "1.9.32", "d": "2026-11-17", "items": ["今日计划自动修复失效题目、重复编号和异常缓存，保留仍有效的计划题目与已完成进度；可补充的题目自动补齐，不足时按实际可用题数显示。只剩动词变位时直接进入变位练习；修复不删除或重置答题记录、金币及其他学习数据。"]},
   {"v": "1.9.31", "d": "2026-11-17", "p": "fr", "items": ["新用户指南新增直达按钮：从零基础开始、查看今日计划和探索游戏。番茄时钟收进点击学习伙伴后打开的面板，计时或暂停时显示剩余时间，未开始或结束后只显示入口文字；点击进入时长与提醒设置，不再在页面上单独悬浮。"]},
   {"v": "1.9.30", "d": "2026-11-17", "p": "fr", "items": ["新用户指南首次进入时默认展开，之后在当前浏览器记住展开或折叠选择；返回首页、刷新或再次打开网页时保留状态。"]},
   {"v": "1.9.29", "d": "2026-11-17", "p": "fr", "items": ["首页新增新用户指南：介绍五个学习板块、今日计划与商店解锁流程，以及单词闯关、环法之旅和肉鸽综合训练；说明标签检索的用法，标明口语与更多玩法仍在开发中。支持折叠、手机布局和中英法三种界面。"]},
