@@ -1705,8 +1705,13 @@
         "qaNote": "Local full-master small ASR, independent base clip ASR, targeted small checks for discrepancies, silence boundaries and AAC decoding; no human listening certification.",
         "sentences": [
           {
-            "text": "Tu n'as pas oublié tes clés, j'espère ? — Non, je les ai mises dans mon sac.",
+            "text": "Tu n'as pas oublié tes clés, j'espère ?",
             "start": 0,
+            "end": 2.685
+          },
+          {
+            "text": "— Non, je les ai mises dans mon sac.",
+            "start": 2.685,
             "end": 4.525
           }
         ]
