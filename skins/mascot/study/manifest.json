@@ -1,12 +1,12 @@
 {
   "version": 1,
-  "release": "1.9.20",
+  "release": "1.9.27",
   "provider": "Google Gemini via AI Studio",
   "model": "gemini-3.8-flash-tts",
   "generatedDate": "2026-11-15",
   "integratedDate": "2026-11-17",
   "format": "AAC-LC, 24 kHz mono, 64 kbps M4A",
-  "qaMethod": "Local small/base transcription, independent unprompted medium discrepancy review, quiet boundaries, level normalization and AAC decoding. Not human listening certification.",
+  "qaMethod": "Local small/base transcription and independent unprompted medium review of discrepancies, quiet clip boundaries, normalized levels, sentence alignment and AAC decoding. Not human listening certification.",
   "characters": {
     "ninon": [
       {
@@ -7167,12 +7167,3851 @@
             "end": 12.5075
           }
         ]
+      },
+      {
+        "text": "Bonjour !",
+        "textSha256": "bc7444869484dd1ed34bfc4465724b887fecf604fcad0d0eaf40d3746d0bfeb7",
+        "file": "pia/bc7444869484dd1ed34b.m4a",
+        "kind": "teaching",
+        "voiceName": "Pia 18 — vive et fière 1",
+        "voiceAgeImpression": 18,
+        "canonicalAge": 21,
+        "masterSha256": "d9f31ffed56ea1637de44906df3e90e66e1638c84d9492829c1675bf63563ed7",
+        "audioSha256": "1230ec6ebc119932dea85f0f3164212bfdba41b7b9a160bcd318e74a0ca8d2bc",
+        "sourceStart": 0.0,
+        "sourceEnd": 1.32,
+        "durationSeconds": 1.32,
+        "gainDb": -3.254,
+        "decodeCorrelation": 0.99445,
+        "bytes": 12144,
+        "generatedDate": "2026-11-17",
+        "integratedDate": "2026-11-17",
+        "qaNote": "Exact normalized transcript: small, base. Numbers expanded and punctuation ignored.",
+        "sourceTextId": "bc7444869484dd1ed34bfc4465724b887fecf604fcad0d0eaf40d3746d0bfeb7",
+        "sourceDomains": [
+          "oral"
+        ],
+        "sentences": [
+          {
+            "text": "Bonjour !",
+            "start": 0.0,
+            "end": 1.32
+          }
+        ]
+      },
+      {
+        "text": "Il y a aussi une entrée près du métro. Elle est ouverte.",
+        "textSha256": "be841aaa0c7ac078fc3f155d738ba0f29482c9ffc26dba3a7a00aae80e6f4a87",
+        "file": "pia/be841aaa0c7ac078fc3f.m4a",
+        "kind": "teaching",
+        "voiceName": "Pia 18 — vive et fière 1",
+        "voiceAgeImpression": 18,
+        "canonicalAge": 21,
+        "masterSha256": "d9f31ffed56ea1637de44906df3e90e66e1638c84d9492829c1675bf63563ed7",
+        "audioSha256": "b5d9337cb9d6cb944655a88b6e6f4d1efb53c158bced1202456332c1a849b4c0",
+        "sourceStart": 1.32,
+        "sourceEnd": 4.9325,
+        "durationSeconds": 3.6125,
+        "gainDb": -2.821,
+        "decodeCorrelation": 0.99788,
+        "bytes": 32012,
+        "generatedDate": "2026-11-17",
+        "integratedDate": "2026-11-17",
+        "qaNote": "Exact normalized transcript: small, base. Numbers expanded and punctuation ignored.",
+        "sourceTextId": "be841aaa0c7ac078fc3f155d738ba0f29482c9ffc26dba3a7a00aae80e6f4a87",
+        "sourceDomains": [
+          "oral"
+        ],
+        "sentences": [
+          {
+            "text": "Il y a aussi une entrée près du métro.",
+            "start": 0.0,
+            "end": 2.325
+          },
+          {
+            "text": "Elle est ouverte.",
+            "start": 2.325,
+            "end": 3.6125
+          }
+        ]
+      },
+      {
+        "text": "Nous passons par l'entrée près du métro. Ces deux billets sont pour nous.",
+        "textSha256": "34b2983ea6067e2bef383b8c93dd532bce423095080afc59fd5ab427a303a0ca",
+        "file": "pia/34b2983ea6067e2bef38.m4a",
+        "kind": "teaching",
+        "voiceName": "Pia 18 — vive et fière 1",
+        "voiceAgeImpression": 18,
+        "canonicalAge": 21,
+        "masterSha256": "d9f31ffed56ea1637de44906df3e90e66e1638c84d9492829c1675bf63563ed7",
+        "audioSha256": "fdb3a94e2fc70add34a969b1ad73b8cd559b2672ac27fca67410bf0a47dd116f",
+        "sourceStart": 4.9325,
+        "sourceEnd": 8.58,
+        "durationSeconds": 3.6475,
+        "gainDb": -1.778,
+        "decodeCorrelation": 0.99738,
+        "bytes": 32416,
+        "generatedDate": "2026-11-17",
+        "integratedDate": "2026-11-17",
+        "qaNote": "Exact normalized transcript: small, base. Numbers expanded and punctuation ignored.",
+        "sourceTextId": "34b2983ea6067e2bef383b8c93dd532bce423095080afc59fd5ab427a303a0ca",
+        "sourceDomains": [
+          "oral"
+        ],
+        "sentences": [
+          {
+            "text": "Nous passons par l'entrée près du métro.",
+            "start": 0.0,
+            "end": 2.0925
+          },
+          {
+            "text": "Ces deux billets sont pour nous.",
+            "start": 2.0925,
+            "end": 3.6475
+          }
+        ]
+      },
+      {
+        "text": "Entrée par la cour ; deux billets à 20 euros chacun",
+        "textSha256": "e2fa112c6fe80b2cdbb123456229b20bf6d8148c85a1fa43e976acb565054524",
+        "file": "pia/e2fa112c6fe80b2cdbb1.m4a",
+        "kind": "teaching",
+        "voiceName": "Pia 18 — vive et fière 1",
+        "voiceAgeImpression": 18,
+        "canonicalAge": 21,
+        "masterSha256": "d9f31ffed56ea1637de44906df3e90e66e1638c84d9492829c1675bf63563ed7",
+        "audioSha256": "5e290e4be320027bc2d9197f07486f61798ecab2be0625bec8ba828d3c6839ee",
+        "sourceStart": 8.58,
+        "sourceEnd": 11.9675,
+        "durationSeconds": 3.3875,
+        "gainDb": 0.719,
+        "decodeCorrelation": 0.99786,
+        "bytes": 30655,
+        "generatedDate": "2026-11-17",
+        "integratedDate": "2026-11-17",
+        "qaNote": "Exact normalized transcript: small. Numbers expanded and punctuation ignored.",
+        "sourceTextId": "e2fa112c6fe80b2cdbb123456229b20bf6d8148c85a1fa43e976acb565054524",
+        "sourceDomains": [
+          "oral"
+        ],
+        "sentences": [
+          {
+            "text": "Entrée par la cour ; deux billets à 20 euros chacun",
+            "start": 0.0,
+            "end": 3.3875
+          }
+        ]
+      },
+      {
+        "text": "Ces deux billets sont pour nous. Nous passons par la cour, c'est bien ça ?",
+        "textSha256": "5e957351953899efdbf2f8e555b5e652f28923aa7a46269e2c39bbf12f749fae",
+        "file": "pia/5e957351953899efdbf2.m4a",
+        "kind": "teaching",
+        "voiceName": "Pia 18 — vive et fière 1",
+        "voiceAgeImpression": 18,
+        "canonicalAge": 21,
+        "masterSha256": "d9f31ffed56ea1637de44906df3e90e66e1638c84d9492829c1675bf63563ed7",
+        "audioSha256": "be170c0bdc3bb61a78fc86894b8282589c5a65eb1a208ef9e9ae34230e125211",
+        "sourceStart": 11.9675,
+        "sourceEnd": 15.7825,
+        "durationSeconds": 3.815,
+        "gainDb": -1.927,
+        "decodeCorrelation": 0.99166,
+        "bytes": 33275,
+        "generatedDate": "2026-11-17",
+        "integratedDate": "2026-11-17",
+        "qaNote": "Exact normalized transcript: small, base. Numbers expanded and punctuation ignored.",
+        "sourceTextId": "5e957351953899efdbf2f8e555b5e652f28923aa7a46269e2c39bbf12f749fae",
+        "sourceDomains": [
+          "oral"
+        ],
+        "sentences": [
+          {
+            "text": "Ces deux billets sont pour nous.",
+            "start": 0.0,
+            "end": 1.635
+          },
+          {
+            "text": "Nous passons par la cour, c'est bien ça ?",
+            "start": 1.635,
+            "end": 3.815
+          }
+        ]
+      },
+      {
+        "text": "Posez une question avec où et confirmez le pluriel avec ces billets.",
+        "textSha256": "6ff394ca20e3c5b1f846c2a4898f357e95c12861928a6b40956669731b5d897c",
+        "file": "pia/6ff394ca20e3c5b1f846.m4a",
+        "kind": "teaching",
+        "voiceName": "Pia 18 — vive et fière 1",
+        "voiceAgeImpression": 18,
+        "canonicalAge": 21,
+        "masterSha256": "d9f31ffed56ea1637de44906df3e90e66e1638c84d9492829c1675bf63563ed7",
+        "audioSha256": "090e82798354cd82a9574425a93a55564ce44c2df1f12724ccdfc235ae74787f",
+        "sourceStart": 15.7825,
+        "sourceEnd": 20.5075,
+        "durationSeconds": 4.725,
+        "gainDb": -0.632,
+        "decodeCorrelation": 0.99767,
+        "bytes": 42710,
+        "generatedDate": "2026-11-17",
+        "integratedDate": "2026-11-17",
+        "qaNote": "Exact normalized transcript: small. Numbers expanded and punctuation ignored.",
+        "sourceTextId": "6ff394ca20e3c5b1f846c2a4898f357e95c12861928a6b40956669731b5d897c",
+        "sourceDomains": [
+          "oral"
+        ],
+        "sentences": [
+          {
+            "text": "Posez une question avec où et confirmez le pluriel avec ces billets.",
+            "start": 0.0,
+            "end": 4.725
+          }
+        ]
+      },
+      {
+        "text": "Entrée près du métro ; deux billets",
+        "textSha256": "9dac977726870f593f5ef81116e3114e5a23dfe167eeb6fdf5ea3ebf9bf757e2",
+        "file": "pia/9dac977726870f593f5e.m4a",
+        "kind": "teaching",
+        "voiceName": "Pia 18 — vive et fière 1",
+        "voiceAgeImpression": 18,
+        "canonicalAge": 21,
+        "masterSha256": "d9f31ffed56ea1637de44906df3e90e66e1638c84d9492829c1675bf63563ed7",
+        "audioSha256": "71ae1d27f7cd6bf5a417d954955a5778d9deb2671425c69d7f39bd3d04010a7d",
+        "sourceStart": 20.5075,
+        "sourceEnd": 23.05,
+        "durationSeconds": 2.5425,
+        "gainDb": 0.523,
+        "decodeCorrelation": 0.98848,
+        "bytes": 22803,
+        "generatedDate": "2026-11-17",
+        "integratedDate": "2026-11-17",
+        "qaNote": "Exact normalized transcript: small, medium. Numbers expanded and punctuation ignored.",
+        "sourceTextId": "9dac977726870f593f5ef81116e3114e5a23dfe167eeb6fdf5ea3ebf9bf757e2",
+        "sourceDomains": [
+          "oral"
+        ],
+        "sentences": [
+          {
+            "text": "Entrée près du métro ; deux billets",
+            "start": 0.0,
+            "end": 2.5425
+          }
+        ]
+      },
+      {
+        "text": "Aujourd'hui, il faut passer par l'entrée du jardin, près du bus.",
+        "textSha256": "9d20ec1cb8ecff7e224195d2588cafc6865beb45f1c87d5e9eed3d5e26da4375",
+        "file": "pia/9d20ec1cb8ecff7e2241.m4a",
+        "kind": "teaching",
+        "voiceName": "Pia 18 — vive et fière 1",
+        "voiceAgeImpression": 18,
+        "canonicalAge": 21,
+        "masterSha256": "d9f31ffed56ea1637de44906df3e90e66e1638c84d9492829c1675bf63563ed7",
+        "audioSha256": "737651b6267b08a1d73e6a1daf9a49654b776f8d902f2b539c9fb5b7b5941d65",
+        "sourceStart": 23.05,
+        "sourceEnd": 26.515,
+        "durationSeconds": 3.465,
+        "gainDb": -0.375,
+        "decodeCorrelation": 0.99725,
+        "bytes": 31752,
+        "generatedDate": "2026-11-17",
+        "integratedDate": "2026-11-17",
+        "qaNote": "Exact normalized transcript: small, base. Numbers expanded and punctuation ignored.",
+        "sourceTextId": "9d20ec1cb8ecff7e224195d2588cafc6865beb45f1c87d5e9eed3d5e26da4375",
+        "sourceDomains": [
+          "oral"
+        ],
+        "sentences": [
+          {
+            "text": "Aujourd'hui, il faut passer par l'entrée du jardin, près du bus.",
+            "start": 0.0,
+            "end": 3.465
+          }
+        ]
+      },
+      {
+        "text": "Nous passons par l'entrée du jardin, près du bus. Ces billets sont pour nous.",
+        "textSha256": "b5017e1a63460f97067c7e6a0a4c006a8c49c3afe53fa9d7351713dd0a5fe5a9",
+        "file": "pia/b5017e1a63460f97067c.m4a",
+        "kind": "teaching",
+        "voiceName": "Pia 18 — vive et fière 1",
+        "voiceAgeImpression": 18,
+        "canonicalAge": 21,
+        "masterSha256": "d9f31ffed56ea1637de44906df3e90e66e1638c84d9492829c1675bf63563ed7",
+        "audioSha256": "44a4d98b7fd658f132f85ea66ea06dc0ef9e810ce00894c2e5de7ee06565a03c",
+        "sourceStart": 26.515,
+        "sourceEnd": 30.5475,
+        "durationSeconds": 4.0325,
+        "gainDb": -1.116,
+        "decodeCorrelation": 0.99786,
+        "bytes": 36131,
+        "generatedDate": "2026-11-17",
+        "integratedDate": "2026-11-17",
+        "qaNote": "Exact normalized transcript: small, base. Numbers expanded and punctuation ignored.",
+        "sourceTextId": "b5017e1a63460f97067c7e6a0a4c006a8c49c3afe53fa9d7351713dd0a5fe5a9",
+        "sourceDomains": [
+          "oral"
+        ],
+        "sentences": [
+          {
+            "text": "Nous passons par l'entrée du jardin, près du bus.",
+            "start": 0.0,
+            "end": 2.6
+          },
+          {
+            "text": "Ces billets sont pour nous.",
+            "start": 2.6,
+            "end": 4.0325
+          }
+        ]
+      },
+      {
+        "text": "Entrée du jardin près du bus ; deux billets",
+        "textSha256": "e974395865c158adb56554c3ec5dbc7d5ee3713be5911bf1f94e678714c38603",
+        "file": "pia/e974395865c158adb565.m4a",
+        "kind": "teaching",
+        "voiceName": "Pia 18 — vive et fière 1",
+        "voiceAgeImpression": 18,
+        "canonicalAge": 21,
+        "masterSha256": "d9f31ffed56ea1637de44906df3e90e66e1638c84d9492829c1675bf63563ed7",
+        "audioSha256": "9b49cf5bb1ad3abbca2118521e3ea85c535d7164beff58801e46145793474ec0",
+        "sourceStart": 30.5475,
+        "sourceEnd": 33.4225,
+        "durationSeconds": 2.875,
+        "gainDb": 2.674,
+        "decodeCorrelation": 0.99782,
+        "bytes": 26562,
+        "generatedDate": "2026-11-17",
+        "integratedDate": "2026-11-17",
+        "qaNote": "Exact normalized transcript: small, medium. Numbers expanded and punctuation ignored.",
+        "sourceTextId": "e974395865c158adb56554c3ec5dbc7d5ee3713be5911bf1f94e678714c38603",
+        "sourceDomains": [
+          "oral"
+        ],
+        "sentences": [
+          {
+            "text": "Entrée du jardin près du bus ; deux billets",
+            "start": 0.0,
+            "end": 2.875
+          }
+        ]
+      },
+      {
+        "text": "Nous devons aller à la gare. Quel chemin est le plus court ?",
+        "textSha256": "9acc0eb81b9053923389be1a58167170f46dc3f0c858f0123d00a169abcac56c",
+        "file": "pia/9acc0eb81b9053923389.m4a",
+        "kind": "teaching",
+        "voiceName": "Pia 18 — vive et fière 1",
+        "voiceAgeImpression": 18,
+        "canonicalAge": 21,
+        "masterSha256": "d9f31ffed56ea1637de44906df3e90e66e1638c84d9492829c1675bf63563ed7",
+        "audioSha256": "0fa0b4d5ee2340b27b3673d986032ff8d4ffe75263d889451393e9c3c085b96c",
+        "sourceStart": 33.4225,
+        "sourceEnd": 36.31,
+        "durationSeconds": 2.8875,
+        "gainDb": -2.821,
+        "decodeCorrelation": 0.99227,
+        "bytes": 25712,
+        "generatedDate": "2026-11-17",
+        "integratedDate": "2026-11-17",
+        "qaNote": "Exact normalized transcript: small, medium. Numbers expanded and punctuation ignored.",
+        "sourceTextId": "9acc0eb81b9053923389be1a58167170f46dc3f0c858f0123d00a169abcac56c",
+        "sourceDomains": [
+          "oral"
+        ],
+        "sentences": [
+          {
+            "text": "Nous devons aller à la gare.",
+            "start": 0.0,
+            "end": 1.4525
+          },
+          {
+            "text": "Quel chemin est le plus court ?",
+            "start": 1.4525,
+            "end": 2.8875
+          }
+        ]
+      },
+      {
+        "text": "Vous pouvez prendre le bus 4. Il est plus rapide, mais payant.",
+        "textSha256": "d3bcdb02942c89145f042249ecdae6d915208fec54ffae474515590402f73a28",
+        "file": "pia/d3bcdb02942c89145f04.m4a",
+        "kind": "teaching",
+        "voiceName": "Pia 18 — vive et fière 1",
+        "voiceAgeImpression": 18,
+        "canonicalAge": 21,
+        "masterSha256": "d9f31ffed56ea1637de44906df3e90e66e1638c84d9492829c1675bf63563ed7",
+        "audioSha256": "63c9519ef02a733aeae08a41bb6de08ef0fd7a00a5266e21a4845b9680ac685b",
+        "sourceStart": 36.31,
+        "sourceEnd": 39.7825,
+        "durationSeconds": 3.4725,
+        "gainDb": 0.611,
+        "decodeCorrelation": 0.99823,
+        "bytes": 30721,
+        "generatedDate": "2026-11-17",
+        "integratedDate": "2026-11-17",
+        "qaNote": "Exact normalized transcript: small, medium. Numbers expanded and punctuation ignored.",
+        "sourceTextId": "d3bcdb02942c89145f042249ecdae6d915208fec54ffae474515590402f73a28",
+        "sourceDomains": [
+          "oral"
+        ],
+        "sentences": [
+          {
+            "text": "Vous pouvez prendre le bus 4.",
+            "start": 0.0,
+            "end": 1.77
+          },
+          {
+            "text": "Il est plus rapide, mais payant.",
+            "start": 1.77,
+            "end": 3.4725
+          }
+        ]
+      },
+      {
+        "text": "Prenons le bus 4. Il est plus rapide, mais il faut payer.",
+        "textSha256": "cccbeaefb96ebebc94f61188cf2e40bb64e7cdf0bfff06545cef3213bdd41eb7",
+        "file": "pia/cccbeaefb96ebebc94f6.m4a",
+        "kind": "teaching",
+        "voiceName": "Pia 18 — vive et fière 1",
+        "voiceAgeImpression": 18,
+        "canonicalAge": 21,
+        "masterSha256": "d9f31ffed56ea1637de44906df3e90e66e1638c84d9492829c1675bf63563ed7",
+        "audioSha256": "524f32ed4a5283a21bd1dfd48ce27d6789c9de2280a7cf30a528d8ab80a15eb6",
+        "sourceStart": 39.7825,
+        "sourceEnd": 43.1,
+        "durationSeconds": 3.3175,
+        "gainDb": -1.452,
+        "decodeCorrelation": 0.9981,
+        "bytes": 30764,
+        "generatedDate": "2026-11-17",
+        "integratedDate": "2026-11-17",
+        "qaNote": "Exact normalized transcript: small, medium. Numbers expanded and punctuation ignored.",
+        "sourceTextId": "cccbeaefb96ebebc94f61188cf2e40bb64e7cdf0bfff06545cef3213bdd41eb7",
+        "sourceDomains": [
+          "oral"
+        ],
+        "sentences": [
+          {
+            "text": "Prenons le bus 4.",
+            "start": 0.0,
+            "end": 1.33
+          },
+          {
+            "text": "Il est plus rapide, mais il faut payer.",
+            "start": 1.33,
+            "end": 3.3175
+          }
+        ]
+      },
+      {
+        "text": "Détour par la place ; pont du parc fermé",
+        "textSha256": "8e7073caf5f906a1f0f6b21872e9ae88f107e95508300d156c75ec7a5debfbd8",
+        "file": "pia/8e7073caf5f906a1f0f6.m4a",
+        "kind": "teaching",
+        "voiceName": "Pia 18 — vive et fière 1",
+        "voiceAgeImpression": 18,
+        "canonicalAge": 21,
+        "masterSha256": "d9f31ffed56ea1637de44906df3e90e66e1638c84d9492829c1675bf63563ed7",
+        "audioSha256": "4f86cec34d280c354111b903618dd169d997e432f2a2957745587293841852ab",
+        "sourceStart": 43.1,
+        "sourceEnd": 46.1875,
+        "durationSeconds": 3.0875,
+        "gainDb": 2.475,
+        "decodeCorrelation": 0.99701,
+        "bytes": 28053,
+        "generatedDate": "2026-11-17",
+        "integratedDate": "2026-11-17",
+        "qaNote": "Exact normalized transcript: small, medium. Numbers expanded and punctuation ignored.",
+        "sourceTextId": "8e7073caf5f906a1f0f6b21872e9ae88f107e95508300d156c75ec7a5debfbd8",
+        "sourceDomains": [
+          "oral"
+        ],
+        "sentences": [
+          {
+            "text": "Détour par la place ; pont du parc fermé",
+            "start": 0.0,
+            "end": 3.0875
+          }
+        ]
+      },
+      {
+        "text": "Passons par la place, puis tournons à droite. C'est plus long, mais le pont est fermé.",
+        "textSha256": "14ae78bc3415cd231e288a58a20d810909a92abcf10b119ef70899521f0b4986",
+        "file": "pia/14ae78bc3415cd231e28.m4a",
+        "kind": "teaching",
+        "voiceName": "Pia 18 — vive et fière 1",
+        "voiceAgeImpression": 18,
+        "canonicalAge": 21,
+        "masterSha256": "d9f31ffed56ea1637de44906df3e90e66e1638c84d9492829c1675bf63563ed7",
+        "audioSha256": "bcda3eb4ac7e8d0fdf85a2f3d93b40df0e051139889f3c79403e08d0e4bf8f47",
+        "sourceStart": 46.1875,
+        "sourceEnd": 50.5125,
+        "durationSeconds": 4.325,
+        "gainDb": -0.273,
+        "decodeCorrelation": 0.99572,
+        "bytes": 38616,
+        "generatedDate": "2026-11-17",
+        "integratedDate": "2026-11-17",
+        "qaNote": "Exact normalized transcript: small, base. Numbers expanded and punctuation ignored.",
+        "sourceTextId": "14ae78bc3415cd231e288a58a20d810909a92abcf10b119ef70899521f0b4986",
+        "sourceDomains": [
+          "oral"
+        ],
+        "sentences": [
+          {
+            "text": "Passons par la place, puis tournons à droite.",
+            "start": 0.0,
+            "end": 2.335
+          },
+          {
+            "text": "C'est plus long, mais le pont est fermé.",
+            "start": 2.335,
+            "end": 4.325
+          }
+        ]
+      },
+      {
+        "text": "Comparez avec plus…que et guidez votre ami à l'impératif.",
+        "textSha256": "657b4c1c1d8c8885dd9ac746367c41b3d9b3f4db1fcd92d08149b150d0638256",
+        "file": "pia/657b4c1c1d8c8885dd9a.m4a",
+        "kind": "teaching",
+        "voiceName": "Pia 18 — vive et fière 1",
+        "voiceAgeImpression": 18,
+        "canonicalAge": 21,
+        "masterSha256": "d9f31ffed56ea1637de44906df3e90e66e1638c84d9492829c1675bf63563ed7",
+        "audioSha256": "11e0a5cfd1f2bac6a66b6e503bd7c4d56f5ac1c9444fae13b2abf429fe79f741",
+        "sourceStart": 50.5125,
+        "sourceEnd": 54.4125,
+        "durationSeconds": 3.9,
+        "gainDb": 0.437,
+        "decodeCorrelation": 0.99371,
+        "bytes": 35557,
+        "generatedDate": "2026-11-17",
+        "integratedDate": "2026-11-17",
+        "qaNote": "Comparez/comparer and guidez/guider are homophones; all words otherwise match.",
+        "sourceTextId": "657b4c1c1d8c8885dd9ac746367c41b3d9b3f4db1fcd92d08149b150d0638256",
+        "sourceDomains": [
+          "oral"
+        ],
+        "sentences": [
+          {
+            "text": "Comparez avec plus…que et guidez votre ami à l'impératif.",
+            "start": 0.0,
+            "end": 3.9
+          }
+        ]
+      },
+      {
+        "text": "Bus 4, plus rapide mais payant",
+        "textSha256": "86333bfaa325b49084ff86510076b27f2e5224ae8f6853205a7e254e1601c818",
+        "file": "pia/86333bfaa325b49084ff.m4a",
+        "kind": "teaching",
+        "voiceName": "Pia 18 — vive et fière 1",
+        "voiceAgeImpression": 18,
+        "canonicalAge": 21,
+        "masterSha256": "d9f31ffed56ea1637de44906df3e90e66e1638c84d9492829c1675bf63563ed7",
+        "audioSha256": "0bbe9cac01612dff16e2f6f41fdc684533981c6b7469d4b2604fc856e6197cdc",
+        "sourceStart": 54.4125,
+        "sourceEnd": 56.8675,
+        "durationSeconds": 2.455,
+        "gainDb": 2.396,
+        "decodeCorrelation": 0.99315,
+        "bytes": 22319,
+        "generatedDate": "2026-11-17",
+        "integratedDate": "2026-11-17",
+        "qaNote": "Exact normalized transcript: small, base. Numbers expanded and punctuation ignored.",
+        "sourceTextId": "86333bfaa325b49084ff86510076b27f2e5224ae8f6853205a7e254e1601c818",
+        "sourceDomains": [
+          "oral"
+        ],
+        "sentences": [
+          {
+            "text": "Bus 4, plus rapide mais payant",
+            "start": 0.0,
+            "end": 2.455
+          }
+        ]
+      },
+      {
+        "text": "Le parc est maintenant ouvert, mais le bus ne circule pas. Passez par le parc et tournez à gauche.",
+        "textSha256": "ef2bd2251a4f8139854d3e77af7a36ea68feaf23cb5d86b5fe921863d89f7053",
+        "file": "pia/ef2bd2251a4f8139854d.m4a",
+        "kind": "teaching",
+        "voiceName": "Pia 18 — vive et fière 1",
+        "voiceAgeImpression": 18,
+        "canonicalAge": 21,
+        "masterSha256": "d9f31ffed56ea1637de44906df3e90e66e1638c84d9492829c1675bf63563ed7",
+        "audioSha256": "4f2f95e486d9cd9affcd43d5e41f303fef99c0d6337f615f8bafd60652ae1cd9",
+        "sourceStart": 56.8675,
+        "sourceEnd": 62.0825,
+        "durationSeconds": 5.215,
+        "gainDb": -1.186,
+        "decodeCorrelation": 0.99733,
+        "bytes": 45957,
+        "generatedDate": "2026-11-17",
+        "integratedDate": "2026-11-17",
+        "qaNote": "Exact normalized transcript: medium. Numbers expanded and punctuation ignored.",
+        "sourceTextId": "ef2bd2251a4f8139854d3e77af7a36ea68feaf23cb5d86b5fe921863d89f7053",
+        "sourceDomains": [
+          "oral"
+        ],
+        "sentences": [
+          {
+            "text": "Le parc est maintenant ouvert, mais le bus ne circule pas.",
+            "start": 0.0,
+            "end": 2.785
+          },
+          {
+            "text": "Passez par le parc et tournez à gauche.",
+            "start": 2.785,
+            "end": 5.215
+          }
+        ]
+      },
+      {
+        "text": "Passons par le parc, puis tournons à gauche. Le bus ne circule pas.",
+        "textSha256": "b9a475e7ba828fe4ccbd1898cc99df731d269300734e4b8e65b9e8df48a5f2d0",
+        "file": "pia/b9a475e7ba828fe4ccbd.m4a",
+        "kind": "teaching",
+        "voiceName": "Pia 18 — vive et fière 1",
+        "voiceAgeImpression": 18,
+        "canonicalAge": 21,
+        "masterSha256": "d9f31ffed56ea1637de44906df3e90e66e1638c84d9492829c1675bf63563ed7",
+        "audioSha256": "41258a2c4f797b6f4967bed3079f2612b1f4d645a5cf9b91e45dc8089b939853",
+        "sourceStart": 62.0825,
+        "sourceEnd": 65.7775,
+        "durationSeconds": 3.695,
+        "gainDb": -1.361,
+        "decodeCorrelation": 0.99649,
+        "bytes": 32593,
+        "generatedDate": "2026-11-17",
+        "integratedDate": "2026-11-17",
+        "qaNote": "Exact normalized transcript: small, medium. Numbers expanded and punctuation ignored.",
+        "sourceTextId": "b9a475e7ba828fe4ccbd1898cc99df731d269300734e4b8e65b9e8df48a5f2d0",
+        "sourceDomains": [
+          "oral"
+        ],
+        "sentences": [
+          {
+            "text": "Passons par le parc, puis tournons à gauche.",
+            "start": 0.0,
+            "end": 2.2475
+          },
+          {
+            "text": "Le bus ne circule pas.",
+            "start": 2.2475,
+            "end": 3.695
+          }
+        ]
+      },
+      {
+        "text": "Traverser le parc puis tourner à gauche ; bus interrompu",
+        "textSha256": "3ddf625d649b6006f5c29c4680988ff2fc2643a8b4bd85f186e6829630f921f1",
+        "file": "pia/3ddf625d649b6006f5c2.m4a",
+        "kind": "teaching",
+        "voiceName": "Pia 18 — vive et fière 1",
+        "voiceAgeImpression": 18,
+        "canonicalAge": 21,
+        "masterSha256": "d9f31ffed56ea1637de44906df3e90e66e1638c84d9492829c1675bf63563ed7",
+        "audioSha256": "bf69d9fe8ffdad7d2eef36fc25a0077c17f27bae6dd26d9efc8c84b757517e6d",
+        "sourceStart": 65.7775,
+        "sourceEnd": 69.42,
+        "durationSeconds": 3.6425,
+        "gainDb": 1.029,
+        "decodeCorrelation": 0.99256,
+        "bytes": 32747,
+        "generatedDate": "2026-11-17",
+        "integratedDate": "2026-11-17",
+        "qaNote": "Exact normalized transcript: small, medium. Numbers expanded and punctuation ignored.",
+        "sourceTextId": "3ddf625d649b6006f5c29c4680988ff2fc2643a8b4bd85f186e6829630f921f1",
+        "sourceDomains": [
+          "oral"
+        ],
+        "sentences": [
+          {
+            "text": "Traverser le parc puis tourner à gauche ; bus interrompu",
+            "start": 0.0,
+            "end": 3.6425
+          }
+        ]
+      },
+      {
+        "text": "Hier, nous avons visité le musée. Demain, nous allons voir le château. Est-ce qu'il reste des places ?",
+        "textSha256": "e15f9c3e6627fb0e82162ec203361fec4dc517b30ba64a6de665ef2f0923c349",
+        "file": "pia/e15f9c3e6627fb0e8216.m4a",
+        "kind": "teaching",
+        "voiceName": "Pia 18 — vive et fière 1",
+        "voiceAgeImpression": 18,
+        "canonicalAge": 21,
+        "masterSha256": "d9f31ffed56ea1637de44906df3e90e66e1638c84d9492829c1675bf63563ed7",
+        "audioSha256": "a92fb9e9dc0d4fd838be58f7d7b993e114f70b09caa0c11073c11bb23c82b9c6",
+        "sourceStart": 69.42,
+        "sourceEnd": 74.83,
+        "durationSeconds": 5.41,
+        "gainDb": -2.801,
+        "decodeCorrelation": 0.9984,
+        "bytes": 46485,
+        "generatedDate": "2026-11-17",
+        "integratedDate": "2026-11-17",
+        "qaNote": "Exact normalized transcript: small, base. Numbers expanded and punctuation ignored.",
+        "sourceTextId": "e15f9c3e6627fb0e82162ec203361fec4dc517b30ba64a6de665ef2f0923c349",
+        "sourceDomains": [
+          "oral"
+        ],
+        "sentences": [
+          {
+            "text": "Hier, nous avons visité le musée.",
+            "start": 0.0,
+            "end": 2.03
+          },
+          {
+            "text": "Demain, nous allons voir le château.",
+            "start": 2.03,
+            "end": 3.895
+          },
+          {
+            "text": "Est-ce qu'il reste des places ?",
+            "start": 3.895,
+            "end": 5.41
+          }
+        ]
+      },
+      {
+        "text": "Il y a une visite à neuf heures après-demain.",
+        "textSha256": "3168f5390cd56be0e03a04c32324a60a926d2772ef8dd1e6f89fc92decda906b",
+        "file": "pia/3168f5390cd56be0e03a.m4a",
+        "kind": "teaching",
+        "voiceName": "Pia 18 — vive et fière 1",
+        "voiceAgeImpression": 18,
+        "canonicalAge": 21,
+        "masterSha256": "d9f31ffed56ea1637de44906df3e90e66e1638c84d9492829c1675bf63563ed7",
+        "audioSha256": "760955df0aa7eb29d9da58b445618339e79e683cfddb037fc0136fcb3cdfd0b9",
+        "sourceStart": 74.83,
+        "sourceEnd": 77.36,
+        "durationSeconds": 2.53,
+        "gainDb": -2.1,
+        "decodeCorrelation": 0.98793,
+        "bytes": 22516,
+        "generatedDate": "2026-11-17",
+        "integratedDate": "2026-11-17",
+        "qaNote": "Exact normalized transcript: small, base. Numbers expanded and punctuation ignored.",
+        "sourceTextId": "3168f5390cd56be0e03a04c32324a60a926d2772ef8dd1e6f89fc92decda906b",
+        "sourceDomains": [
+          "oral"
+        ],
+        "sentences": [
+          {
+            "text": "Il y a une visite à neuf heures après-demain.",
+            "start": 0.0,
+            "end": 2.53
+          }
+        ]
+      },
+      {
+        "text": "Nous en prenons deux pour après-demain à neuf heures.",
+        "textSha256": "d1c02cbd8e01f8c58f0eb7d78fecfe3da506322d82abfdddf3a5f0121176c840",
+        "file": "pia/d1c02cbd8e01f8c58f0e.m4a",
+        "kind": "teaching",
+        "voiceName": "Pia 18 — vive et fière 1",
+        "voiceAgeImpression": 18,
+        "canonicalAge": 21,
+        "masterSha256": "d9f31ffed56ea1637de44906df3e90e66e1638c84d9492829c1675bf63563ed7",
+        "audioSha256": "3d1adfe498b05a009b0844ab8535843693177211c1bbec1753295df4fb752cea",
+        "sourceStart": 77.36,
+        "sourceEnd": 79.805,
+        "durationSeconds": 2.445,
+        "gainDb": -3.103,
+        "decodeCorrelation": 0.99788,
+        "bytes": 22198,
+        "generatedDate": "2026-11-17",
+        "integratedDate": "2026-11-17",
+        "qaNote": "Exact normalized transcript: small, medium. Numbers expanded and punctuation ignored.",
+        "sourceTextId": "d1c02cbd8e01f8c58f0eb7d78fecfe3da506322d82abfdddf3a5f0121176c840",
+        "sourceDomains": [
+          "oral"
+        ],
+        "sentences": [
+          {
+            "text": "Nous en prenons deux pour après-demain à neuf heures.",
+            "start": 0.0,
+            "end": 2.445
+          }
+        ]
+      },
+      {
+        "text": "Demain à 14 h, deux personnes",
+        "textSha256": "a1285c6c71e985b393bd44d70dd632e0621e747ad5c168cec257db7e138f92c7",
+        "file": "pia/a1285c6c71e985b393bd.m4a",
+        "kind": "teaching",
+        "voiceName": "Pia 18 — vive et fière 1",
+        "voiceAgeImpression": 18,
+        "canonicalAge": 21,
+        "masterSha256": "d9f31ffed56ea1637de44906df3e90e66e1638c84d9492829c1675bf63563ed7",
+        "audioSha256": "67d47e8ca36692870c4992fcd7c923ad2ad62b503ac25c3a90495eaa0c19f3b4",
+        "sourceStart": 79.805,
+        "sourceEnd": 82.5225,
+        "durationSeconds": 2.7175,
+        "gainDb": 0.537,
+        "decodeCorrelation": 0.99729,
+        "bytes": 25146,
+        "generatedDate": "2026-11-17",
+        "integratedDate": "2026-11-17",
+        "qaNote": "Exact normalized transcript: small, base, medium. Numbers expanded and punctuation ignored.",
+        "sourceTextId": "a1285c6c71e985b393bd44d70dd632e0621e747ad5c168cec257db7e138f92c7",
+        "sourceDomains": [
+          "oral"
+        ],
+        "sentences": [
+          {
+            "text": "Demain à 14 h, deux personnes",
+            "start": 0.0,
+            "end": 2.7175
+          }
+        ]
+      },
+      {
+        "text": "Nous en prenons deux pour quatorze heures. Hier, nous sommes allés au musée ; demain, nous irons au château.",
+        "textSha256": "d14d82663c4e1d8726f6d63507fd75193c503d85516454d59038085cb3ca90fb",
+        "file": "pia/d14d82663c4e1d8726f6.m4a",
+        "kind": "teaching",
+        "voiceName": "Pia 18 — vive et fière 1",
+        "voiceAgeImpression": 18,
+        "canonicalAge": 21,
+        "masterSha256": "d9f31ffed56ea1637de44906df3e90e66e1638c84d9492829c1675bf63563ed7",
+        "audioSha256": "cb667221d994f7428309c9d4e7e9b1d0a64623ef5787bfa88b991fa48332f1c1",
+        "sourceStart": 82.5225,
+        "sourceEnd": 87.645,
+        "durationSeconds": 5.1225,
+        "gainDb": -2.447,
+        "decodeCorrelation": 0.99384,
+        "bytes": 43579,
+        "generatedDate": "2026-11-17",
+        "integratedDate": "2026-11-17",
+        "qaNote": "Exact normalized transcript: small, medium. Numbers expanded and punctuation ignored.",
+        "sourceTextId": "d14d82663c4e1d8726f6d63507fd75193c503d85516454d59038085cb3ca90fb",
+        "sourceDomains": [
+          "oral"
+        ],
+        "sentences": [
+          {
+            "text": "Nous en prenons deux pour quatorze heures.",
+            "start": 0.0,
+            "end": 1.9
+          },
+          {
+            "text": "Hier, nous sommes allés au musée ; demain, nous irons au château.",
+            "start": 1.9,
+            "end": 5.1225
+          }
+        ]
+      },
+      {
+        "text": "Passé composé pour les faits passés, futur pour le projet et en pour les places.",
+        "textSha256": "5ff7676763da9e7bf736d8b9a12703a59c2cbe3476e8e53c3b07e1fdeb4fb673",
+        "file": "pia/5ff7676763da9e7bf736.m4a",
+        "kind": "teaching",
+        "voiceName": "Pia 18 — vive et fière 1",
+        "voiceAgeImpression": 18,
+        "canonicalAge": 21,
+        "masterSha256": "d9f31ffed56ea1637de44906df3e90e66e1638c84d9492829c1675bf63563ed7",
+        "audioSha256": "f027af0e2710571e72dc3d29b0c19cb1abda2b141394ad5aa5a42b4c00fe2bb9",
+        "sourceStart": 87.645,
+        "sourceEnd": 92.665,
+        "durationSeconds": 5.02,
+        "gainDb": 1.157,
+        "decodeCorrelation": 0.99571,
+        "bytes": 44798,
+        "generatedDate": "2026-11-17",
+        "integratedDate": "2026-11-17",
+        "qaNote": "les faits passés / l’effet passé are phonetically equivalent here; the grammar vocabulary and full ending match.",
+        "sourceTextId": "5ff7676763da9e7bf736d8b9a12703a59c2cbe3476e8e53c3b07e1fdeb4fb673",
+        "sourceDomains": [
+          "oral"
+        ],
+        "sentences": [
+          {
+            "text": "Passé composé pour les faits passés, futur pour le projet et en pour les places.",
+            "start": 0.0,
+            "end": 5.02
+          }
+        ]
+      },
+      {
+        "text": "Après-demain à 9 h, deux personnes",
+        "textSha256": "799943d247316b54c936ea22d8d758eaffcfbe1141ed8b743cdc56a4bfa4c063",
+        "file": "pia/799943d247316b54c936.m4a",
+        "kind": "teaching",
+        "voiceName": "Pia 18 — vive et fière 1",
+        "voiceAgeImpression": 18,
+        "canonicalAge": 21,
+        "masterSha256": "d9f31ffed56ea1637de44906df3e90e66e1638c84d9492829c1675bf63563ed7",
+        "audioSha256": "3cda14342523b5e22321c862d09ca7539c8712799c6e3fb588b0436250709b09",
+        "sourceStart": 92.665,
+        "sourceEnd": 95.2775,
+        "durationSeconds": 2.6125,
+        "gainDb": -0.4,
+        "decodeCorrelation": 0.99739,
+        "bytes": 23689,
+        "generatedDate": "2026-11-17",
+        "integratedDate": "2026-11-17",
+        "qaNote": "Exact normalized transcript: small, base, medium. Numbers expanded and punctuation ignored.",
+        "sourceTextId": "799943d247316b54c936ea22d8d758eaffcfbe1141ed8b743cdc56a4bfa4c063",
+        "sourceDomains": [
+          "oral"
+        ],
+        "sentences": [
+          {
+            "text": "Après-demain à 9 h, deux personnes",
+            "start": 0.0,
+            "end": 2.6125
+          }
+        ]
+      },
+      {
+        "text": "La visite de quatorze heures est annulée. Deux places sont disponibles demain à seize heures.",
+        "textSha256": "f9f620b49b0c7974bd991e1b405d0b66ba48f1f66bea98713f60ff9600a22483",
+        "file": "pia/f9f620b49b0c7974bd99.m4a",
+        "kind": "teaching",
+        "voiceName": "Pia 18 — vive et fière 1",
+        "voiceAgeImpression": 18,
+        "canonicalAge": 21,
+        "masterSha256": "d9f31ffed56ea1637de44906df3e90e66e1638c84d9492829c1675bf63563ed7",
+        "audioSha256": "2b1ccf6f6c3fd7cc6dabfed81f929aa237b422eafb11cc471f92735df1c6a166",
+        "sourceStart": 95.2775,
+        "sourceEnd": 99.76,
+        "durationSeconds": 4.4825,
+        "gainDb": -0.343,
+        "decodeCorrelation": 0.99654,
+        "bytes": 40422,
+        "generatedDate": "2026-11-17",
+        "integratedDate": "2026-11-17",
+        "qaNote": "Exact normalized transcript: small, base. Numbers expanded and punctuation ignored.",
+        "sourceTextId": "f9f620b49b0c7974bd991e1b405d0b66ba48f1f66bea98713f60ff9600a22483",
+        "sourceDomains": [
+          "oral"
+        ],
+        "sentences": [
+          {
+            "text": "La visite de quatorze heures est annulée.",
+            "start": 0.0,
+            "end": 1.86
+          },
+          {
+            "text": "Deux places sont disponibles demain à seize heures.",
+            "start": 1.86,
+            "end": 4.4825
+          }
+        ]
+      },
+      {
+        "text": "Nous en prenons deux pour demain à seize heures, puisque la visite de quatorze heures est annulée.",
+        "textSha256": "888c02c2e428861b49f5a6b48a98eb7c34f6941562d06d4b220c58d4c9335c73",
+        "file": "pia/888c02c2e428861b49f5.m4a",
+        "kind": "teaching",
+        "voiceName": "Pia 18 — vive et fière 1",
+        "voiceAgeImpression": 18,
+        "canonicalAge": 21,
+        "masterSha256": "f7a1d543138edb2a451374c44c5c36f1d0d35b1a9ccd641e7bc490064cbb3977",
+        "audioSha256": "5e7ced39db38d6d9e06af90e3511697724be91370d968ae1efd1c4d23aa76421",
+        "sourceStart": 0.0,
+        "sourceEnd": 4.3625,
+        "durationSeconds": 4.3625,
+        "gainDb": -3.684,
+        "decodeCorrelation": 0.99569,
+        "bytes": 39654,
+        "generatedDate": "2026-11-17",
+        "integratedDate": "2026-11-17",
+        "qaNote": "Exact normalized transcript: small, medium. Numbers expanded and punctuation ignored.",
+        "sourceTextId": "888c02c2e428861b49f5a6b48a98eb7c34f6941562d06d4b220c58d4c9335c73",
+        "sourceDomains": [
+          "oral"
+        ],
+        "sentences": [
+          {
+            "text": "Nous en prenons deux pour demain à seize heures, puisque la visite de quatorze heures est annulée.",
+            "start": 0.0,
+            "end": 4.3625
+          }
+        ]
+      },
+      {
+        "text": "Demain à 16 h, deux personnes",
+        "textSha256": "9d9c88dddbe7d0eb8870e111e3030bb920f4e441b11be218614ba3c7d2cbc84e",
+        "file": "pia/9d9c88dddbe7d0eb8870.m4a",
+        "kind": "teaching",
+        "voiceName": "Pia 18 — vive et fière 1",
+        "voiceAgeImpression": 18,
+        "canonicalAge": 21,
+        "masterSha256": "f7a1d543138edb2a451374c44c5c36f1d0d35b1a9ccd641e7bc490064cbb3977",
+        "audioSha256": "ca30cc8c558e660bffbb5f1dc2184c6e4d3d27db8f310b38b8c35fba8a71bf17",
+        "sourceStart": 4.3625,
+        "sourceEnd": 6.9775,
+        "durationSeconds": 2.615,
+        "gainDb": -0.697,
+        "decodeCorrelation": 0.99644,
+        "bytes": 23045,
+        "generatedDate": "2026-11-17",
+        "integratedDate": "2026-11-17",
+        "qaNote": "Exact normalized transcript: small, base, medium. Numbers expanded and punctuation ignored.",
+        "sourceTextId": "9d9c88dddbe7d0eb8870e111e3030bb920f4e441b11be218614ba3c7d2cbc84e",
+        "sourceDomains": [
+          "oral"
+        ],
+        "sentences": [
+          {
+            "text": "Demain à 16 h, deux personnes",
+            "start": 0.0,
+            "end": 2.615
+          }
+        ]
+      },
+      {
+        "text": "Nous attendions le bus quand il est tombé en panne. Le train était déjà parti quand nous sommes arrivés.",
+        "textSha256": "b294bd2cae6759c7a31b1e5efe93c01aa342514e8735eaf0ea0b1d15a7dbcdc6",
+        "file": "pia/b294bd2cae6759c7a31b.m4a",
+        "kind": "teaching",
+        "voiceName": "Pia 18 — vive et fière 1",
+        "voiceAgeImpression": 18,
+        "canonicalAge": 21,
+        "masterSha256": "f7a1d543138edb2a451374c44c5c36f1d0d35b1a9ccd641e7bc490064cbb3977",
+        "audioSha256": "3455c00c770540e080fbc1e12f73171837a902503c515f4b58fcc2871661549d",
+        "sourceStart": 6.9775,
+        "sourceEnd": 12.3725,
+        "durationSeconds": 5.395,
+        "gainDb": -1.949,
+        "decodeCorrelation": 0.99796,
+        "bytes": 48877,
+        "generatedDate": "2026-11-17",
+        "integratedDate": "2026-11-17",
+        "qaNote": "Exact normalized transcript: small, base. Numbers expanded and punctuation ignored.",
+        "sourceTextId": "b294bd2cae6759c7a31b1e5efe93c01aa342514e8735eaf0ea0b1d15a7dbcdc6",
+        "sourceDomains": [
+          "oral"
+        ],
+        "sentences": [
+          {
+            "text": "Nous attendions le bus quand il est tombé en panne.",
+            "start": 0.0,
+            "end": 2.6725
+          },
+          {
+            "text": "Le train était déjà parti quand nous sommes arrivés.",
+            "start": 2.6725,
+            "end": 5.395
+          }
+        ]
+      },
+      {
+        "text": "Un train direct part à dix-neuf heures, sans supplément.",
+        "textSha256": "7b285ac6c3a288075289cff389cd74180a4bdf2fab75a0684267d781fe28d032",
+        "file": "pia/7b285ac6c3a288075289.m4a",
+        "kind": "teaching",
+        "voiceName": "Pia 18 — vive et fière 1",
+        "voiceAgeImpression": 18,
+        "canonicalAge": 21,
+        "masterSha256": "f7a1d543138edb2a451374c44c5c36f1d0d35b1a9ccd641e7bc490064cbb3977",
+        "audioSha256": "9ff893f906ae952b4557ca3138b08fb2c56ff442ba23c28deb8b9f6a501097e5",
+        "sourceStart": 12.3725,
+        "sourceEnd": 15.8,
+        "durationSeconds": 3.4275,
+        "gainDb": -0.276,
+        "decodeCorrelation": 0.97612,
+        "bytes": 29793,
+        "generatedDate": "2026-11-17",
+        "integratedDate": "2026-11-17",
+        "qaNote": "Exact normalized transcript: medium. Numbers expanded and punctuation ignored.",
+        "sourceTextId": "7b285ac6c3a288075289cff389cd74180a4bdf2fab75a0684267d781fe28d032",
+        "sourceDomains": [
+          "oral"
+        ],
+        "sentences": [
+          {
+            "text": "Un train direct part à dix-neuf heures, sans supplément.",
+            "start": 0.0,
+            "end": 3.4275
+          }
+        ]
+      },
+      {
+        "text": "Je prends le train direct de dix-neuf heures, sans supplément.",
+        "textSha256": "787136e5d768b97ce7e043e8017e883faabb39977f8177c1d60a052079fdbe8e",
+        "file": "pia/787136e5d768b97ce7e0.m4a",
+        "kind": "teaching",
+        "voiceName": "Pia 18 — vive et fière 1",
+        "voiceAgeImpression": 18,
+        "canonicalAge": 21,
+        "masterSha256": "f7a1d543138edb2a451374c44c5c36f1d0d35b1a9ccd641e7bc490064cbb3977",
+        "audioSha256": "7d6245ba97972c89fe6efbccf58fcabf1a6b4fe393b9671a1041be993cd2b12a",
+        "sourceStart": 15.8,
+        "sourceEnd": 18.8225,
+        "durationSeconds": 3.0225,
+        "gainDb": -0.62,
+        "decodeCorrelation": 0.99335,
+        "bytes": 26138,
+        "generatedDate": "2026-11-17",
+        "integratedDate": "2026-11-17",
+        "qaNote": "Exact normalized transcript: small, base. Numbers expanded and punctuation ignored.",
+        "sourceTextId": "787136e5d768b97ce7e043e8017e883faabb39977f8177c1d60a052079fdbe8e",
+        "sourceDomains": [
+          "oral"
+        ],
+        "sentences": [
+          {
+            "text": "Je prends le train direct de dix-neuf heures, sans supplément.",
+            "start": 0.0,
+            "end": 3.0225
+          }
+        ]
+      },
+      {
+        "text": "17 h pour Rouen avec correspondance",
+        "textSha256": "e6dc2a4a6349cdc7f8033b7fe906f32275395853b507817566600a7826216a4a",
+        "file": "pia/e6dc2a4a6349cdc7f803.m4a",
+        "kind": "teaching",
+        "voiceName": "Pia 18 — vive et fière 1",
+        "voiceAgeImpression": 18,
+        "canonicalAge": 21,
+        "masterSha256": "f7a1d543138edb2a451374c44c5c36f1d0d35b1a9ccd641e7bc490064cbb3977",
+        "audioSha256": "4b4548c73917056b6cb4d5db0b861225febe0fc4036cdc0c9c0496c85f3a2052",
+        "sourceStart": 18.8225,
+        "sourceEnd": 21.4275,
+        "durationSeconds": 2.605,
+        "gainDb": -1.504,
+        "decodeCorrelation": 0.99053,
+        "bytes": 23404,
+        "generatedDate": "2026-11-17",
+        "integratedDate": "2026-11-17",
+        "qaNote": "Exact normalized transcript: small, base, medium. Numbers expanded and punctuation ignored.",
+        "sourceTextId": "e6dc2a4a6349cdc7f8033b7fe906f32275395853b507817566600a7826216a4a",
+        "sourceDomains": [
+          "oral"
+        ],
+        "sentences": [
+          {
+            "text": "17 h pour Rouen avec correspondance",
+            "start": 0.0,
+            "end": 2.605
+          }
+        ]
+      },
+      {
+        "text": "Je prends le train de dix-sept heures. C'est la gare dont vous avez parlé pour la correspondance ?",
+        "textSha256": "fba766b5045240345a2fbd308b1ad263548f4311560c9ff7f6e94de8d5c0ab93",
+        "file": "pia/fba766b5045240345a2f.m4a",
+        "kind": "teaching",
+        "voiceName": "Pia 18 — vive et fière 1",
+        "voiceAgeImpression": 18,
+        "canonicalAge": 21,
+        "masterSha256": "f7a1d543138edb2a451374c44c5c36f1d0d35b1a9ccd641e7bc490064cbb3977",
+        "audioSha256": "20ebc254fe340cbb5d3b0e3998dcf54e0cad3d51978de7f28e55615a966c7010",
+        "sourceStart": 21.4275,
+        "sourceEnd": 25.8775,
+        "durationSeconds": 4.45,
+        "gainDb": -1.1,
+        "decodeCorrelation": 0.99423,
+        "bytes": 39430,
+        "generatedDate": "2026-11-17",
+        "integratedDate": "2026-11-17",
+        "qaNote": "Exact normalized transcript: medium. Numbers expanded and punctuation ignored.",
+        "sourceTextId": "fba766b5045240345a2fbd308b1ad263548f4311560c9ff7f6e94de8d5c0ab93",
+        "sourceDomains": [
+          "oral"
+        ],
+        "sentences": [
+          {
+            "text": "Je prends le train de dix-sept heures.",
+            "start": 0.0,
+            "end": 1.8175
+          },
+          {
+            "text": "C'est la gare dont vous avez parlé pour la correspondance ?",
+            "start": 1.8175,
+            "end": 4.45
+          }
+        ]
+      },
+      {
+        "text": "Imparfait pour le cadre, passé composé pour l'événement, plus-que-parfait pour l'antériorité.",
+        "textSha256": "5e7bab850ebede3e421d92c372603480cffd96021c1e4e889fc658a74a28bf78",
+        "file": "pia/5e7bab850ebede3e421d.m4a",
+        "kind": "teaching",
+        "voiceName": "Pia 18 — vive et fière 1",
+        "voiceAgeImpression": 18,
+        "canonicalAge": 21,
+        "masterSha256": "f7a1d543138edb2a451374c44c5c36f1d0d35b1a9ccd641e7bc490064cbb3977",
+        "audioSha256": "676165b345d820113ccb636829cdfc7223ac3217e59799e7c731b3205fc076e2",
+        "sourceStart": 25.8775,
+        "sourceEnd": 31.0525,
+        "durationSeconds": 5.175,
+        "gainDb": -0.334,
+        "decodeCorrelation": 0.99631,
+        "bytes": 45560,
+        "generatedDate": "2026-11-17",
+        "integratedDate": "2026-11-17",
+        "qaNote": "Exact normalized transcript: medium. Numbers expanded and punctuation ignored.",
+        "sourceTextId": "5e7bab850ebede3e421d92c372603480cffd96021c1e4e889fc658a74a28bf78",
+        "sourceDomains": [
+          "oral"
+        ],
+        "sentences": [
+          {
+            "text": "Imparfait pour le cadre, passé composé pour l'événement, plus-que-parfait pour l'antériorité.",
+            "start": 0.0,
+            "end": 5.175
+          }
+        ]
+      },
+      {
+        "text": "19 h direct, sans supplément",
+        "textSha256": "96972d678fc17225598bd1e2a61c981346708e6d64b83184a4d13433e33bf49c",
+        "file": "pia/96972d678fc17225598b.m4a",
+        "kind": "teaching",
+        "voiceName": "Pia 18 — vive et fière 1",
+        "voiceAgeImpression": 18,
+        "canonicalAge": 21,
+        "masterSha256": "f7a1d543138edb2a451374c44c5c36f1d0d35b1a9ccd641e7bc490064cbb3977",
+        "audioSha256": "b4be446e013089cd32bed4cfeb57588a8de5cc59d19c938f28051dd135dc0455",
+        "sourceStart": 31.0525,
+        "sourceEnd": 33.6525,
+        "durationSeconds": 2.6,
+        "gainDb": -0.117,
+        "decodeCorrelation": 0.99428,
+        "bytes": 23108,
+        "generatedDate": "2026-11-17",
+        "integratedDate": "2026-11-17",
+        "qaNote": "direct/directes share the same pronunciation here; nineteen hours and sans supplément verified.",
+        "sourceTextId": "96972d678fc17225598bd1e2a61c981346708e6d64b83184a4d13433e33bf49c",
+        "sourceDomains": [
+          "oral"
+        ],
+        "sentences": [
+          {
+            "text": "19 h direct, sans supplément",
+            "start": 0.0,
+            "end": 2.6
+          }
+        ]
+      },
+      {
+        "text": "Le train direct est supprimé. Une correspondance à Amiens permet d'arriver ce soir.",
+        "textSha256": "9ca043227924ee6c6088ed55e9307da4e73adbc9626599429d58b2066ff94de2",
+        "file": "pia/9ca043227924ee6c6088.m4a",
+        "kind": "teaching",
+        "voiceName": "Pia 18 — vive et fière 1",
+        "voiceAgeImpression": 18,
+        "canonicalAge": 21,
+        "masterSha256": "f7a1d543138edb2a451374c44c5c36f1d0d35b1a9ccd641e7bc490064cbb3977",
+        "audioSha256": "7b4853d215c53dad26d3bdd52a5de53f876710e2c8e98a525c40b368b382921a",
+        "sourceStart": 33.6525,
+        "sourceEnd": 38.3525,
+        "durationSeconds": 4.7,
+        "gainDb": -1.628,
+        "decodeCorrelation": 0.9964,
+        "bytes": 40983,
+        "generatedDate": "2026-11-17",
+        "integratedDate": "2026-11-17",
+        "qaNote": "Exact normalized transcript: small, medium. Numbers expanded and punctuation ignored.",
+        "sourceTextId": "9ca043227924ee6c6088ed55e9307da4e73adbc9626599429d58b2066ff94de2",
+        "sourceDomains": [
+          "oral"
+        ],
+        "sentences": [
+          {
+            "text": "Le train direct est supprimé.",
+            "start": 0.0,
+            "end": 2.0125
+          },
+          {
+            "text": "Une correspondance à Amiens permet d'arriver ce soir.",
+            "start": 2.0125,
+            "end": 4.7
+          }
+        ]
+      },
+      {
+        "text": "Nous changerons à Amiens pour arriver ce soir, c'est bien ça ?",
+        "textSha256": "dcb222a54e71d26eb95521c6423fdc8b2bbe811502922dabcc0caf8141d44a64",
+        "file": "pia/dcb222a54e71d26eb955.m4a",
+        "kind": "teaching",
+        "voiceName": "Pia 18 — vive et fière 1",
+        "voiceAgeImpression": 18,
+        "canonicalAge": 21,
+        "masterSha256": "f7a1d543138edb2a451374c44c5c36f1d0d35b1a9ccd641e7bc490064cbb3977",
+        "audioSha256": "8a1a75aadec26ea929738976239643917af3c3c625954b87f158efb5142b2db9",
+        "sourceStart": 38.3525,
+        "sourceEnd": 41.6625,
+        "durationSeconds": 3.31,
+        "gainDb": -2.43,
+        "decodeCorrelation": 0.9973,
+        "bytes": 29066,
+        "generatedDate": "2026-11-17",
+        "integratedDate": "2026-11-17",
+        "qaNote": "Exact normalized transcript: small, medium. Numbers expanded and punctuation ignored.",
+        "sourceTextId": "dcb222a54e71d26eb95521c6423fdc8b2bbe811502922dabcc0caf8141d44a64",
+        "sourceDomains": [
+          "oral"
+        ],
+        "sentences": [
+          {
+            "text": "Nous changerons à Amiens pour arriver ce soir, c'est bien ça ?",
+            "start": 0.0,
+            "end": 3.31
+          }
+        ]
+      },
+      {
+        "text": "Correspondance à Amiens, arrivée ce soir",
+        "textSha256": "db0ba466c5de13d6d67c8aba9e2c87f1f17b7c3c94f41f51cdd1360398fd16eb",
+        "file": "pia/db0ba466c5de13d6d67c.m4a",
+        "kind": "teaching",
+        "voiceName": "Pia 18 — vive et fière 1",
+        "voiceAgeImpression": 18,
+        "canonicalAge": 21,
+        "masterSha256": "f7a1d543138edb2a451374c44c5c36f1d0d35b1a9ccd641e7bc490064cbb3977",
+        "audioSha256": "a2052c18494d09a70b1844fd29ab4a248b247b6632c3cb37b201a39c26ed9b19",
+        "sourceStart": 41.6625,
+        "sourceEnd": 44.3525,
+        "durationSeconds": 2.69,
+        "gainDb": -4.321,
+        "decodeCorrelation": 0.99623,
+        "bytes": 22941,
+        "generatedDate": "2026-11-17",
+        "integratedDate": "2026-11-17",
+        "qaNote": "Exact normalized transcript: medium. Numbers expanded and punctuation ignored.",
+        "sourceTextId": "db0ba466c5de13d6d67c8aba9e2c87f1f17b7c3c94f41f51cdd1360398fd16eb",
+        "sourceDomains": [
+          "oral"
+        ],
+        "sentences": [
+          {
+            "text": "Correspondance à Amiens, arrivée ce soir",
+            "start": 0.0,
+            "end": 2.69
+          }
+        ]
+      },
+      {
+        "text": "Bonjour, je vous écoute.",
+        "textSha256": "662b6e626c6812985373f6b5ff8fc5689533cb0421e40682fe256cc62868bc6f",
+        "file": "pia/662b6e626c6812985373.m4a",
+        "kind": "teaching",
+        "voiceName": "Pia 18 — vive et fière 1",
+        "voiceAgeImpression": 18,
+        "canonicalAge": 21,
+        "masterSha256": "f7a1d543138edb2a451374c44c5c36f1d0d35b1a9ccd641e7bc490064cbb3977",
+        "audioSha256": "583beec383581937f756b3914eb3ba95912a9c2048f669cd15753e434e6e686d",
+        "sourceStart": 44.3525,
+        "sourceEnd": 46.06,
+        "durationSeconds": 1.7075,
+        "gainDb": -3.828,
+        "decodeCorrelation": 0.99522,
+        "bytes": 14791,
+        "generatedDate": "2026-11-17",
+        "integratedDate": "2026-11-17",
+        "qaNote": "Exact normalized transcript: small, base. Numbers expanded and punctuation ignored.",
+        "sourceTextId": "662b6e626c6812985373f6b5ff8fc5689533cb0421e40682fe256cc62868bc6f",
+        "sourceDomains": [
+          "oral"
+        ],
+        "sentences": [
+          {
+            "text": "Bonjour, je vous écoute.",
+            "start": 0.0,
+            "end": 1.7075
+          }
+        ]
+      },
+      {
+        "text": "Je voudrais réserver une chambre pour deux personnes ce soir.",
+        "textSha256": "9630e103a1326476b47c6a433633bb1761081913ddfc5f9a543e982a335f39df",
+        "file": "pia/9630e103a1326476b47c.m4a",
+        "kind": "teaching",
+        "voiceName": "Pia 18 — vive et fière 1",
+        "voiceAgeImpression": 18,
+        "canonicalAge": 21,
+        "masterSha256": "f7a1d543138edb2a451374c44c5c36f1d0d35b1a9ccd641e7bc490064cbb3977",
+        "audioSha256": "c4bc56bb1a8255e042a1dbf74f538a9b0487d9275a86c7e6d2006347a8db70e0",
+        "sourceStart": 46.06,
+        "sourceEnd": 48.935,
+        "durationSeconds": 2.875,
+        "gainDb": -2.943,
+        "decodeCorrelation": 0.99429,
+        "bytes": 25943,
+        "generatedDate": "2026-11-17",
+        "integratedDate": "2026-11-17",
+        "qaNote": "Exact normalized transcript: small, base. Numbers expanded and punctuation ignored.",
+        "sourceTextId": "9630e103a1326476b47c6a433633bb1761081913ddfc5f9a543e982a335f39df",
+        "sourceDomains": [
+          "oral"
+        ],
+        "sentences": [
+          {
+            "text": "Je voudrais réserver une chambre pour deux personnes ce soir.",
+            "start": 0.0,
+            "end": 2.875
+          }
+        ]
+      },
+      {
+        "text": "Vérifiez : avez-vous donné le nom et utilisé si + présent pour demander l'accès tardif ?",
+        "textSha256": "e7e54b0ec96188cf242e586158617e0abf64d0709277cfc19a715983fab44034",
+        "file": "pia/e7e54b0ec96188cf242e.m4a",
+        "kind": "teaching",
+        "voiceName": "Pia 18 — vive et fière 1",
+        "voiceAgeImpression": 18,
+        "canonicalAge": 21,
+        "masterSha256": "f7a1d543138edb2a451374c44c5c36f1d0d35b1a9ccd641e7bc490064cbb3977",
+        "audioSha256": "276d7f1c25e742da7c4e63404b8c2175f1a63094f93cf4e878f188ba066ef053",
+        "sourceStart": 48.935,
+        "sourceEnd": 54.5175,
+        "durationSeconds": 5.5825,
+        "gainDb": -2.525,
+        "decodeCorrelation": 0.99726,
+        "bytes": 50507,
+        "generatedDate": "2026-11-17",
+        "integratedDate": "2026-11-17",
+        "qaNote": "Exact normalized transcript: medium. Numbers expanded and punctuation ignored.",
+        "sourceTextId": "e7e54b0ec96188cf242e586158617e0abf64d0709277cfc19a715983fab44034",
+        "sourceDomains": [
+          "oral"
+        ],
+        "sentences": [
+          {
+            "text": "Vérifiez : avez-vous donné le nom et utilisé si + présent pour demander l'accès tardif ?",
+            "start": 0.0,
+            "end": 5.5825
+          }
+        ]
+      },
+      {
+        "text": "Je voudrais réserver une chambre pour deux personnes, au nom de… Si j'arrive à vingt-trois heures, comment pourrai-je entrer ?",
+        "textSha256": "0c33f531358da453677ca1c70758d9706e1c4feb1ad75713a3165ab470305eb6",
+        "file": "pia/0c33f531358da453677c.m4a",
+        "kind": "teaching",
+        "voiceName": "Pia 18 — vive et fière 1",
+        "voiceAgeImpression": 18,
+        "canonicalAge": 21,
+        "masterSha256": "f7a1d543138edb2a451374c44c5c36f1d0d35b1a9ccd641e7bc490064cbb3977",
+        "audioSha256": "56097725134f0b6425ee5bc7dc73aaa75ecac99866f673dd74e55f635ae6ccda",
+        "sourceStart": 54.5175,
+        "sourceEnd": 60.72,
+        "durationSeconds": 6.2025,
+        "gainDb": -2.503,
+        "decodeCorrelation": 0.99726,
+        "bytes": 55494,
+        "generatedDate": "2026-11-17",
+        "integratedDate": "2026-11-17",
+        "qaNote": "au nom de… is a spoken name placeholder, with no invented personal name; ASR d’eux reflects the isolated final vowel. pourrai/pourrais is a common merged pronunciation.",
+        "sourceTextId": "0c33f531358da453677ca1c70758d9706e1c4feb1ad75713a3165ab470305eb6",
+        "sourceDomains": [
+          "oral"
+        ],
+        "sentences": [
+          {
+            "text": "Je voudrais réserver une chambre pour deux personnes, au nom de… Si j'arrive à vingt-trois heures, comment pourrai-je entrer ?",
+            "start": 0.0,
+            "end": 6.2025
+          }
+        ]
+      },
+      {
+        "text": "Il ne nous reste qu'une chambre double à 125 euros.",
+        "textSha256": "c7a13259205ef8970be617b762058ba92ee5a436dc28397661040933079d8f20",
+        "file": "pia/c7a13259205ef8970be6.m4a",
+        "kind": "teaching",
+        "voiceName": "Pia 18 — vive et fière 1",
+        "voiceAgeImpression": 18,
+        "canonicalAge": 21,
+        "masterSha256": "f7a1d543138edb2a451374c44c5c36f1d0d35b1a9ccd641e7bc490064cbb3977",
+        "audioSha256": "9f952254aaa7fb6ae55492673592ceedc3c0ad60cdd7f22eb25c63f5386dc850",
+        "sourceStart": 60.72,
+        "sourceEnd": 63.6875,
+        "durationSeconds": 2.9675,
+        "gainDb": -3.602,
+        "decodeCorrelation": 0.99616,
+        "bytes": 26559,
+        "generatedDate": "2026-11-17",
+        "integratedDate": "2026-11-17",
+        "qaNote": "Exact normalized transcript: small, base. Numbers expanded and punctuation ignored.",
+        "sourceTextId": "c7a13259205ef8970be617b762058ba92ee5a436dc28397661040933079d8f20",
+        "sourceDomains": [
+          "oral"
+        ],
+        "sentences": [
+          {
+            "text": "Il ne nous reste qu'une chambre double à 125 euros.",
+            "start": 0.0,
+            "end": 2.9675
+          }
+        ]
+      },
+      {
+        "text": "Auriez-vous une chambre moins chère ? Notre budget est de 110 euros.",
+        "textSha256": "816316309666a7a8684224138ceab20332cb4f1b02527cdacd4d997ddc30b639",
+        "file": "pia/816316309666a7a86842.m4a",
+        "kind": "teaching",
+        "voiceName": "Pia 18 — vive et fière 1",
+        "voiceAgeImpression": 18,
+        "canonicalAge": 21,
+        "masterSha256": "f7a1d543138edb2a451374c44c5c36f1d0d35b1a9ccd641e7bc490064cbb3977",
+        "audioSha256": "d79e2fc8042fa9cf782ab24e77938a33d74437f4dc0dfd31c2d5b926dfcb0e64",
+        "sourceStart": 63.6875,
+        "sourceEnd": 67.2575,
+        "durationSeconds": 3.57,
+        "gainDb": -2.643,
+        "decodeCorrelation": 0.99478,
+        "bytes": 31796,
+        "generatedDate": "2026-11-17",
+        "integratedDate": "2026-11-17",
+        "qaNote": "Exact normalized transcript: small. Numbers expanded and punctuation ignored.",
+        "sourceTextId": "816316309666a7a8684224138ceab20332cb4f1b02527cdacd4d997ddc30b639",
+        "sourceDomains": [
+          "oral"
+        ],
+        "sentences": [
+          {
+            "text": "Auriez-vous une chambre moins chère ?",
+            "start": 0.0,
+            "end": 1.79
+          },
+          {
+            "text": "Notre budget est de 110 euros.",
+            "start": 1.79,
+            "end": 3.57
+          }
+        ]
+      },
+      {
+        "text": "Nous avons aussi une chambre avec deux lits à 104 euros.",
+        "textSha256": "a162bbce62d6bafa36574017cd205e6b3dd45f3463511543899fcdf77a22047a",
+        "file": "pia/a162bbce62d6bafa3657.m4a",
+        "kind": "teaching",
+        "voiceName": "Pia 18 — vive et fière 1",
+        "voiceAgeImpression": 18,
+        "canonicalAge": 21,
+        "masterSha256": "f7a1d543138edb2a451374c44c5c36f1d0d35b1a9ccd641e7bc490064cbb3977",
+        "audioSha256": "b0c7a34d25f9381db0c16c1ac72a28869c01205ddbe56fce70cde7893a8f0cdd",
+        "sourceStart": 67.2575,
+        "sourceEnd": 70.35,
+        "durationSeconds": 3.0925,
+        "gainDb": -3.257,
+        "decodeCorrelation": 0.9967,
+        "bytes": 27260,
+        "generatedDate": "2026-11-17",
+        "integratedDate": "2026-11-17",
+        "qaNote": "Exact normalized transcript: small, base. Numbers expanded and punctuation ignored.",
+        "sourceTextId": "a162bbce62d6bafa36574017cd205e6b3dd45f3463511543899fcdf77a22047a",
+        "sourceDomains": [
+          "oral"
+        ],
+        "sentences": [
+          {
+            "text": "Nous avons aussi une chambre avec deux lits à 104 euros.",
+            "start": 0.0,
+            "end": 3.0925
+          }
+        ]
+      },
+      {
+        "text": "Je voudrais prendre la chambre à deux lits à 104 euros.",
+        "textSha256": "9a88342f895ec0da8fe9854ee85f3cac2be5a9e065edda37d34dbf0a6ba22a19",
+        "file": "pia/9a88342f895ec0da8fe9.m4a",
+        "kind": "teaching",
+        "voiceName": "Pia 18 — vive et fière 1",
+        "voiceAgeImpression": 18,
+        "canonicalAge": 21,
+        "masterSha256": "f7a1d543138edb2a451374c44c5c36f1d0d35b1a9ccd641e7bc490064cbb3977",
+        "audioSha256": "fa15615c1eaf8eeba60ee99d9718ef0058479132b391ede4c8e90359c7c87923",
+        "sourceStart": 70.35,
+        "sourceEnd": 73.2075,
+        "durationSeconds": 2.8575,
+        "gainDb": -2.327,
+        "decodeCorrelation": 0.99456,
+        "bytes": 24921,
+        "generatedDate": "2026-11-17",
+        "integratedDate": "2026-11-17",
+        "qaNote": "Exact normalized transcript: small, base. Numbers expanded and punctuation ignored.",
+        "sourceTextId": "9a88342f895ec0da8fe9854ee85f3cac2be5a9e065edda37d34dbf0a6ba22a19",
+        "sourceDomains": [
+          "oral"
+        ],
+        "sentences": [
+          {
+            "text": "Je voudrais prendre la chambre à deux lits à 104 euros.",
+            "start": 0.0,
+            "end": 2.8575
+          }
+        ]
+      },
+      {
+        "text": "À quel nom souhaitez-vous réserver ? À quelle heure arriverez-vous ?",
+        "textSha256": "78a2fcd776e833a69fb42e0ebbde21ca983cc2ce960e1929998739ff69bda0fb",
+        "file": "pia/78a2fcd776e833a69fb4.m4a",
+        "kind": "teaching",
+        "voiceName": "Pia 18 — vive et fière 1",
+        "voiceAgeImpression": 18,
+        "canonicalAge": 21,
+        "masterSha256": "f7a1d543138edb2a451374c44c5c36f1d0d35b1a9ccd641e7bc490064cbb3977",
+        "audioSha256": "a35795c61248cb5b1232eb0cf24be0d8932aeaa751a483d1e5378f1acadd4940",
+        "sourceStart": 73.2075,
+        "sourceEnd": 76.7,
+        "durationSeconds": 3.4925,
+        "gainDb": -0.713,
+        "decodeCorrelation": 0.99838,
+        "bytes": 30023,
+        "generatedDate": "2026-11-17",
+        "integratedDate": "2026-11-17",
+        "qaNote": "Exact normalized transcript: medium. Numbers expanded and punctuation ignored.",
+        "sourceTextId": "78a2fcd776e833a69fb42e0ebbde21ca983cc2ce960e1929998739ff69bda0fb",
+        "sourceDomains": [
+          "oral"
+        ],
+        "sentences": [
+          {
+            "text": "À quel nom souhaitez-vous réserver ?",
+            "start": 0.0,
+            "end": 1.915
+          },
+          {
+            "text": "À quelle heure arriverez-vous ?",
+            "start": 1.915,
+            "end": 3.4925
+          }
+        ]
+      },
+      {
+        "text": "Je voudrais réserver au nom de… Nous arriverons à vingt-trois heures. Si nous arrivons après la fermeture, comment pourrons-nous entrer ?",
+        "textSha256": "0f114b2a9cad59c6f8e8e58d5f872c2952d37c1374d7c07c3eebd717b6bd32fc",
+        "file": "pia/0f114b2a9cad59c6f8e8.m4a",
+        "kind": "teaching",
+        "voiceName": "Pia 18 — vive et fière 1",
+        "voiceAgeImpression": 18,
+        "canonicalAge": 21,
+        "masterSha256": "f7a1d543138edb2a451374c44c5c36f1d0d35b1a9ccd641e7bc490064cbb3977",
+        "audioSha256": "3e9083b85a49d9897290ea4576d5da92c5c6658ba29f9af837525b6421431cd3",
+        "sourceStart": 76.7,
+        "sourceEnd": 83.4025,
+        "durationSeconds": 6.7025,
+        "gainDb": -1.619,
+        "decodeCorrelation": 0.99711,
+        "bytes": 58576,
+        "generatedDate": "2026-11-17",
+        "integratedDate": "2026-11-17",
+        "qaNote": "au nom de… is a spoken name placeholder; ASR d’eux reflects the isolated final vowel. All following arrival/access wording matches.",
+        "sourceTextId": "0f114b2a9cad59c6f8e8e58d5f872c2952d37c1374d7c07c3eebd717b6bd32fc",
+        "sourceDomains": [
+          "oral"
+        ],
+        "sentences": [
+          {
+            "text": "Je voudrais réserver au nom de… Nous arriverons à vingt-trois heures.",
+            "start": 0.0,
+            "end": 3.565
+          },
+          {
+            "text": "Si nous arrivons après la fermeture, comment pourrons-nous entrer ?",
+            "start": 3.565,
+            "end": 6.7025
+          }
+        ]
+      },
+      {
+        "text": "Et à quelle heure arriverez-vous ? La réception ne reste pas ouverte toute la nuit.",
+        "textSha256": "bedf9247ca5d1267879868cf9a03db2edcc93bb382c8f53be83d4a57a8efc660",
+        "file": "pia/bedf9247ca5d12678798.m4a",
+        "kind": "teaching",
+        "voiceName": "Pia 18 — vive et fière 1",
+        "voiceAgeImpression": 18,
+        "canonicalAge": 21,
+        "masterSha256": "f7a1d543138edb2a451374c44c5c36f1d0d35b1a9ccd641e7bc490064cbb3977",
+        "audioSha256": "4497583a8785ac455a5acf6730ec48029d8657cb7907e60c1e1acf366bdc4d3b",
+        "sourceStart": 83.4025,
+        "sourceEnd": 87.5325,
+        "durationSeconds": 4.13,
+        "gainDb": -2.703,
+        "decodeCorrelation": 0.99609,
+        "bytes": 36097,
+        "generatedDate": "2026-11-17",
+        "integratedDate": "2026-11-17",
+        "qaNote": "Exact normalized transcript: small. Numbers expanded and punctuation ignored.",
+        "sourceTextId": "bedf9247ca5d1267879868cf9a03db2edcc93bb382c8f53be83d4a57a8efc660",
+        "sourceDomains": [
+          "oral"
+        ],
+        "sentences": [
+          {
+            "text": "Et à quelle heure arriverez-vous ?",
+            "start": 0.0,
+            "end": 1.5625
+          },
+          {
+            "text": "La réception ne reste pas ouverte toute la nuit.",
+            "start": 1.5625,
+            "end": 4.13
+          }
+        ]
+      },
+      {
+        "text": "Nous arriverons à vingt-trois heures. Comment pourrai-je entrer si la réception est fermée ?",
+        "textSha256": "f7a4951b320aa44417344864d17e1c28bcd27c5771af50000578d685f005a7a0",
+        "file": "pia/f7a4951b320aa4441734.m4a",
+        "kind": "teaching",
+        "voiceName": "Pia 18 — vive et fière 1",
+        "voiceAgeImpression": 18,
+        "canonicalAge": 21,
+        "masterSha256": "f7a1d543138edb2a451374c44c5c36f1d0d35b1a9ccd641e7bc490064cbb3977",
+        "audioSha256": "6bff14c329afd4f39ad7e0709483b9970eb313126817df55f1a9f090176bf75e",
+        "sourceStart": 87.5325,
+        "sourceEnd": 92.015,
+        "durationSeconds": 4.4825,
+        "gainDb": -1.934,
+        "decodeCorrelation": 0.99744,
+        "bytes": 38470,
+        "generatedDate": "2026-11-17",
+        "integratedDate": "2026-11-17",
+        "qaNote": "pourrai/pourrais is a common merged pronunciation; the complete arrival and access question otherwise matches.",
+        "sourceTextId": "f7a4951b320aa44417344864d17e1c28bcd27c5771af50000578d685f005a7a0",
+        "sourceDomains": [
+          "oral"
+        ],
+        "sentences": [
+          {
+            "text": "Nous arriverons à vingt-trois heures.",
+            "start": 0.0,
+            "end": 2.0625
+          },
+          {
+            "text": "Comment pourrai-je entrer si la réception est fermée ?",
+            "start": 2.0625,
+            "end": 4.4825
+          }
+        ]
+      },
+      {
+        "text": "Il me manque le nom pour la réservation.",
+        "textSha256": "fdf5dadd6fe9c6e404b8440a28be8d2604a1f0ff53bc7ddaa41efee42e5467f3",
+        "file": "pia/fdf5dadd6fe9c6e404b8.m4a",
+        "kind": "teaching",
+        "voiceName": "Pia 18 — vive et fière 1",
+        "voiceAgeImpression": 18,
+        "canonicalAge": 21,
+        "masterSha256": "f7a1d543138edb2a451374c44c5c36f1d0d35b1a9ccd641e7bc490064cbb3977",
+        "audioSha256": "cb8a46830fdc89f81b634da810b2ff520e458e3fe30e735893d07b0ffcc30349",
+        "sourceStart": 92.015,
+        "sourceEnd": 94.155,
+        "durationSeconds": 2.14,
+        "gainDb": -4.945,
+        "decodeCorrelation": 0.99756,
+        "bytes": 18861,
+        "generatedDate": "2026-11-17",
+        "integratedDate": "2026-11-17",
+        "qaNote": "Exact normalized transcript: small, base. Numbers expanded and punctuation ignored.",
+        "sourceTextId": "fdf5dadd6fe9c6e404b8440a28be8d2604a1f0ff53bc7ddaa41efee42e5467f3",
+        "sourceDomains": [
+          "oral"
+        ],
+        "sentences": [
+          {
+            "text": "Il me manque le nom pour la réservation.",
+            "start": 0.0,
+            "end": 2.14
+          }
+        ]
+      },
+      {
+        "text": "Je voudrais réserver au nom de…",
+        "textSha256": "02fe8b2f8c7254874189a5528151f1f17d3fb6757ae6038bacfff2e344ce86c8",
+        "file": "pia/02fe8b2f8c7254874189.m4a",
+        "kind": "teaching",
+        "voiceName": "Pia 18 — vive et fière 1",
+        "voiceAgeImpression": 18,
+        "canonicalAge": 21,
+        "masterSha256": "f7a1d543138edb2a451374c44c5c36f1d0d35b1a9ccd641e7bc490064cbb3977",
+        "audioSha256": "ec6c0cb7ece909d66a7af9926899db18144bdb86f53907e6b561f3fe072416f5",
+        "sourceStart": 94.155,
+        "sourceEnd": 96.06,
+        "durationSeconds": 1.905,
+        "gainDb": -1.424,
+        "decodeCorrelation": 0.99547,
+        "bytes": 16134,
+        "generatedDate": "2026-11-17",
+        "integratedDate": "2026-11-17",
+        "qaNote": "Exact normalized transcript: small, base. Numbers expanded and punctuation ignored.",
+        "sourceTextId": "02fe8b2f8c7254874189a5528151f1f17d3fb6757ae6038bacfff2e344ce86c8",
+        "sourceDomains": [
+          "oral"
+        ],
+        "sentences": [
+          {
+            "text": "Je voudrais réserver au nom de…",
+            "start": 0.0,
+            "end": 1.905
+          }
+        ]
+      },
+      {
+        "text": "La réception ferme à 22 heures, mais on peut vous envoyer un code par SMS.",
+        "textSha256": "d1fcad1d3563634c8493cec5ca12dbe98c95925f4adbb61e9cb93580cc4e66af",
+        "file": "pia/d1fcad1d3563634c8493.m4a",
+        "kind": "teaching",
+        "voiceName": "Pia 18 — vive et fière 1",
+        "voiceAgeImpression": 18,
+        "canonicalAge": 21,
+        "masterSha256": "f7a1d543138edb2a451374c44c5c36f1d0d35b1a9ccd641e7bc490064cbb3977",
+        "audioSha256": "05e5a48357dc58516d24939547bc8232d9179f60c100adc2f65d811bdfc42fff",
+        "sourceStart": 96.06,
+        "sourceEnd": 99.88,
+        "durationSeconds": 3.82,
+        "gainDb": -1.834,
+        "decodeCorrelation": 0.99695,
+        "bytes": 33533,
+        "generatedDate": "2026-11-17",
+        "integratedDate": "2026-11-17",
+        "qaNote": "Exact normalized transcript: small, base. Numbers expanded and punctuation ignored.",
+        "sourceTextId": "d1fcad1d3563634c8493cec5ca12dbe98c95925f4adbb61e9cb93580cc4e66af",
+        "sourceDomains": [
+          "oral"
+        ],
+        "sentences": [
+          {
+            "text": "La réception ferme à 22 heures, mais on peut vous envoyer un code par SMS.",
+            "start": 0.0,
+            "end": 3.82
+          }
+        ]
+      },
+      {
+        "text": "Vous m'envoyez le code par SMS, et je pourrai entrer à vingt-trois heures, c'est bien ça ?",
+        "textSha256": "c3b3aaabcd0c60096d2a37b9a77da2563fa5b05c54cd5c330b6945343554ca9f",
+        "file": "pia/c3b3aaabcd0c60096d2a.m4a",
+        "kind": "teaching",
+        "voiceName": "Pia 18 — vive et fière 1",
+        "voiceAgeImpression": 18,
+        "canonicalAge": 21,
+        "masterSha256": "3f9a31a5ede87ffc21c1ebf1bbe7eafa604b4384a367e94c54e28e1db522e57e",
+        "audioSha256": "a5162525154d5ffbf918c0eb691f1be358e97f56979ace7ed4f04a2b308eb0bf",
+        "sourceStart": 0.0,
+        "sourceEnd": 4.4375,
+        "durationSeconds": 4.4375,
+        "gainDb": -2.379,
+        "decodeCorrelation": 0.98956,
+        "bytes": 38609,
+        "generatedDate": "2026-11-17",
+        "integratedDate": "2026-11-17",
+        "qaNote": "Exact normalized transcript: small. Numbers expanded and punctuation ignored.",
+        "sourceTextId": "c3b3aaabcd0c60096d2a37b9a77da2563fa5b05c54cd5c330b6945343554ca9f",
+        "sourceDomains": [
+          "oral"
+        ],
+        "sentences": [
+          {
+            "text": "Vous m'envoyez le code par SMS, et je pourrai entrer à vingt-trois heures, c'est bien ça ?",
+            "start": 0.0,
+            "end": 4.4375
+          }
+        ]
+      },
+      {
+        "text": "Oui, nous pouvons envoyer le code par mail. Vous pourrez entrer à 23 heures.",
+        "textSha256": "53ecf4a868919cc56137de35ca1caf273bd2c09e4875b34b7039485a1fa29479",
+        "file": "pia/53ecf4a868919cc56137.m4a",
+        "kind": "teaching",
+        "voiceName": "Pia 18 — vive et fière 1",
+        "voiceAgeImpression": 18,
+        "canonicalAge": 21,
+        "masterSha256": "3f9a31a5ede87ffc21c1ebf1bbe7eafa604b4384a367e94c54e28e1db522e57e",
+        "audioSha256": "36d389dd8866460a7f9a4853dd3679cf5d0f40d83bccb1d56ba20dbf57554e96",
+        "sourceStart": 4.4375,
+        "sourceEnd": 8.745,
+        "durationSeconds": 4.3075,
+        "gainDb": -2.364,
+        "decodeCorrelation": 0.9889,
+        "bytes": 37823,
+        "generatedDate": "2026-11-17",
+        "integratedDate": "2026-11-17",
+        "qaNote": "Exact normalized transcript: small. Numbers expanded and punctuation ignored.",
+        "sourceTextId": "53ecf4a868919cc56137de35ca1caf273bd2c09e4875b34b7039485a1fa29479",
+        "sourceDomains": [
+          "oral"
+        ],
+        "sentences": [
+          {
+            "text": "Oui, nous pouvons envoyer le code par mail.",
+            "start": 0.0,
+            "end": 2.4225
+          },
+          {
+            "text": "Vous pourrez entrer à 23 heures.",
+            "start": 2.4225,
+            "end": 4.3075
+          }
+        ]
+      },
+      {
+        "text": "Merci. Je confirme le code par mail et notre arrivée à vingt-trois heures.",
+        "textSha256": "afee950ba5a7868b0d565b0511238ac900607fc97c72dcc5720674d34086bd3b",
+        "file": "pia/afee950ba5a7868b0d56.m4a",
+        "kind": "teaching",
+        "voiceName": "Pia 18 — vive et fière 1",
+        "voiceAgeImpression": 18,
+        "canonicalAge": 21,
+        "masterSha256": "3f9a31a5ede87ffc21c1ebf1bbe7eafa604b4384a367e94c54e28e1db522e57e",
+        "audioSha256": "49fd546964b43f01ab784c4199f3bcec5c61534d5c5841ec853e4012d8f98d99",
+        "sourceStart": 8.745,
+        "sourceEnd": 12.81,
+        "durationSeconds": 4.065,
+        "gainDb": 0.423,
+        "decodeCorrelation": 0.99603,
+        "bytes": 35265,
+        "generatedDate": "2026-11-17",
+        "integratedDate": "2026-11-17",
+        "qaNote": "Exact normalized transcript: small, base. Numbers expanded and punctuation ignored.",
+        "sourceTextId": "afee950ba5a7868b0d565b0511238ac900607fc97c72dcc5720674d34086bd3b",
+        "sourceDomains": [
+          "oral"
+        ],
+        "sentences": [
+          {
+            "text": "Merci.",
+            "start": 0.0,
+            "end": 0.74
+          },
+          {
+            "text": "Je confirme le code par mail et notre arrivée à vingt-trois heures.",
+            "start": 0.74,
+            "end": 4.065
+          }
+        ]
+      },
+      {
+        "text": "La réception ferme à 22 heures. Votre téléphone ne reçoit pas les SMS ; nous pouvons vous envoyer un code par mail.",
+        "textSha256": "109a5c86dd15089b86b766b30274fa066fcbf90e767dc453928154956af72712",
+        "file": "pia/109a5c86dd15089b86b7.m4a",
+        "kind": "teaching",
+        "voiceName": "Pia 18 — vive et fière 1",
+        "voiceAgeImpression": 18,
+        "canonicalAge": 21,
+        "masterSha256": "3f9a31a5ede87ffc21c1ebf1bbe7eafa604b4384a367e94c54e28e1db522e57e",
+        "audioSha256": "d83936da6f383edba3265d2dfb8fc738b7eebbf7540c613621e6e0028667f53b",
+        "sourceStart": 12.81,
+        "sourceEnd": 18.77,
+        "durationSeconds": 5.96,
+        "gainDb": 1.188,
+        "decodeCorrelation": 0.99027,
+        "bytes": 52190,
+        "generatedDate": "2026-11-17",
+        "integratedDate": "2026-11-17",
+        "qaNote": "Exact normalized transcript: small, base. Numbers expanded and punctuation ignored.",
+        "sourceTextId": "109a5c86dd15089b86b766b30274fa066fcbf90e767dc453928154956af72712",
+        "sourceDomains": [
+          "oral"
+        ],
+        "sentences": [
+          {
+            "text": "La réception ferme à 22 heures.",
+            "start": 0.0,
+            "end": 1.9275
+          },
+          {
+            "text": "Votre téléphone ne reçoit pas les SMS ; nous pouvons vous envoyer un code par mail.",
+            "start": 1.9275,
+            "end": 5.96
+          }
+        ]
+      },
+      {
+        "text": "Vous pouvez donc envoyer le code par mail. Je pourrai entrer à vingt-trois heures, c’est bien ça ?",
+        "textSha256": "8f54c082bd6c787e8b70b8a7b23aa506c1afddbdcc1f3a55c9c6ec0f76596c75",
+        "file": "pia/8f54c082bd6c787e8b70.m4a",
+        "kind": "teaching",
+        "voiceName": "Pia 18 — vive et fière 1",
+        "voiceAgeImpression": 18,
+        "canonicalAge": 21,
+        "masterSha256": "3f9a31a5ede87ffc21c1ebf1bbe7eafa604b4384a367e94c54e28e1db522e57e",
+        "audioSha256": "f70ad506c9fe06575b23150bbeaadaa3298c625b79a36889ad85b5cd8038c6e0",
+        "sourceStart": 18.77,
+        "sourceEnd": 23.8975,
+        "durationSeconds": 5.1275,
+        "gainDb": -1.177,
+        "decodeCorrelation": 0.99648,
+        "bytes": 45131,
+        "generatedDate": "2026-11-17",
+        "integratedDate": "2026-11-17",
+        "qaNote": "Exact normalized transcript: small. Numbers expanded and punctuation ignored.",
+        "sourceTextId": "8f54c082bd6c787e8b70b8a7b23aa506c1afddbdcc1f3a55c9c6ec0f76596c75",
+        "sourceDomains": [
+          "oral"
+        ],
+        "sentences": [
+          {
+            "text": "Vous pouvez donc envoyer le code par mail.",
+            "start": 0.0,
+            "end": 2.455
+          },
+          {
+            "text": "Je pourrai entrer à vingt-trois heures, c’est bien ça ?",
+            "start": 2.455,
+            "end": 5.1275
+          }
+        ]
+      },
+      {
+        "text": "On nous a annoncé que le train serait annulé. Bien que nous ayons payé, aucun transport n'a été proposé.",
+        "textSha256": "f11da56df33f3a72a58a2aa747810a7608b08825ccfe139443b56da033c6936b",
+        "file": "pia/f11da56df33f3a72a58a.m4a",
+        "kind": "teaching",
+        "voiceName": "Pia 18 — vive et fière 1",
+        "voiceAgeImpression": 18,
+        "canonicalAge": 21,
+        "masterSha256": "3f9a31a5ede87ffc21c1ebf1bbe7eafa604b4384a367e94c54e28e1db522e57e",
+        "audioSha256": "d2e14e42da9cd8d9c75eff379a2da7b4a42a26e8e52c8e2912303772d5707af2",
+        "sourceStart": 23.8975,
+        "sourceEnd": 29.0125,
+        "durationSeconds": 5.115,
+        "gainDb": -1.944,
+        "decodeCorrelation": 0.99377,
+        "bytes": 45218,
+        "generatedDate": "2026-11-17",
+        "integratedDate": "2026-11-17",
+        "qaNote": "Exact normalized transcript: small, base. Numbers expanded and punctuation ignored.",
+        "sourceTextId": "f11da56df33f3a72a58a2aa747810a7608b08825ccfe139443b56da033c6936b",
+        "sourceDomains": [
+          "oral"
+        ],
+        "sentences": [
+          {
+            "text": "On nous a annoncé que le train serait annulé.",
+            "start": 0.0,
+            "end": 2.3725
+          },
+          {
+            "text": "Bien que nous ayons payé, aucun transport n'a été proposé.",
+            "start": 2.3725,
+            "end": 5.115
+          }
+        ]
+      },
+      {
+        "text": "Si vous présentez le billet et confirmez l'absence de remplacement, nous pouvons demander un remboursement.",
+        "textSha256": "33ed2ebcaecbfd5123771c725628df090c2600c3b7b5c65bbde14da434febdc7",
+        "file": "pia/33ed2ebcaecbfd512377.m4a",
+        "kind": "teaching",
+        "voiceName": "Pia 18 — vive et fière 1",
+        "voiceAgeImpression": 18,
+        "canonicalAge": 21,
+        "masterSha256": "3f9a31a5ede87ffc21c1ebf1bbe7eafa604b4384a367e94c54e28e1db522e57e",
+        "audioSha256": "ad6fa522f647b7a78848d19d7ad1a8a1707c7e7967036c99cc6d85649198b7bf",
+        "sourceStart": 29.0125,
+        "sourceEnd": 34.5475,
+        "durationSeconds": 5.535,
+        "gainDb": -0.985,
+        "decodeCorrelation": 0.99702,
+        "bytes": 48315,
+        "generatedDate": "2026-11-17",
+        "integratedDate": "2026-11-17",
+        "qaNote": "Exact normalized transcript: small, base. Numbers expanded and punctuation ignored.",
+        "sourceTextId": "33ed2ebcaecbfd5123771c725628df090c2600c3b7b5c65bbde14da434febdc7",
+        "sourceDomains": [
+          "oral"
+        ],
+        "sentences": [
+          {
+            "text": "Si vous présentez le billet et confirmez l'absence de remplacement, nous pouvons demander un remboursement.",
+            "start": 0.0,
+            "end": 5.535
+          }
+        ]
+      },
+      {
+        "text": "Je joins le billet et la preuve qu'aucun remplacement n'était disponible. Je demande le remboursement.",
+        "textSha256": "783bcaa27a5884d0ca6b249e43817025ff5ee7697474436df7c20fa0a70993f7",
+        "file": "pia/783bcaa27a5884d0ca6b.m4a",
+        "kind": "teaching",
+        "voiceName": "Pia 18 — vive et fière 1",
+        "voiceAgeImpression": 18,
+        "canonicalAge": 21,
+        "masterSha256": "3f9a31a5ede87ffc21c1ebf1bbe7eafa604b4384a367e94c54e28e1db522e57e",
+        "audioSha256": "fa19c784c54bdd68d8ae9d28e63a00804033554f456bd48896e3cd18e76ca5f5",
+        "sourceStart": 34.5475,
+        "sourceEnd": 39.735,
+        "durationSeconds": 5.1875,
+        "gainDb": -1.522,
+        "decodeCorrelation": 0.99636,
+        "bytes": 45803,
+        "generatedDate": "2026-11-17",
+        "integratedDate": "2026-11-17",
+        "qaNote": "joins/joint are homophones; small-model transcript has all other words verbatim.",
+        "sourceTextId": "783bcaa27a5884d0ca6b249e43817025ff5ee7697474436df7c20fa0a70993f7",
+        "sourceDomains": [
+          "oral"
+        ],
+        "sentences": [
+          {
+            "text": "Je joins le billet et la preuve qu'aucun remplacement n'était disponible.",
+            "start": 0.0,
+            "end": 3.675
+          },
+          {
+            "text": "Je demande le remboursement.",
+            "start": 3.675,
+            "end": 5.1875
+          }
+        ]
+      },
+      {
+        "text": "Avoir proposé, remboursement non confirmé",
+        "textSha256": "f0271e352e3f6380708225bfab0705b93d00273f83c060e62ab3e503984d88ec",
+        "file": "pia/f0271e352e3f63807082.m4a",
+        "kind": "teaching",
+        "voiceName": "Pia 18 — vive et fière 1",
+        "voiceAgeImpression": 18,
+        "canonicalAge": 21,
+        "masterSha256": "3f9a31a5ede87ffc21c1ebf1bbe7eafa604b4384a367e94c54e28e1db522e57e",
+        "audioSha256": "ce3e421da9872beb5196a42da8ff4dca2cd6cde2fc672bb1b1aea2030d2eb94c",
+        "sourceStart": 39.735,
+        "sourceEnd": 42.9025,
+        "durationSeconds": 3.1675,
+        "gainDb": 0.718,
+        "decodeCorrelation": 0.99242,
+        "bytes": 28680,
+        "generatedDate": "2026-11-17",
+        "integratedDate": "2026-11-17",
+        "qaNote": "Exact normalized transcript: small, base. Numbers expanded and punctuation ignored.",
+        "sourceTextId": "f0271e352e3f6380708225bfab0705b93d00273f83c060e62ab3e503984d88ec",
+        "sourceDomains": [
+          "oral"
+        ],
+        "sentences": [
+          {
+            "text": "Avoir proposé, remboursement non confirmé",
+            "start": 0.0,
+            "end": 3.1675
+          }
+        ]
+      },
+      {
+        "text": "Je demande un remboursement parce qu'aucune solution utilisable n'a été proposée. Je joins les justificatifs.",
+        "textSha256": "5fc1c86bd6bbf9b97dd8394a29c2896fd5b200c5070e95bc3c8a02513049cb7f",
+        "file": "pia/5fc1c86bd6bbf9b97dd8.m4a",
+        "kind": "teaching",
+        "voiceName": "Pia 18 — vive et fière 1",
+        "voiceAgeImpression": 18,
+        "canonicalAge": 21,
+        "masterSha256": "3f9a31a5ede87ffc21c1ebf1bbe7eafa604b4384a367e94c54e28e1db522e57e",
+        "audioSha256": "bcc0cb3400bb329dd92ba51bcb4874b9bd72b0f86c26de76292b605e0b8b2a13",
+        "sourceStart": 42.9025,
+        "sourceEnd": 48.62,
+        "durationSeconds": 5.7175,
+        "gainDb": -1.307,
+        "decodeCorrelation": 0.99142,
+        "bytes": 50986,
+        "generatedDate": "2026-11-17",
+        "integratedDate": "2026-11-17",
+        "qaNote": "joins/joint are homophones; full reimbursement justification otherwise matches.",
+        "sourceTextId": "5fc1c86bd6bbf9b97dd8394a29c2896fd5b200c5070e95bc3c8a02513049cb7f",
+        "sourceDomains": [
+          "oral"
+        ],
+        "sentences": [
+          {
+            "text": "Je demande un remboursement parce qu'aucune solution utilisable n'a été proposée.",
+            "start": 0.0,
+            "end": 4.03
+          },
+          {
+            "text": "Je joins les justificatifs.",
+            "start": 4.03,
+            "end": 5.7175
+          }
+        ]
+      },
+      {
+        "text": "Dans un récit au passé, futur → conditionnel ; justifiez avec parce que.",
+        "textSha256": "4721704ffa3db139d1e1d21b807822b5a68c64eae185a4c82b6e39abb7116c07",
+        "file": "pia/4721704ffa3db139d1e1.m4a",
+        "kind": "teaching",
+        "voiceName": "Pia 18 — vive et fière 1",
+        "voiceAgeImpression": 18,
+        "canonicalAge": 21,
+        "masterSha256": "3f9a31a5ede87ffc21c1ebf1bbe7eafa604b4384a367e94c54e28e1db522e57e",
+        "audioSha256": "4d60fc4f15042e0744de973c3229ed2e72d205a75ff339de1c2843d0bf453a0c",
+        "sourceStart": 48.62,
+        "sourceEnd": 53.6325,
+        "durationSeconds": 5.0125,
+        "gainDb": 0.91,
+        "decodeCorrelation": 0.99404,
+        "bytes": 44006,
+        "generatedDate": "2026-11-17",
+        "integratedDate": "2026-11-17",
+        "qaNote": "justifiez/justifier are homophones; arrow in the written grammar cue is a pause between futur and conditionnel.",
+        "sourceTextId": "4721704ffa3db139d1e1d21b807822b5a68c64eae185a4c82b6e39abb7116c07",
+        "sourceDomains": [
+          "oral"
+        ],
+        "sentences": [
+          {
+            "text": "Dans un récit au passé, futur → conditionnel ; justifiez avec parce que.",
+            "start": 0.0,
+            "end": 5.0125
+          }
+        ]
+      },
+      {
+        "text": "Demande de remboursement avec billet et justificatif",
+        "textSha256": "33bb2425031c5b800530dae07c622ad5e94b5b80c48970770630ba2b551f952b",
+        "file": "pia/33bb2425031c5b800530.m4a",
+        "kind": "teaching",
+        "voiceName": "Pia 18 — vive et fière 1",
+        "voiceAgeImpression": 18,
+        "canonicalAge": 21,
+        "masterSha256": "3f9a31a5ede87ffc21c1ebf1bbe7eafa604b4384a367e94c54e28e1db522e57e",
+        "audioSha256": "b6e0f4932014e250930573f15f752529426619408132320006d706ab244d7978",
+        "sourceStart": 53.6325,
+        "sourceEnd": 56.4875,
+        "durationSeconds": 2.855,
+        "gainDb": 1.685,
+        "decodeCorrelation": 0.99758,
+        "bytes": 27534,
+        "generatedDate": "2026-11-17",
+        "integratedDate": "2026-11-17",
+        "qaNote": "Exact normalized transcript: small. Numbers expanded and punctuation ignored.",
+        "sourceTextId": "33bb2425031c5b800530dae07c622ad5e94b5b80c48970770630ba2b551f952b",
+        "sourceDomains": [
+          "oral"
+        ],
+        "sentences": [
+          {
+            "text": "Demande de remboursement avec billet et justificatif",
+            "start": 0.0,
+            "end": 2.855
+          }
+        ]
+      },
+      {
+        "text": "Un bus de remplacement existait, mais il était inaccessible à votre accompagnateur à mobilité réduite.",
+        "textSha256": "efc4f96a9a326a71546d8954441f1e8a8e923c7410fc29845b28034cf2d4f7ea",
+        "file": "pia/efc4f96a9a326a71546d.m4a",
+        "kind": "teaching",
+        "voiceName": "Pia 18 — vive et fière 1",
+        "voiceAgeImpression": 18,
+        "canonicalAge": 21,
+        "masterSha256": "3f9a31a5ede87ffc21c1ebf1bbe7eafa604b4384a367e94c54e28e1db522e57e",
+        "audioSha256": "dd0fe4bfe3d7ef53518f3b82b155c2b352c9ef71317b8d777d794879a5cd405c",
+        "sourceStart": 56.4875,
+        "sourceEnd": 62.045,
+        "durationSeconds": 5.5575,
+        "gainDb": -0.354,
+        "decodeCorrelation": 0.99573,
+        "bytes": 50490,
+        "generatedDate": "2026-11-17",
+        "integratedDate": "2026-11-17",
+        "qaNote": "Exact normalized transcript: small, base. Numbers expanded and punctuation ignored.",
+        "sourceTextId": "efc4f96a9a326a71546d8954441f1e8a8e923c7410fc29845b28034cf2d4f7ea",
+        "sourceDomains": [
+          "oral"
+        ],
+        "sentences": [
+          {
+            "text": "Un bus de remplacement existait, mais il était inaccessible à votre accompagnateur à mobilité réduite.",
+            "start": 0.0,
+            "end": 5.5575
+          }
+        ]
+      },
+      {
+        "text": "Le bus était inaccessible à mon accompagnateur. Je joins un justificatif et je demande un réexamen.",
+        "textSha256": "effe7a6d5db374e3d6c29d288d54f17ad39d0091452d4680dfcd0a57a8c18235",
+        "file": "pia/effe7a6d5db374e3d6c2.m4a",
+        "kind": "teaching",
+        "voiceName": "Pia 18 — vive et fière 1",
+        "voiceAgeImpression": 18,
+        "canonicalAge": 21,
+        "masterSha256": "3f9a31a5ede87ffc21c1ebf1bbe7eafa604b4384a367e94c54e28e1db522e57e",
+        "audioSha256": "325709f30b0ff4a2e3cf35bd0c0571b78ee5d3cdcf30a074cc42925be92ec22f",
+        "sourceStart": 62.045,
+        "sourceEnd": 67.2525,
+        "durationSeconds": 5.2075,
+        "gainDb": 0.562,
+        "decodeCorrelation": 0.99642,
+        "bytes": 46653,
+        "generatedDate": "2026-11-17",
+        "integratedDate": "2026-11-17",
+        "qaNote": "Exact normalized transcript: medium. Numbers expanded and punctuation ignored.",
+        "sourceTextId": "effe7a6d5db374e3d6c29d288d54f17ad39d0091452d4680dfcd0a57a8c18235",
+        "sourceDomains": [
+          "oral"
+        ],
+        "sentences": [
+          {
+            "text": "Le bus était inaccessible à mon accompagnateur.",
+            "start": 0.0,
+            "end": 2.615
+          },
+          {
+            "text": "Je joins un justificatif et je demande un réexamen.",
+            "start": 2.615,
+            "end": 5.2075
+          }
+        ]
+      },
+      {
+        "text": "Expliquer l'inaccessibilité et demander un réexamen avec justificatif",
+        "textSha256": "11096fa2ef7f0d8637c675d4f909960c7dabdf5923cedaa124a13898ccc04182",
+        "file": "pia/11096fa2ef7f0d8637c6.m4a",
+        "kind": "teaching",
+        "voiceName": "Pia 18 — vive et fière 1",
+        "voiceAgeImpression": 18,
+        "canonicalAge": 21,
+        "masterSha256": "3f9a31a5ede87ffc21c1ebf1bbe7eafa604b4384a367e94c54e28e1db522e57e",
+        "audioSha256": "3a36563c678c8bb1e8e2d0790c2700ab93bb89091ed4d56e317eba3342ab1e03",
+        "sourceStart": 67.2525,
+        "sourceEnd": 71.615,
+        "durationSeconds": 4.3625,
+        "gainDb": 1.539,
+        "decodeCorrelation": 0.99476,
+        "bytes": 38873,
+        "generatedDate": "2026-11-17",
+        "integratedDate": "2026-11-17",
+        "qaNote": "Exact normalized transcript: small. Numbers expanded and punctuation ignored.",
+        "sourceTextId": "11096fa2ef7f0d8637c675d4f909960c7dabdf5923cedaa124a13898ccc04182",
+        "sourceDomains": [
+          "oral"
+        ],
+        "sentences": [
+          {
+            "text": "Expliquer l'inaccessibilité et demander un réexamen avec justificatif",
+            "start": 0.0,
+            "end": 4.3625
+          }
+        ]
+      },
+      {
+        "text": "On attendait le bateau quand l'orage a éclaté. Nous avions déjà acheté les billets, alors nous avons cherché un hôtel.",
+        "textSha256": "d490ecc871a8ae58ad9cb0cbebf128b1536a0f29ee37a1e7293a81154cb6da5e",
+        "file": "pia/d490ecc871a8ae58ad9c.m4a",
+        "kind": "teaching",
+        "voiceName": "Pia 18 — vive et fière 1",
+        "voiceAgeImpression": 18,
+        "canonicalAge": 21,
+        "masterSha256": "3f9a31a5ede87ffc21c1ebf1bbe7eafa604b4384a367e94c54e28e1db522e57e",
+        "audioSha256": "e2368fc7991930430b49cc115e6580e6010b9119fb3208f58e5d246767b0ff44",
+        "sourceStart": 71.615,
+        "sourceEnd": 77.19,
+        "durationSeconds": 5.575,
+        "gainDb": 0.994,
+        "decodeCorrelation": 0.997,
+        "bytes": 49142,
+        "generatedDate": "2026-11-17",
+        "integratedDate": "2026-11-17",
+        "qaNote": "Exact normalized transcript: small. Numbers expanded and punctuation ignored.",
+        "sourceTextId": "d490ecc871a8ae58ad9cb0cbebf128b1536a0f29ee37a1e7293a81154cb6da5e",
+        "sourceDomains": [
+          "oral"
+        ],
+        "sentences": [
+          {
+            "text": "On attendait le bateau quand l'orage a éclaté.",
+            "start": 0.0,
+            "end": 2.3175
+          },
+          {
+            "text": "Nous avions déjà acheté les billets, alors nous avons cherché un hôtel.",
+            "start": 2.3175,
+            "end": 5.575
+          }
+        ]
+      },
+      {
+        "text": "Commencez par le fait antérieur, puis le cadre et enfin l'événement : « Ayant déjà acheté nos billets… »",
+        "textSha256": "dd9eeaa529499f15cec85da9141d9d4b71c784ebb54b6355138103aaaa218273",
+        "file": "pia/dd9eeaa529499f15cec8.m4a",
+        "kind": "teaching",
+        "voiceName": "Pia 18 — vive et fière 1",
+        "voiceAgeImpression": 18,
+        "canonicalAge": 21,
+        "masterSha256": "3f9a31a5ede87ffc21c1ebf1bbe7eafa604b4384a367e94c54e28e1db522e57e",
+        "audioSha256": "11af712c1e99655ba50c87ad06811cfbbf54eb524cd0e15f413343f96f56c63d",
+        "sourceStart": 77.19,
+        "sourceEnd": 82.78,
+        "durationSeconds": 5.59,
+        "gainDb": 0.772,
+        "decodeCorrelation": 0.99719,
+        "bytes": 50612,
+        "generatedDate": "2026-11-17",
+        "integratedDate": "2026-11-17",
+        "qaNote": "Commencez/commencer are homophones; quoted participle construction and full instruction otherwise match.",
+        "sourceTextId": "dd9eeaa529499f15cec85da9141d9d4b71c784ebb54b6355138103aaaa218273",
+        "sourceDomains": [
+          "oral"
+        ],
+        "sentences": [
+          {
+            "text": "Commencez par le fait antérieur, puis le cadre et enfin l'événement : « Ayant déjà acheté nos billets… »",
+            "start": 0.0,
+            "end": 5.59
+          }
+        ]
+      },
+      {
+        "text": "Préciser l'achat antérieur et proposer un récit soutenu",
+        "textSha256": "62e73ed77c0ec3882e07a2b93524c49ccc22bad08135f72788396df4cd96f2d6",
+        "file": "pia/62e73ed77c0ec3882e07.m4a",
+        "kind": "teaching",
+        "voiceName": "Pia 18 — vive et fière 1",
+        "voiceAgeImpression": 18,
+        "canonicalAge": 21,
+        "masterSha256": "3f9a31a5ede87ffc21c1ebf1bbe7eafa604b4384a367e94c54e28e1db522e57e",
+        "audioSha256": "4eabb3d48a8e6f874e2c09984cbbc2ee36bdc658fd68d59928afb6f761c469d7",
+        "sourceStart": 87.9975,
+        "sourceEnd": 91.4275,
+        "durationSeconds": 3.43,
+        "gainDb": 2.108,
+        "decodeCorrelation": 0.98721,
+        "bytes": 30758,
+        "generatedDate": "2026-11-17",
+        "integratedDate": "2026-11-17",
+        "qaNote": "Préciser/précisez and proposer/proposez are homophones; full instruction otherwise matches.",
+        "sourceTextId": "62e73ed77c0ec3882e07a2b93524c49ccc22bad08135f72788396df4cd96f2d6",
+        "sourceDomains": [
+          "oral"
+        ],
+        "sentences": [
+          {
+            "text": "Préciser l'achat antérieur et proposer un récit soutenu",
+            "start": 0.0,
+            "end": 3.43
+          }
+        ]
+      },
+      {
+        "text": "Distinguez antériorité, cadre et événement ; passé composé à l'oral, passé simple possible à l'écrit soutenu.",
+        "textSha256": "30ec343581af858c75bf19874aa13340be7ff7636a9bad7e8453ff429980d175",
+        "file": "pia/30ec343581af858c75bf.m4a",
+        "kind": "teaching",
+        "voiceName": "Pia 18 — vive et fière 1",
+        "voiceAgeImpression": 18,
+        "canonicalAge": 21,
+        "masterSha256": "3f9a31a5ede87ffc21c1ebf1bbe7eafa604b4384a367e94c54e28e1db522e57e",
+        "audioSha256": "a4037f9b51778f387860469b6b701aa3152c1af9c5b89df1fc0480a3f2232e73",
+        "sourceStart": 98.0075,
+        "sourceEnd": 105.945,
+        "durationSeconds": 7.9375,
+        "gainDb": -0.818,
+        "decodeCorrelation": 0.99579,
+        "bytes": 69412,
+        "generatedDate": "2026-11-17",
+        "integratedDate": "2026-11-17",
+        "qaNote": "passé/passez are homophones; oral/written register distinction otherwise matches.",
+        "sourceTextId": "30ec343581af858c75bf19874aa13340be7ff7636a9bad7e8453ff429980d175",
+        "sourceDomains": [
+          "oral"
+        ],
+        "sentences": [
+          {
+            "text": "Distinguez antériorité, cadre et événement ; passé composé à l'oral, passé simple possible à l'écrit soutenu.",
+            "start": 0.0,
+            "end": 7.9375
+          }
+        ]
+      },
+      {
+        "text": "Organiser le récit soutenu avec antériorité ou participe",
+        "textSha256": "abb2e4be6b772324151b8384b08c06ab12d23c8ce66a616be9f3a22b6ccab04f",
+        "file": "pia/abb2e4be6b772324151b.m4a",
+        "kind": "teaching",
+        "voiceName": "Pia 18 — vive et fière 1",
+        "voiceAgeImpression": 18,
+        "canonicalAge": 21,
+        "masterSha256": "3f9a31a5ede87ffc21c1ebf1bbe7eafa604b4384a367e94c54e28e1db522e57e",
+        "audioSha256": "e9c321b0f222544d58078e736e7696514a84dca5c872c8402d1890b74a3a9072",
+        "sourceStart": 105.945,
+        "sourceEnd": 109.72,
+        "durationSeconds": 3.775,
+        "gainDb": 0.382,
+        "decodeCorrelation": 0.9889,
+        "bytes": 35277,
+        "generatedDate": "2026-11-17",
+        "integratedDate": "2026-11-17",
+        "qaNote": "Exact normalized transcript: medium. Numbers expanded and punctuation ignored.",
+        "sourceTextId": "abb2e4be6b772324151b8384b08c06ab12d23c8ce66a616be9f3a22b6ccab04f",
+        "sourceDomains": [
+          "oral"
+        ],
+        "sentences": [
+          {
+            "text": "Organiser le récit soutenu avec antériorité ou participe",
+            "start": 0.0,
+            "end": 3.775
+          }
+        ]
+      },
+      {
+        "text": "Cette fois, le destinataire est un ami. Reprenez le même événement sans passé simple, avec des phrases plus courtes.",
+        "textSha256": "269a94cf89e43aed2e45da1bce2a2b68212589d6bf90c60f7c04fbf4cc31d936",
+        "file": "pia/269a94cf89e43aed2e45.m4a",
+        "kind": "teaching",
+        "voiceName": "Pia 18 — vive et fière 1",
+        "voiceAgeImpression": 18,
+        "canonicalAge": 21,
+        "masterSha256": "aaf5b8c0db1ed1144f20a1aebae7dde7e8458869355e653dfc5a4eb5ec775166",
+        "audioSha256": "1208a46dad80423d58506867c3c5fbe9d49cbecdd74032cc96323595e5a8638d",
+        "sourceStart": 0.0,
+        "sourceEnd": 6.4275,
+        "durationSeconds": 6.4275,
+        "gainDb": -0.503,
+        "decodeCorrelation": 0.99704,
+        "bytes": 58048,
+        "generatedDate": "2026-11-17",
+        "integratedDate": "2026-11-17",
+        "qaNote": "passé/passer are homophones; the instruction otherwise matches.",
+        "sourceTextId": "269a94cf89e43aed2e45da1bce2a2b68212589d6bf90c60f7c04fbf4cc31d936",
+        "sourceDomains": [
+          "oral"
+        ],
+        "sentences": [
+          {
+            "text": "Cette fois, le destinataire est un ami.",
+            "start": 0.0,
+            "end": 2.41
+          },
+          {
+            "text": "Reprenez le même événement sans passé simple, avec des phrases plus courtes.",
+            "start": 2.41,
+            "end": 6.4275
+          }
+        ]
+      },
+      {
+        "text": "On avait déjà acheté les billets. On attendait le bateau quand l'orage a éclaté. Alors, on a cherché un hôtel.",
+        "textSha256": "01299befdb46ffb305376cd0619a1bf86200d3267c5a264a65239cf81a15f8ff",
+        "file": "pia/01299befdb46ffb30537.m4a",
+        "kind": "teaching",
+        "voiceName": "Pia 18 — vive et fière 1",
+        "voiceAgeImpression": 18,
+        "canonicalAge": 21,
+        "masterSha256": "aaf5b8c0db1ed1144f20a1aebae7dde7e8458869355e653dfc5a4eb5ec775166",
+        "audioSha256": "67a290478a4efbbb2c6aa1f0a03ee0927207c9c6eef82a532698c3398f7e77cf",
+        "sourceStart": 6.4275,
+        "sourceEnd": 13.51,
+        "durationSeconds": 7.0825,
+        "gainDb": -0.379,
+        "decodeCorrelation": 0.99719,
+        "bytes": 61345,
+        "generatedDate": "2026-11-17",
+        "integratedDate": "2026-11-17",
+        "qaNote": "Exact normalized transcript: small, base. Numbers expanded and punctuation ignored.",
+        "sourceTextId": "01299befdb46ffb305376cd0619a1bf86200d3267c5a264a65239cf81a15f8ff",
+        "sourceDomains": [
+          "oral"
+        ],
+        "sentences": [
+          {
+            "text": "On avait déjà acheté les billets.",
+            "start": 0.0,
+            "end": 2.565
+          },
+          {
+            "text": "On attendait le bateau quand l'orage a éclaté.",
+            "start": 2.565,
+            "end": 4.9875
+          },
+          {
+            "text": "Alors, on a cherché un hôtel.",
+            "start": 4.9875,
+            "end": 7.0825
+          }
+        ]
+      },
+      {
+        "text": "Raconter à un ami au passé composé, avec des phrases courtes",
+        "textSha256": "6d99c22ef7a5a2cb7346ed781bb58a70852876b441b4a7540332784079514337",
+        "file": "pia/6d99c22ef7a5a2cb7346.m4a",
+        "kind": "teaching",
+        "voiceName": "Pia 18 — vive et fière 1",
+        "voiceAgeImpression": 18,
+        "canonicalAge": 21,
+        "masterSha256": "aaf5b8c0db1ed1144f20a1aebae7dde7e8458869355e653dfc5a4eb5ec775166",
+        "audioSha256": "51a4e39756fbae0cd68292dcc605b5fc5dfdeb97d2aef6511c8e60c850e456c4",
+        "sourceStart": 13.51,
+        "sourceEnd": 17.2675,
+        "durationSeconds": 3.7575,
+        "gainDb": 2.795,
+        "decodeCorrelation": 0.99755,
+        "bytes": 35252,
+        "generatedDate": "2026-11-17",
+        "integratedDate": "2026-11-17",
+        "qaNote": "Raconter/racontez are homophones; medium ASR confirms à un ami and the full remaining instruction.",
+        "sourceTextId": "6d99c22ef7a5a2cb7346ed781bb58a70852876b441b4a7540332784079514337",
+        "sourceDomains": [
+          "oral"
+        ],
+        "sentences": [
+          {
+            "text": "Raconter à un ami au passé composé, avec des phrases courtes",
+            "start": 0.0,
+            "end": 3.7575
+          }
+        ]
+      },
+      {
+        "text": "le loyer",
+        "textSha256": "81686c0c360acf47c168af24c8984bb7dcfef84194130c03696aa6aaaafc98d8",
+        "file": "pia/81686c0c360acf47c168.m4a",
+        "kind": "teaching",
+        "voiceName": "Pia 18 — vive et fière 1",
+        "voiceAgeImpression": 18,
+        "canonicalAge": 21,
+        "masterSha256": "aaf5b8c0db1ed1144f20a1aebae7dde7e8458869355e653dfc5a4eb5ec775166",
+        "audioSha256": "5304fa71c9cc820fb2646e448afcd7589d55a1df003696a39d6b0a6cc5db3c1d",
+        "sourceStart": 17.2675,
+        "sourceEnd": 18.985,
+        "durationSeconds": 1.7175,
+        "gainDb": -4.59,
+        "decodeCorrelation": 0.99977,
+        "bytes": 14935,
+        "generatedDate": "2026-11-17",
+        "integratedDate": "2026-11-17",
+        "qaNote": "Exact normalized transcript: small, base. Numbers expanded and punctuation ignored.",
+        "sourceTextId": "81686c0c360acf47c168af24c8984bb7dcfef84194130c03696aa6aaaafc98d8",
+        "sourceDomains": [
+          "vocabulary"
+        ],
+        "sentences": [
+          {
+            "text": "le loyer",
+            "start": 0.0,
+            "end": 1.7175
+          }
+        ]
+      },
+      {
+        "text": "Le loyer de cet appartement est trop élevé.",
+        "textSha256": "305388ebeab77baef29d1aae3cf43f911b3a2cdbc88e7ec14fc07235895ac2b0",
+        "file": "pia/305388ebeab77baef29d.m4a",
+        "kind": "teaching",
+        "voiceName": "Pia 18 — vive et fière 1",
+        "voiceAgeImpression": 18,
+        "canonicalAge": 21,
+        "masterSha256": "aaf5b8c0db1ed1144f20a1aebae7dde7e8458869355e653dfc5a4eb5ec775166",
+        "audioSha256": "426229f7a9e6d404ea49fa057aec7b4c08624018c43af76f39e6fde75dd6313a",
+        "sourceStart": 18.985,
+        "sourceEnd": 21.5275,
+        "durationSeconds": 2.5425,
+        "gainDb": -0.978,
+        "decodeCorrelation": 0.9939,
+        "bytes": 22497,
+        "generatedDate": "2026-11-17",
+        "integratedDate": "2026-11-17",
+        "qaNote": "Exact normalized transcript: small, base. Numbers expanded and punctuation ignored.",
+        "sourceTextId": "305388ebeab77baef29d1aae3cf43f911b3a2cdbc88e7ec14fc07235895ac2b0",
+        "sourceDomains": [
+          "example"
+        ],
+        "sentences": [
+          {
+            "text": "Le loyer de cet appartement est trop élevé.",
+            "start": 0.0,
+            "end": 2.5425
+          }
+        ]
+      },
+      {
+        "text": "Chaque mois, on paie le loyer en billets pour pouvoir habiter cette maison.",
+        "textSha256": "f846eeac5c788e055b5c4d275c8408de45c1ca658e5086d50b0787ad3de1c3fa",
+        "file": "pia/f846eeac5c788e055b5c.m4a",
+        "kind": "teaching",
+        "voiceName": "Pia 18 — vive et fière 1",
+        "voiceAgeImpression": 18,
+        "canonicalAge": 21,
+        "masterSha256": "aaf5b8c0db1ed1144f20a1aebae7dde7e8458869355e653dfc5a4eb5ec775166",
+        "audioSha256": "f2dcaab439ffe683c96962e93d5cb4c185d3e89e53736cbd8b79a0b7fdad70e5",
+        "sourceStart": 21.5275,
+        "sourceEnd": 25.24,
+        "durationSeconds": 3.7125,
+        "gainDb": -1.642,
+        "decodeCorrelation": 0.99591,
+        "bytes": 33854,
+        "generatedDate": "2026-11-17",
+        "integratedDate": "2026-11-17",
+        "qaNote": "Exact normalized transcript: small. Numbers expanded and punctuation ignored.",
+        "sourceTextId": "f846eeac5c788e055b5c4d275c8408de45c1ca658e5086d50b0787ad3de1c3fa",
+        "sourceDomains": [
+          "pictureExample"
+        ],
+        "sentences": [
+          {
+            "text": "Chaque mois, on paie le loyer en billets pour pouvoir habiter cette maison.",
+            "start": 0.0,
+            "end": 3.7125
+          }
+        ]
+      },
+      {
+        "text": "le quartier",
+        "textSha256": "b4af720b737093bfbe3ebed256e4ab81bb9cdfb9d879d7913afbed4ad42f54e4",
+        "file": "pia/b4af720b737093bfbe3e.m4a",
+        "kind": "teaching",
+        "voiceName": "Pia 18 — vive et fière 1",
+        "voiceAgeImpression": 18,
+        "canonicalAge": 21,
+        "masterSha256": "aaf5b8c0db1ed1144f20a1aebae7dde7e8458869355e653dfc5a4eb5ec775166",
+        "audioSha256": "bde268597e96fffd14aeebe2beeae80eae5ecbcfed95ef5a8a9b5da3ea1c7606",
+        "sourceStart": 25.24,
+        "sourceEnd": 26.4425,
+        "durationSeconds": 1.2025,
+        "gainDb": -0.349,
+        "decodeCorrelation": 0.97174,
+        "bytes": 11106,
+        "generatedDate": "2026-11-17",
+        "integratedDate": "2026-11-17",
+        "qaNote": "Exact normalized transcript: small, base. Numbers expanded and punctuation ignored.",
+        "sourceTextId": "b4af720b737093bfbe3ebed256e4ab81bb9cdfb9d879d7913afbed4ad42f54e4",
+        "sourceDomains": [
+          "vocabulary"
+        ],
+        "sentences": [
+          {
+            "text": "le quartier",
+            "start": 0.0,
+            "end": 1.2025
+          }
+        ]
+      },
+      {
+        "text": "J'habite dans un quartier très calme.",
+        "textSha256": "c73a51743580439eb98d501b5cba69a6763292171d631924f024468ca5d16e33",
+        "file": "pia/c73a51743580439eb98d.m4a",
+        "kind": "teaching",
+        "voiceName": "Pia 18 — vive et fière 1",
+        "voiceAgeImpression": 18,
+        "canonicalAge": 21,
+        "masterSha256": "aaf5b8c0db1ed1144f20a1aebae7dde7e8458869355e653dfc5a4eb5ec775166",
+        "audioSha256": "2679b69ce3e61e2ac6c8e8b83fb740c52ee68c2d530a1b8e2d239251b8b97c36",
+        "sourceStart": 26.4425,
+        "sourceEnd": 28.8,
+        "durationSeconds": 2.3575,
+        "gainDb": 0.67,
+        "decodeCorrelation": 0.99647,
+        "bytes": 21555,
+        "generatedDate": "2026-11-17",
+        "integratedDate": "2026-11-17",
+        "qaNote": "Exact normalized transcript: small, base. Numbers expanded and punctuation ignored.",
+        "sourceTextId": "c73a51743580439eb98d501b5cba69a6763292171d631924f024468ca5d16e33",
+        "sourceDomains": [
+          "example"
+        ],
+        "sentences": [
+          {
+            "text": "J'habite dans un quartier très calme.",
+            "start": 0.0,
+            "end": 2.3575
+          }
+        ]
+      },
+      {
+        "text": "Dans ce quartier calme, de jolies maisons colorées bordent une large rue.",
+        "textSha256": "0322240947748b8817dc9446f395014ed1cab95b9d913dfbfe242f1efe026c7f",
+        "file": "pia/0322240947748b8817dc.m4a",
+        "kind": "teaching",
+        "voiceName": "Pia 18 — vive et fière 1",
+        "voiceAgeImpression": 18,
+        "canonicalAge": 21,
+        "masterSha256": "aaf5b8c0db1ed1144f20a1aebae7dde7e8458869355e653dfc5a4eb5ec775166",
+        "audioSha256": "f11ad51502e109c367ac4aa8ac206aa765bf13e552aa8317a01b48cf5699739b",
+        "sourceStart": 28.8,
+        "sourceEnd": 32.8575,
+        "durationSeconds": 4.0575,
+        "gainDb": 1.153,
+        "decodeCorrelation": 0.99776,
+        "bytes": 35321,
+        "generatedDate": "2026-11-17",
+        "integratedDate": "2026-11-17",
+        "qaNote": "Exact normalized transcript: small. Numbers expanded and punctuation ignored.",
+        "sourceTextId": "0322240947748b8817dc9446f395014ed1cab95b9d913dfbfe242f1efe026c7f",
+        "sourceDomains": [
+          "pictureExample"
+        ],
+        "sentences": [
+          {
+            "text": "Dans ce quartier calme, de jolies maisons colorées bordent une large rue.",
+            "start": 0.0,
+            "end": 4.0575
+          }
+        ]
+      },
+      {
+        "text": "le déménagement",
+        "textSha256": "3a8f704eb6c2e38a2440e0734db1ef891e7a7d50d72ee682864df01e12818746",
+        "file": "pia/3a8f704eb6c2e38a2440.m4a",
+        "kind": "teaching",
+        "voiceName": "Pia 18 — vive et fière 1",
+        "voiceAgeImpression": 18,
+        "canonicalAge": 21,
+        "masterSha256": "aaf5b8c0db1ed1144f20a1aebae7dde7e8458869355e653dfc5a4eb5ec775166",
+        "audioSha256": "dab61eb03ebeb469d312006de38c82eb3b69e08a520e8af3f4ac33a9c249d28f",
+        "sourceStart": 32.8575,
+        "sourceEnd": 34.1375,
+        "durationSeconds": 1.28,
+        "gainDb": -3.912,
+        "decodeCorrelation": 0.99949,
+        "bytes": 11734,
+        "generatedDate": "2026-11-17",
+        "integratedDate": "2026-11-17",
+        "qaNote": "Exact normalized transcript: small, base. Numbers expanded and punctuation ignored.",
+        "sourceTextId": "3a8f704eb6c2e38a2440e0734db1ef891e7a7d50d72ee682864df01e12818746",
+        "sourceDomains": [
+          "vocabulary"
+        ],
+        "sentences": [
+          {
+            "text": "le déménagement",
+            "start": 0.0,
+            "end": 1.28
+          }
+        ]
+      },
+      {
+        "text": "Mes amis m'ont aidé pour le déménagement.",
+        "textSha256": "2454fe503d7aced85de6eaf3dc1e29e975f2c389b385aa8785ae4cf5f8085490",
+        "file": "pia/2454fe503d7aced85de6.m4a",
+        "kind": "teaching",
+        "voiceName": "Pia 18 — vive et fière 1",
+        "voiceAgeImpression": 18,
+        "canonicalAge": 21,
+        "masterSha256": "aaf5b8c0db1ed1144f20a1aebae7dde7e8458869355e653dfc5a4eb5ec775166",
+        "audioSha256": "5aecd5d0a777dfb48c1433d5241e243e30874261c9f87e82457dc5b6c768a66e",
+        "sourceStart": 34.1375,
+        "sourceEnd": 36.59,
+        "durationSeconds": 2.4525,
+        "gainDb": -3.007,
+        "decodeCorrelation": 0.99943,
+        "bytes": 21747,
+        "generatedDate": "2026-11-17",
+        "integratedDate": "2026-11-17",
+        "qaNote": "Exact normalized transcript: small, base. Numbers expanded and punctuation ignored.",
+        "sourceTextId": "2454fe503d7aced85de6eaf3dc1e29e975f2c389b385aa8785ae4cf5f8085490",
+        "sourceDomains": [
+          "example"
+        ],
+        "sentences": [
+          {
+            "text": "Mes amis m'ont aidé pour le déménagement.",
+            "start": 0.0,
+            "end": 2.4525
+          }
+        ]
+      },
+      {
+        "text": "Pour le déménagement, deux gros cartons sont posés sur un diable rouge.",
+        "textSha256": "033bfdfd2cd03eb0568ca00734c135171198e5cc879e35def0e79104d9b15365",
+        "file": "pia/033bfdfd2cd03eb0568c.m4a",
+        "kind": "teaching",
+        "voiceName": "Pia 18 — vive et fière 1",
+        "voiceAgeImpression": 18,
+        "canonicalAge": 21,
+        "masterSha256": "aaf5b8c0db1ed1144f20a1aebae7dde7e8458869355e653dfc5a4eb5ec775166",
+        "audioSha256": "d89722a1714c529efdbdf2dc7563ff12ffda68e87e59b74f89bddcd940ea4253",
+        "sourceStart": 36.59,
+        "sourceEnd": 40.7575,
+        "durationSeconds": 4.1675,
+        "gainDb": -0.56,
+        "decodeCorrelation": 0.99758,
+        "bytes": 36573,
+        "generatedDate": "2026-11-17",
+        "integratedDate": "2026-11-17",
+        "qaNote": "Exact normalized transcript: small. Numbers expanded and punctuation ignored.",
+        "sourceTextId": "033bfdfd2cd03eb0568ca00734c135171198e5cc879e35def0e79104d9b15365",
+        "sourceDomains": [
+          "pictureExample"
+        ],
+        "sentences": [
+          {
+            "text": "Pour le déménagement, deux gros cartons sont posés sur un diable rouge.",
+            "start": 0.0,
+            "end": 4.1675
+          }
+        ]
+      },
+      {
+        "text": "l'étagère",
+        "textSha256": "e337003f9826234c0801a8eedb6c227748b3d9f6fcb3e846e995d4069769b4fd",
+        "file": "pia/e337003f9826234c0801.m4a",
+        "kind": "teaching",
+        "voiceName": "Pia 18 — vive et fière 1",
+        "voiceAgeImpression": 18,
+        "canonicalAge": 21,
+        "masterSha256": "aaf5b8c0db1ed1144f20a1aebae7dde7e8458869355e653dfc5a4eb5ec775166",
+        "audioSha256": "21dc6a9be103b8aa48890a64041b65501f79e72b245cd7adcabcc1680adbe9b7",
+        "sourceStart": 40.7575,
+        "sourceEnd": 42.025,
+        "durationSeconds": 1.2675,
+        "gainDb": -2.71,
+        "decodeCorrelation": 0.99805,
+        "bytes": 11910,
+        "generatedDate": "2026-11-17",
+        "integratedDate": "2026-11-17",
+        "qaNote": "Exact normalized transcript: small, base. Numbers expanded and punctuation ignored.",
+        "sourceTextId": "e337003f9826234c0801a8eedb6c227748b3d9f6fcb3e846e995d4069769b4fd",
+        "sourceDomains": [
+          "vocabulary"
+        ],
+        "sentences": [
+          {
+            "text": "l'étagère",
+            "start": 0.0,
+            "end": 1.2675
+          }
+        ]
+      },
+      {
+        "text": "Pose ces livres sur l'étagère.",
+        "textSha256": "2c1ee9029a31a40a75b8ce13321b0a440ac9956bbd9ec501da2d600dd7ed870e",
+        "file": "pia/2c1ee9029a31a40a75b8.m4a",
+        "kind": "teaching",
+        "voiceName": "Pia 18 — vive et fière 1",
+        "voiceAgeImpression": 18,
+        "canonicalAge": 21,
+        "masterSha256": "aaf5b8c0db1ed1144f20a1aebae7dde7e8458869355e653dfc5a4eb5ec775166",
+        "audioSha256": "2a05076d698cd5c5d6bf6535f480422791c6d0a762d63c88662c38057981ef5f",
+        "sourceStart": 42.025,
+        "sourceEnd": 44.07,
+        "durationSeconds": 2.045,
+        "gainDb": -1.608,
+        "decodeCorrelation": 0.99725,
+        "bytes": 18859,
+        "generatedDate": "2026-11-17",
+        "integratedDate": "2026-11-17",
+        "qaNote": "Exact normalized transcript: small. Numbers expanded and punctuation ignored.",
+        "sourceTextId": "2c1ee9029a31a40a75b8ce13321b0a440ac9956bbd9ec501da2d600dd7ed870e",
+        "sourceDomains": [
+          "example"
+        ],
+        "sentences": [
+          {
+            "text": "Pose ces livres sur l'étagère.",
+            "start": 0.0,
+            "end": 2.045
+          }
+        ]
+      },
+      {
+        "text": "Des centaines de livres colorés sont rangés sur chaque étagère de la bibliothèque.",
+        "textSha256": "776f1aa5b4c3123faf75b1a3f1a8212740e1cad727d003495c90f2fdd912c950",
+        "file": "pia/776f1aa5b4c3123faf75.m4a",
+        "kind": "teaching",
+        "voiceName": "Pia 18 — vive et fière 1",
+        "voiceAgeImpression": 18,
+        "canonicalAge": 21,
+        "masterSha256": "aaf5b8c0db1ed1144f20a1aebae7dde7e8458869355e653dfc5a4eb5ec775166",
+        "audioSha256": "56b3482913ebd3a3e35a120e59d9125077f7a4a035f6f1246df4544bdfc56521",
+        "sourceStart": 44.07,
+        "sourceEnd": 48.5175,
+        "durationSeconds": 4.4475,
+        "gainDb": -1.654,
+        "decodeCorrelation": 0.98518,
+        "bytes": 39627,
+        "generatedDate": "2026-11-17",
+        "integratedDate": "2026-11-17",
+        "qaNote": "Exact normalized transcript: small, base. Numbers expanded and punctuation ignored.",
+        "sourceTextId": "776f1aa5b4c3123faf75b1a3f1a8212740e1cad727d003495c90f2fdd912c950",
+        "sourceDomains": [
+          "pictureExample"
+        ],
+        "sentences": [
+          {
+            "text": "Des centaines de livres colorés sont rangés sur chaque étagère de la bibliothèque.",
+            "start": 0.0,
+            "end": 4.4475
+          }
+        ]
+      },
+      {
+        "text": "le tiroir",
+        "textSha256": "f7b7e04f6a1217ec3f4d90e673de1a3e2d7d41db693ea40d9e798fff9b87775f",
+        "file": "pia/f7b7e04f6a1217ec3f4d.m4a",
+        "kind": "teaching",
+        "voiceName": "Pia 18 — vive et fière 1",
+        "voiceAgeImpression": 18,
+        "canonicalAge": 21,
+        "masterSha256": "aaf5b8c0db1ed1144f20a1aebae7dde7e8458869355e653dfc5a4eb5ec775166",
+        "audioSha256": "e9552e642ff947e8ef2ac6e627cbeaab484e7806f773a5848fb0b8759aecac0d",
+        "sourceStart": 48.5175,
+        "sourceEnd": 49.66,
+        "durationSeconds": 1.1425,
+        "gainDb": -2.549,
+        "decodeCorrelation": 0.99843,
+        "bytes": 10138,
+        "generatedDate": "2026-11-17",
+        "integratedDate": "2026-11-17",
+        "qaNote": "Exact normalized transcript: small, base. Numbers expanded and punctuation ignored.",
+        "sourceTextId": "f7b7e04f6a1217ec3f4d90e673de1a3e2d7d41db693ea40d9e798fff9b87775f",
+        "sourceDomains": [
+          "vocabulary"
+        ],
+        "sentences": [
+          {
+            "text": "le tiroir",
+            "start": 0.0,
+            "end": 1.1425
+          }
+        ]
+      },
+      {
+        "text": "Les couteaux sont dans le tiroir de gauche.",
+        "textSha256": "312939f3d1edae0f5f054b71bb0bfcb19881c947b8a092d8e2c339df272e8465",
+        "file": "pia/312939f3d1edae0f5f05.m4a",
+        "kind": "teaching",
+        "voiceName": "Pia 18 — vive et fière 1",
+        "voiceAgeImpression": 18,
+        "canonicalAge": 21,
+        "masterSha256": "aaf5b8c0db1ed1144f20a1aebae7dde7e8458869355e653dfc5a4eb5ec775166",
+        "audioSha256": "3334c2786536787e731c46ec8015bcecff05435417dd0ae7c04c75b6a5109fc2",
+        "sourceStart": 49.66,
+        "sourceEnd": 51.8675,
+        "durationSeconds": 2.2075,
+        "gainDb": 0.278,
+        "decodeCorrelation": 0.99815,
+        "bytes": 20301,
+        "generatedDate": "2026-11-17",
+        "integratedDate": "2026-11-17",
+        "qaNote": "Exact normalized transcript: small. Numbers expanded and punctuation ignored.",
+        "sourceTextId": "312939f3d1edae0f5f054b71bb0bfcb19881c947b8a092d8e2c339df272e8465",
+        "sourceDomains": [
+          "example"
+        ],
+        "sentences": [
+          {
+            "text": "Les couteaux sont dans le tiroir de gauche.",
+            "start": 0.0,
+            "end": 2.2075
+          }
+        ]
+      },
+      {
+        "text": "Chaque vieux tiroir en bois porte une étiquette écrite à la main et une poignée ronde.",
+        "textSha256": "ab21604ab56bb42380e6fc3c402631e88fda7185178deaa8e4f9986aaf4ba6e6",
+        "file": "pia/ab21604ab56bb42380e6.m4a",
+        "kind": "teaching",
+        "voiceName": "Pia 18 — vive et fière 1",
+        "voiceAgeImpression": 18,
+        "canonicalAge": 21,
+        "masterSha256": "aaf5b8c0db1ed1144f20a1aebae7dde7e8458869355e653dfc5a4eb5ec775166",
+        "audioSha256": "e080fb6f4b48883c1440e647956b0a1e7eef41245a6b52bbfc02e4b35149a8d7",
+        "sourceStart": 51.8675,
+        "sourceEnd": 56.5725,
+        "durationSeconds": 4.705,
+        "gainDb": 0.486,
+        "decodeCorrelation": 0.99622,
+        "bytes": 41787,
+        "generatedDate": "2026-11-17",
+        "integratedDate": "2026-11-17",
+        "qaNote": "Exact normalized transcript: small. Numbers expanded and punctuation ignored.",
+        "sourceTextId": "ab21604ab56bb42380e6fc3c402631e88fda7185178deaa8e4f9986aaf4ba6e6",
+        "sourceDomains": [
+          "pictureExample"
+        ],
+        "sentences": [
+          {
+            "text": "Chaque vieux tiroir en bois porte une étiquette écrite à la main et une poignée ronde.",
+            "start": 0.0,
+            "end": 4.705
+          }
+        ]
+      },
+      {
+        "text": "l'évier",
+        "textSha256": "48cb61ff3d64434b004a86761329f6532f57d0d7d15789521c2304c3b8ab723a",
+        "file": "pia/48cb61ff3d64434b004a.m4a",
+        "kind": "teaching",
+        "voiceName": "Pia 18 — vive et fière 1",
+        "voiceAgeImpression": 18,
+        "canonicalAge": 21,
+        "masterSha256": "aaf5b8c0db1ed1144f20a1aebae7dde7e8458869355e653dfc5a4eb5ec775166",
+        "audioSha256": "2d49ddd85625964015a398f34c546efc4ca552687aacb018b837efc8886ed469",
+        "sourceStart": 56.5725,
+        "sourceEnd": 57.7,
+        "durationSeconds": 1.1275,
+        "gainDb": -1.393,
+        "decodeCorrelation": 0.99875,
+        "bytes": 10098,
+        "generatedDate": "2026-11-17",
+        "integratedDate": "2026-11-17",
+        "qaNote": "Exact normalized transcript: small. Numbers expanded and punctuation ignored.",
+        "sourceTextId": "48cb61ff3d64434b004a86761329f6532f57d0d7d15789521c2304c3b8ab723a",
+        "sourceDomains": [
+          "vocabulary"
+        ],
+        "sentences": [
+          {
+            "text": "l'évier",
+            "start": 0.0,
+            "end": 1.1275
+          }
+        ]
+      },
+      {
+        "text": "Il y a encore de la vaisselle dans l'évier.",
+        "textSha256": "16dd7f758373f7008cdb8228783ee5460a67026060f55bb6a556924c8200b854",
+        "file": "pia/16dd7f758373f7008cdb.m4a",
+        "kind": "teaching",
+        "voiceName": "Pia 18 — vive et fière 1",
+        "voiceAgeImpression": 18,
+        "canonicalAge": 21,
+        "masterSha256": "aaf5b8c0db1ed1144f20a1aebae7dde7e8458869355e653dfc5a4eb5ec775166",
+        "audioSha256": "23ab64c4372dde85ad87e5330c5b31fc1b52785a2c5dbb9d4f93e3af93b83d73",
+        "sourceStart": 57.7,
+        "sourceEnd": 59.745,
+        "durationSeconds": 2.045,
+        "gainDb": -0.978,
+        "decodeCorrelation": 0.99793,
+        "bytes": 18174,
+        "generatedDate": "2026-11-17",
+        "integratedDate": "2026-11-17",
+        "qaNote": "Exact normalized transcript: small. Numbers expanded and punctuation ignored.",
+        "sourceTextId": "16dd7f758373f7008cdb8228783ee5460a67026060f55bb6a556924c8200b854",
+        "sourceDomains": [
+          "example"
+        ],
+        "sentences": [
+          {
+            "text": "Il y a encore de la vaisselle dans l'évier.",
+            "start": 0.0,
+            "end": 2.045
+          }
+        ]
+      },
+      {
+        "text": "L'eau coule du robinet noir dans l'évier de la cuisine.",
+        "textSha256": "d5b42e632b6049e68d701405cf06728b0a01517d076c91c80f3309dbaeda11c2",
+        "file": "pia/d5b42e632b6049e68d70.m4a",
+        "kind": "teaching",
+        "voiceName": "Pia 18 — vive et fière 1",
+        "voiceAgeImpression": 18,
+        "canonicalAge": 21,
+        "masterSha256": "aaf5b8c0db1ed1144f20a1aebae7dde7e8458869355e653dfc5a4eb5ec775166",
+        "audioSha256": "ef2c871e06016a3c89f58c35979b49014eee9909e8e4afe7dc0027d5f492202c",
+        "sourceStart": 59.745,
+        "sourceEnd": 62.5575,
+        "durationSeconds": 2.8125,
+        "gainDb": -1.157,
+        "decodeCorrelation": 0.99932,
+        "bytes": 24827,
+        "generatedDate": "2026-11-17",
+        "integratedDate": "2026-11-17",
+        "qaNote": "Exact normalized transcript: small. Numbers expanded and punctuation ignored.",
+        "sourceTextId": "d5b42e632b6049e68d701405cf06728b0a01517d076c91c80f3309dbaeda11c2",
+        "sourceDomains": [
+          "pictureExample"
+        ],
+        "sentences": [
+          {
+            "text": "L'eau coule du robinet noir dans l'évier de la cuisine.",
+            "start": 0.0,
+            "end": 2.8125
+          }
+        ]
+      },
+      {
+        "text": "la poubelle",
+        "textSha256": "a32e6bc8b47568d703618fba75ccf9c2d6d5d678d90a44793fc3c57f2c96dca5",
+        "file": "pia/a32e6bc8b47568d70361.m4a",
+        "kind": "teaching",
+        "voiceName": "Pia 18 — vive et fière 1",
+        "voiceAgeImpression": 18,
+        "canonicalAge": 21,
+        "masterSha256": "aaf5b8c0db1ed1144f20a1aebae7dde7e8458869355e653dfc5a4eb5ec775166",
+        "audioSha256": "17f611b6ca86c5ad25b2d214adb1b21c2fb47fdcfbb051af41f7c946d6f2f741",
+        "sourceStart": 62.5575,
+        "sourceEnd": 63.59,
+        "durationSeconds": 1.0325,
+        "gainDb": -1.19,
+        "decodeCorrelation": 0.99808,
+        "bytes": 9832,
+        "generatedDate": "2026-11-17",
+        "integratedDate": "2026-11-17",
+        "qaNote": "Exact normalized transcript: small, base. Numbers expanded and punctuation ignored.",
+        "sourceTextId": "a32e6bc8b47568d703618fba75ccf9c2d6d5d678d90a44793fc3c57f2c96dca5",
+        "sourceDomains": [
+          "vocabulary"
+        ],
+        "sentences": [
+          {
+            "text": "la poubelle",
+            "start": 0.0,
+            "end": 1.0325
+          }
+        ]
+      },
+      {
+        "text": "N'oublie pas de sortir la poubelle ce soir.",
+        "textSha256": "d33ee38a20668a83bf3d86bdfae130fdb4c4584c165268d17b70dfa4ff14e8d4",
+        "file": "pia/d33ee38a20668a83bf3d.m4a",
+        "kind": "teaching",
+        "voiceName": "Pia 18 — vive et fière 1",
+        "voiceAgeImpression": 18,
+        "canonicalAge": 21,
+        "masterSha256": "aaf5b8c0db1ed1144f20a1aebae7dde7e8458869355e653dfc5a4eb5ec775166",
+        "audioSha256": "4b2f2cbca15ce63d95f674b628a81cb4c2d3ea234200d0d1e5379deb8edd9dba",
+        "sourceStart": 63.59,
+        "sourceEnd": 65.89,
+        "durationSeconds": 2.3,
+        "gainDb": -2.172,
+        "decodeCorrelation": 0.99681,
+        "bytes": 20418,
+        "generatedDate": "2026-11-17",
+        "integratedDate": "2026-11-17",
+        "qaNote": "Exact normalized transcript: small, base. Numbers expanded and punctuation ignored.",
+        "sourceTextId": "d33ee38a20668a83bf3d86bdfae130fdb4c4584c165268d17b70dfa4ff14e8d4",
+        "sourceDomains": [
+          "example"
+        ],
+        "sentences": [
+          {
+            "text": "N'oublie pas de sortir la poubelle ce soir.",
+            "start": 0.0,
+            "end": 2.3
+          }
+        ]
+      },
+      {
+        "text": "Trois grandes poubelles grises sont posées sur l'herbe, près d'un chemin.",
+        "textSha256": "608474305375511061f6cf10766b7f41198d97884878400842b7b6128ebbcfa5",
+        "file": "pia/608474305375511061f6.m4a",
+        "kind": "teaching",
+        "voiceName": "Pia 18 — vive et fière 1",
+        "voiceAgeImpression": 18,
+        "canonicalAge": 21,
+        "masterSha256": "aaf5b8c0db1ed1144f20a1aebae7dde7e8458869355e653dfc5a4eb5ec775166",
+        "audioSha256": "e11b50d8bacbdc5d49b5f22d2f57a0b928452f891e595cb0f97d291c856da4e3",
+        "sourceStart": 65.89,
+        "sourceEnd": 69.49,
+        "durationSeconds": 3.6,
+        "gainDb": -0.496,
+        "decodeCorrelation": 0.99588,
+        "bytes": 32459,
+        "generatedDate": "2026-11-17",
+        "integratedDate": "2026-11-17",
+        "qaNote": "Exact normalized transcript: small, base. Numbers expanded and punctuation ignored.",
+        "sourceTextId": "608474305375511061f6cf10766b7f41198d97884878400842b7b6128ebbcfa5",
+        "sourceDomains": [
+          "pictureExample"
+        ],
+        "sentences": [
+          {
+            "text": "Trois grandes poubelles grises sont posées sur l'herbe, près d'un chemin.",
+            "start": 0.0,
+            "end": 3.6
+          }
+        ]
+      },
+      {
+        "text": "le ménage",
+        "textSha256": "31c74578c6a02e4e06a1a62cb725f1b4457bd3f44a5ce1f1591159fe78737ceb",
+        "file": "pia/31c74578c6a02e4e06a1.m4a",
+        "kind": "teaching",
+        "voiceName": "Pia 18 — vive et fière 1",
+        "voiceAgeImpression": 18,
+        "canonicalAge": 21,
+        "masterSha256": "aaf5b8c0db1ed1144f20a1aebae7dde7e8458869355e653dfc5a4eb5ec775166",
+        "audioSha256": "04db7e08620f8511051e04f2b665e4680cfb615e511e647936ebfc8a5d217daf",
+        "sourceStart": 69.49,
+        "sourceEnd": 70.65,
+        "durationSeconds": 1.16,
+        "gainDb": -4.676,
+        "decodeCorrelation": 0.99844,
+        "bytes": 10272,
+        "generatedDate": "2026-11-17",
+        "integratedDate": "2026-11-17",
+        "qaNote": "Exact normalized transcript: small, base. Numbers expanded and punctuation ignored.",
+        "sourceTextId": "31c74578c6a02e4e06a1a62cb725f1b4457bd3f44a5ce1f1591159fe78737ceb",
+        "sourceDomains": [
+          "vocabulary"
+        ],
+        "sentences": [
+          {
+            "text": "le ménage",
+            "start": 0.0,
+            "end": 1.16
+          }
+        ]
+      },
+      {
+        "text": "Le samedi matin, je fais le ménage.",
+        "textSha256": "5020268a84809f5dc8e064482806174b0657dd6a4658762c73f53c61ecf33cf4",
+        "file": "pia/5020268a84809f5dc8e0.m4a",
+        "kind": "teaching",
+        "voiceName": "Pia 18 — vive et fière 1",
+        "voiceAgeImpression": 18,
+        "canonicalAge": 21,
+        "masterSha256": "aaf5b8c0db1ed1144f20a1aebae7dde7e8458869355e653dfc5a4eb5ec775166",
+        "audioSha256": "c8e198ce5e10de3e7214847625e57b36baa8739ab4b6946d49847370aa7048a3",
+        "sourceStart": 70.65,
+        "sourceEnd": 73.0325,
+        "durationSeconds": 2.3825,
+        "gainDb": -2.235,
+        "decodeCorrelation": 0.99737,
+        "bytes": 21501,
+        "generatedDate": "2026-11-17",
+        "integratedDate": "2026-11-17",
+        "qaNote": "Exact normalized transcript: small, base. Numbers expanded and punctuation ignored.",
+        "sourceTextId": "5020268a84809f5dc8e064482806174b0657dd6a4658762c73f53c61ecf33cf4",
+        "sourceDomains": [
+          "example"
+        ],
+        "sentences": [
+          {
+            "text": "Le samedi matin, je fais le ménage.",
+            "start": 0.0,
+            "end": 2.3825
+          }
+        ]
+      },
+      {
+        "text": "Un balai serpillière vert et des chiffons sont prêts pour faire le ménage.",
+        "textSha256": "187a907296c2202f019b85e65d8a22692bd3ecda7f99383e8afecb4f7fb3a2bd",
+        "file": "pia/187a907296c2202f019b.m4a",
+        "kind": "teaching",
+        "voiceName": "Pia 18 — vive et fière 1",
+        "voiceAgeImpression": 18,
+        "canonicalAge": 21,
+        "masterSha256": "aaf5b8c0db1ed1144f20a1aebae7dde7e8458869355e653dfc5a4eb5ec775166",
+        "audioSha256": "6dd653bd39d63634ff14862c7f902a627466178548897ef313e9c498517fde50",
+        "sourceStart": 73.0325,
+        "sourceEnd": 76.46,
+        "durationSeconds": 3.4275,
+        "gainDb": -0.91,
+        "decodeCorrelation": 0.99494,
+        "bytes": 29423,
+        "generatedDate": "2026-11-17",
+        "integratedDate": "2026-11-17",
+        "qaNote": "Medium recognizes the intended noun as serpillère (ASR spelling variant of serpillière); balai, vert, chiffons and the complete sentence are preserved.",
+        "sourceTextId": "187a907296c2202f019b85e65d8a22692bd3ecda7f99383e8afecb4f7fb3a2bd",
+        "sourceDomains": [
+          "pictureExample"
+        ],
+        "sentences": [
+          {
+            "text": "Un balai serpillière vert et des chiffons sont prêts pour faire le ménage.",
+            "start": 0.0,
+            "end": 3.4275
+          }
+        ]
+      },
+      {
+        "text": "la lessive",
+        "textSha256": "5a7dfd454cdb51275ff7ffa0384793980971bfc905dbe07a1292085eb9dd3e73",
+        "file": "pia/5a7dfd454cdb51275ff7.m4a",
+        "kind": "teaching",
+        "voiceName": "Pia 18 — vive et fière 1",
+        "voiceAgeImpression": 18,
+        "canonicalAge": 21,
+        "masterSha256": "aaf5b8c0db1ed1144f20a1aebae7dde7e8458869355e653dfc5a4eb5ec775166",
+        "audioSha256": "cf018abfb91d9ee7e0e0207a7d72fd6546616ccd0b86c945ebb4dc8e7e076915",
+        "sourceStart": 76.46,
+        "sourceEnd": 77.715,
+        "durationSeconds": 1.255,
+        "gainDb": -2.995,
+        "decodeCorrelation": 0.99811,
+        "bytes": 11336,
+        "generatedDate": "2026-11-17",
+        "integratedDate": "2026-11-17",
+        "qaNote": "Exact normalized transcript: small. Numbers expanded and punctuation ignored.",
+        "sourceTextId": "5a7dfd454cdb51275ff7ffa0384793980971bfc905dbe07a1292085eb9dd3e73",
+        "sourceDomains": [
+          "vocabulary"
+        ],
+        "sentences": [
+          {
+            "text": "la lessive",
+            "start": 0.0,
+            "end": 1.255
+          }
+        ]
+      },
+      {
+        "text": "Je fais une lessive tous les deux jours.",
+        "textSha256": "807e274f7a58309bf510a7ff9ba3a85ab4c53842d50d6e01b6f8bc6cb3a93245",
+        "file": "pia/807e274f7a58309bf510.m4a",
+        "kind": "teaching",
+        "voiceName": "Pia 18 — vive et fière 1",
+        "voiceAgeImpression": 18,
+        "canonicalAge": 21,
+        "masterSha256": "aaf5b8c0db1ed1144f20a1aebae7dde7e8458869355e653dfc5a4eb5ec775166",
+        "audioSha256": "961f58b58f7b48057cbdcee23993743f07dedbfe0c14e8fc0bb0b3a65b0d3b2a",
+        "sourceStart": 77.715,
+        "sourceEnd": 79.94,
+        "durationSeconds": 2.225,
+        "gainDb": -1.899,
+        "decodeCorrelation": 0.98937,
+        "bytes": 18806,
+        "generatedDate": "2026-11-17",
+        "integratedDate": "2026-11-17",
+        "qaNote": "Exact normalized transcript: small. Numbers expanded and punctuation ignored.",
+        "sourceTextId": "807e274f7a58309bf510a7ff9ba3a85ab4c53842d50d6e01b6f8bc6cb3a93245",
+        "sourceDomains": [
+          "example"
+        ],
+        "sentences": [
+          {
+            "text": "Je fais une lessive tous les deux jours.",
+            "start": 0.0,
+            "end": 2.225
+          }
+        ]
+      },
+      {
+        "text": "Des pinces à linge colorées attendent sur le fil pour étendre la lessive.",
+        "textSha256": "a65ec16ab1fa1690b8ee57343db3e6955919261050d51f6a60bb1a76b5cc46c2",
+        "file": "pia/a65ec16ab1fa1690b8ee.m4a",
+        "kind": "teaching",
+        "voiceName": "Pia 18 — vive et fière 1",
+        "voiceAgeImpression": 18,
+        "canonicalAge": 21,
+        "masterSha256": "aaf5b8c0db1ed1144f20a1aebae7dde7e8458869355e653dfc5a4eb5ec775166",
+        "audioSha256": "dec711444fc2526d6c93f74adf917e444c57a16b026050d0be72dd9213fcc748",
+        "sourceStart": 79.94,
+        "sourceEnd": 83.53,
+        "durationSeconds": 3.59,
+        "gainDb": -0.504,
+        "decodeCorrelation": 0.99725,
+        "bytes": 32978,
+        "generatedDate": "2026-11-17",
+        "integratedDate": "2026-11-17",
+        "qaNote": "Exact normalized transcript: medium. Numbers expanded and punctuation ignored.",
+        "sourceTextId": "a65ec16ab1fa1690b8ee57343db3e6955919261050d51f6a60bb1a76b5cc46c2",
+        "sourceDomains": [
+          "pictureExample"
+        ],
+        "sentences": [
+          {
+            "text": "Des pinces à linge colorées attendent sur le fil pour étendre la lessive.",
+            "start": 0.0,
+            "end": 3.59
+          }
+        ]
+      },
+      {
+        "text": "la facture",
+        "textSha256": "adc73eed266ecfdc1f90f3c474637deee75719f2d33724e60a3b765e260533e6",
+        "file": "pia/adc73eed266ecfdc1f90.m4a",
+        "kind": "teaching",
+        "voiceName": "Pia 18 — vive et fière 1",
+        "voiceAgeImpression": 18,
+        "canonicalAge": 21,
+        "masterSha256": "aaf5b8c0db1ed1144f20a1aebae7dde7e8458869355e653dfc5a4eb5ec775166",
+        "audioSha256": "801b42ee6397326414e4d20667117015dd87c4e2df4cd8b4b1d7cf804e9f2782",
+        "sourceStart": 83.53,
+        "sourceEnd": 84.74,
+        "durationSeconds": 1.21,
+        "gainDb": -1.413,
+        "decodeCorrelation": 0.99748,
+        "bytes": 11200,
+        "generatedDate": "2026-11-17",
+        "integratedDate": "2026-11-17",
+        "qaNote": "Exact normalized transcript: small, base. Numbers expanded and punctuation ignored.",
+        "sourceTextId": "adc73eed266ecfdc1f90f3c474637deee75719f2d33724e60a3b765e260533e6",
+        "sourceDomains": [
+          "vocabulary"
+        ],
+        "sentences": [
+          {
+            "text": "la facture",
+            "start": 0.0,
+            "end": 1.21
+          }
+        ]
+      },
+      {
+        "text": "Nous avons reçu la facture d'électricité.",
+        "textSha256": "474dd0da7569f87f006fa9c36732abf41d32473c2b33cb67cb5aa9482c0f758c",
+        "file": "pia/474dd0da7569f87f006f.m4a",
+        "kind": "teaching",
+        "voiceName": "Pia 18 — vive et fière 1",
+        "voiceAgeImpression": 18,
+        "canonicalAge": 21,
+        "masterSha256": "aaf5b8c0db1ed1144f20a1aebae7dde7e8458869355e653dfc5a4eb5ec775166",
+        "audioSha256": "d973ad2af7edd984042ba628841246057a0d538058f0684bbc5bd660172659cf",
+        "sourceStart": 84.74,
+        "sourceEnd": 87.2325,
+        "durationSeconds": 2.4925,
+        "gainDb": -1.853,
+        "decodeCorrelation": 0.99851,
+        "bytes": 22499,
+        "generatedDate": "2026-11-17",
+        "integratedDate": "2026-11-17",
+        "qaNote": "Exact normalized transcript: small, base. Numbers expanded and punctuation ignored.",
+        "sourceTextId": "474dd0da7569f87f006fa9c36732abf41d32473c2b33cb67cb5aa9482c0f758c",
+        "sourceDomains": [
+          "example"
+        ],
+        "sentences": [
+          {
+            "text": "Nous avons reçu la facture d'électricité.",
+            "start": 0.0,
+            "end": 2.4925
+          }
+        ]
+      },
+      {
+        "text": "Une main tend un billet pour payer la facture qui sort de l'enveloppe.",
+        "textSha256": "d933471677c07fd52b98de1ddaefdde98fc3c14bfe393ae861bbae28b5d9b287",
+        "file": "pia/d933471677c07fd52b98.m4a",
+        "kind": "teaching",
+        "voiceName": "Pia 18 — vive et fière 1",
+        "voiceAgeImpression": 18,
+        "canonicalAge": 21,
+        "masterSha256": "aaf5b8c0db1ed1144f20a1aebae7dde7e8458869355e653dfc5a4eb5ec775166",
+        "audioSha256": "6c97873d997e7f94d9d9369e09faf04c0977e0ae36fa1add123765977cf2e5e0",
+        "sourceStart": 87.2325,
+        "sourceEnd": 90.4275,
+        "durationSeconds": 3.195,
+        "gainDb": -1.914,
+        "decodeCorrelation": 0.99743,
+        "bytes": 28668,
+        "generatedDate": "2026-11-17",
+        "integratedDate": "2026-11-17",
+        "qaNote": "Exact normalized transcript: medium. Numbers expanded and punctuation ignored.",
+        "sourceTextId": "d933471677c07fd52b98de1ddaefdde98fc3c14bfe393ae861bbae28b5d9b287",
+        "sourceDomains": [
+          "pictureExample"
+        ],
+        "sentences": [
+          {
+            "text": "Une main tend un billet pour payer la facture qui sort de l'enveloppe.",
+            "start": 0.0,
+            "end": 3.195
+          }
+        ]
+      },
+      {
+        "text": "le chauffage",
+        "textSha256": "c4d82257f491db60e57b1f2bc0c5aeb1b63afd103bb7cfd680a1d2ae70ba2c8f",
+        "file": "pia/c4d82257f491db60e57b.m4a",
+        "kind": "teaching",
+        "voiceName": "Pia 18 — vive et fière 1",
+        "voiceAgeImpression": 18,
+        "canonicalAge": 21,
+        "masterSha256": "aaf5b8c0db1ed1144f20a1aebae7dde7e8458869355e653dfc5a4eb5ec775166",
+        "audioSha256": "4d2263c5407a92a76cc4c1a77feccf9521e16f8464af9ace29ab8cd48c49d868",
+        "sourceStart": 90.4275,
+        "sourceEnd": 91.565,
+        "durationSeconds": 1.1375,
+        "gainDb": -2.911,
+        "decodeCorrelation": 0.97003,
+        "bytes": 10144,
+        "generatedDate": "2026-11-17",
+        "integratedDate": "2026-11-17",
+        "qaNote": "Exact normalized transcript: small, base. Numbers expanded and punctuation ignored.",
+        "sourceTextId": "c4d82257f491db60e57b1f2bc0c5aeb1b63afd103bb7cfd680a1d2ae70ba2c8f",
+        "sourceDomains": [
+          "vocabulary"
+        ],
+        "sentences": [
+          {
+            "text": "le chauffage",
+            "start": 0.0,
+            "end": 1.1375
+          }
+        ]
+      },
+      {
+        "text": "Il fait froid : allume le chauffage !",
+        "textSha256": "b74c04c2c32403ce8447938caa29c117e952d6c584d8776b5c46e15c8f673b77",
+        "file": "pia/b74c04c2c32403ce8447.m4a",
+        "kind": "teaching",
+        "voiceName": "Pia 18 — vive et fière 1",
+        "voiceAgeImpression": 18,
+        "canonicalAge": 21,
+        "masterSha256": "aaf5b8c0db1ed1144f20a1aebae7dde7e8458869355e653dfc5a4eb5ec775166",
+        "audioSha256": "a58cdb38494a67bd9ca87e7923a3cb2b89b34ac9109942d3f8bafca8adce1e4f",
+        "sourceStart": 91.565,
+        "sourceEnd": 94.085,
+        "durationSeconds": 2.52,
+        "gainDb": -3.897,
+        "decodeCorrelation": 0.99939,
+        "bytes": 21997,
+        "generatedDate": "2026-11-17",
+        "integratedDate": "2026-11-17",
+        "qaNote": "Exact normalized transcript: small, base. Numbers expanded and punctuation ignored.",
+        "sourceTextId": "b74c04c2c32403ce8447938caa29c117e952d6c584d8776b5c46e15c8f673b77",
+        "sourceDomains": [
+          "example"
+        ],
+        "sentences": [
+          {
+            "text": "Il fait froid : allume le chauffage !",
+            "start": 0.0,
+            "end": 2.52
+          }
+        ]
+      },
+      {
+        "text": "Ce radiateur gris et son thermostat blanc servent au chauffage de la pièce.",
+        "textSha256": "1cab93f3d94fbeed0e22618e5077f25d1692b9c260ed99bd6002b1f2a8f8e452",
+        "file": "pia/1cab93f3d94fbeed0e22.m4a",
+        "kind": "teaching",
+        "voiceName": "Pia 18 — vive et fière 1",
+        "voiceAgeImpression": 18,
+        "canonicalAge": 21,
+        "masterSha256": "aaf5b8c0db1ed1144f20a1aebae7dde7e8458869355e653dfc5a4eb5ec775166",
+        "audioSha256": "a080765fc7c376a1a7ef3888f66db5722045b83dcfa89a1a1f6b4b861f825f2a",
+        "sourceStart": 94.085,
+        "sourceEnd": 98.105,
+        "durationSeconds": 4.02,
+        "gainDb": -0.383,
+        "decodeCorrelation": 0.9956,
+        "bytes": 35691,
+        "generatedDate": "2026-11-17",
+        "integratedDate": "2026-11-17",
+        "qaNote": "Exact normalized transcript: base, medium. Numbers expanded and punctuation ignored.",
+        "sourceTextId": "1cab93f3d94fbeed0e22618e5077f25d1692b9c260ed99bd6002b1f2a8f8e452",
+        "sourceDomains": [
+          "pictureExample"
+        ],
+        "sentences": [
+          {
+            "text": "Ce radiateur gris et son thermostat blanc servent au chauffage de la pièce.",
+            "start": 0.0,
+            "end": 4.02
+          }
+        ]
+      },
+      {
+        "text": "la clé",
+        "textSha256": "d92a6048badb10888d013f2964b692276613c1be48a735e8f52123772d538fb8",
+        "file": "pia/d92a6048badb10888d01.m4a",
+        "kind": "teaching",
+        "voiceName": "Pia 18 — vive et fière 1",
+        "voiceAgeImpression": 18,
+        "canonicalAge": 21,
+        "masterSha256": "aaf5b8c0db1ed1144f20a1aebae7dde7e8458869355e653dfc5a4eb5ec775166",
+        "audioSha256": "2102fb98e8c8b29f366bb1451ebaaf06b452ee7d29701e5471a1b1464ecc0c5b",
+        "sourceStart": 98.105,
+        "sourceEnd": 99.0275,
+        "durationSeconds": 0.9225,
+        "gainDb": -1.533,
+        "decodeCorrelation": 0.99832,
+        "bytes": 8745,
+        "generatedDate": "2026-11-17",
+        "integratedDate": "2026-11-17",
+        "qaNote": "Exact normalized transcript: small, base. Numbers expanded and punctuation ignored.",
+        "sourceTextId": "d92a6048badb10888d013f2964b692276613c1be48a735e8f52123772d538fb8",
+        "sourceDomains": [
+          "vocabulary"
+        ],
+        "sentences": [
+          {
+            "text": "la clé",
+            "start": 0.0,
+            "end": 0.9225
+          }
+        ]
+      },
+      {
+        "text": "J'ai perdu la clé de ma voiture.",
+        "textSha256": "c9d49dfde7df7556aff19925cc19ade904215db61e48987d835e91104540d012",
+        "file": "pia/c9d49dfde7df7556aff1.m4a",
+        "kind": "teaching",
+        "voiceName": "Pia 18 — vive et fière 1",
+        "voiceAgeImpression": 18,
+        "canonicalAge": 21,
+        "masterSha256": "aaf5b8c0db1ed1144f20a1aebae7dde7e8458869355e653dfc5a4eb5ec775166",
+        "audioSha256": "38703f723d4c6950fd400b1934eac397b8bc820524e949fbf9b1a74bd337530c",
+        "sourceStart": 99.0275,
+        "sourceEnd": 100.8875,
+        "durationSeconds": 1.86,
+        "gainDb": -0.855,
+        "decodeCorrelation": 0.99682,
+        "bytes": 17976,
+        "generatedDate": "2026-11-17",
+        "integratedDate": "2026-11-17",
+        "qaNote": "Exact normalized transcript: small, base. Numbers expanded and punctuation ignored.",
+        "sourceTextId": "c9d49dfde7df7556aff19925cc19ade904215db61e48987d835e91104540d012",
+        "sourceDomains": [
+          "example"
+        ],
+        "sentences": [
+          {
+            "text": "J'ai perdu la clé de ma voiture.",
+            "start": 0.0,
+            "end": 1.86
+          }
+        ]
+      },
+      {
+        "text": "Il y a beaucoup de clés différentes sur ce trousseau.",
+        "textSha256": "dfeef27737ab2d61d5a4fad72cf339d79a79665c9922e8a96130ad16291ddea5",
+        "file": "pia/dfeef27737ab2d61d5a4.m4a",
+        "kind": "teaching",
+        "voiceName": "Pia 18 — vive et fière 1",
+        "voiceAgeImpression": 18,
+        "canonicalAge": 21,
+        "masterSha256": "aaf5b8c0db1ed1144f20a1aebae7dde7e8458869355e653dfc5a4eb5ec775166",
+        "audioSha256": "f3d6cfc8b6adeef62382a61d37936755a3320b922629dee6f9b6215adf87641c",
+        "sourceStart": 100.8875,
+        "sourceEnd": 103.4725,
+        "durationSeconds": 2.585,
+        "gainDb": -0.511,
+        "decodeCorrelation": 0.99889,
+        "bytes": 22683,
+        "generatedDate": "2026-11-17",
+        "integratedDate": "2026-11-17",
+        "qaNote": "Exact normalized transcript: small. Numbers expanded and punctuation ignored.",
+        "sourceTextId": "dfeef27737ab2d61d5a4fad72cf339d79a79665c9922e8a96130ad16291ddea5",
+        "sourceDomains": [
+          "pictureExample"
+        ],
+        "sentences": [
+          {
+            "text": "Il y a beaucoup de clés différentes sur ce trousseau.",
+            "start": 0.0,
+            "end": 2.585
+          }
+        ]
+      },
+      {
+        "text": "la couverture",
+        "textSha256": "f22edcb045cb6bb6a5e28268e1f007830e2f0f788bec08138b3c0bdff6e34927",
+        "file": "pia/f22edcb045cb6bb6a5e2.m4a",
+        "kind": "teaching",
+        "voiceName": "Pia 18 — vive et fière 1",
+        "voiceAgeImpression": 18,
+        "canonicalAge": 21,
+        "masterSha256": "aaf5b8c0db1ed1144f20a1aebae7dde7e8458869355e653dfc5a4eb5ec775166",
+        "audioSha256": "23eb79b92dd6739d6889eb2d9a3da1aa9b69ef6c0e0d1757f5a0362bba32451b",
+        "sourceStart": 103.4725,
+        "sourceEnd": 104.6525,
+        "durationSeconds": 1.18,
+        "gainDb": 0.779,
+        "decodeCorrelation": 0.99663,
+        "bytes": 12056,
+        "generatedDate": "2026-11-17",
+        "integratedDate": "2026-11-17",
+        "qaNote": "Exact normalized transcript: small, base. Numbers expanded and punctuation ignored.",
+        "sourceTextId": "f22edcb045cb6bb6a5e28268e1f007830e2f0f788bec08138b3c0bdff6e34927",
+        "sourceDomains": [
+          "vocabulary"
+        ],
+        "sentences": [
+          {
+            "text": "la couverture",
+            "start": 0.0,
+            "end": 1.18
+          }
+        ]
+      },
+      {
+        "text": "Prends une couverture si tu as froid.",
+        "textSha256": "6abb5b0cc6690232ba92ccb4c12cdf3d8c197a58dc0619b02d2b1a8f70233428",
+        "file": "pia/6abb5b0cc6690232ba92.m4a",
+        "kind": "teaching",
+        "voiceName": "Pia 18 — vive et fière 1",
+        "voiceAgeImpression": 18,
+        "canonicalAge": 21,
+        "masterSha256": "aaf5b8c0db1ed1144f20a1aebae7dde7e8458869355e653dfc5a4eb5ec775166",
+        "audioSha256": "311a85f35c7eaba7d2e15b7873aee76e2b5f6ecc9ecc453387f7b59d14fc5176",
+        "sourceStart": 104.6525,
+        "sourceEnd": 106.76,
+        "durationSeconds": 2.1075,
+        "gainDb": 2.563,
+        "decodeCorrelation": 0.9969,
+        "bytes": 19778,
+        "generatedDate": "2026-11-17",
+        "integratedDate": "2026-11-17",
+        "qaNote": "Exact normalized transcript: small, base. Numbers expanded and punctuation ignored.",
+        "sourceTextId": "6abb5b0cc6690232ba92ccb4c12cdf3d8c197a58dc0619b02d2b1a8f70233428",
+        "sourceDomains": [
+          "example"
+        ],
+        "sentences": [
+          {
+            "text": "Prends une couverture si tu as froid.",
+            "start": 0.0,
+            "end": 2.1075
+          }
+        ]
+      },
+      {
+        "text": "Une couverture rayée à franges noires est posée sur le fauteuil vert.",
+        "textSha256": "ecb441991d13fd79766b9f666b42da41e3a4cba619605a7f774acdd0f9e80f91",
+        "file": "pia/ecb441991d13fd79766b.m4a",
+        "kind": "teaching",
+        "voiceName": "Pia 18 — vive et fière 1",
+        "voiceAgeImpression": 18,
+        "canonicalAge": 21,
+        "masterSha256": "aaf5b8c0db1ed1144f20a1aebae7dde7e8458869355e653dfc5a4eb5ec775166",
+        "audioSha256": "5e488d90bab349c78d00a650b01c6cdf80500c30d200afb52bc806981d08a511",
+        "sourceStart": 106.76,
+        "sourceEnd": 110.4925,
+        "durationSeconds": 3.7325,
+        "gainDb": 0.41,
+        "decodeCorrelation": 0.9959,
+        "bytes": 33714,
+        "generatedDate": "2026-11-17",
+        "integratedDate": "2026-11-17",
+        "qaNote": "Exact normalized transcript: medium. Numbers expanded and punctuation ignored.",
+        "sourceTextId": "ecb441991d13fd79766b9f666b42da41e3a4cba619605a7f774acdd0f9e80f91",
+        "sourceDomains": [
+          "pictureExample"
+        ],
+        "sentences": [
+          {
+            "text": "Une couverture rayée à franges noires est posée sur le fauteuil vert.",
+            "start": 0.0,
+            "end": 3.7325
+          }
+        ]
+      },
+      {
+        "text": "quotidien",
+        "textSha256": "334be6ab79cead6ed8ad702f4b427ebf09b543618946db376257d7e7fc4f702b",
+        "file": "pia/334be6ab79cead6ed8ad.m4a",
+        "kind": "teaching",
+        "voiceName": "Pia 18 — vive et fière 1",
+        "voiceAgeImpression": 18,
+        "canonicalAge": 21,
+        "masterSha256": "aaf5b8c0db1ed1144f20a1aebae7dde7e8458869355e653dfc5a4eb5ec775166",
+        "audioSha256": "37e3614b015e177e88f5316397baa349a637f424763a30572c133ce0bceb24b0",
+        "sourceStart": 110.4925,
+        "sourceEnd": 111.72,
+        "durationSeconds": 1.2275,
+        "gainDb": -2.667,
+        "decodeCorrelation": 0.96963,
+        "bytes": 11245,
+        "generatedDate": "2026-11-17",
+        "integratedDate": "2026-11-17",
+        "qaNote": "Exact normalized transcript: small. Numbers expanded and punctuation ignored.",
+        "sourceTextId": "334be6ab79cead6ed8ad702f4b427ebf09b543618946db376257d7e7fc4f702b",
+        "sourceDomains": [
+          "vocabulary"
+        ],
+        "sentences": [
+          {
+            "text": "quotidien",
+            "start": 0.0,
+            "end": 1.2275
+          }
+        ]
       }
     ]
   },
-  "pendingRetakes": [],
-  "clipCount": 237,
-  "totalBytes": 11763920,
+  "pendingRetakes": [
+    {
+      "voice": "pia",
+      "text": "Ayant déjà acheté nos billets, nous attendions le bateau quand l'orage éclata. Nous cherchâmes alors un hôtel.",
+      "reason": "Passé simple pronunciation needs corrective take; original withheld."
+    },
+    {
+      "voice": "pia",
+      "text": "Nous avions acheté les billets avant l'orage. Alors que nous attendions le bateau, l'orage éclata ; nous cherchâmes un hôtel.",
+      "reason": "Passé simple pronunciation needs corrective take; original withheld."
+    }
+  ],
+  "clipCount": 355,
+  "totalBytes": 15411102,
   "sentenceTimingVersion": 1,
   "sentenceTimingMethod": "French sentence segmentation, local ASR word alignment and decoded waveform pause boundaries"
 }
