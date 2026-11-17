@@ -147,6 +147,9 @@ html.qf #stage > section.q-card.listening-card > .listening-mode{margin:0}
 /* Grouped settings and mistake review. */
 .section-fold{min-width:0}.section-fold-title{font-size:1.05rem;padding:4px 0;line-height:1.6}.section-fold-title:focus-visible{outline:2px solid var(--accent);outline-offset:5px;border-radius:4px}.section-fold-body{display:grid;gap:16px;min-width:0}.section-fold-body>.card{margin:0;box-shadow:none}.fb-sort-row{display:flex;gap:10px;align-items:center;flex-wrap:wrap;margin:12px 0}.fb-sort-row select{font:inherit;max-width:100%;padding:7px 10px;border-radius:8px;color:var(--fg);background:var(--card);border:1px solid var(--line,#ccc)}
 
+
+.usage-filters{display:flex;flex-wrap:wrap;gap:12px;align-items:end;margin:16px 0}.usage-filters label{display:grid;gap:6px;max-width:100%}.usage-filters input{font:inherit;color:var(--fg);background:var(--card);padding:8px;border:1px solid var(--line,#ccc);border-radius:8px;min-width:0}.usage-admin{min-width:0}.usage-summary{font-weight:700;line-height:1.8}.usage-distribution{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;margin:20px 0}.usage-bar{display:grid;gap:5px}.usage-bar progress{width:100%;accent-color:var(--accent)}.usage-table-wrap{max-width:100%;overflow-x:auto;border:1px solid var(--line,#ccc);border-radius:8px}.usage-table{border-collapse:collapse;width:100%;font-size:.86rem}.usage-table th,.usage-table td{padding:10px;text-align:left;border-bottom:1px solid var(--line,#ccc);white-space:nowrap}.usage-results>section{margin-top:24px}@media(max-width:520px){.usage-distribution{grid-template-columns:1fr}.usage-filters{align-items:stretch}.usage-filters label{flex:1 1 135px}}
+
 </style></head><body>
 <title>法语语法小测验</title>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@600;900&family=Noto+Sans+SC:wght@400;500;700&display=swap">
@@ -14914,7 +14917,7 @@ GPA2.forEach(u => {
     LEVEL_OF[id] = u.lv; TAGS_OF[id] = q.tags; KP_OF[id] = "gb" + u.unit;
   });
 });
-const LANG_FILES = {"en": "lang-en.js?v=38cafc1c1a", "fr": "lang-fr.js?v=28d246758c"};
+const LANG_FILES = {"en": "lang-en.js?v=7f22b47aae", "fr": "lang-fr.js?v=cb47e66dc1"};
 (() => { let l = null; try { l = localStorage.getItem("fq-lang"); } catch (e) {}
   if (Object.hasOwn(LANG_FILES, l)) document.write('<script src="' + LANG_FILES[l] + '"><\/script>'); })();
 </script>
@@ -17598,6 +17601,7 @@ function syncHash(str) {
 const syncKeyOf = d => syncHash(recKey(d));
 function syncAuth() { try { return JSON.parse(localStorage.getItem(SYNC_AUTH) || "null"); } catch (e) { return null; } }
 function syncAccountChanged() {
+  if (typeof usageAccountChanged === "function") usageAccountChanged();
   clearTimeout(syncRetryTimer); clearTimeout(syncState.timer); syncState.timer = 0; syncState.queue = []; syncState.last = 0;
   if (typeof oralOnAccountChange === "function") oralOnAccountChange();
   if (typeof petOnAccountChange === "function") petOnAccountChange();
@@ -17898,7 +17902,7 @@ function syncCard() {
     code.addEventListener("keydown", e => { if (e.key === "Enter") login(); });
     const priv = el("details", "xp-rule");
     priv.append(el("summary", null, "隐私说明"),
-      el("p", null, "登录后会在云端（Supabase）保存：你的邮箱，以及做题、背单词、金币和道具的记录。这些数据只用来在你自己的设备之间同步，别人看不到，也不会用于其他用途。"),
+      el("p", null, "登录后会在云端（Supabase）保存：你的邮箱，以及做题、背单词、金币和道具的记录。这些记录用于设备同步与学习功能。法语页管理员可查看每日使用时长和各板块作答数量；页面可见时长默认开启，可在功能设置中关闭。不向其他普通用户公开个人学习明细。"),
       el("p", null, "随时可以在这里“删除账号”，云端的账号和记录会一起删除；这台设备上的记录不受影响。"));
     card.append(row, row2, note, priv);
   }
@@ -18431,6 +18435,7 @@ function setFold(wrap, key, title, initialOpen = false) {
 // 每次用户可见更新都新增记录：默认只递增第三位 1.x.y → 1.x.(y+1)，超过 9 继续到 10、11；第二位升级需用户明确要求。
 // 首位保持 1，只有用户明确要求才可修改；历史记录保留。完整发布规则见根目录 AGENTS.md。
 const CHANGELOG = [
+  {"v": "1.9.35", "d": "2026-11-17", "items": ["法语页新增管理员使用统计：按 UTC 日期查看每日页面可见时长、语法／变位／词汇／听力作答分布及账号明细，可查看单个账号，口语完成任务和模拟卷交卷份数单列。已有云端记录支持历史做题分布。", "登录后默认累计页面可见时长，可在功能设置中关闭；后台不计时，重叠标签页和设备时段去重，仅管理员可查看汇总，不收集输入内容或录音。时长从本版本开始估算，突然关闭可能少计最后约 30 秒。"]},
   {"v": "1.9.34", "d": "2026-11-17", "items": ["法语页设置重新分组：功能设置收纳学习进度、界面语言和字体；做题设置收纳难度、答题、词汇、变位和朗读；游戏模式、学习伙伴与番茄时钟归入靠后的游戏设置。留言板可折叠，各区块记住展开状态。", "公开留言默认按最新排列，可切换为点赞最多；按全部公开留言排序并分页加载，同赞数时较新的留言在前。学习进度中的错题本与错题分布合并为可折叠区块。"]},
   {"v": "1.9.33", "d": "2026-11-17", "items": ["修复零基础入口受难度过滤、直接开始练习后导航未切换、异常题号缓存和空题组跳题问题；修复词汇、变位设置及闯关缓存异常，保留已有学习记录。没有匹配题目时提供明确提示与返回入口。", "听力标签检索不再叠加全局语法难度过滤，以听力目录所选标签为准，修复有材料却显示无题目的问题。", "法语页：管理员回复过的留言及回复向所有人开放查看，不展示账号信息；新增登录点赞、取消点赞与总数显示，每个账号对同一留言最多计一次。未回复留言继续仅本人和管理员可见。"]},
   {"v": "1.9.32", "d": "2026-11-17", "items": ["今日计划自动修复失效题目、重复编号和异常缓存，保留仍有效的计划题目与已完成进度；可补充的题目自动补齐，不足时按实际可用题数显示。只剩动词变位时直接进入变位练习；修复不删除或重置答题记录、金币及其他学习数据。"]},
@@ -31689,6 +31694,142 @@ function pomoInit(){
   document.addEventListener('visibilitychange',()=>{if(!document.hidden)pomoTick();});
   setInterval(pomoTick,1000);pomoTick();
 }
+// First-party, account-scoped visible-page duration. Never records input, URLs or audio.
+const USAGE_PREFIX='fq-usage-outbox:', USAGE_MAX_AGE=7*86400000;
+let usageUid='',usageLast=Date.now(),usageVisible=false,usageBusy=false,usageTicks=0;
+const usagePending=new Map(),usagePreferences=new Map();
+const usageAccount=()=>SYNC_ON?syncAuth()?.uid||'':'';
+function usageEnabled(uid=usageAccount()){if(!uid)return false;if(usagePreferences.has(uid))return usagePreferences.get(uid);try{return localStorage.getItem('fq-usage-enabled:'+uid)!=='0';}catch(e){return true;}}
+function usageMerge(map,minute,mask){try{const n=BigInt(mask);if(n>0n&&n<(1n<<60n))map.set(minute,(map.get(minute)||0n)|n);}catch(e){}}
+function usageMark(map,start,end){
+ if(!Number.isFinite(start)||!Number.isFinite(end)||end<=start)return;
+ // A delayed/suspended timer is not evidence that the entire gap was viewed.
+ start=Math.max(start,end-15000);
+ for(let second=Math.floor(start/1000);second<Math.floor(end/1000);second++){
+  const minute=new Date(Math.floor(second/60)*60000).toISOString();
+  usageMerge(map,minute,1n<<BigInt(second%60));
+ }
+}
+function usageCollect(now=Date.now()){
+ if(usageUid&&usageVisible)usageMark(usagePending,usageLast,now);
+ usageLast=now;
+}
+function usageRows(map){return [...map].sort(([a],[b])=>a.localeCompare(b)).map(([minute,mask])=>({minute,mask:String(mask)}));}
+function usagePersist(){
+ if(!usageUid||!usagePending.size)return;
+ try{
+  const key=USAGE_PREFIX+usageUid+':'+crypto.randomUUID();
+  localStorage.setItem(key,JSON.stringify({at:Date.now(),minutes:usageRows(usagePending)}));usagePending.clear();
+ }catch(e){} // Storage failure keeps the unsent seconds in memory.
+}
+function usageOutbox(uid){
+ const found=[],prefix=USAGE_PREFIX+uid+':';
+ try{
+  const keys=Array.from({length:localStorage.length},(_,i)=>localStorage.key(i)).filter(k=>k?.startsWith(prefix));
+  for(const key of keys){
+   let data;try{data=JSON.parse(localStorage.getItem(key));}catch(e){}
+   if(!data||!Number.isFinite(data.at)||data.at<Date.now()-USAGE_MAX_AGE||!Array.isArray(data.minutes)){localStorage.removeItem(key);continue;}
+   found.push({key,...data});
+  }
+  found.sort((a,b)=>a.at-b.at);
+  // Bound only this feature's retry cache. Never touch answers, coins or login data.
+  while(found.length>4000)localStorage.removeItem(found.shift().key);
+ }catch(e){}
+ return found;
+}
+async function usageFlush(){
+ if(usageBusy||!usageUid||usageAccount()!==usageUid||navigator.onLine===false)return;
+ const uid=usageUid;usagePersist();const batches=usageOutbox(uid).slice(0,50),snapshot=new Map(usagePending),merged=new Map(snapshot);
+ for(const b of batches)for(const row of b.minutes){const t=Date.parse(row.minute);if(Number.isFinite(t)&&t>=Date.now()-USAGE_MAX_AGE+60000&&t<=Date.now())usageMerge(merged,new Date(Math.floor(t/60000)*60000).toISOString(),row.mask);}
+ const rows=usageRows(merged);if(!rows.length){for(const b of batches)try{localStorage.removeItem(b.key);}catch(e){}return;}
+ usageBusy=true;
+ try{
+  // Outbox chunks are immutable; concurrent tabs may safely retry the same seconds.
+  for(let i=0;i<rows.length;i+=120){
+   const ac=new AbortController(),timer=setTimeout(()=>ac.abort(),12000);
+   try{await syncFetch('/rest/v1/rpc/record_visible_usage',{method:'POST',body:JSON.stringify({p_minutes:rows.slice(i,i+120)}),signal:ac.signal,keepalive:true},true,uid);}
+   finally{clearTimeout(timer);}
+  }
+  for(const b of batches)try{localStorage.removeItem(b.key);}catch(e){}
+  if(usageUid===uid)for(const [minute,mask]of snapshot){const rest=(usagePending.get(minute)||0n)&~mask;if(rest)usagePending.set(minute,rest);else usagePending.delete(minute);}
+ }catch(e){} // Best effort. The next heartbeat/visit retries without duplicating time.
+ finally{usageBusy=false;}
+}
+function usageAccountChanged(){
+ usageCollect();usagePersist();usagePending.clear();usageUid=usageAccount();usageLast=Date.now();usageVisible=!!usageUid&&usageEnabled(usageUid)&&document.visibilityState==='visible';void usageFlush();
+}
+function usageVisibility(){usageCollect();usageVisible=!!usageUid&&usageEnabled(usageUid)&&document.visibilityState==='visible';usagePersist();void usageFlush();}
+function usageSetEnabled(enabled){
+ const uid=usageAccount();if(!uid)return;usageCollect();usagePersist();
+ usagePreferences.set(uid,enabled);try{localStorage.setItem('fq-usage-enabled:'+uid,enabled?'1':'0');}catch(e){}
+ usageVisible=enabled&&document.visibilityState==='visible';usageLast=Date.now();void usageFlush();
+}
+function usageInit(){
+ if(!SYNC_ON)return;usageAccountChanged();
+ setInterval(()=>{if(usageAccount()!==usageUid){usageAccountChanged();return;}usageCollect();usageVisible=!!usageUid&&usageEnabled(usageUid)&&document.visibilityState==='visible';if(++usageTicks%6===0)void usageFlush();},5000);
+ document.addEventListener('visibilitychange',usageVisibility);
+ addEventListener('pagehide',()=>{usageCollect();usageVisible=false;usagePersist();void usageFlush();});
+ addEventListener('pageshow',()=>{usageLast=Date.now();usageVisible=!!usageUid&&usageEnabled(usageUid)&&document.visibilityState==='visible';void usageFlush();});
+ addEventListener('online',()=>void usageFlush());
+ addEventListener('storage',e=>{if(e.key==='fq-usage-enabled:'+usageUid){usagePreferences.delete(usageUid);usageVisibility();}});
+}
+queueMicrotask(usageInit);
+
+const usageText=(zh,en,fr)=>typeof UI_LANG==='undefined'||UI_LANG==='zh'?zh:UI_LANG==='fr'?fr:en;
+function usageSettings(wrap){
+ const uid=usageAccount(),epoch=fbEpoch,card=setSection(wrap,usageText('使用统计','Usage statistics','Statistiques d’utilisation'));
+ const note=usageText('登录后默认统计页面可见时长，仅管理员可查看每日时长及各板块做题数量。切到后台不计时，同账号重叠时段不重复累计；不记录输入内容或录音。可关闭本浏览器的后续时长统计，已有学习记录仍用于做题分布。','When signed in, visible-page time is measured by default. Only administrators can see daily time and practice counts. Background time is excluded and overlapping time is counted once per account. No input or recordings are collected. You can stop future time measurement in this browser; existing study records still provide practice totals.','Après connexion, le temps de page visible est mesuré par défaut. Seuls les administrateurs voient les durées et nombres d’exercices par jour. L’arrière-plan est exclu et les périodes simultanées ne sont comptées qu’une fois par compte. Aucun texte saisi ni enregistrement audio n’est collecté. Vous pouvez arrêter la mesure future dans ce navigateur ; les acquis existants servent toujours aux totaux d’exercices.');
+ card.append(el('p','sub',note));
+ const row=setCheckRow('usageEnabled',usageText('统计页面可见时长','Measure visible-page time','Mesurer le temps de page visible'),usageEnabled(uid),value=>{if(fbCurrent(uid,epoch))usageSetEnabled(value);});
+ row.querySelector('input').disabled=!uid;card.append(row);
+ if(!uid)card.append(el('p','sub',usageText('登录后生效；未登录访问不上传时长。','Applies after sign-in; guest visits do not upload time.','Actif après connexion ; les visites anonymes n’envoient aucune durée.')));
+}
+function usageAdminEntry(wrap){
+ const uid=usageAccount(),epoch=fbEpoch;if(!uid)return;
+ fbRpc('feedback_status').then(result=>{
+  if(!result.is_admin||!wrap.isConnected||!fbCurrent(uid,epoch))return;
+  const card=setSection(wrap,usageText('管理员统计','Administrator statistics','Statistiques administrateur'));card.classList.add('fb-admin');
+  const go=fbButton(usageText('查看使用统计','View usage statistics','Voir les statistiques'),'btn');go.addEventListener('click',()=>{if(fbCurrent(uid,epoch))renderUsageAdmin();});card.append(go);
+ }).catch(()=>{});
+}
+function usageDuration(value){const s=Math.max(0,Math.round(Number(value)||0));if(!s)return '—';return Math.floor(s/3600)+'h '+Math.floor(s%3600/60)+'m '+s%60+'s';}
+function renderUsageAdmin(){
+ const uid=usageAccount(),epoch=fbEpoch;if(!uid)return;
+ stage.innerHTML='';const root=el('section','card fb-admin usage-admin');root.dataset.noi18n='';stage.append(root);
+ const current=()=>root.isConnected&&fbCurrent(uid,epoch);
+ const back=fbButton(usageText('返回设置','Back to settings','Retour aux réglages'),'btn ghost');back.addEventListener('click',renderSettings);
+ root.append(back,el('h2',null,usageText('每日使用与做题统计','Daily usage and practice','Utilisation et exercices par jour')),
+  el('p','sub',usageText('按 UTC 日期统计，仅包含已登录账号的云端数据。时长从本版本上线后开始，表示页面可见的估算停留时长，不等同于专注学习；突然关闭可能少计最后约 30 秒。无时长记录以 — 显示。做题按作答次数计，重做也计入；口语仅计已完成任务，模拟卷按交卷份数单列。','Dates use UTC; only signed-in cloud records are included. Time starts with this release and estimates visible-page duration, not focused study. An abrupt close may lose about 30 seconds. A dash means no time record. Practice counts attempts, including repeats; speaking counts completed tasks and exams count submitted papers separately.','Dates en UTC ; seules les données synchronisées des comptes connectés sont incluses. Les durées commencent avec cette version et estiment le temps de page visible, pas la concentration. Une fermeture brutale peut perdre environ 30 secondes. Un tiret indique l’absence de durée enregistrée. Les exercices comptent les tentatives, y compris répétées ; l’oral compte les missions terminées et les examens les copies remises.')));
+ const form=el('div','usage-filters'),from=el('input'),to=el('input'),go=fbButton(usageText('查询','Load','Afficher'),'btn');from.type=to.type='date';
+ to.value=new Date().toISOString().slice(0,10);from.value=new Date(Date.now()-6*86400000).toISOString().slice(0,10);
+ for(const [input,label]of [[from,usageText('开始日期','Start date','Date de début')],[to,usageText('结束日期','End date','Date de fin')]]){const l=el('label',null,label);input.setAttribute('aria-label',label);l.append(input);form.append(l);}
+ form.append(go);const status=el('p','sub'),content=el('div','usage-results');status.setAttribute('role','status');root.append(form,status,content);
+ let selected=null,page=0,busy=false;
+ const headings=[usageText('可见时长','Visible time','Temps visible'),usageText('语法','Grammar','Grammaire'),usageText('变位','Conjugation','Conjugaison'),usageText('词汇','Vocabulary','Vocabulaire'),usageText('听力','Listening','Écoute'),usageText('口语任务','Speaking tasks','Missions orales'),usageText('模拟卷（份）','Exams (papers)','Examens (copies)')];
+ const values=r=>[usageDuration(r.seconds),r.grammar,r.conjugation,r.vocabulary,r.listening,r.oral,r.exams];
+ function table(title,headers,rows){const section=el('section');section.append(el('h3',null,title));const scroll=el('div','usage-table-wrap'),t=el('table','usage-table'),head=el('thead'),tr=el('tr');for(const h of headers){const th=el('th',null,h);th.scope='col';tr.append(th);}head.append(tr);t.append(head);const body=el('tbody');for(const row of rows){const tr=el('tr');for(const value of row){const td=el('td');if(value?.nodeType)td.append(value);else td.textContent=String(value??0);tr.append(td);}body.append(tr);}t.append(body);scroll.append(t);section.append(scroll);content.append(section);}
+ async function load(){
+  if(busy||!current())return;
+  const span=(Date.parse(to.value)-Date.parse(from.value))/86400000;
+  if(!from.value||!to.value||!Number.isFinite(span)||span<0||span>30){content.replaceChildren();status.textContent=usageText('请选择不超过 31 天的日期范围。','Choose a range of up to 31 days.','Choisissez une période de 31 jours maximum.');return;}
+  busy=true;go.disabled=from.disabled=to.disabled=true;content.querySelectorAll('button').forEach(b=>b.disabled=true);status.textContent=fbText('loading');
+  try{
+   const data=await fbRpc('admin_learning_usage',{p_from:from.value,p_to:to.value,p_user:selected,p_page:page});if(!current())return;
+   content.replaceChildren();status.textContent='';
+   const total=data.daily.reduce((a,r)=>{for(const k of ['seconds','grammar','conjugation','vocabulary','listening','oral','exams'])a[k]=(a[k]||0)+Number(r[k]);return a;},{});
+   content.append(el('p','usage-summary',usageText('范围内账号：','Accounts in range: ','Comptes sur la période : ')+data.user_count+' · '+usageText('可见时长：','Visible time: ','Temps visible : ')+usageDuration(total.seconds)+' · '+usageText('作答次数：','Attempts: ','Tentatives : ')+(total.grammar+total.conjugation+total.vocabulary+total.listening)));
+   if(selected){const clear=fbButton(usageText('查看全部账号','All accounts','Tous les comptes'));clear.addEventListener('click',()=>{selected=null;page=0;void load();});content.append(el('p','sub',usageText('当前账号：','Selected account: ','Compte sélectionné : ')+selected.slice(0,8)),clear);}
+   const chart=el('div','usage-distribution');const count=total.grammar+total.conjugation+total.vocabulary+total.listening;
+   for(const [k,label]of [['grammar',headings[1]],['conjugation',headings[2]],['vocabulary',headings[3]],['listening',headings[4]]]){const row=el('div','usage-bar');row.append(el('span',null,label+' · '+total[k]));const bar=el('progress');bar.max=Math.max(1,count);bar.value=total[k];bar.setAttribute('aria-label',label);row.append(bar);chart.append(row);}content.append(chart);
+   table(usageText('每日分布','Daily distribution','Répartition quotidienne'),[usageText('日期（UTC）','Date (UTC)','Date (UTC)'),usageText('活跃账号','Active accounts','Comptes actifs'),...headings],data.daily.map(r=>[r.day,r.active_users,...values(r)]));
+   table(usageText('账号明细','Account details','Détail des comptes'),[usageText('账号','Account','Compte'),...headings,usageText('每日详情','Daily detail','Détail quotidien')],data.users.map(r=>{const b=fbButton(usageText('查看','View','Voir'));b.addEventListener('click',()=>{selected=r.user_id;page=0;void load();});return [(r.nick||usageText('用户','User','Utilisateur'))+' · '+r.user_id.slice(0,8),...values(r),b];}));
+   if(!data.user_count)content.append(el('p','sub',usageText('此范围暂无统计数据。','No data in this range.','Aucune donnée sur cette période.')));
+   const nav=el('div','actions');for(const [delta,label]of [[-1,usageText('上一页','Previous','Précédent')],[1,usageText('下一页','Next','Suivant')]]){const b=fbButton(label);b.disabled=delta<0?page===0:(page+1)*50>=data.user_count;b.addEventListener('click',()=>{page+=delta;void load();});nav.append(b);}content.append(nav);
+  }catch(e){if(current()&&e.code!=='account'){content.replaceChildren();status.textContent=usageText('无法读取统计，请确认管理员权限后重试。','Unable to load statistics. Check administrator access and retry.','Impossible de charger les statistiques. Vérifiez vos droits administrateur et réessayez.');}}
+  finally{busy=false;if(current())go.disabled=from.disabled=to.disabled=false;}
+ }
+ go.addEventListener('click',()=>{page=0;void usageFlush().then(load);});void usageFlush().then(load);
+}
 // ---------- 设置：集中管理各模块的练习设置（都记在本机浏览器里） ----------
 function renderSettings() {
   stage.innerHTML = "";
@@ -31700,6 +31841,7 @@ function renderSettings() {
   setAccountSection(wrap);   // 账号与同步放最上面
   target = setFold(wrap, "settings-function", "功能设置");
   setGoalSection(target);
+  usageSettings(target);
 
   // 界面语言
   const lg = section("界面语言", "切换后页面会重新载入。界面和解析使用所选语言，题目里的法语不变。中文、英文、法语模式答对所得金币分别为 ×1、×2、×3；切换不影响过去的金币。");
@@ -31749,6 +31891,7 @@ function renderSettings() {
   changelogCard(wrap, "fr");   // 版本号和更新记录
   wrap.append(el("p", "sub set-foot", "设置只保存在这台设备的浏览器里，改动马上生效（词汇的题型从下一组开始）。"));
   stage.append(wrap);
+  usageAdminEntry(wrap);
 }
 
 // 所有模块载入后：打开页面先到“做题”的板块选择页

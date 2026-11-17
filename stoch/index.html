@@ -5112,6 +5112,7 @@ function syncHash(str) {
 const syncKeyOf = d => syncHash(recKey(d));
 function syncAuth() { try { return JSON.parse(localStorage.getItem(SYNC_AUTH) || "null"); } catch (e) { return null; } }
 function syncAccountChanged() {
+  if (typeof usageAccountChanged === "function") usageAccountChanged();
   clearTimeout(syncRetryTimer); clearTimeout(syncState.timer); syncState.timer = 0; syncState.queue = []; syncState.last = 0;
   if (typeof oralOnAccountChange === "function") oralOnAccountChange();
   if (typeof petOnAccountChange === "function") petOnAccountChange();
@@ -5412,7 +5413,7 @@ function syncCard() {
     code.addEventListener("keydown", e => { if (e.key === "Enter") login(); });
     const priv = el("details", "xp-rule");
     priv.append(el("summary", null, "隐私说明"),
-      el("p", null, "登录后会在云端（Supabase）保存：你的邮箱，以及做题、背单词、金币和道具的记录。这些数据只用来在你自己的设备之间同步，别人看不到，也不会用于其他用途。"),
+      el("p", null, "登录后会在云端（Supabase）保存：你的邮箱，以及做题、背单词、金币和道具的记录。这些记录用于设备同步与学习功能。法语页管理员可查看每日使用时长和各板块作答数量；页面可见时长默认开启，可在功能设置中关闭。不向其他普通用户公开个人学习明细。"),
       el("p", null, "随时可以在这里“删除账号”，云端的账号和记录会一起删除；这台设备上的记录不受影响。"));
     card.append(row, row2, note, priv);
   }
@@ -5496,6 +5497,7 @@ function setFold(wrap, key, title, initialOpen = false) {
 // 每次用户可见更新都新增记录：默认只递增第三位 1.x.y → 1.x.(y+1)，超过 9 继续到 10、11；第二位升级需用户明确要求。
 // 首位保持 1，只有用户明确要求才可修改；历史记录保留。完整发布规则见根目录 AGENTS.md。
 const CHANGELOG = [
+  {"v": "1.9.35", "d": "2026-11-17", "items": ["法语页新增管理员使用统计：按 UTC 日期查看每日页面可见时长、语法／变位／词汇／听力作答分布及账号明细，可查看单个账号，口语完成任务和模拟卷交卷份数单列。已有云端记录支持历史做题分布。", "登录后默认累计页面可见时长，可在功能设置中关闭；后台不计时，重叠标签页和设备时段去重，仅管理员可查看汇总，不收集输入内容或录音。时长从本版本开始估算，突然关闭可能少计最后约 30 秒。"]},
   {"v": "1.9.34", "d": "2026-11-17", "items": ["法语页设置重新分组：功能设置收纳学习进度、界面语言和字体；做题设置收纳难度、答题、词汇、变位和朗读；游戏模式、学习伙伴与番茄时钟归入靠后的游戏设置。留言板可折叠，各区块记住展开状态。", "公开留言默认按最新排列，可切换为点赞最多；按全部公开留言排序并分页加载，同赞数时较新的留言在前。学习进度中的错题本与错题分布合并为可折叠区块。"]},
   {"v": "1.9.33", "d": "2026-11-17", "items": ["修复零基础入口受难度过滤、直接开始练习后导航未切换、异常题号缓存和空题组跳题问题；修复词汇、变位设置及闯关缓存异常，保留已有学习记录。没有匹配题目时提供明确提示与返回入口。", "听力标签检索不再叠加全局语法难度过滤，以听力目录所选标签为准，修复有材料却显示无题目的问题。", "法语页：管理员回复过的留言及回复向所有人开放查看，不展示账号信息；新增登录点赞、取消点赞与总数显示，每个账号对同一留言最多计一次。未回复留言继续仅本人和管理员可见。"]},
   {"v": "1.9.32", "d": "2026-11-17", "items": ["今日计划自动修复失效题目、重复编号和异常缓存，保留仍有效的计划题目与已完成进度；可补充的题目自动补齐，不足时按实际可用题数显示。只剩动词变位时直接进入变位练习；修复不删除或重置答题记录、金币及其他学习数据。"]},

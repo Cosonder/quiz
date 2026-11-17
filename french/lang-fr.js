@@ -4746,6 +4746,9 @@ const LANG_DICT = {
 "留言板": "Messages",
 "错题本与错题分布": "Erreurs et répartition",
 "答完自动朗读单词（词汇和变位）": "Lire les mots après la réponse (vocabulaire et conjugaison)",
-"设置只保存在这台设备的浏览器里，改动马上生效（词汇的题型从下一组开始）。": "Les réglages sont conservés dans ce navigateur et prennent effet immédiatement (les types d'exercice de vocabulaire s'appliquent à la série suivante)."
+"设置只保存在这台设备的浏览器里，改动马上生效（词汇的题型从下一组开始）。": "Les réglages sont conservés dans ce navigateur et prennent effet immédiatement (les types d'exercice de vocabulaire s'appliquent à la série suivante).",
+"法语页新增管理员使用统计：按 UTC 日期查看每日页面可见时长、语法／变位／词汇／听力作答分布及账号明细，可查看单个账号，口语完成任务和模拟卷交卷份数单列。已有云端记录支持历史做题分布。": "La page de français ajoute des rapports administrateur : temps de page visible, tentatives de grammaire, conjugaison, vocabulaire et écoute, synthèses et vues par compte selon les dates UTC. Les missions orales terminées et copies remises sont séparées. Les acquis synchronisés fournissent l'historique.",
+"登录后默认累计页面可见时长，可在功能设置中关闭；后台不计时，重叠标签页和设备时段去重，仅管理员可查看汇总，不收集输入内容或录音。时长从本版本开始估算，突然关闭可能少计最后约 30 秒。": "Le temps de page visible est mesuré par défaut après connexion et peut être désactivé dans les fonctionnalités. L'arrière-plan est exclu et les périodes simultanées sont dédupliquées. Seuls les administrateurs voient les synthèses ; aucun texte saisi ni audio n'est collecté. La mesure commence avec cette version ; une fermeture brutale peut perdre environ 30 secondes.",
+"登录后会在云端（Supabase）保存：你的邮箱，以及做题、背单词、金币和道具的记录。这些记录用于设备同步与学习功能。法语页管理员可查看每日使用时长和各板块作答数量；页面可见时长默认开启，可在功能设置中关闭。不向其他普通用户公开个人学习明细。": "Après connexion, Supabase conserve votre adresse électronique et vos acquis, vocabulaire, pièces et objets pour la synchronisation et les fonctions pédagogiques. Les administrateurs de français peuvent voir les durées et nombres d'exercices par jour. La mesure du temps visible est activée par défaut et peut être désactivée dans les fonctionnalités. Les détails personnels ne sont pas publics pour les autres utilisateurs ordinaires."
 };
 
