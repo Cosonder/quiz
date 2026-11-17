@@ -14899,7 +14899,7 @@ GPA2.forEach(u => {
     LEVEL_OF[id] = u.lv; TAGS_OF[id] = q.tags; KP_OF[id] = "gb" + u.unit;
   });
 });
-const LANG_FILES = {"en": "lang-en.js?v=266afb3433", "fr": "lang-fr.js?v=33d9cd24c5"};
+const LANG_FILES = {"en": "lang-en.js?v=2c50437436", "fr": "lang-fr.js?v=27dd094291"};
 (() => { let l = null; try { l = localStorage.getItem("fq-lang"); } catch (e) {}
   if (Object.hasOwn(LANG_FILES, l)) document.write('<script src="' + LANG_FILES[l] + '"><\/script>'); })();
 </script>
@@ -18319,6 +18319,7 @@ function setGoalSection(wrap) {
 // 每次用户可见更新都新增记录：默认只递增第三位 1.x.y → 1.x.(y+1)，超过 9 继续到 10、11；第二位升级需用户明确要求。
 // 首位保持 1，只有用户明确要求才可修改；历史记录保留。完整发布规则见根目录 AGENTS.md。
 const CHANGELOG = [
+  {"v": "1.9.30", "d": "2026-11-17", "p": "fr", "items": ["新用户指南首次进入时默认展开，之后在当前浏览器记住展开或折叠选择；返回首页、刷新或再次打开网页时保留状态。"]},
   {"v": "1.9.29", "d": "2026-11-17", "p": "fr", "items": ["首页新增新用户指南：介绍五个学习板块、今日计划与商店解锁流程，以及单词闯关、环法之旅和肉鸽综合训练；说明标签检索的用法，标明口语与更多玩法仍在开发中。支持折叠、手机布局和中英法三种界面。"]},
   {"v": "1.9.28", "d": "2026-11-17", "p": "fr", "items": ["补齐 12 条口语分支配音，并接入两句简单过去时示范的纠音录音。Pia 现已覆盖七个口语任务全部 93 条回复与参考表达，含变更条件和分层提示；新增录音已核对台词、分句、音量和播放。原有录音及语音选择保留，词汇与变位配音仍按后续批次补齐。"]},
   {"v": "1.9.27", "d": "2026-11-17", "p": "fr", "items": ["沿用 Pia 现有 Gemini 声线新增 118 条配音：78 条口语示范、14 条词汇读音、13 条普通例句和 13 条配图例句。已校对台词、切分和音量，并刷新录音索引；设置选择 Pia 后按原文匹配播放。两句简单过去时示范待纠音，另有 12 条新发现的口语分支待接入；未录制内容仍明确使用系统朗读。"]},
@@ -23090,8 +23091,19 @@ function modeShopItems(shop, led, note) {
 }
 
 // 初始做题页：用简短路线介绍学习顺序，原有板块入口保留在下方。
+let beginnerGuideOpen = true; // 存储不可用时，仍在当前页面会话里保留选择。
 function beginnerGuide() {
-  const guide = el("details", "card beginner-guide"); guide.open = true;
+  const guide = el("details", "card beginner-guide");
+  try {
+    const saved = localStorage.getItem("fq-beginner-guide-open");
+    if (saved === "0" || saved === "1") beginnerGuideOpen = saved === "1";
+  } catch (e) {}
+  guide.open = beginnerGuideOpen;
+  guide.addEventListener("toggle", () => {
+    if (!guide.isConnected) return; // 已被切页移除的旧节点不能覆盖新选择。
+    beginnerGuideOpen = guide.open;
+    try { localStorage.setItem("fq-beginner-guide-open", guide.open ? "1" : "0"); } catch (e) {}
+  });
   const summary = el("summary");
   summary.append(el("span", "beginner-kicker", "新用户指南"), el("h2", null, "第一次学法语？从这里开始"));
   guide.append(summary);

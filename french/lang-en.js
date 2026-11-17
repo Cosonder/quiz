@@ -4722,6 +4722,7 @@ const LANG_DICT = {
 "已经了解一些法语？": "Already know some French?",
 "直接进入“做题”，按标签检索语法和听力题，针对薄弱知识点自由练习；词汇与变位也可自行选择练习内容。": "Go straight to Practice and filter grammar and listening questions by tag to target weak areas. You can also choose what to practise in vocabulary and conjugation.",
 "口语板块仍在开发中，可先体验现有情景任务；更多游戏元素与玩法也在逐步开发。": "Speaking is still in development; you can try the existing scenarios. More game features and modes are also in development.",
-"首页新增新用户指南：介绍五个学习板块、今日计划与商店解锁流程，以及单词闯关、环法之旅和肉鸽综合训练；说明标签检索的用法，标明口语与更多玩法仍在开发中。支持折叠、手机布局和中英法三种界面。": "Added a beginner guide to the home page: five study areas, Daily Plan and Shop unlock steps, Word Levels, Tour de France and mixed roguelike practice. Explains tag filters and marks speaking and further game modes as in development. Collapsible, mobile-friendly, and available in Chinese, English and French."
+"首页新增新用户指南：介绍五个学习板块、今日计划与商店解锁流程，以及单词闯关、环法之旅和肉鸽综合训练；说明标签检索的用法，标明口语与更多玩法仍在开发中。支持折叠、手机布局和中英法三种界面。": "Added a beginner guide to the home page: five study areas, Daily Plan and Shop unlock steps, Word Levels, Tour de France and mixed roguelike practice. Explains tag filters and marks speaking and further game modes as in development. Collapsible, mobile-friendly, and available in Chinese, English and French.",
+"新用户指南首次进入时默认展开，之后在当前浏览器记住展开或折叠选择；返回首页、刷新或再次打开网页时保留状态。": "The new user guide opens by default on the first visit, then remembers your expanded or collapsed preference in this browser when you return home, refresh or reopen the site."
 };
 
