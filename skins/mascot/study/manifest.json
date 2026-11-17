@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "release": "1.9.27",
+  "release": "1.9.28",
   "provider": "Google Gemini via AI Studio",
   "model": "gemini-3.8-flash-tts",
   "generatedDate": "2026-11-15",
@@ -10995,23 +10995,491 @@
             "end": 1.2275
           }
         ]
+      },
+      {
+        "text": "L'entrée principale est fermée. Vous pouvez passer par la cour. Les billets coûtent 20 euros chacun.",
+        "textSha256": "411407186153665b4f55ee6fda945bfc07787eeda3872c31c2429b45626e2f71",
+        "file": "pia/411407186153665b4f55.m4a",
+        "kind": "teaching",
+        "voiceName": "Pia 18 — vive et fière 1",
+        "voiceAgeImpression": 18,
+        "canonicalAge": 21,
+        "masterSha256": "ad82d307834154fee6d7818b07148158251014928414504e3063a2562256be1c",
+        "audioSha256": "5cf1a3a0e26abb41730a6268c2fe8c1b9c2a2281c48cb050da7af94025a61cfc",
+        "sourceStart": 0.0,
+        "sourceEnd": 5.105,
+        "durationSeconds": 5.105,
+        "gainDb": -0.894,
+        "decodeCorrelation": 0.99718,
+        "bytes": 46529,
+        "generatedDate": "2026-11-17",
+        "integratedDate": "2026-11-17",
+        "qaNote": "Exact normalized transcript: small. Numbers expanded; punctuation ignored.",
+        "sourceTextId": "411407186153665b4f55ee6fda945bfc07787eeda3872c31c2429b45626e2f71",
+        "sourceDomains": [
+          "oral"
+        ],
+        "sentences": [
+          {
+            "text": "L'entrée principale est fermée.",
+            "start": 0.0,
+            "end": 1.765
+          },
+          {
+            "text": "Vous pouvez passer par la cour.",
+            "start": 1.765,
+            "end": 3.06
+          },
+          {
+            "text": "Les billets coûtent 20 euros chacun.",
+            "start": 3.06,
+            "end": 5.105
+          }
+        ]
+      },
+      {
+        "text": "Où est l'entrée ouverte, s'il vous plaît ?",
+        "textSha256": "be7c1c876e9ddb950593ea8138dfa09023c7ba3c927663d361e81ca7622b2e44",
+        "file": "pia/be7c1c876e9ddb950593.m4a",
+        "kind": "teaching",
+        "voiceName": "Pia 18 — vive et fière 1",
+        "voiceAgeImpression": 18,
+        "canonicalAge": 21,
+        "masterSha256": "ad82d307834154fee6d7818b07148158251014928414504e3063a2562256be1c",
+        "audioSha256": "2e2ea2993c339cd5f52e615ee8178a39939183c1fd8eb3ecab28db6e200a9e27",
+        "sourceStart": 5.105,
+        "sourceEnd": 7.4725,
+        "durationSeconds": 2.3675,
+        "gainDb": -1.299,
+        "decodeCorrelation": 0.99784,
+        "bytes": 20691,
+        "generatedDate": "2026-11-17",
+        "integratedDate": "2026-11-17",
+        "qaNote": "Exact normalized transcript: small. Numbers expanded; punctuation ignored.",
+        "sourceTextId": "be7c1c876e9ddb950593ea8138dfa09023c7ba3c927663d361e81ca7622b2e44",
+        "sourceDomains": [
+          "oral"
+        ],
+        "sentences": [
+          {
+            "text": "Où est l'entrée ouverte, s'il vous plaît ?",
+            "start": 0.0,
+            "end": 2.3675
+          }
+        ]
+      },
+      {
+        "text": "Le chemin du parc est plus court, mais le pont est fermé. Il faut passer par la place.",
+        "textSha256": "4f8dd4c370932e8081d522a8e59c8b67f6b990d45ec379909a56994a510a85ce",
+        "file": "pia/4f8dd4c370932e8081d5.m4a",
+        "kind": "teaching",
+        "voiceName": "Pia 18 — vive et fière 1",
+        "voiceAgeImpression": 18,
+        "canonicalAge": 21,
+        "masterSha256": "ad82d307834154fee6d7818b07148158251014928414504e3063a2562256be1c",
+        "audioSha256": "f8dcac8d8f8bf2aa199893505b79de0cf8bac2c970f8b51d2e016d7c6e555021",
+        "sourceStart": 7.4725,
+        "sourceEnd": 12.17,
+        "durationSeconds": 4.6975,
+        "gainDb": 0.988,
+        "decodeCorrelation": 0.99215,
+        "bytes": 41692,
+        "generatedDate": "2026-11-17",
+        "integratedDate": "2026-11-17",
+        "qaNote": "Exact normalized transcript: small, base. Numbers expanded; punctuation ignored.",
+        "sourceTextId": "4f8dd4c370932e8081d522a8e59c8b67f6b990d45ec379909a56994a510a85ce",
+        "sourceDomains": [
+          "oral"
+        ],
+        "sentences": [
+          {
+            "text": "Le chemin du parc est plus court, mais le pont est fermé.",
+            "start": 0.0,
+            "end": 3.0575
+          },
+          {
+            "text": "Il faut passer par la place.",
+            "start": 3.0575,
+            "end": 4.6975
+          }
+        ]
+      },
+      {
+        "text": "Est-ce qu'il y a un autre trajet plus rapide ?",
+        "textSha256": "8d56eaf1840cd9be3665f486f8926e4dbece2eb9fd6c0e1daf0ffd248f17a166",
+        "file": "pia/8d56eaf1840cd9be3665.m4a",
+        "kind": "teaching",
+        "voiceName": "Pia 18 — vive et fière 1",
+        "voiceAgeImpression": 18,
+        "canonicalAge": 21,
+        "masterSha256": "ad82d307834154fee6d7818b07148158251014928414504e3063a2562256be1c",
+        "audioSha256": "54e3ad8d1d5c7aecdc6ee23fa46d5495bc05b6d328e3720a9d0b6d1843682057",
+        "sourceStart": 12.17,
+        "sourceEnd": 14.575,
+        "durationSeconds": 2.405,
+        "gainDb": -1.537,
+        "decodeCorrelation": 0.9973,
+        "bytes": 21487,
+        "generatedDate": "2026-11-17",
+        "integratedDate": "2026-11-17",
+        "qaNote": "Exact normalized transcript: small, base. Numbers expanded; punctuation ignored.",
+        "sourceTextId": "8d56eaf1840cd9be3665f486f8926e4dbece2eb9fd6c0e1daf0ffd248f17a166",
+        "sourceDomains": [
+          "oral"
+        ],
+        "sentences": [
+          {
+            "text": "Est-ce qu'il y a un autre trajet plus rapide ?",
+            "start": 0.0,
+            "end": 2.405
+          }
+        ]
+      },
+      {
+        "text": "La visite de dix heures est complète. Il reste deux places à quatorze heures.",
+        "textSha256": "f5d602832abf160358aa4bd31cab49e9baefd54dc951d3875e287221c652afd5",
+        "file": "pia/f5d602832abf160358aa.m4a",
+        "kind": "teaching",
+        "voiceName": "Pia 18 — vive et fière 1",
+        "voiceAgeImpression": 18,
+        "canonicalAge": 21,
+        "masterSha256": "ad82d307834154fee6d7818b07148158251014928414504e3063a2562256be1c",
+        "audioSha256": "7242d650ac52ab94f93ad6e6ae2b559c7c0022eb28809c6816820e0eeb04069b",
+        "sourceStart": 14.575,
+        "sourceEnd": 18.255,
+        "durationSeconds": 3.68,
+        "gainDb": 0.608,
+        "decodeCorrelation": 0.99049,
+        "bytes": 33880,
+        "generatedDate": "2026-11-17",
+        "integratedDate": "2026-11-17",
+        "qaNote": "Exact normalized transcript: small, base. Numbers expanded; punctuation ignored.",
+        "sourceTextId": "f5d602832abf160358aa4bd31cab49e9baefd54dc951d3875e287221c652afd5",
+        "sourceDomains": [
+          "oral"
+        ],
+        "sentences": [
+          {
+            "text": "La visite de dix heures est complète.",
+            "start": 0.0,
+            "end": 1.905
+          },
+          {
+            "text": "Il reste deux places à quatorze heures.",
+            "start": 1.905,
+            "end": 3.68
+          }
+        ]
+      },
+      {
+        "text": "À quelle heure peut-on y aller à la place ?",
+        "textSha256": "961c57ab233a1d958d6e10eaed46434d717fde176d444e387f854d40e1239b56",
+        "file": "pia/961c57ab233a1d958d6e.m4a",
+        "kind": "teaching",
+        "voiceName": "Pia 18 — vive et fière 1",
+        "voiceAgeImpression": 18,
+        "canonicalAge": 21,
+        "masterSha256": "ad82d307834154fee6d7818b07148158251014928414504e3063a2562256be1c",
+        "audioSha256": "519141a268c7d0f77287dea0b07c69cbc497cabe5c6c3a169c877a3013e8a2c6",
+        "sourceStart": 18.255,
+        "sourceEnd": 20.3475,
+        "durationSeconds": 2.0925,
+        "gainDb": -0.564,
+        "decodeCorrelation": 0.99673,
+        "bytes": 17960,
+        "generatedDate": "2026-11-17",
+        "integratedDate": "2026-11-17",
+        "qaNote": "Exact normalized transcript: small, base. Numbers expanded; punctuation ignored.",
+        "sourceTextId": "961c57ab233a1d958d6e10eaed46434d717fde176d444e387f854d40e1239b56",
+        "sourceDomains": [
+          "oral"
+        ],
+        "sentences": [
+          {
+            "text": "À quelle heure peut-on y aller à la place ?",
+            "start": 0.0,
+            "end": 2.0925
+          }
+        ]
+      },
+      {
+        "text": "Je peux vous proposer un billet pour Rouen à dix-sept heures. Le trajet passe par une autre gare.",
+        "textSha256": "04e074e3d1010b2d71874278c9572afd363fb977f89086547500c356bac068eb",
+        "file": "pia/04e074e3d1010b2d7187.m4a",
+        "kind": "teaching",
+        "voiceName": "Pia 18 — vive et fière 1",
+        "voiceAgeImpression": 18,
+        "canonicalAge": 21,
+        "masterSha256": "ad82d307834154fee6d7818b07148158251014928414504e3063a2562256be1c",
+        "audioSha256": "2490392a045855eb1b35ca93f9e8f99ae390a1c2c918d426cfda4d4f3de5f25e",
+        "sourceStart": 20.3475,
+        "sourceEnd": 25.08,
+        "durationSeconds": 4.7325,
+        "gainDb": -0.868,
+        "decodeCorrelation": 0.99716,
+        "bytes": 41827,
+        "generatedDate": "2026-11-17",
+        "integratedDate": "2026-11-17",
+        "qaNote": "Exact normalized transcript: small, base. Numbers expanded; punctuation ignored.",
+        "sourceTextId": "04e074e3d1010b2d71874278c9572afd363fb977f89086547500c356bac068eb",
+        "sourceDomains": [
+          "oral"
+        ],
+        "sentences": [
+          {
+            "text": "Je peux vous proposer un billet pour Rouen à dix-sept heures.",
+            "start": 0.0,
+            "end": 2.89
+          },
+          {
+            "text": "Le trajet passe par une autre gare.",
+            "start": 2.89,
+            "end": 4.7325
+          }
+        ]
+      },
+      {
+        "text": "Dans quelle gare est-ce que nous devons changer ?",
+        "textSha256": "68b4da92201f30d06ae2e200bf26157240f623ee0441f1388c18c1e11d2f7e70",
+        "file": "pia/68b4da92201f30d06ae2.m4a",
+        "kind": "teaching",
+        "voiceName": "Pia 18 — vive et fière 1",
+        "voiceAgeImpression": 18,
+        "canonicalAge": 21,
+        "masterSha256": "ad82d307834154fee6d7818b07148158251014928414504e3063a2562256be1c",
+        "audioSha256": "66b51dbb859d3e952a313c6c48705d4bac274cbd89af615160fef8760c221da9",
+        "sourceStart": 25.08,
+        "sourceEnd": 27.18,
+        "durationSeconds": 2.1,
+        "gainDb": -1.139,
+        "decodeCorrelation": 0.99511,
+        "bytes": 18469,
+        "generatedDate": "2026-11-17",
+        "integratedDate": "2026-11-17",
+        "qaNote": "Exact normalized transcript: medium. Numbers expanded; punctuation ignored.",
+        "sourceTextId": "68b4da92201f30d06ae2e200bf26157240f623ee0441f1388c18c1e11d2f7e70",
+        "sourceDomains": [
+          "oral"
+        ],
+        "sentences": [
+          {
+            "text": "Dans quelle gare est-ce que nous devons changer ?",
+            "start": 0.0,
+            "end": 2.1
+          }
+        ]
+      },
+      {
+        "text": "Nous pouvons vous donner un avoir. En principe, le remboursement n'est accordé que si aucun remplacement n'est disponible.",
+        "textSha256": "a00c9b1707743db171829532bd61e31714b6f998d715acc2f7ebfe47829e8359",
+        "file": "pia/a00c9b1707743db17182.m4a",
+        "kind": "teaching",
+        "voiceName": "Pia 18 — vive et fière 1",
+        "voiceAgeImpression": 18,
+        "canonicalAge": 21,
+        "masterSha256": "ad82d307834154fee6d7818b07148158251014928414504e3063a2562256be1c",
+        "audioSha256": "d7394896126cf7de78d121dce300a6d47cf66ff33cf9c4b3cde353cc08f43457",
+        "sourceStart": 27.18,
+        "sourceEnd": 32.96,
+        "durationSeconds": 5.78,
+        "gainDb": -0.412,
+        "decodeCorrelation": 0.99681,
+        "bytes": 52388,
+        "generatedDate": "2026-11-17",
+        "integratedDate": "2026-11-17",
+        "qaNote": "Exact normalized transcript: base, medium. Numbers expanded; punctuation ignored.",
+        "sourceTextId": "a00c9b1707743db171829532bd61e31714b6f998d715acc2f7ebfe47829e8359",
+        "sourceDomains": [
+          "oral"
+        ],
+        "sentences": [
+          {
+            "text": "Nous pouvons vous donner un avoir.",
+            "start": 0.0,
+            "end": 1.785
+          },
+          {
+            "text": "En principe, le remboursement n'est accordé que si aucun remplacement n'est disponible.",
+            "start": 1.785,
+            "end": 5.78
+          }
+        ]
+      },
+      {
+        "text": "Quels justificatifs faut-il fournir pour demander un remboursement ?",
+        "textSha256": "0dea0483f3be4e5fa718094b579aba6e3fe266de3499a5bbdcf6e4ffa84ed354",
+        "file": "pia/0dea0483f3be4e5fa718.m4a",
+        "kind": "teaching",
+        "voiceName": "Pia 18 — vive et fière 1",
+        "voiceAgeImpression": 18,
+        "canonicalAge": 21,
+        "masterSha256": "ad82d307834154fee6d7818b07148158251014928414504e3063a2562256be1c",
+        "audioSha256": "1412ab0ad57b2ec6aee061bcee45820b45b3a6ae74b1ee6a032644b56baccbca",
+        "sourceStart": 32.96,
+        "sourceEnd": 36.1825,
+        "durationSeconds": 3.2225,
+        "gainDb": 0.495,
+        "decodeCorrelation": 0.98459,
+        "bytes": 28636,
+        "generatedDate": "2026-11-17",
+        "integratedDate": "2026-11-17",
+        "qaNote": "Quels/quelles and singular/plural justificatifs are homophones. Medium ASR preserves the complete reimbursement question.",
+        "sourceTextId": "0dea0483f3be4e5fa718094b579aba6e3fe266de3499a5bbdcf6e4ffa84ed354",
+        "sourceDomains": [
+          "oral"
+        ],
+        "sentences": [
+          {
+            "text": "Quels justificatifs faut-il fournir pour demander un remboursement ?",
+            "start": 0.0,
+            "end": 3.2225
+          }
+        ]
+      },
+      {
+        "text": "Votre récit est vivant, mais on ne sait pas si les billets ont été achetés avant ou après l'orage. Pouvez-vous préciser ?",
+        "textSha256": "f7afaa98bd16c50d8525cbcf9029692cea186e4e32e29f0bd87ba20ff97d85a6",
+        "file": "pia/f7afaa98bd16c50d8525.m4a",
+        "kind": "teaching",
+        "voiceName": "Pia 18 — vive et fière 1",
+        "voiceAgeImpression": 18,
+        "canonicalAge": 21,
+        "masterSha256": "ad82d307834154fee6d7818b07148158251014928414504e3063a2562256be1c",
+        "audioSha256": "b0af7027bf306b01d0b287a880007d4a98aa332a73154733e8ae506b5a1e375c",
+        "sourceStart": 36.1825,
+        "sourceEnd": 42.6375,
+        "durationSeconds": 6.455,
+        "gainDb": -0.617,
+        "decodeCorrelation": 0.99786,
+        "bytes": 58018,
+        "generatedDate": "2026-11-17",
+        "integratedDate": "2026-11-17",
+        "qaNote": "Exact normalized transcript: small, base. Numbers expanded; punctuation ignored.",
+        "sourceTextId": "f7afaa98bd16c50d8525cbcf9029692cea186e4e32e29f0bd87ba20ff97d85a6",
+        "sourceDomains": [
+          "oral"
+        ],
+        "sentences": [
+          {
+            "text": "Votre récit est vivant, mais on ne sait pas si les billets ont été achetés avant ou après l'orage.",
+            "start": 0.0,
+            "end": 4.8625
+          },
+          {
+            "text": "Pouvez-vous préciser ?",
+            "start": 4.8625,
+            "end": 6.455
+          }
+        ]
+      },
+      {
+        "text": "Préférez-vous une version orale ou un récit écrit plus formel ?",
+        "textSha256": "ae29c736c4d6101a6f6fc68dcbfa8a4cc0da6c1676ec6c5524bdf54e8f05f045",
+        "file": "pia/ae29c736c4d6101a6f6f.m4a",
+        "kind": "teaching",
+        "voiceName": "Pia 18 — vive et fière 1",
+        "voiceAgeImpression": 18,
+        "canonicalAge": 21,
+        "masterSha256": "ad82d307834154fee6d7818b07148158251014928414504e3063a2562256be1c",
+        "audioSha256": "a88a0d61fb892723952e265113da47e123d20eef6dc4fe38e5a7995bc535e432",
+        "sourceStart": 42.6375,
+        "sourceEnd": 46.12,
+        "durationSeconds": 3.4825,
+        "gainDb": -1.27,
+        "decodeCorrelation": 0.9969,
+        "bytes": 30998,
+        "generatedDate": "2026-11-17",
+        "integratedDate": "2026-11-17",
+        "qaNote": "Exact normalized transcript: medium. Numbers expanded; punctuation ignored.",
+        "sourceTextId": "ae29c736c4d6101a6f6fc68dcbfa8a4cc0da6c1676ec6c5524bdf54e8f05f045",
+        "sourceDomains": [
+          "oral"
+        ],
+        "sentences": [
+          {
+            "text": "Préférez-vous une version orale ou un récit écrit plus formel ?",
+            "start": 0.0,
+            "end": 3.4825
+          }
+        ]
+      },
+      {
+        "text": "Ayant déjà acheté nos billets, nous attendions le bateau quand l'orage éclata. Nous cherchâmes alors un hôtel.",
+        "textSha256": "59f397ad06f1cbf77e74b80e12a1f49dff3cb2df239d2c531e49535d6cfc1cc4",
+        "file": "pia/59f397ad06f1cbf77e74.m4a",
+        "kind": "teaching",
+        "voiceName": "Pia 18 — vive et fière 1",
+        "voiceAgeImpression": 18,
+        "canonicalAge": 21,
+        "masterSha256": "76140f116fe74800b1388b70333d4b7dcc9c37e13514543f6c8ae341b35d9b5b",
+        "audioSha256": "41d60f64dded153c52919a8fa5144c6e1349558a2a9fe1eba696596502a5c5b4",
+        "sourceStart": 0.0,
+        "sourceEnd": 7.6375,
+        "durationSeconds": 7.6375,
+        "gainDb": -1.348,
+        "decodeCorrelation": 0.99722,
+        "bytes": 66605,
+        "generatedDate": "2026-11-17",
+        "integratedDate": "2026-11-17",
+        "qaNote": "Exact normalized transcript: small, medium. Numbers expanded; punctuation ignored. Independent small and unprompted medium full-master ASR explicitly recognize both occurrences of cherchâmes. The short-crop medium result is ambiguous; full-master context resolves it. No human listening certification.",
+        "sourceTextId": "59f397ad06f1cbf77e74b80e12a1f49dff3cb2df239d2c531e49535d6cfc1cc4",
+        "sourceDomains": [
+          "oral"
+        ],
+        "sentences": [
+          {
+            "text": "Ayant déjà acheté nos billets, nous attendions le bateau quand l'orage éclata.",
+            "start": 0.0,
+            "end": 5.17
+          },
+          {
+            "text": "Nous cherchâmes alors un hôtel.",
+            "start": 5.17,
+            "end": 7.6375
+          }
+        ]
+      },
+      {
+        "text": "Nous avions acheté les billets avant l'orage. Alors que nous attendions le bateau, l'orage éclata ; nous cherchâmes un hôtel.",
+        "textSha256": "4656c26c9e594bf2195e8d3109dec16da5e73191c3cd0b581086838d13b28f39",
+        "file": "pia/4656c26c9e594bf2195e.m4a",
+        "kind": "teaching",
+        "voiceName": "Pia 18 — vive et fière 1",
+        "voiceAgeImpression": 18,
+        "canonicalAge": 21,
+        "masterSha256": "76140f116fe74800b1388b70333d4b7dcc9c37e13514543f6c8ae341b35d9b5b",
+        "audioSha256": "8d148d3cc106c33d4dda237ca10d27275e26db1dfb1812e11769a07258a67c2c",
+        "sourceStart": 7.6375,
+        "sourceEnd": 15.96,
+        "durationSeconds": 8.3225,
+        "gainDb": -1.124,
+        "decodeCorrelation": 0.99891,
+        "bytes": 73498,
+        "generatedDate": "2026-11-17",
+        "integratedDate": "2026-11-17",
+        "qaNote": "Exact normalized transcript: small. Numbers expanded; punctuation ignored. Independent small and unprompted medium full-master ASR explicitly recognize both occurrences of cherchâmes. The short-crop medium result is ambiguous; full-master context resolves it. No human listening certification.",
+        "sourceTextId": "4656c26c9e594bf2195e8d3109dec16da5e73191c3cd0b581086838d13b28f39",
+        "sourceDomains": [
+          "oral"
+        ],
+        "sentences": [
+          {
+            "text": "Nous avions acheté les billets avant l'orage.",
+            "start": 0.0,
+            "end": 3.555
+          },
+          {
+            "text": "Alors que nous attendions le bateau, l'orage éclata ; nous cherchâmes un hôtel.",
+            "start": 3.555,
+            "end": 8.3225
+          }
+        ]
       }
     ]
   },
-  "pendingRetakes": [
-    {
-      "voice": "pia",
-      "text": "Ayant déjà acheté nos billets, nous attendions le bateau quand l'orage éclata. Nous cherchâmes alors un hôtel.",
-      "reason": "Passé simple pronunciation needs corrective take; original withheld."
-    },
-    {
-      "voice": "pia",
-      "text": "Nous avions acheté les billets avant l'orage. Alors que nous attendions le bateau, l'orage éclata ; nous cherchâmes un hôtel.",
-      "reason": "Passé simple pronunciation needs corrective take; original withheld."
-    }
-  ],
-  "clipCount": 355,
-  "totalBytes": 15411102,
+  "pendingRetakes": [],
+  "clipCount": 369,
+  "totalBytes": 15963780,
   "sentenceTimingVersion": 1,
   "sentenceTimingMethod": "French sentence segmentation, local ASR word alignment and decoded waveform pause boundaries"
 }
