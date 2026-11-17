@@ -4704,6 +4704,24 @@ const LANG_DICT = {
 "🔂 循环当前句改为可开关的模式，开启时与 🐢 慢速一样高亮。支持播放前预选，暂停、停止、切句和切题后保留，并记住本设备选择；关闭后继续播放后文。普通听力与模拟卷同步支持，停止仍会立即终止声音。": "🔂 Loop sentence is now a persistent toggle, highlighted like 🐢 slow mode when enabled. Select it before playback; it stays selected through pauses, stops, sentence changes and new questions, and is remembered on this device. Turning it off continues the passage. Listening exercises and mock exams both support it; Stop still stops audio immediately.",
 "听力主播放按钮仅在正在播放时高亮；暂停、停止和播放结束后恢复普通样式，与慢速和循环模式的高亮状态独立。": "The main listening playback button is highlighted only while audio is playing. Pausing, stopping or reaching the end restores its neutral style, independently of slow and loop modes.",
 "沿用 Pia 现有 Gemini 声线新增 118 条配音：78 条口语示范、14 条词汇读音、13 条普通例句和 13 条配图例句。已校对台词、切分和音量，并刷新录音索引；设置选择 Pia 后按原文匹配播放。两句简单过去时示范待纠音，另有 12 条新发现的口语分支待接入；未录制内容仍明确使用系统朗读。": "Added 118 Gemini recordings in Pia’s existing voice: 78 oral models, 14 vocabulary labels, 13 examples and 13 picture examples. Transcripts, boundaries and levels were checked, and the audio index refreshed. Select Pia in Settings for exact-text playback. Two passé-simple models await corrected recordings and 12 newly discovered oral branches await integration; unrecorded texts remain explicitly labelled as system speech.",
-"补齐 12 条口语分支配音，并接入两句简单过去时示范的纠音录音。Pia 现已覆盖七个口语任务全部 93 条回复与参考表达，含变更条件和分层提示；新增录音已核对台词、分句、音量和播放。原有录音及语音选择保留，词汇与变位配音仍按后续批次补齐。": "Completed 12 oral-branch recordings and integrated corrected takes for two passé-simple models. Pia now covers all 93 replies and model expressions across the seven speaking tasks, including changed conditions and layered hints. Transcripts, sentence boundaries, levels and playback were checked. Existing recordings and voice preferences are preserved; vocabulary and conjugation narration remain for later batches."
+"补齐 12 条口语分支配音，并接入两句简单过去时示范的纠音录音。Pia 现已覆盖七个口语任务全部 93 条回复与参考表达，含变更条件和分层提示；新增录音已核对台词、分句、音量和播放。原有录音及语音选择保留，词汇与变位配音仍按后续批次补齐。": "Completed 12 oral-branch recordings and integrated corrected takes for two passé-simple models. Pia now covers all 93 replies and model expressions across the seven speaking tasks, including changed conditions and layered hints. Transcripts, sentence boundaries, levels and playback were checked. Existing recordings and voice preferences are preserved; vocabulary and conjugation narration remain for later batches.",
+"新用户指南": "New user guide",
+"第一次学法语？从这里开始": "New to French? Start here",
+"先打基础，再沿关卡前进；每天学一点，逐步串起法语知识。": "Build the basics, then progress through levels. A little practice each day helps it all connect.",
+"理解句子规则": "Understand sentence structure",
+"积累常用表达": "Build everyday vocabulary",
+"练熟动词变化": "Practise verb forms",
+"听懂日常法语": "Understand everyday French",
+"仍在开发中": "Still in development",
+"从零基础开始": "Start with the basics",
+"在下方选择“语法”，从目录的“零基础入门”开始；搭配词汇、变位和短篇听力练习，答题后阅读讲解。": "Choose Grammar below and start with the beginner introduction in the contents. Add vocabulary, conjugation and short listening exercises, then read the explanations.",
+"完成计划，开启游戏": "Complete your plan, unlock games",
+"在“学习进度”里完成第一次“今日计划”，即可开放商店；积累金币后，在商店购买“游戏模式”。": "Complete your first Daily Plan in Learning Progress to open the Shop. Save up coins, then buy Game Mode in the Shop.",
+"沿关卡循序渐进": "Learn step by step through levels",
+"开启游戏模式后，免费进入“单词闯关”练词汇、“环法之旅”学语法，按顺序推进知识点；熟悉后可用金币解锁肉鸽模式“巴黎塔尖”，进行综合训练。": "With Game Mode enabled, Word Levels for vocabulary and Tour de France for grammar are free to enter. Follow the learning sequence; later, spend coins to unlock the Paris Spire roguelike for mixed practice.",
+"已经了解一些法语？": "Already know some French?",
+"直接进入“做题”，按标签检索语法和听力题，针对薄弱知识点自由练习；词汇与变位也可自行选择练习内容。": "Go straight to Practice and filter grammar and listening questions by tag to target weak areas. You can also choose what to practise in vocabulary and conjugation.",
+"口语板块仍在开发中，可先体验现有情景任务；更多游戏元素与玩法也在逐步开发。": "Speaking is still in development; you can try the existing scenarios. More game features and modes are also in development.",
+"首页新增新用户指南：介绍五个学习板块、今日计划与商店解锁流程，以及单词闯关、环法之旅和肉鸽综合训练；说明标签检索的用法，标明口语与更多玩法仍在开发中。支持折叠、手机布局和中英法三种界面。": "Added a beginner guide to the home page: five study areas, Daily Plan and Shop unlock steps, Word Levels, Tour de France and mixed roguelike practice. Explains tag filters and marks speaking and further game modes as in development. Collapsible, mobile-friendly, and available in Chinese, English and French."
 };
 

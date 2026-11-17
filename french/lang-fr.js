@@ -4704,6 +4704,24 @@ const LANG_DICT = {
 "🔂 循环当前句改为可开关的模式，开启时与 🐢 慢速一样高亮。支持播放前预选，暂停、停止、切句和切题后保留，并记住本设备选择；关闭后继续播放后文。普通听力与模拟卷同步支持，停止仍会立即终止声音。": "🔂 Répéter la phrase devient un mode mémorisé, surligné comme le mode lent 🐢 lorsqu'il est activé. Il peut être choisi avant la lecture et reste sélectionné après une pause, un arrêt ou un changement de phrase ou de question. Le choix est conservé sur cet appareil. Le désactiver permet de poursuivre le texte. Les exercices d'écoute et les examens blancs en bénéficient ; Arrêter coupe toujours immédiatement le son.",
 "听力主播放按钮仅在正在播放时高亮；暂停、停止和播放结束后恢复普通样式，与慢速和循环模式的高亮状态独立。": "Le bouton principal d'écoute est surligné uniquement pendant la lecture. La pause, l'arrêt ou la fin de l'audio rétablit son aspect neutre, indépendamment des modes lent et répétition.",
 "沿用 Pia 现有 Gemini 声线新增 118 条配音：78 条口语示范、14 条词汇读音、13 条普通例句和 13 条配图例句。已校对台词、切分和音量，并刷新录音索引；设置选择 Pia 后按原文匹配播放。两句简单过去时示范待纠音，另有 12 条新发现的口语分支待接入；未录制内容仍明确使用系统朗读。": "Ajout de 118 enregistrements Gemini avec la voix habituelle de Pia : 78 modèles oraux, 14 mots, 13 exemples et 13 exemples illustrés. Textes, découpes et niveaux vérifiés, index audio actualisé. Choisissez Pia dans les paramètres. Deux modèles au passé simple attendent une correction et 12 nouvelles répliques attendent leur intégration ; les textes non enregistrés restent signalés comme lus par la voix système.",
-"补齐 12 条口语分支配音，并接入两句简单过去时示范的纠音录音。Pia 现已覆盖七个口语任务全部 93 条回复与参考表达，含变更条件和分层提示；新增录音已核对台词、分句、音量和播放。原有录音及语音选择保留，词汇与变位配音仍按后续批次补齐。": "Ajout des 12 répliques orales manquantes et de deux prises corrigées au passé simple. Pia couvre désormais les 93 répliques et modèles des sept missions orales, y compris les variantes et les indices progressifs. Textes, découpes, niveaux et lecture vérifiés. Les enregistrements existants et le choix de voix sont conservés ; le vocabulaire et la conjugaison seront complétés par lots."
+"补齐 12 条口语分支配音，并接入两句简单过去时示范的纠音录音。Pia 现已覆盖七个口语任务全部 93 条回复与参考表达，含变更条件和分层提示；新增录音已核对台词、分句、音量和播放。原有录音及语音选择保留，词汇与变位配音仍按后续批次补齐。": "Ajout des 12 répliques orales manquantes et de deux prises corrigées au passé simple. Pia couvre désormais les 93 répliques et modèles des sept missions orales, y compris les variantes et les indices progressifs. Textes, découpes, niveaux et lecture vérifiés. Les enregistrements existants et le choix de voix sont conservés ; le vocabulaire et la conjugaison seront complétés par lots.",
+"新用户指南": "Guide de démarrage",
+"第一次学法语？从这里开始": "Vous débutez en français ? Commencez ici",
+"先打基础，再沿关卡前进；每天学一点，逐步串起法语知识。": "Posez les bases, puis avancez de niveau en niveau. Un peu de pratique chaque jour vous aidera à relier vos connaissances.",
+"理解句子规则": "Comprendre les règles des phrases",
+"积累常用表达": "Enrichir le vocabulaire courant",
+"练熟动词变化": "Maîtriser les formes verbales",
+"听懂日常法语": "Comprendre le français du quotidien",
+"仍在开发中": "Encore en développement",
+"从零基础开始": "Partir de zéro",
+"在下方选择“语法”，从目录的“零基础入门”开始；搭配词汇、变位和短篇听力练习，答题后阅读讲解。": "Choisissez Grammaire ci-dessous et commencez par l'introduction pour débutants dans le sommaire. Complétez avec du vocabulaire, de la conjugaison et de courtes écoutes, puis lisez les explications.",
+"完成计划，开启游戏": "Terminer le programme et accéder aux jeux",
+"在“学习进度”里完成第一次“今日计划”，即可开放商店；积累金币后，在商店购买“游戏模式”。": "Terminez votre premier programme du jour dans la progression pour ouvrir la boutique. Cumulez des pièces, puis achetez le mode jeu dans la boutique.",
+"沿关卡循序渐进": "Progresser étape par étape",
+"开启游戏模式后，免费进入“单词闯关”练词汇、“环法之旅”学语法，按顺序推进知识点；熟悉后可用金币解锁肉鸽模式“巴黎塔尖”，进行综合训练。": "Une fois le mode jeu activé, accédez gratuitement aux niveaux de vocabulaire et au Tour de France pour apprendre la grammaire dans l'ordre. Ensuite, débloquez le mode roguelike Tour de Paris avec des pièces pour un entraînement varié.",
+"已经了解一些法语？": "Vous connaissez déjà un peu le français ?",
+"直接进入“做题”，按标签检索语法和听力题，针对薄弱知识点自由练习；词汇与变位也可自行选择练习内容。": "Allez directement aux exercices et filtrez les questions de grammaire et de compréhension orale par étiquette pour cibler vos difficultés. Vous pouvez aussi choisir les contenus à travailler en vocabulaire et en conjugaison.",
+"口语板块仍在开发中，可先体验现有情景任务；更多游戏元素与玩法也在逐步开发。": "La partie expression orale est encore en développement ; vous pouvez déjà essayer les mises en situation disponibles. D'autres éléments et modes de jeu sont également en préparation.",
+"首页新增新用户指南：介绍五个学习板块、今日计划与商店解锁流程，以及单词闯关、环法之旅和肉鸽综合训练；说明标签检索的用法，标明口语与更多玩法仍在开发中。支持折叠、手机布局和中英法三种界面。": "Ajout d'un guide de démarrage sur l'accueil : cinq domaines d'apprentissage, programme du jour, accès à la boutique, niveaux de vocabulaire, Tour de France et entraînement varié en roguelike. Il explique les filtres et signale les fonctions encore en développement. Repliable, adapté au mobile et disponible en chinois, anglais et français."
 };
 
