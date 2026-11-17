@@ -91,6 +91,11 @@ html.qf #stage > section.q-card.listening-card > .listening-mode{margin:0}
 .study-player .study-sentence:empty{display:none}
 .study-player .study-audio-status{order:3;flex-basis:100%;text-align:center}
 
+
+/* Compact icons keep touch targets and accessible names without visible labels. */
+.study-player .play.study-icon{box-sizing:border-box;width:44px;min-width:44px;min-height:44px;padding:6px;font-size:1.25rem;line-height:1;white-space:nowrap;flex:0 0 44px}
+.study-player .study-sentence-nav{max-width:none;grid-template-columns:repeat(3,44px);justify-content:center}
+
 </style></head><body>
 <title>法语语法小测验</title>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@600;900&family=Noto+Sans+SC:wght@400;500;700&display=swap">
@@ -14850,7 +14855,7 @@ GPA2.forEach(u => {
     LEVEL_OF[id] = u.lv; TAGS_OF[id] = q.tags; KP_OF[id] = "gb" + u.unit;
   });
 });
-const LANG_FILES = {"en": "lang-en.js?v=ae67aa99dd", "fr": "lang-fr.js?v=1a4b90d7bc"};
+const LANG_FILES = {"en": "lang-en.js?v=4ef629f8c1", "fr": "lang-fr.js?v=4277f1d9ce"};
 (() => { let l = null; try { l = localStorage.getItem("fq-lang"); } catch (e) {}
   if (Object.hasOwn(LANG_FILES, l)) document.write('<script src="' + LANG_FILES[l] + '"><\/script>'); })();
 </script>
@@ -18270,6 +18275,7 @@ function setGoalSection(wrap) {
 // 每次用户可见更新都新增记录：默认只递增第三位 1.x.y → 1.x.(y+1)，超过 9 继续到 10、11；第二位升级需用户明确要求。
 // 首位保持 1，只有用户明确要求才可修改；历史记录保留。完整发布规则见根目录 AGENTS.md。
 const CHANGELOG = [
+  {"v": "1.9.23", "d": "2026-11-17", "p": "fr", "items": ["听力播放器改用紧凑图标：▶️ 播放／继续、⏸️ 暂停、⏹️ 停止、🐢 慢速、⏮️ 上一句、🔂 循环当前句、⏭️ 下一句。逐句控制仍固定同排，保留悬停提示、多语言无障碍名称和适合手机点击的按钮尺寸。"]},
   {"v": "1.9.22", "d": "2026-11-17", "p": "fr", "items": ["听力逐句控制调整为独立一行：上一句、循环当前句、下一句始终并排，手机窄屏也不拆行；播放、慢速、暂停与停止放在上方，句子进度和配音信息放在下方。普通听力与模拟卷同步适配。"]},
   {"v": "1.9.21", "d": "2026-11-17", "p": "fr", "items": ["听力播放器新增上一句和下一句：从目标句句首切换，保留暂停、循环与播放速度；开启循环时自动循环新选中的句子。首尾按钮自动禁用，模拟卷可跨对话切换并保留男女声分工。"]},
   {"v": "1.9.20", "d": "2026-11-17", "p": "fr", "items": ["听力播放器新增暂停／继续和循环当前句：按播放位置定位当前句，句末自动截断并回到句首，关闭循环后继续后文。角色录音新增句子时间边界，系统朗读按句控制；普通听力三种题型和模拟卷均可使用，停止、切题、切换人物或离开页面时取消旧播放与循环。"]},
@@ -22630,10 +22636,10 @@ function renderQuestion(autoPlay = true) {
     const head = el("h2", "q listen");
     head.append(el("span", null, listening && listening.mode!=='comprehension' ? listeningLabel(listening.mode) : item.q));
     const row = el("div", "listen-row");
-    const play = el("button", "play", "▶ 播放");
+    const play = studyAudioButton("play");
     play.type = "button";
     play.id = "playBtn";
-    const slow = el("button", "play slow", "慢速");
+    const slow = studyAudioButton("slow");
     slow.type = "button";
     slow.id = "slowBtn";
     row.append(play, slow);
@@ -22642,7 +22648,7 @@ function renderQuestion(autoPlay = true) {
       slow.addEventListener("click", () => speak(item.audio, 0.7, slow));
       studyAudioControls(row);
       if (item.title) {
-        const stop = el("button", "play slow", "停止");
+        const stop = studyAudioButton("stop");
         stop.type = "button";
         stop.id = "stopBtn";
         stop.addEventListener("click", () => { studyAudioStop(); row.querySelectorAll(".play").forEach(b => b.setAttribute("aria-pressed", "false")); });
@@ -23932,13 +23938,13 @@ function exListen() {
       const ns = t.qs.map(q => q.n);
       const head = el("div", "ex-listen");
       head.append(el("span", "ex-label", ns.length > 1 ? `第 ${t.id.slice(1)} 段材料 · 第 ${ns[0]}–${ns[ns.length - 1]} 题` : `第 ${t.id.slice(1)} 段对话`));
-      const play = el("button", "play", "▶ 播放"); play.type = "button";
+      const play = studyAudioButton("play"); play.type = "button";
       const note = el("span", "listen-note");
       const showCount = () => { const c = exState.plays[t.id] || 0; note.textContent = `已播放 ${c} 遍 · 建议 ${s === 1 ? 1 : 2} 遍`; };
       showCount();
       if (tts || typeof Audio !== "undefined") {
         play.addEventListener("click", () => { exSpeak(t.lines, 0.95, play); exState.plays[t.id] = (exState.plays[t.id] || 0) + 1; exSave(); showCount(); });
-        const stop = el("button", "play slow", "停止"); stop.type = "button";
+        const stop = studyAudioButton("stop"); stop.type = "button";
         stop.addEventListener("click", () => { studyAudioStop(); play.setAttribute("aria-pressed", "false"); });
         head.append(play, stop);
         studyAudioControls(head);
@@ -30870,7 +30876,7 @@ function studySentenceTexts(text){
 function studyControlsSync(s){
   if(!s?.row)return;
   const pause=s.row.querySelector('[data-study-pause]'),loop=s.row.querySelector('[data-study-loop]'),note=s.row.querySelector('.study-sentence');
-  if(pause){pause.disabled=!!s.ended;const label=petI18n(s.paused?['继续','Resume','Reprendre']:['暂停','Pause','Pause']);if(pause.textContent!==label)pause.textContent=label;pause.setAttribute('aria-pressed',String(!!s.paused));}
+  if(pause){pause.disabled=!!s.ended;studyAudioIcon(pause,s.paused?'resume':'pause');pause.setAttribute('aria-pressed',String(!!s.paused));}
   if(loop){loop.disabled=!!s.ended||!s.segments?.length;loop.setAttribute('aria-pressed',String(!!s.loop));}
   for(const [key,edge] of [['prev',s.partIndex===0&&s.index===0],['next',s.partIndex===s.partCount-1&&s.index===s.segments?.length-1]]){const b=s.row.querySelector('[data-study-'+key+']');if(b)b.disabled=!!s.ended||!s.segments?.length||!s.seek||edge;}
   if(note){const label=!s.ended&&s.segments?.length?petI18n(['第 '+(s.index+1)+' / '+s.segments.length+' 句','Sentence '+(s.index+1)+' / '+s.segments.length,'Phrase '+(s.index+1)+' / '+s.segments.length]):'';if(note.textContent!==label)note.textContent=label;}
@@ -30882,12 +30888,17 @@ function studyAudioStop(){
   if(studyAudio){studyAudio.onended=null;studyAudio.onerror=null;studyAudio.ontimeupdate=null;studyAudio.onseeked=null;studyAudio.pause();studyAudio.removeAttribute('src');studyAudio.load();studyAudio=null;}
   if(tts){tts.cancel();tts.resume?.();}document.querySelectorAll('.play[aria-pressed="true"]:not([data-pet-audio])').forEach(b=>b.setAttribute('aria-pressed','false'));
 }
+function studyAudioIcon(button,key){
+  const [icon,labels]={play:['▶️',['播放','Play','Lire']],slow:['🐢',['慢速','Slow playback','Lecture lente']],pause:['⏸️',['暂停','Pause','Pause']],resume:['▶️',['继续','Resume','Reprendre']],stop:['⏹️',['停止','Stop','Arrêter']],prev:['⏮️',['上一句','Previous sentence','Phrase précédente']],next:['⏭️',['下一句','Next sentence','Phrase suivante']],loop:['🔂',['循环当前句','Loop sentence','Répéter la phrase']]}[key];
+  const label=petI18n(labels);if(button.textContent!==icon)button.textContent=icon;button.classList.add('study-icon');button.setAttribute('aria-label',label);button.title=label;return button;
+}
+function studyAudioButton(key){const button=el('button',key==='play'?'play':'play slow');button.type='button';return studyAudioIcon(button,key);}
 function studyAudioControls(row){
-  const pause=el('button','play slow',petI18n(['暂停','Pause','Pause'])),loop=el('button','play slow',petI18n(['循环当前句','Loop sentence','Répéter la phrase']));
+  const pause=studyAudioButton('pause'),loop=studyAudioButton('loop');
   pause.type=loop.type='button';pause.dataset.studyPause='';loop.dataset.studyLoop='';pause.disabled=loop.disabled=true;pause.setAttribute('aria-pressed','false');loop.setAttribute('aria-pressed','false');
   pause.onclick=()=>{const s=studyAudioSession;if(!s||s.row!==row||s.ended)return;s.paused=!s.paused;if(s.paused){clearTimeout(s.timer);if(studyAudio)studyAudio.pause();else if(s.mode==='system')tts?.pause?.();}else s.resume?.();studyControlsSync(s);};
   loop.onclick=()=>{const s=studyAudioSession;if(!s||s.row!==row||s.ended||!s.segments?.length)return;s.loop=!s.loop;if(s.mode==='recorded'){s.index=studySentenceAt(s.segments,studyAudio?.currentTime||0);s.loopIndex=s.loop?s.index:null;s.arm?.();}studyControlsSync(s);};
-  const prev=el('button','play slow',petI18n(['上一句','Previous sentence','Phrase précédente'])),next=el('button','play slow',petI18n(['下一句','Next sentence','Phrase suivante']));
+  const prev=studyAudioButton('prev'),next=studyAudioButton('next');
   prev.type=next.type='button';prev.dataset.studyPrev='';next.dataset.studyNext='';prev.disabled=next.disabled=true;
   for(const [b,step] of [[prev,-1],[next,1]])b.onclick=()=>{const s=studyAudioSession;if(s&&s.row===row&&!s.ended)s.move?.(step);};
   const navigation=el('div','study-sentence-nav');navigation.setAttribute('role','group');navigation.setAttribute('aria-label',petI18n(['逐句播放','Sentence navigation','Navigation par phrase']));navigation.append(prev,loop,next);
