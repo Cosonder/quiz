@@ -83,6 +83,14 @@ html.qf #stage > section.q-card.listening-card > .listening-mode{margin:0}
 @media(max-height:520px){html.qf #stage > section.q-card.listening-card{overflow-y:auto}html.qf #stage > section.q-card.listening-card > .listening-exercise,html.qf #stage > section.q-card.listening-card > .opts:not(:empty){flex:none;overflow:visible}}
 
 
+
+/* Keep sentence navigation together on its own row, including narrow phones. */
+.study-player .study-sentence-nav{order:1;flex:0 0 100%;width:100%;max-width:32rem;margin-inline:auto;min-width:0;display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.5fr) minmax(0,1fr);gap:8px}
+.study-player .study-sentence-nav .play{min-width:0;width:100%;min-height:44px;box-sizing:border-box;padding:8px 5px;font-size:.875rem;line-height:1.25;white-space:normal;overflow-wrap:anywhere}
+.study-player .study-sentence{order:2;flex-basis:100%;text-align:center}
+.study-player .study-sentence:empty{display:none}
+.study-player .study-audio-status{order:3;flex-basis:100%;text-align:center}
+
 </style></head><body>
 <title>法语语法小测验</title>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@600;900&family=Noto+Sans+SC:wght@400;500;700&display=swap">
@@ -14842,7 +14850,7 @@ GPA2.forEach(u => {
     LEVEL_OF[id] = u.lv; TAGS_OF[id] = q.tags; KP_OF[id] = "gb" + u.unit;
   });
 });
-const LANG_FILES = {"en": "lang-en.js?v=a5629b45c7", "fr": "lang-fr.js?v=2a69fd7ddd"};
+const LANG_FILES = {"en": "lang-en.js?v=ae67aa99dd", "fr": "lang-fr.js?v=1a4b90d7bc"};
 (() => { let l = null; try { l = localStorage.getItem("fq-lang"); } catch (e) {}
   if (Object.hasOwn(LANG_FILES, l)) document.write('<script src="' + LANG_FILES[l] + '"><\/script>'); })();
 </script>
@@ -18262,6 +18270,7 @@ function setGoalSection(wrap) {
 // 每次用户可见更新都新增记录：默认只递增第三位 1.x.y → 1.x.(y+1)，超过 9 继续到 10、11；第二位升级需用户明确要求。
 // 首位保持 1，只有用户明确要求才可修改；历史记录保留。完整发布规则见根目录 AGENTS.md。
 const CHANGELOG = [
+  {"v": "1.9.22", "d": "2026-11-17", "p": "fr", "items": ["听力逐句控制调整为独立一行：上一句、循环当前句、下一句始终并排，手机窄屏也不拆行；播放、慢速、暂停与停止放在上方，句子进度和配音信息放在下方。普通听力与模拟卷同步适配。"]},
   {"v": "1.9.21", "d": "2026-11-17", "p": "fr", "items": ["听力播放器新增上一句和下一句：从目标句句首切换，保留暂停、循环与播放速度；开启循环时自动循环新选中的句子。首尾按钮自动禁用，模拟卷可跨对话切换并保留男女声分工。"]},
   {"v": "1.9.20", "d": "2026-11-17", "p": "fr", "items": ["听力播放器新增暂停／继续和循环当前句：按播放位置定位当前句，句末自动截断并回到句首，关闭循环后继续后文。角色录音新增句子时间边界，系统朗读按句控制；普通听力三种题型和模拟卷均可使用，停止、切题、切换人物或离开页面时取消旧播放与循环。"]},
   {"v": "1.9.19", "d": "2026-11-17", "p": "fr", "items": ["教材情境听力新增 57 段 Pia 的 Gemini 录音，沿用已选定声线；覆盖 40 章、171 道理解选择、关键词填空和复原句子练习，同一材料三种考法共用录音，支持正常与慢速播放。材料按教材场景与交际目标原创改写，不使用教材原文或原版 CD 音频。"]},
@@ -30881,7 +30890,8 @@ function studyAudioControls(row){
   const prev=el('button','play slow',petI18n(['上一句','Previous sentence','Phrase précédente'])),next=el('button','play slow',petI18n(['下一句','Next sentence','Phrase suivante']));
   prev.type=next.type='button';prev.dataset.studyPrev='';next.dataset.studyNext='';prev.disabled=next.disabled=true;
   for(const [b,step] of [[prev,-1],[next,1]])b.onclick=()=>{const s=studyAudioSession;if(s&&s.row===row&&!s.ended)s.move?.(step);};
-  row.append(pause,prev,loop,next,el('span','sub study-sentence'));
+  const navigation=el('div','study-sentence-nav');navigation.setAttribute('role','group');navigation.setAttribute('aria-label',petI18n(['逐句播放','Sentence navigation','Navigation par phrase']));navigation.append(prev,loop,next);
+  row.classList.add('study-player');row.append(pause,navigation,el('span','sub study-sentence'));
 }
 function studySentenceAt(segments,time){let index=segments.findIndex(x=>time<x.end);return index<0?segments.length-1:index;}
 function studyAudioLabel(btn,label){
