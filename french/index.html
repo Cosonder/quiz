@@ -100,6 +100,10 @@ html.qf #stage > section.q-card.listening-card > .listening-mode{margin:0}
 /* Slow playback is a persistent mode rather than a second play button. */
 .study-player .play[data-study-slow][aria-pressed="true"]{background:var(--accent);color:var(--card);box-shadow:0 0 0 3px var(--accent-soft)}
 
+
+/* Sentence repetition uses the same persistent-mode highlight as slow playback. */
+.study-player .play[data-study-loop][aria-pressed="true"]{background:var(--accent);color:var(--card);box-shadow:0 0 0 3px var(--accent-soft)}
+
 </style></head><body>
 <title>法语语法小测验</title>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@600;900&family=Noto+Sans+SC:wght@400;500;700&display=swap">
@@ -14859,7 +14863,7 @@ GPA2.forEach(u => {
     LEVEL_OF[id] = u.lv; TAGS_OF[id] = q.tags; KP_OF[id] = "gb" + u.unit;
   });
 });
-const LANG_FILES = {"en": "lang-en.js?v=30fcc2ca63", "fr": "lang-fr.js?v=ea79725ebe"};
+const LANG_FILES = {"en": "lang-en.js?v=818d4e026a", "fr": "lang-fr.js?v=c03e091db6"};
 (() => { let l = null; try { l = localStorage.getItem("fq-lang"); } catch (e) {}
   if (Object.hasOwn(LANG_FILES, l)) document.write('<script src="' + LANG_FILES[l] + '"><\/script>'); })();
 </script>
@@ -18279,6 +18283,7 @@ function setGoalSection(wrap) {
 // 每次用户可见更新都新增记录：默认只递增第三位 1.x.y → 1.x.(y+1)，超过 9 继续到 10、11；第二位升级需用户明确要求。
 // 首位保持 1，只有用户明确要求才可修改；历史记录保留。完整发布规则见根目录 AGENTS.md。
 const CHANGELOG = [
+  {"v": "1.9.25", "d": "2026-11-17", "p": "fr", "items": ["🔂 循环当前句改为可开关的模式，开启时与 🐢 慢速一样高亮。支持播放前预选，暂停、停止、切句和切题后保留，并记住本设备选择；关闭后继续播放后文。普通听力与模拟卷同步支持，停止仍会立即终止声音。"]},
   {"v": "1.9.24", "d": "2026-11-17", "p": "fr", "items": ["听力播放、暂停和继续合并为一个按钮：播放时显示 ⏸️，暂停、停止或播完后显示 ▶️。🐢 改为可开关的慢速模式，开启时高亮，记住本设备选择并沿用于切句、切题和再次播放；选择模式本身不会启动音频。角色录音可原地切换速度，系统朗读切速时从当前句重读。模拟卷同步支持，暂停和继续不增加播放遍数。"]},
   {"v": "1.9.23", "d": "2026-11-17", "p": "fr", "items": ["听力播放器改用紧凑图标：▶️ 播放／继续、⏸️ 暂停、⏹️ 停止、🐢 慢速、⏮️ 上一句、🔂 循环当前句、⏭️ 下一句。逐句控制仍固定同排，保留悬停提示、多语言无障碍名称和适合手机点击的按钮尺寸。"]},
   {"v": "1.9.22", "d": "2026-11-17", "p": "fr", "items": ["听力逐句控制调整为独立一行：上一句、循环当前句、下一句始终并排，手机窄屏也不拆行；播放、慢速、暂停与停止放在上方，句子进度和配音信息放在下方。普通听力与模拟卷同步适配。"]},
@@ -22604,7 +22609,7 @@ function systemSpeak(text, rate, btn, done, companion = false) {
   lastAutoAudio = text;
   if (!frVoice) frVoice = pickVoice();   // 声音列表可能在页面打开后才加载好
   tts.cancel();
-  document.querySelectorAll('.play[aria-pressed="true"]:not([data-study-slow])').forEach(b => b.setAttribute("aria-pressed", "false"));
+  document.querySelectorAll('.play[aria-pressed="true"]:not([data-study-slow]):not([data-study-loop])').forEach(b => b.setAttribute("aria-pressed", "false"));
   // 长文按句子拆开排队朗读，避免一次读太长被系统截断
   const parts = text.match(/[^.!?…]+[.!?…]+["»]?\s*|[^.!?…]+$/g) || [text];
   parts.forEach((part, k) => {
@@ -30872,6 +30877,7 @@ function petVoicePreview(root) {
 const STUDY_AUDIO_BASE='../skins/mascot/study/';
 let studyAudioManifest=null, studyAudioLoad=null, studyAudioEpoch=0, studyAudio=null, studyAudioBusy=false, studyAudioAbort=null, studyAudioSession=null;
 let studyAudioSlow=false;try{studyAudioSlow=localStorage.getItem('fq-study-slow')==='1';}catch{}
+let studyAudioLoop=false;try{studyAudioLoop=localStorage.getItem('fq-study-loop')==='1';}catch{}
 function studyAudioRate(){return studyAudioSlow ? .7 : .95;}
 function studyVoice(){try{const v=localStorage.getItem('fq-study-voice');return ['ninon','pia','lison'].includes(v)?v:'system';}catch{return 'system';}}
 function studySentenceTexts(text){
@@ -30883,7 +30889,7 @@ function studyControlsSync(s){
   const main=s.row.querySelector('[data-study-main]'),loop=s.row.querySelector('[data-study-loop]'),note=s.row.querySelector('.study-sentence');
   if(main){studyAudioIcon(main,s.ended?'play':s.paused?'resume':'pause');main.setAttribute('aria-pressed',String(!s.ended&&!s.paused));}
   const slow=s.row.querySelector('[data-study-slow]');if(slow)slow.setAttribute('aria-pressed',String(studyAudioSlow));
-  if(loop){loop.disabled=!!s.ended||!s.segments?.length;loop.setAttribute('aria-pressed',String(!!s.loop));}
+  if(loop){loop.disabled=false;loop.setAttribute('aria-pressed',String(studyAudioLoop));}
   for(const [key,edge] of [['prev',s.partIndex===0&&s.index===0],['next',s.partIndex===s.partCount-1&&s.index===s.segments?.length-1]]){const b=s.row.querySelector('[data-study-'+key+']');if(b)b.disabled=!!s.ended||!s.segments?.length||!s.seek||edge;}
   if(note){const label=!s.ended&&s.segments?.length?petI18n(['第 '+(s.index+1)+' / '+s.segments.length+' 句','Sentence '+(s.index+1)+' / '+s.segments.length,'Phrase '+(s.index+1)+' / '+s.segments.length]):'';if(note.textContent!==label)note.textContent=label;}
 }
@@ -30892,7 +30898,7 @@ function studyAudioStop(){
   if(previous){clearTimeout(previous.timer);previous.ended=true;previous.paused=false;previous.loop=false;studyControlsSync(previous);}
   studyAudioEpoch++;studyAudioBusy=false;studyAudioOwner=null;studyAudioAbort?.abort();studyAudioAbort=null;
   if(studyAudio){studyAudio.onended=null;studyAudio.onerror=null;studyAudio.ontimeupdate=null;studyAudio.onseeked=null;studyAudio.pause();studyAudio.removeAttribute('src');studyAudio.load();studyAudio=null;}
-  if(tts){tts.cancel();tts.resume?.();}document.querySelectorAll('.play[aria-pressed="true"]:not([data-pet-audio]):not([data-study-slow])').forEach(b=>b.setAttribute('aria-pressed','false'));
+  if(tts){tts.cancel();tts.resume?.();}document.querySelectorAll('.play[aria-pressed="true"]:not([data-pet-audio]):not([data-study-slow]):not([data-study-loop])').forEach(b=>b.setAttribute('aria-pressed','false'));
 }
 function studyAudioIcon(button,key){
   const [icon,labels]={play:['▶️',['播放','Play','Lire']],slow:['🐢',['慢速','Slow playback','Lecture lente']],pause:['⏸️',['暂停','Pause','Pause']],resume:['▶️',['继续','Resume','Reprendre']],stop:['⏹️',['停止','Stop','Arrêter']],prev:['⏮️',['上一句','Previous sentence','Phrase précédente']],next:['⏭️',['下一句','Next sentence','Phrase suivante']],loop:['🔂',['循环当前句','Loop sentence','Répéter la phrase']]}[key];
@@ -30901,7 +30907,7 @@ function studyAudioIcon(button,key){
 function studyAudioButton(key){const button=el('button',key==='play'?'play':'play slow');button.type='button';if(key==='play')button.dataset.studyMain='';if(key==='slow')button.dataset.studySlow='';return studyAudioIcon(button,key);}
 function studyAudioControls(row,start){
   const main=row.querySelector('[data-study-main]'),slow=row.querySelector('[data-study-slow]'),loop=studyAudioButton('loop');
-  loop.dataset.studyLoop='';loop.disabled=true;loop.setAttribute('aria-pressed','false');
+  loop.dataset.studyLoop='';loop.setAttribute('aria-pressed',String(studyAudioLoop));
   if(main){main.setAttribute('aria-pressed','false');main.onclick=()=>{const s=studyAudioSession;if(!s||s.row!==row||s.ended){start?.();return;}s.paused=!s.paused;if(s.paused){clearTimeout(s.timer);if(studyAudio)studyAudio.pause();else if(s.mode==='system')tts?.pause?.();}else s.resume?.();studyControlsSync(s);};}
   if(slow){slow.setAttribute('aria-pressed',String(studyAudioSlow));slow.onclick=()=>{
     studyAudioSlow=!studyAudioSlow;try{localStorage.setItem('fq-study-slow',studyAudioSlow?'1':'0');}catch{}
@@ -30911,7 +30917,13 @@ function studyAudioControls(row,start){
     else if(s.mode==='system')s.seek?.(s.index);
     studyControlsSync(s);
   };}
-  loop.onclick=()=>{const s=studyAudioSession;if(!s||s.row!==row||s.ended||!s.segments?.length)return;s.loop=!s.loop;if(s.mode==='recorded'){s.index=studySentenceAt(s.segments,studyAudio?.currentTime||0);s.loopIndex=s.loop?s.index:null;s.arm?.();}studyControlsSync(s);};
+  loop.onclick=()=>{
+    studyAudioLoop=!studyAudioLoop;try{localStorage.setItem('fq-study-loop',studyAudioLoop?'1':'0');}catch{}
+    document.querySelectorAll('[data-study-loop]').forEach(b=>b.setAttribute('aria-pressed',String(studyAudioLoop)));
+    const s=studyAudioSession;if(!s||s.ended||!s.row)return;s.loop=studyAudioLoop;
+    if(s.mode==='recorded'&&s.segments?.length){s.index=studySentenceAt(s.segments,studyAudio?.currentTime||0);s.loopIndex=s.loop?s.index:null;s.arm?.();}
+    studyControlsSync(s);
+  };
   const prev=studyAudioButton('prev'),next=studyAudioButton('next');
   prev.type=next.type='button';prev.dataset.studyPrev='';next.dataset.studyNext='';prev.disabled=next.disabled=true;
   for(const [b,step] of [[prev,-1],[next,1]])b.onclick=()=>{const s=studyAudioSession;if(s&&s.row===row&&!s.ended)s.move?.(step);};
@@ -30956,7 +30968,7 @@ function studySpeakSequence(parts,rate,btn,done,voiceOverride=null,recordedOnly=
   if(typeof tourRecorder!=='undefined'&&tourRecorder?.state==='recording'){done?.();return false;}
   const epoch=studyAudioEpoch,voice=voiceOverride||studyVoice();let i=0,partEpoch=0;studyAudioBusy=true;btn?.setAttribute('aria-pressed','true');
   const row=btn?.parentElement?.classList.contains('study-player')?btn.parentElement:null;
-  const s=studyAudioSession={row,rate:row?studyAudioRate():rate,paused:false,loop:false,index:0,partIndex:0,partCount:parts.length,segments:null,mode:'loading',ended:false,timer:null};studyControlsSync(s);
+  const s=studyAudioSession={row,rate:row?studyAudioRate():rate,paused:false,loop:!!row&&studyAudioLoop,index:0,partIndex:0,partCount:parts.length,segments:null,mode:'loading',ended:false,timer:null};studyControlsSync(s);
   const valid=()=>!s.ended&&epoch===studyAudioEpoch&&!document.hidden&&(voiceOverride||voice===studyVoice());
   const finish=()=>{if(!valid())return;clearTimeout(s.timer);s.ended=true;s.paused=false;s.loop=false;studyAudioBusy=false;btn?.setAttribute('aria-pressed','false');studyControlsSync(s);done?.();};
   const next=async(partIndex=i,sentenceIndex=0)=>{
