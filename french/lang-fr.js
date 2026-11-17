@@ -4723,6 +4723,9 @@ const LANG_DICT = {
 "直接进入“做题”，按标签检索语法和听力题，针对薄弱知识点自由练习；词汇与变位也可自行选择练习内容。": "Allez directement aux exercices et filtrez les questions de grammaire et de compréhension orale par étiquette pour cibler vos difficultés. Vous pouvez aussi choisir les contenus à travailler en vocabulaire et en conjugaison.",
 "口语板块仍在开发中，可先体验现有情景任务；更多游戏元素与玩法也在逐步开发。": "La partie expression orale est encore en développement ; vous pouvez déjà essayer les mises en situation disponibles. D'autres éléments et modes de jeu sont également en préparation.",
 "首页新增新用户指南：介绍五个学习板块、今日计划与商店解锁流程，以及单词闯关、环法之旅和肉鸽综合训练；说明标签检索的用法，标明口语与更多玩法仍在开发中。支持折叠、手机布局和中英法三种界面。": "Ajout d'un guide de démarrage sur l'accueil : cinq domaines d'apprentissage, programme du jour, accès à la boutique, niveaux de vocabulaire, Tour de France et entraînement varié en roguelike. Il explique les filtres et signale les fonctions encore en développement. Repliable, adapté au mobile et disponible en chinois, anglais et français.",
-"新用户指南首次进入时默认展开，之后在当前浏览器记住展开或折叠选择；返回首页、刷新或再次打开网页时保留状态。": "Le guide de démarrage est ouvert par défaut à la première visite, puis ce navigateur mémorise votre choix de le laisser ouvert ou replié, même après un retour à l'accueil, une actualisation ou une nouvelle visite."
+"新用户指南首次进入时默认展开，之后在当前浏览器记住展开或折叠选择；返回首页、刷新或再次打开网页时保留状态。": "Le guide de démarrage est ouvert par défaut à la première visite, puis ce navigateur mémorise votre choix de le laisser ouvert ou replié, même après un retour à l'accueil, une actualisation ou une nouvelle visite.",
+"查看今日计划": "Voir le programme du jour",
+"探索游戏": "Découvrir les jeux",
+"新用户指南新增直达按钮：从零基础开始、查看今日计划和探索游戏。番茄时钟收进点击学习伙伴后打开的面板，计时或暂停时显示剩余时间，未开始或结束后只显示入口文字；点击进入时长与提醒设置，不再在页面上单独悬浮。": "Le guide de démarrage propose des accès directs aux exercices débutants, au programme du jour et aux jeux. Le minuteur Pomodoro apparaît dans le panneau ouvert en cliquant sur la compagne : il affiche le temps restant pendant une session en cours ou en pause, et seulement son intitulé sinon. Un clic ouvre les réglages de durée et de rappel. Le minuteur flottant séparé a été retiré."
 };
 
