@@ -104,6 +104,11 @@ html.qf #stage > section.q-card.listening-card > .listening-mode{margin:0}
 /* Sentence repetition uses the same persistent-mode highlight as slow playback. */
 .study-player .play[data-study-loop][aria-pressed="true"]{background:var(--accent);color:var(--card);box-shadow:0 0 0 3px var(--accent-soft)}
 
+
+/* Playback is active only while sound is playing; pause/stop keep the neutral control. */
+.study-player .play[data-study-main]:not([aria-pressed="true"]){background:transparent;color:var(--accent);box-shadow:none}
+.study-player .play[data-study-main][aria-pressed="true"]{background:var(--accent);color:var(--card);box-shadow:0 0 0 3px var(--accent-soft)}
+
 </style></head><body>
 <title>法语语法小测验</title>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@600;900&family=Noto+Sans+SC:wght@400;500;700&display=swap">
@@ -14863,7 +14868,7 @@ GPA2.forEach(u => {
     LEVEL_OF[id] = u.lv; TAGS_OF[id] = q.tags; KP_OF[id] = "gb" + u.unit;
   });
 });
-const LANG_FILES = {"en": "lang-en.js?v=818d4e026a", "fr": "lang-fr.js?v=c03e091db6"};
+const LANG_FILES = {"en": "lang-en.js?v=a91f2a8a1c", "fr": "lang-fr.js?v=121a9f581c"};
 (() => { let l = null; try { l = localStorage.getItem("fq-lang"); } catch (e) {}
   if (Object.hasOwn(LANG_FILES, l)) document.write('<script src="' + LANG_FILES[l] + '"><\/script>'); })();
 </script>
@@ -18283,6 +18288,7 @@ function setGoalSection(wrap) {
 // 每次用户可见更新都新增记录：默认只递增第三位 1.x.y → 1.x.(y+1)，超过 9 继续到 10、11；第二位升级需用户明确要求。
 // 首位保持 1，只有用户明确要求才可修改；历史记录保留。完整发布规则见根目录 AGENTS.md。
 const CHANGELOG = [
+  {"v": "1.9.26", "d": "2026-11-17", "p": "fr", "items": ["听力主播放按钮仅在正在播放时高亮；暂停、停止和播放结束后恢复普通样式，与慢速和循环模式的高亮状态独立。"]},
   {"v": "1.9.25", "d": "2026-11-17", "p": "fr", "items": ["🔂 循环当前句改为可开关的模式，开启时与 🐢 慢速一样高亮。支持播放前预选，暂停、停止、切句和切题后保留，并记住本设备选择；关闭后继续播放后文。普通听力与模拟卷同步支持，停止仍会立即终止声音。"]},
   {"v": "1.9.24", "d": "2026-11-17", "p": "fr", "items": ["听力播放、暂停和继续合并为一个按钮：播放时显示 ⏸️，暂停、停止或播完后显示 ▶️。🐢 改为可开关的慢速模式，开启时高亮，记住本设备选择并沿用于切句、切题和再次播放；选择模式本身不会启动音频。角色录音可原地切换速度，系统朗读切速时从当前句重读。模拟卷同步支持，暂停和继续不增加播放遍数。"]},
   {"v": "1.9.23", "d": "2026-11-17", "p": "fr", "items": ["听力播放器改用紧凑图标：▶️ 播放／继续、⏸️ 暂停、⏹️ 停止、🐢 慢速、⏮️ 上一句、🔂 循环当前句、⏭️ 下一句。逐句控制仍固定同排，保留悬停提示、多语言无障碍名称和适合手机点击的按钮尺寸。"]},
