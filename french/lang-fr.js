@@ -4737,6 +4737,15 @@ const LANG_DICT = {
 "当前词汇与题型没有可练习的题，请调整题型或选择其他词组。": "Aucune question ne correspond à ces mots et types d'exercice. Modifiez les types ou choisissez un autre groupe de mots.",
 "决定普通语法题组的难度。零基础入口固定练习入门题；听力仅按听力目录的标签筛选。不影响游戏、复习和今日计划。": "Définit la difficulté des séries de grammaire. L'initiation conserve ses questions pour débutants ; l'écoute utilise uniquement les filtres de son catalogue. Aucun effet sur les jeux, les révisions ou le programme du jour.",
 "听力标签检索不再叠加全局语法难度过滤，以听力目录所选标签为准，修复有材料却显示无题目的问题。": "Les filtres d'écoute ne se cumulent plus avec la difficulté générale de grammaire. Les étiquettes choisies dans le catalogue d'écoute déterminent les questions, évitant les résultats vides malgré des enregistrements disponibles.",
-"法语页：管理员回复过的留言及回复向所有人开放查看，不展示账号信息；新增登录点赞、取消点赞与总数显示，每个账号对同一留言最多计一次。未回复留言继续仅本人和管理员可见。": "Page de français : Les messages ayant reçu une réponse de l'administration et leurs réponses sont désormais visibles par tous, sans informations de compte. Les utilisateurs connectés peuvent aimer ou retirer leur mention J'aime ; chaque compte est compté une seule fois par message. Les messages sans réponse restent privés."
+"法语页：管理员回复过的留言及回复向所有人开放查看，不展示账号信息；新增登录点赞、取消点赞与总数显示，每个账号对同一留言最多计一次。未回复留言继续仅本人和管理员可见。": "Page de français : Les messages ayant reçu une réponse de l'administration et leurs réponses sont désormais visibles par tous, sans informations de compte. Les utilisateurs connectés peuvent aimer ou retirer leur mention J'aime ; chaque compte est compté une seule fois par message. Les messages sans réponse restent privés.",
+"法语页设置重新分组：功能设置收纳学习进度、界面语言和字体；做题设置收纳难度、答题、词汇、变位和朗读；游戏模式、学习伙伴与番茄时钟归入靠后的游戏设置。留言板可折叠，各区块记住展开状态。": "Les réglages de français sont regroupés en Fonctionnalités (progression, langue et police), Exercices (difficulté, quiz, vocabulaire, conjugaison et lecture vocale) et Jeux (mode jeu, compagne et Pomodoro) vers le bas. Les groupes et les messages sont repliables et mémorisent leur état.",
+"公开留言默认按最新排列，可切换为点赞最多；按全部公开留言排序并分页加载，同赞数时较新的留言在前。学习进度中的错题本与错题分布合并为可折叠区块。": "Les messages publics sont triés par défaut du plus récent au plus ancien, avec une option par nombre de mentions J'aime. Le tri porte sur tous les messages publics, avec pagination ; les plus récents départagent les égalités. Le carnet d'erreurs et leur répartition sont réunis dans une section repliable de la progression.",
+"功能设置": "Réglages des fonctionnalités",
+"做题设置": "Réglages des exercices",
+"游戏设置": "Réglages des jeux",
+"留言板": "Messages",
+"错题本与错题分布": "Erreurs et répartition",
+"答完自动朗读单词（词汇和变位）": "Lire les mots après la réponse (vocabulaire et conjugaison)",
+"设置只保存在这台设备的浏览器里，改动马上生效（词汇的题型从下一组开始）。": "Les réglages sont conservés dans ce navigateur et prennent effet immédiatement (les types d'exercice de vocabulaire s'appliquent à la série suivante)."
 };
 

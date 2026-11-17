@@ -143,6 +143,10 @@ html.qf #stage > section.q-card.listening-card > .listening-mode{margin:0}
 
 .beginner-route .btn { margin-top: 12px; min-height: 44px; }
 
+
+/* Grouped settings and mistake review. */
+.section-fold{min-width:0}.section-fold-title{font-size:1.05rem;padding:4px 0;line-height:1.6}.section-fold-title:focus-visible{outline:2px solid var(--accent);outline-offset:5px;border-radius:4px}.section-fold-body{display:grid;gap:16px;min-width:0}.section-fold-body>.card{margin:0;box-shadow:none}.fb-sort-row{display:flex;gap:10px;align-items:center;flex-wrap:wrap;margin:12px 0}.fb-sort-row select{font:inherit;max-width:100%;padding:7px 10px;border-radius:8px;color:var(--fg);background:var(--card);border:1px solid var(--line,#ccc)}
+
 </style></head><body>
 <title>法语语法小测验</title>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@600;900&family=Noto+Sans+SC:wght@400;500;700&display=swap">
@@ -14910,7 +14914,7 @@ GPA2.forEach(u => {
     LEVEL_OF[id] = u.lv; TAGS_OF[id] = q.tags; KP_OF[id] = "gb" + u.unit;
   });
 });
-const LANG_FILES = {"en": "lang-en.js?v=a692008b30", "fr": "lang-fr.js?v=86fb67d7a1"};
+const LANG_FILES = {"en": "lang-en.js?v=38cafc1c1a", "fr": "lang-fr.js?v=28d246758c"};
 (() => { let l = null; try { l = localStorage.getItem("fq-lang"); } catch (e) {}
   if (Object.hasOwn(LANG_FILES, l)) document.write('<script src="' + LANG_FILES[l] + '"><\/script>'); })();
 </script>
@@ -18071,21 +18075,25 @@ function feedbackThreads(parent,uid,epoch,admin=false,publicMode=false){
  const box=el('section',publicMode?'fb-public':admin?'fb-admin':'fb-private');box.dataset.noi18n='';box.append(el('h4',null,fbText(publicMode?'publicTitle':admin?'admin':'mine')));
  const refresh=fbButton(fbText('refresh')),more=fbButton(fbText('more')),list=el('div','fb-messages'),status=el('p','fb-note');status.setAttribute('role','status');
  if(publicMode)refresh.classList.add('fb-public-refresh');
- let before=null,busy=false;const current=()=>box.isConnected&&fbCurrent(uid,epoch);
+ const sort=document.createElement('select');sort.setAttribute('aria-label',fbText('sort'));
+ for(const [value,key] of [['latest','latest'],['likes','mostLiked']]){const option=el('option',null,fbText(key));option.value=value;sort.append(option);}sort.value='latest';
+ if(publicMode){const label=el('label','fb-sort-row');label.append(el('span',null,fbText('sort')),sort);box.append(label);}
+ let before=null,beforeLikes=null,busy=false;const seen=new Set(),current=()=>box.isConnected&&fbCurrent(uid,epoch);
  const load=async reset=>{
-  if(busy||!current())return;busy=true;refresh.disabled=more.disabled=true;status.textContent=fbText('loading');
+  if(busy||!current())return;busy=true;refresh.disabled=more.disabled=sort.disabled=true;status.textContent=fbText('loading');
   try{
-   const rows=await fbRpc(publicMode?'public_feedback_threads':'feedback_threads',publicMode?{p_before:reset?null:before}:{p_before:reset?null:before,p_admin:admin},publicMode);if(!current())return;
-   if(reset){list.replaceChildren();before=null;}
-   for(const row of rows){list.append(feedbackThreadCard(row,uid,epoch,admin,publicMode));before=row.id;}
+   const rows=await fbRpc(publicMode?'public_feedback_sorted':'feedback_threads',publicMode?{p_sort:sort.value,p_before:reset?null:before,p_before_likes:reset?null:beforeLikes}:{p_before:reset?null:before,p_admin:admin},publicMode);if(!current())return;
+   if(reset){list.replaceChildren();before=null;beforeLikes=null;seen.clear();}
+   for(const row of rows){if(!seen.has(row.id)){list.append(feedbackThreadCard(row,uid,epoch,admin,publicMode,()=>{if(sort.value==='likes')load(true);}));seen.add(row.id);}before=row.id;beforeLikes=row.likes;}
    more.hidden=rows.length<50;status.textContent=list.children.length?'':fbText('none');
   }catch(e){if(e.code!=='account'&&current())status.textContent=fbText('adminFailed');}
-  finally{busy=false;refresh.disabled=more.disabled=false;}
+  finally{busy=false;refresh.disabled=more.disabled=sort.disabled=false;}
  };
+ sort.addEventListener('change',()=>{before=null;beforeLikes=null;seen.clear();list.replaceChildren();more.hidden=true;load(true);});
  refresh.addEventListener('click',()=>load(true));more.addEventListener('click',()=>load(false));more.hidden=true;
  box.append(refresh,list,more,status);parent.append(box);queueMicrotask(()=>load(true));return ()=>load(true);
 }
-function feedbackThreadCard(row,uid,epoch,admin,publicMode=false){
+function feedbackThreadCard(row,uid,epoch,admin,publicMode=false,onLikeChange=null){
  const item=el('article','fb-message'),badge=el('p','fb-note');
  const current=()=>item.isConnected&&fbCurrent(uid,epoch);
  const drawBadge=()=>{badge.textContent=fbText(row.unread_count?'unread':row.reply_count?(admin||publicMode?'replied':'read'):'awaiting')+(row.reply_count?' · '+row.reply_count:'');};drawBadge();
@@ -18135,7 +18143,7 @@ function feedbackThreadCard(row,uid,epoch,admin,publicMode=false){
    if(saving||!current())return;
    if(!fbUid()){note.replaceChildren(document.createTextNode(fbText('likeLogin')+' · '),fbLoginLink());return;}
    saving=true;desired=target;retry.hidden=true;draw();
-   try{const next=await fbRpc('set_feedback_like',{p_message:row.id,p_liked:target});if(!current())return;row.likes=next.likes;row.mine=next.mine;desired=null;note.textContent=fbText(target?'saved':'removed');}
+   try{const next=await fbRpc('set_feedback_like',{p_message:row.id,p_liked:target});if(!current())return;row.likes=next.likes;row.mine=next.mine;desired=null;note.textContent=fbText(target?'saved':'removed');if(onLikeChange)onLikeChange();}
    catch(e){if(e.code!=='account'&&current()){note.textContent=fbText('saveFailed');retry.hidden=false;}}
    finally{saving=false;if(current())draw();}
   };
@@ -18148,6 +18156,10 @@ function feedbackThreadCard(row,uid,epoch,admin,publicMode=false){
 Object.assign(FB_COPY.zh,{publicTitle:'公开留言与回复',publicNotice:'管理员回复后的留言及回复将公开展示；未回复的留言仅本人和管理员可见。公开列表不展示账号信息。',likeLogin:'登录后可以点赞'});
 Object.assign(FB_COPY.en,{publicTitle:'Public messages and replies',publicNotice:'Messages become public once an administrator replies. Unanswered messages remain visible only to their author and administrators. Account details are not shown publicly.',likeLogin:'Sign in to like a message'});
 Object.assign(FB_COPY.fr,{publicTitle:'Messages et réponses publics',publicNotice:'Les messages deviennent publics après une réponse de l’administration. Sans réponse, ils restent visibles uniquement par leur auteur et les administrateurs. Les informations de compte ne sont pas publiées.',likeLogin:'Connectez-vous pour aimer un message'});
+
+Object.assign(FB_COPY.zh,{sort:'留言排序',latest:'最新留言',mostLiked:'点赞最多'});
+Object.assign(FB_COPY.en,{sort:'Sort messages',latest:'Newest first',mostLiked:'Most liked'});
+Object.assign(FB_COPY.fr,{sort:'Trier les messages',latest:'Les plus récents',mostLiked:'Les plus aimés'});
 // Sharing never sends to a recipient without the user's own action.
 const SHARE_URL = 'https://cosonder.github.io/quiz/french/';
 const SHARE_IMAGES = [
@@ -18400,11 +18412,26 @@ function setGoalSection(wrap) {
     xpGoal = Number(val); try { localStorage.setItem("fq-goal", String(xpGoal)); } catch (e) {} planRefresh();
   }));
 }
+
+// Native details keeps keyboard/accessibility behavior and remembers local layout only.
+function setFold(wrap, key, title, initialOpen = false) {
+  const box = el("details", "card section-fold"), summary = el("summary", "section-fold-title", title);
+  box.dataset.fold = key;
+  const storageKey = "fq-fold:" + key;
+  try { const saved = localStorage.getItem(storageKey); box.open = saved === null ? initialOpen : saved === "1"; }
+  catch (e) { box.open = initialOpen; }
+  summary.style.cursor = "pointer"; summary.style.fontWeight = "700";
+  const body = el("div", "section-fold-body"); body.style.marginTop = "16px";
+  box.append(summary, body); wrap.append(box);
+  box.addEventListener("toggle", () => { try { localStorage.setItem(storageKey, box.open ? "1" : "0"); } catch (e) {} });
+  return body;
+}
 // ---------- 版本更新记录：设置页最下面，展开后能看到每个版本改了什么 ----------
 // p：哪个页面的更新（fr 法语页 / st 随机分析页 / 不写表示两个页面都有）。新版本加在最前面。
 // 每次用户可见更新都新增记录：默认只递增第三位 1.x.y → 1.x.(y+1)，超过 9 继续到 10、11；第二位升级需用户明确要求。
 // 首位保持 1，只有用户明确要求才可修改；历史记录保留。完整发布规则见根目录 AGENTS.md。
 const CHANGELOG = [
+  {"v": "1.9.34", "d": "2026-11-17", "items": ["法语页设置重新分组：功能设置收纳学习进度、界面语言和字体；做题设置收纳难度、答题、词汇、变位和朗读；游戏模式、学习伙伴与番茄时钟归入靠后的游戏设置。留言板可折叠，各区块记住展开状态。", "公开留言默认按最新排列，可切换为点赞最多；按全部公开留言排序并分页加载，同赞数时较新的留言在前。学习进度中的错题本与错题分布合并为可折叠区块。"]},
   {"v": "1.9.33", "d": "2026-11-17", "items": ["修复零基础入口受难度过滤、直接开始练习后导航未切换、异常题号缓存和空题组跳题问题；修复词汇、变位设置及闯关缓存异常，保留已有学习记录。没有匹配题目时提供明确提示与返回入口。", "听力标签检索不再叠加全局语法难度过滤，以听力目录所选标签为准，修复有材料却显示无题目的问题。", "法语页：管理员回复过的留言及回复向所有人开放查看，不展示账号信息；新增登录点赞、取消点赞与总数显示，每个账号对同一留言最多计一次。未回复留言继续仅本人和管理员可见。"]},
   {"v": "1.9.32", "d": "2026-11-17", "items": ["今日计划自动修复失效题目、重复编号和异常缓存，保留仍有效的计划题目与已完成进度；可补充的题目自动补齐，不足时按实际可用题数显示。只剩动词变位时直接进入变位练习；修复不删除或重置答题记录、金币及其他学习数据。"]},
   {"v": "1.9.31", "d": "2026-11-17", "p": "fr", "items": ["新用户指南新增直达按钮：从零基础开始、查看今日计划和探索游戏。番茄时钟收进点击学习伙伴后打开的面板，计时或暂停时显示剩余时间，未开始或结束后只显示入口文字；点击进入时长与提醒设置，不再在页面上单独悬浮。"]},
@@ -22995,10 +23022,12 @@ function drawBook() {
   const featOk = id => typeof featOwned !== "function" || featOwned(id);
   stage.append(featOk("calendar") ? heatCard(bookCache.raw || []) : featLockCard("calendar"), xpCard());   // 做题日历放最上面，等级紧跟在下面
   stage.append(planCard(), gameCard(), typeof albumCard === "function" ? albumCard() : "", progressCard());
-  stage.append(tagDistCard());
-  if (!featOk("wrongbook")) { stage.append(featLockCard("wrongbook")); return; }
+  const mistakes = setFold(stage, "progress-mistakes", "错题本与错题分布");
+  if (bookFilter !== "all") mistakes.parentElement.open = true;
+  mistakes.append(tagDistCard());
+  if (!featOk("wrongbook")) { mistakes.append(featLockCard("wrongbook")); return; }
   const card = el("section", "card");
-  stage.append(card);
+  mistakes.append(card);
   const tags = el("div", "tagrow");
   tags.append(el("span", "tag", bookFilter === "all" ? "错题本 · 全部" : "错题本 · " + labelOf(bookFilter).replace(/^错题 · /, "")));
   card.append(tags);
@@ -31664,14 +31693,13 @@ function pomoInit(){
 function renderSettings() {
   stage.innerHTML = "";
   const wrap = el("div", "set-page");
-  const section = (title, sub) => setSection(wrap, title, sub);
+  let target;
+  const section = (title, sub) => setSection(target, title, sub);
   const selectRow = setSelectRow, checkRow = setCheckRow;
 
   setAccountSection(wrap);   // 账号与同步放最上面
-  feedbackSettings(wrap);
-  shareSettings(wrap);
-  surveySettings(wrap);
-  pomoEntry(wrap);
+  target = setFold(wrap, "settings-function", "功能设置");
+  setGoalSection(target);
 
   // 界面语言
   const lg = section("界面语言", "切换后页面会重新载入。界面和解析使用所选语言，题目里的法语不变。中文、英文、法语模式答对所得金币分别为 ×1、×2、×3；切换不影响过去的金币。");
@@ -31685,15 +31713,12 @@ function renderSettings() {
   [["setLang", "fr", "lang-fr"], ["setLang", "en", "lang-en"], ["setFont", "times", "font-times"], ["setFont", "kreon", "font-kreon"]].forEach(([sid, v, item]) => { const o = wrap.querySelector(`#${sid} option[value="${v}"]`); if (o && !setOwned(item)) o.disabled = true; });
   if (!(setOwned("lang-en") && setOwned("lang-fr") && setOwned("font-times") && setOwned("font-kreon"))) lg.append(el("p", "sub", "英文、法语界面和字体要先在“商店 · 设置”里用金币解锁。"));
 
-  setGameSection(wrap);
-  petSettings(wrap);
-  studyAudioSettings(wrap);
+  target = setFold(wrap, "settings-practice", "做题设置");
+  qlSection(target);
+  setQuizSection(target);
 
-  setQuizSection(wrap);
-  qlSection(wrap);   // 难度等级
-
-  // 背单词
-  const v = section("背单词", "难度为“困难”时，干扰选项优先用易混词（意思、用法容易混，如 prêter / emprunter），再用拼写相近的词，答完显示辨析。");
+  // 词汇
+  const v = section("词汇", "难度为“困难”时，干扰选项优先用易混词（意思、用法容易混，如 prêter / emprunter），再用拼写相近的词，答完显示辨析。");
   v.append(selectRow("setVPer", "每组词数", [5, 10, 15, 20].map(n => [n, `${n} 个词`]), vPer, val => {
     vPer = Number(val); try { localStorage.setItem("fq-vper", String(vPer)); } catch (e) {}
   }), ...vSetRows());
@@ -31704,18 +31729,25 @@ function renderSettings() {
     selectRow("setCjMode", "出题方式", [["pick", "选择"], ["type", "填空"]], cjCfg.mode, val => { cjCfg.mode = val; cjSaveCfg(); cjSess = null; }),
     selectRow("setCjN", "每组题数", [[10, "10 题"], [20, "20 题"], [30, "30 题"], [0, "不限"]], cjCfg.n, val => { cjCfg.n = Number(val); cjSaveCfg(); cjSess = null; }));
 
-  setGoalSection(wrap);
-
   // 朗读
+  studyAudioSettings(target);
   const r = section("朗读");
-  r.append(checkRow("setRead", "答完自动朗读单词（背单词和变位）", vSet.read, val => { vSet.read = val; vSaveSet(); }));
+  r.append(checkRow("setRead", "答完自动朗读单词（词汇和变位）", vSet.read, val => { vSet.read = val; vSaveSet(); }));
   if (tts) {
     const voice = frVoice || pickVoice();
     r.append(el("p", "sub", voice ? `朗读用的声音：${voice.name}（${voice.lang}）。想换更好听的声音，可以在系统设置的“辅助功能 → 朗读内容 → 声音”里下载法语的增强版声音。` : "这台设备上没找到法语朗读声音，可以在系统设置里添加法语语音。"));
   } else r.append(el("p", "sub", "这个浏览器不支持朗读。"));
 
+  feedbackSettings(setFold(wrap, "settings-feedback", "留言板"));
+  shareSettings(wrap);
+  surveySettings(wrap);
+  target = setFold(wrap, "settings-game", "游戏设置");
+  setGameSection(target);
+  petSettings(target);
+  pomoEntry(target);
+
   changelogCard(wrap, "fr");   // 版本号和更新记录
-  wrap.append(el("p", "sub set-foot", "设置只保存在这台设备的浏览器里，改动马上生效（背单词的题型从下一组开始）。"));
+  wrap.append(el("p", "sub set-foot", "设置只保存在这台设备的浏览器里，改动马上生效（词汇的题型从下一组开始）。"));
   stage.append(wrap);
 }
 

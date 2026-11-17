@@ -4737,6 +4737,15 @@ const LANG_DICT = {
 "当前词汇与题型没有可练习的题，请调整题型或选择其他词组。": "No questions match these words and exercise types. Change the types or choose another word group.",
 "决定普通语法题组的难度。零基础入口固定练习入门题；听力仅按听力目录的标签筛选。不影响游戏、复习和今日计划。": "Sets the difficulty of general grammar sets. The beginner entry always uses introductory questions; listening uses only its own catalogue filters. Games, reviews and the daily plan are unaffected.",
 "听力标签检索不再叠加全局语法难度过滤，以听力目录所选标签为准，修复有材料却显示无题目的问题。": "Listening filters no longer combine with the global grammar difficulty. The listening catalogue’s selected tags determine the questions, fixing empty results when recordings are available.",
-"法语页：管理员回复过的留言及回复向所有人开放查看，不展示账号信息；新增登录点赞、取消点赞与总数显示，每个账号对同一留言最多计一次。未回复留言继续仅本人和管理员可见。": "French page: Messages with administrator replies and their replies are now visible to everyone, without account details. Signed-in users can like or unlike a message; totals count each account at most once. Unanswered messages remain private to their author and administrators."
+"法语页：管理员回复过的留言及回复向所有人开放查看，不展示账号信息；新增登录点赞、取消点赞与总数显示，每个账号对同一留言最多计一次。未回复留言继续仅本人和管理员可见。": "French page: Messages with administrator replies and their replies are now visible to everyone, without account details. Signed-in users can like or unlike a message; totals count each account at most once. Unanswered messages remain private to their author and administrators.",
+"法语页设置重新分组：功能设置收纳学习进度、界面语言和字体；做题设置收纳难度、答题、词汇、变位和朗读；游戏模式、学习伙伴与番茄时钟归入靠后的游戏设置。留言板可折叠，各区块记住展开状态。": "French settings are grouped into Features (learning progress, language and font), Practice (difficulty, quiz, vocabulary, conjugation and speech), and Games (game mode, companion and Pomodoro) near the bottom. The message board and setting groups can be collapsed and remember their state.",
+"公开留言默认按最新排列，可切换为点赞最多；按全部公开留言排序并分页加载，同赞数时较新的留言在前。学习进度中的错题本与错题分布合并为可折叠区块。": "Public messages default to newest first, with a most-liked option. Sorting covers all public messages with pagination; newer messages break ties. Mistakes and their distribution are grouped in one collapsible section on the progress page.",
+"功能设置": "Feature settings",
+"做题设置": "Practice settings",
+"游戏设置": "Game settings",
+"留言板": "Message board",
+"错题本与错题分布": "Mistakes and distribution",
+"答完自动朗读单词（词汇和变位）": "Read words aloud after answering (vocabulary and conjugation)",
+"设置只保存在这台设备的浏览器里，改动马上生效（词汇的题型从下一组开始）。": "Settings are stored in this browser on this device and apply immediately (vocabulary exercise types apply from the next set)."
 };
 

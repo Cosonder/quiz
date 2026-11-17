@@ -5477,11 +5477,26 @@ function setGoalSection(wrap) {
     xpGoal = Number(val); try { localStorage.setItem("sq-goal", String(xpGoal)); } catch (e) {} planRefresh();
   }));
 }
+
+// Native details keeps keyboard/accessibility behavior and remembers local layout only.
+function setFold(wrap, key, title, initialOpen = false) {
+  const box = el("details", "card section-fold"), summary = el("summary", "section-fold-title", title);
+  box.dataset.fold = key;
+  const storageKey = "sq-fold:" + key;
+  try { const saved = localStorage.getItem(storageKey); box.open = saved === null ? initialOpen : saved === "1"; }
+  catch (e) { box.open = initialOpen; }
+  summary.style.cursor = "pointer"; summary.style.fontWeight = "700";
+  const body = el("div", "section-fold-body"); body.style.marginTop = "16px";
+  box.append(summary, body); wrap.append(box);
+  box.addEventListener("toggle", () => { try { localStorage.setItem(storageKey, box.open ? "1" : "0"); } catch (e) {} });
+  return body;
+}
 // ---------- 版本更新记录：设置页最下面，展开后能看到每个版本改了什么 ----------
 // p：哪个页面的更新（fr 法语页 / st 随机分析页 / 不写表示两个页面都有）。新版本加在最前面。
 // 每次用户可见更新都新增记录：默认只递增第三位 1.x.y → 1.x.(y+1)，超过 9 继续到 10、11；第二位升级需用户明确要求。
 // 首位保持 1，只有用户明确要求才可修改；历史记录保留。完整发布规则见根目录 AGENTS.md。
 const CHANGELOG = [
+  {"v": "1.9.34", "d": "2026-11-17", "items": ["法语页设置重新分组：功能设置收纳学习进度、界面语言和字体；做题设置收纳难度、答题、词汇、变位和朗读；游戏模式、学习伙伴与番茄时钟归入靠后的游戏设置。留言板可折叠，各区块记住展开状态。", "公开留言默认按最新排列，可切换为点赞最多；按全部公开留言排序并分页加载，同赞数时较新的留言在前。学习进度中的错题本与错题分布合并为可折叠区块。"]},
   {"v": "1.9.33", "d": "2026-11-17", "items": ["修复零基础入口受难度过滤、直接开始练习后导航未切换、异常题号缓存和空题组跳题问题；修复词汇、变位设置及闯关缓存异常，保留已有学习记录。没有匹配题目时提供明确提示与返回入口。", "听力标签检索不再叠加全局语法难度过滤，以听力目录所选标签为准，修复有材料却显示无题目的问题。", "法语页：管理员回复过的留言及回复向所有人开放查看，不展示账号信息；新增登录点赞、取消点赞与总数显示，每个账号对同一留言最多计一次。未回复留言继续仅本人和管理员可见。"]},
   {"v": "1.9.32", "d": "2026-11-17", "items": ["今日计划自动修复失效题目、重复编号和异常缓存，保留仍有效的计划题目与已完成进度；可补充的题目自动补齐，不足时按实际可用题数显示。只剩动词变位时直接进入变位练习；修复不删除或重置答题记录、金币及其他学习数据。"]},
   {"v": "1.9.31", "d": "2026-11-17", "p": "fr", "items": ["新用户指南新增直达按钮：从零基础开始、查看今日计划和探索游戏。番茄时钟收进点击学习伙伴后打开的面板，计时或暂停时显示剩余时间，未开始或结束后只显示入口文字；点击进入时长与提醒设置，不再在页面上单独悬浮。"]},
@@ -6345,10 +6360,12 @@ function drawBook() {
   const featOk = id => typeof featOwned !== "function" || featOwned(id);
   stage.append(featOk("calendar") ? heatCard(bookCache.raw || []) : featLockCard("calendar"), xpCard());   // 做题日历放最上面，等级紧跟在下面
   stage.append(planCard(), gameCard(), typeof albumCard === "function" ? albumCard() : "", progressCard());
-  stage.append(tagDistCard());
-  if (!featOk("wrongbook")) { stage.append(featLockCard("wrongbook")); return; }
+  const mistakes = setFold(stage, "progress-mistakes", "错题本与错题分布");
+  if (bookFilter !== "all") mistakes.parentElement.open = true;
+  mistakes.append(tagDistCard());
+  if (!featOk("wrongbook")) { mistakes.append(featLockCard("wrongbook")); return; }
   const card = el("section", "card");
-  stage.append(card);
+  mistakes.append(card);
   const tags = el("div", "tagrow");
   tags.append(el("span", "tag", bookFilter === "all" ? "错题本 · 全部" : "错题本 · " + labelOf(bookFilter).replace(/^错题 · /, "")));
   card.append(tags);
