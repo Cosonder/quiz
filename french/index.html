@@ -1278,6 +1278,8 @@ button.fb-vote:disabled{cursor:default;opacity:.65}
 @media(max-width:520px){.picture-feedback{gap:5px 8px}.fb-vote{padding:6px}.fb-caption{flex-basis:100%}}
 
 .fb-private,.fb-admin{margin-top:20px}.fb-thread{padding:12px 0}.fb-reply{border-left:3px solid var(--accent);padding:12px;margin:12px 0;background:var(--soft,transparent)}.fb-reply time{display:block;font-size:.85em;margin-top:4px}.fb-thread textarea{display:block;width:100%;box-sizing:border-box;margin:12px 0;font:inherit;padding:10px}.fb-message-body{white-space:pre-wrap;overflow-wrap:anywhere}
+
+.fb-public{border-top:1px solid var(--line,#ddd);padding-top:16px;min-width:0}.fb-like-row{display:flex;align-items:center;flex-wrap:wrap;gap:8px;margin-top:10px}
 .share-panel{margin-top:16px}.share-panel[hidden],.share-panel [hidden]{display:none!important}.share-poster{display:block;width:min(100%,280px);height:auto;border-radius:12px;border:1px solid var(--line,#8885);margin:0 0 16px}.share-panel .actions{display:flex;flex-wrap:wrap;gap:10px}.share-panel .btn{white-space:normal;min-height:44px;text-align:center}.share-panel a.btn{text-decoration:none;display:inline-flex;align-items:center}.share-url{box-sizing:border-box;width:100%;padding:10px;margin-top:12px;font:inherit;min-width:0}.share-confirm{display:flex;align-items:center;gap:8px;margin:12px 0;line-height:1.5}.share-confirm input{width:20px;height:20px;flex-shrink:0}.share-panel p{overflow-wrap:anywhere}
 
 .share-page{max-width:760px;margin:0 auto}.share-page .share-poster{width:min(100%,360px);margin:16px auto}.share-picker{display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap}.share-caption{margin:0}.share-page .actions{justify-content:center}.share-page h2{margin-top:16px}
@@ -14908,7 +14910,7 @@ GPA2.forEach(u => {
     LEVEL_OF[id] = u.lv; TAGS_OF[id] = q.tags; KP_OF[id] = "gb" + u.unit;
   });
 });
-const LANG_FILES = {"en": "lang-en.js?v=1e824172e1", "fr": "lang-fr.js?v=be402bab62"};
+const LANG_FILES = {"en": "lang-en.js?v=a692008b30", "fr": "lang-fr.js?v=86fb67d7a1"};
 (() => { let l = null; try { l = localStorage.getItem("fq-lang"); } catch (e) {}
   if (Object.hasOwn(LANG_FILES, l)) document.write('<script src="' + LANG_FILES[l] + '"><\/script>'); })();
 </script>
@@ -15236,7 +15238,7 @@ function homeOf(q) {
 
 function makeSet(key) { let qs = members(key); if (typeof qlApply === "function") qs = qlApply(qs, key); if (key.startsWith("listen:") && typeof listeningInterleave === "function") qs = listeningInterleave(qs, key); return { key, label: labelOf(key), qs }; }   // 法语页：按设置里的难度等级挑题
 // 记住每一组做到第几题（只存在这台设备的浏览器里）
-function loadPos() { try { return JSON.parse(localStorage.getItem("fq-pos") || "{}"); } catch (e) { return {}; } }
+function loadPos() { try { const p = JSON.parse(localStorage.getItem("fq-pos") || "{}"); return p && typeof p === "object" && !Array.isArray(p) ? p : {}; } catch (e) { return {}; } }
 function savePos() { try { const m = loadPos(); m[set.key] = idx; localStorage.setItem("fq-pos", JSON.stringify(m)); } catch (e) {} }
 // 每组做几题（0 = 整轮一次做完），默认 10 题，记在本机浏览器里
 const PER_OPTS = [5, 10, 15, 20, 30, 0];
@@ -15247,14 +15249,28 @@ function calcScore() { let n = 0; for (let k = bStart; k < bEnd(); k++) if (answ
 function startSet(key, fresh) {
   set = makeSet(key); score = 0; answers = {};
   const saved = fresh || /^(rev|learn|plan|tour):/.test(key) ? 0 : Number(loadPos()[key] || 0);   // 复习、学习题组每次重新挑题，从头做
-  idx = saved > 0 && saved < set.qs.length ? saved : 0;
+  idx = Number.isInteger(saved) && saved > 0 && saved < set.qs.length ? saved : 0;
   bStart = idx;
   if (!set.qs.length && typeof qlEmpty === "function") { renderToc(); qlEmpty(); return; }   // 这一组在当前难度下没有题
   renderToc(); beginBatch();
 }
+// Guard every route into a question, including restored positions and empty filter results.
+function quizReady() {
+  if (!set || !Array.isArray(set.qs) || !set.qs.length) {
+    idx = bStart = score = 0;
+    if (typeof rv !== "undefined") rv = null;
+    if (typeof qlEmpty === "function") qlEmpty();
+    else { stage.innerHTML = ""; stage.append(el("p", "empty", "暂无可用题目，请从目录选择其他题组。")); }
+    return false;
+  }
+  if (!Number.isInteger(idx) || idx < 0 || idx >= set.qs.length) idx = 0;
+  if (!Number.isInteger(bStart) || bStart < 0 || bStart > idx) bStart = idx;
+  return true;
+}
 // 从第 from 题（下标）开始新的一组
 function startBatch(from) {
-  bStart = idx = from >= set.qs.length ? 0 : from;
+  if (!quizReady()) return;
+  bStart = idx = Number.isInteger(from) && from >= 0 && from < set.qs.length ? from : 0;
   for (let k = bStart; k < bEnd(); k++) delete answers[k];
   score = calcScore();
   beginBatch();
@@ -15280,6 +15296,7 @@ function kpsOf(qs) {
 }
 // 一组题开始：学习模式下先复习，否则直接出第一题
 function beginBatch() {
+  if (!quizReady()) return;
   rv = null;
   if (study) {
     const list = kpsOf(set.qs.slice(idx, bEnd()));
@@ -17891,7 +17908,7 @@ async function syncVerify(email, token) {
   syncSaveSession(j);
   await syncNow(true);
 }
-// Picture feedback and private messages use the existing Supabase account.
+// Picture feedback, private inboxes and answered public threads use the existing account.
 // No role, private count or message is cached in localStorage.
 const FB_COPY = {
   zh: { picture: "这张配图合理吗？", like: "点赞", dislike: "不满意", optional: "自愿反馈，不影响做题", loading: "正在读取…", retry: "重试", failed: "暂时无法读取反馈，请重试。", saveFailed: "反馈未确认保存，请重试。", saved: "反馈已保存", removed: "已取消反馈", login: "登录后可以反馈", loginGo: "去设置登录", title: "站内留言", intro: "欢迎分享想法、评价与建议。首次成功留言可获得 800 金币，每个账号一次。", input: "写下你的想法（最多 2000 字）", submit: "提交留言", sending: "正在提交…", sent: "留言已收到，谢谢你的反馈！", bonus: "留言已收到，首次留言奖励 800 金币已到账！", claimed: "你已领取首次留言奖励，仍可继续留言。", empty: "请填写 1–2000 字的留言。", messageFailed: "提交结果未确认，内容已保留。请重试，不会重复发奖。", admin: "用户留言（管理员）", refresh: "刷新留言", more: "加载更多", none: "还没有留言。", unavailable: "请在公开网站登录后留言。", publicSite: "打开学习网站", adminFailed: "留言读取失败，请重试。", anonymous: "用户", statusFailed: "账号状态暂时无法读取，提交时会再次核验。", limit: "最多 2000 字" },
@@ -17920,7 +17937,7 @@ function fbLoginLink() {
 function feedbackOnAccountChange() {
   fbEpoch++;
   // Remove private information synchronously, before another request can finish.
-  document.querySelectorAll(".fb-admin,.fb-private").forEach(n => n.remove());
+  document.querySelectorAll(".fb-admin,.fb-private,.fb-public").forEach(n => n.remove());
   fbPictures.forEach(item => { if (!item.root.isConnected) fbPictures.delete(item); else item.reload(); });
   if (typeof view !== "undefined" && view === "settings") renderSettings();
 }
@@ -18003,7 +18020,9 @@ function feedbackSettings(wrap) {
     section.append(el("p", "sub", fbText("unavailable")), link); return;
   }
   const uid = fbUid(), epoch = fbEpoch;
-  if (!uid) { section.append(el("p", "sub", fbText("login"))); return; }
+  section.append(el("p", "fb-note", fbText("publicNotice")));
+  feedbackThreads(section, uid, epoch, false, true);
+  if (!uid) { section.append(el("p", "sub", fbText("login")), fbLoginLink()); return; }
   const draftKey = "fq-feedback-draft:" + uid;
   let draft = { body: "", request: null }, sending = false;
   try { const saved = JSON.parse(localStorage.getItem(draftKey)); if (saved && typeof saved.body === "string") draft = saved; } catch (e) {}
@@ -18048,27 +18067,28 @@ Object.assign(FB_COPY.zh,{read:'已读回复',mine:'我的留言',thread:'查看
 Object.assign(FB_COPY.en,{read:'Replies read',mine:'My messages',thread:'View replies',closeThread:'Hide replies',reply:'Administrator reply',replyInput:'Reply to this message (up to 2000 characters)',replySend:'Send reply',replySent:'Reply sent',replyFailed:'Sending is unconfirmed. Your text is retained; retrying will not send a duplicate.',readFailed:'Read status could not be saved. Reopen the thread to retry.',unread:'Unread replies',replied:'Replied',awaiting:'Awaiting reply',noReplies:'No replies yet.',older:'Older replies'});
 Object.assign(FB_COPY.fr,{read:'Réponses lues',mine:'Mes messages',thread:'Voir les réponses',closeThread:'Masquer les réponses',reply:'Réponse de l’administration',replyInput:'Répondre à ce message (2000 caractères maximum)',replySend:'Envoyer la réponse',replySent:'Réponse envoyée',replyFailed:'Envoi non confirmé. Le texte est conservé ; réessayez sans envoyer de doublon.',readFailed:'Impossible d’enregistrer la lecture. Rouvrez la discussion pour réessayer.',unread:'Réponses non lues',replied:'Répondu',awaiting:'En attente de réponse',noReplies:'Aucune réponse pour le moment.',older:'Réponses antérieures'});
 function feedbackAdmin(parent,uid,epoch){return feedbackThreads(parent,uid,epoch,true);}
-function feedbackThreads(parent,uid,epoch,admin=false){
- const box=el('section',admin?'fb-admin':'fb-private');box.dataset.noi18n='';box.append(el('h4',null,fbText(admin?'admin':'mine')));
+function feedbackThreads(parent,uid,epoch,admin=false,publicMode=false){
+ const box=el('section',publicMode?'fb-public':admin?'fb-admin':'fb-private');box.dataset.noi18n='';box.append(el('h4',null,fbText(publicMode?'publicTitle':admin?'admin':'mine')));
  const refresh=fbButton(fbText('refresh')),more=fbButton(fbText('more')),list=el('div','fb-messages'),status=el('p','fb-note');status.setAttribute('role','status');
+ if(publicMode)refresh.classList.add('fb-public-refresh');
  let before=null,busy=false;const current=()=>box.isConnected&&fbCurrent(uid,epoch);
  const load=async reset=>{
   if(busy||!current())return;busy=true;refresh.disabled=more.disabled=true;status.textContent=fbText('loading');
   try{
-   const rows=await fbRpc('feedback_threads',{p_before:reset?null:before,p_admin:admin});if(!current())return;
+   const rows=await fbRpc(publicMode?'public_feedback_threads':'feedback_threads',publicMode?{p_before:reset?null:before}:{p_before:reset?null:before,p_admin:admin},publicMode);if(!current())return;
    if(reset){list.replaceChildren();before=null;}
-   for(const row of rows){list.append(feedbackThreadCard(row,uid,epoch,admin));before=row.id;}
+   for(const row of rows){list.append(feedbackThreadCard(row,uid,epoch,admin,publicMode));before=row.id;}
    more.hidden=rows.length<50;status.textContent=list.children.length?'':fbText('none');
   }catch(e){if(e.code!=='account'&&current())status.textContent=fbText('adminFailed');}
   finally{busy=false;refresh.disabled=more.disabled=false;}
  };
  refresh.addEventListener('click',()=>load(true));more.addEventListener('click',()=>load(false));more.hidden=true;
- box.append(refresh,list,more,status);parent.append(box);load(true);return ()=>load(true);
+ box.append(refresh,list,more,status);parent.append(box);queueMicrotask(()=>load(true));return ()=>load(true);
 }
-function feedbackThreadCard(row,uid,epoch,admin){
+function feedbackThreadCard(row,uid,epoch,admin,publicMode=false){
  const item=el('article','fb-message'),badge=el('p','fb-note');
  const current=()=>item.isConnected&&fbCurrent(uid,epoch);
- const drawBadge=()=>{badge.textContent=fbText(row.unread_count?'unread':row.reply_count?(admin?'replied':'read'):'awaiting')+(row.reply_count?' · '+row.reply_count:'');};drawBadge();
+ const drawBadge=()=>{badge.textContent=fbText(row.unread_count?'unread':row.reply_count?(admin||publicMode?'replied':'read'):'awaiting')+(row.reply_count?' · '+row.reply_count:'');};drawBadge();
  if(admin)item.append(el('p','fb-message-author',(row.nick||fbText('anonymous'))+' · '+row.user_id));
  item.append(el('time',null,new Date(row.created_at).toLocaleString(UI_LANG==='zh'?'zh-CN':UI_LANG)),el('p','fb-message-body',row.body),badge);
  const toggle=fbButton(fbText('thread')),panel=el('div','fb-thread'),list=el('div'),status=el('p','fb-note'),older=fbButton(fbText('older')),retry=fbButton(fbText('retry'));
@@ -18077,13 +18097,13 @@ function feedbackThreadCard(row,uid,epoch,admin){
  const load=async reset=>{
   if(busy||!current())return;busy=true;const revision=++run;older.disabled=retry.disabled=true;status.textContent=fbText('loading');retry.hidden=true;
   try{
-   const data=await fbRpc('feedback_thread',{p_message:row.id,p_before:reset?null:before});if(!current()||revision!==run||panel.hidden)return;
+   const data=await fbRpc(publicMode?'public_feedback_thread':'feedback_thread',{p_message:row.id,p_before:reset?null:before},publicMode);if(!current()||revision!==run||panel.hidden)return;
    if(reset){list.replaceChildren();before=null;}
    const block=el('div');for(const reply of data.replies){const card=el('article','fb-reply');card.append(el('b',null,fbText('reply')),el('time',null,new Date(reply.created_at).toLocaleString(UI_LANG==='zh'?'zh-CN':UI_LANG)),el('p','fb-message-body',reply.body));block.append(card);}
    if(reset)list.append(block);else list.prepend(block);
    if(data.replies.length)before=data.replies[0].id;
    older.hidden=data.replies.length<50;status.textContent=list.querySelector('.fb-reply')?'':fbText('noReplies');
-   if(reset&&data.replies.length){
+   if(reset&&data.replies.length&&!publicMode){
     const last=data.replies[data.replies.length-1].id;
     try{await fbRpc('mark_feedback_read',{p_message:row.id,p_reply:last});if(current()&&revision===run){row.unread_count=0;drawBadge();}}
     catch(e){if(e.code!=='account'&&current()&&revision===run)status.textContent=fbText('readFailed');}
@@ -18101,13 +18121,33 @@ function feedbackThreadCard(row,uid,epoch,admin){
   send.addEventListener('click',async()=>{
    if(sending||!current())return;const body=input.value.trim();if(!body||[...body].length>2000){note.textContent=fbText('empty');return;}
    request ||= crypto.randomUUID();sending=true;send.disabled=input.disabled=true;note.textContent=fbText('sending');
-   try{await fbRpc('reply_feedback',{p_message:row.id,p_request:request,p_body:body});if(!current())return;request=null;input.value='';note.textContent=fbText('replySent');row.reply_count=Number(row.reply_count||0)+1;drawBadge();await load(true);}
+   try{await fbRpc('reply_feedback',{p_message:row.id,p_request:request,p_body:body});if(!current())return;request=null;input.value='';note.textContent=fbText('replySent');row.reply_count=Number(row.reply_count||0)+1;drawBadge();item.closest('.fb-settings')?.querySelector('.fb-public-refresh')?.click();await load(true);}
    catch(e){if(e.code!=='account'&&current())note.textContent=fbText('replyFailed');}
    finally{sending=false;send.disabled=input.disabled=false;}
   });panel.append(input,send,note);
  }
- item.append(toggle,panel);return item;
+ item.append(toggle,panel);
+ if(publicMode){
+  const like=fbButton('', 'fb-vote'),note=el('span','fb-note'),retry=fbButton(fbText('retry'),'fb-link');
+  note.setAttribute('role','status');retry.hidden=true;let saving=false,desired=null;
+  const draw=()=>{like.textContent='👍 '+fbText('like')+' '+Number(row.likes||0);like.setAttribute('aria-pressed',String(!!row.mine));like.disabled=saving;};
+  const save=async target=>{
+   if(saving||!current())return;
+   if(!fbUid()){note.replaceChildren(document.createTextNode(fbText('likeLogin')+' · '),fbLoginLink());return;}
+   saving=true;desired=target;retry.hidden=true;draw();
+   try{const next=await fbRpc('set_feedback_like',{p_message:row.id,p_liked:target});if(!current())return;row.likes=next.likes;row.mine=next.mine;desired=null;note.textContent=fbText(target?'saved':'removed');}
+   catch(e){if(e.code!=='account'&&current()){note.textContent=fbText('saveFailed');retry.hidden=false;}}
+   finally{saving=false;if(current())draw();}
+  };
+  like.addEventListener('click',()=>save(desired===null?!row.mine:desired));retry.addEventListener('click',()=>save(desired));
+  const actions=el('div','fb-like-row');actions.append(like,note,retry);item.append(actions);draw();
+ }
+ return item;
 }
+
+Object.assign(FB_COPY.zh,{publicTitle:'公开留言与回复',publicNotice:'管理员回复后的留言及回复将公开展示；未回复的留言仅本人和管理员可见。公开列表不展示账号信息。',likeLogin:'登录后可以点赞'});
+Object.assign(FB_COPY.en,{publicTitle:'Public messages and replies',publicNotice:'Messages become public once an administrator replies. Unanswered messages remain visible only to their author and administrators. Account details are not shown publicly.',likeLogin:'Sign in to like a message'});
+Object.assign(FB_COPY.fr,{publicTitle:'Messages et réponses publics',publicNotice:'Les messages deviennent publics après une réponse de l’administration. Sans réponse, ils restent visibles uniquement par leur auteur et les administrateurs. Les informations de compte ne sont pas publiées.',likeLogin:'Connectez-vous pour aimer un message'});
 // Sharing never sends to a recipient without the user's own action.
 const SHARE_URL = 'https://cosonder.github.io/quiz/french/';
 const SHARE_IMAGES = [
@@ -18365,6 +18405,7 @@ function setGoalSection(wrap) {
 // 每次用户可见更新都新增记录：默认只递增第三位 1.x.y → 1.x.(y+1)，超过 9 继续到 10、11；第二位升级需用户明确要求。
 // 首位保持 1，只有用户明确要求才可修改；历史记录保留。完整发布规则见根目录 AGENTS.md。
 const CHANGELOG = [
+  {"v": "1.9.33", "d": "2026-11-17", "items": ["修复零基础入口受难度过滤、直接开始练习后导航未切换、异常题号缓存和空题组跳题问题；修复词汇、变位设置及闯关缓存异常，保留已有学习记录。没有匹配题目时提供明确提示与返回入口。", "听力标签检索不再叠加全局语法难度过滤，以听力目录所选标签为准，修复有材料却显示无题目的问题。", "法语页：管理员回复过的留言及回复向所有人开放查看，不展示账号信息；新增登录点赞、取消点赞与总数显示，每个账号对同一留言最多计一次。未回复留言继续仅本人和管理员可见。"]},
   {"v": "1.9.32", "d": "2026-11-17", "items": ["今日计划自动修复失效题目、重复编号和异常缓存，保留仍有效的计划题目与已完成进度；可补充的题目自动补齐，不足时按实际可用题数显示。只剩动词变位时直接进入变位练习；修复不删除或重置答题记录、金币及其他学习数据。"]},
   {"v": "1.9.31", "d": "2026-11-17", "p": "fr", "items": ["新用户指南新增直达按钮：从零基础开始、查看今日计划和探索游戏。番茄时钟收进点击学习伙伴后打开的面板，计时或暂停时显示剩余时间，未开始或结束后只显示入口文字；点击进入时长与提醒设置，不再在页面上单独悬浮。"]},
   {"v": "1.9.30", "d": "2026-11-17", "p": "fr", "items": ["新用户指南首次进入时默认展开，之后在当前浏览器记住展开或折叠选择；返回首页、刷新或再次打开网页时保留状态。"]},
@@ -18954,7 +18995,7 @@ function tocInBook(card) {
 
 // ---------- 答题的难度等级（设置里选）：零基础 / A1–C2 / 关闭 ----------
 // 选某一档时，每个题组按下面的比例从各等级的题里抽（零基础只出零基础题；关闭时出全部题）。
-// 只影响“答题”页的题组（轮次、章节、标签、听力）；复习、今日计划、环法之旅、巴黎塔尖不受影响。
+// 只影响普通语法题组；零基础入口与听力标签检索使用各自的难度，不叠加全局过滤。复习、今日计划与游戏不受影响。
 const QL_OPTS = [["zero", "零基础"], ["A1", "A1"], ["A2", "A2"], ["B1", "B1"], ["B2", "B2"], ["C1", "C1"], ["C2", "C2"], ["off", "关闭难度等级"]];
 const QL_MIX = {
   zero: { "零基础": 1 },
@@ -18978,7 +19019,7 @@ function qlMixText(k) {
 function qlRng(str) { let h = 2166136261; for (const c of str) { h ^= c.charCodeAt(0); h = Math.imul(h, 16777619); } return () => { h += 0x6D2B79F5; let t = h; t = Math.imul(t ^ t >>> 15, t | 1); t ^= t + Math.imul(t ^ t >>> 7, t | 61); return ((t ^ t >>> 14) >>> 0) / 4294967296; }; }
 function qlApply(list, key) {
   const mix = QL_MIX[qLevel];
-  if (!mix || /^(rev|learn|plan|tour):/.test(key)) return list;
+  if (!mix || key === "fr-r0" || /^(rev|learn|plan|tour|listen):/.test(key)) return list;
   const pools = {}; Object.keys(mix).forEach(l => { pools[l] = list.filter(q => q.level === l); });
   const have = Object.keys(mix).filter(l => pools[l].length);
   if (!have.length) return [];
@@ -18999,20 +19040,28 @@ function qlApply(list, key) {
 function qlEmpty() {
   stage.innerHTML = "";
   const card = el("section", "card");
-  card.append(el("h3", null, `这一组没有「${qlName(qLevel)}」难度的题`), el("p", "sub", qlMixText(qLevel) + " 可以换一组，或者在“设置”里换难度等级。"));
+  const available = set ? members(set.key) : [];
+  card.append(el("h3", null, available.length ? `这一组没有「${qlName(qLevel)}」难度的题` : "暂无可用题目，请从目录选择其他题组。"), el("p", "sub", available.length ? qlMixText(qLevel) + " 可以换一组，或者在“设置”里换难度等级。" : "学习记录仍然保留。"));
   const row = el("div", "actions");
+  if (available.length) {
+    const all = el("button", "btn", "练习此组全部难度"); all.type = "button";
+    all.addEventListener("click", () => {
+      set.qs = set.key.startsWith("listen:") ? listeningInterleave(available, set.key) : available;
+      idx = bStart = score = 0; answers = {}; renderToc(); beginBatch();
+    }); row.append(all);
+  }
   if (qLevel === "zero") { const b = el("button", "btn", "去做零基础入门"); b.type = "button"; b.addEventListener("click", () => startSet("fr-r0", true)); row.append(b); }
   const s = el("button", "btn ghost", "去设置"); s.type = "button"; s.addEventListener("click", () => switchView("settings")); row.append(s);
   card.append(row); stage.append(card);
 }
 // 设置页的“难度等级”
 function qlSection(wrap) {
-  const sec = setSection(wrap, "难度等级", "决定“答题”页每组题出哪些难度。不影响巴黎塔尖、环法之旅、复习和今日计划。");
+  const sec = setSection(wrap, "难度等级", "决定普通语法题组的难度。零基础入口固定练习入门题；听力仅按听力目录的标签筛选。不影响游戏、复习和今日计划。");
   const note = el("p", "sub");
   sec.append(setSelectRow("setQLevel", "难度等级", QL_OPTS, qLevel, val => {
     qLevel = val; try { localStorage.setItem("fq-qlevel", val); } catch (e) {}
     note.textContent = qlMixText(val);
-    if (typeof set !== "undefined" && set && !/^(rev|learn|plan|tour):/.test(set.key)) { set = makeSet(set.key); idx = 0; bStart = 0; answers = {}; score = 0; }   // 回到答题页时按新难度重新排题
+    if (typeof set !== "undefined" && set && set.key !== "fr-r0" && !/^(rev|learn|plan|tour|listen):/.test(set.key)) { set = makeSet(set.key); idx = 0; bStart = 0; answers = {}; score = 0; }   // 回到答题页时按新难度重新排题
   }), note);
   note.textContent = qlMixText(qLevel);
 }
@@ -22659,6 +22708,7 @@ function updateProgress(done) {
 
 // ---------- 跳到指定题号 ----------
 function jumpTo() {
+  if (!quizReady()) return;
   const input = document.getElementById("jumpInput");
   const n = parseInt(input.value, 10);
   if (!set || !Number.isFinite(n)) { input.value = idx + 1; return; }
@@ -22716,6 +22766,7 @@ let lastAutoAudio = null;   // 当前播放文本；切题播放由 autoPlay 控
 
 let hintUsed = false;
 function renderQuestion(autoPlay = true) {
+  if (!quizReady()) return;
   if(typeof studyAudioStop === "function") studyAudioStop();
   const item = set.qs[idx];
   const listening = listeningRun(item);
@@ -23274,13 +23325,14 @@ function renderBoardIntro() {
 // 选题组时记下它属于哪个板块（目录、计划、学习进度、错题本都从这里进）
 const _startSet = startSet;
 startSet = function (key, fresh) {
+  if (view !== "quiz") { switchView("quiz", key, fresh); return; }
   const b = boardOfKey(key);
   if (b) { qBoard = b; qLast[b] = key; curBoardMemo.practice = b; }
   qIntro = false;
   return _startSet(key, fresh);
 };
 
-function switchView(v, setKey) {
+function switchView(v, setKey, fresh) {
   if(typeof studyAudioStop==='function')studyAudioStop();
   if (typeof tourOralLeave === "function" && (view !== v || v === "oral")) tourOralLeave();
   if (typeof tourRun !== "undefined" && view === "tour" && v !== "tour") tourRun = null;
@@ -23306,7 +23358,7 @@ function switchView(v, setKey) {
   if (v === "pet") { renderPet(); return; }
   if (v === "book") { renderBook(); return; }
   if (v === "friends") { renderFriends(); return; }
-  if (setKey) { startSet(setKey); navSync(); return; }
+  if (setKey) { startSet(setKey, fresh); navSync(); return; }
   renderToc();
   if (qIntro || !set) { renderBoardIntro(); return; }
   if (set && !set.qs.length && typeof qlEmpty === "function") { qlEmpty(); return; }
@@ -26576,10 +26628,12 @@ const V_PAUSES = [300, 500, 800, 1200, 2000, 3000];
 const vSet = (() => {
   let s = {};
   try { s = JSON.parse(localStorage.getItem("fq-vset") || "{}"); } catch (e) {}
+  if (!s || typeof s !== "object" || Array.isArray(s)) s = {};
   const types = Array.isArray(s.types) ? s.types.filter(t => V_T.includes(t)) : [];
   return { hard: !!s.hard, types: types.length ? types : V_T.slice(), pause: V_PAUSES.includes(s.pause) ? s.pause : 500, read: s.read !== false };
 })();
 const vSaveSet = () => { try { localStorage.setItem("fq-vset", JSON.stringify(vSet)); } catch (e) {} };
+vSaveSet(); // Normalize settings without touching learning records.
 const vTypes = w => V_T.filter(t => vSet.types.includes(t) && (t !== 7 || (vPic(w) && (w.example || V_PICEX[w.fr]))));
 let vStats = null;     // Map<词 id, {1..5: true/false}>
 let vLoading = null, vRetry = 0;
@@ -26861,6 +26915,8 @@ function vList() {
 // ---------- 浏览：按词表顺序一张一张看 ----------
 const V_STATE_ZH = { weak: "待加强", new: "未练习", done: "已掌握" };
 function vBrowse(words, i, pre) {
+  if (!words.length) { vEmptyPractice(); return; }
+  if (!Number.isInteger(i) || i < 0 || i >= words.length) i = 0;
   vUnbindKeys();
   const w = words[i], ex = vEx(w), last = i === words.length - 1;
   stage.innerHTML = "";
@@ -26919,6 +26975,7 @@ function vStart(pool) {
   vPreview(picked);
 }
 function vPreview(picked) {
+  if (!picked.length) { vEmptyPractice(); return; }
   vUnbindKeys();
   vSess = null;
   stage.innerHTML = "";
@@ -26953,9 +27010,17 @@ function vPreview(picked) {
   stage.append(card);
   go.focus({ preventScroll: true });
 }
+function vEmptyPractice() {
+  vUnbindKeys(); vSess = null; stage.innerHTML = "";
+  const card = el("section", "card");
+  card.append(el("p", "empty", "当前词汇与题型没有可练习的题，请调整题型或选择其他词组。"));
+  const back = el("button", "btn", "回到词表"); back.type = "button";
+  back.addEventListener("click", () => { vToc(); vList(); }); card.append(back); stage.append(card);
+}
 function vBegin(picked) {
   const qs = [];
   V_T.forEach(type => vShuffle(picked).filter(w => vTypes(w).includes(type)).forEach(w => qs.push({ w, type })));
+  if (!qs.length) { vEmptyPractice(); return; }
   vSess = { words: picked, qs, i: 0, res: {}, lv: vLvNo() };
   vLvSave(vSess);
   vQuestion();
@@ -26963,7 +27028,7 @@ function vBegin(picked) {
 // ---------- 闯关进度：每答一题存一次，再进这一关时从上次停下的那题接着做；做完一关就清掉 ----------
 // 本机（fq-vlv）每题都存；同时记成 game 集合里的 "vlv" 记录跟着账号同步（攒一会儿再记，离开页面时马上记），
 // 换一台设备登录也能接着做。读的时候本机和云端哪份新用哪份；"vlv" + clear 表示这一关的进度已经清掉。
-const vLvAll = () => { try { return JSON.parse(localStorage.getItem("fq-vlv") || "{}") || {}; } catch (e) { return {}; } };
+const vLvAll = () => { try { const s = JSON.parse(localStorage.getItem("fq-vlv") || "{}"); return s && typeof s === "object" && !Array.isArray(s) ? s : {}; } catch (e) { return {}; } };
 let vLvPending = null, vLvTimer = 0;
 function vLvSnap(S, i) { return { words: S.words.map(w => w.id), qs: S.qs.map(q => [q.w.id, q.type]), i: i == null ? S.i : i, res: S.res, combo: S.maxCombo || 0, at: Date.now() }; }
 function vLvSave(S, i) {
@@ -27003,14 +27068,14 @@ function vLvSaved(k) {
   const loc = vLvAll()[k], rem = vLvRemote(k);
   const remAt = rem ? Date.parse(rem.at) || 0 : 0, locAt = loc ? loc.at || 0 : 0;
   const x = rem && remAt > locAt ? (rem.clear ? null : rem) : loc;
-  if (!x || !Array.isArray(x.qs) || !(x.i > 0) || x.i >= x.qs.length || !Array.isArray(x.words)) return null;
+  if (!x || !Array.isArray(x.qs) || !Number.isInteger(x.i) || x.i <= 0 || x.i >= x.qs.length || !Array.isArray(x.words)) return null;
   const ids = new Set((V_LEVELS[k] || []));
-  if (!x.words.every(id => ids.has(id) && vById.get(id)) || !x.qs.every(([id]) => vById.get(id))) return null;
+  if (!x.words.every(id => ids.has(id) && vById.get(id)) || !x.qs.every(q => Array.isArray(q) && q.length === 2 && ids.has(q[0]) && vById.get(q[0]) && V_T.includes(q[1]))) return null;
   return x;
 }
 function vLvResume(k) {
   const x = vLvSaved(k); if (!x) return false;
-  vSess = { words: x.words.map(id => vById.get(id)), qs: x.qs.map(([id, type]) => ({ w: vById.get(id), type })), i: x.i, res: x.res || {}, lv: k, maxCombo: x.combo || 0, resumed: x.i };
+  vSess = { words: x.words.map(id => vById.get(id)), qs: x.qs.map(([id, type]) => ({ w: vById.get(id), type })), i: x.i, res: x.res && typeof x.res === "object" && !Array.isArray(x.res) ? x.res : {}, lv: k, maxCombo: x.combo || 0, resumed: x.i };
   vQuestion();
   return true;
 }
@@ -27083,7 +27148,9 @@ let vAdvanceTimer = null;
 function vQuestion() {
   vUnbindKeys();
   clearTimeout(vAdvanceTimer);
-  const S = vSess, q = S.qs[S.i], w = q.w;
+  const S = vSess;
+  if (!S || !S.qs[S.i]) { vEmptyPractice(); return; }
+  const q = S.qs[S.i], w = q.w;
   // 例句填空用描述配图的例句（和题上的配图对得上）；没有时才用普通例句
   const ex = q.type === 5 ? vPicEx(w) || vEx(w) : vEx(w);
   stage.innerHTML = "";
@@ -29260,14 +29327,19 @@ const CJ_COMPOUND = ["pc", "pqp", "fa", "condp"];
 const CJ_AUX_TENSE = { pc: "pres", pqp: "imp", fa: "fut", condp: "cond" };   // 复合时态的助动词用哪个简单时态
 const CJ_BOTH_AUX = ["passer", "rentrer", "descendre", "sortir"];   // 带直接宾语时改用 avoir
 const CJ_BY = new Map(CJ_VERBS.map(v => [v.v, v]));
-const cjSaved = (() => { try { return JSON.parse(localStorage.getItem("fq-conj") || "{}"); } catch (e) { return {}; } })();
+const cjSaved = (() => { try { const c = JSON.parse(localStorage.getItem("fq-conj") || "{}"); return c && typeof c === "object" && !Array.isArray(c) ? c : {}; } catch (e) { return {}; } })();
+function cjValidSelection(value, allowed, fallback) {
+  const valid = Array.isArray(value) ? [...new Set(value.filter(x => allowed.includes(x)))] : [];
+  return valid.length ? valid : fallback;
+}
 let cjCfg = {
-  tenses: Array.isArray(cjSaved.tenses) && cjSaved.tenses.length ? cjSaved.tenses.filter(t => CJ_TZH[t]) : ["pres", "pc", "imp", "fut", "cond", "subj"],
-  groups: Array.isArray(cjSaved.groups) && cjSaved.groups.length ? cjSaved.groups : CJ_GROUPS.map(g => g[0]),
+  tenses: cjValidSelection(cjSaved.tenses, Object.keys(CJ_TZH), ["pres", "pc", "imp", "fut", "cond", "subj"]),
+  groups: cjValidSelection(cjSaved.groups, CJ_GROUPS.map(g => g[0]), CJ_GROUPS.map(g => g[0])),
   mode: cjSaved.mode === "type" ? "type" : "pick",
   n: [10, 20, 30, 0].includes(cjSaved.n) ? cjSaved.n : 10,
 };
 const cjSaveCfg = () => { try { localStorage.setItem("fq-conj", JSON.stringify(cjCfg)); } catch (e) {} };
+cjSaveCfg(); // Persist repaired configuration only; answer history is untouched.
 let cjSess = null;   // { k: 第几题, right, xp0, q: 当前题, answered, lastKey }
 const cjId = (v, t) => `cj:${v}:${t}`;
 const cjNorm = s => String(s || "").normalize("NFC").trim().toLowerCase().replace(/[’`´]/g, "'").replace(/\s+/g, " ");

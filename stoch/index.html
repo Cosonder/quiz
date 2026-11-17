@@ -3293,7 +3293,7 @@ function homeOf(q) {
 
 function makeSet(key) { let qs = members(key); if (typeof qlApply === "function") qs = qlApply(qs, key); if (key.startsWith("listen:") && typeof listeningInterleave === "function") qs = listeningInterleave(qs, key); return { key, label: labelOf(key), qs }; }   // 法语页：按设置里的难度等级挑题
 // 记住每一组做到第几题（只存在这台设备的浏览器里）
-function loadPos() { try { return JSON.parse(localStorage.getItem("sq-pos") || "{}"); } catch (e) { return {}; } }
+function loadPos() { try { const p = JSON.parse(localStorage.getItem("sq-pos") || "{}"); return p && typeof p === "object" && !Array.isArray(p) ? p : {}; } catch (e) { return {}; } }
 function savePos() { try { const m = loadPos(); m[set.key] = idx; localStorage.setItem("sq-pos", JSON.stringify(m)); } catch (e) {} }
 // 每组做几题（0 = 整轮一次做完），默认 10 题，记在本机浏览器里
 const PER_OPTS = [5, 10, 15, 20, 30, 0];
@@ -3304,14 +3304,28 @@ function calcScore() { let n = 0; for (let k = bStart; k < bEnd(); k++) if (answ
 function startSet(key, fresh) {
   set = makeSet(key); score = 0; answers = {};
   const saved = fresh || /^(rev|learn|plan|tour):/.test(key) ? 0 : Number(loadPos()[key] || 0);   // 复习、学习题组每次重新挑题，从头做
-  idx = saved > 0 && saved < set.qs.length ? saved : 0;
+  idx = Number.isInteger(saved) && saved > 0 && saved < set.qs.length ? saved : 0;
   bStart = idx;
   if (!set.qs.length && typeof qlEmpty === "function") { renderToc(); qlEmpty(); return; }   // 这一组在当前难度下没有题
   renderToc(); beginBatch();
 }
+// Guard every route into a question, including restored positions and empty filter results.
+function quizReady() {
+  if (!set || !Array.isArray(set.qs) || !set.qs.length) {
+    idx = bStart = score = 0;
+    if (typeof rv !== "undefined") rv = null;
+    if (typeof qlEmpty === "function") qlEmpty();
+    else { stage.innerHTML = ""; stage.append(el("p", "empty", "暂无可用题目，请从目录选择其他题组。")); }
+    return false;
+  }
+  if (!Number.isInteger(idx) || idx < 0 || idx >= set.qs.length) idx = 0;
+  if (!Number.isInteger(bStart) || bStart < 0 || bStart > idx) bStart = idx;
+  return true;
+}
 // 从第 from 题（下标）开始新的一组
 function startBatch(from) {
-  bStart = idx = from >= set.qs.length ? 0 : from;
+  if (!quizReady()) return;
+  bStart = idx = Number.isInteger(from) && from >= 0 && from < set.qs.length ? from : 0;
   for (let k = bStart; k < bEnd(); k++) delete answers[k];
   score = calcScore();
   beginBatch();
@@ -3337,6 +3351,7 @@ function kpsOf(qs) {
 }
 // 一组题开始：学习模式下先复习，否则直接出第一题
 function beginBatch() {
+  if (!quizReady()) return;
   rv = null;
   if (study) {
     const list = kpsOf(set.qs.slice(idx, bEnd()));
@@ -5467,6 +5482,7 @@ function setGoalSection(wrap) {
 // 每次用户可见更新都新增记录：默认只递增第三位 1.x.y → 1.x.(y+1)，超过 9 继续到 10、11；第二位升级需用户明确要求。
 // 首位保持 1，只有用户明确要求才可修改；历史记录保留。完整发布规则见根目录 AGENTS.md。
 const CHANGELOG = [
+  {"v": "1.9.33", "d": "2026-11-17", "items": ["修复零基础入口受难度过滤、直接开始练习后导航未切换、异常题号缓存和空题组跳题问题；修复词汇、变位设置及闯关缓存异常，保留已有学习记录。没有匹配题目时提供明确提示与返回入口。", "听力标签检索不再叠加全局语法难度过滤，以听力目录所选标签为准，修复有材料却显示无题目的问题。", "法语页：管理员回复过的留言及回复向所有人开放查看，不展示账号信息；新增登录点赞、取消点赞与总数显示，每个账号对同一留言最多计一次。未回复留言继续仅本人和管理员可见。"]},
   {"v": "1.9.32", "d": "2026-11-17", "items": ["今日计划自动修复失效题目、重复编号和异常缓存，保留仍有效的计划题目与已完成进度；可补充的题目自动补齐，不足时按实际可用题数显示。只剩动词变位时直接进入变位练习；修复不删除或重置答题记录、金币及其他学习数据。"]},
   {"v": "1.9.31", "d": "2026-11-17", "p": "fr", "items": ["新用户指南新增直达按钮：从零基础开始、查看今日计划和探索游戏。番茄时钟收进点击学习伙伴后打开的面板，计时或暂停时显示剩余时间，未开始或结束后只显示入口文字；点击进入时长与提醒设置，不再在页面上单独悬浮。"]},
   {"v": "1.9.30", "d": "2026-11-17", "p": "fr", "items": ["新用户指南首次进入时默认展开，之后在当前浏览器记住展开或折叠选择；返回首页、刷新或再次打开网页时保留状态。"]},
