@@ -14842,7 +14842,7 @@ GPA2.forEach(u => {
     LEVEL_OF[id] = u.lv; TAGS_OF[id] = q.tags; KP_OF[id] = "gb" + u.unit;
   });
 });
-const LANG_FILES = {"en": "lang-en.js?v=3f82e5984e", "fr": "lang-fr.js?v=c447b64076"};
+const LANG_FILES = {"en": "lang-en.js?v=a5629b45c7", "fr": "lang-fr.js?v=2a69fd7ddd"};
 (() => { let l = null; try { l = localStorage.getItem("fq-lang"); } catch (e) {}
   if (Object.hasOwn(LANG_FILES, l)) document.write('<script src="' + LANG_FILES[l] + '"><\/script>'); })();
 </script>
@@ -18262,6 +18262,7 @@ function setGoalSection(wrap) {
 // 每次用户可见更新都新增记录：默认只递增第三位 1.x.y → 1.x.(y+1)，超过 9 继续到 10、11；第二位升级需用户明确要求。
 // 首位保持 1，只有用户明确要求才可修改；历史记录保留。完整发布规则见根目录 AGENTS.md。
 const CHANGELOG = [
+  {"v": "1.9.21", "d": "2026-11-17", "p": "fr", "items": ["听力播放器新增上一句和下一句：从目标句句首切换，保留暂停、循环与播放速度；开启循环时自动循环新选中的句子。首尾按钮自动禁用，模拟卷可跨对话切换并保留男女声分工。"]},
   {"v": "1.9.20", "d": "2026-11-17", "p": "fr", "items": ["听力播放器新增暂停／继续和循环当前句：按播放位置定位当前句，句末自动截断并回到句首，关闭循环后继续后文。角色录音新增句子时间边界，系统朗读按句控制；普通听力三种题型和模拟卷均可使用，停止、切题、切换人物或离开页面时取消旧播放与循环。"]},
   {"v": "1.9.19", "d": "2026-11-17", "p": "fr", "items": ["教材情境听力新增 57 段 Pia 的 Gemini 录音，沿用已选定声线；覆盖 40 章、171 道理解选择、关键词填空和复原句子练习，同一材料三种考法共用录音，支持正常与慢速播放。材料按教材场景与交际目标原创改写，不使用教材原文或原版 CD 音频。"]},
   {"v": "1.9.18", "d": "2026-11-16", "p": "fr", "items": ["以 Claire Miquel《Communication progressive du français》初级教材的 40 章、57 个日常情境为主线，新增 57 段原创 A1–A2 听力材料和 171 道独立练习：理解选择、关键词填空、复原句子。听力目录新增教材筛选，标注对应章节与书页，保留原有题库。新材料沿用学习配音设置，尚未录制人物语音的内容明确使用系统朗读；不包含教材原版 CD 音频。"]},
@@ -30862,6 +30863,7 @@ function studyControlsSync(s){
   const pause=s.row.querySelector('[data-study-pause]'),loop=s.row.querySelector('[data-study-loop]'),note=s.row.querySelector('.study-sentence');
   if(pause){pause.disabled=!!s.ended;const label=petI18n(s.paused?['继续','Resume','Reprendre']:['暂停','Pause','Pause']);if(pause.textContent!==label)pause.textContent=label;pause.setAttribute('aria-pressed',String(!!s.paused));}
   if(loop){loop.disabled=!!s.ended||!s.segments?.length;loop.setAttribute('aria-pressed',String(!!s.loop));}
+  for(const [key,edge] of [['prev',s.partIndex===0&&s.index===0],['next',s.partIndex===s.partCount-1&&s.index===s.segments?.length-1]]){const b=s.row.querySelector('[data-study-'+key+']');if(b)b.disabled=!!s.ended||!s.segments?.length||!s.seek||edge;}
   if(note){const label=!s.ended&&s.segments?.length?petI18n(['第 '+(s.index+1)+' / '+s.segments.length+' 句','Sentence '+(s.index+1)+' / '+s.segments.length,'Phrase '+(s.index+1)+' / '+s.segments.length]):'';if(note.textContent!==label)note.textContent=label;}
 }
 function studyAudioStop(){
@@ -30876,7 +30878,10 @@ function studyAudioControls(row){
   pause.type=loop.type='button';pause.dataset.studyPause='';loop.dataset.studyLoop='';pause.disabled=loop.disabled=true;pause.setAttribute('aria-pressed','false');loop.setAttribute('aria-pressed','false');
   pause.onclick=()=>{const s=studyAudioSession;if(!s||s.row!==row||s.ended)return;s.paused=!s.paused;if(s.paused){clearTimeout(s.timer);if(studyAudio)studyAudio.pause();else if(s.mode==='system')tts?.pause?.();}else s.resume?.();studyControlsSync(s);};
   loop.onclick=()=>{const s=studyAudioSession;if(!s||s.row!==row||s.ended||!s.segments?.length)return;s.loop=!s.loop;if(s.mode==='recorded'){s.index=studySentenceAt(s.segments,studyAudio?.currentTime||0);s.loopIndex=s.loop?s.index:null;s.arm?.();}studyControlsSync(s);};
-  row.append(pause,loop,el('span','sub study-sentence'));
+  const prev=el('button','play slow',petI18n(['上一句','Previous sentence','Phrase précédente'])),next=el('button','play slow',petI18n(['下一句','Next sentence','Phrase suivante']));
+  prev.type=next.type='button';prev.dataset.studyPrev='';next.dataset.studyNext='';prev.disabled=next.disabled=true;
+  for(const [b,step] of [[prev,-1],[next,1]])b.onclick=()=>{const s=studyAudioSession;if(s&&s.row===row&&!s.ended)s.move?.(step);};
+  row.append(pause,prev,loop,next,el('span','sub study-sentence'));
 }
 function studySentenceAt(segments,time){let index=segments.findIndex(x=>time<x.end);return index<0?segments.length-1:index;}
 function studyAudioLabel(btn,label){
@@ -30906,27 +30911,32 @@ function studyControlledSystem(s,text,rate,role,valid,next,finish){
     utterance.onend=()=>{if(!valid()||s.utterance!==utterance)return;const advance=()=>read(s.loop?index:index+1);if(s.paused)pending=advance;else advance();};
     utterance.onerror=()=>{if(valid()&&s.utterance===utterance)finish();};
     tts.resume?.();tts.speak(utterance);
-  };read(s.index||0);
+  };
+  s.seek=index=>{s.utterance=null;pending=null;tts.cancel();read(index);};
+  read(s.requestIndex<0?s.segments.length-1:Math.min(s.requestIndex||0,s.segments.length-1));
 }
 // One epoch governs a whole dialogue, so stop/voice/card changes cannot restart a sentence.
 function studySpeakSequence(parts,rate,btn,done,voiceOverride=null,recordedOnly=false){
   studyAudioStop();if(typeof petStopVoice==='function')petStopVoice();
   if(typeof tourRecorder!=='undefined'&&tourRecorder?.state==='recording'){done?.();return false;}
-  const epoch=studyAudioEpoch,voice=voiceOverride||studyVoice();let i=0;studyAudioBusy=true;btn?.setAttribute('aria-pressed','true');
+  const epoch=studyAudioEpoch,voice=voiceOverride||studyVoice();let i=0,partEpoch=0;studyAudioBusy=true;btn?.setAttribute('aria-pressed','true');
   const row=btn?.parentElement?.querySelector('[data-study-pause]')?btn.parentElement:null;
-  const s=studyAudioSession={row,paused:false,loop:false,index:0,segments:null,mode:'loading',ended:false,timer:null};studyControlsSync(s);
+  const s=studyAudioSession={row,paused:false,loop:false,index:0,partIndex:0,partCount:parts.length,segments:null,mode:'loading',ended:false,timer:null};studyControlsSync(s);
   const valid=()=>!s.ended&&epoch===studyAudioEpoch&&!document.hidden&&(voiceOverride||voice===studyVoice());
   const finish=()=>{if(!valid())return;clearTimeout(s.timer);s.ended=true;s.paused=false;s.loop=false;studyAudioBusy=false;btn?.setAttribute('aria-pressed','false');studyControlsSync(s);done?.();};
-  const next=async()=>{
-    if(!valid())return;clearTimeout(s.timer);if(i>=parts.length){finish();return;}
-    const part=parts[i++],text=String(part.text||'').normalize('NFC').trim();s.index=0;s.segments=null;s.mode='loading';s.resume=null;studyControlsSync(s);
-    const fallback=()=>{if(!valid())return;if(recordedOnly){studyAudioLabel(btn,petI18n(['Gemini 录音暂不可用，请稍后重试；不会使用系统语音。','Gemini recording unavailable. Try again later; system speech is disabled.','Enregistrement Gemini indisponible. Réessayez plus tard ; aucune voix système.']));finish();return;}studyAudioLabel(btn,petI18n(['系统朗读','System voice','Voix système'])+(voice!=='system'&&part.role!=='M'?' · '+petI18n(['本句暂无角色录音','No recording for this line','Cette phrase n’est pas enregistrée']):''));if(row)studyControlledSystem(s,text,rate,part.role,valid,next,finish);else studySystemPart(text,rate,btn,next,part.role);};
+  const next=async(partIndex=i,sentenceIndex=0)=>{
+    if(!valid())return;clearTimeout(s.timer);if(partIndex>=parts.length){finish();return;}
+    const request=++partEpoch,current=()=>valid()&&request===partEpoch;i=partIndex;
+    if(studyAudio){studyAudio.onended=studyAudio.onerror=studyAudio.ontimeupdate=studyAudio.onseeked=null;studyAudio.pause();studyAudio.removeAttribute('src');studyAudio.load();studyAudio=null;}
+    s.utterance=null;tts?.cancel();
+    const part=parts[i++],text=String(part.text||'').normalize('NFC').trim();s.partIndex=partIndex;s.requestIndex=sentenceIndex;s.index=0;s.segments=null;s.mode='loading';s.resume=s.seek=s.arm=null;studyControlsSync(s);
+    const fallback=()=>{if(!current())return;if(recordedOnly){studyAudioLabel(btn,petI18n(['Gemini 录音暂不可用，请稍后重试；不会使用系统语音。','Gemini recording unavailable. Try again later; system speech is disabled.','Enregistrement Gemini indisponible. Réessayez plus tard ; aucune voix système.']));finish();return;}studyAudioLabel(btn,petI18n(['系统朗读','System voice','Voix système'])+(voice!=='system'&&part.role!=='M'?' · '+petI18n(['本句暂无角色录音','No recording for this line','Cette phrase n’est pas enregistrée']):''));if(row)studyControlledSystem(s,text,rate,part.role,current,next,finish);else studySystemPart(text,rate,btn,()=>{if(current())next();},part.role);};
     if(voice==='system'||part.role==='M'){fallback();return;}
     let entry;try{const m=await studyAudioIndex();entry=m.characters[voice]?.find(x=>x.text===text);}catch{fallback();return;}
-    if(!valid())return;
+    if(!current())return;
     if(!entry||!/^[-a-z0-9/]+\.m4a$/.test(entry.file)||entry.file.includes('..')){fallback();return;}
     const audio=new Audio(STUDY_AUDIO_BASE+entry.file);studyAudio=audio;audio.preload='auto';audio.playbackRate=Math.max(.5,Math.min(1.5,rate));audio.preservesPitch=true;audio.webkitPreservesPitch=true;
-    let settled=false;const active=()=>!settled&&valid()&&studyAudio===audio;
+    let settled=false;const active=()=>!settled&&current()&&studyAudio===audio;
     s.mode='recorded';s.segments=Array.isArray(entry.sentences)&&entry.sentences.length?entry.sentences:null;
     if(!s.segments&&studySentenceTexts(text).length===1&&entry.durationSeconds>0)s.segments=[{start:0,end:entry.durationSeconds,text}];
     const failure=()=>{if(!active())return;settled=true;clearTimeout(s.timer);audio.onended=audio.onerror=audio.ontimeupdate=audio.onseeked=null;audio.pause();studyAudio=null;fallback();};
@@ -30939,12 +30949,15 @@ function studySpeakSequence(parts,rate,btn,done,voiceOverride=null,recordedOnly=
       s.timer=setTimeout(s.arm,Math.max(10,Math.min(250,remaining*1000)));
     };
     s.resume=()=>{play();s.arm();};
+    s.seek=index=>{if(!active()||!s.segments?.[index])return;clearTimeout(s.timer);s.index=index;s.loopIndex=s.loop?index:null;audio.currentTime=s.segments[index].start;studyControlsSync(s);play();s.arm();};
     audio.ontimeupdate=()=>{if(!active()||!s.segments)return;s.index=s.loop?s.loopIndex:studySentenceAt(s.segments,audio.currentTime);studyControlsSync(s);s.arm();};
     audio.onseeked=()=>{if(active())s.arm();};
     audio.onended=()=>{if(!active())return;if(s.loop&&s.segments){audio.currentTime=s.segments[s.loopIndex].start;play();s.arm();}else{settled=true;clearTimeout(s.timer);studyAudio=null;next();}};
     audio.onerror=failure;
-    studyAudioLabel(btn,voice[0].toUpperCase()+voice.slice(1)+' · '+petI18n(['AI 合成配音','AI narration','Voix de synthèse IA']));studyControlsSync(s);play();
+    studyAudioLabel(btn,voice[0].toUpperCase()+voice.slice(1)+' · '+petI18n(['AI 合成配音','AI narration','Voix de synthèse IA']));
+    if(s.segments)s.seek(sentenceIndex<0?s.segments.length-1:Math.min(sentenceIndex,s.segments.length-1));else{studyControlsSync(s);play();}
   };
+  s.move=step=>{if(!valid()||!s.segments?.length||!s.seek)return;const index=s.mode==='recorded'&&!s.loop?studySentenceAt(s.segments,studyAudio?.currentTime||0):s.index,target=index+step;if(target<0){if(s.partIndex>0)next(s.partIndex-1,-1);}else if(target>=s.segments.length){if(s.partIndex<parts.length-1)next(s.partIndex+1,0);}else s.seek(target);};
   studyAudioOwner=btn||stage.firstElementChild;
   next();return true;
 }
