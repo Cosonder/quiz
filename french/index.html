@@ -14938,7 +14938,7 @@ GPA2.forEach(u => {
     LEVEL_OF[id] = u.lv; TAGS_OF[id] = q.tags; KP_OF[id] = "gb" + u.unit;
   });
 });
-const LANG_FILES = {"en": "lang-en.js?v=f871f8244d", "fr": "lang-fr.js?v=61ede691fa"};
+const LANG_FILES = {"en": "lang-en.js?v=845496b6b2", "fr": "lang-fr.js?v=fa63ce9182"};
 (() => { let l = null; try { l = localStorage.getItem("fq-lang"); } catch (e) {}
   if (Object.hasOwn(LANG_FILES, l)) document.write('<script src="' + LANG_FILES[l] + '"><\/script>'); })();
 </script>
@@ -18456,6 +18456,7 @@ function setFold(wrap, key, title, initialOpen = false) {
 // 每次用户可见更新都新增记录：默认只递增第三位 1.x.y → 1.x.(y+1)，超过 9 继续到 10、11；第二位升级需用户明确要求。
 // 首位保持 1，只有用户明确要求才可修改；历史记录保留。完整发布规则见根目录 AGENTS.md。
 const CHANGELOG = [
+  {"v": "1.9.43", "d": "2026-11-18", "p": "fr", "items": ["点击学习伙伴时，每两条使用提示穿插一条原有问候或互动语音；三位伙伴分别轮换，提示仍一轮不重复。", "修复慢速或循环模式高亮导致伙伴一直静音、手机拖动后吞掉下一次点击，以及气泡提前关闭截断语音的问题。题目音频优先；等待期间保留最近一次点击和较高优先级的答题反馈，切题、切换伙伴、静音或离开页面会取消过期回应。快速连点停止旧录音，自动反馈不打断正在播放的伙伴语音。"]},
   {"v": "1.9.42", "d": "2026-11-18", "p": "fr", "items": ["学习伙伴的使用提示更常出现；连续点击即可轮流查看全部 8 条，每位伙伴单独记住进度，不再等待随机触发或冷却。自动提示概率提高到 60%，最短间隔缩短为 30 秒，做题时仍不自动插入使用提示。三位伙伴各新增 8 条 Gemini 提示配音，沿用现有声线；快速切换停止旧录音，题目音频优先，不使用系统语音。"]},
   {"v": "1.9.41", "d": "2026-11-18", "p": "fr", "items": ["学习伙伴随机互动新增 8 类使用提示，涵盖点击正确选项快速跳题、留言反馈、听力慢速与循环、词块拖动、标签筛选、今日计划、番茄时钟和错题复习。按三位伙伴的语气显示中英法文字，90 秒内不重复触发，一轮内不重复提示；做题时保留原有简短反馈。新提示暂为文字，不调用系统语音，原有 Gemini 配音保持不变。"]},
   {"v": "1.9.40", "d": "2026-11-18", "p": "fr", "items": ["复原句子的撤回一步与清空排列改为 ↩️、🗑️ 图标按钮，缩减手机占用空间；保留 44 像素触控区域、中英法文字提示和无障碍名称。"]},
@@ -30823,13 +30824,27 @@ function petUsageTip(kind, manual = false) {
   const tip = PET_USAGE_TIPS.find(t => t.id === id), intro = PET_TIP_INTROS[character];
   return {fr:intro.fr+tip.fr,zh:intro.zh+tip.zh,en:intro.en+tip.en,word:'',tipId:id};
 }
+// Two tips then one familiar line; each character keeps an independent rotation.
+function petTapLine() {
+  const character = petConfig().character;
+  petRuntime.tapDecks ||= {};
+  const deck = petRuntime.tapDecks[character] ||= {count:0, bag:[], last:null};
+  if (++deck.count % 3) return petUsageTip('tap', true);
+  const eligible = PET_LINES[character].filter(x => ['welcome','tap'].includes(x[0]) && x[1] <= petAffinity().dialogueLevel);
+  let bag = deck.bag.filter(fr => eligible.some(x => x[2] === fr));
+  if (!bag.length) bag = eligible.map(x => x[2]);
+  const candidates = bag.filter(fr => fr !== deck.last), fr = candidates[Math.floor(Math.random()*candidates.length)] || bag[0];
+  deck.bag = bag.filter(x => x !== fr); deck.last = fr;
+  const x = eligible.find(x => x[2] === fr) || PET_LINES[character][0];
+  return {fr:x[2],zh:x[3],en:x[4],word:''};
+}
 function petLine(kind = 'tap') {
   const cfg = petConfig(), level = petAffinity().dialogueLevel;
   const lines = PET_LINES[cfg.character].filter(x => x[0] === kind && x[1] <= level);
   const x = lines[Math.floor(Math.random() * lines.length)] || PET_LINES[cfg.character][0];
   return { fr: x[2], zh: x[3], en: x[4], word: '' };
 }
-const PET_SPEECH_PRIORITY = { plan: 4, streak: 3, sad: 2, enter: 2, welcome: 1, happy: 1, idle: 0, tap: 5 };
+const PET_SPEECH_PRIORITY = { plan: 4, streak: 3, sad: 2, enter: 0, welcome: 0, happy: 1, idle: 0, tap: 5 };
 function petSpeechReady(now = Date.now()) {
   return !petQuestionActive() || !petRuntime.lastSpeech || petRuntime.answersSinceSpeech >= 3 || now - petRuntime.lastSpeech >= 20000;
 }
@@ -30839,7 +30854,49 @@ const PET_VOICE_VERSION = '1.9.6';
 let petVoiceIndex = null, petVoiceBuffer = null, petVoiceContext = null;
 let petVoiceSource = null, petVoiceAbort = null, petVoiceEpoch = 0;
 let petVoiceButton = null, petVoiceSystem = false, petVoiceManual = false;
-function petStopVoice() {
+let petVoiceLoading = 0, petDeferredTimer = 0, petDeferredManual = null, petDeferredAuto = null;
+const petVoiceCache = new Map();
+function petQuestionAudioBusy() {
+  const synth = typeof tts !== 'undefined' && tts;
+  return !!((typeof studyAudioBusy !== 'undefined' && studyAudioBusy) ||
+    (synth && (synth.speaking || synth.pending)) ||
+    document.querySelector('.play[aria-pressed="true"]:not([data-pet-audio]):not([data-study-slow]):not([data-study-loop])'));
+}
+function petClearDeferred() {
+  clearTimeout(petDeferredTimer); petDeferredTimer = 0; petDeferredManual = petDeferredAuto = null;
+}
+function petDeferLine(kind, manual) {
+  const item = {kind, manual, character:petConfig().character, page:view, card:petQuestionCard(), until:Date.now()+30000};
+  if (manual) petDeferredManual = item;
+  else if (!petDeferredAuto || (PET_SPEECH_PRIORITY[kind]||0) >= (PET_SPEECH_PRIORITY[petDeferredAuto.kind]||0)) petDeferredAuto = item;
+  // Do not let an old bubble timeout discard a newly requested response.
+  clearTimeout(petBubbleTimer);
+  if (!petDeferredTimer) petDeferredTimer = setTimeout(petFlushDeferred,250);
+  return true;
+}
+function petFlushDeferred() {
+  petDeferredTimer = 0;
+  const cfg = petConfig(), valid = x => x && (x.manual || x.until > Date.now()) && x.character === cfg.character && x.page === view && x.card === petQuestionCard() && !petBlocked() && petOwned() && gameOn() && cfg.enabled && cfg.voice && (x.manual || cfg.feedback);
+  if (!valid(petDeferredManual)) petDeferredManual = null;
+  if (!valid(petDeferredAuto)) petDeferredAuto = null;
+  let delivered = false;
+  if (!petQuestionAudioBusy() && !petVoiceSource && !petVoiceLoading) {
+    const item = petDeferredManual || petDeferredAuto;
+    if (item) { delivered = true; if (item.manual) petDeferredManual = null; else petDeferredAuto = null; petShowLine(item.kind,item.manual); }
+  }
+  if ((petDeferredManual || petDeferredAuto) && !petDeferredTimer) petDeferredTimer = setTimeout(petFlushDeferred,250);
+  else if (!delivered && petRuntime.open && !petVoiceSource && !petVoiceLoading) petBubbleLater(1500);
+}
+function petBubbleLater(ms) {
+  clearTimeout(petBubbleTimer);
+  petBubbleTimer = setTimeout(() => {
+    if (petVoiceSource || petVoiceLoading || petDeferredManual || petDeferredAuto) petBubbleLater(500);
+    else petCloseBubble();
+  },ms);
+}
+function petStopVoice(preserveDeferred = false) {
+  if (preserveDeferred !== true) petClearDeferred();
+  petVoiceLoading = 0;
   petVoiceEpoch++;
   petVoiceAbort?.abort(); petVoiceAbort = null;
   if (petVoiceSource) { petVoiceSource.onended = null; try { petVoiceSource.stop(); } catch (e) {} petVoiceSource.disconnect(); petVoiceSource = null; }
@@ -30848,15 +30905,14 @@ function petStopVoice() {
   petVoiceButton?.setAttribute('aria-pressed', 'false'); petVoiceButton = null;
 }
 function petVoiceAllowed(manual = false) {
-  const cfg = petConfig(), synth = typeof tts !== 'undefined' && tts;
-  return !(typeof studyAudioBusy !== 'undefined' && studyAudioBusy) && petOwned() && gameOn() && cfg.enabled && cfg.voice && (manual || cfg.feedback) && !petBlocked() &&
-    !(typeof tourOral !== 'undefined' && tourOral) &&
-    !(synth && (synth.speaking || synth.pending)) &&
-    !document.querySelector('.play[aria-pressed="true"]:not([data-pet-audio])');
+  const cfg = petConfig();
+  return !petQuestionAudioBusy() && petOwned() && gameOn() && cfg.enabled && cfg.voice && (manual || cfg.feedback) && !petBlocked() &&
+    !(typeof tourOral !== 'undefined' && tourOral);
 }
 // Unlock silently in a real user gesture, before timers/network work. Once running,
 // the context can play delayed feedback; a new transient click is not required.
-function petPrimeVoice() {
+function petPrimeVoice(event) {
+  if (event?.isTrusted && typeof userActivated !== 'undefined') userActivated = true;
   const cfg = petConfig(), Context = window.AudioContext || window.webkitAudioContext;
   if (!Context || !petOwned() || !gameOn() || !cfg.enabled || !cfg.voice || document.hidden) return;
   try {
@@ -30866,7 +30922,7 @@ function petPrimeVoice() {
 }
 async function petPlayVoice(line, button = null, manual = false, recordedOnly = false) {
   // Cancel our own prior clip first; never cancel another feature's speech.
-  petStopVoice();
+  petStopVoice(true);
   if (line.textOnly) return false;
   if (!petVoiceAllowed(manual) || (typeof userActivated !== 'undefined' && !userActivated)) return false;
   const activeGesture = !navigator.userActivation || navigator.userActivation.isActive;
@@ -30877,13 +30933,15 @@ async function petPlayVoice(line, button = null, manual = false, recordedOnly = 
   const fallback = () => false; // Companion voices never use browser/system TTS.
   const Context = window.AudioContext || window.webkitAudioContext;
   if (!Context) return fallback();
+  petVoiceLoading = epoch;
   try {
     // Resume in the originating gesture, before network requests (Safari).
     petVoiceContext ||= new Context();
     if (petVoiceContext.state !== 'running') await petVoiceContext.resume();
-    if (!valid() || petVoiceContext.state !== 'running') return false;
-  } catch (e) { return false; } // Autoplay rejection stays silent; no retry loop.
+    if (!valid() || petVoiceContext.state !== 'running') { if (petVoiceLoading === epoch) petVoiceLoading = 0; return false; }
+  } catch (e) { if (petVoiceLoading === epoch) petVoiceLoading = 0; return false; } // Autoplay rejection stays silent; no retry loop.
   const controller = new AbortController(); petVoiceAbort = controller;
+  const timeout = setTimeout(() => controller.abort(),15000);
   try {
     if (!petVoiceIndex) {
       const response = await fetch(PET_VOICE_BASE + 'manifest.json?v=' + PET_VOICE_VERSION, { signal: controller.signal });
@@ -30905,13 +30963,17 @@ async function petPlayVoice(line, button = null, manual = false, recordedOnly = 
     if (!cue && !standalone) return false;
     if (!standalone && (!/^(ninon|lison|pia)\.m4a$/.test(file) || !Number.isFinite(cue.start) || !Number.isFinite(cue.end) || cue.start < 0 || cue.end <= cue.start)) throw new Error('Invalid voice cue');
     const cacheKey = base + file;
+    for (const [key,value] of petVoiceCache) if (value.character !== character) petVoiceCache.delete(key);
+    if (petVoiceCache.has(cacheKey)) { petVoiceBuffer = petVoiceCache.get(cacheKey); petVoiceCache.delete(cacheKey); petVoiceCache.set(cacheKey,petVoiceBuffer); }
     if (petVoiceBuffer?.character !== character || petVoiceBuffer.key !== cacheKey) {
-      petVoiceBuffer = null; // Keep only the selected character's decoded audio.
+      petVoiceBuffer = null;
       const response = await fetch(base + file + '?v=' + PET_VOICE_VERSION, { signal: controller.signal });
       if (!response.ok) throw new Error('Voice recording unavailable');
       const buffer = await petVoiceContext.decodeAudioData(await response.arrayBuffer());
       if (!valid()) return false;
-      petVoiceBuffer = { character, buffer, key: cacheKey };
+      petVoiceBuffer = { character, buffer, key: cacheKey }; petVoiceCache.set(cacheKey,petVoiceBuffer);
+      // Keep the current character's master plus a few short tips, not all three masters.
+      while (petVoiceCache.size > 5) petVoiceCache.delete(petVoiceCache.keys().next().value);
     }
     if (!valid()) return false;
     const buffer = petVoiceBuffer.buffer;
@@ -30926,7 +30988,7 @@ async function petPlayVoice(line, button = null, manual = false, recordedOnly = 
     if (e.name === 'AbortError' || e.name === 'NotAllowedError') return false;
     if (valid() && petVoiceSource) { petVoiceSource.onended = null; try { petVoiceSource.stop(); } catch (_) {} petVoiceSource.disconnect(); petVoiceSource = null; button?.setAttribute('aria-pressed', 'false'); }
     return fallback();
-  } finally { if (petVoiceAbort === controller) petVoiceAbort = null; }
+  } finally { clearTimeout(timeout); if (petVoiceAbort === controller) petVoiceAbort = null; if (petVoiceLoading === epoch) petVoiceLoading = 0; }
 }
 
 function petTryVoice(line, button = null, manual = false) { return petPlayVoice(line, button, manual); }
@@ -30970,20 +31032,25 @@ function petRecentLine() {
 function petShowLine(kind = 'tap', manual = false) {
   if (!manual && typeof pomoSuppress === 'function' && pomoSuppress(kind)) return false;
   if (petBlocked() || !petOwned() || !petConfig().enabled || (!manual && !petConfig().feedback)) return false;
+  if (petConfig().voice && (petQuestionAudioBusy() || (!manual && (petRuntime.presenting || petVoiceSource || petVoiceLoading)))) return petDeferLine(kind,manual);
+  if (manual) { petDeferredManual = null; petPrimeVoice(); }
   if (!manual && !petSpeechReady()) return petQueueLine(kind);
   if (manual && kind !== 'tap' && petRuntime.pendingSpeech) { kind = petRuntime.pendingSpeech.kind; petRuntime.pendingSpeech = null; clearTimeout(petSpeechTimer); }
   if (manual) petRuntime.touched = Date.now();
   petRuntime.open = true; petRuntime.manual = manual;
   petRuntime.lastSpeech = Date.now(); petRuntime.answersSinceSpeech = 0;
   // Learning lines stay short during a question; recent examples remain available off-task.
-  petRuntime.line = petUsageTip(kind,manual) || (kind === 'tap' && !petQuestionActive() && Math.random() < .65 ? petRecentLine() || petLine(kind) : petLine(kind));
+  petRuntime.line = (manual && kind === 'tap' ? petTapLine() : petUsageTip(kind,manual)) || (kind === 'tap' && !petQuestionActive() && Math.random() < .65 ? petRecentLine() || petLine(kind) : petLine(kind));
+  petRuntime.presenting = true;
+  try {
   petSetState(kind === 'sad' ? 'sad' : kind === 'idle' ? 'sleep' : kind === 'tap' ? 'tap' : 'happy');
   petRenderBubble(); petRefresh();
   if (manual && $('petBubble')) $('petBubble').setAttribute('data-manual', 'true');
   // Compact bubbles may not fit beside a full-screen question. That layout
   // decision must not mute otherwise eligible learning feedback.
   petTryVoice(petRuntime.line, null, manual);
-  clearTimeout(petBubbleTimer); petBubbleTimer = setTimeout(() => petCloseBubble(),petRuntime.line.tipId ? 15000 : manual && !petQuestionActive() ? 12000 : 6500);
+  petBubbleLater(petRuntime.line.tipId ? 15000 : manual && !petQuestionActive() ? 12000 : 6500);
+  } finally { petRuntime.presenting = false; }
   return true;
 }
 function petRenderBubble() {
@@ -31031,7 +31098,7 @@ function petRefresh() {
   if (!petRuntime.started) return;
   const cfg = petConfig(), widget = $('petWidget');
   const enabled = petOwned() && cfg.enabled && gameOn(), blocked = petBlocked();
-  if (!enabled || blocked || !cfg.voice || (!cfg.feedback && !petVoiceManual) || (petVoiceBuffer && petVoiceBuffer.character !== cfg.character)) petStopVoice();
+  if (!enabled || blocked || !cfg.voice || (!cfg.feedback && !petVoiceManual && !petDeferredManual) || (petVoiceBuffer && petVoiceBuffer.character !== cfg.character)) petStopVoice();
   if (petVoiceBuffer?.character !== cfg.character) petVoiceBuffer = null;
   const mobile = petMobile(); widget.classList.toggle('pet-mobile', mobile);
   const card = petQuestionCard();
@@ -31076,14 +31143,16 @@ function petRefresh() {
   else if (cfg.feedback && !petRuntime.greetingShown) { petRuntime.greetingShown = true; setTimeout(() => petQueueLine('welcome'),0); }
 }
 function petDragStart(e) {
-  if (e.button !== 0 || petBlocked()) return;
+  if (e.button !== 0 || e.isPrimary === false || petBlocked()) return;
+  petRuntime.dragged = false; // A previous touch drag may not dispatch a synthetic click.
   const a = $('petAvatar'), r = $('petWidget').getBoundingClientRect();
-  petRuntime.drag = { x: e.clientX, y: e.clientY, originLeft: r.left, originTop: r.top, left: r.left, top: r.top, moved: false };
+  petRuntime.drag = { pointerId:e.pointerId, threshold:e.pointerType === 'touch' ? 10 : 6, x: e.clientX, y: e.clientY, originLeft: r.left, originTop: r.top, left: r.left, top: r.top, moved: false };
   a.setPointerCapture?.(e.pointerId);
 }
 function petDragMove(e) {
-  const d = petRuntime.drag; if (!d) return;
-  if (Math.hypot(e.clientX - d.x, e.clientY - d.y) < 6 && !d.moved) return;
+  const d = petRuntime.drag; if (!d || (e.pointerId !== undefined && d.pointerId !== e.pointerId)) return;
+  if (Math.hypot(e.clientX - d.x, e.clientY - d.y) < d.threshold && !d.moved) return;
+  if (!d.moved) petStopVoice();
   d.moved = true; petRuntime.dragged = true; petRuntime.open = false; $('petBubble')?.remove();
   d.left = d.originLeft + e.clientX - d.x; d.top = d.originTop + e.clientY - d.y; petPlace();
 }
@@ -31101,7 +31170,7 @@ function petDragEnd() {
 function petInit() {
   if (petRuntime.started) return; petRuntime.started = true;
   const widget = el('aside', 'pet-widget'); widget.id = 'petWidget'; widget.hidden = true; widget.setAttribute('aria-label', tr('学习伙伴'));
-  const avatar = petButton('和伙伴说句话', () => { if (petRuntime.dragged) { petRuntime.dragged = false; return; } petShowLine('tap', true); }, 'petAvatar', 'pet-avatar'); avatar.setAttribute('aria-label', tr('和伙伴说句话'));
+  const avatar = petButton('和伙伴说句话', e => { if (petRuntime.dragged && e.detail !== 0) { petRuntime.dragged = false; return; } petRuntime.dragged = false; petShowLine('tap', true); }, 'petAvatar', 'pet-avatar'); avatar.setAttribute('aria-label', tr('和伙伴说句话'));
   avatar.addEventListener('pointerdown', petDragStart); avatar.addEventListener('pointermove', petDragMove); avatar.addEventListener('pointerup', petDragEnd); avatar.addEventListener('pointercancel', () => { petRuntime.dragged = false; petDragEnd(); });
   widget.append(avatar); document.body.append(widget);
   widget.addEventListener('keydown', e => { e.stopPropagation(); if (e.key === 'Escape') { e.preventDefault(); petCloseBubble(true); } });
@@ -31115,6 +31184,7 @@ function petInit() {
   new MutationObserver(ms => { if (ms.some(m => !m.target.closest?.('#petWidget') && (m.type === 'attributes' || [...m.addedNodes, ...m.removedNodes].some(n => n.nodeType === 1 && n.id !== 'petWidget' && !n.closest?.('#petWidget, #petPage'))))) petScheduleLayout(); }).observe(document.body, { childList: true, subtree: true, attributes: true, attributeFilter: ['open', 'aria-modal'] });
   document.addEventListener('pointerdown', petPrimeVoice, { capture: true, passive: true });
   document.addEventListener('pointerup', petPrimeVoice, { capture: true, passive: true });
+  document.addEventListener('click', petPrimeVoice, { capture: true, passive: true });
   document.addEventListener('keydown', petPrimeVoice, { capture: true, passive: true });
   document.addEventListener('pointerdown', () => { petRuntime.touched = Date.now(); if (petRuntime.state === 'sleep') petSetState('idle'); }, { passive: true });
   document.addEventListener('keydown', () => { petRuntime.touched = Date.now(); }, { passive: true });
