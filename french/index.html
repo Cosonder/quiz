@@ -175,6 +175,11 @@ html.qf #stage > section.q-card.listening-card > .listening-mode{margin:0}
 
 .phonetic-preview:not([aria-pressed="true"]){background:transparent;color:var(--accent);box-shadow:none}.phonetic-preview[aria-pressed="true"]{background:var(--accent);color:var(--card)}
 
+.dlc-nav{display:flex;flex-wrap:wrap;gap:6px;margin:0 0 18px}.dlc-tab{flex:1;min-width:110px}.dlc-tab[aria-pressed=true]{background:var(--accent,#326c79);color:#fff;border-color:var(--accent,#326c79)}.dlc-map-scroll{overflow:auto;max-width:100%;border:2px solid #648f82;border-radius:10px;overscroll-behavior:contain;background:#dfebda}.dlc-map{position:relative;margin:auto}.dlc-map svg{position:absolute;width:100%;height:100%;inset:0}.dlc-region{position:absolute;width:49px;height:46px;min-width:44px;min-height:44px;border:2px solid #294a43;border-radius:7px 2px 7px 2px;background:#fff5d5;color:#203d38;font-size:17px;font-weight:bold;display:flex;flex-direction:column;align-items:center;justify-content:center;line-height:1.1;box-shadow:3px 3px 0 #6d9581;padding:2px}.dlc-region small{font-size:10px;font-weight:normal}.dlc-region.locked{background:#d4dddb;color:#3d5350}.dlc-region.done{background:#8ccea4}.dlc-region.selected{outline:3px solid #d46e36;outline-offset:2px;z-index:1}.dlc-region:focus-visible{outline:4px solid #365bda;outline-offset:3px;z-index:2}.dlc-panel{padding:16px;margin:16px 0;border:1px solid var(--line,#899);border-radius:12px}.dlc-panel h3{margin-top:0}.dlc-levels{margin:16px 0}.dlc-levels>button{display:block;text-align:left;width:100%;margin:6px 0;white-space:normal}.dlc-preview{width:100%;max-height:320px;object-fit:cover;image-rendering:pixelated;border-radius:10px;margin-top:20px}.dlc-postcard{display:flex;flex-direction:column;gap:12px;max-width:720px;width:calc(100vw - 32px);max-height:90vh;overflow:auto;background:var(--card,#fff);color:var(--text,#24323a);padding:18px;border-radius:16px}.dlc-postcard img{width:100%;height:auto;image-rendering:pixelated;border-radius:8px}.dlc-postcard h3,.dlc-postcard p{margin:0}.dlc-album{margin-top:20px}.dlc-covers{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px;margin-top:12px}.dlc-covers button{min-width:0;white-space:normal}.dlc-covers img{display:block;width:100%;aspect-ratio:3/2;object-fit:cover;border-radius:5px;margin-bottom:8px}@media(max-width:520px){.dlc-nav{gap:5px}.dlc-tab{min-width:calc(50% - 5px);padding:10px 6px}.dlc-panel{padding:12px}.dlc-covers{grid-template-columns:1fr}.dlc-preview{max-height:230px}}
+
+.dlc-map-scroll{max-height:520px}.dlc-map svg{max-width:none;max-height:none}.dlc-tab[aria-pressed=true]{background:#3e5db5;color:#fff!important}.dlc-map path[data-dlc-region]{cursor:pointer}
+.dlc-nav .btn.dlc-tab[aria-pressed="true"]{background:#3e5db5!important;color:#fff!important}
+
 </style></head><body>
 <title>法语语法小测验</title>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@600;900&family=Noto+Sans+SC:wght@400;500;700&display=swap">
@@ -1765,12 +1770,12 @@ html.qf #stage > section.q-card > .explain { flex: none !important; height: clam
   </div>
 </div>
 
-<script src="data-befbd67e27f5.js"></script>
+<script src="data-c28dd9019963.js"></script>
 <script>
 (()=>{const key='fq-boot-retry-1.9.44';
  if(typeof ROUNDS!=='undefined'&&typeof BANK!=='undefined'&&typeof LANG_FILES!=='undefined'){
   try{sessionStorage.removeItem(key);}catch{}
-  document.write('<script src="app-858c3e08770a.js"><\/script>');return;
+  document.write('<script src="app-7b54beef2f41.js"><\/script>');return;
  }
  const note=document.getElementById('saveNote');if(note)note.textContent='正在下载更新，请稍候… / Downloading update… / Téléchargement de la mise à jour…';
  const retry=document.createElement('button');retry.type='button';retry.className='btn';retry.textContent='重新加载 / Reload / Recharger';retry.onclick=()=>location.reload();document.getElementById('stage')?.append(retry);
