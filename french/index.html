@@ -166,6 +166,10 @@ html.qf #stage > section.q-card.listening-card > .listening-mode{margin:0}
 /* Reserve responsive sentence space; hidden candidates keep their original slots. */
 .listening-sentence-space{display:grid;min-width:0;margin-bottom:16px}.listening-sentence-space>.listening-word-tray{grid-area:1/1;min-width:0;align-content:flex-start;align-items:flex-start}.listening-sizer{visibility:hidden;pointer-events:none}.listening-sizer>.listening-word{display:inline-block;box-sizing:border-box}.listening-word-tray>.listening-word.is-selected{visibility:hidden;pointer-events:none}
 
+
+/* Compact ordering actions retain a full touch target and accessible names. */
+.listening-edit-actions{gap:8px;flex-wrap:nowrap}.listening-edit-actions>.btn{display:inline-flex;align-items:center;justify-content:center;flex:0 0 44px;width:44px;min-width:44px;height:44px;min-height:44px;padding:0;font-size:1.2rem;line-height:1}
+
 </style></head><body>
 <title>法语语法小测验</title>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@600;900&family=Noto+Sans+SC:wght@400;500;700&display=swap">
@@ -14933,7 +14937,7 @@ GPA2.forEach(u => {
     LEVEL_OF[id] = u.lv; TAGS_OF[id] = q.tags; KP_OF[id] = "gb" + u.unit;
   });
 });
-const LANG_FILES = {"en": "lang-en.js?v=1f74e1c1e1", "fr": "lang-fr.js?v=db2169fb3c"};
+const LANG_FILES = {"en": "lang-en.js?v=5cc904ce5c", "fr": "lang-fr.js?v=dc2ac075f6"};
 (() => { let l = null; try { l = localStorage.getItem("fq-lang"); } catch (e) {}
   if (Object.hasOwn(LANG_FILES, l)) document.write('<script src="' + LANG_FILES[l] + '"><\/script>'); })();
 </script>
@@ -18451,6 +18455,7 @@ function setFold(wrap, key, title, initialOpen = false) {
 // 每次用户可见更新都新增记录：默认只递增第三位 1.x.y → 1.x.(y+1)，超过 9 继续到 10、11；第二位升级需用户明确要求。
 // 首位保持 1，只有用户明确要求才可修改；历史记录保留。完整发布规则见根目录 AGENTS.md。
 const CHANGELOG = [
+  {"v": "1.9.40", "d": "2026-11-18", "p": "fr", "items": ["复原句子的撤回一步与清空排列改为 ↩️、🗑️ 图标按钮，缩减手机占用空间；保留 44 像素触控区域、中英法文字提示和无障碍名称。"]},
   {"v": "1.9.39", "d": "2026-11-18", "p": "fr", "items": ["复原句子选中词块后隐藏其候选项，点击移回、撤回或清空时重新显示；保留候选位置并预留句子换行空间，减少连续选词时的跳动。", "学习配音默认使用 Pia；Ninon 和 Lison 暂时不可选并标注配音准备中。此前选择这两位的学习配音暂用 Pia，保留明确选择的系统语音。"]},
   {"v": "1.9.38", "d": "2026-11-18", "p": "fr", "items": ["复原句子移除词块区域标题，将上一题、提交答案和下一题合并为同一排。已排列词块支持手机触屏或鼠标拖动换序，保留点击移回词库，并支持 Alt 加左右方向键调整；拖出区域或取消拖动不会改变答案，提交后锁定排列。"]},
   {"v": "1.9.37", "d": "2026-11-18", "p": "fr", "items": ["听力播放的六个图标在手机和电脑上保持同排，移除播放器常规说明、答题前提示与“已排列”计数。复原句子拆为逐句独立题目，同一材料按句序连续练习，下一题自动播放对应句子；填空只播放涉及空缺的句子，理解题播放全文。保留暂停、慢速和循环模式，以及既有学习记录。"]},
@@ -20813,7 +20818,8 @@ function listeningRender(item,card,run){
   if(!run.words){run.words=listeningWords(sentences[run.sentence]);run.bank=listeningShuffle(run.words.map((_,i)=>i));}
   const target=el('div','listening-word-tray listening-built'),bank=el('div','listening-word-tray');target.setAttribute('role','group');target.setAttribute('aria-label',listeningLabel('assembled'));bank.setAttribute('role','group');bank.setAttribute('aria-label',listeningLabel('bank'));target.lang=bank.lang='fr';
   const space=el('div','listening-sentence-space'),sizer=el('div','listening-word-tray listening-sizer');sizer.setAttribute('aria-hidden','true');sizer.lang='fr';run.bank.forEach(id=>sizer.append(el('span','listening-word',run.words[id])));space.append(sizer,target);
-  const controls=el('div','actions'),undo=el('button','btn ghost',listeningLabel('undo')),reset=el('button','btn ghost',listeningLabel('reset'));undo.type=reset.type='button';
+  const controls=el('div','actions listening-edit-actions'),undo=el('button','btn ghost'),reset=el('button','btn ghost');
+  for(const [button,key,icon]of[[undo,'undo','↩️'],[reset,'reset','🗑️']]){button.type='button';button.title=listeningLabel(key);button.setAttribute('aria-label',listeningLabel(key));const glyph=el('span',null,icon);glyph.setAttribute('aria-hidden','true');button.append(glyph);}
   const draw=()=>{
    target.replaceChildren();bank.replaceChildren();
    run.chosen.forEach((id,pos)=>{const b=el('button','listening-word',run.words[id]);b.type='button';b.dataset.wordId=id;b.draggable=false;b.setAttribute('aria-keyshortcuts','Alt+ArrowLeft Alt+ArrowRight');b.setAttribute('aria-description',UI_LANG==='fr'?'Faites glisser pour réordonner, ou utilisez Alt et les flèches gauche/droite.':UI_LANG==='en'?'Drag to reorder, or use Alt and the left/right arrow keys.':'拖动可调整顺序，也可按 Alt 加左右方向键。');b.setAttribute('aria-label',listeningLabel('remove')+' '+run.words[id]+' ('+(pos+1)+')');b.addEventListener('click',()=>{if(run.answered||answers[idx]!==undefined)return;run.chosen.splice(pos,1);draw();bank.querySelector('button:not(:disabled)')?.focus?.();});target.append(b);});
