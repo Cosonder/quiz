@@ -3250,6 +3250,7 @@ const SHOW_EPS = ["Pilot","Spanish 101","Introduction to Film","Social Psycholog
 const isListen = q => !!q.audio;
 // 每个分组键包含哪些题
 function members(key) {
+  if (key.startsWith("mistakes:")) return mistakeMembers(key);
   if (key.startsWith("listen:") && typeof listeningMembers === "function") return listeningMembers(key);
   if (/^(rev|learn):/.test(key)) return progMembers(key);
   if (key.startsWith("plan:")) return planMembers(key);
@@ -3277,6 +3278,7 @@ function inGroup(key, q) {
   return roundOf(q.id) === key;
 }
 function labelOf(key) {
+  if (key.startsWith("mistakes:")) { const f = mistakeFilter(key); return "错题 · " + (f.group ? labelOf(f.group) : f.scope === "all" ? "全部" : labelOf(f.scope).replace(/^错题 · /, "")); }
   if (key.startsWith("listen:") && typeof listeningSetLabel === "function") return listeningSetLabel(key);
   if (/^(rev|learn):/.test(key)) return progLabel(key);
   if (key.startsWith("plan:")) return planLabel(key);
@@ -3623,7 +3625,8 @@ function xpToast(text, big) {
 function progMembers(key) {
   const rev = key.startsWith("rev:"), tags = key.slice(rev ? 4 : 6).split("|").filter(Boolean);
   // “@题组键+题组键”：按书籍章节（法语页的进度展板）；否则按标签
-  const pool = tags.length && tags[0].startsWith("@") ? [...new Set(tags[0].slice(1).split("+").flatMap(k => members(k)))] : tags.length ? BANK.filter(q => tagMatch(q, tags, "any")) : BANK;
+  let pool = tags.length && tags[0].startsWith("@") ? [...new Set(tags[0].slice(1).split("+").flatMap(k => members(k)))] : tags.length ? BANK.filter(q => tagMatch(q, tags, "any")) : BANK;
+  if (typeof practiceAllows === "function") pool = pool.filter(q => practiceAllows(q, key));
   const now = Date.now();
   if (rev) {
     const over = q => { const m = memOf(q.id); return (now - m.last) / memInterval(m.lv); };
@@ -3693,13 +3696,15 @@ function progressCard() {
     .forEach(([v, k]) => { const s = el("div", "stat"); s.append(el("b", null, v), el("span", null, k)); stats.append(s); });
   fold.append(stats);
   const act = el("div", "actions");
-  const rv = el("button", all.due ? "btn" : "btn ghost", all.due ? `开始复习（${all.due} 题到期）` : "现在没有到期的题");
-  rv.type = "button"; rv.id = "revBtn"; rv.disabled = !all.due;
+  const dueCount = progMembers("rev:").length;
+  const rv = el("button", dueCount ? "btn" : "btn ghost", dueCount ? `开始复习（${dueCount} 题到期）` : "现在没有到期的题");
+  rv.type = "button"; rv.id = "revBtn"; rv.disabled = !dueCount;
   rv.addEventListener("click", () => progGo("rev:"));
   const ln = el("button", "btn ghost", "学新题 / 巩固"); ln.type = "button";
   ln.addEventListener("click", () => progGo("learn:"));
   act.append(rv, ln);
   fold.append(act);
+  if (typeof practiceScopeNote === "function") fold.append(el("p", "sub", practiceScopeNote()));
   // 按标签 / 按书籍章节（法语页有 progBookGroups）
   const byBook = typeof progBookGroups === "function" && progBy === "book";
   if (typeof progBookGroups === "function") {
@@ -3767,16 +3772,18 @@ function weakestTag() {
   const since = Date.now() - 60 * DAY_MS, st = new Map();
   (ansRaw || []).forEach(d => {
     const q = BY_ID.get(d.qid);
-    if (!q || !(Date.parse(d.at) >= since)) return;
+    if (!q || !planAllows(q) || !(Date.parse(d.at) >= since)) return;
     q.tags.forEach(t => { if (LEVELS.includes(t)) return; const s = st.get(t) || [0, 0]; s[0]++; if (!d.isCorrect) s[1]++; st.set(t, s); });
   });
   let best = null;
   st.forEach(([n, w], t) => { if (n < 5 || !w) return; const r = w / n; if (!best || r > best.r || (r === best.r && w > best.w)) best = { t, r, w, n }; });
   return best;
 }
+function planScope() { return typeof practiceScopeKey === "function" ? practiceScopeKey() : ""; }
+function planAllows(q) { return typeof practiceAllows !== "function" || practiceAllows(q); }
 function planBuild(reserved = new Set(), weakTag = null, limits = PLAN_LIMITS) {
   const used = new Set(reserved);
-  const review = progMembers("rev:").filter(q => !used.has(q.id)).slice(0, limits.review).map(q => q.id);
+  const review = progMembers("rev:").filter(q => planAllows(q) && !used.has(q.id)).slice(0, limits.review).map(q => q.id);
   review.forEach(i => used.add(i));
   // 新题：从最近做的那一轮接着往下，挑还没做过的题
   const lastQ = [...(ansRaw || [])].sort((a, b) => String(a.at).localeCompare(String(b.at))).reverse().map(d => BY_ID.get(d.qid)).find(Boolean);
@@ -3784,7 +3791,7 @@ function planBuild(reserved = new Set(), weakTag = null, limits = PLAN_LIMITS) {
   let start = lastQ ? order.indexOf(roundOf(lastQ.id)) : 0;
   if (start < 0) start = 0;
   const byRound = new Map();
-  BANK.forEach(q => { const r = roundOf(q.id); if (!byRound.has(r)) byRound.set(r, []); byRound.get(r).push(q); });
+  BANK.filter(planAllows).forEach(q => { const r = roundOf(q.id); if (!byRound.has(r)) byRound.set(r, []); byRound.get(r).push(q); });
   const fresh = [];
   for (const r of order.slice(start).concat(order.slice(0, start))) {
     for (const q of byRound.get(r) || []) {
@@ -3798,23 +3805,25 @@ function planBuild(reserved = new Set(), weakTag = null, limits = PLAN_LIMITS) {
   let weak = [];
   if (wk) {
     const score = q => { const m = memOf(q.id); return m.last && m.lv === 0 ? 0 : m.last === 0 ? 1 : 2 + m.lv; };
-    weak = BANK.filter(q => q.tags.includes(wk.t) && !used.has(q.id)).map((q, k) => [q, score(q), k])
+    weak = BANK.filter(q => planAllows(q) && q.tags.includes(wk.t) && !used.has(q.id)).map((q, k) => [q, score(q), k])
       .sort((a, b) => a[1] - b[1] || a[2] - b[2]).slice(0, limits.weak).map(x => x[0].id);
   }
-  return { day: dayKey(new Date()), review, fresh, weak, weakTag: wk ? wk.t : "" };
+  return { day: dayKey(new Date()), review, fresh, weak, weakTag: wk ? wk.t : "", ...(typeof practiceScopeKey === "function" ? { scope: planScope() } : {}) };
 }
 const planValidId = id => typeof id === "string" && BY_ID.has(id);
 // Reserve every surviving id before replacing any section, so repair cannot
 // displace valid (including already answered) questions in another section.
 function planRepair(p, day) {
   if (!p || typeof p !== "object" || Array.isArray(p) || p.day !== day) return planBuild();
-  const fixed = { day, review: [], fresh: [], weak: [], weakTag: typeof p.weakTag === "string" ? p.weakTag : "" };
+  const scope = planScope(), changed = (p.scope || "") !== scope, done = answeredToday();
+  const fixed = { day, review: [], fresh: [], weak: [], weakTag: typeof p.weakTag === "string" ? p.weakTag : "", ...(typeof practiceScopeKey === "function" ? { scope } : {}) };
+  if (changed && !Object.keys(PLAN_LIMITS).some(k => Array.isArray(p[k]) && p[k].length)) return planBuild();
   const used = new Set(), damaged = [];
   for (const [part, cap] of Object.entries(PLAN_LIMITS)) {
     const ids = Array.isArray(p[part]) ? p[part] : [];
     for (const id of ids) {
       if (fixed[part].length >= cap) break;
-      if (planValidId(id) && !used.has(id)) { fixed[part].push(id); used.add(id); }
+      if (planValidId(id) && (done.has(id) || planAllows(BY_ID.get(id))) && !used.has(id)) { fixed[part].push(id); used.add(id); }
     }
     if (!Array.isArray(p[part]) || ids.length !== fixed[part].length)
       damaged.push([part, Array.isArray(p[part]) ? Math.min(cap, ids.length) : cap]);
@@ -3828,7 +3837,7 @@ function planRepair(p, day) {
     for (const [part, target] of damaged) {
       for (const id of replacements[part]) {
         if (fixed[part].length >= target) break;
-        if (planValidId(id) && !used.has(id)) { fixed[part].push(id); used.add(id); }
+        if (planValidId(id) && (done.has(id) || planAllows(BY_ID.get(id))) && !used.has(id)) { fixed[part].push(id); used.add(id); }
       }
     }
     if (!fixed.weakTag) fixed.weakTag = replacements.weakTag;
@@ -3857,7 +3866,7 @@ function planStatus(p) {
   const parts = PLAN_PARTS.filter(([k]) => p[k].length).map(([k, name]) => ({
     k, name: k === "weak" && p.weakTag ? `弱项「${p.weakTag}」` : name, n: p[k].length, d: p[k].filter(i => done.has(i)).length,
   }));
-  if (hasConj()) parts.push({ k: "conj", name: "动词变位", n: PLAN_CONJ, d: Math.min(PLAN_CONJ, conjToday()) });
+  if (hasConj() && (!planScope() || conjToday())) parts.push({ k: "conj", name: "动词变位", n: planScope() ? Math.min(PLAN_CONJ, conjToday()) : PLAN_CONJ, d: Math.min(PLAN_CONJ, conjToday()) });
   const n = parts.reduce((s, x) => s + x.n, 0), d = parts.reduce((s, x) => s + x.d, 0);
   return { parts, n, d };
 }
@@ -3867,7 +3876,7 @@ function planMembers(key) {
   if (!p) return [];
   const part = key.slice(5), done = answeredToday();
   const ids = part ? Object.hasOwn(PLAN_LIMITS, part) ? p[part] : [] : [...p.review, ...p.fresh, ...p.weak];
-  return ids.filter(i => !done.has(i)).map(i => BY_ID.get(i)).filter(Boolean);
+  return ids.filter(i => !done.has(i)).map(i => BY_ID.get(i)).filter(q => q && planAllows(q));
 }
 function planLabel(key) {
   const part = key.slice(5), p = planGet();
@@ -3960,6 +3969,10 @@ function planCard() {
   const s = planStatus(p), st = streakInfo();
   head.append(el("span", "streak" + (st.met ? " on" : ""), `连续 ${st.n} 天`));
   card.append(head);
+  if (typeof practiceScopeNote === "function") {
+    card.append(el("p", "sub", practiceScopeNote()));
+    if (planScope()) card.append(el("p", "sub", "已设难度时，计划只安排标有对应等级的题目；变位可到变位板块单独练习。已完成的题目仍计入今日进度。"));
+  }
   const all = el("div", "plan-all");
   const bar = el("span", "pbar"), fill = el("i", "mastery"); fill.style.width = (s.n ? s.d / s.n * 100 : 0) + "%"; bar.append(fill);
   all.append(bar, el("b", null, `${s.d} / ${s.n} 题`));
@@ -3994,7 +4007,7 @@ function planCard() {
   if (st.patch) card.append(el("p", "plan-patch", `昨天没达到目标。今天拿到 ${2 * xpGoal} 经验（2 倍目标），或用商店里的时光沙漏回到昨天把题补上，就能保住之前连续的 ${st.patch} 天。`));
   const rule = el("details", "xp-rule");
   rule.append(el("summary", null, "今日计划怎么配"),
-    elParts("p", [`每天第一次打开时生成，当天不变：到期该复习的题（最多 ${PLAN_REVIEW_MAX} 道，最该复习的在前）、从最近做的那一轮接着往下的 ${PLAN_NEW} 道新题、最近 60 天答错比例最高的标签里 ${PLAN_WEAK} 道题`, hasConj() ? `，再加 ${PLAN_CONJ} 道动词变位。` : "。", "今天答过一次就算完成。"]),
+    elParts("p", [`每天首次生成；改变难度时仅调整未完成部分：到期该复习的题（最多 ${PLAN_REVIEW_MAX} 道，最该复习的在前）、从最近做的那一轮接着往下的 ${PLAN_NEW} 道新题、最近 60 天答错比例最高的标签里 ${PLAN_WEAK} 道题`, hasConj() && !planScope() ? `，再加 ${PLAN_CONJ} 道动词变位。` : "。", "今天答过一次就算完成。"]),
     el("p", null, "连续打卡：当天经验达到每日目标算打卡。某天没达标，第二天达到 2 倍目标就能补签那一天（不能连着两天都缺），也可以用商店里的时光沙漏回到昨天，把昨天的题补上。做完今日计划奖励 30 金币。"));
   card.append(rule);
   return card;
@@ -6097,6 +6110,7 @@ function setFold(wrap, key, title, initialOpen = false) {
 // 每次用户可见更新都新增记录：默认只递增第三位 1.x.y → 1.x.(y+1)，超过 9 继续到 10、11；第二位升级需用户明确要求。
 // 首位保持 1，只有用户明确要求才可修改；历史记录保留。完整发布规则见根目录 AGENTS.md。
 const CHANGELOG = [
+  {"v": "1.9.53", "d": "2026-11-19", "items": ["今日计划与复习严格遵守所选难度，调整计划时保留已完成题目；错题复习只包含当前筛选内的错题，不再进入整章或在无结果时扩大范围。语法、错题和听力标签旁数字实时显示再次点击该标签后预计匹配的总题数，并随任一／同时满足、选择与取消同步更新。"]},
   {"v": "1.9.52", "d": "2026-11-19", "p": "fr", "items": ["听力修改题型、难度、内容或搜索条件后，“下一组”和继续练习会应用最新筛选；语法与听力的待应用筛选分别保留，听力错题筛选不再改动普通练习条件。生词本练空后明确提示完成，不再自动转为全部单词；保留当前组答案及学习记录。"]},
   {"v": "1.9.51", "d": "2026-11-19", "p": "fr", "items": ["修复目录标签与“下一组”不同步的问题：勾选 A1、A2 等标签后，无需先点检索，下一组即按所选范围出题；保留当前组答案，筛选无结果时提示换条件，不混入其他难度。"]},
   {"v": "1.9.50", "d": "2026-11-19", "p": "fr", "items": ["魁北克、比利时法语区和瑞士法语区选关地图统一为紧凑像素风，仅显示小号关卡编号，整张地图自适应屏幕，无需横向或纵向拖动；保留原有关卡、解锁条件、星数和明信片。"]},
@@ -6439,7 +6453,17 @@ function parseTagKey(key) {
   const m = /^(tag|wrong):(any|all)(!?):(.*)$/.exec(key);
   return m ? { kind: m[1], mode: m[2], rnd: m[3] === "!", tags: m[4] ? m[4].split("|") : [] } : null;
 }
-const wrongIds = () => new Set((bookCache?.wrong || []).map(d => d.qid));
+function wrongIds() {
+  if (bookCache?.wrong) return new Set(bookCache.wrong.map(d => d.qid));
+  const latest = new Map();
+  if (typeof ansRaw !== "undefined") [...(ansRaw || [])].sort((a,b)=>String(a.at).localeCompare(String(b.at))).forEach(d=>latest.set(d.qid,d));
+  return new Set([...latest.values()].filter(d=>!d.isCorrect).map(d=>d.qid));
+}
+function tagResults(pool, tags, mode, random, kind) {
+  const list = pool.filter(q => !tags.length ? kind === "wrong" || random : tagMatch(q, tags, mode));
+  return typeof qlApply === "function" ? qlApply(list, tagKey(kind, tags, mode, random)) : list;
+}
+function tagToggle(tags, t) { return tags.includes(t) ? tags.filter(x => x !== t) : tags.concat(t); }
 function tagLabel(p) {
   const lv = p.tags.filter(t => LEVELS.includes(t)).sort((a, b) => LEVELS.indexOf(a) - LEVELS.indexOf(b)), tp = p.tags.filter(t => !LEVELS.includes(t));
   const t = (lv.length ? lv.join("/") + (tp.length ? " · " : "") : "") + (tp.length ? tp.join(p.mode === "all" ? " + " : " / ") : lv.length ? "" : "全部");
@@ -6466,10 +6490,12 @@ function tagPanel() {
   const selectionChanged = () => {
     if (quiz && typeof queueQuizTags === "function") queueQuizTags();
     saveTags(); refresh();
+    if (!quiz) { bookFilter = pickTags.size || tagRandom ? tagKey("wrong") : "all"; drawBook(); }
+    if (typeof planRefresh === "function") planRefresh();
   };
   const refresh = () => {
     const tags = [...pickTags];
-    const n = tags.length ? pool.filter(q => tagMatch(q, tags, tagMode)).length : tagRandom ? pool.length : 0;
+    const n = tagResults(pool, tags, tagMode, tagRandom, quiz ? "tag" : "wrong").length;
     sum.textContent = "";
     if (!tags.length && !tagRandom) sum.append(document.createTextNode(quiz ? "勾选标签来检索题目（可多选）" : "勾选标签来筛选错题（可多选）"));
     else { sum.append(document.createTextNode(tags.length ? `已选 ${tags.length} 个标签 · ${quiz ? "共" : "错题"} ` : (quiz ? "全部题目 · 共 " : "全部错题 · 共 ")), el("b", null, String(n)), document.createTextNode(" 题" + (tagRandom ? " · 随机顺序" : ""))); }
@@ -6479,7 +6505,12 @@ function tagPanel() {
     go.disabled = !n;
     clear.disabled = !tags.length && !tagRandom;
     randChip.setAttribute("aria-pressed", String(tagRandom));
-    chips.forEach(c => c.setAttribute("aria-pressed", String(pickTags.has(c.dataset.tag))));
+    chips.forEach(c => {
+      c.setAttribute("aria-pressed", String(pickTags.has(c.dataset.tag)));
+      const n = tagResults(pool, tagToggle(tags, c.dataset.tag), tagMode, tagRandom, quiz ? "tag" : "wrong").length;
+      c.querySelector("small").textContent = String(n);
+      c.disabled = false;
+    });
   };
   [["any", "任一标签"], ["all", "同时满足"]].forEach(([m, t]) => {
     const b = el("button", null, t); b.type = "button";
@@ -6492,9 +6523,9 @@ function tagPanel() {
     else { bookFilter = tagKey("wrong"); renderToc(); drawBook(); }
     afterPick();
   });
-  clear.addEventListener("click", () => { pickTags.clear(); tagRandom = false; selectionChanged(); if (!quiz && bookFilter !== "all") { bookFilter = "all"; renderToc(); drawBook(); } });
+  clear.addEventListener("click", () => { pickTags.clear(); tagRandom = false; selectionChanged(); });
   act.append(go, clear);
-  box.append(sum, mode, act);
+  box.append(sum, mode, act, el("p", "sub", "标签旁数字表示点击该标签后预计匹配的总题数；点击已选标签会取消选择。"));
   const rg = el("div", "tag-group"), rw = el("div", "chips");
   rg.append(el("div", "tag-gname", "出题方式"), rw); rw.append(randChip); box.append(rg);
   TAG_GROUPS.forEach(g => {
@@ -6539,7 +6570,7 @@ function tagDistCard() {
       const bar = el("span", "bar2"), fill = el("i"); fill.style.width = (c / max * 100) + "%"; bar.append(fill);
       const num = el("span", "n"); num.append(el("b", null, `${c} 次`), document.createTextNode(` · 现有 ${now.get(t) || 0} 题`));
       r.append(el("span", null, t), bar, num);
-      r.addEventListener("click", () => { pickTags = new Set([t]); saveTags(); bookFilter = tagKey("wrong", [t], "any"); renderToc(); drawBook(); });
+      r.addEventListener("click", () => { const tags = LEVELS.includes(t) ? [t] : [...pickTags].filter(x => LEVELS.includes(x)).concat(t); pickTags = new Set(tags); saveTags(); bookFilter = tagKey("wrong", tags, "any"); renderToc(); drawBook(); });
       list.append(r);
     });
   };
@@ -6951,6 +6982,15 @@ function renderResult() {
   typeset(card);
 }
 // ---------- 学习进度（经验等级、各标签进度、做题日历、错题分布、错题本） ----------
+function mistakeKey(scope = bookFilter, group = null) { return "mistakes:" + encodeURIComponent(JSON.stringify({ scope, group })); }
+function mistakeFilter(key) {
+  try { const f = JSON.parse(decodeURIComponent(key.slice(9))); return { scope: typeof f.scope === "string" && !f.scope.startsWith("mistakes:") ? f.scope : "all", group: typeof f.group === "string" && !f.group.startsWith("mistakes:") ? f.group : null }; }
+  catch (e) { return { scope: "all", group: null }; }
+}
+function mistakeMembers(key) {
+  const f = mistakeFilter(key), ids = wrongIds();
+  return BANK.filter(q => ids.has(q.id) && (f.scope === "all" || inGroup(f.scope, q)) && (!f.group || inGroup(f.group, q)) && (typeof practiceAllows !== "function" || practiceAllows(q, key)));
+}
 async function renderBook() {
   renderToc();
   stage.innerHTML = "";
@@ -6973,7 +7013,7 @@ async function renderBook() {
     bookCache = { all, wrong: all.filter(d => !d.isCorrect), raw: docs };
   }
   if (view !== "book") return;
-  if (bookFilter !== "all" && !bookCache.wrong.some(d => inGroup(bookFilter, BY_ID.get(d.qid)))) bookFilter = "all";
+  // Keep an empty filter selected; never widen it to all mistakes.
   renderToc();
   drawBook();
 }
@@ -6997,7 +7037,7 @@ function drawBook() {
   card.append(tags);
   if (typeof tocInBook === "function") tocInBook(card);   // 法语页：错题的筛选目录放在错题本里
 
-  const scope = bookFilter === "all" ? all : all.filter(d => inGroup(bookFilter, BY_ID.get(d.qid)));
+  const scope = all.filter(d => (bookFilter === "all" || inGroup(bookFilter, BY_ID.get(d.qid))) && (typeof practiceAllows !== "function" || practiceAllows(BY_ID.get(d.qid), mistakeKey())));
   const scopeWrong = scope.filter(d => !d.isCorrect);
   const stats = el("div", "stats");
   [[scope.length, "已答题数"], [scopeWrong.length, "错题"], [scope.length ? Math.round((scope.length - scopeWrong.length) / scope.length * 100) + "%" : "–", "正确率"]]
@@ -7005,11 +7045,12 @@ function drawBook() {
   card.append(stats);
   if (scopeWrong.length) {
     const drill = el("button", "btn", `练这些错题（${scopeWrong.length} 题）`); drill.type = "button"; drill.id = "drillBtn";
-    const p = parseTagKey(bookFilter);
-    drill.addEventListener("click", () => switchView("quiz", p ? tagKey("wrong", p.tags, p.mode) : bookFilter === "all" ? "wrong:any:" : bookFilter));
+    drill.addEventListener("click", () => switchView("quiz", mistakeKey()));
     const row = el("div", "actions"); row.append(drill); card.append(row);
   }
 
+  if (typeof practiceScopeNote === "function") card.append(el("p", "sub", practiceScopeNote(mistakeKey())));
+  if (wrong.length && !scopeWrong.length) card.append(el("p", "empty", "当前筛选下没有错题。请调整筛选；原有记录仍然保留。"));
   if (!wrong.length) { card.append(el("p", "empty", all.length ? "目前没有错题，继续保持。" : "还没有答题记录。去「答题」做一轮，答错的题会出现在这里。")); return; }
 
   // 选了某一组就整组列出；看全部时，语法题按章节、听力题按集或按轮分组
@@ -7030,7 +7071,7 @@ function drawBook() {
     head.append(h);
     const go = el("button", "btn ghost", "练这一组");
     go.type = "button";
-    go.addEventListener("click", () => { switchView("quiz", k); });
+    go.addEventListener("click", () => { switchView("quiz", mistakeKey(bookFilter, k)); });
     head.append(go);
     g.append(head);
     items.forEach(d => {

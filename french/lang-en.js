@@ -4776,6 +4776,14 @@ const LANG_DICT = {
 "下一组（应用所选标签）": "Next set (apply selected tags)",
 "听力修改题型、难度、内容或搜索条件后，“下一组”和继续练习会应用最新筛选；语法与听力的待应用筛选分别保留，听力错题筛选不再改动普通练习条件。生词本练空后明确提示完成，不再自动转为全部单词；保留当前组答案及学习记录。": "Listening filter changes now apply to the next set and resumed practice. Grammar and listening keep separate pending filters, and filtering listening mistakes does not change regular practice. An empty vocabulary review list now shows completion instead of switching to all words. Current answers and learning records are preserved.",
 "下一组（应用听力筛选）": "Next set (apply listening filters)",
-"生词本已练完。可回到词表选择其他练习。": "Your vocabulary review list is complete. Return to the word list to choose another practice."
+"生词本已练完。可回到词表选择其他练习。": "Your vocabulary review list is complete. Return to the word list to choose another practice.",
+"今日计划与复习严格遵守所选难度，调整计划时保留已完成题目；错题复习只包含当前筛选内的错题，不再进入整章或在无结果时扩大范围。语法、错题和听力标签旁数字实时显示再次点击该标签后预计匹配的总题数，并随任一／同时满足、选择与取消同步更新。": "Daily plans and reviews now stay within selected levels while preserving completed questions. Mistake practice includes only matching mistakes, without widening to whole chapters or other levels when empty. Grammar, mistake and listening tag counts predict the total after the next click and update with match mode, selection and removal.",
+"标签旁数字表示点击该标签后预计匹配的总题数；点击已选标签会取消选择。": "Numbers predict the total matches after clicking that tag. Clicking a selected tag removes it.",
+"计划与复习难度：": "Plan and review levels: ",
+"。优先使用目录所选难度，未选择时使用设置中的难度。": ". Directory levels take priority; otherwise the level in Settings applies.",
+"已设难度时，计划只安排标有对应等级的题目；变位可到变位板块单独练习。已完成的题目仍计入今日进度。": "With a level selected, plans include only questions labelled with that level. Practise conjugation separately in its section. Completed questions still count toward today’s progress.",
+"当前筛选下没有错题。请调整筛选；原有记录仍然保留。": "No mistakes match these filters. Adjust the filters; your records are preserved.",
+"普通语法题组按所设比例出题；计划与复习严格使用目录所选难度，未选择时使用此处难度。零基础入口、听力目录与游戏保留各自规则。": "Regular grammar sets use the configured mix. Plans and reviews strictly use directory levels, or this level when none are selected. Beginner practice, listening and games retain their own rules.",
+"每天首次生成；改变难度时仅调整未完成部分：到期该复习的题（最多 ${PLAN_REVIEW_MAX} 道，最该复习的在前）、从最近做的那一轮接着往下的 ${PLAN_NEW} 道新题、最近 60 天答错比例最高的标签里 ${PLAN_WEAK} 道题": "Generated daily; level changes adjust only unfinished questions: up to ${PLAN_REVIEW_MAX} due reviews, ${PLAN_NEW} new questions continuing your latest round, and ${PLAN_WEAK} questions from your weakest tag over the last 60 days"
 };
 

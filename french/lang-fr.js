@@ -4776,6 +4776,14 @@ const LANG_DICT = {
 "下一组（应用所选标签）": "Série suivante (appliquer les étiquettes)",
 "听力修改题型、难度、内容或搜索条件后，“下一组”和继续练习会应用最新筛选；语法与听力的待应用筛选分别保留，听力错题筛选不再改动普通练习条件。生词本练空后明确提示完成，不再自动转为全部单词；保留当前组答案及学习记录。": "Les filtres d'écoute modifiés s'appliquent à la série suivante et à la reprise. Les filtres en attente de grammaire et d'écoute sont séparés, et le filtrage des erreurs ne modifie plus la pratique normale. Le carnet de mots terminé affiche un message au lieu de passer à tous les mots. Les réponses et la progression sont conservées.",
 "下一组（应用听力筛选）": "Série suivante (appliquer les filtres d'écoute)",
-"生词本已练完。可回到词表选择其他练习。": "Le carnet de mots est terminé. Revenez à la liste pour choisir un autre entraînement."
+"生词本已练完。可回到词表选择其他练习。": "Le carnet de mots est terminé. Revenez à la liste pour choisir un autre entraînement.",
+"今日计划与复习严格遵守所选难度，调整计划时保留已完成题目；错题复习只包含当前筛选内的错题，不再进入整章或在无结果时扩大范围。语法、错题和听力标签旁数字实时显示再次点击该标签后预计匹配的总题数，并随任一／同时满足、选择与取消同步更新。": "Les plans quotidiens et révisions respectent les niveaux choisis et conservent les exercices terminés. La reprise des erreurs reste limitée aux erreurs filtrées, sans élargissement à un chapitre entier ou à d'autres niveaux. Les compteurs des étiquettes de grammaire, d'erreurs et d'écoute prédisent le total après le prochain clic, selon le mode et les sélections.",
+"标签旁数字表示点击该标签后预计匹配的总题数；点击已选标签会取消选择。": "Les nombres prédisent le total après un clic sur cette étiquette. Cliquer sur une étiquette sélectionnée la retire.",
+"计划与复习难度：": "Niveaux du plan et des révisions : ",
+"。优先使用目录所选难度，未选择时使用设置中的难度。": ". Les niveaux du répertoire sont prioritaires ; sinon, le niveau des paramètres s'applique.",
+"已设难度时，计划只安排标有对应等级的题目；变位可到变位板块单独练习。已完成的题目仍计入今日进度。": "Avec un niveau choisi, le plan inclut uniquement les exercices portant ce niveau. La conjugaison reste disponible dans sa rubrique. Les exercices terminés comptent toujours dans la progression du jour.",
+"当前筛选下没有错题。请调整筛选；原有记录仍然保留。": "Aucune erreur ne correspond à ces filtres. Modifiez-les ; vos résultats sont conservés.",
+"普通语法题组按所设比例出题；计划与复习严格使用目录所选难度，未选择时使用此处难度。零基础入口、听力目录与游戏保留各自规则。": "Les séries de grammaire utilisent les proportions configurées. Les plans et révisions suivent strictement les niveaux du répertoire, ou celui-ci à défaut. L’initiation, l’écoute et les jeux conservent leurs règles.",
+"每天首次生成；改变难度时仅调整未完成部分：到期该复习的题（最多 ${PLAN_REVIEW_MAX} 道，最该复习的在前）、从最近做的那一轮接着往下的 ${PLAN_NEW} 道新题、最近 60 天答错比例最高的标签里 ${PLAN_WEAK} 道题": "Généré chaque jour ; un changement de niveau ajuste seulement les exercices non terminés : jusqu’à ${PLAN_REVIEW_MAX} révisions dues, ${PLAN_NEW} nouveaux exercices et ${PLAN_WEAK} exercices de votre étiquette la plus faible sur les 60 derniers jours"
 };
 
