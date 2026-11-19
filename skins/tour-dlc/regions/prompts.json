@@ -1,0 +1,303 @@
+[
+  {
+    "id": "qc-06",
+    "region": "Montréal",
+    "zh": "蒙特利尔",
+    "landmark": "Basilique Notre-Dame de Montréal",
+    "landmarkZh": "蒙特利尔圣母圣殿",
+    "fr": "Les deux tours de Notre-Dame veillent sur la place d’Armes.",
+    "tr": "圣母圣殿的双塔守望着兵器广场。",
+    "prompt": "Use case: stylized-concept. Asset type: individual collectible regional postcard for a French learning pixel-art travel game. Landscape 3:2, full-bleed single coherent scene. Original polished 16-bit pixel art with clearly visible crisp square pixel clusters, restricted harmonious palette, strong readable silhouette at mobile thumbnail size, detailed but not photorealistic; no smooth painted brushwork. No text, lettering, logos, watermarks, frames or collage. No foreground people. Subject and scene: The Notre-Dame Basilica in Old Montréal seen from Place d’Armes, two symmetrical square Gothic stone towers and three arched portals, a few autumn trees and historic square paving, warm early evening sky. No Paris cathedral, no river directly in front."
+  },
+  {
+    "id": "qc-13",
+    "region": "Laval",
+    "zh": "拉瓦尔",
+    "landmark": "Rivière des Mille Îles",
+    "landmarkZh": "千岛河",
+    "fr": "Entre les îles, la rivière invite à une pause en canot.",
+    "tr": "岛屿之间，河流邀人乘独木舟歇一歇。",
+    "prompt": "Use case: stylized-concept. Asset type: individual collectible regional postcard for a French learning pixel-art travel game. Landscape 3:2, full-bleed single coherent scene. Original polished 16-bit pixel art with clearly visible crisp square pixel clusters, restricted harmonious palette, strong readable silhouette at mobile thumbnail size, detailed but not photorealistic; no smooth painted brushwork. No text, lettering, logos, watermarks, frames or collage. No foreground people. Subject and scene: A calm channel of the Rivière des Mille Îles at Laval, low wooded islands, reeds, a bright red empty canoe drawn up at a wooden landing, golden morning mist. Green flat islands, not mountains."
+  },
+  {
+    "id": "qc-16",
+    "region": "Montérégie",
+    "zh": "蒙泰雷吉",
+    "landmark": "Mont Saint-Hilaire",
+    "landmarkZh": "圣伊莱尔山",
+    "fr": "Au pied du mont Saint-Hilaire, les pommes annoncent l’automne.",
+    "tr": "圣伊莱尔山脚下，苹果带来了秋天的消息。",
+    "prompt": "Use case: stylized-concept. Asset type: individual collectible regional postcard for a French learning pixel-art travel game. Landscape 3:2, full-bleed single coherent scene. Original polished 16-bit pixel art with clearly visible crisp square pixel clusters, restricted harmonious palette, strong readable silhouette at mobile thumbnail size, detailed but not photorealistic; no smooth painted brushwork. No text, lettering, logos, watermarks, frames or collage. No foreground people. Subject and scene: Mont Saint-Hilaire’s rounded wooded mountain rising behind a Montérégie apple orchard, laden red apples on near branches, a small wooden harvest basket, patchwork fields, crisp autumn sunlight. Distinct isolated rounded mountain, not Alpine peaks."
+  },
+  {
+    "id": "qc-05",
+    "region": "Estrie",
+    "zh": "埃斯特里",
+    "landmark": "Lac Memphrémagog",
+    "landmarkZh": "梅姆弗雷马戈格湖",
+    "fr": "Le lac Memphrémagog reflète les collines des Cantons-de-l’Est.",
+    "tr": "梅姆弗雷马戈格湖映照着东部乡镇的丘陵。",
+    "prompt": "Use case: stylized-concept. Asset type: individual collectible regional postcard for a French learning pixel-art travel game. Landscape 3:2, full-bleed single coherent scene. Original polished 16-bit pixel art with clearly visible crisp square pixel clusters, restricted harmonious palette, strong readable silhouette at mobile thumbnail size, detailed but not photorealistic; no smooth painted brushwork. No text, lettering, logos, watermarks, frames or collage. No foreground people. Subject and scene: Lake Memphrémagog in Québec’s Eastern Townships, long blue lake between rolling forested hills, wooden jetty and a small moored white sailboat, autumn hills reflected in still water, early morning clarity. No enormous snowy alpine mountains."
+  },
+  {
+    "id": "qc-17",
+    "region": "Centre-du-Québec",
+    "zh": "魁北克中心区",
+    "landmark": "Récolte des canneberges",
+    "landmarkZh": "蔓越莓丰收",
+    "fr": "Les canneberges colorent la récolte du Centre-du-Québec.",
+    "tr": "蔓越莓为魁北克中心区的丰收染上红色。",
+    "prompt": "Use case: stylized-concept. Asset type: individual collectible regional postcard for a French learning pixel-art travel game. Landscape 3:2, full-bleed single coherent scene. Original polished 16-bit pixel art with clearly visible crisp square pixel clusters, restricted harmonious palette, strong readable silhouette at mobile thumbnail size, detailed but not photorealistic; no smooth painted brushwork. No text, lettering, logos, watermarks, frames or collage. No foreground people. Subject and scene: An iconic autumn cranberry harvest in Centre-du-Québec: a flooded rectangular bog densely covered in floating crimson cranberries, golden maple woodland and farm shed in distance, a wooden crate with berries at foreground edge, luminous sky. Clearly cranberry bog, not a field of flowers."
+  },
+  {
+    "id": "qc-04",
+    "region": "Mauricie",
+    "zh": "莫里西",
+    "landmark": "Parc national de la Mauricie",
+    "landmarkZh": "莫里西国家公园",
+    "fr": "En Mauricie, les lacs se cachent entre les forêts.",
+    "tr": "在莫里西，湖泊藏在森林之间。",
+    "prompt": "Use case: stylized-concept. Asset type: individual collectible regional postcard for a French learning pixel-art travel game. Landscape 3:2, full-bleed single coherent scene. Original polished 16-bit pixel art with clearly visible crisp square pixel clusters, restricted harmonious palette, strong readable silhouette at mobile thumbnail size, detailed but not photorealistic; no smooth painted brushwork. No text, lettering, logos, watermarks, frames or collage. No foreground people. Subject and scene: La Mauricie national park: sinuous blue lake surrounded by dark fir trees and glowing autumn maples, a rocky shoreline in foreground with a yellow canoe, gentle wooded granite hills under a vast fresh sky. Focus on mirror lake and forest wilderness."
+  },
+  {
+    "id": "qc-03",
+    "region": "Capitale-Nationale",
+    "zh": "首府区",
+    "landmark": "Chute Montmorency",
+    "landmarkZh": "蒙莫朗西瀑布",
+    "fr": "À Montmorency, l’eau plonge sous la passerelle suspendue.",
+    "tr": "蒙莫朗西瀑布的水流从吊桥下飞泻而落。",
+    "prompt": "Use case: stylized-concept. Asset type: individual collectible regional postcard for a French learning pixel-art travel game. Landscape 3:2, full-bleed single coherent scene. Original polished 16-bit pixel art with clearly visible crisp square pixel clusters, restricted harmonious palette, strong readable silhouette at mobile thumbnail size, detailed but not photorealistic; no smooth painted brushwork. No text, lettering, logos, watermarks, frames or collage. No foreground people. Subject and scene: Montmorency Falls near Québec City: immense single white waterfall dropping over dark cliffs into a misty basin, the slender pedestrian suspension bridge spans above the top of the falls, forested cliffs and a small distant river plain. Strong vertical waterfall in landscape composition, sunny rainbow mist. No invented multi-tier waterfall.",
+    "revision": "Removed an invented distant city castle; replaced with wooded hills, preserving waterfall, bridge and rainbow."
+  },
+  {
+    "id": "qc-12",
+    "region": "Chaudière-Appalaches",
+    "zh": "肖迪耶尔—阿巴拉什",
+    "landmark": "Chutes de la Chaudière",
+    "landmarkZh": "肖迪耶尔瀑布",
+    "fr": "À Lévis, les chutes de la Chaudière traversent les rochers.",
+    "tr": "在莱维，肖迪耶尔瀑布奔流于岩石之间。",
+    "prompt": "Use case: stylized-concept. Asset type: individual collectible regional postcard for a French learning pixel-art travel game. Landscape 3:2, full-bleed single coherent scene. Original polished 16-bit pixel art with clearly visible crisp square pixel clusters, restricted harmonious palette, strong readable silhouette at mobile thumbnail size, detailed but not photorealistic; no smooth painted brushwork. No text, lettering, logos, watermarks, frames or collage. No foreground people. Subject and scene: The wide stepped Chutes de la Chaudière at Lévis, broad white cascades spread across dark horizontal rock ledges, forested banks and a delicate suspension footbridge farther downstream, summer greenery and evening light. Distinct broad low falls, NOT Montmorency’s high single cliff."
+  },
+  {
+    "id": "qc-01",
+    "region": "Bas-Saint-Laurent",
+    "zh": "下圣劳伦斯",
+    "landmark": "Phare de Pointe-au-Père",
+    "landmarkZh": "父亲角灯塔",
+    "fr": "Le phare de Pointe-au-Père regarde l’estuaire du Saint-Laurent.",
+    "tr": "父亲角灯塔眺望着圣劳伦斯河口。",
+    "prompt": "Use case: stylized-concept. Asset type: individual collectible regional postcard for a French learning pixel-art travel game. Landscape 3:2, full-bleed single coherent scene. Original polished 16-bit pixel art with clearly visible crisp square pixel clusters, restricted harmonious palette, strong readable silhouette at mobile thumbnail size, detailed but not photorealistic; no smooth painted brushwork. No text, lettering, logos, watermarks, frames or collage. No foreground people. Subject and scene: Pointe-au-Père lighthouse near Rimouski: distinctive tall white reinforced-concrete octagonal lighthouse with external angled buttresses and red lantern top, low red-roof keeper buildings beside the broad Saint Lawrence estuary, seabirds and rocky shore, peach-blue sunset. No generic striped lighthouse."
+  },
+  {
+    "id": "qc-02",
+    "region": "Saguenay–Lac-Saint-Jean",
+    "zh": "萨格奈—圣让湖",
+    "landmark": "Fjord du Saguenay",
+    "landmarkZh": "萨格奈峡湾",
+    "fr": "Les falaises du Saguenay se dressent au-dessus du fjord.",
+    "tr": "萨格奈的峭壁耸立在峡湾上方。",
+    "prompt": "Use case: stylized-concept. Asset type: individual collectible regional postcard for a French learning pixel-art travel game. Landscape 3:2, full-bleed single coherent scene. Original polished 16-bit pixel art with clearly visible crisp square pixel clusters, restricted harmonious palette, strong readable silhouette at mobile thumbnail size, detailed but not photorealistic; no smooth painted brushwork. No text, lettering, logos, watermarks, frames or collage. No foreground people. Subject and scene: Saguenay fjord and Cap Trinité: immense rounded vertical grey granite cliffs crowned with evergreen forest, deep navy-blue fjord winding between wooded walls, tiny yellow kayak at a distance for scale, clear luminous northern summer sky. No European village, no tropical vegetation."
+  },
+  {
+    "id": "qc-09",
+    "region": "Côte-Nord",
+    "zh": "北岸",
+    "landmark": "Monolithes de Mingan",
+    "landmarkZh": "明安石柱群",
+    "fr": "À Mingan, la mer sculpte les monolithes de calcaire.",
+    "tr": "在明安，大海雕刻着石灰岩石柱。",
+    "prompt": "Use case: stylized-concept. Asset type: individual collectible regional postcard for a French learning pixel-art travel game. Landscape 3:2, full-bleed single coherent scene. Original polished 16-bit pixel art with clearly visible crisp square pixel clusters, restricted harmonious palette, strong readable silhouette at mobile thumbnail size, detailed but not photorealistic; no smooth painted brushwork. No text, lettering, logos, watermarks, frames or collage. No foreground people. Subject and scene: Mingan Archipelago on Québec’s Côte-Nord: distinctive pale limestone sea stacks with narrow eroded bases and wide irregular caps, turquoise tidal pools, flat coastal limestone ledges, small distant spruce islands, delicate sea birds. Low coastal horizon, cool bright morning, no gigantic inland mountains."
+  },
+  {
+    "id": "qc-11",
+    "region": "Gaspésie–Îles-de-la-Madeleine",
+    "zh": "加斯佩西—马德莱娜群岛",
+    "landmark": "Rocher Percé",
+    "landmarkZh": "佩尔塞岩",
+    "fr": "Le rocher Percé ouvre une arche sur le golfe.",
+    "tr": "佩尔塞岩朝海湾敞开一座天然拱门。",
+    "prompt": "Use case: stylized-concept. Asset type: individual collectible regional postcard for a French learning pixel-art travel game. Landscape 3:2, full-bleed single coherent scene. Original polished 16-bit pixel art with clearly visible crisp square pixel clusters, restricted harmonious palette, strong readable silhouette at mobile thumbnail size, detailed but not photorealistic; no smooth painted brushwork. No text, lettering, logos, watermarks, frames or collage. No foreground people. Subject and scene: Rocher Percé in Gaspésie: massive reddish-gold flat-topped limestone rock rising from blue sea, its unmistakable single large natural arch near one end and a detached narrow sea stack beyond that end, coastal summer flowers foreground, a few tiny gulls. Clear sea-level view, one arch only."
+  },
+  {
+    "id": "qc-14",
+    "region": "Lanaudière",
+    "zh": "拉诺迪耶尔",
+    "landmark": "Lac Taureau",
+    "landmarkZh": "托罗湖",
+    "fr": "Au lac Taureau, les plages rencontrent la forêt.",
+    "tr": "在托罗湖，沙滩与森林相遇。",
+    "prompt": "Use case: stylized-concept. Asset type: individual collectible regional postcard for a French learning pixel-art travel game. Landscape 3:2, full-bleed single coherent scene. Original polished 16-bit pixel art with clearly visible crisp square pixel clusters, restricted harmonious palette, strong readable silhouette at mobile thumbnail size, detailed but not photorealistic; no smooth painted brushwork. No text, lettering, logos, watermarks, frames or collage. No foreground people. Subject and scene: Lac Taureau reservoir in Lanaudière: sandy crescent beach and a tiny wooden dock, blue water winding among many wooded peninsulas and islands, one empty canoe under pines, golden late afternoon. Rolling forest wilderness, no towering alpine mountains."
+  },
+  {
+    "id": "qc-15",
+    "region": "Laurentides",
+    "zh": "洛朗蒂德",
+    "landmark": "Mont-Tremblant",
+    "landmarkZh": "蒙特朗布朗",
+    "fr": "À Mont-Tremblant, les toits colorés répondent aux couleurs des arbres.",
+    "tr": "在蒙特朗布朗，彩色屋顶与树木的色彩交相呼应。",
+    "prompt": "Use case: stylized-concept. Asset type: individual collectible regional postcard for a French learning pixel-art travel game. Landscape 3:2, full-bleed single coherent scene. Original polished 16-bit pixel art with clearly visible crisp square pixel clusters, restricted harmonious palette, strong readable silhouette at mobile thumbnail size, detailed but not photorealistic; no smooth painted brushwork. No text, lettering, logos, watermarks, frames or collage. No foreground people. Subject and scene: Mont-Tremblant pedestrian village in the Laurentides: colorful chalet facades and steep red roofs lining a charming pedestrian lane, rounded ski mountain with autumn gold-red forest rising behind, small gondola cabins on a cable in the distance. Readable village architecture, warm sunlight, no text on shops."
+  },
+  {
+    "id": "qc-07",
+    "region": "Outaouais",
+    "zh": "乌塔韦",
+    "landmark": "Musée canadien de l’histoire",
+    "landmarkZh": "加拿大历史博物馆",
+    "fr": "À Gatineau, les courbes du musée accompagnent la rivière.",
+    "tr": "在加蒂诺，博物馆的曲线伴随着河流。",
+    "prompt": "Use case: stylized-concept. Asset type: individual collectible regional postcard for a French learning pixel-art travel game. Landscape 3:2, full-bleed single coherent scene. Original polished 16-bit pixel art with clearly visible crisp square pixel clusters, restricted harmonious palette, strong readable silhouette at mobile thumbnail size, detailed but not photorealistic; no smooth painted brushwork. No text, lettering, logos, watermarks, frames or collage. No foreground people. Subject and scene: Canadian Museum of History in Gatineau: recognisable flowing rounded buff limestone architecture and curved copper-green roofline, large window wall, smooth undulating forms next to the Ottawa River, autumn riverside trees. Museum is dominant, not Ottawa Parliament; no generic classical museum columns."
+  },
+  {
+    "id": "qc-08",
+    "region": "Abitibi-Témiscamingue",
+    "zh": "阿比蒂比—泰米斯卡曼格",
+    "landmark": "Cité de l’Or · Bourlamaque",
+    "landmarkZh": "黄金城与布尔拉马克矿村",
+    "fr": "À Val-d’Or, le chevalement rappelle l’histoire des mines.",
+    "tr": "在瓦尔多，矿井井架让人想起采矿的历史。",
+    "prompt": "Use case: stylized-concept. Asset type: individual collectible regional postcard for a French learning pixel-art travel game. Landscape 3:2, full-bleed single coherent scene. Original polished 16-bit pixel art with clearly visible crisp square pixel clusters, restricted harmonious palette, strong readable silhouette at mobile thumbnail size, detailed but not photorealistic; no smooth painted brushwork. No text, lettering, logos, watermarks, frames or collage. No foreground people. Subject and scene: Val-d’Or mining heritage in Abitibi-Témiscamingue: tall historic steel mine headframe of the former Lamaque mine, low industrial red/brown buildings, a foreground lane of small squared log houses inspired by Bourlamaque mining village, boreal forest under blue sky. Heritage landscape, no fantasy gold mountain."
+  },
+  {
+    "id": "qc-10",
+    "region": "Nord-du-Québec",
+    "zh": "魁北克北部",
+    "landmark": "Cratère des Pingualuit",
+    "landmarkZh": "平加卢伊特陨石坑",
+    "fr": "Au Nunavik, le cratère des Pingualuit abrite un lac presque circulaire.",
+    "tr": "在努纳维克，平加卢伊特陨石坑中藏着一片近乎圆形的湖泊。",
+    "prompt": "Use case: stylized-concept. Asset type: individual collectible regional postcard for a French learning pixel-art travel game. Landscape 3:2, full-bleed single coherent scene. Original polished 16-bit pixel art with clearly visible crisp square pixel clusters, restricted harmonious palette, strong readable silhouette at mobile thumbnail size, detailed but not photorealistic; no smooth painted brushwork. No text, lettering, logos, watermarks, frames or collage. No foreground people. Subject and scene: Elevated aerial oblique view of Pingualuit crater in Nunavik: one near-circular deep cobalt lake enclosed by a continuous low rocky circular rim, vast treeless tundra with scattered small glacial ponds, subtle autumn moss and lichen, pure northern daylight. Impact crater, no erupting volcano, no buildings, no tall trees."
+  },
+  {
+    "id": "be-bru",
+    "region": "Bruxelles-Capitale",
+    "zh": "布鲁塞尔首都大区",
+    "landmark": "Grand-Place",
+    "landmarkZh": "布鲁塞尔大广场",
+    "fr": "Sur la Grand-Place, les façades dorées entourent les pavés.",
+    "tr": "大广场上，金色立面环绕着石铺地面。",
+    "prompt": "Use case: stylized-concept. Asset type: individual collectible regional postcard for a French learning pixel-art travel game. Landscape 3:2, full-bleed single coherent scene. Original polished 16-bit pixel art with clearly visible crisp square pixel clusters, restricted harmonious palette, strong readable silhouette at mobile thumbnail size, detailed but not photorealistic; no smooth painted brushwork. No text, lettering, logos, watermarks, frames or collage. No foreground people. Subject and scene: Brussels Grand-Place: the recognisable Gothic Town Hall with its very tall slender off-centre openwork spire, richly gilded ornate guildhouse facades framing a cobbled square, luminous blue-and-gold early evening. Historical skyline, no modern skyscrapers, no readable shop signs."
+  },
+  {
+    "id": "be-brw",
+    "region": "Brabant wallon",
+    "zh": "瓦隆布拉班特",
+    "landmark": "Butte du Lion · Waterloo",
+    "landmarkZh": "滑铁卢狮子丘",
+    "fr": "À Waterloo, l’escalier monte jusqu’au lion de la butte.",
+    "tr": "在滑铁卢，阶梯一直通向丘顶的雄狮。",
+    "prompt": "Use case: stylized-concept. Asset type: individual collectible regional postcard for a French learning pixel-art travel game. Landscape 3:2, full-bleed single coherent scene. Original polished 16-bit pixel art with clearly visible crisp square pixel clusters, restricted harmonious palette, strong readable silhouette at mobile thumbnail size, detailed but not photorealistic; no smooth painted brushwork. No text, lettering, logos, watermarks, frames or collage. No foreground people. Subject and scene: Waterloo Lion’s Mound in Walloon Brabant: distinctive steep smooth green conical grassy hill with long straight central stone staircase leading to the small bronze lion statue on a high plinth at summit, open undulating Belgian fields, low dramatic clouds, late afternoon sun. Lion silhouette standing on all four paws, no lion face closeup, no battlefield violence."
+  },
+  {
+    "id": "be-hai",
+    "region": "Hainaut",
+    "zh": "埃诺",
+    "landmark": "Cathédrale de Tournai",
+    "landmarkZh": "图尔奈主教座堂",
+    "fr": "À Tournai, cinq tours dominent les toits de la ville.",
+    "tr": "在图尔奈，五座塔楼俯瞰着城市屋顶。",
+    "prompt": "Use case: stylized-concept. Asset type: individual collectible regional postcard for a French learning pixel-art travel game. Landscape 3:2, full-bleed single coherent scene. Original polished 16-bit pixel art with clearly visible crisp square pixel clusters, restricted harmonious palette, strong readable silhouette at mobile thumbnail size, detailed but not photorealistic; no smooth painted brushwork. No text, lettering, logos, watermarks, frames or collage. No foreground people. Subject and scene: Tournai Cathedral in Hainaut: a recognisable huge grey Romanesque-Gothic cathedral with FIVE square stone towers clustered around the transept, each capped by dark pointed roofs; view across old town tiled roofs at a raised three-quarter angle so all five towers can be distinguished, golden morning light. Five towers, not Notre-Dame Paris twin facade."
+  },
+  {
+    "id": "be-nam",
+    "region": "Namur",
+    "zh": "那慕尔",
+    "landmark": "Citadelle de Namur",
+    "landmarkZh": "那慕尔城堡",
+    "fr": "À Namur, la citadelle veille sur la rencontre des deux rivières.",
+    "tr": "在那慕尔，城堡守望着两条河流的交汇。",
+    "prompt": "Use case: stylized-concept. Asset type: individual collectible regional postcard for a French learning pixel-art travel game. Landscape 3:2, full-bleed single coherent scene. Original polished 16-bit pixel art with clearly visible crisp square pixel clusters, restricted harmonious palette, strong readable silhouette at mobile thumbnail size, detailed but not photorealistic; no smooth painted brushwork. No text, lettering, logos, watermarks, frames or collage. No foreground people. Subject and scene: Namur Citadel on its steep green hill at the confluence of the Sambre and Meuse rivers: layered stone fortification walls, two rivers meeting clearly in foreground, graceful bridge and small historic riverside buildings. Sunny green summer, coherent aerial three-quarter landscape, no Dinant onion-domed church."
+  },
+  {
+    "id": "be-lie",
+    "region": "Liège",
+    "zh": "列日",
+    "landmark": "Montagne de Bueren",
+    "landmarkZh": "布伦山阶梯",
+    "fr": "À Liège, les marches de Bueren invitent à prendre de la hauteur.",
+    "tr": "在列日，布伦山的阶梯邀人登高远望。",
+    "prompt": "Use case: stylized-concept. Asset type: individual collectible regional postcard for a French learning pixel-art travel game. Landscape 3:2, full-bleed single coherent scene. Original polished 16-bit pixel art with clearly visible crisp square pixel clusters, restricted harmonious palette, strong readable silhouette at mobile thumbnail size, detailed but not photorealistic; no smooth painted brushwork. No text, lettering, logos, watermarks, frames or collage. No foreground people. Subject and scene: Montagne de Bueren in Liège: a very long steep straight stone staircase climbing between narrow brick houses and stone facades, repeated handrails and landings converging uphill, flower pots near the foreground, a bright summer sky and small patch of trees at the top. Look uphill, architectural depth, no mountain landscape or giant cathedral at top."
+  },
+  {
+    "id": "be-lux",
+    "region": "Luxembourg belge",
+    "zh": "比利时卢森堡省",
+    "landmark": "Château de Bouillon",
+    "landmarkZh": "布永城堡",
+    "fr": "Le château de Bouillon surplombe un méandre de la Semois.",
+    "tr": "布永城堡俯瞰着瑟穆瓦河的一道弯流。",
+    "prompt": "Use case: stylized-concept. Asset type: individual collectible regional postcard for a French learning pixel-art travel game. Landscape 3:2, full-bleed single coherent scene. Original polished 16-bit pixel art with clearly visible crisp square pixel clusters, restricted harmonious palette, strong readable silhouette at mobile thumbnail size, detailed but not photorealistic; no smooth painted brushwork. No text, lettering, logos, watermarks, frames or collage. No foreground people. Subject and scene: Bouillon Castle in the Belgian province of Luxembourg: elongated medieval stone fortress occupying a rocky ridge above a tight bend of the Semois river, wooded Ardennes hills, clustered red-tile town roofs below, amber autumn trees. Castle towers and long battlements with river meander, no Luxembourg City skyline."
+  },
+  {
+    "id": "ch-ge",
+    "region": "Genève",
+    "zh": "日内瓦",
+    "landmark": "Jet d’eau",
+    "landmarkZh": "日内瓦大喷泉",
+    "fr": "À Genève, le Jet d’eau dessine une ligne blanche au-dessus du lac.",
+    "tr": "在日内瓦，大喷泉在湖面上方画出一道白线。",
+    "prompt": "Use case: stylized-concept. Asset type: individual collectible regional postcard for a French learning pixel-art travel game. Landscape 3:2, full-bleed single coherent scene. Original polished 16-bit pixel art with clearly visible crisp square pixel clusters, restricted harmonious palette, strong readable silhouette at mobile thumbnail size, detailed but not photorealistic; no smooth painted brushwork. No text, lettering, logos, watermarks, frames or collage. No foreground people. Subject and scene: Geneva Jet d’eau: a towering slender white plume of water rising from the lake jetty, Lake Geneva vivid blue, small white sailboats and an elegant city waterfront in background, lakeside flower bed in foreground, sunny clear sky. One very tall water jet, not a tiered ornamental fountain."
+  },
+  {
+    "id": "ch-vd",
+    "region": "Vaud",
+    "zh": "沃州",
+    "landmark": "Château de Chillon",
+    "landmarkZh": "西庸城堡",
+    "fr": "Le château de Chillon semble posé sur les eaux du Léman.",
+    "tr": "西庸城堡仿佛安放在莱芒湖的水面上。",
+    "prompt": "Use case: stylized-concept. Asset type: individual collectible regional postcard for a French learning pixel-art travel game. Landscape 3:2, full-bleed single coherent scene. Original polished 16-bit pixel art with clearly visible crisp square pixel clusters, restricted harmonious palette, strong readable silhouette at mobile thumbnail size, detailed but not photorealistic; no smooth painted brushwork. No text, lettering, logos, watermarks, frames or collage. No foreground people. Subject and scene: Chillon Castle in canton Vaud: recognisable medieval lakeside fortress built on a low rocky islet directly in Lake Geneva, compact cluster of pale stone towers capped with steep conical red-brown roofs, deep blue lake and distant hazy Alpine slopes. Three-quarter view from lakeshore, sparkling summer light. No castle on high mountain cliff."
+  },
+  {
+    "id": "ch-fr",
+    "region": "Fribourg",
+    "zh": "弗里堡",
+    "landmark": "Pont de Berne · Fribourg",
+    "landmarkZh": "弗里堡伯尔尼桥",
+    "fr": "À Fribourg, le pont couvert traverse la Sarine au pied de la vieille ville.",
+    "tr": "在弗里堡，廊桥横跨老城脚下的萨林河。",
+    "prompt": "Use case: stylized-concept. Asset type: individual collectible regional postcard for a French learning pixel-art travel game. Landscape 3:2, full-bleed single coherent scene. Original polished 16-bit pixel art with clearly visible crisp square pixel clusters, restricted harmonious palette, strong readable silhouette at mobile thumbnail size, detailed but not photorealistic; no smooth painted brushwork. No text, lettering, logos, watermarks, frames or collage. No foreground people. Subject and scene: The old town of Fribourg in Switzerland with its historic covered wooden Pont de Berne spanning the Sarine: low timber bridge with continuous pitched reddish roof, river and sandstone cliff, dense old houses rising uphill and distant tall square Gothic Saint Nicholas cathedral tower. A Fribourg river-quarter view, not Lucerne’s Chapel Bridge and octagonal water tower."
+  },
+  {
+    "id": "ch-ne",
+    "region": "Neuchâtel",
+    "zh": "纳沙泰尔",
+    "landmark": "Creux du Van",
+    "landmarkZh": "万谷岩壁",
+    "fr": "Au Creux du Van, la falaise dessine un immense demi-cercle.",
+    "tr": "在万谷岩壁，峭壁勾勒出一个巨大的半圆。",
+    "prompt": "Use case: stylized-concept. Asset type: individual collectible regional postcard for a French learning pixel-art travel game. Landscape 3:2, full-bleed single coherent scene. Original polished 16-bit pixel art with clearly visible crisp square pixel clusters, restricted harmonious palette, strong readable silhouette at mobile thumbnail size, detailed but not photorealistic; no smooth painted brushwork. No text, lettering, logos, watermarks, frames or collage. No foreground people. Subject and scene: Creux du Van in Swiss canton Neuchâtel: monumental horseshoe-shaped amphitheatre of pale layered limestone cliffs, a green grassy rim in foreground, dark conifer forest filling the bowl far below, distant Jura ridges, clear early-summer sunlight. Wide panorama emphasizes the semicircular sheer cliff, no lake within the cirque."
+  },
+  {
+    "id": "ch-ju",
+    "region": "Jura",
+    "zh": "汝拉",
+    "landmark": "Étang de la Gruère",
+    "landmarkZh": "格吕埃尔池塘",
+    "fr": "Dans le Jura, les sapins se reflètent dans l’étang de la Gruère.",
+    "tr": "在汝拉，冷杉倒映在格吕埃尔池塘中。",
+    "prompt": "Use case: stylized-concept. Asset type: individual collectible regional postcard for a French learning pixel-art travel game. Landscape 3:2, full-bleed single coherent scene. Original polished 16-bit pixel art with clearly visible crisp square pixel clusters, restricted harmonious palette, strong readable silhouette at mobile thumbnail size, detailed but not photorealistic; no smooth painted brushwork. No text, lettering, logos, watermarks, frames or collage. No foreground people. Subject and scene: Étang de la Gruère in Swiss Jura: tranquil dark peat-bog pond reflecting fir trees, gnarled pine roots and a modest wooden boardwalk on the near shore, soft morning mist over water, rounded Jura landscape, rich green moss, peaceful woodland. Intimate low landscape, no snowy Alpine peaks."
+  },
+  {
+    "id": "ch-be",
+    "region": "Berne · région francophone",
+    "zh": "伯尔尼州法语区",
+    "landmark": "Lac de Bienne · île Saint-Pierre",
+    "landmarkZh": "比尔湖与圣皮埃尔岛",
+    "fr": "Sur le lac de Bienne, l’île Saint-Pierre offre une pause au bord de l’eau.",
+    "tr": "在比尔湖上，圣皮埃尔岛让人享受水边的片刻宁静。",
+    "prompt": "Use case: stylized-concept. Asset type: individual collectible regional postcard for a French learning pixel-art travel game. Landscape 3:2, full-bleed single coherent scene. Original polished 16-bit pixel art with clearly visible crisp square pixel clusters, restricted harmonious palette, strong readable silhouette at mobile thumbnail size, detailed but not photorealistic; no smooth painted brushwork. No text, lettering, logos, watermarks, frames or collage. No foreground people. Subject and scene: Lake Biel/Bienne and Saint Peter’s Island peninsula in canton Bern: long low wooded green peninsula extending into blue lake, old monastery complex with warm tiled roofs partly visible among trees, vineyards along distant Jura lakeshore, a small white sailboat, sunny late afternoon. Island/peninsula is mostly flat, no Bern city clocktower or high alpine castle."
+  },
+  {
+    "id": "ch-vs",
+    "region": "Valais",
+    "zh": "瓦莱",
+    "landmark": "Valère et Tourbillon · Sion",
+    "landmarkZh": "锡永的瓦莱尔与图尔比永",
+    "fr": "À Sion, Valère et Tourbillon se répondent au-dessus des vignes.",
+    "tr": "在锡永，瓦莱尔与图尔比永在葡萄园上方遥相呼应。",
+    "prompt": "Use case: stylized-concept. Asset type: individual collectible regional postcard for a French learning pixel-art travel game. Landscape 3:2, full-bleed single coherent scene. Original polished 16-bit pixel art with clearly visible crisp square pixel clusters, restricted harmonious palette, strong readable silhouette at mobile thumbnail size, detailed but not photorealistic; no smooth painted brushwork. No text, lettering, logos, watermarks, frames or collage. No foreground people. Subject and scene: Sion in Valais: TWO distinct rocky hills above a warm old-town roofscape, one topped by fortified Valère church and the other by ruined Tourbillon castle ramparts, vineyard slopes and distant Alps behind, golden late-afternoon light. Two separate hilltop landmarks clearly legible, no Matterhorn or Zermatt."
+  }
+]
