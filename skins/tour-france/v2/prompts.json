@@ -1,0 +1,479 @@
+[
+  {
+    "id": "paris",
+    "city": "Paris",
+    "zh": "巴黎",
+    "landmark": "Paris · la Seine",
+    "fr": "Paris est la capitale de la France. On y trouve la tour Eiffel, construite pour l'Exposition universelle de 1889. Le soir, on peut se promener le long de la Seine et admirer les monuments illuminés.",
+    "tr": "巴黎是法国的首都。这里有为 1889 年世界博览会建造的埃菲尔铁塔。晚上可以沿着塞纳河散步，欣赏灯火通明的名胜古迹。",
+    "prompt": "Use case: stylized-concept. Asset type: one independent collectible pixel-art postcard for a French learning travel game. Landscape 3:2 full bleed. Polished original 16-bit pixel art with crisp clearly visible square pixel clusters, detailed architecture simplified into strong recognizable silhouettes, limited harmonious palette, no photorealism or smooth painting. No text, typography, watermarks, logos, borders or collage. Buildings must be fully readable at thumbnail size. No foreground people. Subject: Wide Paris river panorama at blue hour, Eiffel Tower rising on the left above a bend of the Seine, warm illuminated bridges and Haussmann rooftops, one riverboat. Coherent scenic view, no collage. Distinct from close-up p7."
+  },
+  {
+    "id": "versailles",
+    "city": "Versailles",
+    "zh": "凡尔赛",
+    "landmark": "Château de Versailles",
+    "fr": "Le château de Versailles était la résidence de Louis XIV, le « Roi-Soleil ». Sa galerie des Glaces et ses immenses jardins attirent des millions de visiteurs chaque année.",
+    "tr": "凡尔赛宫曾是“太阳王”路易十四的居所。宫里的镜厅和广阔的花园每年吸引数百万游客。",
+    "prompt": "Use case: stylized-concept. Asset type: one independent collectible pixel-art postcard for a French learning travel game. Landscape 3:2 full bleed. Polished original 16-bit pixel art with crisp clearly visible square pixel clusters, detailed architecture simplified into strong recognizable silhouettes, limited harmonious palette, no photorealism or smooth painting. No text, typography, watermarks, logos, borders or collage. Buildings must be fully readable at thumbnail size. No foreground people. Subject: Garden-facing long cream limestone Versailles palace, slate mansard roofs, precisely geometric parterre and central ornamental fountain in foreground. Wide symmetrical vista."
+  },
+  {
+    "id": "marseille",
+    "city": "Marseille",
+    "zh": "马赛",
+    "landmark": "Vieux-Port et Notre-Dame-de-la-Garde",
+    "fr": "Marseille est la plus ancienne ville de France : elle a été fondée par des Grecs il y a plus de 2 600 ans. Du haut de sa colline, la basilique Notre-Dame-de-la-Garde veille sur le port et sur la mer.",
+    "tr": "马赛是法国最古老的城市，两千六百多年前由希腊人建立。守护圣母圣殿坐落在山顶，守望着港口和大海。",
+    "prompt": "Use case: stylized-concept. Asset type: one independent collectible pixel-art postcard for a French learning travel game. Landscape 3:2 full bleed. Polished original 16-bit pixel art with crisp clearly visible square pixel clusters, detailed architecture simplified into strong recognizable silhouettes, limited harmonious palette, no photorealism or smooth painting. No text, typography, watermarks, logos, borders or collage. Buildings must be fully readable at thumbnail size. No foreground people. Subject: Marseille old port full of small sailing boats, warm ochre quays, Notre-Dame-de-la-Garde striped basilica crowned by golden Virgin high on distant hill. Mediterranean brilliant blue."
+  },
+  {
+    "id": "nice",
+    "city": "Nice",
+    "zh": "尼斯",
+    "landmark": "Promenade des Anglais",
+    "fr": "À Nice, la promenade des Anglais longe la mer sur sept kilomètres. Les habitants s'y assoient sur les célèbres chaises bleues pour regarder le soleil se coucher sur la Méditerranée.",
+    "tr": "在尼斯，英国人漫步大道沿着海边延伸七公里。当地人坐在著名的蓝色椅子上，看太阳落入地中海。",
+    "prompt": "Use case: stylized-concept. Asset type: one independent collectible pixel-art postcard for a French learning travel game. Landscape 3:2 full bleed. Polished original 16-bit pixel art with crisp clearly visible square pixel clusters, detailed architecture simplified into strong recognizable silhouettes, limited harmonious palette, no photorealism or smooth painting. No text, typography, watermarks, logos, borders or collage. Buildings must be fully readable at thumbnail size. No foreground people. Subject: Nice Promenade des Anglais curving along turquoise Baie des Anges, iconic blue metal chairs in foreground, palm trees and pastel Belle Époque waterfront, pebble beach."
+  },
+  {
+    "id": "lyon",
+    "city": "Lyon",
+    "zh": "里昂",
+    "landmark": "Fourvière et les quais de Saône",
+    "fr": "Lyon se trouve au confluent du Rhône et de la Saône. On l'appelle souvent la capitale de la gastronomie. Sur la colline, la basilique de Fourvière domine la ville.",
+    "tr": "里昂位于罗讷河与索恩河的交汇处，常被称为美食之都。富维耶圣母院矗立在山丘上，俯瞰全城。",
+    "prompt": "Use case: stylized-concept. Asset type: one independent collectible pixel-art postcard for a French learning travel game. Landscape 3:2 full bleed. Polished original 16-bit pixel art with crisp clearly visible square pixel clusters, detailed architecture simplified into strong recognizable silhouettes, limited harmonious palette, no photorealism or smooth painting. No text, typography, watermarks, logos, borders or collage. Buildings must be fully readable at thumbnail size. No foreground people. Subject: Lyon Saône waterfront with ochre old town, Fourvière basilica with four corner towers atop green hill, stone bridge and tiny red bouchon restaurant awning."
+  },
+  {
+    "id": "annecy",
+    "city": "Annecy",
+    "zh": "安纳西",
+    "landmark": "Palais de l’Isle",
+    "fr": "Annecy est surnommée la « Venise des Alpes » à cause de ses canaux. Le palais de l'Isle, une ancienne prison en forme de bateau, se trouve au milieu de la rivière. Son lac est l'un des plus purs d'Europe.",
+    "tr": "安纳西因城中的运河被称为“阿尔卑斯山的威尼斯”。岛宫曾是一座监狱，形状像一条船，就立在河中央。安纳西湖是欧洲最清澈的湖泊之一。",
+    "prompt": "Use case: stylized-concept. Asset type: one independent collectible pixel-art postcard for a French learning travel game. Landscape 3:2 full bleed. Polished original 16-bit pixel art with crisp clearly visible square pixel clusters, detailed architecture simplified into strong recognizable silhouettes, limited harmonious palette, no photorealism or smooth painting. No text, typography, watermarks, logos, borders or collage. Buildings must be fully readable at thumbnail size. No foreground people. Subject: Annecy Palais de l’Isle triangular pointed stone building shaped like ship bow in the Thiou canal, old pastel houses and flower-filled railings, clear turquoise water. No Venice gondolas."
+  },
+  {
+    "id": "bordeaux",
+    "city": "Bordeaux",
+    "zh": "波尔多",
+    "landmark": "Place de la Bourse et miroir d’eau",
+    "fr": "Bordeaux est connue dans le monde entier pour ses vins. Devant la place de la Bourse, le miroir d'eau reflète les façades du XVIIIe siècle : c'est le plus grand miroir d'eau du monde.",
+    "tr": "波尔多以葡萄酒闻名世界。交易所广场前的水镜倒映着 18 世纪的建筑立面，它是世界上最大的水镜。",
+    "prompt": "Use case: stylized-concept. Asset type: one independent collectible pixel-art postcard for a French learning travel game. Landscape 3:2 full bleed. Polished original 16-bit pixel art with crisp clearly visible square pixel clusters, detailed architecture simplified into strong recognizable silhouettes, limited harmonious palette, no photorealism or smooth painting. No text, typography, watermarks, logos, borders or collage. Buildings must be fully readable at thumbnail size. No foreground people. Subject: Bordeaux Place de la Bourse symmetrical eighteenth-century stone façades and mansard roofs reflected in a shallow perfectly still water mirror, pink sunset, no deep lake."
+  },
+  {
+    "id": "biarritz",
+    "city": "Biarritz",
+    "zh": "比亚里茨",
+    "landmark": "Rocher de la Vierge",
+    "fr": "Biarritz, au Pays basque, est une ville de surf. Le rocher de la Vierge, relié à la côte par une passerelle, résiste aux grosses vagues de l'océan Atlantique.",
+    "tr": "比亚里茨位于巴斯克地区，是一座冲浪小城。圣母岩由一座小桥与海岸相连，迎着大西洋的巨浪屹立不倒。",
+    "prompt": "Use case: stylized-concept. Asset type: one independent collectible pixel-art postcard for a French learning travel game. Landscape 3:2 full bleed. Polished original 16-bit pixel art with crisp clearly visible square pixel clusters, detailed architecture simplified into strong recognizable silhouettes, limited harmonious palette, no photorealism or smooth painting. No text, typography, watermarks, logos, borders or collage. Buildings must be fully readable at thumbnail size. No foreground people. Subject: Biarritz rocky Atlantic coast, Rocher de la Vierge outcrop crowned by small white Virgin statue, slender straight iron footbridge joining shore, powerful turquoise surf and Basque coast."
+  },
+  {
+    "id": "toulouse",
+    "city": "Toulouse",
+    "zh": "图卢兹",
+    "landmark": "Capitole de Toulouse",
+    "fr": "On appelle Toulouse la « Ville rose » à cause de la couleur de ses briques. C'est aussi la capitale européenne de l'aéronautique : les avions Airbus y sont assemblés.",
+    "tr": "图卢兹因砖墙的颜色被称为“玫瑰之城”。它也是欧洲的航空之都，空客飞机就在这里组装。",
+    "prompt": "Use case: stylized-concept. Asset type: one independent collectible pixel-art postcard for a French learning travel game. Landscape 3:2 full bleed. Polished original 16-bit pixel art with crisp clearly visible square pixel clusters, detailed architecture simplified into strong recognizable silhouettes, limited harmonious palette, no photorealism or smooth painting. No text, typography, watermarks, logos, borders or collage. Buildings must be fully readable at thumbnail size. No foreground people. Subject: Toulouse broad red-brick and cream-stone Capitole façade with eight central marble columns, warm rose-pink evening light on expansive stone square, café chairs at edge."
+  },
+  {
+    "id": "carcassonne",
+    "city": "Carcassonne",
+    "zh": "卡尔卡松",
+    "landmark": "Cité de Carcassonne",
+    "fr": "La Cité de Carcassonne est une ville fortifiée du Moyen Âge. Avec ses 52 tours et ses deux enceintes de remparts, elle ressemble à un château de conte de fées.",
+    "tr": "卡尔卡松古城是一座中世纪的要塞城市。它有 52 座塔楼和两道城墙，看起来像童话里的城堡。",
+    "prompt": "Use case: stylized-concept. Asset type: one independent collectible pixel-art postcard for a French learning travel game. Landscape 3:2 full bleed. Polished original 16-bit pixel art with crisp clearly visible square pixel clusters, detailed architecture simplified into strong recognizable silhouettes, limited harmonious palette, no photorealism or smooth painting. No text, typography, watermarks, logos, borders or collage. Buildings must be fully readable at thumbnail size. No foreground people. Subject: Carcassonne walled medieval citadel, clear double concentric stone ramparts and clustered round towers with slate conical roofs, viewed above vineyards at warm sunrise. Not a fantasy isolated single castle."
+  },
+  {
+    "id": "rennes",
+    "city": "Rennes",
+    "zh": "雷恩",
+    "landmark": "Maisons à colombages",
+    "fr": "Rennes est la capitale de la Bretagne. Dans le centre historique, les maisons à colombages aux couleurs vives datent du Moyen Âge. C'est une ville très étudiante et animée.",
+    "tr": "雷恩是布列塔尼的首府。老城区里色彩鲜艳的木筋屋可以追溯到中世纪。这是一座学生众多、充满活力的城市。",
+    "prompt": "Use case: stylized-concept. Asset type: one independent collectible pixel-art postcard for a French learning travel game. Landscape 3:2 full bleed. Polished original 16-bit pixel art with crisp clearly visible square pixel clusters, detailed architecture simplified into strong recognizable silhouettes, limited harmonious palette, no photorealism or smooth painting. No text, typography, watermarks, logos, borders or collage. Buildings must be fully readable at thumbnail size. No foreground people. Subject: Rennes medieval street with irregular colorful timber-framed houses, red and yellow timber beams, cobbled ground and a small creperie terrace, Breton overcast light breaking into sunshine."
+  },
+  {
+    "id": "saintmalo",
+    "city": "Saint-Malo",
+    "zh": "圣马洛",
+    "landmark": "Remparts de Saint-Malo",
+    "fr": "Saint-Malo est entourée de remparts. Autrefois, c'était la ville des corsaires. À marée basse, on peut marcher jusqu'à de petites îles ; à marée haute, la mer arrive au pied des murs.",
+    "tr": "圣马洛被城墙环绕，从前是海盗之城。退潮时可以步行走到附近的小岛；涨潮时，海水一直漫到城墙脚下。",
+    "prompt": "Use case: stylized-concept. Asset type: one independent collectible pixel-art postcard for a French learning travel game. Landscape 3:2 full bleed. Polished original 16-bit pixel art with crisp clearly visible square pixel clusters, detailed architecture simplified into strong recognizable silhouettes, limited harmonious palette, no photorealism or smooth painting. No text, typography, watermarks, logos, borders or collage. Buildings must be fully readable at thumbnail size. No foreground people. Subject: Saint-Malo massive granite sea walls, dense slate-roof old town behind, broad golden beach at low tide and tidal offshore fort, dramatic Atlantic light, no palm trees."
+  },
+  {
+    "id": "rouen",
+    "city": "Rouen",
+    "zh": "鲁昂",
+    "landmark": "Gros-Horloge",
+    "fr": "À Rouen, le Gros-Horloge est une horloge astronomique de la Renaissance placée sur une arche, au-dessus d'une rue. C'est aussi dans cette ville que Jeanne d'Arc est morte en 1431.",
+    "tr": "在鲁昂，大钟是一座文艺复兴时期的天文钟，架在一条街道上方的拱门上。圣女贞德也是 1431 年在这座城市牺牲的。",
+    "prompt": "Use case: stylized-concept. Asset type: one independent collectible pixel-art postcard for a French learning travel game. Landscape 3:2 full bleed. Polished original 16-bit pixel art with crisp clearly visible square pixel clusters, detailed architecture simplified into strong recognizable silhouettes, limited harmonious palette, no photorealism or smooth painting. No text, typography, watermarks, logos, borders or collage. Buildings must be fully readable at thumbnail size. No foreground people. Subject: Rouen Gros-Horloge Renaissance astronomical clock: ornate golden clockface with blue center set into decorative pavilion above a stone arch spanning a narrow cobbled pedestrian street, surrounding Norman half-timber houses."
+  },
+  {
+    "id": "montsaintmichel",
+    "city": "Le Mont-Saint-Michel",
+    "zh": "圣米歇尔山",
+    "landmark": "Abbaye du Mont-Saint-Michel",
+    "fr": "Le Mont-Saint-Michel est une abbaye construite sur un rocher, au milieu d'une baie. Les marées y sont parmi les plus fortes d'Europe : parfois, la mer entoure complètement le mont.",
+    "tr": "圣米歇尔山是建在海湾中央一块岩石上的修道院。这里的潮汐是欧洲最强的之一，有时海水会把整座山完全包围。",
+    "prompt": "Use case: stylized-concept. Asset type: one independent collectible pixel-art postcard for a French learning travel game. Landscape 3:2 full bleed. Polished original 16-bit pixel art with crisp clearly visible square pixel clusters, detailed architecture simplified into strong recognizable silhouettes, limited harmonious palette, no photorealism or smooth painting. No text, typography, watermarks, logos, borders or collage. Buildings must be fully readable at thumbnail size. No foreground people. Subject: Mont-Saint-Michel abbey ascending above tightly clustered medieval houses on a tidal granite island, tall slender abbey spire, reflecting shallow tidal bay at dawn. No fantasy mountain behind."
+  },
+  {
+    "id": "strasbourg",
+    "city": "Strasbourg",
+    "zh": "斯特拉斯堡",
+    "landmark": "Petite France et cathédrale",
+    "fr": "Strasbourg est le siège du Parlement européen. Sa cathédrale en grès rose a une seule flèche, haute de 142 mètres. Dans le quartier de la Petite France, les maisons à colombages se reflètent dans les canaux.",
+    "tr": "斯特拉斯堡是欧洲议会所在地。用粉红砂岩建成的大教堂只有一座尖塔，高 142 米。在小法兰西区，木筋屋倒映在运河里。",
+    "prompt": "Use case: stylized-concept. Asset type: one independent collectible pixel-art postcard for a French learning travel game. Landscape 3:2 full bleed. Polished original 16-bit pixel art with crisp clearly visible square pixel clusters, detailed architecture simplified into strong recognizable silhouettes, limited harmonious palette, no photorealism or smooth painting. No text, typography, watermarks, logos, borders or collage. Buildings must be fully readable at thumbnail size. No foreground people. Subject: Strasbourg Petite France black-and-white timber houses beside green canal, pink sandstone cathedral with exactly ONE tall spire in distant skyline, flowers along bridge, Alsatian atmosphere."
+  },
+  {
+    "id": "reims",
+    "city": "Reims",
+    "zh": "兰斯",
+    "landmark": "Cathédrale Notre-Dame de Reims",
+    "fr": "Les rois de France étaient couronnés dans la cathédrale de Reims. Aujourd'hui, la ville est surtout célèbre pour le champagne, qu'on fait vieillir dans des caves creusées sous la terre.",
+    "tr": "法国国王曾在兰斯大教堂加冕。如今这座城市最出名的是香槟酒，它们在地下挖出的酒窖里慢慢陈酿。",
+    "prompt": "Use case: stylized-concept. Asset type: one independent collectible pixel-art postcard for a French learning travel game. Landscape 3:2 full bleed. Polished original 16-bit pixel art with crisp clearly visible square pixel clusters, detailed architecture simplified into strong recognizable silhouettes, limited harmonious palette, no photorealism or smooth painting. No text, typography, watermarks, logos, borders or collage. Buildings must be fully readable at thumbnail size. No foreground people. Subject: Reims Gothic coronation cathedral frontal view, exactly two square flat-topped west towers, large central rose window, three richly sculpted portals, sparkling golden morning light. No tall pointed tower spires."
+  },
+  {
+    "id": "lille",
+    "city": "Lille",
+    "zh": "里尔",
+    "landmark": "Grand-Place et Vieille Bourse",
+    "fr": "Lille est une grande ville proche de la Belgique. Son beffroi est inscrit au patrimoine mondial de l'UNESCO. Chaque septembre, la Braderie de Lille devient le plus grand marché aux puces d'Europe.",
+    "tr": "里尔是一座靠近比利时的大城市，它的钟楼被列入联合国教科文组织世界遗产。每年九月，里尔大集市都会变成欧洲最大的跳蚤市场。",
+    "prompt": "Use case: stylized-concept. Asset type: one independent collectible pixel-art postcard for a French learning travel game. Landscape 3:2 full bleed. Polished original 16-bit pixel art with crisp clearly visible square pixel clusters, detailed architecture simplified into strong recognizable silhouettes, limited harmonious palette, no photorealism or smooth painting. No text, typography, watermarks, logos, borders or collage. Buildings must be fully readable at thumbnail size. No foreground people. Subject: Lille Grand Place, richly ornamented red-brick and golden-stone Flemish Vieille Bourse with many sculpted gables, column of the Goddess on square, softly glowing northern afternoon."
+  },
+  {
+    "id": "amiens",
+    "city": "Amiens",
+    "zh": "亚眠",
+    "landmark": "Hortillonnages et cathédrale",
+    "fr": "À Amiens, les hortillonnages sont des jardins flottants entourés de canaux. On les visite en barque, au calme. La ville possède aussi la plus grande cathédrale gothique de France.",
+    "tr": "在亚眠，水上花园是被运河环绕的漂浮园地，可以坐小船静静游览。这座城市还拥有法国最大的哥特式大教堂。",
+    "prompt": "Use case: stylized-concept. Asset type: one independent collectible pixel-art postcard for a French learning travel game. Landscape 3:2 full bleed. Polished original 16-bit pixel art with crisp clearly visible square pixel clusters, detailed architecture simplified into strong recognizable silhouettes, limited harmonious palette, no photorealism or smooth painting. No text, typography, watermarks, logos, borders or collage. Buildings must be fully readable at thumbnail size. No foreground people. Subject: Amiens hortillonnages: a quiet narrow channel edged with lush vegetable and flower garden plots, traditional shallow pointed wooden boat, Gothic cathedral distant above trees, fresh spring palette."
+  },
+  {
+    "id": "chambord",
+    "city": "Chambord",
+    "zh": "香波尔",
+    "landmark": "Château de Chambord",
+    "fr": "Le château de Chambord est le plus grand des châteaux de la Loire. Son célèbre escalier à double révolution a peut-être été imaginé par Léonard de Vinci : deux personnes peuvent le monter sans jamais se croiser.",
+    "tr": "香波尔城堡是卢瓦尔河谷最大的城堡。它著名的双螺旋楼梯据说出自达·芬奇的构想：两个人同时上楼，却永远不会碰面。",
+    "prompt": "Use case: stylized-concept. Asset type: one independent collectible pixel-art postcard for a French learning travel game. Landscape 3:2 full bleed. Polished original 16-bit pixel art with crisp clearly visible square pixel clusters, detailed architecture simplified into strong recognizable silhouettes, limited harmonious palette, no photorealism or smooth painting. No text, typography, watermarks, logos, borders or collage. Buildings must be fully readable at thumbnail size. No foreground people. Subject: Château de Chambord wide French Renaissance castle, forest of intricate white chimneys and lantern turrets on blue-slate roof, four large round corner towers, calm canal reflection, green woodland. Do not place castle spanning river."
+  },
+  {
+    "id": "chenonceau",
+    "city": "Chenonceau",
+    "zh": "舍农索",
+    "landmark": "Château de Chenonceau",
+    "fr": "Le château de Chenonceau est construit sur des arches au-dessus du Cher. On l'appelle le « château des Dames », car plusieurs femmes célèbres l'ont habité et transformé.",
+    "tr": "舍农索城堡建在谢尔河上的一排拱桥上。它被称为“女人的城堡”，因为好几位著名的女性曾住在这里并改建了它。",
+    "prompt": "Use case: stylized-concept. Asset type: one independent collectible pixel-art postcard for a French learning travel game. Landscape 3:2 full bleed. Polished original 16-bit pixel art with crisp clearly visible square pixel clusters, detailed architecture simplified into strong recognizable silhouettes, limited harmonious palette, no photorealism or smooth painting. No text, typography, watermarks, logos, borders or collage. Buildings must be fully readable at thumbnail size. No foreground people. Subject: Château de Chenonceau white Renaissance château with long enclosed two-storey gallery carried on five stone arches across the Cher river, slate roofs, forest and mirror reflections. Emphasize the river running UNDER the gallery."
+  },
+  {
+    "id": "nantes",
+    "city": "Nantes",
+    "zh": "南特",
+    "landmark": "Grand Éléphant des Machines de l’île",
+    "fr": "À Nantes, les Machines de l'île présentent un éléphant mécanique de douze mètres de haut. Il se promène avec des passagers sur le dos ! Nantes est aussi la ville natale de Jules Verne.",
+    "tr": "在南特，“岛上机器”展出一头 12 米高的机械大象，它会驮着乘客四处走动！南特也是儒勒·凡尔纳的故乡。",
+    "prompt": "Use case: stylized-concept. Asset type: one independent collectible pixel-art postcard for a French learning travel game. Landscape 3:2 full bleed. Polished original 16-bit pixel art with crisp clearly visible square pixel clusters, detailed architecture simplified into strong recognizable silhouettes, limited harmonious palette, no photorealism or smooth painting. No text, typography, watermarks, logos, borders or collage. Buildings must be fully readable at thumbnail size. No foreground people. Subject: Nantes Grand Éléphant: huge articulated wooden and steel mechanical elephant with carved wood panels and passenger gallery on back, four sturdy legs, curved trunk spraying mist, former shipyard steel halls behind. No real animal skin, no text."
+  },
+  {
+    "id": "angers",
+    "city": "Angers",
+    "zh": "昂热",
+    "landmark": "Château d’Angers",
+    "fr": "Le château d'Angers a dix-sept grosses tours rayées de pierre sombre et de pierre claire. À l'intérieur, on peut voir la tapisserie de l'Apocalypse, la plus grande tapisserie médiévale au monde.",
+    "tr": "昂热城堡有十七座粗大的塔楼，深色和浅色的石头交替成条纹。城堡里收藏着《启示录》挂毯，它是世界上最大的中世纪挂毯。",
+    "prompt": "Use case: stylized-concept. Asset type: one independent collectible pixel-art postcard for a French learning travel game. Landscape 3:2 full bleed. Polished original 16-bit pixel art with crisp clearly visible square pixel clusters, detailed architecture simplified into strong recognizable silhouettes, limited harmonious palette, no photorealism or smooth painting. No text, typography, watermarks, logos, borders or collage. Buildings must be fully readable at thumbnail size. No foreground people. Subject: Château d’Angers imposing squat circular towers with alternating dark slate and pale limestone horizontal bands, broad curtain walls and flower-garden dry moat, Loire valley light. No conical fairy-tale roofs."
+  },
+  {
+    "id": "dijon",
+    "city": "Dijon",
+    "zh": "第戎",
+    "landmark": "Chouette de Notre-Dame",
+    "fr": "Dijon est célèbre pour sa moutarde. Dans la vieille ville, une petite chouette est sculptée sur un mur de l'église Notre-Dame : on dit qu'elle porte bonheur si on la touche de la main gauche.",
+    "tr": "第戎以芥末闻名。在老城的圣母教堂墙上，雕着一只小猫头鹰。据说用左手摸一摸它就会带来好运。",
+    "prompt": "Use case: stylized-concept. Asset type: one independent collectible pixel-art postcard for a French learning travel game. Landscape 3:2 full bleed. Polished original 16-bit pixel art with crisp clearly visible square pixel clusters, detailed architecture simplified into strong recognizable silhouettes, limited harmonious palette, no photorealism or smooth painting. No text, typography, watermarks, logos, borders or collage. Buildings must be fully readable at thumbnail size. No foreground people. Subject: Close foreground worn small owl carving in honey-colored stone on Notre-Dame church wall in Dijon, cobbled old-town street receding behind with Burgundian patterned tiled roofs, warm afternoon. Owl is a worn relief carved into wall, not living bird."
+  },
+  {
+    "id": "beaune",
+    "city": "Beaune",
+    "zh": "博讷",
+    "landmark": "Hospices de Beaune",
+    "fr": "Beaune est au cœur des vignobles de Bourgogne. Les Hospices de Beaune, un ancien hôpital du XVe siècle, sont connus pour leurs toits couverts de tuiles colorées.",
+    "tr": "博讷位于勃艮第葡萄园的中心。博讷济贫院原是一座 15 世纪的医院，以屋顶上色彩缤纷的瓦片闻名。",
+    "prompt": "Use case: stylized-concept. Asset type: one independent collectible pixel-art postcard for a French learning travel game. Landscape 3:2 full bleed. Polished original 16-bit pixel art with crisp clearly visible square pixel clusters, detailed architecture simplified into strong recognizable silhouettes, limited harmonious palette, no photorealism or smooth painting. No text, typography, watermarks, logos, borders or collage. Buildings must be fully readable at thumbnail size. No foreground people. Subject: Hospices de Beaune courtyard with famous steep glazed tile roofs arranged in red green gold dark geometric diamond patterns, Gothic dormers, timber arcaded galleries and central stone well."
+  },
+  {
+    "id": "ajaccio",
+    "city": "Ajaccio",
+    "zh": "阿雅克肖",
+    "landmark": "Îles Sanguinaires",
+    "fr": "Ajaccio est la ville natale de Napoléon Bonaparte. Le soir, les îles Sanguinaires prennent une couleur rouge au coucher du soleil, à côté d'une vieille tour génoise.",
+    "tr": "阿雅克肖是拿破仑·波拿巴的故乡。傍晚，血岛在夕阳下染成红色，旁边是一座古老的热那亚塔。",
+    "prompt": "Use case: stylized-concept. Asset type: one independent collectible pixel-art postcard for a French learning travel game. Landscape 3:2 full bleed. Polished original 16-bit pixel art with crisp clearly visible square pixel clusters, detailed architecture simplified into strong recognizable silhouettes, limited harmonious palette, no photorealism or smooth painting. No text, typography, watermarks, logos, borders or collage. Buildings must be fully readable at thumbnail size. No foreground people. Subject: Ajaccio gulf sunset viewed near Tour de la Parata: squat round Genoese stone watchtower on headland, chain of Sanguinaires islands glowing deep red against cobalt Mediterranean, coastal maquis and rugged rocks."
+  },
+  {
+    "id": "bonifacio",
+    "city": "Bonifacio",
+    "zh": "博尼法乔",
+    "landmark": "Falaises de Bonifacio",
+    "fr": "À Bonifacio, les maisons sont construites tout au bord de hautes falaises blanches. Par beau temps, on peut voir la Sardaigne, qui se trouve de l'autre côté de la mer.",
+    "tr": "在博尼法乔，房屋就建在高高的白色悬崖边上。天气好的时候，可以望见大海对岸的撒丁岛。",
+    "prompt": "Use case: stylized-concept. Asset type: one independent collectible pixel-art postcard for a French learning travel game. Landscape 3:2 full bleed. Polished original 16-bit pixel art with crisp clearly visible square pixel clusters, detailed architecture simplified into strong recognizable silhouettes, limited harmonious palette, no photorealism or smooth painting. No text, typography, watermarks, logos, borders or collage. Buildings must be fully readable at thumbnail size. No foreground people. Subject: Bonifacio Corsica pale houses perched directly on towering layered white limestone sea cliffs, turquoise clear water and small sailboat below, sunny dramatic side view. No snowy mountains."
+  },
+  {
+    "id": "p1",
+    "city": "1er · Louvre",
+    "zh": "第 1 区 · 卢浮宫",
+    "landmark": "Pyramide du Louvre",
+    "fr": "Le musée du Louvre est le musée le plus visité du monde. Devant le palais, la pyramide de verre, inaugurée en 1989, sert d'entrée principale.",
+    "tr": "卢浮宫是世界上参观人数最多的博物馆。宫殿前的玻璃金字塔于 1989 年落成，是博物馆的主入口。",
+    "prompt": "Use case: stylized-concept. Asset type: one independent collectible pixel-art postcard for a French learning travel game. Landscape 3:2 full bleed. Polished original 16-bit pixel art with crisp clearly visible square pixel clusters, detailed architecture simplified into strong recognizable silhouettes, limited harmonious palette, no photorealism or smooth painting. No text, typography, watermarks, logos, borders or collage. Buildings must be fully readable at thumbnail size. No foreground people. Subject: Louvre Cour Napoléon in Paris, one large transparent glass pyramid centrally placed before expansive historic Louvre palace façades, golden sunset glinting on glass triangles and shallow pools. No Eiffel Tower."
+  },
+  {
+    "id": "p2",
+    "city": "2e · Bourse",
+    "zh": "第 2 区 · 交易所",
+    "landmark": "Galerie Vivienne",
+    "fr": "Le palais Brongniart, avec ses grandes colonnes, a abrité la Bourse de Paris pendant plus de 150 ans. Le quartier est aussi connu pour ses passages couverts, comme la galerie Vivienne.",
+    "tr": "布龙尼亚尔宫有一排高大的柱子，巴黎证券交易所在这里办公了 150 多年。这个街区还以带顶棚的廊街闻名，比如薇薇安廊街。",
+    "prompt": "Use case: stylized-concept. Asset type: one independent collectible pixel-art postcard for a French learning travel game. Landscape 3:2 full bleed. Polished original 16-bit pixel art with crisp clearly visible square pixel clusters, detailed architecture simplified into strong recognizable silhouettes, limited harmonious palette, no photorealism or smooth painting. No text, typography, watermarks, logos, borders or collage. Buildings must be fully readable at thumbnail size. No foreground people. Subject: Interior of Galerie Vivienne covered passage in Paris: long glass barrel-vault roof on elegant iron ribs, mosaic tiled floor, cream pilasters and warm shop windows, beautiful one-point perspective, no readable shop lettering."
+  },
+  {
+    "id": "p3",
+    "city": "3e · Temple",
+    "zh": "第 3 区 · 苏比斯府邸",
+    "landmark": "Hôtel de Soubise",
+    "fr": "Dans le Marais, l’hôtel de Soubise abrite le musée des Archives nationales. Sa cour est bordée d’une élégante colonnade.",
+    "tr": "在玛黑区，苏比斯府邸设有法国国家档案馆博物馆，庭院周围是一圈优雅的柱廊。",
+    "prompt": "Use case: stylized-concept. Asset type: one independent collectible pixel-art postcard for a French learning travel game. Landscape 3:2 full bleed. Polished original 16-bit pixel art with crisp clearly visible square pixel clusters, detailed architecture simplified into strong recognizable silhouettes, limited harmonious palette, no photorealism or smooth painting. No text, typography, watermarks, logos, borders or collage. Buildings must be fully readable at thumbnail size. No foreground people. Subject: Hôtel de Soubise in Paris Marais, pale classical palace with sculpted central pediment at far side of broad oval cour d’honneur embraced by curved colonnades, central garden and clean blue sky. No high-rise."
+  },
+  {
+    "id": "p4",
+    "city": "4e · Hôtel-de-Ville",
+    "zh": "第 4 区 · 巴黎圣母院",
+    "landmark": "Notre-Dame de Paris",
+    "fr": "La cathédrale Notre-Dame se trouve sur l'île de la Cité. Après le grand incendie de 2019, elle a rouvert ses portes en décembre 2024.",
+    "tr": "巴黎圣母院坐落在西岱岛上。经历 2019 年的大火之后，它于 2024 年 12 月重新开放。",
+    "prompt": "Use case: stylized-concept. Asset type: one independent collectible pixel-art postcard for a French learning travel game. Landscape 3:2 full bleed. Polished original 16-bit pixel art with crisp clearly visible square pixel clusters, detailed architecture simplified into strong recognizable silhouettes, limited harmonious palette, no photorealism or smooth painting. No text, typography, watermarks, logos, borders or collage. Buildings must be fully readable at thumbnail size. No foreground people. Subject: Notre-Dame de Paris viewed from Seine quay, recognizable Gothic west facade with two square flat-topped towers and rose window, rebuilt slender central spire behind, stone riverside and bookstalls at edge. No Montreal basilica."
+  },
+  {
+    "id": "p5",
+    "city": "5e · Panthéon",
+    "zh": "第 5 区 · 先贤祠",
+    "landmark": "Panthéon",
+    "fr": "Au cœur du Quartier latin, le Panthéon abrite les tombeaux de grandes figures françaises, comme Victor Hugo, Marie Curie et Simone Veil.",
+    "tr": "先贤祠位于拉丁区的中心，安葬着许多法国伟人，比如维克多·雨果、玛丽·居里和西蒙娜·韦伊。",
+    "prompt": "Use case: stylized-concept. Asset type: one independent collectible pixel-art postcard for a French learning travel game. Landscape 3:2 full bleed. Polished original 16-bit pixel art with crisp clearly visible square pixel clusters, detailed architecture simplified into strong recognizable silhouettes, limited harmonious palette, no photorealism or smooth painting. No text, typography, watermarks, logos, borders or collage. Buildings must be fully readable at thumbnail size. No foreground people. Subject: Paris Panthéon monumental neoclassical temple frontage with Corinthian column portico and triangular pediment, enormous tiered dome rising above, quiet Latin Quarter square, lavender-gold twilight."
+  },
+  {
+    "id": "p6",
+    "city": "6e · Luxembourg",
+    "zh": "第 6 区 · 卢森堡公园",
+    "landmark": "Jardin du Luxembourg",
+    "fr": "Au jardin du Luxembourg, les enfants font naviguer de petits voiliers sur le grand bassin. Le palais, au fond, accueille le Sénat.",
+    "tr": "在卢森堡公园，孩子们在大水池里放小帆船。远处的宫殿是法国参议院所在地。",
+    "prompt": "Use case: stylized-concept. Asset type: one independent collectible pixel-art postcard for a French learning travel game. Landscape 3:2 full bleed. Polished original 16-bit pixel art with crisp clearly visible square pixel clusters, detailed architecture simplified into strong recognizable silhouettes, limited harmonious palette, no photorealism or smooth painting. No text, typography, watermarks, logos, borders or collage. Buildings must be fully readable at thumbnail size. No foreground people. Subject: Luxembourg Garden Paris, broad octagonal basin with colorful tiny toy sailboats, iconic green metal chairs and flower beds, Luxembourg Palace with classical rusticated stone and slate roofs behind, spring sunlight."
+  },
+  {
+    "id": "p7",
+    "city": "7e · Palais-Bourbon",
+    "zh": "第 7 区 · 埃菲尔铁塔",
+    "landmark": "Tour Eiffel · Champ-de-Mars",
+    "fr": "La tour Eiffel mesure environ 330 mètres. Le soir, elle scintille pendant cinq minutes au début de chaque heure.",
+    "tr": "埃菲尔铁塔高约 330 米。晚上每到整点，它都会闪烁五分钟。",
+    "prompt": "Use case: stylized-concept. Asset type: one independent collectible pixel-art postcard for a French learning travel game. Landscape 3:2 full bleed. Polished original 16-bit pixel art with crisp clearly visible square pixel clusters, detailed architecture simplified into strong recognizable silhouettes, limited harmonious palette, no photorealism or smooth painting. No text, typography, watermarks, logos, borders or collage. Buildings must be fully readable at thumbnail size. No foreground people. Subject: Low-angle Eiffel Tower from Champ de Mars lawns, all four iron legs planted visibly, lattice structure narrowing to top fully inside frame, spring cherry blossoms and paths, blue daytime sky. No river panorama."
+  },
+  {
+    "id": "p8",
+    "city": "8e · Élysée",
+    "zh": "第 8 区 · 凯旋门",
+    "landmark": "Arc de Triomphe",
+    "fr": "L'Arc de Triomphe se dresse en haut des Champs-Élysées. Sous l'arc repose le Soldat inconnu, et une flamme y est ravivée chaque soir.",
+    "tr": "凯旋门矗立在香榭丽舍大街的尽头。拱门下安葬着无名烈士，每天傍晚都会重新点燃那里的长明火。",
+    "prompt": "Use case: stylized-concept. Asset type: one independent collectible pixel-art postcard for a French learning travel game. Landscape 3:2 full bleed. Polished original 16-bit pixel art with crisp clearly visible square pixel clusters, detailed architecture simplified into strong recognizable silhouettes, limited harmonious palette, no photorealism or smooth painting. No text, typography, watermarks, logos, borders or collage. Buildings must be fully readable at thumbnail size. No foreground people. Subject: Arc de Triomphe Paris single huge central arch with sculpted pale stone sides and flat heavy attic, Champs Élysées avenue receding from foreground, golden light, autumn chestnut trees. No Eiffel Tower."
+  },
+  {
+    "id": "p9",
+    "city": "9e · Opéra",
+    "zh": "第 9 区 · 加尼叶歌剧院",
+    "landmark": "Palais Garnier",
+    "fr": "L'Opéra Garnier, inauguré en 1875, est célèbre pour son grand escalier de marbre et pour son plafond peint par Marc Chagall.",
+    "tr": "加尼叶歌剧院于 1875 年落成，以大理石大楼梯和马克·夏加尔绘制的天顶画闻名。",
+    "prompt": "Use case: stylized-concept. Asset type: one independent collectible pixel-art postcard for a French learning travel game. Landscape 3:2 full bleed. Polished original 16-bit pixel art with crisp clearly visible square pixel clusters, detailed architecture simplified into strong recognizable silhouettes, limited harmonious palette, no photorealism or smooth painting. No text, typography, watermarks, logos, borders or collage. Buildings must be fully readable at thumbnail size. No foreground people. Subject: Paris Palais Garnier grand opera facade, rich paired columns, sculpted marble figures, green copper roof dome and gilded winged statues on corners, warm glowing windows at twilight, full building view."
+  },
+  {
+    "id": "p10",
+    "city": "10e · Entrepôt",
+    "zh": "第 10 区 · 圣马丁运河",
+    "landmark": "Canal Saint-Martin",
+    "fr": "Le long du canal Saint-Martin, on traverse l'eau par de jolies passerelles en fer. Aux beaux jours, les Parisiens pique-niquent sur ses quais.",
+    "tr": "沿着圣马丁运河，可以走过一座座漂亮的铁制小桥。天气好的时候，巴黎人会在河岸上野餐。",
+    "prompt": "Use case: stylized-concept. Asset type: one independent collectible pixel-art postcard for a French learning travel game. Landscape 3:2 full bleed. Polished original 16-bit pixel art with crisp clearly visible square pixel clusters, detailed architecture simplified into strong recognizable silhouettes, limited harmonious palette, no photorealism or smooth painting. No text, typography, watermarks, logos, borders or collage. Buildings must be fully readable at thumbnail size. No foreground people. Subject: Paris Canal Saint-Martin with gracefully arched narrow green iron footbridge, stone lock walls and calm water, plane trees and relaxed café fronts, warm morning light. No giant Seine bridge."
+  },
+  {
+    "id": "p11",
+    "city": "11e · Popincourt",
+    "zh": "第 11 区 · 巴士底",
+    "landmark": "Colonne de Juillet · Bastille",
+    "fr": "La colonne de Juillet se dresse place de la Bastille, là où la prison a été prise le 14 juillet 1789. Tout en haut, le Génie de la Liberté brille en or.",
+    "tr": "七月柱矗立在巴士底广场，1789 年 7 月 14 日巴士底狱就是在这里被攻占的。柱顶的自由之神闪着金光。",
+    "prompt": "Use case: stylized-concept. Asset type: one independent collectible pixel-art postcard for a French learning travel game. Landscape 3:2 full bleed. Polished original 16-bit pixel art with crisp clearly visible square pixel clusters, detailed architecture simplified into strong recognizable silhouettes, limited harmonious palette, no photorealism or smooth painting. No text, typography, watermarks, logos, borders or collage. Buildings must be fully readable at thumbnail size. No foreground people. Subject: Bastille square Paris, tall slender green bronze July Column on square pedestal, gilded winged Genius of Liberty on top, modern curved glass Bastille opera building to side, dusk city scene. No surviving medieval Bastille prison."
+  },
+  {
+    "id": "p12",
+    "city": "12e · Reuilly",
+    "zh": "第 12 区 · 里昂火车站",
+    "landmark": "Gare de Lyon",
+    "fr": "La gare de Lyon se reconnaît à sa haute tour de l'horloge. C'est de là que partent les TGV vers le sud de la France.",
+    "tr": "里昂火车站的标志是那座高高的钟楼。开往法国南部的高铁就从这里出发。",
+    "prompt": "Use case: stylized-concept. Asset type: one independent collectible pixel-art postcard for a French learning travel game. Landscape 3:2 full bleed. Polished original 16-bit pixel art with crisp clearly visible square pixel clusters, detailed architecture simplified into strong recognizable silhouettes, limited harmonious palette, no photorealism or smooth painting. No text, typography, watermarks, logos, borders or collage. Buildings must be fully readable at thumbnail size. No foreground people. Subject: Paris Gare de Lyon ornate Belle Époque station facade and tall square clock tower, large clock faces, slate roof, street-level plaza and small train-related luggage detail without text, morning departure atmosphere."
+  },
+  {
+    "id": "p13",
+    "city": "13e · Gobelins",
+    "zh": "第 13 区 · 法国国家图书馆",
+    "landmark": "Bibliothèque François-Mitterrand",
+    "fr": "La Bibliothèque nationale François-Mitterrand a quatre tours de verre en forme de livres ouverts. Le 13e abrite aussi un grand quartier asiatique.",
+    "tr": "密特朗国家图书馆有四座玻璃塔楼，形状像四本打开的书。第 13 区还有一个很大的亚洲街区。",
+    "prompt": "Use case: stylized-concept. Asset type: one independent collectible pixel-art postcard for a French learning travel game. Landscape 3:2 full bleed. Polished original 16-bit pixel art with crisp clearly visible square pixel clusters, detailed architecture simplified into strong recognizable silhouettes, limited harmonious palette, no photorealism or smooth painting. No text, typography, watermarks, logos, borders or collage. Buildings must be fully readable at thumbnail size. No foreground people. Subject: Elevated view of Bibliothèque François-Mitterrand Paris: exactly FOUR separate tall glass L-shaped towers like open books marking four corners of broad rectangular wooden esplanade, sunken rectangular forest garden in center, Seine at edge. All four towers readable."
+  },
+  {
+    "id": "p14",
+    "city": "14e · Observatoire",
+    "zh": "第 14 区 · 巴黎天文台",
+    "landmark": "Observatoire de Paris",
+    "fr": "Dans le 14e arrondissement, l’Observatoire de Paris associe un bâtiment historique, des coupoles et des jardins. On y étudie le ciel depuis le XVIIe siècle.",
+    "tr": "在巴黎第 14 区，巴黎天文台汇集了历史建筑、观测穹顶和花园。从 17 世纪起，人们就在这里研究天空。",
+    "prompt": "Use case: stylized-concept. Asset type: one independent collectible pixel-art postcard for a French learning travel game. Landscape 3:2 full bleed. Polished original 16-bit pixel art with crisp clearly visible square pixel clusters, detailed architecture simplified into strong recognizable silhouettes, limited harmonious palette, no photorealism or smooth painting. No text, typography, watermarks, logos, borders or collage. Buildings must be fully readable at thumbnail size. No foreground people. Subject: Paris Observatory historic Perrault building, substantial pale limestone seventeenth-century rectangular scientific building with projecting octagonal corner pavilions and a metal telescope dome, broad garden, crisp clear starry twilight. No modern Montparnasse skyscraper."
+  },
+  {
+    "id": "p15",
+    "city": "15e · Vaugirard",
+    "zh": "第 15 区 · 雪铁龙公园",
+    "landmark": "Parc André-Citroën",
+    "fr": "Dans le parc André-Citroën, un grand ballon captif s'élève à 150 mètres de haut pour admirer Paris vu du ciel.",
+    "tr": "在安德烈·雪铁龙公园，一只系留热气球能升到 150 米高，让人从空中欣赏巴黎。",
+    "prompt": "Use case: stylized-concept. Asset type: one independent collectible pixel-art postcard for a French learning travel game. Landscape 3:2 full bleed. Polished original 16-bit pixel art with crisp clearly visible square pixel clusters, detailed architecture simplified into strong recognizable silhouettes, limited harmonious palette, no photorealism or smooth painting. No text, typography, watermarks, logos, borders or collage. Buildings must be fully readable at thumbnail size. No foreground people. Subject: Parc André-Citroën Paris: large tethered helium sightseeing balloon, pale yellow and blue panels and small suspended passenger ring, cable anchored in modern geometric park lawns, glass greenhouses and fountain lines. Balloon is not a free flying hot-air balloon, no logos."
+  },
+  {
+    "id": "p16",
+    "city": "16e · Passy",
+    "zh": "第 16 区 · 特罗卡德罗",
+    "landmark": "Trocadéro",
+    "fr": "Depuis l'esplanade du Trocadéro, on a l'une des plus belles vues sur la tour Eiffel. En été, ses grandes fontaines rafraîchissent les promeneurs.",
+    "tr": "从特罗卡德罗广场可以看到最美的埃菲尔铁塔之一。夏天，这里的大喷泉给游人带来清凉。",
+    "prompt": "Use case: stylized-concept. Asset type: one independent collectible pixel-art postcard for a French learning travel game. Landscape 3:2 full bleed. Polished original 16-bit pixel art with crisp clearly visible square pixel clusters, detailed architecture simplified into strong recognizable silhouettes, limited harmonious palette, no photorealism or smooth painting. No text, typography, watermarks, logos, borders or collage. Buildings must be fully readable at thumbnail size. No foreground people. Subject: Trocadéro view from elevated terrace down symmetrical fountain basins toward Eiffel Tower across Seine, Palais de Chaillot curved pale-stone wings framing left and right, full coherent architectural perspective, fresh summer morning."
+  },
+  {
+    "id": "p17",
+    "city": "17e · Batignolles",
+    "zh": "第 17 区 · 巴黎司法院",
+    "landmark": "Tribunal de Paris · Batignolles",
+    "fr": "Dans le quartier des Batignolles, le Tribunal de Paris est un gratte-ciel de verre formé de blocs empilés, conçu par l'architecte Renzo Piano.",
+    "tr": "在巴蒂尼奥勒街区，巴黎司法院是一座由一层层方块叠起来的玻璃摩天楼，由建筑师伦佐·皮亚诺设计。",
+    "prompt": "Use case: stylized-concept. Asset type: one independent collectible pixel-art postcard for a French learning travel game. Landscape 3:2 full bleed. Polished original 16-bit pixel art with crisp clearly visible square pixel clusters, detailed architecture simplified into strong recognizable silhouettes, limited harmonious palette, no photorealism or smooth painting. No text, typography, watermarks, logos, borders or collage. Buildings must be fully readable at thumbnail size. No foreground people. Subject: Paris courthouse by Renzo Piano: four stacked glass rectangular volumes stepping inward toward top, rooftop planted terraces, modern Martin-Luther-King park with grasses and reflective basin in foreground, clear blue sky."
+  },
+  {
+    "id": "p18",
+    "city": "18e · Butte-Montmartre",
+    "zh": "第 18 区 · 蒙马特圣心堂",
+    "landmark": "Sacré-Cœur · Montmartre",
+    "fr": "Sur la butte Montmartre, la basilique du Sacré-Cœur domine la ville. Juste à côté, les peintres de la place du Tertre font le portrait des passants.",
+    "tr": "在蒙马特高地上，圣心大教堂俯瞰全城。旁边的小丘广场上，画家们为路人画肖像。",
+    "prompt": "Use case: stylized-concept. Asset type: one independent collectible pixel-art postcard for a French learning travel game. Landscape 3:2 full bleed. Polished original 16-bit pixel art with crisp clearly visible square pixel clusters, detailed architecture simplified into strong recognizable silhouettes, limited harmonious palette, no photorealism or smooth painting. No text, typography, watermarks, logos, borders or collage. Buildings must be fully readable at thumbnail size. No foreground people. Subject: White Sacré-Cœur basilica Paris on Montmartre hill, central elongated white dome and smaller domes, grand stairs and green lawns, small artist easel in corner, warm pink evening sky. No Notre-Dame Gothic towers."
+  },
+  {
+    "id": "p19",
+    "city": "19e · Buttes-Chaumont",
+    "zh": "第 19 区 · 肖蒙山丘公园",
+    "landmark": "Temple de la Sibylle",
+    "fr": "Au parc des Buttes-Chaumont, un petit temple rond se dresse au sommet d'une falaise, au-dessus d'un lac.",
+    "tr": "在肖蒙山丘公园，一座小小的圆形神庙立在悬崖顶上，下面是一片湖。",
+    "prompt": "Use case: stylized-concept. Asset type: one independent collectible pixel-art postcard for a French learning travel game. Landscape 3:2 full bleed. Polished original 16-bit pixel art with crisp clearly visible square pixel clusters, detailed architecture simplified into strong recognizable silhouettes, limited harmonious palette, no photorealism or smooth painting. No text, typography, watermarks, logos, borders or collage. Buildings must be fully readable at thumbnail size. No foreground people. Subject: Buttes-Chaumont park Paris: small circular classical Sibyl temple with slender columns perched on top of sheer rocky island cliff over green lake, delicate suspended footbridge to side, lush trees and sunny sky."
+  },
+  {
+    "id": "p20",
+    "city": "20e · Ménilmontant",
+    "zh": "第 20 区 · 拉雪兹神父公墓",
+    "landmark": "Père-Lachaise",
+    "fr": "Au cimetière du Père-Lachaise reposent de nombreuses célébrités, comme Molière, Chopin et Édith Piaf. C'est aussi un grand parc arboré.",
+    "tr": "拉雪兹神父公墓安葬着许多名人，比如莫里哀、肖邦和伊迪丝·琵雅芙。这里也是一座绿树成荫的大公园。",
+    "prompt": "Use case: stylized-concept. Asset type: one independent collectible pixel-art postcard for a French learning travel game. Landscape 3:2 full bleed. Polished original 16-bit pixel art with crisp clearly visible square pixel clusters, detailed architecture simplified into strong recognizable silhouettes, limited harmonious palette, no photorealism or smooth painting. No text, typography, watermarks, logos, borders or collage. Buildings must be fully readable at thumbnail size. No foreground people. Subject: Peaceful Père-Lachaise cemetery Paris: cobbled curving avenue under tall leafy trees, small historic stone mausoleums and weathered memorial sculptures, dappled autumn sunlight. Respectful serene garden, no horror, no names or readable inscriptions."
+  },
+  {
+    "id": "d92",
+    "city": "92 · Hauts-de-Seine",
+    "zh": "上塞纳省 · 拉德芳斯",
+    "landmark": "Grande Arche de La Défense",
+    "fr": "À La Défense, le grand quartier d'affaires de la région parisienne, la Grande Arche ressemble à un cube géant ouvert au milieu.",
+    "tr": "拉德芳斯是巴黎地区最大的商务区，那里的新凯旋门像一个中间掏空的巨型立方体。",
+    "prompt": "Use case: stylized-concept. Asset type: one independent collectible pixel-art postcard for a French learning travel game. Landscape 3:2 full bleed. Polished original 16-bit pixel art with crisp clearly visible square pixel clusters, detailed architecture simplified into strong recognizable silhouettes, limited harmonious palette, no photorealism or smooth painting. No text, typography, watermarks, logos, borders or collage. Buildings must be fully readable at thumbnail size. No foreground people. Subject: La Défense Grande Arche: enormous square white hollow cube with huge open rectangular center, broad monumental steps, neighboring blue glass office towers and open esplanade, sunset reflected in glass. Not curved Arc de Triomphe."
+  },
+  {
+    "id": "d93",
+    "city": "93 · Seine-Saint-Denis",
+    "zh": "塞纳-圣但尼省 · 法兰西体育场",
+    "landmark": "Stade de France",
+    "fr": "Le Stade de France, à Saint-Denis, accueille les grands matchs de football et de rugby. Il a aussi servi aux Jeux olympiques de 2024.",
+    "tr": "位于圣但尼的法兰西体育场举办重大的足球和橄榄球比赛，2024 年奥运会也在这里进行。",
+    "prompt": "Use case: stylized-concept. Asset type: one independent collectible pixel-art postcard for a French learning travel game. Landscape 3:2 full bleed. Polished original 16-bit pixel art with crisp clearly visible square pixel clusters, detailed architecture simplified into strong recognizable silhouettes, limited harmonious palette, no photorealism or smooth painting. No text, typography, watermarks, logos, borders or collage. Buildings must be fully readable at thumbnail size. No foreground people. Subject: Aerial oblique view of Stade de France in Saint-Denis, broad oval silver disc roof with open oval green pitch visible, structural supports and stepped grandstands, Paris suburban urban fabric, evening stadium lights, no logos."
+  },
+  {
+    "id": "d94",
+    "city": "94 · Val-de-Marne",
+    "zh": "马恩河谷省 · 樊尚城堡",
+    "landmark": "Château de Vincennes",
+    "fr": "Le château de Vincennes possède le plus haut donjon médiéval d'Europe : il mesure environ 50 mètres.",
+    "tr": "樊尚城堡拥有欧洲最高的中世纪主塔，高约 50 米。",
+    "prompt": "Use case: stylized-concept. Asset type: one independent collectible pixel-art postcard for a French learning travel game. Landscape 3:2 full bleed. Polished original 16-bit pixel art with crisp clearly visible square pixel clusters, detailed architecture simplified into strong recognizable silhouettes, limited harmonious palette, no photorealism or smooth painting. No text, typography, watermarks, logos, borders or collage. Buildings must be fully readable at thumbnail size. No foreground people. Subject: Château de Vincennes tall square pale stone medieval keep with four corner turrets, crenellated walls and Gothic Sainte-Chapelle visible inside castle grounds, spring lawn, bright blue sky. Not Versailles."
+  },
+  {
+    "id": "d95",
+    "city": "95 · Val-d'Oise",
+    "zh": "瓦勒德瓦兹省 · 奥维尔教堂",
+    "landmark": "Église d’Auvers-sur-Oise",
+    "fr": "À Auvers-sur-Oise, Vincent van Gogh a peint l'église du village. Il a passé les derniers mois de sa vie dans cette petite ville.",
+    "tr": "在瓦兹河畔奥维尔，文森特·梵高画下了村里的教堂。他在这座小城度过了生命的最后几个月。",
+    "prompt": "Use case: stylized-concept. Asset type: one independent collectible pixel-art postcard for a French learning travel game. Landscape 3:2 full bleed. Polished original 16-bit pixel art with crisp clearly visible square pixel clusters, detailed architecture simplified into strong recognizable silhouettes, limited harmonious palette, no photorealism or smooth painting. No text, typography, watermarks, logos, borders or collage. Buildings must be fully readable at thumbnail size. No foreground people. Subject: Auvers-sur-Oise church viewed from rear with squat square stone bell tower, dark slate roofs and Gothic apse, foreground path splits around grassy church plot, vivid blue sky. Fresh original pixel illustration of the actual building, no copying a painting."
+  },
+  {
+    "id": "d77",
+    "city": "77 · Seine-et-Marne",
+    "zh": "塞纳-马恩省 · 枫丹白露",
+    "landmark": "Château de Fontainebleau",
+    "fr": "Le château de Fontainebleau est célèbre pour son escalier en fer à cheval. C'est là que Napoléon a fait ses adieux à sa garde en 1814.",
+    "tr": "枫丹白露宫以马蹄形楼梯闻名。1814 年，拿破仑就是在这里告别了他的近卫军。",
+    "prompt": "Use case: stylized-concept. Asset type: one independent collectible pixel-art postcard for a French learning travel game. Landscape 3:2 full bleed. Polished original 16-bit pixel art with crisp clearly visible square pixel clusters, detailed architecture simplified into strong recognizable silhouettes, limited harmonious palette, no photorealism or smooth painting. No text, typography, watermarks, logos, borders or collage. Buildings must be fully readable at thumbnail size. No foreground people. Subject: Fontainebleau palace Cour du Cheval Blanc, famous symmetrical double horseshoe exterior stone staircase curving apart and back together before cream facade and brick wings, broad courtyard, gold autumn light."
+  },
+  {
+    "id": "d78",
+    "city": "78 · Yvelines",
+    "zh": "伊夫林省 · 圣日耳曼昂莱",
+    "landmark": "Château de Saint-Germain-en-Laye",
+    "fr": "C'est à Saint-Germain-en-Laye qu'est né Louis XIV. La longue terrasse du château offre une belle vue sur la Seine et sur Paris.",
+    "tr": "路易十四就出生在圣日耳曼昂莱。城堡前长长的露台可以远眺塞纳河和巴黎。",
+    "prompt": "Use case: stylized-concept. Asset type: one independent collectible pixel-art postcard for a French learning travel game. Landscape 3:2 full bleed. Polished original 16-bit pixel art with crisp clearly visible square pixel clusters, detailed architecture simplified into strong recognizable silhouettes, limited harmonious palette, no photorealism or smooth painting. No text, typography, watermarks, logos, borders or collage. Buildings must be fully readable at thumbnail size. No foreground people. Subject: Saint-Germain-en-Laye château distinctive red brick and pale stone Renaissance walls with round corner towers and mostly flat roof terraces, formal terrace and broad view over Seine valley, clipped gardens. Not Versailles palace."
+  },
+  {
+    "id": "d91",
+    "city": "91 · Essonne",
+    "zh": "埃松省 · 萨克雷同步辐射光源",
+    "landmark": "Synchrotron SOLEIL · Saint-Aubin",
+    "fr": "Sur le plateau de Saclay, le synchrotron SOLEIL est un grand anneau où les scientifiques étudient la matière grâce à une lumière très puissante.",
+    "tr": "在萨克雷高原，SOLEIL 同步辐射光源是一座巨大的环形建筑，科学家们用极强的光来研究物质。",
+    "prompt": "Use case: stylized-concept. Asset type: one independent collectible pixel-art postcard for a French learning travel game. Landscape 3:2 full bleed. Polished original 16-bit pixel art with crisp clearly visible square pixel clusters, detailed architecture simplified into strong recognizable silhouettes, limited harmonious palette, no photorealism or smooth painting. No text, typography, watermarks, logos, borders or collage. Buildings must be fully readable at thumbnail size. No foreground people. Subject: Elevated oblique view of SOLEIL synchrotron scientific facility at Saint-Aubin on Saclay plateau: broad low circular ring-shaped accelerator building with large round central courtyard and radial technical roof details, surrounding green campus and small office blocks. Real research campus, not a futuristic flying saucer, no glowing magic ring or text."
+  }
+]
