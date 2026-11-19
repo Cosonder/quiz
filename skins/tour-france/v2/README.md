@@ -1,9 +1,7 @@
-# France and Paris postcards
+# France and Paris landmark maps and postcards
 
-53 independently generated pixel-art postcards: 26 French destinations and 27 Paris / Île-de-France locations (20 arrondissements and 7 surrounding departments).
+Published in game: postcards in 1.9.47, level-selection maps in 1.9.48.
 
-- Images: `cards/`, JPEG, 960 × 640 pixels.
-- Generation prompts and captions: `prompts.json`.
-- Generated with the built-in image_gen tool; artwork is a stylised interpretation of landmarks.
+53 pixel-art postcards (960 × 640), two landmark maps, and a browsable catalogue. See index.html for postcards, maps.html for map previews, map-sources.md for geographic attribution and prompts.json for image prompts.
 
-Uploaded on 2026-11-19 as an asset collection. Game integration is not part of this upload.
+Previous artwork and coordinates are preserved in ../legacy-1.9.46/. Existing learning and reward identifiers are unchanged.
