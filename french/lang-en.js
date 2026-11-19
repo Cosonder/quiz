@@ -4773,6 +4773,9 @@ const LANG_DICT = {
 "魁北克、比利时法语区和瑞士法语区选关地图统一为紧凑像素风，仅显示小号关卡编号，整张地图自适应屏幕，无需横向或纵向拖动；保留原有关卡、解锁条件、星数和明信片。": "Québec, French-speaking Belgium and French-speaking Switzerland now use compact pixel maps with small level numbers. Each full map fits the screen without panning. Levels, unlock rules, stars and postcards are preserved.",
 "修复目录标签与“下一组”不同步的问题：勾选 A1、A2 等标签后，无需先点检索，下一组即按所选范围出题；保留当前组答案，筛选无结果时提示换条件，不混入其他难度。": "Fixed directory tags not applying to the next set: selecting A1, A2 or other tags now applies to the next set without pressing Search first. Current answers are preserved; an empty selection result asks you to change filters instead of including other levels.",
 "标签已更改：点击“下一组”会自动应用；当前这一组保持不变。也可点击“检索并开始做题”立即开始。": "Tags changed: Next set will apply them automatically. Your current set stays unchanged. You can also use Search and start to begin immediately.",
-"下一组（应用所选标签）": "Next set (apply selected tags)"
+"下一组（应用所选标签）": "Next set (apply selected tags)",
+"听力修改题型、难度、内容或搜索条件后，“下一组”和继续练习会应用最新筛选；语法与听力的待应用筛选分别保留，听力错题筛选不再改动普通练习条件。生词本练空后明确提示完成，不再自动转为全部单词；保留当前组答案及学习记录。": "Listening filter changes now apply to the next set and resumed practice. Grammar and listening keep separate pending filters, and filtering listening mistakes does not change regular practice. An empty vocabulary review list now shows completion instead of switching to all words. Current answers and learning records are preserved.",
+"下一组（应用听力筛选）": "Next set (apply listening filters)",
+"生词本已练完。可回到词表选择其他练习。": "Your vocabulary review list is complete. Return to the word list to choose another practice."
 };
 

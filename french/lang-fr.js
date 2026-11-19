@@ -4773,6 +4773,9 @@ const LANG_DICT = {
 "魁北克、比利时法语区和瑞士法语区选关地图统一为紧凑像素风，仅显示小号关卡编号，整张地图自适应屏幕，无需横向或纵向拖动；保留原有关卡、解锁条件、星数和明信片。": "Le Québec, la Belgique francophone et la Suisse romande adoptent des cartes pixel compactes avec de petits numéros. Chaque carte tient entièrement à l'écran sans défilement. Les étapes, le déblocage, les étoiles et les cartes postales sont conservés.",
 "修复目录标签与“下一组”不同步的问题：勾选 A1、A2 等标签后，无需先点检索，下一组即按所选范围出题；保留当前组答案，筛选无结果时提示换条件，不混入其他难度。": "Correction des filtres du répertoire : les étiquettes choisies, dont A1 et A2, s'appliquent à la série suivante sans lancer une recherche. Les réponses en cours sont conservées ; si aucun exercice ne correspond, il faut modifier les filtres sans ajouter d'autres niveaux.",
 "标签已更改：点击“下一组”会自动应用；当前这一组保持不变。也可点击“检索并开始做题”立即开始。": "Étiquettes modifiées : Série suivante les appliquera automatiquement. La série en cours reste inchangée. Vous pouvez aussi choisir Rechercher et démarrer pour commencer immédiatement.",
-"下一组（应用所选标签）": "Série suivante (appliquer les étiquettes)"
+"下一组（应用所选标签）": "Série suivante (appliquer les étiquettes)",
+"听力修改题型、难度、内容或搜索条件后，“下一组”和继续练习会应用最新筛选；语法与听力的待应用筛选分别保留，听力错题筛选不再改动普通练习条件。生词本练空后明确提示完成，不再自动转为全部单词；保留当前组答案及学习记录。": "Les filtres d'écoute modifiés s'appliquent à la série suivante et à la reprise. Les filtres en attente de grammaire et d'écoute sont séparés, et le filtrage des erreurs ne modifie plus la pratique normale. Le carnet de mots terminé affiche un message au lieu de passer à tous les mots. Les réponses et la progression sont conservées.",
+"下一组（应用听力筛选）": "Série suivante (appliquer les filtres d'écoute)",
+"生词本已练完。可回到词表选择其他练习。": "Le carnet de mots est terminé. Revenez à la liste pour choisir un autre entraînement."
 };
 
