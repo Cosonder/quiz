@@ -4784,6 +4784,18 @@ const LANG_DICT = {
 "已设难度时，计划只安排标有对应等级的题目；变位可到变位板块单独练习。已完成的题目仍计入今日进度。": "Avec un niveau choisi, le plan inclut uniquement les exercices portant ce niveau. La conjugaison reste disponible dans sa rubrique. Les exercices terminés comptent toujours dans la progression du jour.",
 "当前筛选下没有错题。请调整筛选；原有记录仍然保留。": "Aucune erreur ne correspond à ces filtres. Modifiez-les ; vos résultats sont conservés.",
 "普通语法题组按所设比例出题；计划与复习严格使用目录所选难度，未选择时使用此处难度。零基础入口、听力目录与游戏保留各自规则。": "Les séries de grammaire utilisent les proportions configurées. Les plans et révisions suivent strictement les niveaux du répertoire, ou celui-ci à défaut. L’initiation, l’écoute et les jeux conservent leurs règles.",
-"每天首次生成；改变难度时仅调整未完成部分：到期该复习的题（最多 ${PLAN_REVIEW_MAX} 道，最该复习的在前）、从最近做的那一轮接着往下的 ${PLAN_NEW} 道新题、最近 60 天答错比例最高的标签里 ${PLAN_WEAK} 道题": "Généré chaque jour ; un changement de niveau ajuste seulement les exercices non terminés : jusqu’à ${PLAN_REVIEW_MAX} révisions dues, ${PLAN_NEW} nouveaux exercices et ${PLAN_WEAK} exercices de votre étiquette la plus faible sur les 60 derniers jours"
+"每天首次生成；改变难度时仅调整未完成部分：到期该复习的题（最多 ${PLAN_REVIEW_MAX} 道，最该复习的在前）、从最近做的那一轮接着往下的 ${PLAN_NEW} 道新题、最近 60 天答错比例最高的标签里 ${PLAN_WEAK} 道题": "Généré chaque jour ; un changement de niveau ajuste seulement les exercices non terminés : jusqu’à ${PLAN_REVIEW_MAX} révisions dues, ${PLAN_NEW} nouveaux exercices et ${PLAN_WEAK} exercices de votre étiquette la plus faible sur les 60 derniers jours",
+"当前筛选下没有可练习的词汇题，请调整作答状态或题型。": "Aucun exercice de vocabulaire ne correspond. Modifiez l’état ou les types d’exercices.",
+"词汇、变位和口语筛选显示点击后的预计总题数；难度标签遵守任一标签（或）／同时满足（与）。出题方式新增未做过／已做过筛选。公开留言支持用户评论，默认显示前三条（含管理员回复）。做题日历色阶调整为 1–9、10–49、50–100、101+ 题。": "Les filtres de vocabulaire, conjugaison et oral prédisent les totaux après sélection. Les niveaux suivent OU/ET. Des filtres non tenté/déjà tenté sont disponibles. Les messages publics acceptent les commentaires et affichent les trois premiers, réponses administratives comprises. Le calendrier utilise les plages 1–9, 10–49, 50–100 et 101+ réponses.",
+"任一标签（或）": "Une étiquette (OU)",
+"同时满足（与）": "Toutes les étiquettes (ET)",
+"未做过": "Non tenté",
+"已做过": "Déjà tenté",
+"作答状态": "État des exercices",
+"难度标签也遵守或／与；难度范围与内容标签同时满足。未做过／已做过单独限定作答状态，两项都选表示不限。": "Les niveaux suivent aussi OU/ET. Les groupes de niveaux et de contenu doivent tous deux correspondre. L’état est un filtre indépendant ; choisir les deux supprime cette restriction.",
+"标签数字表示点击后可检索的总题数（包含人称及阴阳性形式）；掌握进度显示在下方。": "Les nombres indiquent le total après le clic, personnes et genres compris. La maîtrise figure ci-dessous.",
+"目录数字表示选择该项后可检索的总题数；作答状态按每个词的每种题型分别判断，从下一组生效。": "Le répertoire indique le total après sélection. L’état est suivi par mot et type d’exercice et s’applique dès la série suivante.",
+" 多（1–9 / 10–49 / 50–100 / 101+ 题）": " Plus (1–9 / 10–49 / 50–100 / 101+ réponses)",
+"${cjQuestionCount()} 题 · ${pool.length} 个“动词 + 时态” · 进度 ": "${cjQuestionCount()} questions · ${pool.length} couples verbe/temps · Progression "
 };
 
