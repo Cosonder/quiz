@@ -183,6 +183,17 @@ html.qf #stage > section.q-card.listening-card > .listening-mode{margin:0}
 /* Regional postcard collections keep mobile cards readable without a wide scroll. */
 .dlc-region-preview{margin:18px 0 8px}.dlc-region-preview figcaption{font-size:.85rem;line-height:1.5;margin:6px 0}.dlc-region-album{margin:12px 0}.dlc-region-covers{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px;margin:12px 0}.dlc-region-covers button{min-width:0;padding:0 0 10px;display:flex;flex-direction:column;gap:6px;overflow:hidden;white-space:normal}.dlc-region-covers img{width:100%;height:auto;aspect-ratio:3/2;object-fit:cover}.dlc-region-covers span,.dlc-region-covers small{padding:0 8px;overflow-wrap:anywhere}.dlc-region-covers .dlc-card-locked{width:100%;aspect-ratio:3/2;display:grid;place-items:center;background:rgba(120,130,140,.12);padding:0;font-size:2rem}.dlc-region-covers small{font-weight:normal;line-height:1.4}.dlc-region-covers button:disabled{opacity:.75}@media(max-width:600px){.dlc-region-covers{grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}.dlc-region-covers button{font-size:.85rem}}
 
+/* Match the compact France/Paris pixel maps; no scroll or region-code badges. */
+.dlc-map-scroll.compact-dlc-wrap{display:flex;justify-content:center;overflow:visible;max-height:none;width:100%;border:0;background:none;border-radius:0;margin:12px auto}
+.dlc-map.compact-dlc-map{position:relative;width:min(100%,560px,calc(54svh * var(--map-ratio)));height:auto;aspect-ratio:var(--map-ratio);border:2px solid #739793;border-radius:4px;overflow:hidden;box-shadow:0 3px 0 #567d7130;background:#b8d9e6;margin:0}
+.compact-dlc-map svg{width:100%;height:100%;image-rendering:pixelated}
+.compact-dlc-map .dlc-region{transform:translate(-50%,-50%);width:20px;height:20px;min-width:20px;min-height:20px;padding:0;border:1px solid #294e4b;border-radius:3px;background:#fff9df;color:#233d39;font:700 10px/1 ui-monospace,SFMono-Regular,Consolas,monospace;box-shadow:1px 2px 0 #294e4b45}
+.compact-dlc-map .dlc-region.locked{background:#e6ebdd;color:#63756b;border-color:#8c9f90;box-shadow:1px 1px 0 #294e4b25}
+.compact-dlc-map .dlc-region.done{background:#bde5b8;color:#24482c;border-color:#4d8059}
+.compact-dlc-map .dlc-region.selected{background:#f7cb76;color:#402f18;border-color:#8f652e;outline:2px solid #fff8dc;outline-offset:1px;z-index:4}
+.compact-dlc-map .dlc-region:focus-visible{outline:2px solid #3259c3;outline-offset:2px;z-index:5}
+@media(max-width:600px){.compact-dlc-map .dlc-region{width:16px;height:16px;min-width:16px;min-height:16px;font-size:9px;border-radius:2px}.tour-card>h2{font-size:1.15rem;margin:12px 0}.compact-dlc-wrap+.sub{font-size:.75rem}}
+
 </style></head><body>
 <title>法语语法小测验</title>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@600;900&family=Noto+Sans+SC:wght@400;500;700&display=swap">
@@ -1792,12 +1803,12 @@ html.qf #stage > section.q-card > .explain { flex: none !important; height: clam
   </div>
 </div>
 
-<script src="data-d0e0530bcb0a.js"></script>
+<script src="data-57f31d571321.js"></script>
 <script>
 (()=>{const key='fq-boot-retry-1.9.44';
  if(typeof ROUNDS!=='undefined'&&typeof BANK!=='undefined'&&typeof LANG_FILES!=='undefined'){
   try{sessionStorage.removeItem(key);}catch{}
-  document.write('<script src="app-44445acbef8d.js"><\/script>');return;
+  document.write('<script src="app-0674527d75ed.js"><\/script>');return;
  }
  const note=document.getElementById('saveNote');if(note)note.textContent='正在下载更新，请稍候… / Downloading update… / Téléchargement de la mise à jour…';
  const retry=document.createElement('button');retry.type='button';retry.className='btn';retry.textContent='重新加载 / Reload / Recharger';retry.onclick=()=>location.reload();document.getElementById('stage')?.append(retry);
