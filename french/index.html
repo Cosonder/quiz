@@ -1561,6 +1561,9 @@ button.fb-vote:disabled{cursor:default;opacity:.65}
 .sk-asteroid-rose .sk-card { border-color:var(--accent); }
 @media (max-width:600px) { :root[data-skin="asteroid-rose"] body::before { background-size:auto 70%; background-position:left bottom; -webkit-mask-image:linear-gradient(to bottom, transparent 30%, #000 calc(30% + 48px)); mask-image:linear-gradient(to bottom, transparent 30%, #000 calc(30% + 48px)); } }
 
+
+/* Landmark postcards v2 */
+.pc-art img,.tour-pc img{display:block;width:100%;height:100%;object-fit:contain}
 /* ---------- 做题全屏：一屏放下一道题，页面不能上下滚动；右上角返回 / 退出 ---------- */
 html.qf, html.qf body { overflow: hidden; height: 100%; overscroll-behavior: none; }
 html.qf header, html.qf .boards, html.qf .tocwrap, html.qf #progress, html.qf .keys-note, html.qf #saveNote, html.qf .plan-slot, html.qf .skin-reveal { display: none !important; }
@@ -1773,12 +1776,12 @@ html.qf #stage > section.q-card > .explain { flex: none !important; height: clam
   </div>
 </div>
 
-<script src="data-b40b22d10584.js"></script>
+<script src="data-d5919cb9ef12.js"></script>
 <script>
 (()=>{const key='fq-boot-retry-1.9.44';
  if(typeof ROUNDS!=='undefined'&&typeof BANK!=='undefined'&&typeof LANG_FILES!=='undefined'){
   try{sessionStorage.removeItem(key);}catch{}
-  document.write('<script src="app-a51d7e408aa2.js"><\/script>');return;
+  document.write('<script src="app-90ac98e0ace0.js"><\/script>');return;
  }
  const note=document.getElementById('saveNote');if(note)note.textContent='正在下载更新，请稍候… / Downloading update… / Téléchargement de la mise à jour…';
  const retry=document.createElement('button');retry.type='button';retry.className='btn';retry.textContent='重新加载 / Reload / Recharger';retry.onclick=()=>location.reload();document.getElementById('stage')?.append(retry);
