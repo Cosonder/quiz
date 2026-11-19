@@ -3296,7 +3296,7 @@ function homeOf(q) {
   return "ch:" + q.ch;
 }
 
-function makeSet(key) { let qs = members(key); if (typeof qlApply === "function") qs = qlApply(qs, key); if (key.startsWith("listen:") && typeof listeningInterleave === "function") qs = listeningInterleave(qs, key); return { key, label: labelOf(key), qs }; }   // 法语页：按设置里的难度等级挑题
+function makeSet(key) { let qs = members(key); if (typeof qlApply === "function") qs = qlApply(qs, key); if (key.startsWith("listen:") && typeof listeningInterleave === "function") qs = listeningInterleave(qs, key); if(typeof studySortQuestions === "function")qs=studySortQuestions(qs,key); return { key, label: labelOf(key), qs }; }   // 法语页：按设置里的难度等级挑题
 // 记住每一组做到第几题（只存在这台设备的浏览器里）
 function loadPos() { try { const p = JSON.parse(localStorage.getItem("sq-pos") || "{}"); return p && typeof p === "object" && !Array.isArray(p) ? p : {}; } catch (e) { return {}; } }
 function savePos() { try { const m = loadPos(); m[set.key] = idx; localStorage.setItem("sq-pos", JSON.stringify(m)); } catch (e) {} }
@@ -3412,7 +3412,7 @@ function goPrev() { if (idx > bStart) { idx--; renderQuestion(); } }
 document.addEventListener("keydown", e => {
   if (view !== "quiz" || !set || e.ctrlKey || e.metaKey || e.altKey || stage.querySelector(".board-intro")) return;
   const t = e.target;
-  if (t && t.closest && t.closest("#petWidget, #petLauncher, #petPage")) return;
+  if (t && t.closest && t.closest("#petWidget, #petLauncher, #petPage, .study-feedback")) return;
   if (t && /^(INPUT|SELECT|TEXTAREA)$/.test(t.tagName)) return;
   const k = e.key, click = id => { const b = document.getElementById(id); if (b && !b.disabled) { e.preventDefault(); b.click(); return true; } return false; };
   if (rv) {   // 正在复习知识点
@@ -6110,6 +6110,7 @@ function setFold(wrap, key, title, initialOpen = false) {
 // 每次用户可见更新都新增记录：默认只递增第三位 1.x.y → 1.x.(y+1)，超过 9 继续到 10、11；第二位升级需用户明确要求。
 // 首位保持 1，只有用户明确要求才可修改；历史记录保留。完整发布规则见根目录 AGENTS.md。
 const CHANGELOG = [
+  {"v": "1.9.55", "p": "fr", "d": "2026-11-20", "items": ["题目答完后可以点赞、不满意和留言；单词也支持留言，评论默认收起，仅显示数量。完整检索结果可按点赞或留言数排序，单词可按不计名词冠词的字典序排序。支持上传圆形头像，未上传时分配固定的随机明信片头像，并在排行榜与留言评论区统一显示。"]},
   {"v": "1.9.54", "d": "2026-11-20", "items": ["词汇、变位和口语筛选显示点击后的预计总题数；难度标签遵守任一标签（或）／同时满足（与）。出题方式新增未做过／已做过筛选。公开留言支持用户评论，默认显示前三条（含管理员回复）。做题日历色阶调整为 1–9、10–49、50–100、101+ 题。"]},
   {"v": "1.9.53", "d": "2026-11-19", "items": ["今日计划与复习严格遵守所选难度，调整计划时保留已完成题目；错题复习只包含当前筛选内的错题，不再进入整章或在无结果时扩大范围。语法、错题和听力标签旁数字实时显示再次点击该标签后预计匹配的总题数，并随任一／同时满足、选择与取消同步更新。"]},
   {"v": "1.9.52", "d": "2026-11-19", "p": "fr", "items": ["听力修改题型、难度、内容或搜索条件后，“下一组”和继续练习会应用最新筛选；语法与听力的待应用筛选分别保留，听力错题筛选不再改动普通练习条件。生词本练空后明确提示完成，不再自动转为全部单词；保留当前组答案及学习记录。"]},
@@ -6539,6 +6540,7 @@ function tagPanel() {
   });
   clear.addEventListener("click", () => { pickTags.clear(); tagRandom = false; selectionChanged(); });
   act.append(go, clear);
+  if(typeof studySortControl === "function")box.append(studySortControl("q",()=>{if(quiz){if(pickTags.size||tagRandom)startSet(tagKey("tag"),true);else if(set)startSet(set.key,true);}else drawBook();}));
   box.append(sum, mode, act, el("p", "sub", "标签旁数字表示点击该标签后预计匹配的总题数；点击已选标签会取消选择。"));
   const rg = el("div", "tag-group"), rw = el("div", "chips");
   rg.append(el("div", "tag-gname", "出题方式"), rw); rw.append(randChip);
@@ -7058,7 +7060,9 @@ function drawBook() {
   if (typeof tocInBook === "function") tocInBook(card);   // 法语页：错题的筛选目录放在错题本里
 
   const scope = all.filter(d => (bookFilter === "all" || inGroup(bookFilter, BY_ID.get(d.qid))) && (typeof practiceAllows !== "function" || practiceAllows(BY_ID.get(d.qid), mistakeKey())));
-  const scopeWrong = scope.filter(d => !d.isCorrect);
+  let scopeWrong = scope.filter(d => !d.isCorrect);
+  const ranked = typeof studySort !== "undefined" && studySort.q !== "normal";
+  if(ranked){const ranks=new Map(studySorted(scopeWrong.map(d=>BY_ID.get(d.qid)),"q").map((q,i)=>[q.id,i]));scopeWrong.sort((a,b)=>ranks.get(a.qid)-ranks.get(b.qid));}
   const stats = el("div", "stats");
   [[scope.length, "已答题数"], [scopeWrong.length, "错题"], [scope.length ? Math.round((scope.length - scopeWrong.length) / scope.length * 100) + "%" : "–", "正确率"]]
     .forEach(([v, k]) => { const st = el("div", "stat"); st.append(el("b", null, String(v)), el("span", null, k)); stats.append(st); });
@@ -7076,7 +7080,7 @@ function drawBook() {
   // 选了某一组就整组列出；看全部时，语法题按章节、听力题按集或按轮分组
   const groups = new Map();
   scopeWrong.forEach(d => {
-    const k = bookFilter === "all" || parseTagKey(bookFilter) ? homeOf(BY_ID.get(d.qid)) : bookFilter;
+    const k = ranked ? mistakeKey() : bookFilter === "all" || parseTagKey(bookFilter) ? homeOf(BY_ID.get(d.qid)) : bookFilter;
     if (!groups.has(k)) groups.set(k, []);
     groups.get(k).push(d);
   });

@@ -1333,6 +1333,11 @@ button.fb-vote:disabled{cursor:default;opacity:.65}
 .fb-public{border-top:1px solid var(--line,#ddd);padding-top:16px;min-width:0}.fb-like-row{display:flex;align-items:center;flex-wrap:wrap;gap:8px;margin-top:10px}
 
 .fb-discussion{margin:12px 0}.fb-discussion h5{margin:8px 0}.fb-discussion .fb-reply{padding:8px 12px;margin:8px 0}.fb-comment-form textarea{min-height:90px}.fb-discussion [hidden]{display:none!important}
+/* Compact round avatars and collapsed, post-answer discussions. */
+.user-avatar{display:inline-flex;vertical-align:middle;width:36px;height:36px;flex:0 0 36px;border-radius:50%;overflow:hidden;background:#eee5d5;border:1px solid var(--line,#ded9cf);margin-right:8px;align-items:center;justify-content:center}
+.user-avatar>img,.avatar-postcard,.avatar-postcard>img{width:100%;height:100%;object-fit:cover;object-position:center;display:block}.avatar-postcard>img{image-rendering:pixelated}.avatar-postcard{overflow:hidden}.avatar-postcard>img{transform:scale(1.25)}
+.avatar-preview .user-avatar{width:80px;height:80px}.avatar-settings .btn{margin:4px 8px 4px 0}.fb-reply .user-avatar{width:28px;height:28px;flex-basis:28px}.fb-message>.user-avatar{float:left}.fb-message>time{display:inline-block}.fb-message-body{clear:both}.soc-name{display:flex;align-items:center;min-width:0}.soc-name .user-avatar{margin-right:8px}.soc-name>span:not(.user-avatar){overflow-wrap:anywhere}
+.study-feedback{border-top:1px solid var(--line,#ded9cf);padding-top:12px;margin-top:12px;text-align:left;font-size:14px}.study-feedback .fb-note:empty{display:none}.study-discussion{margin-top:8px}.study-discussion>summary{cursor:pointer;color:var(--accent,#795c3d);padding:6px 0;list-style:none}.study-discussion>summary::-webkit-details-marker{display:none}.study-discussion textarea{display:block;box-sizing:border-box;width:100%;padding:10px;border:1px solid var(--line,#ded9cf);border-radius:8px;background:var(--card,#fff);color:inherit;margin:10px 0}.study-feedback .fb-comments{max-height:360px;overflow:auto}.study-sort{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin:12px 0}.study-sort label{display:flex;flex-wrap:wrap;gap:8px;align-items:center}.study-sort select{font:inherit;max-width:100%;padding:6px;border-radius:6px}.study-sort>small{flex-basis:100%;color:var(--muted,#777)}.v-rvlayer .study-feedback{width:100%}.v-rvlayer:has(.study-discussion[open]){max-height:none}
 .share-panel{margin-top:16px}.share-panel[hidden],.share-panel [hidden]{display:none!important}.share-poster{display:block;width:min(100%,280px);height:auto;border-radius:12px;border:1px solid var(--line,#8885);margin:0 0 16px}.share-panel .actions{display:flex;flex-wrap:wrap;gap:10px}.share-panel .btn{white-space:normal;min-height:44px;text-align:center}.share-panel a.btn{text-decoration:none;display:inline-flex;align-items:center}.share-url{box-sizing:border-box;width:100%;padding:10px;margin-top:12px;font:inherit;min-width:0}.share-confirm{display:flex;align-items:center;gap:8px;margin:12px 0;line-height:1.5}.share-confirm input{width:20px;height:20px;flex-shrink:0}.share-panel p{overflow-wrap:anywhere}
 
 .share-page{max-width:760px;margin:0 auto}.share-page .share-poster{width:min(100%,360px);margin:16px auto}.share-picker{display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap}.share-caption{margin:0}.share-page .actions{justify-content:center}.share-page h2{margin-top:16px}
@@ -1805,12 +1810,12 @@ html.qf #stage > section.q-card > .explain { flex: none !important; height: clam
   </div>
 </div>
 
-<script src="data-c826ae30e7ea.js"></script>
+<script src="data-3db4cefd914e.js"></script>
 <script>
 (()=>{const key='fq-boot-retry-1.9.44';
  if(typeof ROUNDS!=='undefined'&&typeof BANK!=='undefined'&&typeof LANG_FILES!=='undefined'){
   try{sessionStorage.removeItem(key);}catch{}
-  document.write('<script src="app-e120d7aa1c7b.js"><\/script>');return;
+  document.write('<script src="app-0523843a6eaf.js"><\/script>');return;
  }
  const note=document.getElementById('saveNote');if(note)note.textContent='正在下载更新，请稍候… / Downloading update… / Téléchargement de la mise à jour…';
  const retry=document.createElement('button');retry.type='button';retry.className='btn';retry.textContent='重新加载 / Reload / Recharger';retry.onclick=()=>location.reload();document.getElementById('stage')?.append(retry);
