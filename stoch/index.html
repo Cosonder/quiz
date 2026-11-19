@@ -6097,6 +6097,7 @@ function setFold(wrap, key, title, initialOpen = false) {
 // 每次用户可见更新都新增记录：默认只递增第三位 1.x.y → 1.x.(y+1)，超过 9 继续到 10、11；第二位升级需用户明确要求。
 // 首位保持 1，只有用户明确要求才可修改；历史记录保留。完整发布规则见根目录 AGENTS.md。
 const CHANGELOG = [
+  {"v": "1.9.51", "d": "2026-11-19", "p": "fr", "items": ["修复目录标签与“下一组”不同步的问题：勾选 A1、A2 等标签后，无需先点检索，下一组即按所选范围出题；保留当前组答案，筛选无结果时提示换条件，不混入其他难度。"]},
   {"v": "1.9.50", "d": "2026-11-19", "p": "fr", "items": ["魁北克、比利时法语区和瑞士法语区选关地图统一为紧凑像素风，仅显示小号关卡编号，整张地图自适应屏幕，无需横向或纵向拖动；保留原有关卡、解锁条件、星数和明信片。"]},
   {"v": "1.9.49", "d": "2026-11-19", "p": "fr", "items": ["法国和巴黎选关地图恢复像素风格，移除地图上的明信片缩略图，仅显示精简的关卡编号；地图整体缩小并自适应屏幕，无需拖动即可查看全部站点，保留定位选择、收藏与原有进度。"]},
   {"v": "1.9.48", "d": "2026-11-19", "p": "fr", "items": ["法国与巴黎选关地图换成配套的地标地图，站点显示新明信片缩略图；支持滑动浏览和下拉定位，巴黎 20 区与周边七省分区展示。原有关卡顺序、解锁条件、星数和奖励记录保持不变。"]},
@@ -6460,13 +6461,20 @@ function tagPanel() {
   const chips = [];
   const randChip = el("button", "chip"); randChip.type = "button"; randChip.id = "randChip";
   randChip.append(document.createTextNode("随机"), el("small", null, "打乱顺序"));
-  randChip.addEventListener("click", () => { tagRandom = !tagRandom; saveTags(); refresh(); });
+  randChip.addEventListener("click", () => { tagRandom = !tagRandom; selectionChanged(); });
+  const selectionChanged = () => {
+    if (quiz && typeof queueQuizTags === "function") queueQuizTags();
+    saveTags(); refresh();
+  };
   const refresh = () => {
     const tags = [...pickTags];
     const n = tags.length ? pool.filter(q => tagMatch(q, tags, tagMode)).length : tagRandom ? pool.length : 0;
     sum.textContent = "";
     if (!tags.length && !tagRandom) sum.append(document.createTextNode(quiz ? "勾选标签来检索题目（可多选）" : "勾选标签来筛选错题（可多选）"));
     else { sum.append(document.createTextNode(tags.length ? `已选 ${tags.length} 个标签 · ${quiz ? "共" : "错题"} ` : (quiz ? "全部题目 · 共 " : "全部错题 · 共 ")), el("b", null, String(n)), document.createTextNode(" 题" + (tagRandom ? " · 随机顺序" : ""))); }
+    if (quiz && typeof pendingQuizTagKey !== "undefined" && pendingQuizTagKey) {
+      sum.append(el("p", "sub", "标签已更改：点击“下一组”会自动应用；当前这一组保持不变。也可点击“检索并开始做题”立即开始。"));
+    }
     go.disabled = !n;
     clear.disabled = !tags.length && !tagRandom;
     randChip.setAttribute("aria-pressed", String(tagRandom));
@@ -6475,7 +6483,7 @@ function tagPanel() {
   [["any", "任一标签"], ["all", "同时满足"]].forEach(([m, t]) => {
     const b = el("button", null, t); b.type = "button";
     b.setAttribute("aria-pressed", String(tagMode === m));
-    b.addEventListener("click", () => { tagMode = m; saveTags(); mode.querySelectorAll("button").forEach(x => x.setAttribute("aria-pressed", String(x === b))); refresh(); });
+    b.addEventListener("click", () => { tagMode = m; mode.querySelectorAll("button").forEach(x => x.setAttribute("aria-pressed", String(x === b))); selectionChanged(); });
     mode.append(b);
   });
   go.addEventListener("click", () => {
@@ -6483,7 +6491,7 @@ function tagPanel() {
     else { bookFilter = tagKey("wrong"); renderToc(); drawBook(); }
     afterPick();
   });
-  clear.addEventListener("click", () => { pickTags.clear(); tagRandom = false; saveTags(); refresh(); if (!quiz && bookFilter !== "all") { bookFilter = "all"; renderToc(); drawBook(); } });
+  clear.addEventListener("click", () => { pickTags.clear(); tagRandom = false; selectionChanged(); if (!quiz && bookFilter !== "all") { bookFilter = "all"; renderToc(); drawBook(); } });
   act.append(go, clear);
   box.append(sum, mode, act);
   const rg = el("div", "tag-group"), rw = el("div", "chips");
@@ -6499,7 +6507,7 @@ function tagPanel() {
       c.type = "button"; c.dataset.tag = t;
       c.append(document.createTextNode(t), el("small", null, String(n)));
       c.disabled = !n && !pickTags.has(t);
-      c.addEventListener("click", () => { pickTags.has(t) ? pickTags.delete(t) : pickTags.add(t); saveTags(); refresh(); });
+      c.addEventListener("click", () => { pickTags.has(t) ? pickTags.delete(t) : pickTags.add(t); selectionChanged(); });
       chips.push(c);
       wrap.append(c);
     });
