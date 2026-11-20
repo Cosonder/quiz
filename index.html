@@ -36,7 +36,7 @@ a.card:focus-visible { outline: 3px solid var(--accent); outline-offset: 2px; }
 .offline { font-size: .9rem; margin: 4px 0 0; padding: 10px 14px; border-radius: 10px; background: var(--card); border: 1px solid var(--line); color: var(--muted); }
 .offline.ok { color: var(--fg); border-color: var(--accent); }
 </style>
-<link rel="manifest" href="./manifest.webmanifest"><link rel="apple-touch-icon" href="./icons/fr-app-v61-180.png"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-title" content="选择题练习"><meta name="theme-color" content="#2f5bd3"><script>
+<link rel="manifest" href="./manifest.webmanifest"><link rel="apple-touch-icon" href="./icons/fr-app-v61-180.png"><link rel="icon" type="image/png" sizes="32x32" href="./icons/fr-app-v61-32.png"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-title" content="选择题练习"><meta name="theme-color" content="#2f5bd3"><script>
 // 注册离线缓存（Service Worker），并在首页显示离线准备情况；下面 sw.js 的路径由 build.py 按页面所在位置填好
 (() => {
   if (!("serviceWorker" in navigator) || location.protocol === "file:") return;
@@ -95,7 +95,7 @@ a.card:focus-visible { outline: 3px solid var(--accent); outline-offset: 2px; }
   });
 })();
 </script>
-<link rel="icon" type="image/png" sizes="32x32" href="./icons/fr-app-v61-32.png"></head>
+</head>
 <body>
 <main>
   <img src="icons/fr-home-v60-512.png" width="64" height="64" alt="" style="border-radius:14px;margin-bottom:12px"><h1>选择题练习</h1>
