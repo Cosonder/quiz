@@ -4802,6 +4802,7 @@ const LANG_DICT = {
 "压缩留言区留白，统一选择答案前后的题目布局，减少选项位置变化。单词卡片只保留原有配图评价，并移至留言上方。": "Réduction des espaces dans les commentaires et stabilisation des choix avant et après la réponse. Les cartes de mots conservent une seule ligne d’avis sur l’image, juste au-dessus des commentaires.",
 "设置页版本号上方新增 Buy me some Token 打赏入口，支持 1、3、5、10 元及自定义金额，通过微信或支付宝收款码支持网站；收款码配有学习伙伴装饰边框。": "Buy me some Token apparaît au-dessus de la version dans les réglages : 1, 3, 5, 10 yuans ou un montant libre via les codes WeChat Pay et Alipay, décorés de compagnons d’apprentissage.",
 "打赏按钮和收款码边框标题统一改为 Buy me some Tokens。": "Le bouton de soutien et le titre du cadre de paiement s’intitulent désormais Buy me some Tokens.",
-"更新法语学习品牌图标：金色铁塔用于首页，徽章用于主屏幕及浏览器图标，近景铁塔用于巴黎塔尖入口。": "Nouvelle identité visuelle : la tour dorée sur l’accueil, le médaillon comme icône d’écran d’accueil et de navigateur, et la tour en gros plan à l’entrée de la Flèche de Paris."
+"更新法语学习品牌图标：金色铁塔用于首页，徽章用于主屏幕及浏览器图标，近景铁塔用于巴黎塔尖入口。": "Nouvelle identité visuelle : la tour dorée sur l’accueil, le médaillon comme icône d’écran d’accueil et de navigateur, et la tour en gros plan à l’entrée de la Flèche de Paris.",
+"放大主屏幕及浏览器图标中的铁塔徽章，减少四周留白，让小尺寸图标更清晰。": "Agrandissement du médaillon de la tour Eiffel dans les icônes d’accueil et du navigateur pour une meilleure lisibilité en petit format."
 };
 
