@@ -4797,6 +4797,7 @@ const LANG_DICT = {
 "目录数字表示选择该项后可检索的总题数；作答状态按每个词的每种题型分别判断，从下一组生效。": "Le répertoire indique le total après sélection. L’état est suivi par mot et type d’exercice et s’applique dès la série suivante.",
 " 多（1–9 / 10–49 / 50–100 / 101+ 题）": " Plus (1–9 / 10–49 / 50–100 / 101+ réponses)",
 "${cjQuestionCount()} 题 · ${pool.length} 个“动词 + 时态” · 进度 ": "${cjQuestionCount()} questions · ${pool.length} couples verbe/temps · Progression ",
-"题目答完后可以点赞、不满意和留言；单词也支持留言，评论默认收起，仅显示数量。完整检索结果可按点赞或留言数排序，单词可按不计名词冠词的字典序排序。支持上传圆形头像，未上传时分配固定的随机明信片头像，并在排行榜与留言评论区统一显示。": "Après chaque réponse, aimez, désapprouvez ou commentez les questions. Les mots acceptent aussi des commentaires, repliés par défaut avec leur nombre. Triez tous les résultats par avis ou commentaires, ou les mots alphabétiquement sans l’article des noms. Importez un avatar rond ou utilisez une carte postale aléatoire fixe dans les classements et discussions."
+"题目答完后可以点赞、不满意和留言；单词也支持留言，评论默认收起，仅显示数量。完整检索结果可按点赞或留言数排序，单词可按不计名词冠词的字典序排序。支持上传圆形头像，未上传时分配固定的随机明信片头像，并在排行榜与留言评论区统一显示。": "Après chaque réponse, aimez, désapprouvez ou commentez les questions. Les mots acceptent aussi des commentaires, repliés par défaut avec leur nombre. Triez tous les résultats par avis ou commentaires, ou les mots alphabétiquement sans l’article des noms. Importez un avatar rond ou utilisez une carte postale aléatoire fixe dans les classements et discussions.",
+"修复答题专注模式下留言区无法上下滚动的问题；移除题目反馈和配图询问文字。词表中的单词或配图可直接打开对应单词，继续用上一个、下一个浏览。": "Correction du défilement des commentaires en mode concentration. Suppression des titres d’avis et de la question sur l’image. Cliquez sur un mot ou son image dans les résultats pour le parcourir avec les boutons précédent et suivant."
 };
 

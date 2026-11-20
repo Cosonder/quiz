@@ -4797,6 +4797,7 @@ const LANG_DICT = {
 "目录数字表示选择该项后可检索的总题数；作答状态按每个词的每种题型分别判断，从下一组生效。": "Directory numbers show the total questions after selecting that item. Attempt status is tracked per word and question type and applies from the next set.",
 " 多（1–9 / 10–49 / 50–100 / 101+ 题）": " More (1–9 / 10–49 / 50–100 / 101+ answers)",
 "${cjQuestionCount()} 题 · ${pool.length} 个“动词 + 时态” · 进度 ": "${cjQuestionCount()} questions · ${pool.length} verb/tense pairs · Progress ",
-"题目答完后可以点赞、不满意和留言；单词也支持留言，评论默认收起，仅显示数量。完整检索结果可按点赞或留言数排序，单词可按不计名词冠词的字典序排序。支持上传圆形头像，未上传时分配固定的随机明信片头像，并在排行榜与留言评论区统一显示。": "After answering, like, dislike or comment on questions. Words also accept comments, collapsed to a count by default. Sort all matching results by likes or comments, or words alphabetically ignoring noun articles. Upload a round avatar or use a stable random postcard avatar across leaderboards and discussions."
+"题目答完后可以点赞、不满意和留言；单词也支持留言，评论默认收起，仅显示数量。完整检索结果可按点赞或留言数排序，单词可按不计名词冠词的字典序排序。支持上传圆形头像，未上传时分配固定的随机明信片头像，并在排行榜与留言评论区统一显示。": "After answering, like, dislike or comment on questions. Words also accept comments, collapsed to a count by default. Sort all matching results by likes or comments, or words alphabetically ignoring noun articles. Upload a round avatar or use a stable random postcard avatar across leaderboards and discussions.",
+"修复答题专注模式下留言区无法上下滚动的问题；移除题目反馈和配图询问文字。词表中的单词或配图可直接打开对应单词，继续用上一个、下一个浏览。": "Fix scrolling in question discussions in focus mode. Remove feedback headings and picture prompts. Click a word or picture in search results to browse it, with previous and next navigation."
 };
 
