@@ -4803,6 +4803,7 @@ const LANG_DICT = {
 "设置页版本号上方新增 Buy me some Token 打赏入口，支持 1、3、5、10 元及自定义金额，通过微信或支付宝收款码支持网站；收款码配有学习伙伴装饰边框。": "Buy me some Token is now above the version section in Settings, with ¥1, ¥3, ¥5, ¥10 or a custom amount via WeChat Pay or Alipay QR codes, framed with learning companions.",
 "打赏按钮和收款码边框标题统一改为 Buy me some Tokens。": "Rename the support button and payment-code frame heading to Buy me some Tokens.",
 "更新法语学习品牌图标：金色铁塔用于首页，徽章用于主屏幕及浏览器图标，近景铁塔用于巴黎塔尖入口。": "New French-learning artwork: the golden tower marks the home page, the badge is used for home-screen and browser icons, and the close-up tower marks Paris Spire.",
-"放大主屏幕及浏览器图标中的铁塔徽章，减少四周留白，让小尺寸图标更清晰。": "Enlarged the Eiffel Tower badge in home-screen and browser icons, reducing margins for better small-size legibility."
+"放大主屏幕及浏览器图标中的铁塔徽章，减少四周留白，让小尺寸图标更清晰。": "Enlarged the Eiffel Tower badge in home-screen and browser icons, reducing margins for better small-size legibility.",
+"为单词闯关、环法之旅和学习伙伴新增图标，伙伴按 Ninon、Pia、Lison 排列成蓝白红配色；游戏入口图标统一放在标题右侧；移除做题和游戏页标题旁的图标。": "Added icons for Word Levels, Tour de France and Learning Companions, with Ninon, Pia and Lison arranged in blue-white-red order; game icons now appear to the right of their titles, and section heading icons have been removed."
 };
 

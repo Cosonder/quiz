@@ -4803,6 +4803,7 @@ const LANG_DICT = {
 "设置页版本号上方新增 Buy me some Token 打赏入口，支持 1、3、5、10 元及自定义金额，通过微信或支付宝收款码支持网站；收款码配有学习伙伴装饰边框。": "Buy me some Token apparaît au-dessus de la version dans les réglages : 1, 3, 5, 10 yuans ou un montant libre via les codes WeChat Pay et Alipay, décorés de compagnons d’apprentissage.",
 "打赏按钮和收款码边框标题统一改为 Buy me some Tokens。": "Le bouton de soutien et le titre du cadre de paiement s’intitulent désormais Buy me some Tokens.",
 "更新法语学习品牌图标：金色铁塔用于首页，徽章用于主屏幕及浏览器图标，近景铁塔用于巴黎塔尖入口。": "Nouvelle identité visuelle : la tour dorée sur l’accueil, le médaillon comme icône d’écran d’accueil et de navigateur, et la tour en gros plan à l’entrée de la Flèche de Paris.",
-"放大主屏幕及浏览器图标中的铁塔徽章，减少四周留白，让小尺寸图标更清晰。": "Agrandissement du médaillon de la tour Eiffel dans les icônes d’accueil et du navigateur pour une meilleure lisibilité en petit format."
+"放大主屏幕及浏览器图标中的铁塔徽章，减少四周留白，让小尺寸图标更清晰。": "Agrandissement du médaillon de la tour Eiffel dans les icônes d’accueil et du navigateur pour une meilleure lisibilité en petit format.",
+"为单词闯关、环法之旅和学习伙伴新增图标，伙伴按 Ninon、Pia、Lison 排列成蓝白红配色；游戏入口图标统一放在标题右侧；移除做题和游戏页标题旁的图标。": "Nouvelles icônes pour les niveaux de vocabulaire, le Tour de France et les compagnons, Ninon, Pia et Lison dans l’ordre bleu-blanc-rouge : placées à droite des titres, sans icône à côté des titres de section."
 };
 
