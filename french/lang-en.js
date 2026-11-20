@@ -4800,6 +4800,7 @@ const LANG_DICT = {
 "题目答完后可以点赞、不满意和留言；单词也支持留言，评论默认收起，仅显示数量。完整检索结果可按点赞或留言数排序，单词可按不计名词冠词的字典序排序。支持上传圆形头像，未上传时分配固定的随机明信片头像，并在排行榜与留言评论区统一显示。": "After answering, like, dislike or comment on questions. Words also accept comments, collapsed to a count by default. Sort all matching results by likes or comments, or words alphabetically ignoring noun articles. Upload a round avatar or use a stable random postcard avatar across leaderboards and discussions.",
 "修复答题专注模式下留言区无法上下滚动的问题；移除题目反馈和配图询问文字。词表中的单词或配图可直接打开对应单词，继续用上一个、下一个浏览。": "Fix scrolling in question discussions in focus mode. Remove feedback headings and picture prompts. Click a word or picture in search results to browse it, with previous and next navigation.",
 "压缩留言区留白，统一选择答案前后的题目布局，减少选项位置变化。单词卡片只保留原有配图评价，并移至留言上方。": "Reduce discussion spacing and keep the question layout stable before and after answering. Word cards retain one picture-rating row directly above comments.",
-"设置页版本号上方新增 Buy me some Token 打赏入口，支持 1、3、5、10 元及自定义金额，通过微信或支付宝收款码支持网站；收款码配有学习伙伴装饰边框。": "Buy me some Token is now above the version section in Settings, with ¥1, ¥3, ¥5, ¥10 or a custom amount via WeChat Pay or Alipay QR codes, framed with learning companions."
+"设置页版本号上方新增 Buy me some Token 打赏入口，支持 1、3、5、10 元及自定义金额，通过微信或支付宝收款码支持网站；收款码配有学习伙伴装饰边框。": "Buy me some Token is now above the version section in Settings, with ¥1, ¥3, ¥5, ¥10 or a custom amount via WeChat Pay or Alipay QR codes, framed with learning companions.",
+"打赏按钮和收款码边框标题统一改为 Buy me some Tokens。": "Rename the support button and payment-code frame heading to Buy me some Tokens."
 };
 
