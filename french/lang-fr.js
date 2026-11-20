@@ -4804,6 +4804,7 @@ const LANG_DICT = {
 "打赏按钮和收款码边框标题统一改为 Buy me some Tokens。": "Le bouton de soutien et le titre du cadre de paiement s’intitulent désormais Buy me some Tokens.",
 "更新法语学习品牌图标：金色铁塔用于首页，徽章用于主屏幕及浏览器图标，近景铁塔用于巴黎塔尖入口。": "Nouvelle identité visuelle : la tour dorée sur l’accueil, le médaillon comme icône d’écran d’accueil et de navigateur, et la tour en gros plan à l’entrée de la Flèche de Paris.",
 "放大主屏幕及浏览器图标中的铁塔徽章，减少四周留白，让小尺寸图标更清晰。": "Agrandissement du médaillon de la tour Eiffel dans les icônes d’accueil et du navigateur pour une meilleure lisibilité en petit format.",
-"为单词闯关、环法之旅和学习伙伴新增图标，伙伴按 Ninon、Pia、Lison 排列成蓝白红配色；游戏入口图标统一放在标题右侧；移除做题和游戏页标题旁的图标。": "Nouvelles icônes pour les niveaux de vocabulaire, le Tour de France et les compagnons, Ninon, Pia et Lison dans l’ordre bleu-blanc-rouge : placées à droite des titres, sans icône à côté des titres de section."
+"为单词闯关、环法之旅和学习伙伴新增图标，伙伴按 Ninon、Pia、Lison 排列成蓝白红配色；游戏入口图标统一放在标题右侧；移除做题和游戏页标题旁的图标。": "Nouvelles icônes pour les niveaux de vocabulaire, le Tour de France et les compagnons, Ninon, Pia et Lison dans l’ordre bleu-blanc-rouge : placées à droite des titres, sans icône à côté des titres de section.",
+"修复单词闯关续做进度同步：每题立即保存，自动补传旧设备未同步的存档，完成或重开后不再恢复旧进度；通关和最佳星级继续保留。": "Correction de la synchronisation des niveaux de vocabulaire : sauvegarde après chaque réponse, récupération des anciennes sauvegardes locales et respect des remises à zéro. Réussites et meilleures étoiles conservées."
 };
 

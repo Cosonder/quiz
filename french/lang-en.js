@@ -4804,6 +4804,7 @@ const LANG_DICT = {
 "打赏按钮和收款码边框标题统一改为 Buy me some Tokens。": "Rename the support button and payment-code frame heading to Buy me some Tokens.",
 "更新法语学习品牌图标：金色铁塔用于首页，徽章用于主屏幕及浏览器图标，近景铁塔用于巴黎塔尖入口。": "New French-learning artwork: the golden tower marks the home page, the badge is used for home-screen and browser icons, and the close-up tower marks Paris Spire.",
 "放大主屏幕及浏览器图标中的铁塔徽章，减少四周留白，让小尺寸图标更清晰。": "Enlarged the Eiffel Tower badge in home-screen and browser icons, reducing margins for better small-size legibility.",
-"为单词闯关、环法之旅和学习伙伴新增图标，伙伴按 Ninon、Pia、Lison 排列成蓝白红配色；游戏入口图标统一放在标题右侧；移除做题和游戏页标题旁的图标。": "Added icons for Word Levels, Tour de France and Learning Companions, with Ninon, Pia and Lison arranged in blue-white-red order; game icons now appear to the right of their titles, and section heading icons have been removed."
+"为单词闯关、环法之旅和学习伙伴新增图标，伙伴按 Ninon、Pia、Lison 排列成蓝白红配色；游戏入口图标统一放在标题右侧；移除做题和游戏页标题旁的图标。": "Added icons for Word Levels, Tour de France and Learning Companions, with Ninon, Pia and Lison arranged in blue-white-red order; game icons now appear to the right of their titles, and section heading icons have been removed.",
+"修复单词闯关续做进度同步：每题立即保存，自动补传旧设备未同步的存档，完成或重开后不再恢复旧进度；通关和最佳星级继续保留。": "Fixed Word Levels resume syncing: save after every answer, recover older local checkpoints, and prevent cleared runs from reappearing. Completion and best stars are preserved."
 };
 
