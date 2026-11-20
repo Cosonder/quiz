@@ -4885,6 +4885,16 @@ const LANG_DICT = {
 "显示 ${name}": "Show ${name}",
 "${name} 躲在这里，点一下叫她出来": "${name} is hiding here. Tap to call her out",
 "点击学习伙伴弹出的窗口里新增“隐藏 Ninon / Pia / Lison”按钮：隐藏后她只从屏幕边缘露出头，不挡内容也不出声；点一下会探出半个身子，并出现“显示”按钮把她叫回来。番茄时钟按钮缩成一个小按钮，和隐藏按钮排在一行。": "The window that opens when you tap your study companion has a new \"Hide Ninon / Pia / Lison\" button: once hidden, she only peeks out from the edge of the screen, covers nothing and stays quiet; tap her and she leans out with a \"Show\" button to bring her back. The Pomodoro button is now a small button on the same row.",
-"英文和法语界面补齐遗漏的翻译：110 个基础虚词的用法说明、页面底部的记录提示、模拟卷成绩记录、巴黎塔尖的层数和排数，以及学习进度里环法之旅的标签。": "English and French interfaces: filled in missing translations for the usage notes of the 110 basic function words, the record note at the bottom of the page, mock exam history, Paris Spire floors and rows, and Tour de France tags in Progress."
+"英文和法语界面补齐遗漏的翻译：110 个基础虚词的用法说明、页面底部的记录提示、模拟卷成绩记录、巴黎塔尖的层数和排数，以及学习进度里环法之旅的标签。": "English and French interfaces: filled in missing translations for the usage notes of the 110 basic function words, the record note at the bottom of the page, mock exam history, Paris Spire floors and rows, and Tour de France tags in Progress.",
+"词条类型": "Entry type",
+"词组 · 固定搭配": "Phrase · fixed expression",
+"词组": "Phrase",
+"限定词": "Determiners",
+"其他": "Other",
+"n.m.pl. 阳性复数名词": "n.m.pl. masculine plural noun",
+"当前筛选下没有可练习的词汇题，请调整词条类型、词性、作答状态或题型。": "No vocabulary questions match these filters. Adjust the entry type, part of speech, attempt status or question types.",
+"目录数字表示选择该项后可检索的总题数；同一类里多选任一满足即可，不同类之间要同时满足。作答状态按每个词的每种题型分别判断，从下一组生效。": "Numbers show how many questions you would get after choosing that item. Within one group, any selected tag may match; different groups must all match. Attempt status is judged per word and per question type, and applies from the next set.",
+"背单词新增两组可以组合的筛选：词条类型（单词 / 词组·固定搭配）和词性（名词、动词、形容词、限定词、代词、副词、介词、连词）。点一下马上更新题目数、词表和下一组；同一类里多选任一满足即可，不同类之间要同时满足。": "Vocabulary has two new filters you can combine: entry type (word / phrase · fixed expression) and part of speech (nouns, verbs, adjectives, determiners, pronouns, adverbs, prepositions, conjunctions). Tapping one updates the question count, the word list and the next set at once; within a group any choice may match, and different groups must all match.",
+"已有的 41 个固定搭配（如 grâce à、mot de passe、se rendre compte）归入“词组”；自反动词和连字符复合词仍算单词。词表和浏览卡上显示每个词条的类型；学习记录、配图和关卡都不变。": "The 41 existing fixed expressions (such as grâce à, mot de passe, se rendre compte) are now filed under \"Phrase\"; reflexive verbs and hyphenated compounds still count as words. The word list and browse card show each entry's type; learning records, pictures and levels are unchanged."
 };
 

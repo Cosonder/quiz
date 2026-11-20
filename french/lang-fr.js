@@ -4885,6 +4885,16 @@ const LANG_DICT = {
 "显示 ${name}": "Afficher ${name}",
 "${name} 躲在这里，点一下叫她出来": "${name} se cache ici. Touchez pour l'appeler",
 "点击学习伙伴弹出的窗口里新增“隐藏 Ninon / Pia / Lison”按钮：隐藏后她只从屏幕边缘露出头，不挡内容也不出声；点一下会探出半个身子，并出现“显示”按钮把她叫回来。番茄时钟按钮缩成一个小按钮，和隐藏按钮排在一行。": "La fenêtre qui s'ouvre quand vous touchez votre compagne d'étude propose un nouveau bouton « Cacher Ninon / Pia / Lison » : une fois cachée, elle ne montre plus que la tête au bord de l'écran, ne couvre rien et reste silencieuse ; touchez-la, elle se penche et un bouton « Afficher » permet de la rappeler. Le bouton Pomodoro devient un petit bouton sur la même ligne.",
-"英文和法语界面补齐遗漏的翻译：110 个基础虚词的用法说明、页面底部的记录提示、模拟卷成绩记录、巴黎塔尖的层数和排数，以及学习进度里环法之旅的标签。": "Interfaces anglaise et française : traductions manquantes ajoutées pour les notes d'usage des 110 mots-outils de base, la note d'enregistrement en bas de page, l'historique des examens blancs, les étages et rangées de la Flèche de Paris, et les étiquettes du Tour de France dans la progression."
+"英文和法语界面补齐遗漏的翻译：110 个基础虚词的用法说明、页面底部的记录提示、模拟卷成绩记录、巴黎塔尖的层数和排数，以及学习进度里环法之旅的标签。": "Interfaces anglaise et française : traductions manquantes ajoutées pour les notes d'usage des 110 mots-outils de base, la note d'enregistrement en bas de page, l'historique des examens blancs, les étages et rangées de la Flèche de Paris, et les étiquettes du Tour de France dans la progression.",
+"词条类型": "Type d'entrée",
+"词组 · 固定搭配": "Locution · expression figée",
+"词组": "Locution",
+"限定词": "Déterminants",
+"其他": "Autres",
+"n.m.pl. 阳性复数名词": "n.m.pl. nom masculin pluriel",
+"当前筛选下没有可练习的词汇题，请调整词条类型、词性、作答状态或题型。": "Aucune question de vocabulaire ne correspond à ces filtres. Modifiez le type d'entrée, la catégorie grammaticale, l'état des réponses ou les types de questions.",
+"目录数字表示选择该项后可检索的总题数；同一类里多选任一满足即可，不同类之间要同时满足。作答状态按每个词的每种题型分别判断，从下一组生效。": "Les nombres indiquent combien de questions vous obtiendriez en choisissant cet élément. Dans un même groupe, une seule étiquette suffit ; les groupes différents doivent tous être respectés. L'état des réponses est évalué par mot et par type de question, et s'applique à la série suivante.",
+"背单词新增两组可以组合的筛选：词条类型（单词 / 词组·固定搭配）和词性（名词、动词、形容词、限定词、代词、副词、介词、连词）。点一下马上更新题目数、词表和下一组；同一类里多选任一满足即可，不同类之间要同时满足。": "Le vocabulaire a deux nouveaux filtres combinables : le type d'entrée (mot / locution · expression figée) et la catégorie grammaticale (noms, verbes, adjectifs, déterminants, pronoms, adverbes, prépositions, conjonctions). Un toucher met à jour le nombre de questions, la liste et la série suivante ; dans un groupe, un seul choix suffit, et les groupes différents doivent tous être respectés.",
+"已有的 41 个固定搭配（如 grâce à、mot de passe、se rendre compte）归入“词组”；自反动词和连字符复合词仍算单词。词表和浏览卡上显示每个词条的类型；学习记录、配图和关卡都不变。": "Les 41 expressions figées existantes (comme grâce à, mot de passe, se rendre compte) sont classées dans « Locution » ; les verbes pronominaux et les mots composés à trait d'union restent des mots. La liste et la fiche de mot affichent le type de chaque entrée ; l'historique, les images et les niveaux ne changent pas."
 };
 
