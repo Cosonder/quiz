@@ -8527,8 +8527,26 @@ function surveyForm(section,uid,epoch,tier='basic',rewardState={}){
  catch{if(fbCurrent(uid,epoch))notice.textContent=surveyText(['提交未确认，内容保留在此页面。可以安全重试，不会重复发奖。','Submission not confirmed. Your answers remain on this page. Retry safely without duplicate rewards.','Envoi non confirmé. Vos réponses restent sur cette page. Réessayez sans récompense en double.']);}finally{busy=false;send.disabled=false;}
  };
 }
+// 管理员：逐份列出回答（阶段、时间、各项选择、目标和留言）；不含账号
+function surveyResponses(result,rows){
+ if(!Array.isArray(rows)||!rows.length)return;
+ const sectionName=id=>{const x=SURVEY_SECTIONS.find(s=>s[0]===id);return x?surveyText(x.slice(1)):id;},priorityName=id=>{const x=SURVEY_PRIORITIES.find(s=>s[0]===id);return x?surveyText(x.slice(1)):id;};
+ const stage={basic:['基础问卷','Basic','De base'],experienced:['老用户问卷','Experienced','Expérimenté'],guest:['未登录','Guest','Invité']};
+ const box=el('details','survey-responses');box.append(el('summary',null,surveyText(['逐份回答','Individual responses','Réponses individuelles'])+' · '+rows.length));
+ rows.forEach((row,i)=>{
+  const a=row.answers||{},item=el('div','survey-response'),when=row.at?new Date(row.at).toLocaleString():'';
+  item.append(el('p','survey-response-head','#'+(rows.length-i)+' · '+(stage[row.stage]?surveyText(stage[row.stage]):row.stage||'')+(when?' · '+when:'')));
+  const line=(label,value)=>{if(value!==undefined&&value!==null&&value!=='')item.append(el('p',null,surveyText(label)+' : '+value));};
+  line(['用过的板块和评分','Sections used and ratings','Rubriques utilisées et notes'],(a.used||[]).map(id=>sectionName(id)+' '+((a.ratings||{})[id]??'-')).join(' / '));
+  line(['最想改进','Priorities','Priorités'],(a.priorities||[]).map(priorityName).join(' / '));
+  line(['水平','Level','Niveau'],a.level);line(['配音','Voice','Voix'],a.voice);line(['服装','Outfits','Tenues'],a.outfits);line(['付费意愿','Paid content','Contenu payant'],a.paid);line(['价格','Price','Prix'],a.price);
+  line(['学习目标','Goal','Objectif'],a.goal);line(['留言','Comment','Commentaire'],a.comment);
+  box.append(item);
+ });
+ result.append(box);
+}
 function surveyAdmin(section,uid,epoch){
- const button=fbButton(surveyText(['查看问卷汇总（管理员）','Survey summary (administrator)','Synthèse (administrateur)'])),result=el('div','survey-summary');section.append(button,result);button.onclick=async()=>{button.disabled=true;try{const data=await fbRpc('survey_summary',{p_version:SURVEY_VERSION});if(!fbCurrent(uid,epoch)||!result.isConnected)return;result.replaceChildren(el('p',null,surveyText(['完成份数','Responses','Réponses'])+' : '+data.count));if(data.suppressed){result.append(el('p','sub',surveyText(['不足 5 份，暂不显示细分统计。','Fewer than 5 responses; detailed statistics are hidden.','Moins de 5 réponses ; statistiques détaillées masquées.'])));return;}for(const [id,v]of Object.entries(data.ratings||{})){const name=SURVEY_SECTIONS.find(s=>s[0]===id);result.append(el('p',null,(name?surveyText(name.slice(1)):id)+' · '+v.mean+' / 5 · n='+v.count));}for(const [field,values]of Object.entries(data.preferences||{})){const title={voice:['配音','Voice','Voix'],outfits:['服装','Outfits','Tenues'],paid:['付费意愿','Paid content','Contenu payant'],price:['价格','Price','Prix'],level:['水平','Level','Niveau']}[field];result.append(el('p',null,surveyText(title)+' · '+Object.entries(values).map(([k,n])=>k+': '+n).join(' / ')));}for(const [id,n]of Object.entries(data.priorities||{})){const p=SURVEY_PRIORITIES.find(x=>x[0]===id);result.append(el('p',null,surveyText(p.slice(1))+' : '+n));}}catch{if(fbCurrent(uid,epoch))result.textContent=surveyText(['读取失败，请重试。','Could not load. Please retry.','Échec du chargement. Réessayez.']);}finally{button.disabled=false;}};
+ const button=fbButton(surveyText(['查看问卷汇总（管理员）','Survey summary (administrator)','Synthèse (administrateur)'])),result=el('div','survey-summary');section.append(button,result);button.onclick=async()=>{button.disabled=true;try{const data=await fbRpc('survey_summary',{p_version:SURVEY_VERSION});if(!fbCurrent(uid,epoch)||!result.isConnected)return;result.replaceChildren(el('p',null,surveyText(['完成份数','Responses','Réponses'])+' : '+data.count));if(data.suppressed){result.append(el('p','sub',surveyText(['数据库还是旧的汇总函数（不足 5 份不显示）。请在 Supabase 运行 quiz-site/supabase/survey-admin-full.sql。','The database still has the old summary function (hidden below 5 responses). Run quiz-site/supabase/survey-admin-full.sql in Supabase.','La base utilise encore l’ancienne fonction (masquée sous 5 réponses). Exécutez quiz-site/supabase/survey-admin-full.sql dans Supabase.'])));return;}for(const [id,v]of Object.entries(data.ratings||{})){const name=SURVEY_SECTIONS.find(s=>s[0]===id);result.append(el('p',null,(name?surveyText(name.slice(1)):id)+' · '+v.mean+' / 5 · n='+v.count));}for(const [field,values]of Object.entries(data.preferences||{})){const title={voice:['配音','Voice','Voix'],outfits:['服装','Outfits','Tenues'],paid:['付费意愿','Paid content','Contenu payant'],price:['价格','Price','Prix'],level:['水平','Level','Niveau']}[field];result.append(el('p',null,surveyText(title)+' · '+Object.entries(values).map(([k,n])=>k+': '+n).join(' / ')));}for(const [id,n]of Object.entries(data.priorities||{})){const p=SURVEY_PRIORITIES.find(x=>x[0]===id);result.append(el('p',null,(p?surveyText(p.slice(1)):id)+' : '+n));}surveyResponses(result,data.responses);}catch{if(fbCurrent(uid,epoch))result.textContent=surveyText(['读取失败，请重试。','Could not load. Please retry.','Échec du chargement. Réessayez.']);}finally{button.disabled=false;}};
 }
 // ---------- 设置页的公共部件：分区卡片、下拉、勾选，以及最上面的“账号与同步” ----------
 function setSection(wrap, title, sub) {
@@ -8600,6 +8618,8 @@ function setFold(wrap, key, title, initialOpen = false) {
 // 每次用户可见更新都新增记录：默认只递增第三位 1.x.y → 1.x.(y+1)，超过 9 继续到 10、11；第二位升级需用户明确要求。
 // 首位保持 1，只有用户明确要求才可修改；历史记录保留。完整发布规则见根目录 AGENTS.md。
 const CHANGELOG = [
+  {"v": "1.9.68", "p": "fr", "d": "2026-11-21", "items": ["新增的 40 段原创听力对话现在有了角色录音：Ninon、Lison、Pia 轮流两两搭档，男性说话人由男声朗读，一听就能分清谁在说话。理解、填空和排序三种题型共用同一段录音，仍可逐句播放、循环和慢速；在“设置 → 学习配音”选择系统语音时照旧使用系统朗读。录音为 AI 合成配音，已用本地语音识别逐段核对文字，尚未逐句人工听审。"]},
+  {"v": "1.9.67", "p": "fr", "d": "2026-11-21", "items": ["听力新增两组考点标签，来自教材《Communication progressive du français · Débutant》的目录：40 个交际功能（如预约、问路、提议、道歉）和 57 个语法点。全部 218 段听力材料都贴了标签，基础听力的题卡上也会显示对应的功能；在“听力标签检索”里展开“考点”即可按标签筛选，可以和来源、题型、难度组合。", "新增 40 段原创听力对话，每个交际功能一段，每段两道理解题、一道填空和若干排序题，共 325 道新题。对话按教材的考点编写，不是教材原文或原版录音。", "管理员的问卷汇总不再要求满 5 份：有回答就显示全部统计，并可展开逐份查看每份回答（不显示账号）。需要先在 Supabase 运行 quiz-site/supabase/survey-admin-full.sql。"]},
   {"v": "1.9.66", "p": "fr", "d": "2026-11-20", "items": ["背单词新增两组可以组合的筛选：词条类型（单词 / 词组·固定搭配）和词性（名词、动词、形容词、限定词、代词、副词、介词、连词）。点一下马上更新题目数、词表和下一组；同一类里多选任一满足即可，不同类之间要同时满足。", "已有的 41 个固定搭配（如 grâce à、mot de passe、se rendre compte）归入“词组”；自反动词和连字符复合词仍算单词。词表和浏览卡上显示每个词条的类型；学习记录、配图和关卡都不变。"]},
   {"v": "1.9.65", "p": "fr", "d": "2026-11-20", "items": ["点击学习伙伴弹出的窗口里新增“隐藏 Ninon / Pia / Lison”按钮：隐藏后她只从屏幕边缘露出头，不挡内容也不出声；点一下会探出半个身子，并出现“显示”按钮把她叫回来。番茄时钟按钮缩成一个小按钮，和隐藏按钮排在一行。", "英文和法语界面补齐遗漏的翻译：110 个基础虚词的用法说明、页面底部的记录提示、模拟卷成绩记录、巴黎塔尖的层数和排数，以及学习进度里环法之旅的标签。"]},
   {"v": "1.9.64", "p": "fr", "d": "2026-11-20", "items": ["环法之旅按《Grammaire progressive》初级与中级目录重排为 74 关，新增 22 关、224 道原创题并调整难度；保留原通关星数、口语记录及明信片，新增教材目录对照。"]},
@@ -12969,6 +12989,1900 @@ function communicationRegister(){
  }
 }
 communicationRegister();
+// Generated by tools/communication/build.py; edit toc.py, general.py or dialogues.py there.
+// 考点标签来自《Communication progressive du français · Débutant》的目录：6 个部分、40 个交际功能、57 个语法点。
+// 对话是按这些考点原创的练习，不是教材原文或原版录音。
+const COMM_SECTIONS=[[1,"Faire les courses","购物","Shopping"],[2,"Renseigner, se renseigner","问讯与告知","Asking for and giving information"],[3,"Parler des lieux et des objets","谈地点和物品","Talking about places and things"],[4,"Parler aux autres","和别人交谈","Talking to others"],[5,"Parler de soi","谈自己","Talking about yourself"],[6,"Parler des autres","谈别人","Talking about others"]];
+const COMM_ACTS=[[1,1,"Demander des articles","要东西","Asking for items"],[2,1,"Parler des quantités","说数量","Talking about quantities"],[3,1,"Demander le prix","问价钱","Asking the price"],[4,1,"Passer une commande","点单、订货","Placing an order"],[5,1,"Faire une réservation","预订","Making a reservation"],[6,1,"Faire des achats","买衣物","Shopping for clothes"],[7,1,"Hésiter","犹豫","Hesitating"],[8,2,"Prendre rendez-vous","预约","Making an appointment"],[9,2,"Demander des renseignements","问讯","Asking for information"],[10,2,"Exprimer une obligation","表达必须","Expressing obligation"],[11,2,"Autoriser et interdire","允许和禁止","Allowing and forbidding"],[12,2,"Vérifier","确认、核实","Checking"],[13,2,"Protester","抗议、投诉","Complaining"],[14,2,"Exprimer des intentions, des projets","说打算和计划","Intentions and plans"],[15,3,"Localiser","说位置、问路","Locating"],[16,3,"S'informer par téléphone","电话咨询","Enquiring by phone"],[17,3,"Comparer","比较","Comparing"],[18,3,"Caractériser","指明是哪一个","Specifying which one"],[19,3,"Exprimer une condition","表达条件","Expressing a condition"],[20,3,"Parler d'un besoin","说需要","Talking about a need"],[21,4,"Saluer et présenter","问候和介绍","Greeting and introducing"],[22,4,"Excuser et s'excuser","道歉和原谅","Apologising"],[23,4,"Téléphoner","打电话","Phoning"],[24,4,"Donner des instructions","给指令","Giving instructions"],[25,4,"Nier","否认","Denying"],[26,4,"Inviter, accepter, refuser","邀请、接受、拒绝","Inviting, accepting, refusing"],[27,4,"Demander à quelqu'un de faire quelque chose","请别人做事","Asking someone to do something"],[28,4,"Proposer","提议","Suggesting"],[29,5,"Parler de sa santé","谈健康","Talking about health"],[30,5,"Parler de ses goûts","谈爱好","Likes and dislikes"],[31,5,"Parler de son curriculum vitae","谈经历和履历","Talking about your CV"],[32,5,"Demander et donner son opinion","问看法、说看法","Asking for and giving opinions"],[33,5,"Exprimer la surprise","表示惊讶","Expressing surprise"],[34,6,"Exprimer la certitude ou l'incertitude","肯定和不确定","Certainty and uncertainty"],[35,6,"Décrire","描述","Describing"],[36,6,"Faire des compliments","称赞","Paying compliments"],[37,6,"Féliciter","祝贺","Congratulating"],[38,6,"Consoler et encourager","安慰和鼓励","Comforting and encouraging"],[39,6,"Critiquer","批评","Criticising"],[40,6,"Exprimer l'admiration","表示赞叹","Expressing admiration"]];
+const COMM_GRAMMAR={"genre":["masculin / féminin / pluriel des noms","名词的阴阳性和复数","Gender and plural of nouns"],"interro-simple":["interrogation simple","简单疑问句","Simple questions"],"quantite":["quantité","数量表达","Quantities"],"quantite-indef":["quantité indéfinie","不确定的数量（du / de la / des / pas de）","Indefinite quantities"],"infinitif":["infinitif","动词不定式","The infinitive"],"pour":["« pour »","pour 的用法","Uses of pour"],"present-irreg":["« avoir », « prendre », « aller » au présent","avoir / prendre / aller 的现在时","avoir, prendre, aller in the present"],"adjectif":["adjectif qualificatif","品质形容词","Adjectives"],"quel":["« quel(s) », « quelle(s) »… ?","疑问词 quel","Quel(s), quelle(s)"],"trop-assez":["« trop » / « assez »","trop 和 assez","Trop and assez"],"dans-sur":["« dans » / « sur »","dans 和 sur","Dans and sur"],"savoir-croire-vouloir":["« savoir », « croire », « vouloir » au présent","savoir / croire / vouloir 的现在时","savoir, croire, vouloir in the present"],"superlatif":["superlatif","最高级","The superlative"],"imparfait":["imparfait (« avoir », « être »)","未完成过去时（avoir、être）","Imperfect of avoir and être"],"devoir-pouvoir":["« devoir », « pouvoir » au présent","devoir / pouvoir 的现在时","devoir, pouvoir in the present"],"temps":["expressions de temps","时间表达","Time expressions"],"interro-complexe":["interrogation complexe","带疑问词的疑问句","Questions with question words"],"verbes-a":["verbes + « à »","接 à 的动词","Verbs followed by à"],"cest-ilest":["« c'est », « il est » + adjectif","c'est / il est + 形容词","C'est / il est + adjective"],"compl-nom":["complément de nom","名词补语（de + 名词）","Noun complements with de"],"futur-proche":["futur proche","最近将来时","Near future"],"pron-compl":["pronoms personnels compléments","宾语人称代词","Object pronouns"],"futur":["futur simple","简单将来时","Simple future"],"lieu":["prépositions et adverbes de lieu","地点介词和副词","Prepositions and adverbs of place"],"qui":["pronom relatif « qui »","关系代词 qui","Relative pronoun qui"],"cod-pc":["pronoms personnels directs au passé composé","复合过去时中的直接宾语代词","Direct object pronouns in the passé composé"],"en":["le pronom « en »","代词 en","The pronoun en"],"comparatif":["comparatif","比较级","The comparative"],"demonstratif":["pronoms démonstratifs","指示代词","Demonstrative pronouns"],"condition":["hypothèse réelle, condition","真实假设（si + 现在时）","Real conditions with si"],"subjonctif":["verbes en -er au subjonctif","-er 动词的虚拟式","Subjunctive of -er verbs"],"pronominaux":["verbes pronominaux (présent)","代词式动词（现在时）","Reflexive verbs in the present"],"pqp":["plus-que-parfait","愈过去时","The pluperfect"],"coi":["pronoms personnels indirects","间接宾语代词","Indirect object pronouns"],"doubles-pronoms":["doubles pronoms personnels","双宾语代词","Double object pronouns"],"imperatif-vous":["impératif « vous »","命令式（vous）","Imperative with vous"],"imperatif-tu":["impératif « tu »","命令式（tu）","Imperative with tu"],"pc-negatif":["passé composé négatif","复合过去时的否定","Negative passé composé"],"possessifs":["adjectifs possessifs","主有形容词","Possessive adjectives"],"on":["« on » pour « nous »","on 代替 nous","On meaning we"],"discours-indirect":["discours indirect","间接引语","Reported speech"],"conditionnel":["conditionnel présent","条件式现在时","Present conditional"],"indefinis":["pronoms indéfinis","泛指代词","Indefinite pronouns"],"pc-etre":["passé composé avec « être »","用 être 的复合过去时","Passé composé with être"],"gerondif":["gérondif","副动词（en + -ant）","The gerund"],"verbes-de":["verbes avec « de » + infinitif","接 de + 不定式的动词","Verbs with de + infinitive"],"savoir-connaitre":["« savoir » / « connaître »","savoir 和 connaître","Savoir and connaître"],"passe-recent":["passé récent","最近过去时","Recent past"],"nominalisation":["nominalisation","名词化","Nominalisation"],"cequi":["« ce qui », « ce que »","ce qui 和 ce que","Ce qui and ce que"],"impersonnel":["tournures impersonnelles","无人称句式","Impersonal expressions"],"pc-imparfait":["passé composé / imparfait","复合过去时和未完成过去时","Passé composé and imperfect"],"adverbes":["adverbes","副词","Adverbs"],"tout":["« tout / toute(s) / tous »","tout 的各种形式","Tout, toute, tous, toutes"],"passif":["voix passive","被动态","The passive"],"cause":["cause","原因表达","Expressing cause"],"opposition":["opposition","对立和转折","Contrast"]};
+const COMM_PAGES={"8":[1,"genre","À la boulangerie-pâtisserie","boulangerie","面包店"],"10":[1,"interro-simple","À la poste","poste","邮局"],"12":[2,"quantite","Au marché","fruits et légumes","水果蔬菜"],"14":[2,"quantite-indef","À l'épicerie","produits de base","基本食品"],"16":[3,"infinitif","Dans une papeterie","papeterie","文具店"],"18":[4,"pour","Chez le poissonnier","poissons et fruits de mer","鱼和海鲜"],"20":[4,"present-irreg","Au café","café et bistrot","咖啡馆"],"22":[5,"adjectif","À l'hôtel","hôtel","旅馆"],"24":[5,"quel","À la gare","trains, billets","火车和车票"],"26":[6,"trop-assez","Dans une boutique de vêtements","vêtements","服装"],"28":[6,"dans-sur","Dans un magasin de chaussures","chaussures","鞋"],"30":[7,"savoir-croire-vouloir","Au magasin d'informatique","ordinateur","电脑"],"32":[8,"superlatif","Chez le dentiste","dentiste, dents","牙医"],"34":[8,"imparfait","Au cabinet médical","rendez-vous","预约"],"36":[9,"devoir-pouvoir","Dans une station de métro","métro, bus","地铁和公交"],"38":[9,"temps","Dans une association sportive","inscriptions","报名"],"40":[9,"interro-complexe","À l'office du tourisme","bal, 14 juillet","节庆"],"42":[10,"verbes-a","Dans une administration","administration","行政手续"],"44":[11,"cest-ilest","Dans une station de ski","ski, pistes","滑雪"],"46":[12,"compl-nom","Dans une station balnéaire","nager, piscine","游泳"],"48":[13,"futur-proche","Au camping","camping, tente","露营"],"50":[14,"pron-compl","Louer des vélos","location, vélos","租车"],"52":[14,"futur","À la banque","banque, comptes","银行"],"54":[15,"lieu","Aux Galeries Lafayette","caisse, rayon","百货商店"],"56":[15,"qui","À la campagne","village, église","乡村"],"58":[15,"cod-pc","Un objet perdu","déclaration de vol","报失"],"60":[16,"en","Une maison à louer","maison, garage","房屋"],"62":[17,"comparatif","À propos des vacances","tourisme","旅游"],"64":[18,"demonstratif","Avant une fête d'anniversaire","table, vaisselle","餐具"],"66":[19,"condition","Le temps qu'il fait","météo","天气"],"68":[20,"subjonctif","Dans un nouveau bureau","mobile, Toile","手机和网络"],"70":[21,"pronominaux","Dans la rue","voisin, collègue","邻居和同事"],"72":[22,"pqp","Monsieur « Catastrophe »","actions quotidiennes","日常动作"],"74":[23,"coi","Un ami téléphone","téléphone","电话"],"76":[23,"doubles-pronoms","Dans une entreprise","standard, ligne","总机"],"78":[24,"imperatif-vous","Au club de gym","gymnastique","健身"],"80":[24,"imperatif-tu","Dans un jardin public","jardin, toboggan","公园"],"82":[25,"pc-negatif","Une mère et son fils","ranger, chercher","收拾和寻找"],"84":[26,"possessifs","Entre voisins","propriétaire","房东和邻里"],"86":[26,"on","Au travail","bureau, réunions","办公室"],"88":[27,"discours-indirect","Au bureau","temps qui passe","时间流逝"],"90":[28,"conditionnel","La préparation d'un pique-nique","pique-nique","野餐"],"92":[29,"indefinis","À la pharmacie","comprimés, gouttes","药品"],"94":[29,"pc-etre","Une jambe cassée","accident, fracture","事故"],"96":[29,"gerondif","Chez le médecin","radio, ordonnance","看病"],"98":[30,"verbes-de","Entre amis","passe-temps, musique","消遣和音乐"],"100":[31,"savoir-connaitre","Une baby-sitter","bébé, couches","照看婴儿"],"102":[32,"passe-recent","Entre collègues","budget, finances","预算"],"104":[33,"nominalisation","Une fête d'anniversaire","fête, cadeau","聚会和礼物"],"106":[34,"cequi","Entre deux mères","système scolaire","学校制度"],"108":[34,"impersonnel","Enquête policière","parole, dispute","争吵"],"110":[35,"pc-imparfait","Au commissariat de police","description physique","外貌"],"112":[36,"adverbes","Un dîner entre amies","bijoux, accessoires","首饰"],"114":[37,"tout","Bonnes nouvelles !","la vie, la mort","人生大事"],"116":[38,"passif","Après un match","vie sportive","体育"],"118":[39,"cause","À la sortie d'un match","football","足球"],"120":[40,"opposition","À la sortie d'un spectacle","spectacle","演出"]};
+const LISTENING_POINTS={"fr-r7-1":[[25],["pc-negatif","cod-pc"]],"fr-r7-2":[[],["passe-recent"]],"fr-r7-3":[[25,26],[]],"fr-r7-4":[[2],["quantite"]],"fr-r7-5":[[31],["temps"]],"fr-r7-6":[[28,15],["lieu","on"]],"fr-r7-7":[[19,22],["condition"]],"fr-r7-8":[[10,23],["subjonctif"]],"fr-r7-9":[[12],["interro-simple"]],"fr-r7-10":[[21,31],["interro-complexe"]],"fr-r7-11":[[28,26],["conditionnel"]],"fr-r7-12":[[27],["conditionnel"]],"fr-r7-13":[[31],["temps","interro-complexe"]],"fr-r7-14":[[9],["pc-etre","interro-complexe"]],"fr-r7-15":[[11],[]],"fr-r7-16":[[18],["interro-complexe"]],"fr-r7-17":[[5],["pour"]],"fr-r7-18":[[22,26,8],["futur"]],"fr-r7-19":[[9],["futur"]],"fr-r7-20":[[15,24],["imperatif-vous","lieu"]],"fr-r7-21":[[14],["opposition","trop-assez"]],"fr-r7-22":[[17,35],["comparatif","superlatif"]],"fr-r7-23":[[20],["qui","subjonctif"]],"fr-r7-24":[[12],["cod-pc","pc-negatif"]],"fr-r8-1":[[14,29],["futur-proche","pronominaux"]],"fr-r8-2":[[],[]],"fr-r8-3":[[30,25],["quantite-indef"]],"fr-r8-4":[[28],["on"]],"fr-r8-5":[[17],["comparatif","possessifs"]],"fr-r8-6":[[31],["pc-etre"]],"fr-r8-7":[[21],["interro-complexe"]],"fr-r8-8":[[21],["quel"]],"fr-r8-9":[[21,15],["interro-complexe"]],"fr-r8-10":[[9],["quel"]],"fr-r8-11":[[3,6],["interro-complexe"]],"fr-r8-12":[[22],["interro-complexe","cause"]],"fr-r8-13":[[28],["savoir-croire-vouloir","interro-simple"]],"fr-r8-14":[[],["interro-complexe"]],"fr-r8-15":[[21],["interro-simple"]],"fr-r8-16":[[8],["on","interro-complexe"]],"fr-r8-17":[[9],["temps"]],"fr-r8-18":[[3],[]],"fr-r8-19":[[23],["possessifs"]],"fr-r8-20":[[9],["temps"]],"fr-r8-21":[[],["temps"]],"fr-r8-22":[[8,29],["temps"]],"fr-r9-1":[[23,28,27],["cause","futur"]],"fr-r9-5":[[31,14,30],["pc-imparfait","cequi"]],"fr-r9-9":[[11,9,24],["futur","condition"]],"fr-r9-13":[[32],["cause","opposition","pc-imparfait"]],"fr-r10-1":[[15],["lieu"]],"fr-r10-2":[[],["present-irreg","temps"]],"fr-r10-3":[[],[]],"fr-r10-4":[[8],["present-irreg"]],"fr-r10-5":[[27],["devoir-pouvoir"]],"fr-r10-6":[[],[]],"fr-r10-7":[[30],[]],"fr-r10-8":[[15],["possessifs"]],"fr-r10-9":[[14],["on","temps"]],"fr-r10-10":[[15],["lieu"]],"fr-r10-11":[[6],["adjectif"]],"fr-r10-12":[[15],["lieu"]],"fr-r10-13":[[15],[]],"fr-r10-14":[[4],["conditionnel"]],"fr-r10-15":[[9],["temps"]],"fr-r10-16":[[3],[]],"fr-r10-17":[[],["temps"]],"fr-r10-18":[[35],["adjectif"]],"fr-r10-19":[[15],["possessifs"]],"fr-r10-20":[[26],["interro-simple"]],"fr-r11-1":[[],["present-irreg","tout"]],"fr-r11-2":[[],["present-irreg"]],"fr-r11-3":[[2],["quantite-indef"]],"fr-r11-4":[[28],["savoir-croire-vouloir"]],"fr-r11-5":[[],["present-irreg"]],"fr-r11-6":[[1],["conditionnel"]],"fr-r11-7":[[14],["conditionnel"]],"fr-r11-8":[[],["present-irreg"]],"fr-r11-9":[[15],["dans-sur"]],"fr-r11-10":[[],["tout"]],"fr-r11-11":[[],["possessifs"]],"fr-r11-12":[[18],["compl-nom","possessifs"]],"fr-r11-13":[[2],["quantite-indef"]],"fr-r11-14":[[8],["on"]],"fr-r11-15":[[9],["temps"]],"fr-r11-16":[[3],[]],"fr-r11-17":[[31],["pc-etre"]],"fr-r11-18":[[],["temps"]],"fr-r11-19":[[12],["interro-simple"]],"fr-r11-20":[[15],["lieu"]],"fr-r11-21":[[],["present-irreg"]],"fr-r11-22":[[15],["lieu"]],"fr-r11-23":[[1],["savoir-croire-vouloir"]],"fr-r11-24":[[10,9],["infinitif"]],"fr-r11-25":[[],["possessifs"]],"fr-r11-26":[[14],["temps"]],"fr-r11-27":[[36],["adjectif"]],"fr-r11-28":[[28,20],["on"]],"fr-r11-29":[[15],["lieu"]],"fr-r11-30":[[35],["adjectif"]],"fr-r11-31":[[29],["temps"]],"fr-r11-32":[[27],["devoir-pouvoir"]],"fr-r11-33":[[15],["interro-complexe"]],"fr-r11-34":[[8],[]],"fr-r11-35":[[],[]],"fr-r11-36":[[],[]],"fr-r11-37":[[],[]],"fr-r11-38":[[9],["temps"]],"fr-r11-39":[[15],[]],"fr-r11-40":[[15],["possessifs"]],"fr-r17-35":[[],["cod-pc"]],"fr-r17-36":[[],["pc-etre"]],"fr-r17-37":[[],["passe-recent"]],"fr-r17-38":[[10],["pour","infinitif"]],"fr-r17-39":[[],[]],"fr-r20-45":[[],[]],"fr-r20-46":[[],[]],"fr-r20-47":[[31],["pc-etre"]],"fr-r20-48":[[8],["temps"]],"fr-r20-49":[[3],[]],"fr-r20-50":[[],["temps"]]};
+const COMMUNICATION_DIALOGUES=[
+ {
+  "id": "fr-cp01-d1",
+  "unit": 1,
+  "level": "A1",
+  "title": "À la pâtisserie",
+  "audio": "Bonjour madame, vous désirez ? — Bonjour, je voudrais une tarte aux pommes, s'il vous plaît. — Pour combien de personnes ? — Pour six personnes. Est-ce que vous avez aussi des éclairs au café ? — Non, je suis désolé, je n'ai plus d'éclairs au café, mais il me reste des éclairs au chocolat. — Alors, donnez-moi quatre éclairs au chocolat. — Et avec ceci ? — Ce sera tout, merci.",
+  "grammar": [
+   "genre",
+   "interro-simple"
+  ],
+  "qs": [
+   {
+    "q": "Qu'est-ce qu'il n'y a plus dans la pâtisserie ?",
+    "opts": [
+     "Des éclairs au café",
+     "Des éclairs au chocolat",
+     "Des tartes aux pommes",
+     "Des croissants"
+    ],
+    "evidence": "je n'ai plus d'éclairs au café",
+    "gloss": "咖啡味的闪电泡芙卖完了，只剩巧克力味的。"
+   },
+   {
+    "q": "Pour combien de personnes est la tarte ?",
+    "opts": [
+     "Pour six personnes",
+     "Pour quatre personnes",
+     "Pour deux personnes",
+     "Pour huit personnes"
+    ],
+    "evidence": "Pour six personnes",
+    "gloss": "苹果挞是六人份的；“四”是后面买的泡芙数量。"
+   }
+  ],
+  "gaps": [
+   {
+    "start": 311,
+    "end": 317,
+    "options": [
+     "quatre",
+     "six",
+     "deux",
+     "quatorze"
+    ]
+   }
+  ]
+ },
+ {
+  "id": "fr-cp02-d1",
+  "unit": 2,
+  "level": "A1",
+  "title": "Préparer une quiche",
+  "audio": "Qu'est-ce qu'il faut pour la quiche ? — Il faut six œufs, deux cents grammes de lardons et un peu de fromage. — On a du lait ? — Oui, il reste une bouteille de lait, mais il n'y a plus de crème. — Bon, j'achète un pot de crème et une douzaine d'œufs. — Prends aussi une livre de tomates pour la salade. — D'accord, une livre, ça suffit.",
+  "grammar": [
+   "quantite",
+   "quantite-indef"
+  ],
+  "qs": [
+   {
+    "q": "Qu'est-ce qu'il n'y a plus à la maison ?",
+    "opts": [
+     "De la crème",
+     "Du lait",
+     "Du fromage",
+     "Des lardons"
+    ],
+    "evidence": "il n'y a plus de crème",
+    "gloss": "牛奶还有一瓶，奶油没有了。"
+   },
+   {
+    "q": "Quelle quantité de tomates faut-il acheter ?",
+    "opts": [
+     "Une livre",
+     "Un kilo",
+     "Une douzaine",
+     "Deux cents grammes"
+    ],
+    "evidence": "une livre de tomates",
+    "gloss": "une livre 是一斤（500 克）；“一打”说的是鸡蛋。"
+   }
+  ],
+  "gaps": [
+   {
+    "start": 230,
+    "end": 242,
+    "options": [
+     "une douzaine",
+     "une dizaine",
+     "une bouteille",
+     "une quinzaine"
+    ]
+   }
+  ]
+ },
+ {
+  "id": "fr-cp03-d1",
+  "unit": 3,
+  "level": "A1",
+  "title": "Au marché aux puces",
+  "audio": "Bonjour monsieur, combien coûte cette lampe ? — Elle coûte quarante-cinq euros. — Et le petit miroir, il fait combien ? — Le miroir est à vingt euros. — C'est un peu cher. Vous pouvez me faire un prix si je prends les deux ? — Bon, soixante euros pour les deux. — D'accord. Je peux payer par carte ? — Non, désolé, seulement en espèces.",
+  "grammar": [
+   "infinitif"
+  ],
+  "qs": [
+   {
+    "q": "Combien la cliente paie-t-elle pour les deux objets ?",
+    "opts": [
+     "Soixante euros",
+     "Soixante-cinq euros",
+     "Quarante-cinq euros",
+     "Vingt euros"
+    ],
+    "evidence": "soixante euros pour les deux",
+    "gloss": "两件原价共 65 欧，讲价后 60 欧。"
+   },
+   {
+    "q": "Comment faut-il payer ?",
+    "opts": [
+     "En espèces",
+     "Par carte",
+     "Par chèque",
+     "En ligne"
+    ],
+    "evidence": "seulement en espèces",
+    "gloss": "摊主只收现金，不能刷卡。"
+   }
+  ],
+  "gaps": [
+   {
+    "start": 59,
+    "end": 72,
+    "options": [
+     "quarante-cinq",
+     "cinquante-cinq",
+     "quarante-six",
+     "trente-cinq"
+    ]
+   }
+  ]
+ },
+ {
+  "id": "fr-cp04-d1",
+  "unit": 4,
+  "level": "A1",
+  "title": "Au restaurant",
+  "audio": "Vous avez choisi ? — Oui. Comme entrée, je vais prendre la soupe à l'oignon. — Et comme plat ? — Le poulet rôti avec des frites, s'il vous plaît. — Et pour madame ? — Pour moi, pas d'entrée. Je prends seulement le poisson du jour avec du riz. — Et comme boisson ? — Une carafe d'eau et un verre de vin blanc pour moi.",
+  "grammar": [
+   "pour",
+   "present-irreg"
+  ],
+  "qs": [
+   {
+    "q": "Que commande la dame ?",
+    "opts": [
+     "Le poisson du jour avec du riz",
+     "Le poulet rôti avec des frites",
+     "La soupe à l'oignon",
+     "Une salade verte"
+    ],
+    "evidence": "Je prends seulement le poisson du jour avec du riz",
+    "gloss": "女士不要前菜，只点了当日鱼配米饭。"
+   },
+   {
+    "q": "Quelle entrée le premier client choisit-il ?",
+    "opts": [
+     "La soupe à l'oignon",
+     "Aucune entrée",
+     "Le poisson du jour",
+     "Une salade de tomates"
+    ],
+    "evidence": "je vais prendre la soupe à l'oignon",
+    "gloss": "第一位客人的前菜是洋葱汤。"
+   }
+  ],
+  "gaps": [
+   {
+    "start": 194,
+    "end": 200,
+    "options": [
+     "prends",
+     "prend",
+     "prenez",
+     "apprends"
+    ]
+   }
+  ]
+ },
+ {
+  "id": "fr-cp05-d1",
+  "unit": 5,
+  "level": "A1",
+  "title": "Réserver une table",
+  "audio": "Restaurant Le Jardin, bonjour. — Bonjour, je voudrais réserver une table pour vendredi soir. — Pour combien de personnes ? — Pour cinq personnes, vers vingt heures. — Je regrette, à vingt heures, c'est complet. Il me reste une table à vingt et une heures. — Très bien, à vingt et une heures. — C'est à quel nom ? — Au nom de Morel.",
+  "grammar": [
+   "quel",
+   "pour"
+  ],
+  "qs": [
+   {
+    "q": "À quelle heure la table est-elle réservée ?",
+    "opts": [
+     "À vingt et une heures",
+     "À vingt heures",
+     "À dix-neuf heures",
+     "À vingt heures trente"
+    ],
+    "evidence": "Très bien, à vingt et une heures",
+    "gloss": "20 点已订满，最后订的是 21 点。"
+   },
+   {
+    "q": "Pour combien de personnes est la réservation ?",
+    "opts": [
+     "Cinq",
+     "Quatre",
+     "Quinze",
+     "Deux"
+    ],
+    "evidence": "Pour cinq personnes",
+    "gloss": "订的是五个人的桌子。"
+   }
+  ],
+  "gaps": [
+   {
+    "start": 202,
+    "end": 209,
+    "options": [
+     "complet",
+     "fermé",
+     "réservé",
+     "ouvert"
+    ]
+   }
+  ]
+ },
+ {
+  "id": "fr-cp06-d1",
+  "unit": 6,
+  "level": "A1",
+  "title": "Au rayon des manteaux",
+  "audio": "Je peux vous aider ? — Oui, je cherche un manteau d'hiver. — Quelle taille faites-vous ? — Je fais du quarante. — Voilà un manteau gris. Vous voulez l'essayer ? — Oui. Il est joli, mais il est trop petit. Les manches ne sont pas assez longues. — Je vous apporte la taille au-dessus. — Merci. Et vous l'avez en noir ? — Non, seulement en gris et en bleu.",
+  "grammar": [
+   "trop-assez"
+  ],
+  "qs": [
+   {
+    "q": "Quel est le problème avec le premier manteau ?",
+    "opts": [
+     "Il est trop petit",
+     "Il est trop cher",
+     "Il est trop long",
+     "La couleur ne plaît pas"
+    ],
+    "evidence": "il est trop petit",
+    "gloss": "大衣太小，袖子不够长。"
+   },
+   {
+    "q": "En quelles couleurs le manteau existe-t-il ?",
+    "opts": [
+     "En gris et en bleu",
+     "En noir et en gris",
+     "En noir et en bleu",
+     "Seulement en gris"
+    ],
+    "evidence": "seulement en gris et en bleu",
+    "gloss": "没有黑色，只有灰色和蓝色。"
+   }
+  ],
+  "gaps": [
+   {
+    "start": 229,
+    "end": 234,
+    "options": [
+     "assez",
+     "aussi",
+     "très",
+     "trop"
+    ]
+   }
+  ]
+ },
+ {
+  "id": "fr-cp07-d1",
+  "unit": 7,
+  "level": "A2",
+  "title": "Choisir un cadeau",
+  "audio": "Alors, tu prends le sac ou l'écharpe pour maman ? — Je ne sais pas trop. Le sac est beau, mais j'hésite, il est un peu cher. — Et l'écharpe ? — Je ne suis pas sûre, je crois qu'elle a déjà une écharpe rouge. — Tu veux réfléchir ? — Oui, peut-être. Je vais revenir demain avec papa.",
+  "grammar": [
+   "savoir-croire-vouloir"
+  ],
+  "qs": [
+   {
+    "q": "Pourquoi hésite-t-elle à prendre le sac ?",
+    "opts": [
+     "Il est un peu cher",
+     "Il n'est pas beau",
+     "Il est trop petit",
+     "Sa mère a déjà un sac"
+    ],
+    "evidence": "il est un peu cher",
+    "gloss": "包好看，但有点贵，所以犹豫。"
+   },
+   {
+    "q": "Que décide-t-elle finalement ?",
+    "opts": [
+     "De revenir demain",
+     "D'acheter le sac",
+     "D'acheter l'écharpe",
+     "D'acheter les deux"
+    ],
+    "evidence": "Je vais revenir demain",
+    "gloss": "她没有决定，打算明天和爸爸再来。"
+   }
+  ],
+  "gaps": [
+   {
+    "start": 168,
+    "end": 173,
+    "options": [
+     "crois",
+     "vois",
+     "sais",
+     "dois"
+    ]
+   }
+  ]
+ },
+ {
+  "id": "fr-cp08-d1",
+  "unit": 8,
+  "level": "A2",
+  "title": "Chez le coiffeur",
+  "audio": "Salon Coiffure Plus, bonjour. — Bonjour, je voudrais prendre rendez-vous pour une coupe, le plus tôt possible. — Quel jour vous convient ? — Jeudi après-midi, c'est possible ? — Jeudi, c'est complet. Mercredi à dix heures, ça vous convient ? — Non, le matin, je travaille. — Alors vendredi à seize heures trente ? — Oui, c'est parfait.",
+  "grammar": [
+   "superlatif"
+  ],
+  "qs": [
+   {
+    "q": "Quel rendez-vous est finalement pris ?",
+    "opts": [
+     "Vendredi à seize heures trente",
+     "Jeudi après-midi",
+     "Mercredi à dix heures",
+     "Vendredi à six heures trente"
+    ],
+    "evidence": "Alors vendredi à seize heures trente",
+    "gloss": "周四已满，周三上午她要上班，最后定在周五 16:30。"
+   },
+   {
+    "q": "Pourquoi refuse-t-elle le rendez-vous de mercredi ?",
+    "opts": [
+     "Elle travaille le matin",
+     "Le salon est fermé",
+     "C'est complet",
+     "Elle est en vacances"
+    ],
+    "evidence": "le matin, je travaille",
+    "gloss": "她上午要工作。"
+   }
+  ],
+  "gaps": [
+   {
+    "start": 89,
+    "end": 109,
+    "options": [
+     "le plus tôt possible",
+     "le plus tard possible",
+     "le plus vite possible",
+     "plus tôt que possible"
+    ]
+   }
+  ]
+ },
+ {
+  "id": "fr-cp09-d1",
+  "unit": 9,
+  "level": "A1",
+  "title": "À la médiathèque",
+  "audio": "Bonjour, je voudrais des renseignements sur l'inscription, s'il vous plaît. — Bien sûr. L'inscription coûte dix euros par an, et c'est gratuit pour les étudiants. — Combien de livres est-ce que je peux emprunter ? — Vous pouvez emprunter cinq livres pendant trois semaines. — Et quels sont les horaires ? — Nous sommes ouverts du mardi au samedi, de dix heures à dix-huit heures.",
+  "grammar": [
+   "devoir-pouvoir",
+   "interro-complexe",
+   "temps"
+  ],
+  "qs": [
+   {
+    "q": "Pour qui l'inscription est-elle gratuite ?",
+    "opts": [
+     "Pour les étudiants",
+     "Pour les enfants",
+     "Pour les retraités",
+     "Pour tout le monde"
+    ],
+    "evidence": "c'est gratuit pour les étudiants",
+    "gloss": "注册每年 10 欧，学生免费。"
+   },
+   {
+    "q": "Combien de temps peut-on garder les livres ?",
+    "opts": [
+     "Trois semaines",
+     "Cinq semaines",
+     "Un an",
+     "Dix jours"
+    ],
+    "evidence": "pendant trois semaines",
+    "gloss": "可以借五本，借期三周。"
+   }
+  ],
+  "gaps": [
+   {
+    "start": 250,
+    "end": 257,
+    "options": [
+     "pendant",
+     "depuis",
+     "avant",
+     "pourtant"
+    ]
+   }
+  ]
+ },
+ {
+  "id": "fr-cp10-d1",
+  "unit": 10,
+  "level": "A2",
+  "title": "S'inscrire à un cours",
+  "audio": "Bonjour, je voudrais m'inscrire au cours de français. — Vous devez d'abord remplir ce formulaire. — Il faut une photo ? — Oui, il faut deux photos d'identité et une copie de votre passeport. — Est-ce que je dois payer aujourd'hui ? — Non, ce n'est pas obligatoire. Mais vous êtes obligé de payer avant le premier cours. — D'accord, je pense à tout apporter demain.",
+  "grammar": [
+   "verbes-a",
+   "devoir-pouvoir"
+  ],
+  "qs": [
+   {
+    "q": "Que faut-il apporter ?",
+    "opts": [
+     "Deux photos d'identité et une copie du passeport",
+     "Une photo et l'original du passeport",
+     "Une carte d'étudiant",
+     "Une lettre du professeur"
+    ],
+    "evidence": "il faut deux photos d'identité et une copie de votre passeport",
+    "gloss": "需要两张证件照和护照复印件。"
+   },
+   {
+    "q": "Quand faut-il payer ?",
+    "opts": [
+     "Avant le premier cours",
+     "Aujourd'hui",
+     "Après le premier cours",
+     "À la fin de l'année"
+    ],
+    "evidence": "payer avant le premier cours",
+    "gloss": "今天不必付，但必须在第一节课之前付。"
+   }
+  ],
+  "gaps": [
+   {
+    "start": 252,
+    "end": 263,
+    "options": [
+     "obligatoire",
+     "obligé",
+     "possible",
+     "nécessaire"
+    ]
+   }
+  ]
+ },
+ {
+  "id": "fr-cp11-d1",
+  "unit": 11,
+  "level": "A2",
+  "title": "Au musée",
+  "audio": "Excusez-moi, est-ce qu'on peut prendre des photos ici ? — Oui, c'est autorisé, mais sans flash. — Et je peux garder mon sac à dos ? — Non, je regrette, c'est interdit. Vous devez le laisser au vestiaire. — D'accord. Est-ce qu'il est possible de manger dans les salles ? — Non, il est interdit de manger et de boire dans le musée. Mais il y a un café au rez-de-chaussée.",
+  "grammar": [
+   "cest-ilest"
+  ],
+  "qs": [
+   {
+    "q": "Qu'est-ce qui est autorisé dans le musée ?",
+    "opts": [
+     "Prendre des photos sans flash",
+     "Garder son sac à dos",
+     "Manger dans les salles",
+     "Prendre des photos avec flash"
+    ],
+    "evidence": "c'est autorisé, mais sans flash",
+    "gloss": "可以拍照，但不能用闪光灯。"
+   },
+   {
+    "q": "Où faut-il laisser le sac à dos ?",
+    "opts": [
+     "Au vestiaire",
+     "Au café",
+     "Dans la salle",
+     "Dans la voiture"
+    ],
+    "evidence": "Vous devez le laisser au vestiaire",
+    "gloss": "背包不能带进去，要存在衣帽间。"
+   }
+  ],
+  "gaps": [
+   {
+    "start": 69,
+    "end": 77,
+    "options": [
+     "autorisé",
+     "interdit",
+     "organisé",
+     "utilisé"
+    ]
+   }
+  ]
+ },
+ {
+  "id": "fr-cp12-d1",
+  "unit": 12,
+  "level": "A1",
+  "title": "Avant le départ",
+  "audio": "Tu as bien fermé les fenêtres ? — Oui, elles sont toutes fermées. — Et les billets de train, tu es sûr qu'ils sont dans ton sac ? — Oui, je viens de vérifier. — Le train part bien à neuf heures dix, c'est ça ? — Non, à neuf heures six. — Ah ! Alors il faut partir tout de suite. Tu as pris la clé de la maison de Julie ? — Oui, oui, ne t'inquiète pas.",
+  "grammar": [
+   "compl-nom",
+   "interro-simple"
+  ],
+  "qs": [
+   {
+    "q": "À quelle heure part le train ?",
+    "opts": [
+     "À neuf heures six",
+     "À neuf heures dix",
+     "À dix heures six",
+     "À neuf heures seize"
+    ],
+    "evidence": "Non, à neuf heures six",
+    "gloss": "不是 9:10，而是 9:06。"
+   },
+   {
+    "q": "Où sont les billets de train ?",
+    "opts": [
+     "Dans le sac",
+     "Sur la table",
+     "Chez Julie",
+     "À la gare"
+    ],
+    "evidence": "ils sont dans ton sac",
+    "gloss": "车票在包里，刚刚检查过。"
+   }
+  ],
+  "gaps": [
+   {
+    "start": 149,
+    "end": 157,
+    "options": [
+     "vérifier",
+     "téléphoner",
+     "terminer",
+     "voyager"
+    ]
+   }
+  ]
+ },
+ {
+  "id": "fr-cp13-d1",
+  "unit": 13,
+  "level": "A2",
+  "title": "Une chambre d'hôtel décevante",
+  "audio": "Bonsoir. J'ai réservé une chambre avec vue sur la mer, mais ma chambre donne sur le parking ! — Je suis désolé, madame, l'hôtel est complet ce soir. — Ce n'est pas normal ! J'ai payé pour la vue sur la mer. En plus, la douche ne marche pas. — Je comprends. Nous allons réparer la douche tout de suite, et demain, vous allez changer de chambre. — Bon, mais c'est vraiment inadmissible.",
+  "grammar": [
+   "futur-proche"
+  ],
+  "qs": [
+   {
+    "q": "De quoi la cliente se plaint-elle d'abord ?",
+    "opts": [
+     "Sa chambre donne sur le parking",
+     "Sa chambre est trop chère",
+     "Sa chambre est trop petite",
+     "Il y a trop de bruit"
+    ],
+    "evidence": "ma chambre donne sur le parking",
+    "gloss": "她订的是海景房，房间却对着停车场。"
+   },
+   {
+    "q": "Que va-t-il se passer demain ?",
+    "opts": [
+     "La cliente va changer de chambre",
+     "L'hôtel va rembourser la cliente",
+     "On va réparer la douche",
+     "La cliente va quitter l'hôtel"
+    ],
+    "evidence": "demain, vous allez changer de chambre",
+    "gloss": "淋浴马上修，明天换房间。"
+   }
+  ],
+  "gaps": [
+   {
+    "start": 262,
+    "end": 276,
+    "options": [
+     "allons réparer",
+     "avons réparé",
+     "allons préparer",
+     "voulons réparer"
+    ]
+   }
+  ]
+ },
+ {
+  "id": "fr-cp14-d1",
+  "unit": 14,
+  "level": "A2",
+  "title": "Les projets de l'été",
+  "audio": "Qu'est-ce que tu vas faire cet été ? — J'ai l'intention de partir en Bretagne avec des amis. Nous louerons une petite maison près de la plage. — Vous resterez combien de temps ? — Deux semaines. Et toi, tu as des projets ? — Moi, je compte travailler en juillet. En août, j'irai peut-être voir ma sœur à Montréal. — Tu lui as déjà dit ? — Non, je lui téléphonerai ce week-end.",
+  "grammar": [
+   "futur",
+   "pron-compl"
+  ],
+  "qs": [
+   {
+    "q": "Où la première personne va-t-elle passer ses vacances ?",
+    "opts": [
+     "En Bretagne",
+     "À Montréal",
+     "Chez sa sœur",
+     "À la montagne"
+    ],
+    "evidence": "partir en Bretagne avec des amis",
+    "gloss": "她打算和朋友去布列塔尼。"
+   },
+   {
+    "q": "Que fera la deuxième personne en juillet ?",
+    "opts": [
+     "Elle travaillera",
+     "Elle ira à Montréal",
+     "Elle louera une maison",
+     "Elle partira en Bretagne"
+    ],
+    "evidence": "je compte travailler en juillet",
+    "gloss": "七月打算工作，八月也许去蒙特利尔看姐妹。"
+   }
+  ],
+  "gaps": [
+   {
+    "start": 98,
+    "end": 106,
+    "options": [
+     "louerons",
+     "louons",
+     "loueront",
+     "jouerons"
+    ]
+   }
+  ]
+ },
+ {
+  "id": "fr-cp15-d1",
+  "unit": 15,
+  "level": "A1",
+  "title": "Chercher la pharmacie",
+  "audio": "Pardon madame, où se trouve la pharmacie, s'il vous plaît ? — Ce n'est pas loin. Vous allez tout droit jusqu'au feu, puis vous tournez à droite. La pharmacie est à côté de la boulangerie, en face du cinéma. — C'est avant ou après le pont ? — Juste après le pont. — Merci. Et il y a un distributeur de billets près d'ici ? — Oui, là-bas, au coin de la rue.",
+  "grammar": [
+   "lieu"
+  ],
+  "qs": [
+   {
+    "q": "Où est la pharmacie ?",
+    "opts": [
+     "À côté de la boulangerie",
+     "À côté du cinéma",
+     "Avant le pont",
+     "Au coin de la rue"
+    ],
+    "evidence": "La pharmacie est à côté de la boulangerie",
+    "gloss": "药店在面包店旁边、电影院对面，过了桥就是。"
+   },
+   {
+    "q": "Où faut-il tourner à droite ?",
+    "opts": [
+     "Au feu",
+     "Au pont",
+     "Au cinéma",
+     "Au coin de la rue"
+    ],
+    "evidence": "tout droit jusqu'au feu, puis vous tournez à droite",
+    "gloss": "直走到红绿灯再右转。"
+   }
+  ],
+  "gaps": [
+   {
+    "start": 188,
+    "end": 198,
+    "options": [
+     "en face du",
+     "à côté du",
+     "près du",
+     "au fond du"
+    ]
+   }
+  ]
+ },
+ {
+  "id": "fr-cp16-d1",
+  "unit": 16,
+  "level": "A2",
+  "title": "Un studio à louer",
+  "audio": "Allô, bonjour, je vous appelle à propos de l'annonce pour le studio. Il est toujours libre ? — Oui, il est libre à partir du premier mars. — Il fait quelle surface ? — Trente mètres carrés, avec un balcon. — Le loyer est de combien ? — Six cent cinquante euros, charges comprises. — Il y a des placards ? — Oui, il y en a deux dans l'entrée. — Est-ce que je peux le visiter samedi ?",
+  "grammar": [
+   "en"
+  ],
+  "qs": [
+   {
+    "q": "Quel est le loyer du studio ?",
+    "opts": [
+     "Six cent cinquante euros, charges comprises",
+     "Six cent cinquante euros, sans les charges",
+     "Cinq cent soixante euros",
+     "Sept cent cinquante euros"
+    ],
+    "evidence": "Six cent cinquante euros, charges comprises",
+    "gloss": "房租 650 欧，含杂费。"
+   },
+   {
+    "q": "Combien de placards y a-t-il ?",
+    "opts": [
+     "Deux",
+     "Trois",
+     "Un",
+     "Aucun"
+    ],
+    "evidence": "il y en a deux dans l'entrée",
+    "gloss": "门厅里有两个壁橱（en 代替 placards）。"
+   }
+  ],
+  "gaps": [
+   {
+    "start": 113,
+    "end": 124,
+    "options": [
+     "à partir du",
+     "à côté du",
+     "à propos du",
+     "jusqu'au"
+    ]
+   }
+  ]
+ },
+ {
+  "id": "fr-cp17-d1",
+  "unit": 17,
+  "level": "A2",
+  "title": "Deux appartements",
+  "audio": "Alors, tu préfères quel appartement ? — Le premier est plus grand que le deuxième, mais il est aussi plus cher. — Et le quartier ? — Le deuxième est mieux situé : il est plus près du métro et moins bruyant. — Il y a autant de lumière ? — Non, le premier est plus clair. — Et finalement ? — Je prends le deuxième. Pour moi, le calme est plus important que la taille.",
+  "grammar": [
+   "comparatif"
+  ],
+  "qs": [
+   {
+    "q": "Quel appartement choisit-elle ?",
+    "opts": [
+     "Le deuxième, plus calme",
+     "Le premier, plus grand",
+     "Le premier, moins cher",
+     "Aucun des deux"
+    ],
+    "evidence": "Je prends le deuxième",
+    "gloss": "她选第二套：对她来说安静比面积重要。"
+   },
+   {
+    "q": "Quel est l'avantage du premier appartement ?",
+    "opts": [
+     "Il est plus clair",
+     "Il est plus près du métro",
+     "Il est moins cher",
+     "Il est moins bruyant"
+    ],
+    "evidence": "le premier est plus clair",
+    "gloss": "第一套更大、更亮，但更贵。"
+   }
+  ],
+  "gaps": [
+   {
+    "start": 192,
+    "end": 205,
+    "options": [
+     "moins bruyant",
+     "plus bruyant",
+     "moins brillant",
+     "aussi bruyant"
+    ]
+   }
+  ]
+ },
+ {
+  "id": "fr-cp18-d1",
+  "unit": 18,
+  "level": "A2",
+  "title": "Quel pull ?",
+  "audio": "Tu peux me passer mon pull, s'il te plaît ? — Lequel ? Celui-ci ? — Non, pas celui-là. Celui qui est sur la chaise, le bleu à rayures blanches. — Ah, celui en laine ? — Oui, c'est ça. Et prends aussi mes chaussures. — Lesquelles ? Les noires ? — Non, celles qui sont près de la porte, les marron en cuir.",
+  "grammar": [
+   "demonstratif",
+   "qui"
+  ],
+  "qs": [
+   {
+    "q": "Quel pull veut-elle ?",
+    "opts": [
+     "Le pull bleu à rayures blanches",
+     "Le pull blanc à rayures bleues",
+     "Le pull noir en laine",
+     "Le pull marron en coton"
+    ],
+    "evidence": "le bleu à rayures blanches",
+    "gloss": "她要椅子上那件蓝底白条纹的羊毛衫。"
+   },
+   {
+    "q": "Où sont les chaussures qu'elle veut ?",
+    "opts": [
+     "Près de la porte",
+     "Sur la chaise",
+     "Sous le lit",
+     "Dans le placard"
+    ],
+    "evidence": "celles qui sont près de la porte",
+    "gloss": "要的是门边那双棕色皮鞋。"
+   }
+  ],
+  "gaps": [
+   {
+    "start": 87,
+    "end": 96,
+    "options": [
+     "Celui qui",
+     "Celle qui",
+     "Celui que",
+     "Ceux qui"
+    ]
+   }
+  ]
+ },
+ {
+  "id": "fr-cp19-d1",
+  "unit": 19,
+  "level": "A2",
+  "title": "Dimanche à la mer",
+  "audio": "Qu'est-ce qu'on fait dimanche ? — S'il fait beau, on ira à la plage. — Et s'il pleut ? — S'il pleut, nous visiterons le musée de la Marine. — Et si le musée est fermé ? — Alors on restera à l'hôtel et on jouera aux cartes ! — Regarde la météo : ils annoncent du soleil le matin et des nuages l'après-midi. — Dans ce cas, partons tôt.",
+  "grammar": [
+   "condition",
+   "futur"
+  ],
+  "qs": [
+   {
+    "q": "Que feront-ils s'il pleut ?",
+    "opts": [
+     "Ils visiteront le musée",
+     "Ils iront à la plage",
+     "Ils rentreront chez eux",
+     "Ils iront au cinéma"
+    ],
+    "evidence": "S'il pleut, nous visiterons le musée de la Marine",
+    "gloss": "下雨就去参观海事博物馆。"
+   },
+   {
+    "q": "Quel temps est annoncé pour le matin ?",
+    "opts": [
+     "Du soleil",
+     "Des nuages",
+     "De la pluie",
+     "Du vent"
+    ],
+    "evidence": "du soleil le matin",
+    "gloss": "上午晴，下午多云。"
+   }
+  ],
+  "gaps": [
+   {
+    "start": 53,
+    "end": 56,
+    "options": [
+     "ira",
+     "irait",
+     "aura",
+     "va"
+    ]
+   }
+  ]
+ },
+ {
+  "id": "fr-cp20-d1",
+  "unit": 20,
+  "level": "A2",
+  "title": "Avant la réunion",
+  "audio": "De quoi as-tu besoin pour la réunion ? — J'ai besoin d'un ordinateur portable et d'un grand écran. — Il te faut aussi des copies ? — Oui, il faut que j'imprime vingt copies du rapport. — L'imprimante du deuxième étage est en panne. — Alors il faut que je trouve une autre imprimante avant midi. — Utilise celle de l'accueil, elle marche très bien.",
+  "grammar": [
+   "subjonctif"
+  ],
+  "qs": [
+   {
+    "q": "Combien de copies du rapport faut-il ?",
+    "opts": [
+     "Vingt",
+     "Douze",
+     "Deux",
+     "Vingt-deux"
+    ],
+    "evidence": "il faut que j'imprime vingt copies du rapport",
+    "gloss": "要打印二十份报告。"
+   },
+   {
+    "q": "Quelle imprimante peut-on utiliser ?",
+    "opts": [
+     "Celle de l'accueil",
+     "Celle du deuxième étage",
+     "Celle du directeur",
+     "Aucune ne marche"
+    ],
+    "evidence": "Utilise celle de l'accueil",
+    "gloss": "三楼（法国的二楼）的打印机坏了，用前台的。"
+   }
+  ],
+  "gaps": [
+   {
+    "start": 255,
+    "end": 261,
+    "options": [
+     "trouve",
+     "trouves",
+     "trouver",
+     "prouve"
+    ]
+   }
+  ]
+ },
+ {
+  "id": "fr-cp21-d1",
+  "unit": 21,
+  "level": "A1",
+  "title": "Une nouvelle voisine",
+  "audio": "Bonjour ! Je me présente : je m'appelle Clara Petit, je viens d'emménager au troisième étage. — Enchanté ! Moi, c'est Hugo. J'habite juste en dessous, au deuxième. — Vous habitez ici depuis longtemps ? — Depuis cinq ans. Je vous présente ma femme, Sophie. — Bonjour Sophie, ravie de vous rencontrer. — Bienvenue dans l'immeuble ! On se tutoie ?",
+  "grammar": [
+   "pronominaux"
+  ],
+  "qs": [
+   {
+    "q": "À quel étage habite Clara ?",
+    "opts": [
+     "Au troisième étage",
+     "Au deuxième étage",
+     "Au cinquième étage",
+     "Au premier étage"
+    ],
+    "evidence": "au troisième étage",
+    "gloss": "克拉拉刚搬到四楼（法国的三楼），雨果住在她楼下。"
+   },
+   {
+    "q": "Qui est Sophie ?",
+    "opts": [
+     "La femme de Hugo",
+     "La sœur de Clara",
+     "Une collègue de Clara",
+     "La propriétaire"
+    ],
+    "evidence": "Je vous présente ma femme, Sophie",
+    "gloss": "索菲是雨果的妻子。"
+   }
+  ],
+  "gaps": [
+   {
+    "start": 30,
+    "end": 39,
+    "options": [
+     "m'appelle",
+     "t'appelle",
+     "s'appelle",
+     "rappelle"
+    ]
+   }
+  ]
+ },
+ {
+  "id": "fr-cp22-d1",
+  "unit": 22,
+  "level": "A2",
+  "title": "Un déjeuner oublié",
+  "audio": "Allô, Marc ? Je suis vraiment désolée, j'ai complètement oublié notre déjeuner ! — Je t'ai attendue une demi-heure au restaurant. — Excuse-moi. J'avais noté le rendez-vous dans mon agenda, mais j'avais laissé l'agenda au bureau. — Bon, ce n'est pas grave, ça arrive. — Je t'invite demain pour me faire pardonner. — D'accord, mais cette fois, n'oublie pas !",
+  "grammar": [
+   "pqp"
+  ],
+  "qs": [
+   {
+    "q": "Pourquoi a-t-elle oublié le déjeuner ?",
+    "opts": [
+     "Elle avait laissé son agenda au bureau",
+     "Elle n'avait pas noté le rendez-vous",
+     "Elle était malade",
+     "Elle avait perdu son téléphone"
+    ],
+    "evidence": "j'avais laissé l'agenda au bureau",
+    "gloss": "她记在记事本上了，但把记事本忘在办公室。"
+   },
+   {
+    "q": "Que propose-t-elle pour s'excuser ?",
+    "opts": [
+     "D'inviter Marc demain",
+     "De payer le restaurant d'aujourd'hui",
+     "De téléphoner ce soir",
+     "D'envoyer un cadeau"
+    ],
+    "evidence": "Je t'invite demain",
+    "gloss": "她明天请客赔罪。"
+   }
+  ],
+  "gaps": [
+   {
+    "start": 146,
+    "end": 156,
+    "options": [
+     "avais noté",
+     "avait noté",
+     "ai noté",
+     "avais voté"
+    ]
+   }
+  ]
+ },
+ {
+  "id": "fr-cp23-d1",
+  "unit": 23,
+  "level": "A1",
+  "title": "Rappeler plus tard",
+  "audio": "Allô, bonjour, est-ce que je pourrais parler à Léa, s'il vous plaît ? — C'est de la part de qui ? — De Karim, un ami de la fac. — Ne quittez pas. Je suis désolée, elle n'est pas là. Vous voulez lui laisser un message ? — Oui. Dites-lui que la répétition est annulée ce soir. — Très bien, je lui dirai. Elle peut vous rappeler ? — Oui, sur mon portable, après dix-huit heures.",
+  "grammar": [
+   "coi"
+  ],
+  "qs": [
+   {
+    "q": "Quel message Karim laisse-t-il ?",
+    "opts": [
+     "La répétition est annulée ce soir",
+     "La répétition est reportée à demain",
+     "Karim sera en retard",
+     "Léa doit venir plus tôt"
+    ],
+    "evidence": "la répétition est annulée ce soir",
+    "gloss": "留言：今晚的排练取消了。"
+   },
+   {
+    "q": "Quand Léa peut-elle rappeler Karim ?",
+    "opts": [
+     "Après dix-huit heures",
+     "Avant dix-huit heures",
+     "Demain matin",
+     "À midi"
+    ],
+    "evidence": "après dix-huit heures",
+    "gloss": "18 点以后打他的手机。"
+   }
+  ],
+  "gaps": [
+   {
+    "start": 194,
+    "end": 205,
+    "options": [
+     "lui laisser",
+     "le laisser",
+     "lui passer",
+     "leur laisser"
+    ]
+   }
+  ]
+ },
+ {
+  "id": "fr-cp24-d1",
+  "unit": 24,
+  "level": "A1",
+  "title": "Une recette de crêpes",
+  "audio": "Comment est-ce qu'on fait les crêpes ? — C'est facile. D'abord, mets la farine dans un saladier. Ensuite, ajoute trois œufs et mélange bien. — Et le lait ? — Verse le lait petit à petit. Ne le verse pas trop vite ! — Et après ? — Laisse reposer la pâte une heure. Puis fais chauffer la poêle avec un peu de beurre. — Une heure ? J'ai faim, moi !",
+  "grammar": [
+   "imperatif-tu"
+  ],
+  "qs": [
+   {
+    "q": "Que faut-il faire d'abord ?",
+    "opts": [
+     "Mettre la farine dans un saladier",
+     "Ajouter les œufs",
+     "Verser le lait",
+     "Faire chauffer la poêle"
+    ],
+    "evidence": "D'abord, mets la farine dans un saladier",
+    "gloss": "第一步是把面粉倒进大碗。"
+   },
+   {
+    "q": "Combien de temps la pâte doit-elle reposer ?",
+    "opts": [
+     "Une heure",
+     "Trois heures",
+     "Une demi-heure",
+     "Dix minutes"
+    ],
+    "evidence": "Laisse reposer la pâte une heure",
+    "gloss": "面糊要静置一小时。"
+   }
+  ],
+  "gaps": [
+   {
+    "start": 106,
+    "end": 112,
+    "options": [
+     "ajoute",
+     "ajoutez",
+     "ajouter",
+     "achète"
+    ]
+   }
+  ]
+ },
+ {
+  "id": "fr-cp25-d1",
+  "unit": 25,
+  "level": "A2",
+  "title": "Qui a mangé le gâteau ?",
+  "audio": "Qui a mangé le gâteau au chocolat ? C'est toi, Théo ? — Non, ce n'est pas moi ! Je n'ai rien mangé. — Tu n'as pas ouvert le frigo ? — Si, mais j'ai seulement pris un yaourt. Je n'ai pas touché au gâteau. — Et ta sœur ? — Elle n'est pas encore rentrée. — Alors c'est le chien. — Mais non, il n'est jamais entré dans la cuisine !",
+  "grammar": [
+   "pc-negatif"
+  ],
+  "qs": [
+   {
+    "q": "Qu'est-ce que Théo a pris dans le frigo ?",
+    "opts": [
+     "Un yaourt",
+     "Le gâteau au chocolat",
+     "Rien du tout",
+     "Un fruit"
+    ],
+    "evidence": "j'ai seulement pris un yaourt",
+    "gloss": "他开过冰箱，但只拿了一个酸奶。"
+   },
+   {
+    "q": "Pourquoi ce n'est pas la sœur de Théo ?",
+    "opts": [
+     "Elle n'est pas encore rentrée",
+     "Elle n'aime pas le chocolat",
+     "Elle dort",
+     "Elle est dans la cuisine"
+    ],
+    "evidence": "Elle n'est pas encore rentrée",
+    "gloss": "姐姐还没回家。"
+   }
+  ],
+  "gaps": [
+   {
+    "start": 88,
+    "end": 92,
+    "options": [
+     "rien",
+     "bien",
+     "tout",
+     "plus"
+    ]
+   }
+  ]
+ },
+ {
+  "id": "fr-cp26-d1",
+  "unit": 26,
+  "level": "A1",
+  "title": "Un anniversaire",
+  "audio": "Salut Émilie ! On organise une fête samedi soir pour l'anniversaire de Lucas. Tu viens ? — Samedi ? Oh, c'est dommage, je suis prise : je dîne chez mes parents. — Et dimanche midi ? On fait un brunch à la maison. — Dimanche, avec plaisir ! Qu'est-ce que j'apporte ? — Rien du tout, ou alors une bouteille de jus d'orange. — Ça marche. À dimanche !",
+  "grammar": [
+   "on",
+   "possessifs"
+  ],
+  "qs": [
+   {
+    "q": "Pourquoi Émilie refuse-t-elle l'invitation de samedi ?",
+    "opts": [
+     "Elle dîne chez ses parents",
+     "Elle travaille",
+     "Elle est en voyage",
+     "Elle n'aime pas les fêtes"
+    ],
+    "evidence": "je dîne chez mes parents",
+    "gloss": "周六晚上她要去父母家吃饭。"
+   },
+   {
+    "q": "Quelle invitation accepte-t-elle ?",
+    "opts": [
+     "Le brunch de dimanche",
+     "La fête de samedi",
+     "Un dîner vendredi",
+     "Aucune"
+    ],
+    "evidence": "Dimanche, avec plaisir",
+    "gloss": "她高兴地接受了周日中午的早午餐。"
+   }
+  ],
+  "gaps": [
+   {
+    "start": 127,
+    "end": 132,
+    "options": [
+     "prise",
+     "prête",
+     "grise",
+     "promise"
+    ]
+   }
+  ]
+ },
+ {
+  "id": "fr-cp27-d1",
+  "unit": 27,
+  "level": "A2",
+  "title": "Un service entre collègues",
+  "audio": "Nadia, est-ce que tu pourrais me rendre un service ? — Bien sûr, de quoi s'agit-il ? — Je pars en formation demain. Ça t'ennuierait de répondre à mon téléphone ? — Pas du tout. — Et le directeur demande si tu peux envoyer le contrat au client avant jeudi. — D'accord, je m'en occupe. Il a dit autre chose ? — Il a dit que la réunion de vendredi était maintenue.",
+  "grammar": [
+   "discours-indirect",
+   "conditionnel"
+  ],
+  "qs": [
+   {
+    "q": "Que doit envoyer Nadia ?",
+    "opts": [
+     "Le contrat au client",
+     "Le rapport au directeur",
+     "Une invitation aux collègues",
+     "Un message à la formation"
+    ],
+    "evidence": "envoyer le contrat au client avant jeudi",
+    "gloss": "经理问她能否在周四前把合同寄给客户。"
+   },
+   {
+    "q": "Qu'a dit le directeur à propos de la réunion ?",
+    "opts": [
+     "Elle est maintenue",
+     "Elle est annulée",
+     "Elle est reportée à jeudi",
+     "Elle est avancée"
+    ],
+    "evidence": "la réunion de vendredi était maintenue",
+    "gloss": "周五的会议照常举行。"
+   }
+  ],
+  "gaps": [
+   {
+    "start": 21,
+    "end": 29,
+    "options": [
+     "pourrais",
+     "pouvais",
+     "pourrait",
+     "voudrais"
+    ]
+   }
+  ]
+ },
+ {
+  "id": "fr-cp28-d1",
+  "unit": 28,
+  "level": "A2",
+  "title": "Que faire ce soir ?",
+  "audio": "Qu'est-ce qu'on fait ce soir ? — Ça te dirait d'aller au théâtre ? — Bof, les places sont chères. On pourrait plutôt voir un film. — Bonne idée ! Et si on dînait d'abord au restaurant japonais ? — Pourquoi pas ? Je propose qu'on se retrouve devant le restaurant à dix-neuf heures. — Parfait. Je réserve les places de cinéma sur Internet.",
+  "grammar": [
+   "conditionnel"
+  ],
+  "qs": [
+   {
+    "q": "Pourquoi ne vont-ils pas au théâtre ?",
+    "opts": [
+     "Les places sont chères",
+     "Il n'y a plus de places",
+     "Le théâtre est fermé",
+     "Ils n'aiment pas le théâtre"
+    ],
+    "evidence": "les places sont chères",
+    "gloss": "戏票太贵，改看电影。"
+   },
+   {
+    "q": "Où se retrouvent-ils à dix-neuf heures ?",
+    "opts": [
+     "Devant le restaurant",
+     "Devant le cinéma",
+     "Devant le théâtre",
+     "À la maison"
+    ],
+    "evidence": "devant le restaurant à dix-neuf heures",
+    "gloss": "先在日本餐馆门口碰头吃饭，再去看电影。"
+   }
+  ],
+  "gaps": [
+   {
+    "start": 155,
+    "end": 161,
+    "options": [
+     "dînait",
+     "dîner",
+     "dînera",
+     "disait"
+    ]
+   }
+  ]
+ },
+ {
+  "id": "fr-cp29-d1",
+  "unit": 29,
+  "level": "A2",
+  "title": "Un gros rhume",
+  "audio": "Bonjour docteur. — Bonjour. Qu'est-ce qui ne va pas ? — J'ai mal à la gorge depuis trois jours et je tousse beaucoup. — Vous avez de la fièvre ? — Un peu, trente-huit ce matin. — Ce n'est pas grave, c'est un gros rhume. Je vous donne un sirop : prenez-en une cuillère trois fois par jour. Et reposez-vous. — Je peux aller travailler ? — Non, restez chez vous deux jours.",
+  "grammar": [
+   "imperatif-vous",
+   "temps"
+  ],
+  "qs": [
+   {
+    "q": "Depuis quand a-t-elle mal à la gorge ?",
+    "opts": [
+     "Depuis trois jours",
+     "Depuis deux jours",
+     "Depuis une semaine",
+     "Depuis ce matin"
+    ],
+    "evidence": "depuis trois jours",
+    "gloss": "嗓子疼三天了；“两天”是医生让她在家休息的时间。"
+   },
+   {
+    "q": "Que conseille le médecin ?",
+    "opts": [
+     "De rester à la maison deux jours",
+     "D'aller travailler",
+     "D'aller à l'hôpital",
+     "De faire du sport"
+    ],
+    "evidence": "restez chez vous deux jours",
+    "gloss": "重感冒：喝糖浆、休息、在家待两天。"
+   }
+  ],
+  "gaps": [
+   {
+    "start": 101,
+    "end": 107,
+    "options": [
+     "tousse",
+     "tombe",
+     "pousse",
+     "touche"
+    ]
+   }
+  ]
+ },
+ {
+  "id": "fr-cp30-d1",
+  "unit": 30,
+  "level": "A2",
+  "title": "Sport et musique",
+  "audio": "Tu aimes le sport, Inès ? — Pas tellement. Je déteste courir, mais j'adore nager. Et toi ? — Moi, je suis passionné de football. J'ai envie d'essayer le tennis aussi. — Et la musique ? — J'aime bien le jazz, mais je préfère le rock. — Moi, j'ai horreur du rock ! Ce qui me plaît, c'est la musique classique. J'ai décidé d'apprendre le piano.",
+  "grammar": [
+   "verbes-de"
+  ],
+  "qs": [
+   {
+    "q": "Quel sport Inès aime-t-elle ?",
+    "opts": [
+     "La natation",
+     "La course à pied",
+     "Le football",
+     "Le tennis"
+    ],
+    "evidence": "j'adore nager",
+    "gloss": "她讨厌跑步，但很喜欢游泳。"
+   },
+   {
+    "q": "Quelle musique plaît à Inès ?",
+    "opts": [
+     "La musique classique",
+     "Le rock",
+     "Le jazz",
+     "La pop"
+    ],
+    "evidence": "Ce qui me plaît, c'est la musique classique",
+    "gloss": "她受不了摇滚，喜欢古典音乐，决定学钢琴。"
+   }
+  ],
+  "gaps": [
+   {
+    "start": 134,
+    "end": 139,
+    "options": [
+     "envie",
+     "ennui",
+     "enfin",
+     "avis"
+    ]
+   }
+  ]
+ },
+ {
+  "id": "fr-cp31-d1",
+  "unit": 31,
+  "level": "A2",
+  "title": "Un entretien pour un stage",
+  "audio": "Vous avez déjà une expérience professionnelle ? — Oui, j'ai travaillé deux étés dans un hôtel, à la réception. — Vous savez parler anglais ? — Oui, je parle couramment anglais et un peu espagnol. — Vous connaissez notre entreprise ? — Oui, je connais bien vos produits. — Quand êtes-vous disponible ? — À partir du quinze juin.",
+  "grammar": [
+   "savoir-connaitre"
+  ],
+  "qs": [
+   {
+    "q": "Où le candidat a-t-il déjà travaillé ?",
+    "opts": [
+     "Dans un hôtel, à la réception",
+     "Dans un restaurant",
+     "Dans une école de langues",
+     "Dans une banque"
+    ],
+    "evidence": "dans un hôtel, à la réception",
+    "gloss": "他在旅馆前台干过两个夏天。"
+   },
+   {
+    "q": "Quelles langues parle-t-il ?",
+    "opts": [
+     "Anglais couramment et un peu espagnol",
+     "Espagnol couramment et un peu anglais",
+     "Seulement anglais",
+     "Anglais et allemand"
+    ],
+    "evidence": "je parle couramment anglais et un peu espagnol",
+    "gloss": "英语流利，西班牙语会一点。"
+   }
+  ],
+  "gaps": [
+   {
+    "start": 203,
+    "end": 213,
+    "options": [
+     "connaissez",
+     "savez",
+     "connaissiez",
+     "reconnaissez"
+    ]
+   }
+  ]
+ },
+ {
+  "id": "fr-cp32-d1",
+  "unit": 32,
+  "level": "A2",
+  "title": "Le télétravail",
+  "audio": "Qu'est-ce que tu penses du télétravail ? — À mon avis, c'est une bonne chose : on perd moins de temps dans les transports. — Je ne suis pas d'accord. Je trouve que c'est difficile de travailler seul à la maison. — Tu crois ? Moi, je viens d'essayer pendant un mois et j'ai mieux travaillé. — Peut-être, mais pour moi, les collègues sont importants. — Tu as raison. Deux jours par semaine, c'est l'idéal.",
+  "grammar": [
+   "passe-recent"
+  ],
+  "qs": [
+   {
+    "q": "Quel avantage du télétravail est cité ?",
+    "opts": [
+     "On perd moins de temps dans les transports",
+     "On gagne plus d'argent",
+     "On voit plus ses collègues",
+     "On a moins de réunions"
+    ],
+    "evidence": "on perd moins de temps dans les transports",
+    "gloss": "优点：路上花的时间少了。"
+   },
+   {
+    "q": "Quelle solution trouvent-ils idéale ?",
+    "opts": [
+     "Deux jours par semaine",
+     "Tous les jours",
+     "Un mois par an",
+     "Jamais"
+    ],
+    "evidence": "Deux jours par semaine, c'est l'idéal",
+    "gloss": "最后都同意：每周两天最理想。"
+   }
+  ],
+  "gaps": [
+   {
+    "start": 233,
+    "end": 248,
+    "options": [
+     "viens d'essayer",
+     "vais essayer",
+     "veux essayer",
+     "viens essayer"
+    ]
+   }
+  ]
+ },
+ {
+  "id": "fr-cp33-d1",
+  "unit": 33,
+  "level": "A2",
+  "title": "Une grande nouvelle",
+  "audio": "Tu sais quoi ? Antoine et Camille vont se marier ! — Ce n'est pas vrai ! Ils se connaissent depuis seulement six mois. — Si, je t'assure. Le mariage aura lieu en juin, en Italie. — En Italie ? Ça alors ! Je ne m'attendais pas à ça. — Et ce n'est pas tout : leur départ pour Rome est prévu juste après. Ils vont vivre là-bas. — Quelle surprise ! Je n'en reviens pas.",
+  "grammar": [
+   "nominalisation"
+  ],
+  "qs": [
+   {
+    "q": "Où le mariage aura-t-il lieu ?",
+    "opts": [
+     "En Italie",
+     "En France",
+     "En Espagne",
+     "Au Canada"
+    ],
+    "evidence": "Le mariage aura lieu en juin, en Italie",
+    "gloss": "婚礼六月在意大利举行。"
+   },
+   {
+    "q": "Depuis combien de temps se connaissent-ils ?",
+    "opts": [
+     "Six mois",
+     "Six ans",
+     "Deux ans",
+     "Un mois"
+    ],
+    "evidence": "depuis seulement six mois",
+    "gloss": "他们才认识六个月，所以让人吃惊。"
+   }
+  ],
+  "gaps": [
+   {
+    "start": 262,
+    "end": 268,
+    "options": [
+     "départ",
+     "retour",
+     "voyage",
+     "travail"
+    ]
+   }
+  ]
+ },
+ {
+  "id": "fr-cp34-d1",
+  "unit": 34,
+  "level": "A2",
+  "title": "L'arrivée de Lucie",
+  "audio": "Tu es sûr que Lucie arrive ce soir ? — Oui, j'en suis certain, elle m'a envoyé un message. — À quelle heure ? — Je ne sais pas exactement. Il me semble que son train arrive vers vingt heures. — Elle vient seule ? — Ça m'étonnerait. Je suppose que son frère l'accompagne, mais ce n'est pas sûr. — Ce qui est certain, c'est qu'il faut préparer deux chambres.",
+  "grammar": [
+   "cequi",
+   "impersonnel"
+  ],
+  "qs": [
+   {
+    "q": "De quoi est-il certain ?",
+    "opts": [
+     "Lucie arrive ce soir",
+     "Le train arrive à vingt heures précises",
+     "Le frère de Lucie vient aussi",
+     "Lucie vient seule"
+    ],
+    "evidence": "Oui, j'en suis certain, elle m'a envoyé un message",
+    "gloss": "他确定露西今晚到，因为收到了她的消息。"
+   },
+   {
+    "q": "Qu'est-ce qui n'est pas sûr ?",
+    "opts": [
+     "Que son frère l'accompagne",
+     "Qu'elle arrive ce soir",
+     "Qu'elle a envoyé un message",
+     "Qu'il faut préparer des chambres"
+    ],
+    "evidence": "son frère l'accompagne, mais ce n'est pas sûr",
+    "gloss": "她哥哥来不来只是猜测。"
+   }
+  ],
+  "gaps": [
+   {
+    "start": 139,
+    "end": 151,
+    "options": [
+     "Il me semble",
+     "Il me ressemble",
+     "Il me faut",
+     "Il leur semble"
+    ]
+   }
+  ]
+ },
+ {
+  "id": "fr-cp35-d1",
+  "unit": 35,
+  "level": "A2",
+  "title": "Le témoin",
+  "audio": "Vous avez vu le voleur ? Comment était-il ? — C'était un homme grand et mince, d'environ quarante ans. — Il avait les cheveux de quelle couleur ? — Il avait les cheveux gris, très courts, et il portait des lunettes. — Comment était-il habillé ? — Il portait un blouson noir et un jean. Il est sorti du magasin en courant et il a pris un vélo rouge.",
+  "grammar": [
+   "pc-imparfait"
+  ],
+  "qs": [
+   {
+    "q": "Comment était le voleur ?",
+    "opts": [
+     "Grand et mince, avec des cheveux gris",
+     "Petit et gros, avec des cheveux noirs",
+     "Jeune, avec des cheveux longs",
+     "Grand, avec une barbe"
+    ],
+    "evidence": "un homme grand et mince",
+    "gloss": "高瘦、四十岁左右、灰色短发、戴眼镜。"
+   },
+   {
+    "q": "Comment le voleur est-il parti ?",
+    "opts": [
+     "À vélo",
+     "En voiture",
+     "En bus",
+     "En moto"
+    ],
+    "evidence": "il a pris un vélo rouge",
+    "gloss": "他跑出商店，骑上一辆红色自行车走了。"
+   }
+  ],
+  "gaps": [
+   {
+    "start": 194,
+    "end": 201,
+    "options": [
+     "portait",
+     "partait",
+     "porte",
+     "portaient"
+    ]
+   }
+  ]
+ },
+ {
+  "id": "fr-cp36-d1",
+  "unit": 36,
+  "level": "A1",
+  "title": "Un nouvel appartement",
+  "audio": "Entrez, entrez ! — Oh, votre appartement est magnifique ! Il est vraiment très clair. — Merci, c'est gentil. — Et ce canapé, il est superbe. Vous l'avez acheté récemment ? — Oui, le mois dernier. — J'adore aussi les rideaux, ils vont parfaitement avec les murs. — C'est ma fille qui les a choisis. — Elle a beaucoup de goût.",
+  "grammar": [
+   "adverbes"
+  ],
+  "qs": [
+   {
+    "q": "Qui a choisi les rideaux ?",
+    "opts": [
+     "La fille de l'hôte",
+     "L'hôte",
+     "L'invitée",
+     "Un vendeur"
+    ],
+    "evidence": "C'est ma fille qui les a choisis",
+    "gloss": "窗帘是主人的女儿挑的。"
+   },
+   {
+    "q": "Quand le canapé a-t-il été acheté ?",
+    "opts": [
+     "Le mois dernier",
+     "La semaine dernière",
+     "L'année dernière",
+     "Hier"
+    ],
+    "evidence": "Oui, le mois dernier",
+    "gloss": "沙发是上个月买的。"
+   }
+  ],
+  "gaps": [
+   {
+    "start": 234,
+    "end": 246,
+    "options": [
+     "parfaitement",
+     "parfois",
+     "vraiment",
+     "récemment"
+    ]
+   }
+  ]
+ },
+ {
+  "id": "fr-cp37-d1",
+  "unit": 37,
+  "level": "A1",
+  "title": "Le permis de conduire",
+  "audio": "Allô, mamie ? J'ai une bonne nouvelle : j'ai eu mon permis de conduire ! — Oh, félicitations, ma chérie ! Je suis très contente pour toi. Tu l'as eu du premier coup ? — Oui, et sans faute ! — Bravo ! Toute la famille va être fière de toi. — Merci. Et ce n'est pas tout : Julien a réussi tous ses examens. — C'est formidable ! Il faut fêter tout ça dimanche.",
+  "grammar": [
+   "tout"
+  ],
+  "qs": [
+   {
+    "q": "Quelle bonne nouvelle annonce-t-elle d'abord ?",
+    "opts": [
+     "Elle a eu son permis de conduire",
+     "Elle a réussi ses examens",
+     "Elle a trouvé un travail",
+     "Elle va se marier"
+    ],
+    "evidence": "j'ai eu mon permis de conduire",
+    "gloss": "她一次就考到了驾照。"
+   },
+   {
+    "q": "Qu'a réussi Julien ?",
+    "opts": [
+     "Tous ses examens",
+     "Son permis de conduire",
+     "Un concours de musique",
+     "Un match"
+    ],
+    "evidence": "Julien a réussi tous ses examens",
+    "gloss": "朱利安所有考试都通过了。"
+   }
+  ],
+  "gaps": [
+   {
+    "start": 200,
+    "end": 205,
+    "options": [
+     "Toute",
+     "Tout",
+     "Toutes",
+     "Tous"
+    ]
+   }
+  ]
+ },
+ {
+  "id": "fr-cp38-d1",
+  "unit": 38,
+  "level": "A2",
+  "title": "Après un examen raté",
+  "audio": "Ça ne va pas, Samuel ? — Non. J'ai raté mon examen de maths. J'ai été éliminé dès la première épreuve. — Ne t'inquiète pas, ce n'est pas grave. Tu pourras le repasser en septembre. — Mais j'avais beaucoup travaillé ! — Allez, courage ! Tu vas y arriver. Cet été, tu seras aidé par ta cousine, elle est prof de maths. — Tu crois ? — J'en suis sûr. Ne te décourage pas.",
+  "grammar": [
+   "passif"
+  ],
+  "qs": [
+   {
+    "q": "Quand Samuel pourra-t-il repasser l'examen ?",
+    "opts": [
+     "En septembre",
+     "En juin",
+     "L'année prochaine",
+     "La semaine prochaine"
+    ],
+    "evidence": "Tu pourras le repasser en septembre",
+    "gloss": "九月可以补考。"
+   },
+   {
+    "q": "Qui va aider Samuel cet été ?",
+    "opts": [
+     "Sa cousine",
+     "Son frère",
+     "Son professeur",
+     "Un ami"
+    ],
+    "evidence": "tu seras aidé par ta cousine",
+    "gloss": "他当数学老师的表姐会帮他（被动态 être aidé par）。"
+   }
+  ],
+  "gaps": [
+   {
+    "start": 70,
+    "end": 77,
+    "options": [
+     "éliminé",
+     "illuminé",
+     "limité",
+     "éliminer"
+    ]
+   }
+  ]
+ },
+ {
+  "id": "fr-cp39-d1",
+  "unit": 39,
+  "level": "A2",
+  "title": "Un mauvais restaurant",
+  "audio": "Alors, ce nouveau restaurant ? — Franchement, c'était nul. On a attendu une heure parce qu'il n'y avait qu'un seul serveur. — Et les plats ? — Mon poisson était trop salé et les légumes étaient froids. — Ah bon ? Pourtant, les critiques sont bonnes. — Je ne comprends pas pourquoi. En plus, comme la salle est petite, il y avait beaucoup de bruit. Je n'y retournerai pas.",
+  "grammar": [
+   "cause"
+  ],
+  "qs": [
+   {
+    "q": "Pourquoi ont-ils attendu une heure ?",
+    "opts": [
+     "Il n'y avait qu'un seul serveur",
+     "La salle était pleine",
+     "La cuisine était fermée",
+     "Ils n'avaient pas réservé"
+    ],
+    "evidence": "parce qu'il n'y avait qu'un seul serveur",
+    "gloss": "只有一个服务员，所以等了一小时。"
+   },
+   {
+    "q": "Que reproche-t-elle au poisson ?",
+    "opts": [
+     "Il était trop salé",
+     "Il était froid",
+     "Il n'était pas frais",
+     "Il était trop cher"
+    ],
+    "evidence": "Mon poisson était trop salé",
+    "gloss": "鱼太咸；凉的是蔬菜。"
+   }
+  ],
+  "gaps": [
+   {
+    "start": 291,
+    "end": 296,
+    "options": [
+     "comme",
+     "quand",
+     "puisque",
+     "comment"
+    ]
+   }
+  ]
+ },
+ {
+  "id": "fr-cp40-d1",
+  "unit": 40,
+  "level": "A2",
+  "title": "Une exposition de photos",
+  "audio": "Alors, cette exposition, ça t'a plu ? — C'était magnifique ! Je n'ai jamais vu de photos aussi belles. — Qu'est-ce que tu as préféré ? — Les portraits en noir et blanc. Quel talent ! Le photographe est très jeune, mais il a déjà un style extraordinaire. — Il y avait du monde ? — Oui, beaucoup. Pourtant, on pouvait regarder tranquillement. Le billet est un peu cher, mais je te conseille d'y aller.",
+  "grammar": [
+   "opposition"
+  ],
+  "qs": [
+   {
+    "q": "Qu'est-ce qu'elle a préféré ?",
+    "opts": [
+     "Les portraits en noir et blanc",
+     "Les paysages en couleur",
+     "Les vidéos",
+     "Les sculptures"
+    ],
+    "evidence": "Les portraits en noir et blanc",
+    "gloss": "她最喜欢黑白人像。"
+   },
+   {
+    "q": "Que dit-elle du photographe ?",
+    "opts": [
+     "Il est très jeune mais a déjà beaucoup de style",
+     "Il est âgé et très célèbre",
+     "Il manque encore de talent",
+     "Il ne fait que des photos en couleur"
+    ],
+    "evidence": "il a déjà un style extraordinaire",
+    "gloss": "摄影师很年轻，却已经有非凡的风格。"
+   }
+  ],
+  "gaps": [
+   {
+    "start": 295,
+    "end": 303,
+    "options": [
+     "Pourtant",
+     "Pour autant",
+     "Partout",
+     "Portant"
+    ]
+   }
+  ]
+ }
+];
+const commLang=()=>UI_LANG==='fr'?0:UI_LANG==='en'?2:1;
+function commActLabel(n){const a=COMM_ACTS[n-1];return a?n+'. '+a[2+commLang()]:String(n);}
+function commGrammarLabel(id){const g=COMM_GRAMMAR[id];return g?g[commLang()]:id;}
+function commSectionOf(n){return COMM_SECTIONS[COMM_ACTS[n-1][1]-1][1];}
+function commTag(q,acts,grammar){
+ q.listeningActs=acts;q.listeningGrammar=grammar;
+ q.tags=[...(q.tags||[]),...acts.flatMap(n=>COMM_ACTS[n-1].slice(2)),...grammar.flatMap(id=>COMM_GRAMMAR[id])];
+}
+function communicationPointsRegister(){
+ const lang=UI_LANG==='fr'?'fr':UI_LANG==='en'?'en':'zh';
+ // 教材 57 个情境：功能 = 所在章，语法点 = 目录里这一页的语法点
+ for(const q of BANK){if(q.sourceBook&&COMM_PAGES[q.sourceBook.page])commTag(q,[q.sourceBook.unit],[COMM_PAGES[q.sourceBook.page][1]]);}
+ // 基础听力：同一段录音的所有题贴同样的标签
+ const byAudio=new Map();
+ for(const q of BANK){if(LISTENING_POINTS[q.id])byAudio.set(q.audio,LISTENING_POINTS[q.id]);}
+ for(const q of BANK){if(q.audio&&!q.sourceBook&&!q.phonetic&&byAudio.has(q.audio))commTag(q,...byAudio.get(q.audio));}
+ // 新对话：每段两道理解题，填空和排序题由 listeningRegister 自动生成
+ for(const row of COMMUNICATION_DIALOGUES){
+  const act=COMM_ACTS[row.unit-1],section=commSectionOf(row.unit),round='fr-cp'+String(row.unit).padStart(2,'0');
+  LISTENING_GAPS[row.audio]=row.gaps;
+  row.qs.forEach((x,i)=>{
+   const answer=x.opts[0];
+   const exp=lang==='zh'?x.gloss+' 正确答案：'+answer+'。依据：« '+x.evidence+' »。':lang==='en'?'Answer: '+answer+'. Listen for: « '+x.evidence+' ».':'Réponse : '+answer+'. Repère dans l’enregistrement : « '+x.evidence+' ».';
+   const q={id:row.id+(i?'-q'+(i+1):''),ch:null,cat:section,title:row.title,q:x.q,audio:row.audio,opts:x.opts.slice(),a:0,exp,level:row.level,tags:[row.level,section,row.title,'Communication progressive'],listeningTopic:section,listeningSource:COMMUNICATION_BOOK.id,listeningOrderMin:6,sourceBook:{id:COMMUNICATION_BOOK.id,unit:row.unit,unitTitle:act[2]}};
+   commTag(q,[row.unit],row.grammar);BANK.push(q);BY_ID.set(q.id,q);
+  });
+ }
+}
+communicationPointsRegister();
 // Original phonetics practice; sources and scope: tools/feedback/phonetics-sources.md.
 const PHONETICS_DATA = {"alphabet":[["A","a","a"],["B","be","bé"],["C","se","cé"],["D","de","dé"],["E","ə","euh"],["F","ɛf","effe"],["G","ʒe","gé"],["H","aʃ","ache"],["I","i","i"],["J","ʒi","ji"],["K","ka","ka"],["L","ɛl","elle"],["M","ɛm","emme"],["N","ɛn","enne"],["O","o","o"],["P","pe","pé"],["Q","ky","Q"],["R","ɛʁ","erre"],["S","ɛs","esse"],["T","te","té"],["U","y","u"],["V","ve","vé"],["W","dubləve","double vé"],["X","iks","ixe"],["Y","iɡʁɛk","i grec"],["Z","zɛd","zède"]],"rules":[["vowel","ou","soupe","u","y|o|ɔ","ou 在这个词中读 /u/，不要读成 u 的 /y/。","Here ou is /u/, unlike u /y/.","Ici, ou se lit /u/, contrairement à u /y/."],["vowel","u","lune","y","u|i|ø","u 在这里读 /y/，嘴唇圆起，舌位靠前。","Here u is the front rounded vowel /y/.","Ici, u est la voyelle antérieure arrondie /y/."],["vowel","é","été","e","ɛ|ə|i","é 通常对应闭口 /e/。","é normally represents closed /e/.","é représente généralement le /e/ fermé."],["vowel","è","père","ɛ","e|ə|ø","è 在这里对应开口 /ɛ/。","Here è represents open /ɛ/.","Ici, è représente le /ɛ/ ouvert."],["vowel","ê","fête","ɛ","e|i|ə","ê 在 fête 中读 /ɛ/；部分地区有长音。","ê in fête is /ɛ/, lengthened in some regions.","ê dans fête se lit /ɛ/, avec une longueur dans certaines régions."],["vowel","ai","chaise","ɛ","a|i|wa","ai 在 chaise 中对应 /ɛ/，不是把 a 和 i 分别读出。","ai in chaise is /ɛ/, not two separate vowels.","ai dans chaise se lit /ɛ/, et non deux voyelles séparées."],["vowel","ei","peine","ɛ","e|i|ə","ei 在 peine 中对应 /ɛ/。","ei in peine represents /ɛ/.","ei dans peine représente /ɛ/."],["vowel","au","jaune","o","ɔ|u|a","au 在 jaune 中读 /o/；au 并非在所有词中都如此。","au in jaune is /o/; this is not universal.","au dans jaune se lit /o/ ; ce n’est pas universel."],["vowel","eau","bateau","o","ɔ|u|ə","eau 三个字母合起来表示 /o/。","The three letters eau represent /o/.","Les trois lettres eau représentent /o/."],["vowel","o","porte","ɔ","o|u|ø","porte 中 o 读开口 /ɔ/；不能把所有 o 都读成 /o/。","o in porte is open /ɔ/; not every o is /o/.","o dans porte est ouvert /ɔ/ ; tous les o ne se lisent pas /o/."],["vowel","ô","côte","o","ɔ|u|ə","côte 中 ô 读 /o/。","ô in côte is /o/.","ô dans côte se lit /o/."],["vowel","eu","feu","ø","œ|u|y","feu 的 eu 读闭口圆唇 /ø/。","eu in feu is the closed rounded vowel /ø/.","eu dans feu est le /ø/ fermé et arrondi."],["vowel","eu","neuf","œ","ø|u|e","neuf 的 eu 读开口圆唇 /œ/，与 feu 区分。","eu in neuf is open /œ/, unlike feu.","eu dans neuf est ouvert /œ/, contrairement à feu."],["vowel","œu","cœur","œ","ø|u|o","cœur 的 œu 读 /œ/。","œu in cœur is /œ/.","œu dans cœur se lit /œ/."],["vowel","œu","vœu","ø","œ|u|ɔ","vœu 的 œu 读 /ø/，并非所有 œu 都读 /œ/。","œu in vœu is /ø/, not /œ/.","œu dans vœu se lit /ø/, et non /œ/."],["glide","oi","voiture","wa","wi|ɔ|o","oi 在这里合成 /wa/。","Here oi represents /wa/.","Ici, oi représente /wa/."],["glide","ui","nuit","ɥi","wi|y|u","nuit 的 ui 读 /ɥi/，与 oui 的 /wi/ 区别。","ui in nuit is /ɥi/, distinct from oui /wi/.","ui dans nuit se lit /ɥi/, distinct de oui /wi/."],["glide","ou","oui","w","u|y|ɥ","oui 中 ou 接元音，作半元音 /w/。","ou before the vowel in oui is the glide /w/.","ou devant la voyelle dans oui est la semi-voyelle /w/."],["glide","i","pied","j","i|ʒ|ɥ","pied 中 i 在元音前作半元音 /j/。","i before the vowel in pied is /j/.","i devant la voyelle dans pied se lit /j/."],["glide","ll","fille","j","l|il|ij","fille 的 ll 表示 /j/；ville、mille 等是例外。","ll in fille represents /j/; ville and mille are exceptions.","ll dans fille représente /j/ ; ville et mille sont des exceptions."],["glide","ill","ville","il","j|ij|i","ville 是例外：ill 读 /il/，保留 /l/。","ville is an exception: ill is /il/, keeping /l/.","ville est une exception : ill se lit /il/, avec /l/."],["glide","ail","travail","aj","ɛj|al|a","travail 词尾 ail 读 /aj/。","Final ail in travail is /aj/.","ail final dans travail se lit /aj/."],["glide","eil","réveil","ɛj","ej|ɛl|i","réveil 词尾 eil 读 /ɛj/。","Final eil in réveil is /ɛj/.","eil final dans réveil se lit /ɛj/."],["glide","euil","fauteuil","œj","ø|ɛj|œl","fauteuil 的 euil 读 /œj/。","euil in fauteuil is /œj/.","euil dans fauteuil se lit /œj/."],["nasal","an","danse","ɑ̃","an|ɛ̃|ɔ̃","an 在此鼻化为 /ɑ̃/，不另读 /n/。","an here is nasal /ɑ̃/, without a separate /n/.","an est ici nasal /ɑ̃/, sans /n/ séparé."],["nasal","en","dent","ɑ̃","ɛn|ɛ̃|ɔ̃","dent 的 en 对应鼻元音 /ɑ̃/。","en in dent represents nasal /ɑ̃/.","en dans dent représente le /ɑ̃/ nasal."],["nasal","am","lampe","ɑ̃","am|ɛ̃|ɔ̃","lampe 中 am 对应 /ɑ̃/；p 前常写 m。","am in lampe is /ɑ̃/; m is common before p.","am dans lampe se lit /ɑ̃/ ; on écrit souvent m devant p."],["nasal","em","temps","ɑ̃","ɛm|ɛ̃|ɔ̃","temps 的 em 对应 /ɑ̃/，末尾 ps 不发音。","em in temps is /ɑ̃/; final ps is silent.","em dans temps se lit /ɑ̃/ ; le ps final est muet."],["nasal","on","monde","ɔ̃","on|ɑ̃|ɛ̃","on 在 monde 中读鼻元音 /ɔ̃/。","on in monde is nasal /ɔ̃/.","on dans monde est le /ɔ̃/ nasal."],["nasal","om","ombre","ɔ̃","om|ɑ̃|ɛ̃","ombre 中 om 对应 /ɔ̃/。","om in ombre represents /ɔ̃/.","om dans ombre représente /ɔ̃/."],["nasal","in","jardin","ɛ̃","in|ɑ̃|ɔ̃","jardin 中 in 对应鼻元音 /ɛ̃/。","in in jardin represents nasal /ɛ̃/.","in dans jardin représente le /ɛ̃/ nasal."],["nasal","im","simple","ɛ̃","im|ɑ̃|ɔ̃","simple 中 im 对应 /ɛ̃/。","im in simple represents /ɛ̃/.","im dans simple représente /ɛ̃/."],["nasal","ain","bain","ɛ̃","ɛn|ɑ̃|ɔ̃","bain 的 ain 对应 /ɛ̃/。","ain in bain is /ɛ̃/.","ain dans bain se lit /ɛ̃/."],["nasal","ein","plein","ɛ̃","en|ɑ̃|ɔ̃","plein 的 ein 对应 /ɛ̃/。","ein in plein is /ɛ̃/.","ein dans plein se lit /ɛ̃/."],["nasal","un","brun","œ̃ ~ ɛ̃","yn|ɑ̃|ɔ̃","传统区分中 un 读 /œ̃/；许多法国说话者合并为 /ɛ̃/，本题接受两者。","Traditional un is /œ̃/; many speakers in France merge it with /ɛ̃/. Both are accepted.","Traditionnellement un est /œ̃/ ; beaucoup de locuteurs en France le confondent avec /ɛ̃/. Les deux sont admis."],["nasal","oin","coin","wɛ̃","wa|ɔ̃|wɑ̃","coin 的 oin 对应 /wɛ̃/。","oin in coin is /wɛ̃/.","oin dans coin se lit /wɛ̃/."],["nasal","ien","bien","jɛ̃","jɑ̃|in|iɛn","bien 的 ien 对应 /jɛ̃/。","ien in bien is /jɛ̃/.","ien dans bien se lit /jɛ̃/."],["nasal","on","bonne","ɔn","ɔ̃|ɑ̃|ɛ̃","bonne 的双 n 后有元音字母，元音不鼻化，并读出 /n/。","In bonne, doubled n is followed by a vowel letter: the vowel is oral and /n/ is pronounced.","Dans bonne, le n double est suivi d’une voyelle écrite : la voyelle est orale et /n/ se prononce."],["consonant","ch","chocolat","ʃ","k|s|ʒ","ch 在 chocolat 中读 /ʃ/。","ch in chocolat is /ʃ/.","ch dans chocolat se lit /ʃ/."],["consonant","ch","chorale","k","ʃ|s|ʒ","chorale 属于 ch 读 /k/ 的词，常见于部分希腊语源词。","ch in chorale is /k/, as in some words of Greek origin.","ch dans chorale se lit /k/, comme dans certains mots d’origine grecque."],["consonant","ph","éléphant","f","p|v|b","ph 合起来读 /f/。","ph represents /f/.","ph représente /f/."],["consonant","th","thé","t","θ|s|d","法语 thé 中 th 读 /t/，不是英语 /θ/。","th in French thé is /t/, not English /θ/.","th dans thé se lit /t/, et non le /θ/ anglais."],["consonant","gn","ligne","ɲ","ɡn|n|ŋ","ligne 的 gn 读 /ɲ/。","gn in ligne is /ɲ/.","gn dans ligne se lit /ɲ/."],["consonant","qu","quatre","k","kw|ky|ɡ","quatre 中 qu 读 /k/，u 不另发音。","qu in quatre is /k/; u has no separate sound.","qu dans quatre se lit /k/ ; u n’a pas de son séparé."],["consonant","gu","guitare","ɡ","ʒ|ɡy|ɡw","guitare 的 gu 在 i 前保留 /ɡ/。","gu before i in guitare preserves /ɡ/.","gu devant i dans guitare conserve /ɡ/."],["consonant","g","girafe","ʒ","ɡ|ʃ|j","g 在这里位于 i 前，读 /ʒ/。","g before i here is /ʒ/.","g devant i se lit ici /ʒ/."],["consonant","ge","orangeade","ʒ","ɡ|ʒe|ɡə","ge 在 orangeade 中保留软音 /ʒ/；e 不另成音节。","ge preserves soft /ʒ/ in orangeade; e is not a separate syllable.","ge conserve /ʒ/ dans orangeade ; e ne forme pas de syllabe séparée."],["consonant","c","cinéma","s","k|ʃ|z","c 在 i 前通常读 /s/。","c before i normally represents /s/.","c devant i représente généralement /s/."],["consonant","c","café","k","s|ʃ|ɡ","c 在 a 前通常读 /k/。","c before a normally represents /k/.","c devant a représente généralement /k/."],["consonant","ç","leçon","s","k|ʃ|z","ç 在 a、o、u 前保留 /s/。","ç preserves /s/ before a, o or u.","ç conserve /s/ devant a, o ou u."],["consonant","s","maison","z","s|ʃ|ʒ","两个元音之间单写 s，在 maison 中读 /z/。","Single s between vowels in maison is /z/.","Le s simple entre voyelles dans maison se lit /z/."],["consonant","ss","poisson","s","z|ʃ|ʒ","双写 ss 在这里读 /s/。","Double ss here is /s/.","Le double ss se lit ici /s/."],["consonant","tion","station","sjɔ̃","tjɔ̃|ʃɔ̃|sɔn","station 的 tion 读 /sjɔ̃/；并非所有 ti 都读 /sj/。","tion in station is /sjɔ̃/; not every ti is /sj/.","tion dans station se lit /sjɔ̃/ ; tous les ti ne se lisent pas /sj/."],["ending","er","parler","e","ɛʁ|ə|ɛ","第一组动词不定式 parler 的 er 读 /e/。","Infinitive er in the first-group verb parler is /e/.","Le er de l’infinitif parler se lit /e/."],["ending","ez","parlez","e","ez|ɛz|ə","第二人称复数 parlez 的 ez 读 /e/。","ez in second-person plural parlez is /e/.","ez dans parlez, à la deuxième personne du pluriel, se lit /e/."],["ending","ent","ils parlent","∅","ɑ̃|ɛ̃|ɛnt","第三人称复数动词 parlent 的 ent 不发音；不要推广到所有词尾 ent。","Third-person plural verb ending ent in parlent is silent; this does not apply to all final ent.","Le ent verbal de parlent est muet ; cela ne vaut pas pour tous les ent finaux."]],"phenomena":[["liaison","les enfants","z","s|t|∅","les 单独读 /le/，在 enfants 前原本不读的 s 读 /z/。","The normally silent s of les becomes /z/ before enfants.","Le s normalement muet de les devient /z/ devant enfants."],["liaison","vous avez","z","s|t|∅","主语代词 vous 与元音开头的动词之间必须联诵 /z/。","The subject pronoun vous requires liaison /z/ before avez.","Le pronom sujet vous impose la liaison /z/ devant avez."],["liaison","un petit ami","t","d|z|∅","前置形容词 petit 与 ami 之间的 t 联诵。","The t of the adjective petit links to ami.","Le t de l’adjectif petit se lie à ami."],["liaison","un grand arbre","t","d|z|∅","grand 的词尾 d 联诵时读 /t/。","Final d of grand is pronounced /t/ in liaison.","Le d final de grand se prononce /t/ en liaison."],["liaison","deux amis","z","ks|s|∅","deux 的 x 在 amis 前联诵为 /z/。","The x of deux becomes /z/ before amis.","Le x de deux devient /z/ devant amis."],["liaison","les héros","∅","z|s|t","héros 的 h 是嘘音 h，阻止联诵，h 本身也不发音。","The h aspiré of héros blocks liaison; h itself is silent.","Le h aspiré de héros bloque la liaison ; le h lui-même est muet."],["liaison","et elle","∅","t|z|d","连词 et 后不联诵，不添加 /t/。","There is no liaison after the conjunction et; do not add /t/.","Pas de liaison après la conjonction et ; on n’ajoute pas /t/."],["liaison","les hommes","z","s|t|∅","hommes 是哑音 h，允许 les 的 /z/ 联诵。","The h muet of hommes allows liaison /z/ after les.","Le h muet de hommes permet la liaison /z/ après les."],["elision","l’école","la → l’","le → l’|je → j’|de → d’","école 为阴性，应为 la → l’。","école is feminine, so la becomes l’.","école est féminin : la devient l’."],["elision","j’aime","je → j’","le → l’|tu → t’|si → s’","je 的 e 在 aime 前省去，以撇号标示。","The e of je is elided before aime and replaced by an apostrophe.","Le e de je s’élide devant aime et est remplacé par une apostrophe."],["elision","s’il vient","si → s’","se → s’|ce → c’|il → l’","si 在 il、ils 前省音为 s’。","si is elided to s’ before il and ils.","si s’élide en s’ devant il et ils."],["elision","l’histoire","la → l’","le → l’|je → j’|de → d’","histoire 是阴性、哑音 h，la 省音为 l’。","histoire is feminine with h muet, so la becomes l’.","histoire est féminin, avec h muet : la devient l’."],["elision","le héros","不省音","l’héros|l’zéros|lhéros","héros 的嘘音 h 阻止省音，保留 le。","The h aspiré of héros blocks elision; keep le.","Le h aspiré de héros bloque l’élision ; on garde le."],["elision","d’abord","de → d’","du → d’|des → d’|je → j’","de 的 e 在 abord 前省去。","The e of de is elided before abord.","Le e de de s’élide devant abord."],["enchainement","avec elle","k","z|t|∅","avec 的 /k/ 本来就发音；它与 elle 连成下一音节，不是新增联诵音。","The /k/ in avec is already pronounced; it joins the next syllable before elle.","Le /k/ de avec est déjà prononcé ; il passe à la syllabe suivante devant elle."],["enchainement","une amie","n","z|t|∅","une 中 /n/ 本来发音，与 amie 的开头元音连读。","The already pronounced /n/ of une links to the initial vowel of amie.","Le /n/ déjà prononcé de une s’enchaîne avec la voyelle initiale de amie."],["enchainement","pour elle","ʁ","t|z|∅","pour 的 /ʁ/ 本来发音，连入 elle 的首音节。","The already pronounced /ʁ/ of pour joins the first syllable of elle.","Le /ʁ/ déjà prononcé de pour rejoint la première syllabe de elle."],["enchainement","il arrive","l","t|z|∅","il 的 /l/ 本来发音，这里是连读而非联诵。","The /l/ of il is already pronounced: this is enchaînement, not liaison.","Le /l/ de il est déjà prononcé : c’est un enchaînement, pas une liaison."],["hiatus","naïf","a.i","ɛ|aj|e","naïf 的 a 和 i 属于不同音节；分音符提示分开读。","a and i in naïf belong to separate syllables; the diaeresis marks the separation.","a et i dans naïf appartiennent à deux syllabes ; le tréma marque la séparation."],["hiatus","Noël","ɔ.ɛ","œ|ø|wa","Noël 中两元音分属不同音节。","The two vowels in Noël belong to separate syllables.","Les deux voyelles de Noël appartiennent à deux syllabes distinctes."],["hiatus","poète","ɔ.ɛ","ø|wa|œ","poète 中 o 与 è 分开，属于元音相遇。","o and è in poète are separate vowels in hiatus.","o et è dans poète sont deux voyelles distinctes en hiatus."],["hiatus","tu as","y.a","ɥa|wa|ta","规范完整读法 tu as 保留 /y.a/；口语 t’as 属于省略，不能视为唯一标准读法。","Full careful tu as keeps /y.a/; colloquial t’as is a reduction, not the only standard form.","La forme soignée tu as conserve /y.a/ ; t’as est une réduction familière."]]};
 const PHONETIC_LABELS={
@@ -13023,7 +14937,7 @@ Object.assign(LISTEN_LABELS,{
  kind:['材料类别','Material category','Catégorie'],letter:['字母','Letters','Lettres'],syllable:['音节','Spelling and sounds','Graphies et sons'],sentence:['句子','Sentences','Phrases'],passage:['短文','Passages','Textes et dialogues'],phenomenon:['语音现象','Connected speech','Phénomènes phonétiques'],phonetics:['语音基础','Pronunciation basics','Bases de prononciation'],
  'letter-ipa':['看字母选音标','Letter to IPA','Lettre vers API'],'letter-hear':['听读音选字母','Sound to letter','Son vers lettre'],'letter-sound':['四段读音辨字母','Choose a letter sound','Choisir le son d’une lettre'],phonics:['拼读与语音规则','Sound rules','Règles phonétiques'],
  source:['材料来源','Source','Source'],general:['基础听力','General listening','Écoute générale'],
- bookNote:['按教材 40 章、57 个情境编写的原创练习；不是教材原文或原版 CD 录音。','Original practice for the book’s 40 chapters and 57 situations; not the original exercises or CD audio.','Exercices originaux alignés sur les 40 chapitres et 57 situations du manuel ; ni transcription des exercices ni audio du CD.'],
+ bookNote:['按教材 40 章的考点编写的原创练习（57 个情境短文和 40 段对话）；不是教材原文或原版 CD 录音。','Original practice for the book’s 40 chapters (57 situations and 40 dialogues); not the original exercises or CD audio.','Exercices originaux alignés sur les 40 chapitres du manuel (57 situations et 40 dialogues) ; ni transcription des exercices ni audio du CD.'],
  catalog:['听力标签检索','Find listening exercises','Rechercher des exercices d’écoute'],
  search:['搜索内容或标签','Search content or tags','Rechercher un contenu ou une étiquette'],
  type:['题型','Format','Type'],level:['难度','Level','Niveau'],topic:['内容标签','Content tags','Étiquettes'],
@@ -13032,6 +14946,7 @@ Object.assign(LISTEN_LABELS,{
  found:['题目','questions','questions'],materials:['段材料','recordings','enregistrements'],
  filterHelp:['同类标签任选其一，不同类别同时满足。','Within a category, match any selected tag; across categories, match all.','Une étiquette suffit par catégorie ; toutes les catégories doivent correspondre.'],
  filterPending:['筛选已更改：下一组会自动应用；当前这一组保持不变。也可点击“开始穿插练习”立即开始。','Filters changed: the next set will apply them. Your current set stays unchanged. You can also start mixed practice immediately.','Filtres modifiés : ils seront appliqués à la série suivante. La série en cours reste inchangée. Vous pouvez aussi commencer l’entraînement varié immédiatement.'],
+ acts:['考点 · 交际功能（教材目录）','Speech acts (textbook contents)','Actes de parole (table des contenus)'],grammar:['考点 · 语法点（教材目录）','Grammar points (textbook contents)','Points de grammaire (table des contenus)'],
  results:['查看筛选错题','Show matching mistakes','Voir les erreurs correspondantes']
 });
 function listeningMaterialKind(text){
@@ -13049,6 +14964,7 @@ function listeningRegister(){
   for(const mode of ['cloze','order']){
    const sentences=mode==='order'?listeningSentences(q.audio):[null];
    sentences.forEach((sentence,index)=>{
+    if(mode==='order'&&q.listeningOrderMin&&listeningWords(sentence).length<q.listeningOrderMin)return; // 对话里的短句不出排序题；编号仍按原句序
     const correct=mode==='cloze'?LISTENING_GAPS[q.audio].map(g=>g.options[0]).join(' / '):sentence;
     const item={...q,id:q.id+'-'+mode+(index?'-'+(index+1):''),sourceId:q.id,listeningMode:mode,listeningSentence:index,q:LISTEN_LABELS[mode][0],a:0,opts:[correct,'—'],hint:'',exp:mode==='order'?sentence:q.audio};
     extra.push(item);BY_ID.set(item.id,item);
@@ -13058,19 +14974,21 @@ function listeningRegister(){
  BANK.push(...extra);
 }
 listeningRegister();
-function listeningFilter(key){try{const f=JSON.parse(decodeURIComponent(key.slice(7)||'%7B%7D'));return {kinds:Array.isArray(f.kinds)?f.kinds:[],sources:Array.isArray(f.sources)?f.sources:[],modes:Array.isArray(f.modes)?f.modes:[],levels:Array.isArray(f.levels)?f.levels:[],topics:Array.isArray(f.topics)?f.topics:[],attempts:Array.isArray(f.attempts)?f.attempts.filter(t=>ATTEMPT_TAGS.includes(t)):[],query:typeof f.query==='string'?f.query:''};}catch(e){return {kinds:[],sources:[],modes:[],levels:[],topics:[],attempts:[],query:''};}}
-function listeningKey(f){return 'listen:'+encodeURIComponent(JSON.stringify({kinds:[...(f.kinds||[])].sort(),sources:[...(f.sources||[])].sort(),modes:[...f.modes].sort(),levels:[...f.levels].sort(),topics:[...f.topics].sort(),...(f.attempts?.length?{attempts:[...f.attempts].sort()}:{}),query:f.query.trim()}));}
+function listeningFilter(key){try{const f=JSON.parse(decodeURIComponent(key.slice(7)||'%7B%7D'));return {kinds:Array.isArray(f.kinds)?f.kinds:[],sources:Array.isArray(f.sources)?f.sources:[],modes:Array.isArray(f.modes)?f.modes:[],levels:Array.isArray(f.levels)?f.levels:[],topics:Array.isArray(f.topics)?f.topics:[],acts:Array.isArray(f.acts)?f.acts.filter(Number.isInteger):[],grammar:Array.isArray(f.grammar)?f.grammar:[],attempts:Array.isArray(f.attempts)?f.attempts.filter(t=>ATTEMPT_TAGS.includes(t)):[],query:typeof f.query==='string'?f.query:''};}catch(e){return {kinds:[],sources:[],modes:[],levels:[],topics:[],acts:[],grammar:[],attempts:[],query:''};}}
+function listeningKey(f){return 'listen:'+encodeURIComponent(JSON.stringify({kinds:[...(f.kinds||[])].sort(),sources:[...(f.sources||[])].sort(),modes:[...f.modes].sort(),levels:[...f.levels].sort(),topics:[...f.topics].sort(),...(f.acts?.length?{acts:[...f.acts].sort((a,b)=>a-b)}:{}),...(f.grammar?.length?{grammar:[...f.grammar].sort()}:{}),...(f.attempts?.length?{attempts:[...f.attempts].sort()}:{}),query:f.query.trim()}));}
 function listeningMatches(q,f){
  if(!q.listeningMode || !attemptMatch(q.id,f.attempts||[]))return false;
  if(f.kinds?.length&&!f.kinds.includes(q.listeningKind))return false;
  if(f.sources?.length&&!f.sources.includes(q.listeningSource))return false;
+ if(f.acts?.length&&!(q.listeningActs||[]).some(n=>f.acts.includes(n)))return false;
+ if(f.grammar?.length&&!(q.listeningGrammar||[]).some(g=>f.grammar.includes(g)))return false;
  if(f.modes.length&&!f.modes.includes(q.listeningMode)||f.levels.length&&!f.levels.includes(q.level)||f.topics.length&&!f.topics.includes(q.listeningTopic))return false;
  const norm=s=>s.normalize('NFD').replace(/\p{M}/gu,'').toLocaleLowerCase();
  return !f.query||norm([q.audio,q.q,q.cat,q.level,...(q.tags||[])].join(' ')).includes(norm(f.query.trim()));
 }
 function listeningMembers(key){const f=listeningFilter(key);return BANK.filter(q=>listeningMatches(q,f));}
 function listeningSourceLabel(id){return id==='phonetics'?listeningLabel('phonetics'):id==='communication-beginner'?'Communication progressive · Débutant':listeningLabel('general');}
-function listeningSetLabel(key){const f=listeningFilter(key);return [listeningLabel('catalog'),...f.kinds.map(listeningLabel),...f.sources.map(listeningSourceLabel),...f.modes.map(listeningLabel),...f.levels,...f.topics.map(x=>typeof phoneticLabel==='function'&&PHONETIC_LABELS[x]?phoneticLabel(x):tr(x)),f.query].filter(Boolean).join(' · ');}
+function listeningSetLabel(key){const f=listeningFilter(key);return [listeningLabel('catalog'),...f.kinds.map(listeningLabel),...f.sources.map(listeningSourceLabel),...f.modes.map(listeningLabel),...f.levels,...f.topics.map(x=>typeof phoneticLabel==='function'&&PHONETIC_LABELS[x]?phoneticLabel(x):tr(x)),...(f.acts||[]).map(n=>commActLabel(n)),...(f.grammar||[]).map(g=>commGrammarLabel(g)),f.query].filter(Boolean).join(' · ');}
 // Seeded ordering makes saved question positions reliable. Cycle formats and avoid adjacent
 // copies between groups when possible; sentence-order groups remain in spoken order.
 function listeningInterleave(list,key){
@@ -13091,15 +15009,16 @@ function listeningInterleave(list,key){
 function listeningToggle(f, field, value) {
  const next=JSON.parse(JSON.stringify(f));
  next[field]=!value?[]:(next[field]||[]).includes(value)?(next[field]||[]).filter(x=>x!==value):[...(next[field]||[]),value];
- if(field==='sources'){next.topics=[];next.levels=[];next.kinds=[];next.modes=[];}
- if(field==='kinds'){next.sources=[];next.modes=[];next.topics=[];next.levels=[];}
+ if(field==='sources'){next.topics=[];next.levels=[];next.kinds=[];next.modes=[];next.acts=[];next.grammar=[];}
+ if(field==='kinds'){next.sources=[];next.modes=[];next.topics=[];next.levels=[];next.acts=[];next.grammar=[];}
  return next;
 }
-let listeningPicker={kinds:[],sources:[],modes:[],levels:[],topics:[],attempts:[],query:''};
-let listeningWrongPicker={kinds:[],sources:[],modes:[],levels:[],topics:[],attempts:[],query:''};
+const listeningPointsOpen={acts:false,grammar:false};
+let listeningPicker={kinds:[],sources:[],modes:[],levels:[],topics:[],acts:[],grammar:[],attempts:[],query:''};
+let listeningWrongPicker={kinds:[],sources:[],modes:[],levels:[],topics:[],acts:[],grammar:[],attempts:[],query:''};
 function listeningPanel(wrong=false){
  const panel=el('div','listening-catalog');panel.setAttribute('aria-label',listeningLabel('catalog'));
- const f=wrong?listeningWrongPicker:listeningPicker;f.attempts ||= [];const search=el('input','listening-search');search.type='search';search.placeholder=listeningLabel('search');search.setAttribute('aria-label',listeningLabel('search'));search.value=f.query;
+ const f=wrong?listeningWrongPicker:listeningPicker;f.attempts ||= [];f.acts ||= [];f.grammar ||= [];const search=el('input','listening-search');search.type='search';search.placeholder=listeningLabel('search');search.setAttribute('aria-label',listeningLabel('search'));search.value=f.query;
  const bookNote=el('p','sub listening-book-note',listeningLabel('bookNote'));
  const info=el('p','sub');info.setAttribute('aria-live','polite');
  const pendingNote=el('p','sub',listeningLabel('filterPending'));pendingNote.setAttribute('aria-live','polite');
@@ -13110,14 +15029,15 @@ function listeningPanel(wrong=false){
  const changed=()=>{if(!wrong)queueListeningFilters(f);update();if(wrong){bookFilter=listeningKey(f);drawBook();}};
  const draw=()=>{
   choices.replaceChildren();countChips.length=0;
-  for(const [field,label,values] of [['attempts','出题方式',ATTEMPT_TAGS],['kinds','kind',['letter','syllable','sentence','passage','phenomenon']],['sources','source',[...new Set(BANK.filter(q=>q.listeningMode).map(q=>q.listeningSource))]],['modes','type',LISTEN_MODES.filter(mode=>BANK.some(q=>q.listeningMode===mode&&(!f.kinds.length||f.kinds.includes(q.listeningKind))&&(!f.sources.length||f.sources.includes(q.listeningSource))))],['levels','level',[...new Set(BANK.filter(q=>q.listeningMode&&(!f.kinds.length||f.kinds.includes(q.listeningKind))&&(!f.sources.length||f.sources.includes(q.listeningSource))).map(q=>q.level).filter(Boolean))].sort()],['topics','topic',[...new Set(BANK.filter(q=>q.listeningMode&&(!f.kinds.length||f.kinds.includes(q.listeningKind))&&(!f.sources.length||f.sources.includes(q.listeningSource))).map(q=>q.listeningTopic))].sort()]]){
+  const pool=BANK.filter(q=>q.listeningMode&&(!f.kinds.length||f.kinds.includes(q.listeningKind))&&(!f.sources.length||f.sources.includes(q.listeningSource))),points={acts:new Set(pool.flatMap(q=>q.listeningActs||[])),grammar:new Set(pool.flatMap(q=>q.listeningGrammar||[]))};
+  for(const [field,label,values] of [['attempts','出题方式',ATTEMPT_TAGS],['kinds','kind',['letter','syllable','sentence','passage','phenomenon']],['sources','source',[...new Set(BANK.filter(q=>q.listeningMode).map(q=>q.listeningSource))]],['modes','type',LISTEN_MODES.filter(mode=>BANK.some(q=>q.listeningMode===mode&&(!f.kinds.length||f.kinds.includes(q.listeningKind))&&(!f.sources.length||f.sources.includes(q.listeningSource))))],['levels','level',[...new Set(BANK.filter(q=>q.listeningMode&&(!f.kinds.length||f.kinds.includes(q.listeningKind))&&(!f.sources.length||f.sources.includes(q.listeningSource))).map(q=>q.level).filter(Boolean))].sort()],['topics','topic',[...new Set(BANK.filter(q=>q.listeningMode&&(!f.kinds.length||f.kinds.includes(q.listeningKind))&&(!f.sources.length||f.sources.includes(q.listeningSource))).map(q=>q.listeningTopic))].sort()],...(typeof COMM_ACTS==='undefined'?[]:[['acts','acts',COMM_ACTS.map(a=>a[0]).filter(n=>points.acts.has(n))],['grammar','grammar',Object.keys(COMM_GRAMMAR).filter(g=>points.grammar.has(g))]])]){
    const group=el('fieldset','listening-filter'),legend=el('legend',null,(label==='出题方式'?tr(label):listeningLabel(label)));group.append(legend);
-   for(const value of ['',...values]){const b=el('button','listening-filter-chip',value?(field==='sources'?listeningSourceLabel(value):(field==='modes'||field==='kinds')?listeningLabel(value):typeof phoneticLabel==='function'&&PHONETIC_LABELS[value]?phoneticLabel(value):tr(value)):listeningLabel('all'));b.type='button';b.setAttribute('aria-pressed',String(value?f[field].includes(value):!f[field].length));const n=el('small');b.append(document.createTextNode(' '),n);countChips.push({field,value,n});b.addEventListener('click',()=>{Object.assign(f,listeningToggle(f,field,value));draw();changed();Array.from(choices.querySelectorAll('fieldset'))[['attempts','kinds','sources','modes','levels','topics'].indexOf(field)]?.querySelectorAll('button')[['',...values].indexOf(value)]?.focus();});group.append(b);}choices.append(group);
+   for(const value of ['',...values]){const b=el('button','listening-filter-chip',value?(field==='acts'?commActLabel(value):field==='grammar'?commGrammarLabel(value):field==='sources'?listeningSourceLabel(value):(field==='modes'||field==='kinds')?listeningLabel(value):typeof phoneticLabel==='function'&&PHONETIC_LABELS[value]?phoneticLabel(value):tr(value)):listeningLabel('all'));b.type='button';b.setAttribute('aria-pressed',String(value?f[field].includes(value):!f[field].length));const n=el('small');b.append(document.createTextNode(' '),n);countChips.push({field,value,n});b.addEventListener('click',()=>{Object.assign(f,listeningToggle(f,field,value));draw();changed();Array.from(choices.querySelectorAll('fieldset'))[['attempts','kinds','sources','modes','levels','topics','acts','grammar'].indexOf(field)]?.querySelectorAll('button')[['',...values].indexOf(value)]?.focus();});group.append(b);}if(field==='acts'||field==='grammar'){const box=el('details','listening-points');box.open=f[field].length>0||listeningPointsOpen[field];const sum=el('summary',null,listeningLabel(label)+(f[field].length?' · '+f[field].length:''));box.append(sum,group);legend.hidden=true;box.addEventListener('toggle',()=>{listeningPointsOpen[field]=box.open;});choices.append(box);}else choices.append(group);
   }
  };
  search.addEventListener('input',()=>{f.query=search.value;changed();if(wrong)search.focus();});
  search.addEventListener('keydown',e=>{if(e.key==='Enter'&&!start.disabled){e.preventDefault();start.click();}});
- clear.addEventListener('click',()=>{f.kinds=[];f.sources=[];f.modes=[];f.levels=[];f.topics=[];f.attempts=[];f.query='';search.value='';draw();changed();search.focus();});
+ clear.addEventListener('click',()=>{f.kinds=[];f.sources=[];f.modes=[];f.levels=[];f.topics=[];f.acts=[];f.grammar=[];f.attempts=[];f.query='';search.value='';draw();changed();search.focus();});
  start.addEventListener('click',()=>{const key=listeningKey(f);if(wrong){bookFilter=key;renderToc();drawBook();}else startSet(key);afterPick();});
  if(typeof COMMUNICATION_BOOK!=='undefined')panel.append(bookNote);
  const actions=el('div','actions');actions.append(start,clear);panel.append(search,el('p','sub',listeningLabel('filterHelp')),el('p','sub','标签旁数字表示点击该标签后预计匹配的总题数；点击已选标签会取消选择。'),choices,info,pendingNote,actions);if(typeof studySortControl === "function")panel.append(studySortControl("q",()=>{if(wrong)drawBook();else startSet(listeningKey(f),true);}));draw();update();return panel;
@@ -13233,8 +15153,9 @@ function renderQuestion(autoPlay = true) {
   const tags = el("div", "tagrow");
   if (item.level) tags.append(el("span", "tag lv", item.level));
   tags.append(el("span", "tag", item.cat));
-  if(item.sourceBook)tags.append(el('span','tag plain','Communication progressive · '+item.sourceBook.unit+'. '+item.sourceBook.unitTitle+' · p. '+item.sourceBook.page));
+  if(item.sourceBook)tags.append(el('span','tag plain','Communication progressive · '+item.sourceBook.unit+'. '+item.sourceBook.unitTitle+(item.sourceBook.page?' · p. '+item.sourceBook.page:'')));
   else if(CH.has(item.ch))tags.append(el("span", "tag plain", `第 ${item.ch} 章 · ${CH.get(item.ch).zh}`));
+  if(!item.sourceBook&&item.listeningActs?.length&&typeof commActLabel==='function')item.listeningActs.slice(0,2).forEach(n=>tags.append(el('span','tag plain',commActLabel(n))));
   if(item.listeningKind)tags.append(el("span","tag plain",listeningLabel(item.listeningKind)));
   if(item.phonetic)tags.append(el("span","tag plain",phoneticText(["法语系统语音","French system voice","Voix système française"])));
   tags.append(comboBadge("quiz"));
@@ -21939,7 +23860,7 @@ function studyClipSegments(entry,text){
 async function studyAudioIndex(){
   if(studyAudioManifest)return studyAudioManifest;
   if(studyAudioLoad)return studyAudioLoad;
-  studyAudioLoad=(async()=>{const controller=new AbortController(),timer=setTimeout(()=>controller.abort(),8000);try{const r=await fetch(STUDY_AUDIO_BASE+'manifest.json?v=1.9.42',{signal:controller.signal});if(!r.ok)throw Error('manifest');const m=await r.json();if(m.version!==1||!m.characters)throw Error('manifest');studyAudioManifest=m;return m;}finally{clearTimeout(timer);studyAudioLoad=null;}})();
+  studyAudioLoad=(async()=>{const controller=new AbortController(),timer=setTimeout(()=>controller.abort(),8000);try{const r=await fetch(STUDY_AUDIO_BASE+'manifest.json?v=1.9.68',{signal:controller.signal});if(!r.ok)throw Error('manifest');const m=await r.json();if(m.version!==1||!m.characters)throw Error('manifest');studyAudioManifest=m;return m;}finally{clearTimeout(timer);studyAudioLoad=null;}})();
   return studyAudioLoad;
 }
 function studySystemPart(text,rate,btn,done,role){
@@ -21980,7 +23901,8 @@ function studySpeakSequence(parts,rate,btn,done,voiceOverride=null,recordedOnly=
     const part=parts[i++],text=String(part.text||'').normalize('NFC').trim(),spokenText=part.clipText||text;s.clipped=!!part.clipText;s.partIndex=partIndex;s.requestIndex=sentenceIndex;s.index=0;s.segments=null;s.mode='loading';s.resume=s.seek=s.arm=null;studyControlsSync(s);
     const fallback=()=>{if(!current())return;if(recordedOnly){studyAudioLabel(btn,petI18n(['Gemini 录音暂不可用，请稍后重试；不会使用系统语音。','Gemini recording unavailable. Try again later; system speech is disabled.','Enregistrement Gemini indisponible. Réessayez plus tard ; aucune voix système.']),true);finish();return;}studyAudioLabel(btn,petI18n(['系统朗读','System voice','Voix système'])+(voice!=='system'&&part.role!=='M'?' · '+petI18n(['本句暂无角色录音','No recording for this line','Cette phrase n’est pas enregistrée']):''),voice!=='system'&&part.role!=='M');if(row)studyControlledSystem(s,spokenText,rate,part.role,current,next,finish);else studySystemPart(spokenText,rate,btn,()=>{if(current())next();},part.role);};
     if(voice==='system'||part.role==='M'){fallback();return;}
-    let entry;try{const m=await studyAudioIndex();entry=m.characters[voice]?.find(x=>x.text===text);}catch{fallback();return;}
+    // Two-voice dialogue recordings are shared by every recorded narrator; an explicit character preview keeps its own voice.
+    let entry;try{const m=await studyAudioIndex();entry=(!voiceOverride&&m.dialogues?.find(x=>x.text===text))||m.characters[voice]?.find(x=>x.text===text);}catch{fallback();return;}
     if(!current())return;
     if(!entry||!/^[-a-z0-9/]+\.m4a$/.test(entry.file)||entry.file.includes('..')){fallback();return;}
     const clipped=part.clipText?studyClipSegments(entry,part.clipText):null;if(part.clipText&&!clipped){fallback();return;}
@@ -22004,7 +23926,7 @@ function studySpeakSequence(parts,rate,btn,done,voiceOverride=null,recordedOnly=
     audio.onseeked=()=>{if(active())s.arm();};
     audio.onended=()=>{if(!active())return;if(s.loop&&s.segments){audio.currentTime=s.segments[s.loopIndex].start;play();s.arm();}else endPart();};
     audio.onerror=failure;
-    studyAudioLabel(btn,voice[0].toUpperCase()+voice.slice(1)+' · '+petI18n(['AI 合成配音','AI narration','Voix de synthèse IA']));
+    studyAudioLabel(btn,(Array.isArray(entry.cast)?entry.cast.map(c=>String(c.speaker)):[voice]).map(n=>n[0].toUpperCase()+n.slice(1)).join(' & ')+' · '+petI18n(['AI 合成配音','AI narration','Voix de synthèse IA']));
     if(s.segments)s.seek(sentenceIndex<0?s.segments.length-1:Math.min(sentenceIndex,s.segments.length-1));else{studyControlsSync(s);play();}
   };
   s.move=step=>{if(!valid()||!s.segments?.length||!s.seek)return;const index=s.mode==='recorded'&&!s.loop?studySentenceAt(s.segments,studyAudio?.currentTime||0):s.index,target=index+step;if(target<0){if(s.partIndex>0)next(s.partIndex-1,-1);}else if(target>=s.segments.length){if(s.partIndex<parts.length-1)next(s.partIndex+1,0);}else s.seek(target);};
