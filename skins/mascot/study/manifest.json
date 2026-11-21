@@ -15355,96 +15355,95 @@
           "voice": "Puck"
         }
       ],
-      "masterSha256": "7f3dd818ae82f960acd3900006541ca26c1fcc308bef5ff5a42f42f66d5ee1fc",
-      "audioSha256": "705f47e26bc55309643580d7a9860c286b484d739715af35edd1516b5be4f8b0",
-      "durationSeconds": 24.19,
-      "gainDb": -0.208,
-      "decodeCorrelation": 0.9979,
-      "bytes": 208607,
+      "masterSha256": "34bcc738e0b2f07fad38a2e058c87d7be5de5b67800b50ceec638f4cd0309b0d",
+      "audioSha256": "b8721c15e91e7082dca40fbed709983b7e4702397f37cccc1408df0555750f2c",
+      "durationSeconds": 23.66,
+      "gainDb": 0.628,
+      "decodeCorrelation": 0.99712,
+      "bytes": 210770,
       "model": "gemini-3.8-flash-tts",
       "style": "Listening exercise: clear conversational French, restrained expression, natural moderate pace; keep numbers, negation and liaison distinct",
-      "asrMatch": 0.9571,
+      "asrMatch": 1.0,
       "sentences": [
         {
           "text": "Ça ne va pas, Samuel ?",
           "speaker": "charon",
           "start": 0.0,
-          "end": 1.18
+          "end": 1.295
         },
         {
           "text": "— Non.",
           "speaker": "puck",
-          "start": 1.18,
-          "end": 2.4
+          "start": 1.295,
+          "end": 2.555
         },
         {
           "text": "J'ai raté mon examen de maths.",
           "speaker": "puck",
-          "start": 2.4,
-          "end": 4.85
+          "start": 2.555,
+          "end": 4.565
         },
         {
           "text": "J'ai été éliminé dès la première épreuve.",
           "speaker": "puck",
-          "start": 4.85,
-          "end": 7.815
+          "start": 4.565,
+          "end": 7.31
         },
         {
           "text": "— Ne t'inquiète pas, ce n'est pas grave.",
           "speaker": "charon",
-          "start": 7.815,
-          "end": 9.835
+          "start": 7.31,
+          "end": 9.01
         },
         {
           "text": "Tu pourras le repasser en septembre.",
           "speaker": "charon",
-          "start": 9.835,
-          "end": 11.745
+          "start": 9.01,
+          "end": 10.825
         },
         {
           "text": "— Mais j'avais beaucoup travaillé !",
           "speaker": "puck",
-          "start": 11.745,
-          "end": 13.98
+          "start": 10.825,
+          "end": 12.825
         },
         {
           "text": "— Allez, courage !",
           "speaker": "charon",
-          "start": 13.98,
-          "end": 15.61
+          "start": 12.825,
+          "end": 14.365
         },
         {
           "text": "Tu vas y arriver.",
           "speaker": "charon",
-          "start": 15.61,
-          "end": 16.98
+          "start": 14.365,
+          "end": 15.815
         },
         {
           "text": "Cet été, tu seras aidé par ta cousine, elle est prof de maths.",
           "speaker": "charon",
-          "start": 16.98,
-          "end": 20.435
+          "start": 15.815,
+          "end": 19.595
         },
         {
           "text": "— Tu crois ?",
           "speaker": "puck",
-          "start": 20.435,
-          "end": 21.585
+          "start": 19.595,
+          "end": 20.67
         },
         {
           "text": "— J'en suis sûr.",
           "speaker": "charon",
-          "start": 21.585,
-          "end": 22.89
+          "start": 20.67,
+          "end": 22.26
         },
         {
           "text": "Ne te décourage pas.",
           "speaker": "charon",
-          "start": 22.89,
-          "end": 24.19
+          "start": 22.26,
+          "end": 23.66
         }
       ],
-      "qaNote": "Whisper medium/small transcribed « elle est prof de maths » as « à l'épreuve de maths » in five of six takes (base heard « prof »); the rest of this take matches. Needs human listening.",
       "generatedDate": "2026-11-21",
       "integratedDate": "2026-11-21"
     },
@@ -15640,6 +15639,3011 @@
     }
   ],
   "dialogueCount": 40,
-  "dialogueBytes": 7457552,
-  "dialogueProvenance": "Gemini API multi-speaker requests with the saved character voices and prebuilt male voices; local Whisper medium transcript comparison, word-aligned pause boundaries, level normalization and AAC decoding. Not human listening certification."
+  "dialogueBytes": 7459715,
+  "dialogueProvenance": "Gemini API multi-speaker requests with the saved character voices and prebuilt male voices; local Whisper medium transcript comparison, word-aligned pause boundaries, level normalization and AAC decoding. Not human listening certification.",
+  "examples": [
+    {
+      "text": "Le sport fait partie de ma vie quotidienne.",
+      "file": "examples/108abff57c026a02c05d.m4a",
+      "speaker": "lison",
+      "durationSeconds": 2.43,
+      "bytes": 21844,
+      "audioSha256": "19c1f3fb2f37f5d7934ed8055b6ecd13133e622b3cdcf90f8c97d6b4e7c2f9cc"
+    },
+    {
+      "text": "Lire le journal au lit avec une tasse fait partie de sa routine quotidienne.",
+      "file": "examples/eaefa44aeabd0cfdf8a7.m4a",
+      "speaker": "lison",
+      "durationSeconds": 5.16,
+      "bytes": 46366,
+      "audioSha256": "303d2cf124b440acaf6ee48037f32903a73d25b9e630a4e3990fe28424f97d3e"
+    },
+    {
+      "text": "Ma grand-mère emprunte dix romans par semaine à la bibliothèque.",
+      "file": "examples/b50fba19f3ddf22ddc1f.m4a",
+      "speaker": "ninon",
+      "durationSeconds": 3.73,
+      "bytes": 36005,
+      "audioSha256": "2854812fc0da718cf1754804fdaf3a2c65b98981d02b2253937e27ecb9d84e49"
+    },
+    {
+      "text": "Le pingouin prête son écharpe au flamant rose qui grelotte.",
+      "file": "examples/ad194906254713560623.m4a",
+      "speaker": "lison",
+      "durationSeconds": 3.57,
+      "bytes": 34321,
+      "audioSha256": "ee30f83c78b99b6ed729671c524bdd6741beaa40b279b3912c7d2f320abda549"
+    },
+    {
+      "text": "Dépêche-toi, on va rater le bus !",
+      "file": "examples/d5d65fbfb978bab1d95b.m4a",
+      "speaker": "ninon",
+      "durationSeconds": 2.33,
+      "bytes": 20760,
+      "audioSha256": "14ac8b5932f8e8b85004dfd1c099894049e84efb9006536edd4fa9c1413c9088"
+    },
+    {
+      "text": "L'homme en costume court, une horloge et une mallette à la main : il se dépêche.",
+      "file": "examples/573b56a7e8d2ceeabcc9.m4a",
+      "speaker": "ninon",
+      "durationSeconds": 4.59,
+      "bytes": 41110,
+      "audioSha256": "67a19e8034b83b601a88863bb81ff1e8ef526992865ccc73d93b8f8db0a4c92a"
+    },
+    {
+      "text": "Mon voisin fait du bruit tous les soirs.",
+      "file": "examples/de0ab0fcfc25efcad5cf.m4a",
+      "speaker": "lison",
+      "durationSeconds": 2.59,
+      "bytes": 23282,
+      "audioSha256": "b42f1755c247528c7a44e796cea7995bd36a9d556962b8ebe1203f9418d0d6f7"
+    },
+    {
+      "text": "Ces maisons aux toits de tuiles rouges ont des terrasses très proches de celles des voisins.",
+      "file": "examples/56e473b25167067b0824.m4a",
+      "speaker": "lison",
+      "durationSeconds": 4.85,
+      "bytes": 42778,
+      "audioSha256": "10e2d09fab11645bab177f5e9fbcefe4d11ac2d45acd85949ce43d4c4ac9f9f7"
+    },
+    {
+      "text": "Les deux enfants se battent avec des oreillers pleins de plumes.",
+      "file": "examples/4c1258e9f73598fb4b47.m4a",
+      "speaker": "ninon",
+      "durationSeconds": 3.04,
+      "bytes": 27893,
+      "audioSha256": "6a83c1bc43a11c072a87329ea336be81f7f3bda2d5ab9d1fb36ada3ad47b596d"
+    },
+    {
+      "text": "Le petit garçon ferme le robinet pour ne pas gaspiller l'eau.",
+      "file": "examples/cacc938d08c0435117ef.m4a",
+      "speaker": "lison",
+      "durationSeconds": 3.8,
+      "bytes": 33598,
+      "audioSha256": "5810ed7354b45925da84b14fa324353586ee13a6b24bc18fef01bbe84c7082f9"
+    },
+    {
+      "text": "Le chat renverse le bol de lait avec sa queue.",
+      "file": "examples/b3b430516845c329bc4d.m4a",
+      "speaker": "ninon",
+      "durationSeconds": 3.31,
+      "bytes": 30104,
+      "audioSha256": "54f518972349ad0b8f76ac521f305d28d5d626a9be4e2cc18b9dec492fc27eca"
+    },
+    {
+      "text": "Je me débarrasse de cette chaise cassée à la déchèterie.",
+      "file": "examples/60317ff3bc3cbb0a2308.m4a",
+      "speaker": "lison",
+      "durationSeconds": 3.02,
+      "bytes": 27863,
+      "audioSha256": "11d1222d37ed8c6b58a2eef3162e135b35790bd35db1d36ca974a6592e974c69"
+    },
+    {
+      "text": "Paul remplace la roue abîmée de son vélo par une neuve.",
+      "file": "examples/a05128cd6c9b9d555d24.m4a",
+      "speaker": "ninon",
+      "durationSeconds": 3.85,
+      "bytes": 34067,
+      "audioSha256": "62190f370c28d11dcb06c0b784af13bed110cda572d9635897ee95baaff23a61"
+    },
+    {
+      "text": "Son bureau désordonné disparaît sous les papiers et les chaussettes.",
+      "file": "examples/d79911c203bec092d5fe.m4a",
+      "speaker": "lison",
+      "durationSeconds": 3.65,
+      "bytes": 32573,
+      "audioSha256": "60415efe38d700ed1d52037d69297fdc5c0eb6b33ac92d53c7325631dc50b0a8"
+    },
+    {
+      "text": "Elle cherche un emploi dans le tourisme.",
+      "file": "examples/17d98c8ba1b25ddbd5ea.m4a",
+      "speaker": "ninon",
+      "durationSeconds": 2.28,
+      "bytes": 20723,
+      "audioSha256": "46c82b15d7dd3da44424f73b2d8203648ad010a0842924eea2b8ea21f1e41a9d"
+    },
+    {
+      "text": "La jeune femme cherche un emploi sur son ordinateur portable, un café à côté d'elle.",
+      "file": "examples/74f7317360b3159b2543.m4a",
+      "speaker": "ninon",
+      "durationSeconds": 4.73,
+      "bytes": 42219,
+      "audioSha256": "968fc65934add2326c42819461d5c0b2285d3f2831acd54d42fc76d0f9f32c3c"
+    },
+    {
+      "text": "Le taux de chômage a baissé cette année.",
+      "file": "examples/8009e7e75b13a8db4bc7.m4a",
+      "speaker": "lison",
+      "durationSeconds": 2.52,
+      "bytes": 22994,
+      "audioSha256": "6383bd3c658e6465a1a037636034f86f4eebaaecbabdbf18c76c20d537c2c881"
+    },
+    {
+      "text": "Au chômage, ce jeune homme cherche un emploi avec des jumelles.",
+      "file": "examples/272d64a5d6707ec7f438.m4a",
+      "speaker": "lison",
+      "durationSeconds": 3.91,
+      "bytes": 34367,
+      "audioSha256": "32074c592942d40abc6221ad0cd939e0f57afc5df2079a289f4f813d608674a0"
+    },
+    {
+      "text": "Il travaille dans une petite entreprise.",
+      "file": "examples/f1124009beda01d6c294.m4a",
+      "speaker": "ninon",
+      "durationSeconds": 2.48,
+      "bytes": 22388,
+      "audioSha256": "24625e47025b81ecea18ede0895906edea06d3b60e8f090047553bab0eeea67a"
+    },
+    {
+      "text": "Plusieurs grandes entreprises ont leurs bureaux dans ces immeubles de verre modernes.",
+      "file": "examples/033fc2ea344d368c11cf.m4a",
+      "speaker": "ninon",
+      "durationSeconds": 4.27,
+      "bytes": 38473,
+      "audioSha256": "98a69c58a3e0b115d18c6660de0110665325ae5a1ef2a703762c9beda2bca54c"
+    },
+    {
+      "text": "J'ai un entretien d'embauche demain.",
+      "file": "examples/8c6e3b8eaf0f1e45268c.m4a",
+      "speaker": "lison",
+      "durationSeconds": 1.91,
+      "bytes": 17329,
+      "audioSha256": "99b96951769332238bcd68b4df16d81fcf7bbd20e7346f87cefab3066f089078"
+    },
+    {
+      "text": "Pendant l'entretien, les deux hommes discutent face à face devant un ordinateur portable.",
+      "file": "examples/8702479ee7a622e64475.m4a",
+      "speaker": "lison",
+      "durationSeconds": 4.98,
+      "bytes": 45773,
+      "audioSha256": "f852624560c2ad1f49e6d7fd4fe5a57ae256ea012f650d10ba0cc5efed0d3bfd"
+    },
+    {
+      "text": "L'entreprise va embaucher dix personnes.",
+      "file": "examples/e5fe043f52c60642accb.m4a",
+      "speaker": "ninon",
+      "durationSeconds": 2.64,
+      "bytes": 23307,
+      "audioSha256": "e1fc2b0199ccc10193aaaa74551b29326d2d0105b5470c1f96e0bb563bb9cbee"
+    },
+    {
+      "text": "Deux hommes en costume se serrent la main : l'un vient d'embaucher l'autre.",
+      "file": "examples/85135a56e52af6608554.m4a",
+      "speaker": "ninon",
+      "durationSeconds": 4.09,
+      "bytes": 36222,
+      "audioSha256": "0bd165a4db232c053e03b529be06129e2b90b21dfe62bbdde8a90b074be5eaea"
+    },
+    {
+      "text": "L'usine a licencié deux cents ouvriers.",
+      "file": "examples/0c1d26ef20d69cbae961.m4a",
+      "speaker": "lison",
+      "durationSeconds": 2.28,
+      "bytes": 19541,
+      "audioSha256": "edf8a12b7fb0f17cf0a61ebaafa23bef3016d269deaa2bb9e32a1b9dc08d3cb1"
+    },
+    {
+      "text": "Ce grand tampon rouge annonce qu'un employé vient d'être licencié.",
+      "file": "examples/79c7eb3cea0b114a5d14.m4a",
+      "speaker": "lison",
+      "durationSeconds": 3.71,
+      "bytes": 34009,
+      "audioSha256": "cd076f2a2da6361e649347ce628534e65c2f5b5a04346962ead0b0b4aaa93cc9"
+    },
+    {
+      "text": "La réunion commence à neuf heures.",
+      "file": "examples/01af15383986d8c0569d.m4a",
+      "speaker": "ninon",
+      "durationSeconds": 1.86,
+      "bytes": 17149,
+      "audioSha256": "ddfed727afcdbaca930d6d25e65e2362c102d0524443c230677e1f254f7e1ae4"
+    },
+    {
+      "text": "Autour de la table, deux collègues se serrent la main au début de la réunion.",
+      "file": "examples/b892af3aa093dbc818dd.m4a",
+      "speaker": "ninon",
+      "durationSeconds": 3.89,
+      "bytes": 35620,
+      "audioSha256": "dbdcd35df9203f4b520d77c85459929d59cb690edc918afcf03eafb8b8e0bdeb"
+    },
+    {
+      "text": "Chacun a une tâche précise.",
+      "file": "examples/77d6165e0661ab665053.m4a",
+      "speaker": "lison",
+      "durationSeconds": 1.99,
+      "bytes": 18383,
+      "audioSha256": "d89681bf9e333352b4dd7a51b6e5bf17b9169d30de83d512d0532eccff08b8d5"
+    },
+    {
+      "text": "Il faut réduire nos dépenses.",
+      "file": "examples/ae551637edcb6976c7be.m4a",
+      "speaker": "ninon",
+      "durationSeconds": 1.74,
+      "bytes": 16304,
+      "audioSha256": "5fc25ffb80f169059d1a332e927023ca317e66862069275e705634d1da6f6b07"
+    },
+    {
+      "text": "Derrière un petit chariot doré, une pile de tickets de caisse montre les dépenses.",
+      "file": "examples/16d822c05ccb3e6f8ecf.m4a",
+      "speaker": "ninon",
+      "durationSeconds": 4.7,
+      "bytes": 41917,
+      "audioSha256": "cdafaa9dd368c26f007a5cd6f15a34072fefb921e0a3f74d784e442e1023021e"
+    },
+    {
+      "text": "J'économise pour acheter une voiture.",
+      "file": "examples/6993ea199a4463900801.m4a",
+      "speaker": "lison",
+      "durationSeconds": 1.79,
+      "bytes": 16603,
+      "audioSha256": "7885d044533faebffb7e360634bee9826683dc36badd60708267d63000dcdbf1"
+    },
+    {
+      "text": "Cette tirelire rose en forme de cochon sert à économiser de l'argent.",
+      "file": "examples/e9d10e850bea37acce1f.m4a",
+      "speaker": "lison",
+      "durationSeconds": 3.57,
+      "bytes": 31257,
+      "audioSha256": "4249eabfe0e945dfbfb217ecf238340428055bef64a1cba786e44261e0567e7c"
+    },
+    {
+      "text": "Ils ont demandé un prêt pour acheter leur maison.",
+      "file": "examples/6f7ffdf764082067ebae.m4a",
+      "speaker": "ninon",
+      "durationSeconds": 2.23,
+      "bytes": 20064,
+      "audioSha256": "1bd988987f3ce64df22838e495cac2f297ac7d97e4edd89376585509e319746a"
+    },
+    {
+      "text": "L'homme en costume remet une liasse de billets de 500 euros pour le prêt.",
+      "file": "examples/6fb6e09412ce50571830.m4a",
+      "speaker": "ninon",
+      "durationSeconds": 3.74,
+      "bytes": 34004,
+      "audioSha256": "ca37779bfd032bbd848be3e204f5c604fe1c5dff1b25a6d53ecdc205ff239fe6"
+    },
+    {
+      "text": "Les trains ne circulent pas à cause de la grève.",
+      "file": "examples/eed01ef4a068dcda505c.m4a",
+      "speaker": "lison",
+      "durationSeconds": 2.88,
+      "bytes": 26454,
+      "audioSha256": "aff5da1ea5214bbe8c8378aeff2433393f65197a1ec0882d4f1921dc41d392a6"
+    },
+    {
+      "text": "Ce panneau triangulaire rouge et jaune annonce une grève.",
+      "file": "examples/69c0fde58b543a89c0d4.m4a",
+      "speaker": "lison",
+      "durationSeconds": 3.48,
+      "bytes": 31147,
+      "audioSha256": "02df1d819eef128575949c9f431e3f25754569f465eab0e34b02cfc949ca968e"
+    },
+    {
+      "text": "Il a fait toute sa carrière dans la même entreprise.",
+      "file": "examples/f0045cc83c1575620c2f.m4a",
+      "speaker": "ninon",
+      "durationSeconds": 3.39,
+      "bytes": 29960,
+      "audioSha256": "66833ab4ef41bb9ad0092cb9951d971944f6f2adb8b165f41587241edc5f2485"
+    },
+    {
+      "text": "Cet homme qui monte un grand escalier symbolise une carrière en progression.",
+      "file": "examples/e5713e1c21004f88f52b.m4a",
+      "speaker": "ninon",
+      "durationSeconds": 5.05,
+      "bytes": 45867,
+      "audioSha256": "9c93705f4360c722d65e7291ca061382879c4766be6a524d67b5738be31fbc32"
+    },
+    {
+      "text": "Ce petit magasin n'est plus rentable.",
+      "file": "examples/c411813d70dd5a8cb006.m4a",
+      "speaker": "lison",
+      "durationSeconds": 2.38,
+      "bytes": 21223,
+      "audioSha256": "79d502ac125ad785653562fbdbd3003a0819c5b2a5724d2327664a38306b755c"
+    },
+    {
+      "text": "Sur l'écran, le graphique en hausse montre une activité de plus en plus rentable.",
+      "file": "examples/10ced977e46115ee1896.m4a",
+      "speaker": "lison",
+      "durationSeconds": 5.01,
+      "bytes": 45443,
+      "audioSha256": "75cf39d6bb3b3eb98d027fcc60066599d4cde5d4fc2172520df9034f28a03c62"
+    },
+    {
+      "text": "L'imprimante crache des feuilles partout dans le bureau !",
+      "file": "examples/b3a0ecf25e1c101ec9a2.m4a",
+      "speaker": "ninon",
+      "durationSeconds": 3.59,
+      "bytes": 32056,
+      "audioSha256": "20b29208a2deecdc3c99556244345094d8b4d51d4a56718fe17de21c1bcc3d00"
+    },
+    {
+      "text": "Pour son premier jour de stage, Léa porte une pile de dossiers plus haute qu'elle.",
+      "file": "examples/63e6cec7cf9cc87f2b2a.m4a",
+      "speaker": "lison",
+      "durationSeconds": 4.26,
+      "bytes": 39206,
+      "audioSha256": "c9c766c74425e903c164df309cb8b53065683c7f6f05fa363f7afe7dd420f038"
+    },
+    {
+      "text": "Le père répartit les parts de pizza entre ses enfants.",
+      "file": "examples/c4806b931f987ba73fa5.m4a",
+      "speaker": "ninon",
+      "durationSeconds": 3.08,
+      "bytes": 28777,
+      "audioSha256": "5228a99a0b88822cceeda922398a4faa743e07803de7712e75a92af88400acca"
+    },
+    {
+      "text": "Maya gère son budget en répartissant ses pièces dans plusieurs bocaux.",
+      "file": "examples/e12cbfaf611a0f571a32.m4a",
+      "speaker": "lison",
+      "durationSeconds": 4.27,
+      "bytes": 38884,
+      "audioSha256": "067d15772baaf3cb9d1f5c99ada71bd57248eff860ec392110e8c0c24334596d"
+    },
+    {
+      "text": "Elle reporte le pique-nique à cause de la pluie.",
+      "file": "examples/d6c06679d8d0a2cb3813.m4a",
+      "speaker": "ninon",
+      "durationSeconds": 2.58,
+      "bytes": 23537,
+      "audioSha256": "337acb6bdc5bea49edff0359de0f3e4af1d3c167edd62ba9c2e1d2cdad61c325"
+    },
+    {
+      "text": "Cette couturière rigoureuse vérifie chaque couture avant de terminer la veste.",
+      "file": "examples/2d518523bcce4a281135.m4a",
+      "speaker": "lison",
+      "durationSeconds": 5.35,
+      "bytes": 47728,
+      "audioSha256": "f20fe8f5dea85faf413d1918721141e6e6b3cf88992fdfacbe1c1b9e7f3f6be1"
+    },
+    {
+      "text": "Cette brosse efficace enlève toute la boue de mes bottes.",
+      "file": "examples/6c114751e70802deef2b.m4a",
+      "speaker": "ninon",
+      "durationSeconds": 3.24,
+      "bytes": 31004,
+      "audioSha256": "81d79f98d15bc543c4a04706bbe9cea167c028fb1deb7bde9f538eed74ad6074"
+    },
+    {
+      "text": "Elle a obtenu son diplôme l'année dernière.",
+      "file": "examples/da1467f9b602ffc859c3.m4a",
+      "speaker": "lison",
+      "durationSeconds": 2.69,
+      "bytes": 24572,
+      "audioSha256": "7bf571ac34bc025ee11bd6f692cb618594b6632e9a4512e5ab0150b4b326f848"
+    },
+    {
+      "text": "Le diplôme est roulé et attaché avec un ruban rouge.",
+      "file": "examples/de389a9acdf24efb4c6d.m4a",
+      "speaker": "lison",
+      "durationSeconds": 3.55,
+      "bytes": 31274,
+      "audioSha256": "736d50f7b7c19955ceb594ef20fc5ed47aaaa555184db8e2f82252fe08e83d1c"
+    },
+    {
+      "text": "Ce poste demande de bonnes connaissances en maths.",
+      "file": "examples/65551d294d689dc08d99.m4a",
+      "speaker": "ninon",
+      "durationSeconds": 3.01,
+      "bytes": 28301,
+      "audioSha256": "25681a21dee7f4d4204ca8b9dbd10b4e0f4264a0d4a6d918ad0b4d24995e4f1b"
+    },
+    {
+      "text": "L'apprentissage d'une langue prend du temps.",
+      "file": "examples/ee2edf4f8df9a623c71e.m4a",
+      "speaker": "lison",
+      "durationSeconds": 2.25,
+      "bytes": 20908,
+      "audioSha256": "185ef66aff691865188f21f402d4f8366e4a58b141da840120931f893ed629f9"
+    },
+    {
+      "text": "Devant son ordinateur, la jeune femme mord son crayon : l'apprentissage demande des efforts.",
+      "file": "examples/46d15073341543441eff.m4a",
+      "speaker": "lison",
+      "durationSeconds": 6.74,
+      "bytes": 59165,
+      "audioSha256": "351ef70158156934c5bb52b5a50da451706fbc59182a1fe876525b6c6276a783"
+    },
+    {
+      "text": "Il écrit son mémoire de master.",
+      "file": "examples/0ab5bc9dd967ac2b8650.m4a",
+      "speaker": "ninon",
+      "durationSeconds": 2.02,
+      "bytes": 19049,
+      "audioSha256": "abd3b08fa5bda7ae0ffb523d64a52720cc1b64d4205cfa4cc266de0e66cbd92e"
+    },
+    {
+      "text": "À la bibliothèque, une étudiante rédige son mémoire entourée de livres.",
+      "file": "examples/df44c0243b6e5a4bf13c.m4a",
+      "speaker": "ninon",
+      "durationSeconds": 4.45,
+      "bytes": 39713,
+      "audioSha256": "be5d8eac9f90785cedeaff6dfe7d1838059179a07d4759ea598f6598c02b9ab9"
+    },
+    {
+      "text": "Elle a obtenu une bourse pour étudier au Canada.",
+      "file": "examples/24a9fc1a507ceb882b1f.m4a",
+      "speaker": "lison",
+      "durationSeconds": 2.66,
+      "bytes": 24673,
+      "audioSha256": "715053e37aba402f86e2949289fb3b1b779735952ae0812f9b8b5b79a824838e"
+    },
+    {
+      "text": "Un chapeau de diplômé posé sur des liasses de billets symbolise une bourse d'études.",
+      "file": "examples/1ba5ce2ce31c25a73e94.m4a",
+      "speaker": "lison",
+      "durationSeconds": 5.34,
+      "bytes": 48896,
+      "audioSha256": "c4ff18995ca592f9357942fda2c36441383ee90189d7d22f61f25ef5dd85a600"
+    },
+    {
+      "text": "Il a échoué à l'examen du permis.",
+      "file": "examples/5695d6e0331ec076b6f8.m4a",
+      "speaker": "ninon",
+      "durationSeconds": 2.2,
+      "bytes": 20001,
+      "audioSha256": "ee9f5e20049dd5621d17de92825c1ad194bc37101e84a820cde63f063d33c766"
+    },
+    {
+      "text": "Ce grand tampon rouge « FAIL » signifie qu'on a échoué.",
+      "file": "examples/983603e3e2b8e1efa929.m4a",
+      "speaker": "ninon",
+      "durationSeconds": 3.97,
+      "bytes": 35092,
+      "audioSha256": "4da624e231533046077b99b2c34af49caf463b6ce6671eee636d1b27bdd2eb7a"
+    },
+    {
+      "text": "Bravo, tu as réussi ton bac !",
+      "file": "examples/b4f52d55a2e725fc3777.m4a",
+      "speaker": "lison",
+      "durationSeconds": 2.12,
+      "bytes": 18481,
+      "audioSha256": "c1f6d016593cb04197791b7c979f257b8172c35ca92cace2c40dbe81629e4915"
+    },
+    {
+      "text": "Les bras levés au milieu des feuilles qui volent, il crie de joie : il a réussi !",
+      "file": "examples/34f3cded33070a3b0a44.m4a",
+      "speaker": "lison",
+      "durationSeconds": 4.79,
+      "bytes": 42123,
+      "audioSha256": "6da56960495b62d535514527ae24e6c1a36610af8fbf0951dbc504c41003c202"
+    },
+    {
+      "text": "Elle révise ses cours tous les soirs.",
+      "file": "examples/372ccf490569b845b675.m4a",
+      "speaker": "ninon",
+      "durationSeconds": 2.44,
+      "bytes": 21530,
+      "audioSha256": "ba95527c10fdbe7e26b3057d149330591463a20643a8dc4573687419bd0b66b1"
+    },
+    {
+      "text": "Le jeune homme révise ses notes à son bureau avec un livre ouvert.",
+      "file": "examples/eac4ebec15ddd6d226e7.m4a",
+      "speaker": "ninon",
+      "durationSeconds": 4.07,
+      "bytes": 36434,
+      "audioSha256": "6824b0430dc2c553f566931e63fde55f26480d58df89245a5811d19e192c0c67"
+    },
+    {
+      "text": "Mon emploi du temps est très chargé cette semaine.",
+      "file": "examples/2154a0f5c62860d1f79a.m4a",
+      "speaker": "lison",
+      "durationSeconds": 2.41,
+      "bytes": 22627,
+      "audioSha256": "e398b9c92a3b379033e7844009295fa60fa1956efefbdc8cec991cfa42959f36"
+    },
+    {
+      "text": "Un stylo est posé sur un agenda ouvert où l'on note son emploi du temps.",
+      "file": "examples/298994bbd02740666e7a.m4a",
+      "speaker": "lison",
+      "durationSeconds": 4.54,
+      "bytes": 40415,
+      "audioSha256": "f6813a64895954e1eea88d3d6def88d2684f15d7a5c2781eeb1d555cd1eb1168"
+    },
+    {
+      "text": "Ma matière préférée, c'est la biologie.",
+      "file": "examples/638017d5eed8e2950f07.m4a",
+      "speaker": "ninon",
+      "durationSeconds": 2.5,
+      "bytes": 21904,
+      "audioSha256": "f81e971892e52926d7cb713bb95ff3ec348d76f633f17ed9d357ebb7514b6b51"
+    },
+    {
+      "text": "Chaque livre correspond à une matière : histoire, physique, biologie ou anglais.",
+      "file": "examples/0abf275ab9f5e375b954.m4a",
+      "speaker": "ninon",
+      "durationSeconds": 6.39,
+      "bytes": 56205,
+      "audioSha256": "a2155614d6428da96e35b0a656baa8b3dc00750449d9cfd0ccc91285360c0fa3"
+    },
+    {
+      "text": "L'inscription à l'université se fait en ligne.",
+      "file": "examples/5e64881e7f1f6a6fa664.m4a",
+      "speaker": "lison",
+      "durationSeconds": 2.715,
+      "bytes": 23874,
+      "audioSha256": "95246af05615ff4d59fe50b1b49a77666c37b20017ce92f0ee58373f4ff03920"
+    },
+    {
+      "text": "Quelqu'un remplit le formulaire d'inscription avec un stylo.",
+      "file": "examples/2585d0c16b02210b6fbd.m4a",
+      "speaker": "lison",
+      "durationSeconds": 2.98,
+      "bytes": 28442,
+      "audioSha256": "85683277ad8ae9f05e5f5ee5251c6bcab750d293591445e6338edda8b03bb324"
+    },
+    {
+      "text": "Tu as fini ton devoir de maths ?",
+      "file": "examples/83fb13711d080cea8d35.m4a",
+      "speaker": "ninon",
+      "durationSeconds": 2.14,
+      "bytes": 20001,
+      "audioSha256": "e192a4e2cdd4c5b30ac5057f45e4d7ed73ddcd04cd63debbaf29db7a815b6192"
+    },
+    {
+      "text": "L'enfant fait son devoir sur une feuille avec un crayon rouge.",
+      "file": "examples/e1d224170f2518d25468.m4a",
+      "speaker": "ninon",
+      "durationSeconds": 3.51,
+      "bytes": 30355,
+      "audioSha256": "05c177434e268eb54197be72091ab798dc74e881b99710824504a9756643f0c5"
+    },
+    {
+      "text": "L'épreuve écrite dure trois heures.",
+      "file": "examples/35a0053e8b0d049c31e2.m4a",
+      "speaker": "lison",
+      "durationSeconds": 1.8,
+      "bytes": 17517,
+      "audioSha256": "4a8f40e8c5da6301a0e0cdf06156a91f157eb2ba0ce8850dd932c4264744e73e"
+    },
+    {
+      "text": "Pendant l'épreuve, l'élève remplit sa feuille de réponses au crayon.",
+      "file": "examples/7cd12db647f60c13b5c8.m4a",
+      "speaker": "lison",
+      "durationSeconds": 3.66,
+      "bytes": 31988,
+      "audioSha256": "b745a74454c2179a804ca003b245b595ba227817992ae835cb1572c68e52100b"
+    },
+    {
+      "text": "La maîtresse dessine un énorme dinosaure à la craie sur le tableau.",
+      "file": "examples/d49429e39f677ee2279a.m4a",
+      "speaker": "lison",
+      "durationSeconds": 3.56,
+      "bytes": 31315,
+      "audioSha256": "265fb73f4f8ff7b2d8f84b3a3ef0b9ffa5b59eca70bd79d0090e2c29b606ca02"
+    },
+    {
+      "text": "Lina améliore son dessin en ajoutant des couleurs plus vives.",
+      "file": "examples/02a0fffe59b2fe76a73a.m4a",
+      "speaker": "ninon",
+      "durationSeconds": 3.86,
+      "bytes": 33858,
+      "audioSha256": "d20d20f29903d22cf4df4742760943420ad171b77f477faae9ad6e47fbd862b9"
+    },
+    {
+      "text": "Cette élève persévérante reconstruit sa tour chaque fois qu'elle s'écroule.",
+      "file": "examples/09864d2f4394db621c41.m4a",
+      "speaker": "lison",
+      "durationSeconds": 4.11,
+      "bytes": 35909,
+      "audioSha256": "4c9de16583c6239e9c2eae517a99ff8df92817065de1490c7340aa8528f16081"
+    },
+    {
+      "text": "J'ai une douleur dans le dos.",
+      "file": "examples/b3bdf2986bc8bd141cc2.m4a",
+      "speaker": "ninon",
+      "durationSeconds": 1.72,
+      "bytes": 16137,
+      "audioSha256": "add893c0d326a4386d2c4920f5cff2fe0454156352005b3c5a274c8504cf6b67"
+    },
+    {
+      "text": "Assis sur un banc, l'homme se tient le dos à cause d'une forte douleur.",
+      "file": "examples/fdfeda82938f5eb7436c.m4a",
+      "speaker": "ninon",
+      "durationSeconds": 4.38,
+      "bytes": 39754,
+      "audioSha256": "ae5e305c0430d2d146cf33f30cbe203dad2f89928975bc2bf203a13f497e75d1"
+    },
+    {
+      "text": "Le médecin m'a donné une ordonnance.",
+      "file": "examples/84113522534ef933d56a.m4a",
+      "speaker": "lison",
+      "durationSeconds": 2.09,
+      "bytes": 17941,
+      "audioSha256": "e46edf8dea86e9d37c2e251ff9fd2ba6deec9661fdc4e5c72c16872a37bcd3a8"
+    },
+    {
+      "text": "J'ai attrapé un rhume.",
+      "file": "examples/96a58fad429787342c6a.m4a",
+      "speaker": "ninon",
+      "durationSeconds": 1.6,
+      "bytes": 14280,
+      "audioSha256": "faa283c0d60c70a85c344d56439ffd4edb246b4aa467711c29535d96c001cafe"
+    },
+    {
+      "text": "Elle a attrapé un rhume et se mouche dans un mouchoir en papier.",
+      "file": "examples/7f5906c193f8c55b2924.m4a",
+      "speaker": "ninon",
+      "durationSeconds": 3.57,
+      "bytes": 32577,
+      "audioSha256": "e65c85297c1ed6b39a9f655c81309584e8f78d3edfeddefab50132ec139a8b59"
+    },
+    {
+      "text": "Cet hiver, toute la famille a eu la grippe.",
+      "file": "examples/0094b704285e5a0ba58f.m4a",
+      "speaker": "lison",
+      "durationSeconds": 2.52,
+      "bytes": 22917,
+      "audioSha256": "c63112f1761ff65dde04efa8b7f4bc082e101435d53d72274bf3c0962019aa85"
+    },
+    {
+      "text": "Au lit en pyjama, le couple a la grippe et utilise beaucoup de mouchoirs.",
+      "file": "examples/f96285112c714953553a.m4a",
+      "speaker": "lison",
+      "durationSeconds": 5.09,
+      "bytes": 46590,
+      "audioSha256": "dd6d6648158aeba65dc9c0bf7f378badc9ed877da3597476cf9a3dd680f20566"
+    },
+    {
+      "text": "Il s'est blessé en jouant au foot.",
+      "file": "examples/72aab5ac383c858df6c5.m4a",
+      "speaker": "ninon",
+      "durationSeconds": 2.29,
+      "bytes": 22332,
+      "audioSha256": "bb177b68bb330da10517c4ae7e142b14a562d99d3dd1236092fe5d487fc6144e"
+    },
+    {
+      "text": "Ce footballeur s'est blessé et reste à genoux sur la pelouse.",
+      "file": "examples/d1b63f91558109b81181.m4a",
+      "speaker": "ninon",
+      "durationSeconds": 3.45,
+      "bytes": 30483,
+      "audioSha256": "b3e2e72885740a2c056b0b318da22b9ad5fdf119e625f4429102dd8a43745d7a"
+    },
+    {
+      "text": "Elle a mis deux semaines à guérir.",
+      "file": "examples/787684207d4bd846119f.m4a",
+      "speaker": "lison",
+      "durationSeconds": 3.79,
+      "bytes": 32449,
+      "audioSha256": "21bd892c395d942473d036dc58c7032473239d64f3d1ad43bb651a6056bc6d3b"
+    },
+    {
+      "text": "Triste sous les nuages au début, l'homme semble guéri et marche joyeusement au soleil.",
+      "file": "examples/db8a86766dc7d1320831.m4a",
+      "speaker": "lison",
+      "durationSeconds": 5.79,
+      "bytes": 50748,
+      "audioSha256": "606bd03df86fd527f47719b8c46a134ab33fa2a7d09800cae09597839e171d4e"
+    },
+    {
+      "text": "L'enfant a de la fièvre depuis hier.",
+      "file": "examples/29dbb59bd7be37b5c0d2.m4a",
+      "speaker": "ninon",
+      "durationSeconds": 2.83,
+      "bytes": 24290,
+      "audioSha256": "7385cc3c05b031accdf2b8b1bd2d71560a97c967e10bdf42bfb3c733bc518abd"
+    },
+    {
+      "text": "Le thermomètre affiche 36 degrés, donc il n'y a pas de fièvre.",
+      "file": "examples/861b665ecc90b9ea3e92.m4a",
+      "speaker": "ninon",
+      "durationSeconds": 4.92,
+      "bytes": 46019,
+      "audioSha256": "b573221cff0f007a066d2d11df8d6d23c3b8bc4c87825e7496eb1a72fb0e7af3"
+    },
+    {
+      "text": "Sur cette image, on voit les deux poumons roses dans la poitrine.",
+      "file": "examples/91ac505e91b15b0522df.m4a",
+      "speaker": "lison",
+      "durationSeconds": 3.63,
+      "bytes": 32459,
+      "audioSha256": "d2057e77ffccda4fc9a53023abba63dc44e76359ec4533eccfcbaf36c4a0edb2"
+    },
+    {
+      "text": "Le médecin montre le foie : il est juste sous les côtes, à droite.",
+      "file": "examples/99552246c25b00e0f636.m4a",
+      "speaker": "ninon",
+      "durationSeconds": 4.395,
+      "bytes": 39759,
+      "audioSha256": "89c7cdd20227c752e8dc76c599d9b497249d772f99fa7a31b867760e5989f53e"
+    },
+    {
+      "text": "Je me suis fait mal au genou.",
+      "file": "examples/149c9bc13c37dceb89e6.m4a",
+      "speaker": "lison",
+      "durationSeconds": 1.73,
+      "bytes": 14779,
+      "audioSha256": "dd77ec7620eb0eab5803132b1d075cbb93556ab8dac04e5e483d01e4e0455e35"
+    },
+    {
+      "text": "On l'a emmené aux urgences cette nuit.",
+      "file": "examples/f73de3d5f0f6ba41d7db.m4a",
+      "speaker": "ninon",
+      "durationSeconds": 2.14,
+      "bytes": 20288,
+      "audioSha256": "77ce1b611a5b9b621a4474d4cd52e7edce523be8de30edf1b6b18edcf2c1c5f4"
+    },
+    {
+      "text": "Les ambulances sont garées devant l'entrée des urgences de l'hôpital.",
+      "file": "examples/4317e3f95df4146b1100.m4a",
+      "speaker": "ninon",
+      "durationSeconds": 3.64,
+      "bytes": 33555,
+      "audioSha256": "3676f4e56f0e8dfb7dff97f297b141a586ac0d8c049c28c4b3631b4d7860716d"
+    },
+    {
+      "text": "Après ce voyage, nous étions épuisés.",
+      "file": "examples/ca48dab59b9452651650.m4a",
+      "speaker": "ninon",
+      "durationSeconds": 2.59,
+      "bytes": 24495,
+      "audioSha256": "6992eade46b503d4bf942cb67efee62e964e4d3334225f284fc7b93959d6c495"
+    },
+    {
+      "text": "Épuisé, l'homme a posé la tête sur la table, à côté d'une bouteille vide.",
+      "file": "examples/4743a1ce88abce490225.m4a",
+      "speaker": "ninon",
+      "durationSeconds": 4.64,
+      "bytes": 42002,
+      "audioSha256": "b296b77b7931675f34c4f4a949fb0dd6ae4e627c6a1879f00b995baddeda7f63"
+    },
+    {
+      "text": "Avec ses béquilles, le footballeur regarde le match depuis le banc.",
+      "file": "examples/03512debad76562b186d.m4a",
+      "speaker": "ninon",
+      "durationSeconds": 3.34,
+      "bytes": 30644,
+      "audioSha256": "21e7026088b2f56bba19b8cf44cdc84b58fc0f5053dac01fc8243c943d740b04"
+    },
+    {
+      "text": "Le train part du quai numéro trois.",
+      "file": "examples/f3c8f14546bd9c1b9cd3.m4a",
+      "speaker": "ninon",
+      "durationSeconds": 1.69,
+      "bytes": 16568,
+      "audioSha256": "3e615bb074c252dff26e95d8054ed64507e473102ad5ddcd968d4b4a18135e40"
+    },
+    {
+      "text": "Une femme assise sur un banc du quai attend pendant qu'un train arrive en gare.",
+      "file": "examples/4c199729bf0720817a73.m4a",
+      "speaker": "ninon",
+      "durationSeconds": 4.61,
+      "bytes": 42899,
+      "audioSha256": "1fd243a203fb2f24838bf70df710622403bba71e88adcbd62f2821291ace4ce8"
+    },
+    {
+      "text": "Vous n'avez droit qu'à un bagage en cabine.",
+      "file": "examples/5e23a5e97a6be5a41e3b.m4a",
+      "speaker": "ninon",
+      "durationSeconds": 2.83,
+      "bytes": 24681,
+      "audioSha256": "4d1457561449d87cc8462280adc816acffd64a2e5725c0d76f2fad9db2a46e1d"
+    },
+    {
+      "text": "Pour ce voyage, il y a trois bagages : deux valises roses et une valise verte.",
+      "file": "examples/8c006948a4374a4fc43d.m4a",
+      "speaker": "ninon",
+      "durationSeconds": 6.2,
+      "bytes": 55630,
+      "audioSha256": "d7322bbc918dd49c876e44efabd1c50cd6f4751679b65b1da15246d8ba11b282"
+    },
+    {
+      "text": "Il a eu son permis de conduire à dix-huit ans.",
+      "file": "examples/4ddbc0541df98748bc42.m4a",
+      "speaker": "ninon",
+      "durationSeconds": 2.57,
+      "bytes": 23269,
+      "audioSha256": "7898a77c8226aced2e6c4eb94e3ed0772b4a3520b51e158c09ee530f8482e44f"
+    },
+    {
+      "text": "Deux permis de conduire britanniques sont posés sur une feuille imprimée.",
+      "file": "examples/c9176cca0e94389eff18.m4a",
+      "speaker": "ninon",
+      "durationSeconds": 3.63,
+      "bytes": 33137,
+      "audioSha256": "32701fc11156abbbf9313e5c1f0d1dcaacb02304c525a5777abde73c77fc48c7"
+    },
+    {
+      "text": "Nous avons dormi dans une petite auberge.",
+      "file": "examples/c4b7db76ab67c7b3a55e.m4a",
+      "speaker": "ninon",
+      "durationSeconds": 2.45,
+      "bytes": 21470,
+      "audioSha256": "a20988a04f8894703b680b6e001baadfdc153d787ef7387e3e179cb2473ed018"
+    },
+    {
+      "text": "Devant cette vieille auberge aux volets verts, il y a un grand jardin.",
+      "file": "examples/7bf33590219e08c52243.m4a",
+      "speaker": "ninon",
+      "durationSeconds": 4.44,
+      "bytes": 39005,
+      "audioSha256": "f5280813ca4e7f04fa283aee927d6d3f9a34d039e3f6556abe972fef8047f492"
+    },
+    {
+      "text": "Nous avons traversé la frontière suisse.",
+      "file": "examples/b3d6657928a3aa2311b9.m4a",
+      "speaker": "ninon",
+      "durationSeconds": 2.53,
+      "bytes": 22643,
+      "audioSha256": "01b160780afd694057045aea0f8021ee9d4d1a0e93c2f5fb4a9146614c149ec1"
+    },
+    {
+      "text": "Au poste de frontière, la route est bloquée par des cônes et un panneau stop.",
+      "file": "examples/f222d3e61672473aba99.m4a",
+      "speaker": "ninon",
+      "durationSeconds": 4.49,
+      "bytes": 41644,
+      "audioSha256": "441ee4e2a2740f0200ad5918ab7268a917af26de30660fa73855a52a88ed88f7"
+    },
+    {
+      "text": "On va louer une voiture pour les vacances.",
+      "file": "examples/b60c4448f57337e20bea.m4a",
+      "speaker": "ninon",
+      "durationSeconds": 1.94,
+      "bytes": 17285,
+      "audioSha256": "acf56d3ac0c31c04e52a1f38470fb1d52b1ad805307d2c6d321d61a2f03c15f7"
+    },
+    {
+      "text": "Avec une clé, on ouvre la portière grise de la voiture louée.",
+      "file": "examples/276d650e67eb05e3ef8c.m4a",
+      "speaker": "ninon",
+      "durationSeconds": 3.77,
+      "bytes": 33515,
+      "audioSha256": "2842e3c9e128f007967c1877930b64e1d01dc07554cc2f5cb6f0965c7c7c9eda"
+    },
+    {
+      "text": "Ce voyage au Japon, quel dépaysement !",
+      "file": "examples/eec113c9e7fc1fd9584c.m4a",
+      "speaker": "ninon",
+      "durationSeconds": 2.93,
+      "bytes": 25627,
+      "audioSha256": "13676fac5620ef69e4e2ac7c13842cb085537413fb499f5bec6f77585afc1ef7"
+    },
+    {
+      "text": "Cette plage de sable blanc sous un palmier offre un vrai dépaysement.",
+      "file": "examples/193709b849f3cf81446b.m4a",
+      "speaker": "ninon",
+      "durationSeconds": 3.98,
+      "bytes": 36315,
+      "audioSha256": "a06dcd9b6fff034d87b66f17e6ca318ccd933d0007490ce506483f3dbfa7dfa9"
+    },
+    {
+      "text": "Le vent emporte la tente, et les campeurs se réveillent à la belle étoile.",
+      "file": "examples/ffb9a5d01582d057040b.m4a",
+      "speaker": "ninon",
+      "durationSeconds": 4.07,
+      "bytes": 37933,
+      "audioSha256": "ded5b78fa15b8291d93f18459ead20e6e56c1a331dd25c3ba44ecd00687fac22"
+    },
+    {
+      "text": "La voyageuse se renseigne sur les sentiers auprès du guide.",
+      "file": "examples/cbb6aaa7ec0c3883604e.m4a",
+      "speaker": "lison",
+      "durationSeconds": 3.87,
+      "bytes": 35063,
+      "audioSha256": "9a2970dd38acc03261f3e6b7634db152d5a9a17c774146338d8d1f94d74d5b0f"
+    },
+    {
+      "text": "Triez vos déchets avant de les jeter.",
+      "file": "examples/da1e3afdd913539665de.m4a",
+      "speaker": "ninon",
+      "durationSeconds": 2.33,
+      "bytes": 22658,
+      "audioSha256": "bcc2410e031b7d83735c559f30442c2c9fb80a44ae340a5fac1aee83b49de978"
+    },
+    {
+      "text": "Au coucher du soleil, des oiseaux volent au-dessus d'une montagne de déchets.",
+      "file": "examples/3bf610fa79e2dc2d81ac.m4a",
+      "speaker": "ninon",
+      "durationSeconds": 4.57,
+      "bytes": 42448,
+      "audioSha256": "f70f0e01fd4a68dd1c790418345e77203ad696599c2fdcc7bcdedd456d8ecaa9"
+    },
+    {
+      "text": "Le réchauffement climatique inquiète les jeunes.",
+      "file": "examples/56b49f0c4654c0be2690.m4a",
+      "speaker": "lison",
+      "durationSeconds": 2.56,
+      "bytes": 22196,
+      "audioSha256": "59355aa63012c6fbc4221030b5b23a01d2b6b4e78a1fbdf38464792be38747cf"
+    },
+    {
+      "text": "Cette Terre entourée de flammes illustre le réchauffement de la planète.",
+      "file": "examples/a8316e9ffd57c9f657ee.m4a",
+      "speaker": "lison",
+      "durationSeconds": 4.43,
+      "bytes": 40191,
+      "audioSha256": "fe93c7b94e4f30f89b7b76cf85c2eeac7b45788f1d70942640d96b4448f4e38c"
+    },
+    {
+      "text": "Les fortes pluies ont causé des inondations.",
+      "file": "examples/d3a4c6d81228b94c197a.m4a",
+      "speaker": "ninon",
+      "durationSeconds": 2.61,
+      "bytes": 24183,
+      "audioSha256": "98ecf3f3ea6d55313ae95bf00ebabf2a744ca41814de5fd831faca3723e73f20"
+    },
+    {
+      "text": "Pendant l'inondation, seul le panneau pour piétons et vélos dépasse de l'eau boueuse.",
+      "file": "examples/e2954557088fb7592e4a.m4a",
+      "speaker": "ninon",
+      "durationSeconds": 4.86,
+      "bytes": 44093,
+      "audioSha256": "5cf4ce580a3e922e747baf8f028c30b96f3b5b8c0e9d7eb02b8ba0cd333cebd8"
+    },
+    {
+      "text": "Nous nous promenons en forêt le dimanche.",
+      "file": "examples/085db92f2bbc15491b12.m4a",
+      "speaker": "lison",
+      "durationSeconds": 2.06,
+      "bytes": 18089,
+      "audioSha256": "f3f60a8614a45495846896a77a3f402ad5d097aa5f4b110397e3d08daee6977d"
+    },
+    {
+      "text": "Un chemin de terre traverse la forêt, éclairée par les rayons du soleil.",
+      "file": "examples/29a9063df83aac061bf9.m4a",
+      "speaker": "lison",
+      "durationSeconds": 4.27,
+      "bytes": 37460,
+      "audioSha256": "1916a90d5c4cb1573c3bd1ad8efa9c644ec8104fd4de9a2a390cad56f4f2943c"
+    },
+    {
+      "text": "Cette espèce d'oiseau est menacée.",
+      "file": "examples/935f39fdf0d27798cce1.m4a",
+      "speaker": "ninon",
+      "durationSeconds": 1.82,
+      "bytes": 16550,
+      "audioSha256": "da2cfb5e226a7adc886d21821c64ab9c56e753686c6ec524b3fd7db22524980a"
+    },
+    {
+      "text": "L'éléphant d'Afrique est une espèce qui vit en troupeau dans la savane.",
+      "file": "examples/7a3c6d6d0aee71891b1e.m4a",
+      "speaker": "ninon",
+      "durationSeconds": 3.76,
+      "bytes": 34366,
+      "audioSha256": "cd72d316ba808d0d387a8ec8184b23c334aa38c3a10251b4980502d821c5b76e"
+    },
+    {
+      "text": "L'eau est une ressource précieuse.",
+      "file": "examples/8d82a16849cfc54af4f0.m4a",
+      "speaker": "lison",
+      "durationSeconds": 2.15,
+      "bytes": 20313,
+      "audioSha256": "adf985a1f0b1d3b5b1abc22f27beef2c0b9d8e8e4925c5d6f7b2c55e31a93db4"
+    },
+    {
+      "text": "L'eau de ce vieux puits en pierre est une ressource précieuse.",
+      "file": "examples/8b765f8649a005f042bd.m4a",
+      "speaker": "lison",
+      "durationSeconds": 3.6,
+      "bytes": 32817,
+      "audioSha256": "189e5a7d50117969a16ebb99865efe019793e6989125a5d26d64bf60c972aba1"
+    },
+    {
+      "text": "Arrête de gaspiller l'eau !",
+      "file": "examples/af5b52db4b03cc224fd2.m4a",
+      "speaker": "ninon",
+      "durationSeconds": 1.59,
+      "bytes": 13765,
+      "audioSha256": "cf337c8420145859992b80cfd6b36e36077d9b3932b609cf9fa1450b09379132"
+    },
+    {
+      "text": "On peut recycler le verre et le papier.",
+      "file": "examples/9ed4543f393cd42a089c.m4a",
+      "speaker": "lison",
+      "durationSeconds": 1.725,
+      "bytes": 16777,
+      "audioSha256": "41825b47564f656eec570ae858b8040c79ed3cc6a24a697b084e6237d03bcd89"
+    },
+    {
+      "text": "Cette poubelle verte est pleine de bouteilles et d'emballages à recycler.",
+      "file": "examples/6ae247ee0005d2b9e591.m4a",
+      "speaker": "lison",
+      "durationSeconds": 3.83,
+      "bytes": 34935,
+      "audioSha256": "ae3c226d52db1f0f4a72c3c4ca83441e817fdf9cb46fc833c91c651d095821ac"
+    },
+    {
+      "text": "La pollution menace de nombreuses espèces.",
+      "file": "examples/2e96acd801d2f26d657a.m4a",
+      "speaker": "ninon",
+      "durationSeconds": 2.82,
+      "bytes": 26176,
+      "audioSha256": "16c2c23e49da3b5c108ad36b5cdc3edbba7d64df4e6e9170a20c3cd7f9d00c1f"
+    },
+    {
+      "text": "La tempête a fait tomber plusieurs arbres.",
+      "file": "examples/3b4163482a2eb96401ec.m4a",
+      "speaker": "lison",
+      "durationSeconds": 2.39,
+      "bytes": 22579,
+      "audioSha256": "a30ada54a6071574ef6bb7213f5f6e18557adfcaf7d506955067af88fcd3e66b"
+    },
+    {
+      "text": "À marée basse, on peut aller à pied jusqu'à l'île.",
+      "file": "examples/6aecee5708e8208dac80.m4a",
+      "speaker": "ninon",
+      "durationSeconds": 3.41,
+      "bytes": 30224,
+      "audioSha256": "221d7949bec6103dd930c07c5ea57a577dab33cd4bb29f09955bfde2198b2a0a"
+    },
+    {
+      "text": "À marée haute, les vagues recouvrent le pied des poteaux en bois.",
+      "file": "examples/c47b7edb7c2b17459b3f.m4a",
+      "speaker": "ninon",
+      "durationSeconds": 3.66,
+      "bytes": 33712,
+      "audioSha256": "6cd431ff5d8199fe734e5f0db63508363c586ac896b88f8f31a59c979ea1af41"
+    },
+    {
+      "text": "Le ciel est tout gris ce matin.",
+      "file": "examples/137cf998491d1c08b2e0.m4a",
+      "speaker": "ninon",
+      "durationSeconds": 1.85,
+      "bytes": 17614,
+      "audioSha256": "bd5d7715b064d2598b327140bc0d98ebae522976fbd0759a107fdb0970cb6809"
+    },
+    {
+      "text": "Au-dessus du champ et de l'arbre solitaire, le ciel est rempli de nuages orange.",
+      "file": "examples/fbbf25bd16788baefb59.m4a",
+      "speaker": "ninon",
+      "durationSeconds": 5.0,
+      "bytes": 44779,
+      "audioSha256": "25b57bbc3e6af66e3c3c793effd5c65f717b16ab2ac3d75168a50455d8600431"
+    },
+    {
+      "text": "Des touristes en imperméable prennent une photo devant la cascade.",
+      "file": "examples/51d23e3821ab8a23b720.m4a",
+      "speaker": "ninon",
+      "durationSeconds": 3.57,
+      "bytes": 33805,
+      "audioSha256": "89f6c66e9f2c175fe637be85103bbde849aba50de009432e41deadfbb194437d"
+    },
+    {
+      "text": "Cette loi interdit de fumer dans les bars.",
+      "file": "examples/8aa574d48e9b162a3328.m4a",
+      "speaker": "ninon",
+      "durationSeconds": 2.43,
+      "bytes": 23120,
+      "audioSha256": "07ac763b9ec34179feb633f01f0a85a8f69fe9cca7066638b004f86e2b397ece"
+    },
+    {
+      "text": "Ce marteau de juge en bois est le symbole de la loi et de la justice.",
+      "file": "examples/47f50d4e99cabcf1757a.m4a",
+      "speaker": "ninon",
+      "durationSeconds": 5.63,
+      "bytes": 47940,
+      "audioSha256": "ceeb3189b6cd1f0f4fc74635dda535a854663a38db58c85524b88b67003bb90b"
+    },
+    {
+      "text": "Le débat à la télévision a duré deux heures.",
+      "file": "examples/5143114616d1d62bcf94.m4a",
+      "speaker": "ninon",
+      "durationSeconds": 2.96,
+      "bytes": 25861,
+      "audioSha256": "e92d85187360f3ff99ab7753bf64e5003dc3d8826ed0d36491317cf308a812a1"
+    },
+    {
+      "text": "Pendant le débat, un homme et une femme parlent derrière deux pupitres.",
+      "file": "examples/b336193e4800a0b3383f.m4a",
+      "speaker": "ninon",
+      "durationSeconds": 4.67,
+      "bytes": 41880,
+      "audioSha256": "39dd1ac97e56043bd0d2984ea8d5381f7be60d150113956631f562d006bb0eb9"
+    },
+    {
+      "text": "Merci pour votre accueil chaleureux !",
+      "file": "examples/b7e19f8ee09568530bcb.m4a",
+      "speaker": "ninon",
+      "durationSeconds": 2.0,
+      "bytes": 18824,
+      "audioSha256": "3633b5ed1caa448be820a1aea9e1d30c62675e69cc7a21e0d6956afccc258d82"
+    },
+    {
+      "text": "À l'accueil de l'hôtel, une employée répond au téléphone près de son collègue.",
+      "file": "examples/fa05ec64073bf3974b79.m4a",
+      "speaker": "ninon",
+      "durationSeconds": 4.73,
+      "bytes": 42388,
+      "audioSha256": "ff843135dafbfb2e993097c64decb1287d86ec41239a8cc538b66a95a8946fb1"
+    },
+    {
+      "text": "Ces nombreuses mains levées sur un fond coloré symbolisent le bénévolat.",
+      "file": "examples/dfb1054fb7cbc15bdce6.m4a",
+      "speaker": "lison",
+      "durationSeconds": 4.4,
+      "bytes": 38633,
+      "audioSha256": "fb089964c58d0f6eb12cf4d37b0e2f9914b98778c29e0da4748bebbb2a84ddce"
+    },
+    {
+      "text": "Il est interdit de stationner ici.",
+      "file": "examples/ebad98a9d76ed7c94473.m4a",
+      "speaker": "ninon",
+      "durationSeconds": 2.46,
+      "bytes": 21255,
+      "audioSha256": "c3af0dd3ca93c008faa68169a7427955d7c216944f02f0dba4a09478a4a310a8"
+    },
+    {
+      "text": "Ce panneau rouge barré d'une diagonale signifie que quelque chose est interdit.",
+      "file": "examples/6c60b9338c75f5683bbc.m4a",
+      "speaker": "ninon",
+      "durationSeconds": 5.4,
+      "bytes": 48399,
+      "audioSha256": "1c0bf3a7b31e3febf0a22d5c54b2bf193758e5f8c488140e918173f817984396"
+    },
+    {
+      "text": "Le directeur exige une réponse immédiate.",
+      "file": "examples/05d6e4aee495912cd800.m4a",
+      "speaker": "lison",
+      "durationSeconds": 2.61,
+      "bytes": 24685,
+      "audioSha256": "fe90d184cf88e1125afb9612cb9837ca15d37e1dd228c0502b6a10d250f9f68e"
+    },
+    {
+      "text": "D'un doigt pointé, cette main semble exiger quelque chose avec autorité.",
+      "file": "examples/7b6e2bc04a6b471fd6ec.m4a",
+      "speaker": "lison",
+      "durationSeconds": 4.68,
+      "bytes": 42656,
+      "audioSha256": "85f8a514446ccfdd12a3b67d59793a9724d8b48a5b0ab6912557c94b3e82620f"
+    },
+    {
+      "text": "Il faut lutter contre le racisme.",
+      "file": "examples/b8b2a5a2115e1ca78948.m4a",
+      "speaker": "ninon",
+      "durationSeconds": 2.16,
+      "bytes": 19178,
+      "audioSha256": "115648eefdd513b89e3fe137fae80b70d9f547007a54e1a76df48a373b6a5e49"
+    },
+    {
+      "text": "Ils se sont mariés à la mairie.",
+      "file": "examples/b4e82f4a033a27613c09.m4a",
+      "speaker": "lison",
+      "durationSeconds": 1.67,
+      "bytes": 15659,
+      "audioSha256": "f2edb2b989d1f3d77be234b7a66abb20b43be4569aa4ce5e15810e426df4ab74"
+    },
+    {
+      "text": "La nuit, la mairie illuminée se dresse derrière une grande fontaine.",
+      "file": "examples/2a021a445f5b851d58b8.m4a",
+      "speaker": "lison",
+      "durationSeconds": 4.68,
+      "bytes": 41465,
+      "audioSha256": "805c3171c9fbf34b6af287478ee982c7da45e2e254edfbe6a0345656ca359435"
+    },
+    {
+      "text": "D'après ce sondage, la plupart des Français sont d'accord.",
+      "file": "examples/48914cad22932d53ddf9.m4a",
+      "speaker": "ninon",
+      "durationSeconds": 3.88,
+      "bytes": 35440,
+      "audioSha256": "96cea2555000c795c5de148fd93d49613bbd9b3c876e74e89697a62e6986b006"
+    },
+    {
+      "text": "Pour répondre au sondage, il faut cocher la case « oui » ou « non ».",
+      "file": "examples/4bd860d129f0e4d5c69c.m4a",
+      "speaker": "ninon",
+      "durationSeconds": 4.28,
+      "bytes": 39067,
+      "audioSha256": "27cef236f3ad20e8c15c7fb18f721b171296168e08401a67e5a3c98bd2fe7b6e"
+    },
+    {
+      "text": "Les réseaux sociaux ont changé notre société.",
+      "file": "examples/c7b5e13f5ef35ba9e6e9.m4a",
+      "speaker": "lison",
+      "durationSeconds": 2.57,
+      "bytes": 22660,
+      "audioSha256": "0383eb38cfabe8c0975ab80fa06249e916312d6c7ab5cd5ee0ca7b555007baaf"
+    },
+    {
+      "text": "Ces personnages de toutes les couleurs se tiennent la main comme une société unie.",
+      "file": "examples/e921a08ad72d4562234a.m4a",
+      "speaker": "lison",
+      "durationSeconds": 4.66,
+      "bytes": 41556,
+      "audioSha256": "1a2239d6908e6383a61151d9ce40c0806183ede0ef1a1fea93258d4f2b513407"
+    },
+    {
+      "text": "Sur la mairie, le drapeau bleu, blanc, rouge flotte au vent.",
+      "file": "examples/2d582dd77d8dddf05e4d.m4a",
+      "speaker": "ninon",
+      "durationSeconds": 3.62,
+      "bytes": 32265,
+      "audioSha256": "3fca0470aa0a1b501e9ab492f0cc8d856044789ce6325f2b108b1734c5339702"
+    },
+    {
+      "text": "Une vieille dame glisse son bulletin dans l'urne avec un grand sourire.",
+      "file": "examples/7532a6ce15f34f1ce9d0.m4a",
+      "speaker": "lison",
+      "durationSeconds": 4.09,
+      "bytes": 35887,
+      "audioSha256": "3a457734398e8258d0f5475f11803b5f7478467e90d5e5c3c458b6048afcbc2d"
+    },
+    {
+      "text": "Les voisins s'entraident pour monter une grande armoire dans le salon.",
+      "file": "examples/46b6ff2c80bdcab401b8.m4a",
+      "speaker": "ninon",
+      "durationSeconds": 3.28,
+      "bytes": 29103,
+      "audioSha256": "414f0af1d7c1ad4fa6daa97d885e809a85cf9f0cbea25c23d550e27fe456f374"
+    },
+    {
+      "text": "Les enfants passent trop de temps devant les écrans.",
+      "file": "examples/e21734b3756880f6410a.m4a",
+      "speaker": "lison",
+      "durationSeconds": 2.36,
+      "bytes": 22448,
+      "audioSha256": "4d3f0cd8a3fcd87ceae3f02611ba7ffa5261775186afaec0c67c898f299d1784"
+    },
+    {
+      "text": "Sur le bureau blanc, l'écran de l'ordinateur est allumé mais complètement blanc.",
+      "file": "examples/3b11e3dc36079a7cfc51.m4a",
+      "speaker": "lison",
+      "durationSeconds": 4.53,
+      "bytes": 41920,
+      "audioSha256": "540534bd03a93b46b7be83023f4ccb77014acc0a63089a894999a8debe932841"
+    },
+    {
+      "text": "Clique deux fois avec la souris.",
+      "file": "examples/edc66c0dd70e61c09090.m4a",
+      "speaker": "ninon",
+      "durationSeconds": 2.17,
+      "bytes": 20823,
+      "audioSha256": "84086c6b4e99e4f4a8a6a9ca3c22d6938396e623842f631d488b3a8ee3d79345"
+    },
+    {
+      "text": "Une main est posée sur une souris grise et noire.",
+      "file": "examples/87b37bb989b0c877688c.m4a",
+      "speaker": "ninon",
+      "durationSeconds": 3.01,
+      "bytes": 25934,
+      "audioSha256": "debc0c76426235fee1d420c155e24a5f67c0020ece4bd0944b88210df50d8562"
+    },
+    {
+      "text": "Il faut installer ce logiciel sur ton ordinateur.",
+      "file": "examples/2c71c288cd7b6f2db55b.m4a",
+      "speaker": "lison",
+      "durationSeconds": 2.71,
+      "bytes": 24347,
+      "audioSha256": "e2b1e4900da6d60eff86704e29dc419ed922ca56dfab0041d343f6c405b34fed"
+    },
+    {
+      "text": "Sur l'écran de l'ordinateur portable, on voit le code d'un logiciel en développement.",
+      "file": "examples/66ea0bdd6111e9709af1.m4a",
+      "speaker": "lison",
+      "durationSeconds": 4.39,
+      "bytes": 39155,
+      "audioSha256": "dfda08201f02bb20c528f0e0f0cae1bea4f70794e2b28156b8d0fbe56ca6a990"
+    },
+    {
+      "text": "Je t'envoie le fichier par e-mail.",
+      "file": "examples/777c27938215b7d0f806.m4a",
+      "speaker": "ninon",
+      "durationSeconds": 2.07,
+      "bytes": 17465,
+      "audioSha256": "f333de65daf1b585161b135e08cc6c847cc3b639742971828cbc09b6d0e4b2db"
+    },
+    {
+      "text": "Cette icône jaune représente un dossier qui contient un fichier.",
+      "file": "examples/bb5e93f0acd025dfc085.m4a",
+      "speaker": "ninon",
+      "durationSeconds": 3.58,
+      "bytes": 32635,
+      "audioSha256": "87ceaedf500ad35f7872ad2c6263c81189aa450df58eae61055cce6da7f6fa64"
+    },
+    {
+      "text": "Il n'y a pas de réseau dans ce village.",
+      "file": "examples/6caef68e419ddfbe1fa8.m4a",
+      "speaker": "lison",
+      "durationSeconds": 1.91,
+      "bytes": 17641,
+      "audioSha256": "b1e819f23e0888a215258b13678f3eabbf33ab3ef32b7840ca3833186dbbf0d6"
+    },
+    {
+      "text": "Des téléphones et des icônes d'applications forment un grand réseau social.",
+      "file": "examples/05758a7b90da2a2c892c.m4a",
+      "speaker": "lison",
+      "durationSeconds": 3.86,
+      "bytes": 34684,
+      "audioSha256": "738ccaf484f54fceeebdc9c9a341974c52f71137299b02f2961f7bab9c6d7541"
+    },
+    {
+      "text": "Tu peux télécharger l'application gratuitement.",
+      "file": "examples/c87e8ef4711fddab7df2.m4a",
+      "speaker": "ninon",
+      "durationSeconds": 2.59,
+      "bytes": 23976,
+      "audioSha256": "b06b8fa8b071288820d1f84a93190dd67dd5d8522975b4bc3b7120d8cd9ca039"
+    },
+    {
+      "text": "Cette icône bleue avec une flèche sert à télécharger un fichier.",
+      "file": "examples/5853c6a4f8f658b19e5e.m4a",
+      "speaker": "ninon",
+      "durationSeconds": 3.79,
+      "bytes": 34030,
+      "audioSha256": "6f03c80f10289246db8b67f1e5b4a0ba07eb4c24cc368735cbe9235dbbf320f7"
+    },
+    {
+      "text": "N'oublie pas d'enregistrer ton document !",
+      "file": "examples/a5a11512f3efb287c90e.m4a",
+      "speaker": "lison",
+      "durationSeconds": 2.06,
+      "bytes": 19054,
+      "audioSha256": "6375735c312715986c59950b4d9ba64b55b37c9177dbb7c6bdb186a2f4224e4e"
+    },
+    {
+      "text": "Autrefois, on utilisait cette disquette pour enregistrer ses fichiers.",
+      "file": "examples/060ffc3f8594c7701f23.m4a",
+      "speaker": "lison",
+      "durationSeconds": 4.42,
+      "bytes": 38996,
+      "audioSha256": "ebdb450385a2b3a8d4c44683cab1b89792c6479d3bf50d36343a248e1843692f"
+    },
+    {
+      "text": "Il fait de la recherche en biologie.",
+      "file": "examples/7ea795085105b518c306.m4a",
+      "speaker": "ninon",
+      "durationSeconds": 2.32,
+      "bytes": 21779,
+      "audioSha256": "9cb24028b55c290fcd7ca82902762827d387d823b0c052fccffdf428b60d3130"
+    },
+    {
+      "text": "La loupe est souvent le symbole de la recherche.",
+      "file": "examples/f3cc0984cba40df85f16.m4a",
+      "speaker": "ninon",
+      "durationSeconds": 2.9,
+      "bytes": 26080,
+      "audioSha256": "5c9f2134092c13a921839d8fa6d2328a4381df38294e0011cbcf5405efc3c2b9"
+    },
+    {
+      "text": "Mon père lit le journal tous les matins.",
+      "file": "examples/01be1bcdd06266bd8639.m4a",
+      "speaker": "lison",
+      "durationSeconds": 2.52,
+      "bytes": 21996,
+      "audioSha256": "60cb292f1b7d1897f5774e8847f9c7a4fbb908380b04c9989c67a55b41653433"
+    },
+    {
+      "text": "Sur quelle chaîne passe le match ?",
+      "file": "examples/c15e9fcfc13561783ea7.m4a",
+      "speaker": "ninon",
+      "durationSeconds": 1.84,
+      "bytes": 17538,
+      "audioSha256": "e4b0c5fc938f9b540b1cec86733854b5ba5dad9db769ae658e5ea41bd1c782aa"
+    },
+    {
+      "text": "Il change de chaîne avec la télécommande devant la télévision.",
+      "file": "examples/357c27ed27456bd62223.m4a",
+      "speaker": "ninon",
+      "durationSeconds": 3.62,
+      "bytes": 32159,
+      "audioSha256": "6f417167a2375807cb6bb6a74a926c83b98604cbee9d5ed59ed4bade485f6112"
+    },
+    {
+      "text": "Je lis toujours la rubrique sport en premier.",
+      "file": "examples/094d118622ab9ddb5e9c.m4a",
+      "speaker": "lison",
+      "durationSeconds": 2.56,
+      "bytes": 22370,
+      "audioSha256": "1708085b12106e136a7757533583fbb2f272737082b50bdb42dbda1ac65bf9bb"
+    },
+    {
+      "text": "Deux personnes âgées, assises dehors, lisent chacune une rubrique du journal.",
+      "file": "examples/38bc41ad553ce7be231c.m4a",
+      "speaker": "lison",
+      "durationSeconds": 4.73,
+      "bytes": 42276,
+      "audioSha256": "4128f71e690bb2d6b55e32b6b506ea5d9d81e53df00c79e6a679b40b992b7838"
+    },
+    {
+      "text": "Il y a trop de publicité à la télévision.",
+      "file": "examples/6902b209b8d1867ea6c6.m4a",
+      "speaker": "ninon",
+      "durationSeconds": 2.88,
+      "bytes": 26531,
+      "audioSha256": "00ef4cda80938e9b94e814f74ac66240f4ebb173a980c92f95b9555662f266e2"
+    },
+    {
+      "text": "Sur ce panneau noir dans la rue, l'écran blanc attend une nouvelle publicité.",
+      "file": "examples/d7a2fff9e38c27b69465.m4a",
+      "speaker": "ninon",
+      "durationSeconds": 5.29,
+      "bytes": 48188,
+      "audioSha256": "b06b96a2b0d17df1a08ad38295e9d3d4b2fd5053902c06854a678cdf64caf7cc"
+    },
+    {
+      "text": "Avec ses écouteurs, Paul n'entend pas le chien qui aboie.",
+      "file": "examples/3f7ae0d2f48f85438eb3.m4a",
+      "speaker": "ninon",
+      "durationSeconds": 3.67,
+      "bytes": 32732,
+      "audioSha256": "6641ba6091b5a447512c57de3b0745f886b788be4ce88bf8e0d6e68be9acf0e8"
+    },
+    {
+      "text": "Il est parti en colère.",
+      "file": "examples/9e07dcacbf4ae903e75f.m4a",
+      "speaker": "ninon",
+      "durationSeconds": 1.53,
+      "bytes": 14112,
+      "audioSha256": "60683ac5e1beab8a47a1e15bce7380e4df33656c3b59e873e268a44da997968d"
+    },
+    {
+      "text": "La jeune femme est si en colère que de la fumée lui sort des oreilles.",
+      "file": "examples/c7502ba2e7875b032a89.m4a",
+      "speaker": "ninon",
+      "durationSeconds": 3.94,
+      "bytes": 36337,
+      "audioSha256": "b3e89eb8c6e0f074d46a0c2f1e9f122d336dbd10c3d287f84287aa775fc3b2ae"
+    },
+    {
+      "text": "Sa jalousie a détruit leur amitié.",
+      "file": "examples/33eb7c2cc6ac60798a64.m4a",
+      "speaker": "ninon",
+      "durationSeconds": 2.46,
+      "bytes": 22511,
+      "audioSha256": "88ffcec50a8786a86aef18b372fab8d2cfdce09f5b472a1106a689f63861fc9c"
+    },
+    {
+      "text": "Les enfants mouraient d'ennui pendant le discours.",
+      "file": "examples/73c43d24b6b6c59730ca.m4a",
+      "speaker": "ninon",
+      "durationSeconds": 2.98,
+      "bytes": 26279,
+      "audioSha256": "c8d36903eeb61216908895cdb3a428e6ba496e37a12b40f3fe0140892a15943f"
+    },
+    {
+      "text": "Il ne faut jamais perdre espoir.",
+      "file": "examples/ba7009728bfd61c9bd29.m4a",
+      "speaker": "ninon",
+      "durationSeconds": 1.96,
+      "bytes": 17873,
+      "audioSha256": "5f6b820752d1b5ea173da0a1105dd82761019eaec16b7ed0e0cf6620719c2212"
+    },
+    {
+      "text": "Cette jeune pousse qui sort de la terre au soleil est un symbole d'espoir.",
+      "file": "examples/63e7901cbef13969e388.m4a",
+      "speaker": "ninon",
+      "durationSeconds": 4.46,
+      "bytes": 40329,
+      "audioSha256": "7f019875b27782f7b176b283c95b98d4b32b9ddc40bc39de70559ced5434f74d"
+    },
+    {
+      "text": "Il est têtu comme une mule.",
+      "file": "examples/ad9fdf525b051b991203.m4a",
+      "speaker": "ninon",
+      "durationSeconds": 1.98,
+      "bytes": 19141,
+      "audioSha256": "05a6bd86f6bebffffa8716ecfe0e558208e3e69af3d34c786ccf3224f7a5a96c"
+    },
+    {
+      "text": "Il avait l'air gêné quand on lui a posé la question.",
+      "file": "examples/729e3ac16e795253528b.m4a",
+      "speaker": "ninon",
+      "durationSeconds": 2.9,
+      "bytes": 24854,
+      "audioSha256": "938d8bc9c101cf169ecbe841f5af09419bf925486ec1bb6452d1a4ad426cc2df"
+    },
+    {
+      "text": "La jeune fille, très gênée, cache son visage dans ses mains.",
+      "file": "examples/901e51adbf3f8af846c2.m4a",
+      "speaker": "ninon",
+      "durationSeconds": 3.68,
+      "bytes": 32732,
+      "audioSha256": "a5df72530a6b1c303eaf4fde4694696bdcbe07fdf0443b7d60af84ffd2375918"
+    },
+    {
+      "text": "Je regrette de ne pas être venu.",
+      "file": "examples/b5ee35a2adcc604ac7bd.m4a",
+      "speaker": "ninon",
+      "durationSeconds": 1.81,
+      "bytes": 17111,
+      "audioSha256": "c70a4ab4723ab5bc85ee8202296300c724150a9a4492e6e0ad4c3b9731dbbc94"
+    },
+    {
+      "text": "L'homme grimace et pose deux doigts sur sa tempe : il regrette son erreur.",
+      "file": "examples/53b8b5fe67cd34e338b6.m4a",
+      "speaker": "ninon",
+      "durationSeconds": 5.5,
+      "bytes": 48838,
+      "audioSha256": "c776b4211ee0e5f0eee0381075bc156e077ba826d034595908ea633737395363"
+    },
+    {
+      "text": "En épluchant les oignons, le cuisinier pleure à chaudes larmes.",
+      "file": "examples/19be1762748b679f3c74.m4a",
+      "speaker": "ninon",
+      "durationSeconds": 4.07,
+      "bytes": 36068,
+      "audioSha256": "76d6f2f0cded25f3c00d0d3d2f433226458e61aaad5f6f789e0e1f81a1def2ac"
+    },
+    {
+      "text": "Au marché, Hugo hésite entre les pommes et les poires.",
+      "file": "examples/5ca5aa623d3ec73e930c.m4a",
+      "speaker": "ninon",
+      "durationSeconds": 4.26,
+      "bytes": 39480,
+      "audioSha256": "ebe495395da603d6e825db944dc94130c627108f7e46b2ede54ffcd0e0929bc4"
+    },
+    {
+      "text": "Léa est déçue : sa glace vient de tomber par terre.",
+      "file": "examples/eac8faa73749c5ad838f.m4a",
+      "speaker": "ninon",
+      "durationSeconds": 3.65,
+      "bytes": 33825,
+      "audioSha256": "4fbe65f6474acf48a098a1c1870072109a66f2f61bb165f808ce3160eccf6108"
+    },
+    {
+      "text": "Mon frère distrait verse du jus dans son bol de céréales.",
+      "file": "examples/087d3fc4c03fbca4a2a7.m4a",
+      "speaker": "ninon",
+      "durationSeconds": 4.54,
+      "bytes": 40127,
+      "audioSha256": "6fc6d9c4cb9069de4247fbded3f9fb2a18b152155e0b4e2824bb2915cd0504dd"
+    },
+    {
+      "text": "Je n'ai pas envie de sortir ; d'ailleurs, mon chat dort sur moi.",
+      "file": "examples/76374962e86d2488d712.m4a",
+      "speaker": "ninon",
+      "durationSeconds": 4.1,
+      "bytes": 37422,
+      "audioSha256": "3522b2ae2186a89acc49331ed40337e8780ab2c7efef6891ea29b6c9a5dd3646"
+    },
+    {
+      "text": "Avec trois chats, il faut davantage de croquettes.",
+      "file": "examples/eed44c12bf28e989abed.m4a",
+      "speaker": "ninon",
+      "durationSeconds": 3.11,
+      "bytes": 28371,
+      "audioSha256": "aadb03137483108e1f7f6ea9995e9e16f07df90f9b71f84deff5fdd30ebba867"
+    },
+    {
+      "text": "Le chef pose le gâteau et le chien saute aussitôt dessus.",
+      "file": "examples/bf4dc95dc8876de8865f.m4a",
+      "speaker": "ninon",
+      "durationSeconds": 3.74,
+      "bytes": 34521,
+      "audioSha256": "490c830a8f018f633b228a066fc9f9fda6652ffe826877d577978f0dc6f243ca"
+    },
+    {
+      "text": "Grâce à un chien de sauvetage, on a retrouvé le randonneur perdu.",
+      "file": "examples/e1436906c3873e28dc0b.m4a",
+      "speaker": "ninon",
+      "durationSeconds": 3.72,
+      "bytes": 32625,
+      "audioSha256": "a8035754a278538e138764a2a4bb7adf3b9e8a824f3067e154470f922de3655f"
+    },
+    {
+      "text": "Lors de leur mariage, le gâteau est tombé par terre.",
+      "file": "examples/bbc6b70b0749a060b338.m4a",
+      "speaker": "ninon",
+      "durationSeconds": 3.2,
+      "bytes": 29677,
+      "audioSha256": "334b206f7b5924be6b2f7778f4bbb4eacacf8a65a8abb3f5436e51516598299b"
+    },
+    {
+      "text": "Bien qu'il soit tout petit, le chihuahua fait peur au facteur.",
+      "file": "examples/ad6366adfec6a35d9f1c.m4a",
+      "speaker": "ninon",
+      "durationSeconds": 4.45,
+      "bytes": 38396,
+      "audioSha256": "04475137136de7ae48a4df23958d8b594cf9f8829714e2e4c6af574aa72afd17"
+    },
+    {
+      "text": "À cause de la neige, le bus est bloqué au milieu de la route.",
+      "file": "examples/837bf92a9fe2a6593a22.m4a",
+      "speaker": "ninon",
+      "durationSeconds": 3.59,
+      "bytes": 32957,
+      "audioSha256": "e6ce26c5b69ce5ecba6efb471d591a6d98b3f0ecdc6a5a47bb8f29c90ad6ed25"
+    },
+    {
+      "text": "Mets le gâteau au four pendant trente minutes.",
+      "file": "examples/dadbdd5009a149eeb5f6.m4a",
+      "speaker": "ninon",
+      "durationSeconds": 2.56,
+      "bytes": 23787,
+      "audioSha256": "8ec8b0b0b2356564ab6ce2761662ed392890f9d235c7340ebbf6d491de85a7dc"
+    },
+    {
+      "text": "Une femme aux cheveux blancs sort une tarte fumante du four.",
+      "file": "examples/6db46e7fb96116ea2f9d.m4a",
+      "speaker": "ninon",
+      "durationSeconds": 3.99,
+      "bytes": 35144,
+      "audioSha256": "3168186ed34274bfc11ad77ffd30c817d6be36f978e04ddb50ede93e08c24ccc"
+    },
+    {
+      "text": "Le repas de midi est servi à treize heures.",
+      "file": "examples/dd99909e2d2abf963169.m4a",
+      "speaker": "ninon",
+      "durationSeconds": 2.4,
+      "bytes": 21707,
+      "audioSha256": "f860136c305e34a97da0f56dc418aaa536341255d33dfd1929fe12dc8bd34283"
+    },
+    {
+      "text": "La table est prête pour un grand repas avec salades et petits plats.",
+      "file": "examples/1bb69c9b08200f758a3e.m4a",
+      "speaker": "ninon",
+      "durationSeconds": 4.75,
+      "bytes": 43903,
+      "audioSha256": "bb74962e84e538a3526d8b44c4e608929a34cc438cd2f7439324328947bd4086"
+    },
+    {
+      "text": "Le couscous est mon plat préféré.",
+      "file": "examples/62d7e79c727f1f294fd7.m4a",
+      "speaker": "ninon",
+      "durationSeconds": 2.04,
+      "bytes": 19688,
+      "audioSha256": "8c5b60449c6e4cb7e583ff3bef1ff9718024d276592a3bc2597e3fc4c98a256a"
+    },
+    {
+      "text": "Ce plat de couscous est garni de pois chiches, d'oignons et d'olives.",
+      "file": "examples/a4b0a7b74b041530a029.m4a",
+      "speaker": "ninon",
+      "durationSeconds": 4.64,
+      "bytes": 42820,
+      "audioSha256": "b4bac65e4db8a6558dc115d2fcb508d590c39c430b49397440f81b9d70bc5ef0"
+    },
+    {
+      "text": "Mélangez la farine et le sucre.",
+      "file": "examples/483aa4b8c089ebd68b8a.m4a",
+      "speaker": "ninon",
+      "durationSeconds": 2.41,
+      "bytes": 21524,
+      "audioSha256": "be1511acc240934d7422f50836e9ed9ed3f544726ef59d2855df7cf2e8f41f1f"
+    },
+    {
+      "text": "Avec ce fouet, on va mélanger les œufs dans le bol.",
+      "file": "examples/c0059f7bd29b66b6dddf.m4a",
+      "speaker": "ninon",
+      "durationSeconds": 2.87,
+      "bytes": 25867,
+      "audioSha256": "0b28131b33715ab1ce1742fa45cef53c3a1bc853652734977e2ac46371790e41"
+    },
+    {
+      "text": "J'achète toujours des légumes frais au marché.",
+      "file": "examples/388f01432ab52729c80f.m4a",
+      "speaker": "ninon",
+      "durationSeconds": 2.38,
+      "bytes": 21060,
+      "audioSha256": "423e790dacaddef48d93a1af3f345557260226ccd7395e44a07fd28cd91fb1a5"
+    },
+    {
+      "text": "Des brocolis et des carottes frais cuisent dans une poêle.",
+      "file": "examples/158605dcfcbe57dbd1de.m4a",
+      "speaker": "ninon",
+      "durationSeconds": 2.75,
+      "bytes": 25616,
+      "audioSha256": "3892229f6741449b95498f67fd2bf48f8204478fbec11fac641c21e1534f6b74"
+    },
+    {
+      "text": "Le loup a tellement faim qu'il voit des sandwichs à la place des moutons.",
+      "file": "examples/5127a18bbe5c36ef4942.m4a",
+      "speaker": "ninon",
+      "durationSeconds": 3.36,
+      "bytes": 29593,
+      "audioSha256": "e3cf4504be704b5355d31cafbce6aff621c40602e613cd35f3767875679b19e4"
+    },
+    {
+      "text": "Le petit chef porte un tablier couvert de farine.",
+      "file": "examples/6672180ba57c334a0141.m4a",
+      "speaker": "ninon",
+      "durationSeconds": 3.85,
+      "bytes": 35723,
+      "audioSha256": "f0c0faa42b41df587b1099d9310b14c1d1566285a180e91db643dedcb8959ea4"
+    },
+    {
+      "text": "Il y a une longue queue à la caisse.",
+      "file": "examples/71e3fff1ad5a9f37f431.m4a",
+      "speaker": "ninon",
+      "durationSeconds": 2.29,
+      "bytes": 20799,
+      "audioSha256": "2f10b60f0edd245b46bface883c9913e6b80238661657fef308750189a16828b"
+    },
+    {
+      "text": "À la caisse du supermarché, la caissière scanne les articles d'une cliente souriante.",
+      "file": "examples/145416958a5c1f25f9fa.m4a",
+      "speaker": "ninon",
+      "durationSeconds": 4.99,
+      "bytes": 45053,
+      "audioSha256": "b36ed722d365d228aaf689154f4b458ab2114a4bf246afd4a2ba4fb87ecfd30b"
+    },
+    {
+      "text": "Elle met les fruits dans son panier.",
+      "file": "examples/27e51ffa41f03384eb43.m4a",
+      "speaker": "ninon",
+      "durationSeconds": 1.74,
+      "bytes": 15444,
+      "audioSha256": "2f64943c735c3d2d9e6690ae13ed42692fc4012edfffa2364e86ea53ac69e165"
+    },
+    {
+      "text": "Ce panier en osier posé sur l'herbe contient des pommes et des bananes.",
+      "file": "examples/046b9bf591dc3677b900.m4a",
+      "speaker": "ninon",
+      "durationSeconds": 4.67,
+      "bytes": 42741,
+      "audioSha256": "9a05c5bfe71a88a613b777a5a8cece8889d4daa184bf7a76710756ce7c45ffae"
+    },
+    {
+      "text": "Le prix de l'essence a encore augmenté.",
+      "file": "examples/ce34edcc6a095cfd5e2d.m4a",
+      "speaker": "ninon",
+      "durationSeconds": 2.04,
+      "bytes": 18419,
+      "audioSha256": "f43b5449e5af3193527c55adc9bb5c95b3532878da5e1cfc91d12baf2ce2de19"
+    },
+    {
+      "text": "Sur cette étiquette jaune, on n'a pas encore écrit le prix.",
+      "file": "examples/c3fc130539d580ee658c.m4a",
+      "speaker": "ninon",
+      "durationSeconds": 3.79,
+      "bytes": 33582,
+      "audioSha256": "78ee820b065ce8c4d7f4b7e3ebb12a4b87fcc928048ab406005b12ce56a898d1"
+    },
+    {
+      "text": "Le magasin est plein de clients le samedi.",
+      "file": "examples/dbfc09cb4bd8cc58e017.m4a",
+      "speaker": "ninon",
+      "durationSeconds": 3.04,
+      "bytes": 28095,
+      "audioSha256": "c36c3d88511a883546d0f24775e77e643940b5ba505774cf52473e0311c24a70"
+    },
+    {
+      "text": "Ce client barbu marche avec des sacs de shopping colorés dans les mains.",
+      "file": "examples/8755c004dab67b2b4b8c.m4a",
+      "speaker": "ninon",
+      "durationSeconds": 4.11,
+      "bytes": 37305,
+      "audioSha256": "e035fb2bc9b5efa8a3717a7a251985ae83e0a3613a1e5e1ea665a28b2fc7a540"
+    },
+    {
+      "text": "J'ai commandé un livre sur Internet.",
+      "file": "examples/2f68aef44e4fe2b44548.m4a",
+      "speaker": "ninon",
+      "durationSeconds": 2.32,
+      "bytes": 20682,
+      "audioSha256": "91d6caca078fde5a93a2f26935fd1a5ed729fb5e52461f6ba5665b71470bef52"
+    },
+    {
+      "text": "Ce petit chariot rempli de sacs, posé sur un ordinateur, rappelle qu'on peut commander en ligne.",
+      "file": "examples/4babf7205a8c1809fa89.m4a",
+      "speaker": "ninon",
+      "durationSeconds": 5.85,
+      "bytes": 52077,
+      "audioSha256": "c87e31e20bf7db8e1a4ada84db13f62dedd34d60b43a92be69e5115cb58a1070"
+    },
+    {
+      "text": "J'attends un colis de ma sœur.",
+      "file": "examples/47f5a83e9ddbbb3ba20d.m4a",
+      "speaker": "ninon",
+      "durationSeconds": 1.57,
+      "bytes": 14532,
+      "audioSha256": "cc078c0662308d2eb0ccddfd38195910e646cc7a80cf9945a2e8d09e605c21c7"
+    },
+    {
+      "text": "Un homme soulève un colis en carton posé sur une pile de cartons.",
+      "file": "examples/7a603068c1a547e84f28.m4a",
+      "speaker": "ninon",
+      "durationSeconds": 3.55,
+      "bytes": 31805,
+      "audioSha256": "32c1b5a7f2b219438f8be37acca0fcbda189143d10d4a6d54a2f6aa0d2a47d4a"
+    },
+    {
+      "text": "Pendant les soldes, les clients se précipitent dans le magasin dès l'ouverture.",
+      "file": "examples/f698c9bf7ca5f1e028d8.m4a",
+      "speaker": "ninon",
+      "durationSeconds": 4.09,
+      "bytes": 38229,
+      "audioSha256": "8266b9d6119d540a7c1a27fb884470715fbcc05eba839227b8761826307df331"
+    },
+    {
+      "text": "Cette réparation coûteuse m'oblige à vider ma tirelire presque entièrement.",
+      "file": "examples/c65cffef346238b66892.m4a",
+      "speaker": "ninon",
+      "durationSeconds": 4.81,
+      "bytes": 42349,
+      "audioSha256": "2ee0ef605e30cae415313ed6ddfe7f032cbb7f1bedd3886b260533cc30c13f38"
+    },
+    {
+      "text": "Le stade était plein pour la finale.",
+      "file": "examples/4a1946b166a8f7a27617.m4a",
+      "speaker": "ninon",
+      "durationSeconds": 2.01,
+      "bytes": 18518,
+      "audioSha256": "08eb6ee29c0dc409c451929573fb96cf3baee1b68b28e61a4abc81fccda2bde7"
+    },
+    {
+      "text": "Nous avons fait une randonnée en montagne.",
+      "file": "examples/d41fe18f31802871c063.m4a",
+      "speaker": "ninon",
+      "durationSeconds": 2.15,
+      "bytes": 18648,
+      "audioSha256": "8719675c0b68617e8cf4df762fc9bca1089c4d0f7e8e5f129cb06658780fee3b"
+    },
+    {
+      "text": "Un homme avec un sac à dos fait une randonnée en montagne.",
+      "file": "examples/dcacd65e4802c7821378.m4a",
+      "speaker": "ninon",
+      "durationSeconds": 4.35,
+      "bytes": 38261,
+      "audioSha256": "ee6a9813b5e5bfe5085186d6b3142fabd909c18b7a533b7c3e3405cfa89cd4ee"
+    },
+    {
+      "text": "C'est le meilleur joueur de l'équipe.",
+      "file": "examples/fa18fc96bc6300b1d7e0.m4a",
+      "speaker": "ninon",
+      "durationSeconds": 2.21,
+      "bytes": 19599,
+      "audioSha256": "b66fe396da1d2a56ea0fea933c9f3a097a0ac3e5aaa356d4498548483b4ae6fa"
+    },
+    {
+      "text": "Le jeune joueur en maillot vert frappe le ballon sur le terrain.",
+      "file": "examples/da29b15ed6b84537f642.m4a",
+      "speaker": "ninon",
+      "durationSeconds": 3.87,
+      "bytes": 34128,
+      "audioSha256": "dcb2c8980389daea030187f0a9cd0272e185d0d462cbd2b33d2f5043d34a3440"
+    },
+    {
+      "text": "Elle s'entraîne tous les jours pour le marathon.",
+      "file": "examples/260794e45685306e69e4.m4a",
+      "speaker": "ninon",
+      "durationSeconds": 2.5,
+      "bytes": 22979,
+      "audioSha256": "2d8f073a824519ba73f0b2f61b08c3cad40f62326bd394eb316bbe799240f5c9"
+    },
+    {
+      "text": "Sur le terrain de foot, la jeune femme s'entraîne en faisant des étirements.",
+      "file": "examples/7db376d65343ffc3d295.m4a",
+      "speaker": "ninon",
+      "durationSeconds": 4.16,
+      "bytes": 38136,
+      "audioSha256": "91930b02323b8044fe5f0066aa594f5bd8e9194e92306879ecb7c5016f9847c0"
+    },
+    {
+      "text": "Je cours dans le parc tous les matins.",
+      "file": "examples/00cbdb58a7311f2727ac.m4a",
+      "speaker": "ninon",
+      "durationSeconds": 2.09,
+      "bytes": 20480,
+      "audioSha256": "aae2a97b7d756fcda8e4278f87365019002ced3a0a031e07da7806aca22adcde"
+    },
+    {
+      "text": "Une personne en baskets court sur un chemin dans le parc.",
+      "file": "examples/7ec0afa7efe7e4605142.m4a",
+      "speaker": "ninon",
+      "durationSeconds": 3.08,
+      "bytes": 28669,
+      "audioSha256": "e422e03d005d4977f215a29a0def89334410bacc4d836d19adc478c33917bde5"
+    },
+    {
+      "text": "On a joué à un jeu de société hier soir.",
+      "file": "examples/7b2ba1ded671d26a0c95.m4a",
+      "speaker": "ninon",
+      "durationSeconds": 2.06,
+      "bytes": 19199,
+      "audioSha256": "29f18def8fa02e5b0920af58f5117536f57dfb0194c5c64b588ad5147c89deaa"
+    },
+    {
+      "text": "Les pièces noires et blanches sont prêtes pour un jeu d'échecs.",
+      "file": "examples/d4710c571529c1576d77.m4a",
+      "speaker": "ninon",
+      "durationSeconds": 2.74,
+      "bytes": 24024,
+      "audioSha256": "bb1cb7c3f4c80663629ad61043bdfb2696dc3d72835bd16814954b63cc768d67"
+    },
+    {
+      "text": "Le grand-père et son petit-fils font voler un cerf-volant en forme de dragon.",
+      "file": "examples/5527b5331a99ee9dc74f.m4a",
+      "speaker": "ninon",
+      "durationSeconds": 3.52,
+      "bytes": 31799,
+      "audioSha256": "fbf63d25354f8aa6d7f52fec72d5bba7b93190780dcea238309296827847749a"
+    },
+    {
+      "text": "Ce tableau de Monet vaut des millions.",
+      "file": "examples/5f3ca2077f779dfc41c0.m4a",
+      "speaker": "ninon",
+      "durationSeconds": 2.6,
+      "bytes": 23247,
+      "audioSha256": "3791fc39a64622b6e6cc71462424adb2eac993ab719977a5dae88c44caa789d8"
+    },
+    {
+      "text": "Ce tableau dans un cadre doré montre une statue d'ange à côté d'une horloge.",
+      "file": "examples/daa3def7fe471572e36c.m4a",
+      "speaker": "ninon",
+      "durationSeconds": 5.13,
+      "bytes": 48171,
+      "audioSha256": "c7e560e4303436017d351d7f03b0659d01cc410a85db2dc09c92dd331a7f4711"
+    },
+    {
+      "text": "L'exposition de photos se termine dimanche.",
+      "file": "examples/12e63e9651084691194f.m4a",
+      "speaker": "ninon",
+      "durationSeconds": 2.57,
+      "bytes": 23496,
+      "audioSha256": "43cdca69e7356fa152f870300e678caec3ddfec6d16c0e436cd78eee93968352"
+    },
+    {
+      "text": "Dans le musée, une femme assise sur un banc admire les grands tableaux de l'exposition.",
+      "file": "examples/85a5bc0590a11d5d22c3.m4a",
+      "speaker": "ninon",
+      "durationSeconds": 5.22,
+      "bytes": 46067,
+      "audioSha256": "83a743310e055918ae429a3797492e17781d05b3510e9faa2b74ebda671188f1"
+    },
+    {
+      "text": "Les acteurs entrent en scène.",
+      "file": "examples/66686f5ca48bd2ccc3e8.m4a",
+      "speaker": "ninon",
+      "durationSeconds": 1.75,
+      "bytes": 16577,
+      "audioSha256": "12cba6b333b7529a735b9aeb5676047ddc24deea065fa9696a9ca081e5c8a7f0"
+    },
+    {
+      "text": "Des projecteurs éclairent la scène d'un théâtre plongé dans le noir.",
+      "file": "examples/d244674634206f3c8773.m4a",
+      "speaker": "ninon",
+      "durationSeconds": 3.58,
+      "bytes": 34371,
+      "audioSha256": "b1c8cf536270c69a2af3f1f88ebe2a95ca4d8f7b96488605dfecae2329bd73a4"
+    },
+    {
+      "text": "L'orchestre joue une symphonie de Mozart.",
+      "file": "examples/ea2bc9bb98812fb56b18.m4a",
+      "speaker": "ninon",
+      "durationSeconds": 3.16,
+      "bytes": 28576,
+      "audioSha256": "0c56f5e083d6fa590ccacb6e7725f157d5d833496441c7ceddb4709b0e4d317f"
+    },
+    {
+      "text": "Les violonistes de l'orchestre jouent assis devant leurs pupitres.",
+      "file": "examples/3241f486ad1dcda54e1f.m4a",
+      "speaker": "ninon",
+      "durationSeconds": 4.68,
+      "bytes": 43170,
+      "audioSha256": "c3bceda1cc7b6f8b22da1bc6e14ca183aa87856f27189e6ef4570a9a73489c3e"
+    },
+    {
+      "text": "Je regarde les films avec les sous-titres.",
+      "file": "examples/fea1b8d0ccb67d3a33c5.m4a",
+      "speaker": "ninon",
+      "durationSeconds": 2.64,
+      "bytes": 25252,
+      "audioSha256": "df2803322d818943a91d6ea71eb6828f7235034793cdc82fcbe78e9438f60612"
+    },
+    {
+      "text": "Sur l'écran du cinéma, une danseuse apparaît, mais on ne voit aucun sous-titre.",
+      "file": "examples/1c0f542b17554b8b93f2.m4a",
+      "speaker": "ninon",
+      "durationSeconds": 5.84,
+      "bytes": 53048,
+      "audioSha256": "21f1c4ba9b35b4c54f039519ad6133261a1e52621168d493b96cad23d04ed219"
+    },
+    {
+      "text": "Le public a applaudi pendant cinq minutes.",
+      "file": "examples/abaebf15d5586da28e9d.m4a",
+      "speaker": "ninon",
+      "durationSeconds": 2.99,
+      "bytes": 28039,
+      "audioSha256": "6cc5f0727fe6020cc441ea654d68cd3e51b1cc6e0a0d69ef7606dd971a71e28c"
+    },
+    {
+      "text": "Le Penseur est une sculpture de Rodin.",
+      "file": "examples/8e43309e2d742e3dddcd.m4a",
+      "speaker": "ninon",
+      "durationSeconds": 2.51,
+      "bytes": 24135,
+      "audioSha256": "cb07301e82aaf744f9434b5dec93704edf335beb37b97264df9bd9d377eb6ae1"
+    },
+    {
+      "text": "Cette vieille sculpture en pierre représente un ange aux grandes ailes.",
+      "file": "examples/18621cd9f315f0cc8033.m4a",
+      "speaker": "ninon",
+      "durationSeconds": 3.93,
+      "bytes": 36514,
+      "audioSha256": "19bf65e53786c7980071ee88bb2134cb6566395423f665dc31e6b6fdaf5cc92b"
+    },
+    {
+      "text": "Le peintre tient son pinceau entre les dents pour se gratter la tête.",
+      "file": "examples/5d7346ef3eff51b328a9.m4a",
+      "speaker": "ninon",
+      "durationSeconds": 3.54,
+      "bytes": 32586,
+      "audioSha256": "291f6e0d57db1d1202b86d4367543d596988763ca6268e7ddd0816933f236de0"
+    },
+    {
+      "text": "C'est un couple très uni.",
+      "file": "examples/6518e7101b02d4f81544.m4a",
+      "speaker": "ninon",
+      "durationSeconds": 1.6,
+      "bytes": 14975,
+      "audioSha256": "ec3cb168d5829ebb3f2e98aef4155fa37d2fc130e16ed4ab6a909ea781f900a3"
+    },
+    {
+      "text": "Ce couple se tient par la main devant un mur de briques blanches.",
+      "file": "examples/32c0c3a435bbd9c49ef7.m4a",
+      "speaker": "ninon",
+      "durationSeconds": 3.54,
+      "bytes": 33449,
+      "audioSha256": "0ec48e743ae4e8b8b9aad582ee31dd6394fc0974e6e2797b6bf1aae401a07f59"
+    },
+    {
+      "text": "Paul et Louis sont des jumeaux.",
+      "file": "examples/6eef110a1d3dc8b9e14e.m4a",
+      "speaker": "ninon",
+      "durationSeconds": 1.58,
+      "bytes": 13903,
+      "audioSha256": "806c7b7a4a603738528a4c3f730cc441d80ba9d353b3e21f4109d6b719d262cb"
+    },
+    {
+      "text": "Chaque jumeau porte un bonnet blanc avec des oreilles de lapin et tient une peluche.",
+      "file": "examples/134cee1ce5394a61e585.m4a",
+      "speaker": "ninon",
+      "durationSeconds": 4.58,
+      "bytes": 43019,
+      "audioSha256": "56adc2b1cf2c4cb3fb4b4e9b83b2973fdc795da9fbea9ee7b523710a084bad91"
+    },
+    {
+      "text": "Ils ont eu une dispute à cause de l'argent.",
+      "file": "examples/6523118247e198056067.m4a",
+      "speaker": "ninon",
+      "durationSeconds": 1.81,
+      "bytes": 15901,
+      "audioSha256": "c0cd6215b758e40de6447109572353ee9298c9123647e90beac6b48e05b78796"
+    },
+    {
+      "text": "Pendant la dispute, le jeune homme pointe le doigt vers la jeune femme.",
+      "file": "examples/972f7c7b9e4776a23215.m4a",
+      "speaker": "ninon",
+      "durationSeconds": 3.91,
+      "bytes": 36282,
+      "audioSha256": "7390f67f3f9d30e5a24b20802e634f30c91021e68eab1986eecc474bdc87a515"
+    },
+    {
+      "text": "J'ai de bons souvenirs de ce voyage.",
+      "file": "examples/0a6f07b9fa6182d336df.m4a",
+      "speaker": "ninon",
+      "durationSeconds": 2.08,
+      "bytes": 20047,
+      "audioSha256": "697e2aec5b0a8e183dffdf46a93b5fb102e9cd8e9a4cdd7463a5d3b340da4371"
+    },
+    {
+      "text": "Il regarde de vieilles photos en noir et blanc pleines de souvenirs.",
+      "file": "examples/423f01594096b9056a4f.m4a",
+      "speaker": "ninon",
+      "durationSeconds": 3.77,
+      "bytes": 33946,
+      "audioSha256": "a56e692afa1c1cf3b4ba3c54394bbd86c042d2c9700ccd4b05370422031157d5"
+    },
+    {
+      "text": "Elle a élevé trois enfants seule.",
+      "file": "examples/efdf42d6af42d81eb9ca.m4a",
+      "speaker": "ninon",
+      "durationSeconds": 1.94,
+      "bytes": 17935,
+      "audioSha256": "89073eee18cfce9d53056bc9679700a2be5ee6b8c91cb17de405848e07286363"
+    },
+    {
+      "text": "Cette mère élève ses trois filles, qui la serrent dans leurs bras sur l'herbe.",
+      "file": "examples/d97e9b6d3f4ebe9c5114.m4a",
+      "speaker": "ninon",
+      "durationSeconds": 3.88,
+      "bytes": 33809,
+      "audioSha256": "ad492395d001a9b7b47d2c1bca135780216c4a11d141a578c44aea5dc59b1a84"
+    },
+    {
+      "text": "Il m'a fait un geste amical.",
+      "file": "examples/0bbc4dfb2694e558dbe9.m4a",
+      "speaker": "ninon",
+      "durationSeconds": 1.46,
+      "bytes": 12953,
+      "audioSha256": "db8682b4171272aaf1de942f7795a1de7d3a3d92fa352843586692bce3d9c369"
+    },
+    {
+      "text": "Elle fait un signe amical de la main et dit bonjour en souriant.",
+      "file": "examples/45116def2602caf1f758.m4a",
+      "speaker": "ninon",
+      "durationSeconds": 3.66,
+      "bytes": 33458,
+      "audioSha256": "9f8e53420378b620a9b3b315b74b2d8f6148f8f57dc0e46ee543b252b159472a"
+    },
+    {
+      "text": "Ma grand-mère a six petits-enfants.",
+      "file": "examples/a766a58e530d77fe0197.m4a",
+      "speaker": "ninon",
+      "durationSeconds": 2.17,
+      "bytes": 20431,
+      "audioSha256": "d96afc5399c83b7b675ed82a186588f3045b56b8baf4839c3f120da064568639"
+    },
+    {
+      "text": "La grand-mère pose pour une photo entre ses deux petits-enfants.",
+      "file": "examples/34e8ce925e7512f90881.m4a",
+      "speaker": "ninon",
+      "durationSeconds": 3.62,
+      "bytes": 34021,
+      "audioSha256": "38f1f2eb87176d8d7355b14e2855ca39cfe597188e9523d3ea10e57853133bde"
+    },
+    {
+      "text": "La mère gronde le chien qui a mangé ses chaussures.",
+      "file": "examples/30f333d056caaf6d896b.m4a",
+      "speaker": "ninon",
+      "durationSeconds": 2.77,
+      "bytes": 24824,
+      "audioSha256": "f8531fea3b9c6bb84399c752374e3236d6eeba19beb4f438070638f10e988488"
+    },
+    {
+      "text": "Sur le banc, Zoé se confie à son amie attentive.",
+      "file": "examples/511962603962c9a07f56.m4a",
+      "speaker": "ninon",
+      "durationSeconds": 3.7,
+      "bytes": 33298,
+      "audioSha256": "5f7bfdaba6e1b8ecf1717cef80da0cb1958a253e6209956f86f7c5ddb6f4eaa3"
+    },
+    {
+      "text": "Mon voisin généreux partage toutes ses fraises avec les enfants.",
+      "file": "examples/6ce7e4347813b3b5b303.m4a",
+      "speaker": "ninon",
+      "durationSeconds": 3.05,
+      "bytes": 28061,
+      "audioSha256": "e0ddf40e14e07ef8b2974d670776af6bbda64f3888730f66dc37186d6e8d79b2"
+    },
+    {
+      "text": "On traverse la Seine sur ce pont.",
+      "file": "examples/80eabc00c17a9c20493a.m4a",
+      "speaker": "ninon",
+      "durationSeconds": 2.28,
+      "bytes": 19864,
+      "audioSha256": "134ef002063d93b15b5b01a1791b50b4e5edf42eee174b44a580ae628e96e750"
+    },
+    {
+      "text": "Le soir, les lumières du pont se reflètent dans l'eau du fleuve.",
+      "file": "examples/a08a1b7bd9d900165ca0.m4a",
+      "speaker": "ninon",
+      "durationSeconds": 3.86,
+      "bytes": 33909,
+      "audioSha256": "72e048516346677491e53c272821bb257edb53279df7febee27372b5dfe60721"
+    },
+    {
+      "text": "New York est célèbre pour ses gratte-ciel.",
+      "file": "examples/879092fad5824be613cd.m4a",
+      "speaker": "ninon",
+      "durationSeconds": 2.53,
+      "bytes": 23476,
+      "audioSha256": "918d0e6f0e7522521c903fe235456a1f3dadb76a85c0adb3fffcab699fcf2387"
+    },
+    {
+      "text": "Il est tombé dans l'escalier.",
+      "file": "examples/d0e9a4ee6e2925d01118.m4a",
+      "speaker": "ninon",
+      "durationSeconds": 1.84,
+      "bytes": 17466,
+      "audioSha256": "a53a14576e6bfa4214f43a12c84cccd3e4ea6c38ed91bcbb29c60fdcd686cffe"
+    },
+    {
+      "text": "Ce grand escalier en spirale descend jusqu'au rez-de-chaussée.",
+      "file": "examples/83aa121e2ffe229283e4.m4a",
+      "speaker": "ninon",
+      "durationSeconds": 3.54,
+      "bytes": 31353,
+      "audioSha256": "ed79f12f8a91d18daa8c59894c36bd370292edca037d6ab61c7433bb8c15e347"
+    },
+    {
+      "text": "Cette ville compte cent mille habitants.",
+      "file": "examples/a7410e2f131356800c11.m4a",
+      "speaker": "ninon",
+      "durationSeconds": 2.31,
+      "bytes": 21160,
+      "audioSha256": "88ffe40aea921660587da5af0e808c64eb9abf31e3a91993f491221a36f65de8"
+    },
+    {
+      "text": "Des habitants se promènent dans une rue ensoleillée, à côté d'un petit chien blanc.",
+      "file": "examples/958333522aa04962825c.m4a",
+      "speaker": "ninon",
+      "durationSeconds": 4.9,
+      "bytes": 43342,
+      "audioSha256": "13b48bc4df76b89ace8ec6cbdeace7d1de91abdc6c39675b09a42110b97c94be"
+    },
+    {
+      "text": "Les rues de cette ville sont très propres.",
+      "file": "examples/d8a1d1d7339b066fafdc.m4a",
+      "speaker": "ninon",
+      "durationSeconds": 2.59,
+      "bytes": 23040,
+      "audioSha256": "70051f4c4c3edc26894b1bbab0364a7d1e9655671e95d485d70558e8a42355bf"
+    },
+    {
+      "text": "Il balaie les feuilles pour que le sol soit propre.",
+      "file": "examples/6965db6a013089143af5.m4a",
+      "speaker": "ninon",
+      "durationSeconds": 2.95,
+      "bytes": 27648,
+      "audioSha256": "c48962db6525a43a30e165c11d0039e76caedba3b9a7fc89741c3a5cdd5cc4b8"
+    },
+    {
+      "text": "Regarde bien avant de traverser la rue.",
+      "file": "examples/e7967552b8fec0b87138.m4a",
+      "speaker": "ninon",
+      "durationSeconds": 2.53,
+      "bytes": 23116,
+      "audioSha256": "c195cbd464ab23a9943de12c108ab68ddc7b544620ec10e14e55dfb8dfda7f8e"
+    },
+    {
+      "text": "Une foule de piétons traverse la rue sur le passage clouté.",
+      "file": "examples/a74a66f87ace14438bb9.m4a",
+      "speaker": "ninon",
+      "durationSeconds": 3.47,
+      "bytes": 31042,
+      "audioSha256": "0703420cf116a2df489691d6af1ae8e815f32a9b39afe43875863ded5ffda57f"
+    },
+    {
+      "text": "Le soir, les lampadaires s'allument un par un le long de la rue.",
+      "file": "examples/e2c18ba5889862647992.m4a",
+      "speaker": "ninon",
+      "durationSeconds": 4.06,
+      "bytes": 33767,
+      "audioSha256": "32e60bd62aa82aa02484eabd3c11c279e8d3f4b7c7ebcd8782d906c35fd6a8fe"
+    },
+    {
+      "text": "Elle a porté plainte pour vol.",
+      "file": "examples/dd1926887e2867a0720b.m4a",
+      "speaker": "ninon",
+      "durationSeconds": 1.55,
+      "bytes": 15148,
+      "audioSha256": "f74f0316278769398aaaa79423b2bd31d807d3102cda4c9f996b55ebb880cb2f"
+    },
+    {
+      "text": "Avec sa lampe de poche et son gros sac, le voleur prépare un vol.",
+      "file": "examples/ca2c593f03ae9e0d1ead.m4a",
+      "speaker": "ninon",
+      "durationSeconds": 5.07,
+      "bytes": 46214,
+      "audioSha256": "8a721676b662806219ed4ee8bc722b1ab6d0c267ad6ad0e4b9c0cd950106217b"
+    },
+    {
+      "text": "La police a ouvert une enquête.",
+      "file": "examples/5eecf26640e187210f2a.m4a",
+      "speaker": "ninon",
+      "durationSeconds": 2.17,
+      "bytes": 20590,
+      "audioSha256": "e1be436a8bf7461ca6cfb8c9d3afef2df7fa3ead7eecebaec40f14515c777bab"
+    },
+    {
+      "text": "Avec sa grosse loupe, le détective en vert mène son enquête.",
+      "file": "examples/4a988db3dd8ddaf28c20.m4a",
+      "speaker": "ninon",
+      "durationSeconds": 4.5,
+      "bytes": 40789,
+      "audioSha256": "c6a3288a159456a9d7d3db97c3cbc2df29d3f6354648e0398ad0ee872cf62cf1"
+    },
+    {
+      "text": "Le juge a rendu sa décision.",
+      "file": "examples/204c43da95c1a17aefe8.m4a",
+      "speaker": "ninon",
+      "durationSeconds": 2.1,
+      "bytes": 19473,
+      "audioSha256": "a3ce8d559447271102293b7181778fbee761fa94169acd8c7c575c242b10a690"
+    },
+    {
+      "text": "Dans la salle d'audience, un jeune homme en costume s'adresse au juge.",
+      "file": "examples/b42485feb7c44d3a6ccf.m4a",
+      "speaker": "ninon",
+      "durationSeconds": 4.6,
+      "bytes": 40179,
+      "audioSha256": "45ab6096004bb564b8f2260fc0ed91b9cf3f79ad471724afba8bfd2cf0f86b74"
+    },
+    {
+      "text": "Il a passé deux ans en prison.",
+      "file": "examples/f744b944e938b9c2860e.m4a",
+      "speaker": "ninon",
+      "durationSeconds": 2.03,
+      "bytes": 18562,
+      "audioSha256": "7e5a29c61091d3999794b475e81850660a645a0e96a7f7423d677ee9fc6b810b"
+    },
+    {
+      "text": "Dans ce long couloir de la vieille prison, les portes des cellules sont fermées.",
+      "file": "examples/a8277b5a534b5928cc26.m4a",
+      "speaker": "ninon",
+      "durationSeconds": 5.23,
+      "bytes": 46042,
+      "audioSha256": "f49b279ddf0b365e3f6909d3307aafb15d01a22f0236b4bd31bb142a4bcb30f5"
+    },
+    {
+      "text": "On m'a volé mon portefeuille.",
+      "file": "examples/efa44635a81324a17669.m4a",
+      "speaker": "ninon",
+      "durationSeconds": 2.06,
+      "bytes": 17985,
+      "audioSha256": "6d4a390c557f0d7e750c8df88c5152ca8989bcb305f3638c8364950775c22c0e"
+    },
+    {
+      "text": "Ce portefeuille dépasse de la poche arrière : il serait facile de le voler.",
+      "file": "examples/e0d5a5f9b797ec2431fa.m4a",
+      "speaker": "ninon",
+      "durationSeconds": 4.71,
+      "bytes": 42212,
+      "audioSha256": "c806baa8fb931d9d008ca75d15a513068d6f644999480c3a83cd2e08a61d6c5d"
+    },
+    {
+      "text": "L'incendie a détruit trois maisons.",
+      "file": "examples/100b58248d92f08ba2b3.m4a",
+      "speaker": "ninon",
+      "durationSeconds": 2.18,
+      "bytes": 19588,
+      "audioSha256": "9cdae72ae991275c8f56d85bb3048c9b9c06d5be5d25d3a39e3bd8458a92c303"
+    },
+    {
+      "text": "Un violent incendie détruit la maison en pleine nuit.",
+      "file": "examples/e3c67d65f6b87cd6f4b4.m4a",
+      "speaker": "ninon",
+      "durationSeconds": 3.46,
+      "bytes": 32028,
+      "audioSha256": "78806c9f7720fb2a38457394a347432c56cc4bf797829cb007206351b89a5845"
+    },
+    {
+      "text": "Attention, danger de mort !",
+      "file": "examples/9cc047cc35b66254db49.m4a",
+      "speaker": "ninon",
+      "durationSeconds": 1.88,
+      "bytes": 17606,
+      "audioSha256": "7974519bc3810c05142737917215cbe7881a5f19314af203e2c64e0ad981f913"
+    },
+    {
+      "text": "Ce panneau triangulaire avec un point d'exclamation signale un danger.",
+      "file": "examples/ad742fbe3476c93bde3b.m4a",
+      "speaker": "ninon",
+      "durationSeconds": 4.05,
+      "bytes": 36018,
+      "audioSha256": "9f123069898746a30fcff5b6943cd0ae6aea1fb08ced825d7fa9375d009bef82"
+    },
+    {
+      "text": "Le cambrioleur entre par la fenêtre, mais le chien l'attend.",
+      "file": "examples/9769382e93827e34115d.m4a",
+      "speaker": "ninon",
+      "durationSeconds": 4.11,
+      "bytes": 38988,
+      "audioSha256": "648659d78a3a589a0efb12f8baa3dfb094ea8221b3c3512eecb1ef9629b6563d"
+    },
+    {
+      "text": "Les élèves font une expérience de chimie.",
+      "file": "examples/1bb747b6401766d756c9.m4a",
+      "speaker": "ninon",
+      "durationSeconds": 2.79,
+      "bytes": 23890,
+      "audioSha256": "3e6ecd05ae5aa1b5381a5d50613fafa3cf93b7ece064904d9cf8347c9bce9468"
+    },
+    {
+      "text": "Au laboratoire, quelqu'un en gants bleus verse un liquide rouge dans un tube pour une expérience.",
+      "file": "examples/ac9dd0c951984df073bb.m4a",
+      "speaker": "ninon",
+      "durationSeconds": 6.26,
+      "bytes": 56925,
+      "audioSha256": "88298dde82f71c2f178076896114bbe13dacdf5865d99197ffbcb7e6d98ef284"
+    },
+    {
+      "text": "La découverte d'un œuf de dinosaure a stupéfié les chercheurs.",
+      "file": "examples/0aed765b77c128e0c4fc.m4a",
+      "speaker": "ninon",
+      "durationSeconds": 4.61,
+      "bytes": 40039,
+      "audioSha256": "954631cee32dec5a667a4319007c1b5378abf2c471b6f5e40bf2d2dfc264a801"
+    },
+    {
+      "text": "Cette machine fabrique des bouteilles.",
+      "file": "examples/6bdbea834a96f4f3f16a.m4a",
+      "speaker": "ninon",
+      "durationSeconds": 2.1,
+      "bytes": 19303,
+      "audioSha256": "9374e0799319e0316cf597018f2226a6d14b62e1648a35353a1d6f760f82cbb3"
+    },
+    {
+      "text": "Cette grosse machine industrielle est faite de tuyaux gris et de vannes bleues.",
+      "file": "examples/2887e495131807bf846d.m4a",
+      "speaker": "ninon",
+      "durationSeconds": 4.54,
+      "bytes": 40969,
+      "audioSha256": "297dd94f605989facbc902b649eb336c57bcdc8c094e4d94e7b80d25590996c6"
+    },
+    {
+      "text": "Il y a une coupure d'électricité.",
+      "file": "examples/cfc8c9a5473d76fdf1eb.m4a",
+      "speaker": "ninon",
+      "durationSeconds": 1.71,
+      "bytes": 17108,
+      "audioSha256": "6bf65de2738b88699dabb4eaba24a2934c17d448308a80c5452a15d3f4167464"
+    },
+    {
+      "text": "Ces grands pylônes transportent l'électricité à travers la campagne.",
+      "file": "examples/72fe64a3a1125493e75f.m4a",
+      "speaker": "ninon",
+      "durationSeconds": 4.17,
+      "bytes": 39299,
+      "audioSha256": "d8c0e2a6d2afec2ebeb5f37bdd32c147b4d815d56b4fde53b912353978229f02"
+    },
+    {
+      "text": "On voit beaucoup d'étoiles à la campagne.",
+      "file": "examples/d76d1ebf079d4968f676.m4a",
+      "speaker": "ninon",
+      "durationSeconds": 1.92,
+      "bytes": 17754,
+      "audioSha256": "d26fcb7627ca1cf7d6af61719ee063fe71e4b1f504cd1201f8dc8266d7a6efad"
+    },
+    {
+      "text": "Des milliers d'étoiles brillent dans le ciel au-dessus d'une montagne.",
+      "file": "examples/843ff5ef74bc1b86c9bd.m4a",
+      "speaker": "ninon",
+      "durationSeconds": 3.625,
+      "bytes": 31694,
+      "audioSha256": "328c5ed7411a194c03e4025aea2a8159553304c25563a4c9a4ffdb595782a9b3"
+    },
+    {
+      "text": "Il a calculé le prix total.",
+      "file": "examples/e0db663fe93407cd84db.m4a",
+      "speaker": "ninon",
+      "durationSeconds": 1.63,
+      "bytes": 15286,
+      "audioSha256": "34e6c5f2d6424afcedb0ae5c3bc60519777a401db8ffe65d3b303c658c8c2832"
+    },
+    {
+      "text": "Une calculatrice et un stylo sont posés sur des feuilles pleines de chiffres à calculer.",
+      "file": "examples/4bfbf7cf41d82b138f6a.m4a",
+      "speaker": "ninon",
+      "durationSeconds": 5.06,
+      "bytes": 45181,
+      "audioSha256": "d56d09ad516588c7d46a3521f31f54cccedf2d418356cb69f4293ed7a5bd6138"
+    },
+    {
+      "text": "On observe les cellules au microscope.",
+      "file": "examples/376c83abcb1edb6e0680.m4a",
+      "speaker": "ninon",
+      "durationSeconds": 2.31,
+      "bytes": 20757,
+      "audioSha256": "af5d22b6884541e74e19fe60f37d3be11467defef29dbbb268ea3e20dad4d460"
+    },
+    {
+      "text": "L'objectif du microscope est placé juste au-dessus d'une lame éclairée.",
+      "file": "examples/5d640fbf5c1390749689.m4a",
+      "speaker": "ninon",
+      "durationSeconds": 4.03,
+      "bytes": 36997,
+      "audioSha256": "7d18c888c614a3c9dcc93a393b3cd1f4cfaec0494f0a6926d1ad0ec8a4340ff5"
+    },
+    {
+      "text": "Le détective observe une empreinte avec sa loupe.",
+      "file": "examples/aa06c9612934dda63ac3.m4a",
+      "speaker": "ninon",
+      "durationSeconds": 2.63,
+      "bytes": 24945,
+      "audioSha256": "4fd5641ed82827bab288bd50669f8b5e2b41487d4ac5774b516c58ed0b346990"
+    },
+    {
+      "text": "Mets de la crème, ta peau est sèche.",
+      "file": "examples/7e27ce91cdc2d04b6b95.m4a",
+      "speaker": "ninon",
+      "durationSeconds": 2.61,
+      "bytes": 22804,
+      "audioSha256": "68899acf9c37b392a417a4a713d5011dcc7913460f5c8ac032ad76338b73aab8"
+    },
+    {
+      "text": "La jeune femme a mis une crème blanche sur la peau de son visage.",
+      "file": "examples/c4d5c4138fbf6a6e6456.m4a",
+      "speaker": "ninon",
+      "durationSeconds": 3.06,
+      "bytes": 27788,
+      "audioSha256": "5f7a084cf802142eb262f2d070d1391f7243ea4af0333e8ae387871ba859f768"
+    },
+    {
+      "text": "Mon père porte la barbe.",
+      "file": "examples/804bb0e4cf0dd77b76c4.m4a",
+      "speaker": "ninon",
+      "durationSeconds": 1.69,
+      "bytes": 15903,
+      "audioSha256": "95ebb9e8c5c21684dbf3824f6dd4b8b560d03c0d5b75b53ca6e228962f98014f"
+    },
+    {
+      "text": "Ce jeune homme aux yeux bleus porte une épaisse barbe brune.",
+      "file": "examples/48fea753c7183f964417.m4a",
+      "speaker": "ninon",
+      "durationSeconds": 2.89,
+      "bytes": 25971,
+      "audioSha256": "7de5d301dd2fd16e44eacf5fa1a48c6d010243e511ceaa75304079f535354dcb"
+    },
+    {
+      "text": "Elle m'a tricoté une écharpe en laine.",
+      "file": "examples/aeec4c988ce73238fd81.m4a",
+      "speaker": "ninon",
+      "durationSeconds": 1.8,
+      "bytes": 16340,
+      "audioSha256": "d7062262c82c0bd335e6f758b2d27ccea18f0f36ca74b4c4a3cc5a002b04abb5"
+    },
+    {
+      "text": "La petite fille porte une grosse écharpe grise autour de la tête.",
+      "file": "examples/34c8fbaf830719554eb5.m4a",
+      "speaker": "ninon",
+      "durationSeconds": 2.96,
+      "bytes": 27914,
+      "audioSha256": "e553f87a3c4bc0a62541e567fb12a1731b845db8e0bc8f3d016f455c3c1bca15"
+    },
+    {
+      "text": "Ce pantalon est trop grand, il me faut une ceinture.",
+      "file": "examples/b039935155a2f039be54.m4a",
+      "speaker": "ninon",
+      "durationSeconds": 3.6,
+      "bytes": 33713,
+      "audioSha256": "e826c48e0f72184a72e4fca8f914615327383d6d6c0a0a9a3d84853a5e17d697"
+    },
+    {
+      "text": "Cette ceinture en cuir noir a une boucle argentée.",
+      "file": "examples/1c88112e24fc17cce535.m4a",
+      "speaker": "ninon",
+      "durationSeconds": 3.4,
+      "bytes": 31466,
+      "audioSha256": "f7189fca4f704fac40577998034ca34465599fae4e8ee9ecd46b74eb7895aa10"
+    },
+    {
+      "text": "Paris est la capitale de la mode.",
+      "file": "examples/5ff295926750eea15920.m4a",
+      "speaker": "ninon",
+      "durationSeconds": 2.33,
+      "bytes": 21393,
+      "audioSha256": "9d0fd9b5103ab86889a649b1bff003f0f2415b76f71cf6cd745463a7132e97b0"
+    },
+    {
+      "text": "Les mannequins marchent sur le podium pendant un défilé de mode.",
+      "file": "examples/6c4078bded6632f4a963.m4a",
+      "speaker": "ninon",
+      "durationSeconds": 3.28,
+      "bytes": 30272,
+      "audioSha256": "7d69c167b4de6a488104b17f68e624404c5ee8c8b06b83326f1b8498679bc8a7"
+    },
+    {
+      "text": "Seul le chat mince passe entre les barreaux ; le gros reste coincé.",
+      "file": "examples/07b8dae8f8c4f13b1102.m4a",
+      "speaker": "ninon",
+      "durationSeconds": 3.82,
+      "bytes": 35049,
+      "audioSha256": "855aeae511f7828dab276c9d57f1656a3e1f098fe2c04e59d53df63c1cfec108"
+    },
+    {
+      "text": "Mon grand-père a beaucoup de rides.",
+      "file": "examples/6c789bead12b09650e1a.m4a",
+      "speaker": "ninon",
+      "durationSeconds": 1.77,
+      "bytes": 17272,
+      "audioSha256": "6341efdfb116c5b139012d22e41c476ca51c68bae89a3730784f050f734dc4ce"
+    },
+    {
+      "text": "Cette vieille femme au foulard vert a le visage couvert de rides.",
+      "file": "examples/d8f61f03958529965be9.m4a",
+      "speaker": "ninon",
+      "durationSeconds": 4.58,
+      "bytes": 39282,
+      "audioSha256": "9f6e5b020a8358ede202e02c36e812d09f71a6fcd59400d0ff42f94615b1f8d8"
+    },
+    {
+      "text": "Grand-père se souvient de son premier vélo comme si c'était hier.",
+      "file": "examples/d5ae75a0628800f5fa70.m4a",
+      "speaker": "ninon",
+      "durationSeconds": 3.98,
+      "bytes": 35008,
+      "audioSha256": "638258d2bda725f294fd57c2fea1a39e44aeecf61e0908d43a928f841975523e"
+    },
+    {
+      "text": "J'attends le bus depuis vingt minutes.",
+      "file": "examples/ee5738a2f012f4d2a572.m4a",
+      "speaker": "ninon",
+      "durationSeconds": 1.86,
+      "bytes": 18031,
+      "audioSha256": "4b2e281b9a09fd33dc367ddd17edccd6618c3ca14d0e8c772aedc324113d02a4"
+    },
+    {
+      "text": "À l'arrêt de bus, la jeune femme attend en regardant son téléphone.",
+      "file": "examples/6e7bbe495f4f7e8a18cf.m4a",
+      "speaker": "ninon",
+      "durationSeconds": 4.07,
+      "bytes": 37940,
+      "audioSha256": "f26f4ac7127807efbdab1a01fbe9256ddfb8f3e2a453ac34ef73ca4a4a1b996e"
+    },
+    {
+      "text": "Laisse-moi réfléchir avant de répondre.",
+      "file": "examples/5d8e7cf753b89d26fcde.m4a",
+      "speaker": "ninon",
+      "durationSeconds": 2.0,
+      "bytes": 18399,
+      "audioSha256": "b7c77e0a7f5e453f892a54d6fb2ff7bba63151b39ace5e3d111bcf0ec17daf0b"
+    },
+    {
+      "text": "Le jeune homme à lunettes réfléchit, la main sous le menton.",
+      "file": "examples/dc6e3f87a36f1da1b2ae.m4a",
+      "speaker": "ninon",
+      "durationSeconds": 3.09,
+      "bytes": 27380,
+      "audioSha256": "34675412905fd31ec763d646d684f5f11129165744d7fbb7439ba541b80c3866"
+    },
+    {
+      "text": "Profitez bien du soleil !",
+      "file": "examples/7a6cdb49c88207b75186.m4a",
+      "speaker": "ninon",
+      "durationSeconds": 1.47,
+      "bytes": 13674,
+      "audioSha256": "377337182dd98a4ad39714115d68c4e88be57bdf540b6bb40441b16ce1351043"
+    },
+    {
+      "text": "Deux jeunes femmes courent dans les vagues pour profiter de la mer.",
+      "file": "examples/e84a81ce274d0554981e.m4a",
+      "speaker": "ninon",
+      "durationSeconds": 2.97,
+      "bytes": 26030,
+      "audioSha256": "138c11cb9b5565fe74a9a44fafdf648fcc836688e7845133ddb8a4778ae4ab63"
+    },
+    {
+      "text": "Ils ont atteint le sommet à midi.",
+      "file": "examples/c3b3f3cdc2e2254f2883.m4a",
+      "speaker": "ninon",
+      "durationSeconds": 1.84,
+      "bytes": 17101,
+      "audioSha256": "9e1c95afb097ac83c3e9d8fa8855e60fc1071d9fc19bed10c5d1344e92274dc8"
+    },
+    {
+      "text": "Avec son piolet, l'alpiniste grimpe pour atteindre le sommet de la montagne.",
+      "file": "examples/0728128ba5f024cc5501.m4a",
+      "speaker": "ninon",
+      "durationSeconds": 5.32,
+      "bytes": 48557,
+      "audioSha256": "e5d673cc48cf0697fae85638c3be5195b2c7c43f5c90ee90b4795ff149be20aa"
+    },
+    {
+      "text": "Cette valise est très lourde.",
+      "file": "examples/a93a98efd7149510e5a9.m4a",
+      "speaker": "ninon",
+      "durationSeconds": 1.87,
+      "bytes": 17320,
+      "audioSha256": "a9666b47c0b848b43b1c3b1d7603373a1bb585da7ce309398e661b8eb6265205"
+    },
+    {
+      "text": "Elle sourit en tenant une lourde valise posée sur les pavés.",
+      "file": "examples/6f1e4f8cf76001f1e60c.m4a",
+      "speaker": "ninon",
+      "durationSeconds": 3.97,
+      "bytes": 35566,
+      "audioSha256": "e11e475d8a9de3e24f17600b8ffb714f87a2e4d496e88c09c6997635c5dec3fe"
+    },
+    {
+      "text": "Le TGV est un train très rapide.",
+      "file": "examples/3b13bf5c4fa64c9eb7f4.m4a",
+      "speaker": "ninon",
+      "durationSeconds": 2.26,
+      "bytes": 20839,
+      "audioSha256": "2e1d5e0833c69efdc21ed41008ebeb386c9f703c17cc212c4faa7b3daa5dbdae"
+    },
+    {
+      "text": "Ce train blanc très rapide traverse un pont au-dessus de la rivière.",
+      "file": "examples/559a19f55a5e2b18a0d7.m4a",
+      "speaker": "ninon",
+      "durationSeconds": 4.67,
+      "bytes": 41282,
+      "audioSha256": "9c661300b4f31b185e3238f69681cc98032126676bc41cebe4d8d846a8f2ed69"
+    },
+    {
+      "text": "Le serveur glisse sur une peau de banane avec son plateau.",
+      "file": "examples/b6b80105f5cbff231ccf.m4a",
+      "speaker": "ninon",
+      "durationSeconds": 3.45,
+      "bytes": 31354,
+      "audioSha256": "a8ea624910edea45c652b24fbf859052394ca3c51657030915507e3e5bf41154"
+    },
+    {
+      "text": "Zoé se précipite vers la porte pour accueillir sa grand-mère.",
+      "file": "examples/071d97b17f037817167f.m4a",
+      "speaker": "ninon",
+      "durationSeconds": 3.85,
+      "bytes": 34225,
+      "audioSha256": "6ce189323108bbc9ea17fd08d759d3dd3e21e74f3cedee2bc4771642a7f97194"
+    },
+    {
+      "text": "Nous soulevons le canapé pour retrouver le ballon du chien.",
+      "file": "examples/48be8d12514ce6f19ae7.m4a",
+      "speaker": "ninon",
+      "durationSeconds": 3.63,
+      "bytes": 31979,
+      "audioSha256": "9b70e90547d3bc2a3be80606cf835b65c9d81a8dad4c6541ceda137d8e236a38"
+    },
+    {
+      "text": "Ce serveur maladroit laisse tomber les oranges de son plateau.",
+      "file": "examples/c2360799cb9ea240cb72.m4a",
+      "speaker": "ninon",
+      "durationSeconds": 3.8,
+      "bytes": 34197,
+      "audioSha256": "645b236678cd373b99168c970c3883178c886973907fd156357d1a92c73ffdb1"
+    },
+    {
+      "text": "Cette passoire est inutile pour transporter de l'eau jusqu'au jardin.",
+      "file": "examples/de1a7bc6d98952c745f6.m4a",
+      "speaker": "ninon",
+      "durationSeconds": 4.18,
+      "bytes": 40413,
+      "audioSha256": "266146a7d4cb35917bfc747bb19fe50b0533e4f2d0655cf758c9ba459350c3a0"
+    },
+    {
+      "text": "Elle porte un sac bleu.",
+      "file": "examples/7a8f4a6cc61f1b39e7e3.m4a",
+      "speaker": "ninon",
+      "durationSeconds": 1.64,
+      "bytes": 15162,
+      "audioSha256": "6e3b9465fe54f23d856069d9b371e3d1a27ff8fd3763f30d7ec55f430e4f9b3f"
+    },
+    {
+      "text": "Elles portent un grand sac.",
+      "file": "examples/bac0a75b150c85f79280.m4a",
+      "speaker": "ninon",
+      "durationSeconds": 1.775,
+      "bytes": 16914,
+      "audioSha256": "8f5e5edfd7a03c71b0ed90d8d2b7834b9b6684b6ff205a254b68615f9dd10123"
+    },
+    {
+      "text": "Ce cadeau est pour toi.",
+      "file": "examples/9429cac048c3f5fa552c.m4a",
+      "speaker": "ninon",
+      "durationSeconds": 1.29,
+      "bytes": 11964,
+      "audioSha256": "457a81e0e79f8ef862baaa49d4ac8aa10b2a1a5ee3478c6d799d675ae9522ff8"
+    },
+    {
+      "text": "Des pommes, Pia en prend deux.",
+      "file": "examples/7784ef0f899ae177e71d.m4a",
+      "speaker": "ninon",
+      "durationSeconds": 2.27,
+      "bytes": 22791,
+      "audioSha256": "d8b4d237d5b5649ddbcb6e6c5700c600716060099449d6184c546971b67c4956"
+    },
+    {
+      "text": "Lison ne voit personne dehors.",
+      "file": "examples/f056c9cd74e9c53d1467.m4a",
+      "speaker": "ninon",
+      "durationSeconds": 2.2,
+      "bytes": 20336,
+      "audioSha256": "1be68498d659e5f0d0b080249a0ccb0ba548b77155b7883f9b9fb7bc3180de62"
+    },
+    {
+      "text": "Pia met tout dans sa boîte.",
+      "file": "examples/c0d991a81c9aa007199e.m4a",
+      "speaker": "ninon",
+      "durationSeconds": 1.8,
+      "bytes": 17815,
+      "audioSha256": "0e97733e13a47db838b87565c3cb65b6eae27562a76e628e00ce404c46ac7984"
+    },
+    {
+      "text": "Je prends celui-ci, près de moi.",
+      "file": "examples/269aa864d9c94c41ec44.m4a",
+      "speaker": "ninon",
+      "durationSeconds": 1.77,
+      "bytes": 14994,
+      "audioSha256": "91ca8435993931bb132c7ddba62b2a62fc3e1a719a5a761c79bce5f8927bc0b1"
+    },
+    {
+      "text": "Voici Lison que pousse Pia.",
+      "file": "examples/0a039a155e21e37284e8.m4a",
+      "speaker": "ninon",
+      "durationSeconds": 2.72,
+      "bytes": 23792,
+      "audioSha256": "4a470b11171a1b185d5e7532ac0880f0901fd0887d29954d33b15bb0bb9c2cf6"
+    },
+    {
+      "text": "Voici Pia dont le sac est bleu.",
+      "file": "examples/0610bf02c2b2f64a3992.m4a",
+      "speaker": "ninon",
+      "durationSeconds": 2.77,
+      "bytes": 25335,
+      "audioSha256": "a1d1004f55ec1372102296827c1f671171bbcaa8233a30680712d6d89c79cccf"
+    },
+    {
+      "text": "Ce sac bleu est le tien.",
+      "file": "examples/a02754689c90ddab0ff6.m4a",
+      "speaker": "ninon",
+      "durationSeconds": 1.68,
+      "bytes": 15504,
+      "audioSha256": "f9dd1ea069dffe9963eceeee4f9399279044e99e17fd7773fe3e80213f4224d8"
+    },
+    {
+      "text": "Ce grand sac est le vôtre.",
+      "file": "examples/7ed30e753951aec9c38b.m4a",
+      "speaker": "ninon",
+      "durationSeconds": 1.98,
+      "bytes": 18097,
+      "audioSha256": "a43ecb72111295a7927f91b5cad3d2fe5e4a6d06c4910df17632d20315353cf2"
+    },
+    {
+      "text": "Lison sort de la maison.",
+      "file": "examples/16f76a1ab27d0a944ef8.m4a",
+      "speaker": "ninon",
+      "durationSeconds": 2.08,
+      "bytes": 18819,
+      "audioSha256": "ee813161282f749883a002eea1ee100595dd35d6e3bdf027b8f388095205d922"
+    },
+    {
+      "text": "Pia marche sans parapluie.",
+      "file": "examples/7b9f508fc2e608e9deec.m4a",
+      "speaker": "ninon",
+      "durationSeconds": 2.04,
+      "bytes": 19079,
+      "audioSha256": "f5447155e2e553ca3a40583af2c7b4a00eeb3c50bcb94a926b95900bf9e10f0a"
+    },
+    {
+      "text": "Pia dort chez Ninon.",
+      "file": "examples/766fa9bc8010d9f3cfc0.m4a",
+      "speaker": "ninon",
+      "durationSeconds": 1.53,
+      "bytes": 13791,
+      "audioSha256": "d1494a6d30292f2a3a2037673751f192b5a9229bff9df6634aab9b8ca18165d0"
+    },
+    {
+      "text": "Le chat dort sur la table.",
+      "file": "examples/3aa405d98c24f9f12456.m4a",
+      "speaker": "ninon",
+      "durationSeconds": 1.96,
+      "bytes": 17466,
+      "audioSha256": "2a856af14fcfa98140f596a0a9b06f62daf5b65f99a1c39b7696526ccc594aef"
+    },
+    {
+      "text": "Lison se cache derrière le canapé.",
+      "file": "examples/9feba1f84e73736303b9.m4a",
+      "speaker": "ninon",
+      "durationSeconds": 2.33,
+      "bytes": 20672,
+      "audioSha256": "f53dc0af16de53d9387363e9b29fda32ab959592e2efcc67297fa3052e918d64"
+    },
+    {
+      "text": "Pia s'assoit en face de Ninon.",
+      "file": "examples/b44d78701d099008b8a1.m4a",
+      "speaker": "ninon",
+      "durationSeconds": 1.84,
+      "bytes": 17092,
+      "audioSha256": "2bd559f8d286a7cf43dd5b86b96bd8ec2bcf008e74ba6dd48f7efa9c4e597b16"
+    },
+    {
+      "text": "Lison pose le vélo contre le mur.",
+      "file": "examples/8817df84c5a750c7d86c.m4a",
+      "speaker": "ninon",
+      "durationSeconds": 2.41,
+      "bytes": 20744,
+      "audioSha256": "979634501ae4aa590f1fb95f5be3c78c0131c3b5d76292fc26268160a7ba6a52"
+    },
+    {
+      "text": "Ninon est à droite de la porte.",
+      "file": "examples/983b1c1483d81833a497.m4a",
+      "speaker": "ninon",
+      "durationSeconds": 2.17,
+      "bytes": 20379,
+      "audioSha256": "0bb1fedde4f1318c4ba5fa0df08f14db25c42bac3ee8282947ad568b1a8b43e6"
+    },
+    {
+      "text": "Pia marche vers la maison.",
+      "file": "examples/e812b37625cdf87d4816.m4a",
+      "speaker": "ninon",
+      "durationSeconds": 1.69,
+      "bytes": 16755,
+      "audioSha256": "e064172c5706222924d60def690faff945867b97fb6647c7ed29e8233e304d82"
+    },
+    {
+      "text": "Ninon marche le long de la rivière.",
+      "file": "examples/93c33cfb3d7b9bef9c7c.m4a",
+      "speaker": "ninon",
+      "durationSeconds": 2.45,
+      "bytes": 23762,
+      "audioSha256": "95aa01e1bb52e9816e94d5d7d27f73d67fd2814d3aadafe0cca9571ed0b2a03e"
+    },
+    {
+      "text": "Pia se lave les mains après le repas.",
+      "file": "examples/478724ec1d6f0ee5ff75.m4a",
+      "speaker": "ninon",
+      "durationSeconds": 2.39,
+      "bytes": 21689,
+      "audioSha256": "03fbee6a1af0ae6b5f87148dcc92fb0242351de456339195bd96e7a5d7697807"
+    },
+    {
+      "text": "Pia prend du pain et du lait.",
+      "file": "examples/06d97929e14ed12911ff.m4a",
+      "speaker": "ninon",
+      "durationSeconds": 2.02,
+      "bytes": 18100,
+      "audioSha256": "879296e813dc9170f0236ff483f76e04fdd726632e5442b9459246e709cb5e34"
+    },
+    {
+      "text": "Pia ne boit pas de thé ni de café.",
+      "file": "examples/50a6699d55f06cb114af.m4a",
+      "speaker": "ninon",
+      "durationSeconds": 2.81,
+      "bytes": 26894,
+      "audioSha256": "f56a7d26e93c8b80bd2aceb7dd72b4b4f5d2a44d6c694c30c8dcf28d7a589d77"
+    },
+    {
+      "text": "Pia reste chez elle s'il pleut.",
+      "file": "examples/98badfe0075d0c836063.m4a",
+      "speaker": "ninon",
+      "durationSeconds": 1.79,
+      "bytes": 15989,
+      "audioSha256": "f9d9fd54e75f647ce740b85e9eb2fa86d0376fff82a0fc6f37e652a7bf769e86"
+    },
+    {
+      "text": "Pia danse comme Ninon danse.",
+      "file": "examples/2ef10fc7173b3ae74a54.m4a",
+      "speaker": "ninon",
+      "durationSeconds": 2.1,
+      "bytes": 18974,
+      "audioSha256": "996bfb9f3a20dc3fcf72f6c23613c067635943a869ff00da36d35a199e68ae6a"
+    },
+    {
+      "text": "Ninon lit pendant que Pia dessine.",
+      "file": "examples/c41c664fb03a0d6ed2ca.m4a",
+      "speaker": "ninon",
+      "durationSeconds": 2.32,
+      "bytes": 20489,
+      "audioSha256": "157017aa91ea1e3b89409acf0af8c8811e4b18207c013b78199ffbb13162ee88"
+    },
+    {
+      "text": "Lison achète des pommes au marché.",
+      "file": "examples/9d0c17dd19b5fb337f6d.m4a",
+      "speaker": "ninon",
+      "durationSeconds": 2.68,
+      "bytes": 23421,
+      "audioSha256": "e04456703891134d8a9930f111ac87f05f3f7890d74a4f06dde88b022cb13465"
+    },
+    {
+      "text": "Je porte mon sac rouge.",
+      "file": "examples/c6b71817aea78f412ce9.m4a",
+      "speaker": "ninon",
+      "durationSeconds": 1.49,
+      "bytes": 14403,
+      "audioSha256": "dbdb78c3185a5ee9b651a5cdbe3efbc66722e88a2fe9ffa36cd1a6c6ac23f52d"
+    },
+    {
+      "text": "Voici notre petite maison.",
+      "file": "examples/8a95c945de91cf4efd6e.m4a",
+      "speaker": "ninon",
+      "durationSeconds": 1.58,
+      "bytes": 14197,
+      "audioSha256": "d7671101d6a72c77fc39690ebfe44430313cbf63410d9ae833a9ebf59760ea82"
+    },
+    {
+      "text": "Quel gâteau veux-tu pour ton anniversaire ?",
+      "file": "examples/1d02d5c6b16ffbca280b.m4a",
+      "speaker": "ninon",
+      "durationSeconds": 2.54,
+      "bytes": 23588,
+      "audioSha256": "829dba9044373739a5e9ca9e1d50cb6324ec08328780c3d5778db070982e30f2"
+    },
+    {
+      "text": "Il reste quelques biscuits dans la grande boîte.",
+      "file": "examples/d6afc60e9579d056f7a8.m4a",
+      "speaker": "ninon",
+      "durationSeconds": 3.17,
+      "bytes": 29466,
+      "audioSha256": "a0181ab055ce8e0c46607e529ade36f29ffa6bb7afdc5524686e46e2639e413d"
+    }
+  ],
+  "exampleCount": 375,
+  "exampleBytes": 10893526,
+  "examplePending": 580
 }

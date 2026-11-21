@@ -8618,6 +8618,8 @@ function setFold(wrap, key, title, initialOpen = false) {
 // 每次用户可见更新都新增记录：默认只递增第三位 1.x.y → 1.x.(y+1)，超过 9 继续到 10、11；第二位升级需用户明确要求。
 // 首位保持 1，只有用户明确要求才可修改；历史记录保留。完整发布规则见根目录 AGENTS.md。
 const CHANGELOG = [
+  {"v": "1.9.69", "p": "fr", "d": "2026-11-21", "items": ["单词例句开始有角色录音：背单词里的例句和配图例句由 Ninon、Lison、Pia 轮流朗读，播放时会标出是谁在读。981 句里目前 401 句有录音，其余 580 句暂时仍用系统朗读，会分批补齐（语音生成每天有请求限额）。录音为 AI 合成配音，已用本地语音识别逐句核对，尚未人工听审。", "例句两用：每句例句同时也是听力题，共 1957 道——听录音选出句中的生词，或把打乱的词复原成句子，播放的就是这句例句的录音。在“听力标签检索”的“材料来源”里选“单词例句”，还可以按单词主题筛选。", "重录了听力对话《Après un examen raté》里读得不够清楚的一句。"]},
+  {"v": "1.9.68", "p": "fr", "d": "2026-11-21", "items": ["新增的 40 段原创听力对话现在有了角色录音：Ninon、Lison、Pia 轮流两两搭档，男性说话人由男声朗读，一听就能分清谁在说话。理解、填空和排序三种题型共用同一段录音，仍可逐句播放、循环和慢速；在“设置 → 学习配音”选择系统语音时照旧使用系统朗读。录音为 AI 合成配音，已用本地语音识别逐段核对文字，尚未逐句人工听审。"]},
   {"v": "1.9.67", "p": "fr", "d": "2026-11-21", "items": ["听力新增两组考点标签，来自教材《Communication progressive du français · Débutant》的目录：40 个交际功能（如预约、问路、提议、道歉）和 57 个语法点。全部 218 段听力材料都贴了标签，基础听力的题卡上也会显示对应的功能；在“听力标签检索”里展开“考点”即可按标签筛选，可以和来源、题型、难度组合。", "新增 40 段原创听力对话，每个交际功能一段，每段两道理解题、一道填空和若干排序题，共 325 道新题。对话按教材的考点编写，不是教材原文或原版录音。", "管理员的问卷汇总不再要求满 5 份：有回答就显示全部统计，并可展开逐份查看每份回答（不显示账号）。需要先在 Supabase 运行 quiz-site/supabase/survey-admin-full.sql。"]},
   {"v": "1.9.66", "p": "fr", "d": "2026-11-20", "items": ["背单词新增两组可以组合的筛选：词条类型（单词 / 词组·固定搭配）和词性（名词、动词、形容词、限定词、代词、副词、介词、连词）。点一下马上更新题目数、词表和下一组；同一类里多选任一满足即可，不同类之间要同时满足。", "已有的 41 个固定搭配（如 grâce à、mot de passe、se rendre compte）归入“词组”；自反动词和连字符复合词仍算单词。词表和浏览卡上显示每个词条的类型；学习记录、配图和关卡都不变。"]},
   {"v": "1.9.65", "p": "fr", "d": "2026-11-20", "items": ["点击学习伙伴弹出的窗口里新增“隐藏 Ninon / Pia / Lison”按钮：隐藏后她只从屏幕边缘露出头，不挡内容也不出声；点一下会探出半个身子，并出现“显示”按钮把她叫回来。番茄时钟按钮缩成一个小按钮，和隐藏按钮排在一行。", "英文和法语界面补齐遗漏的翻译：110 个基础虚词的用法说明、页面底部的记录提示、模拟卷成绩记录、巴黎塔尖的层数和排数，以及学习进度里环法之旅的标签。"]},
@@ -14935,7 +14937,7 @@ const LISTEN_MODES = ['comprehension','cloze','order','letter-ipa','letter-hear'
 Object.assign(LISTEN_LABELS,{
  kind:['材料类别','Material category','Catégorie'],letter:['字母','Letters','Lettres'],syllable:['音节','Spelling and sounds','Graphies et sons'],sentence:['句子','Sentences','Phrases'],passage:['短文','Passages','Textes et dialogues'],phenomenon:['语音现象','Connected speech','Phénomènes phonétiques'],phonetics:['语音基础','Pronunciation basics','Bases de prononciation'],
  'letter-ipa':['看字母选音标','Letter to IPA','Lettre vers API'],'letter-hear':['听读音选字母','Sound to letter','Son vers lettre'],'letter-sound':['四段读音辨字母','Choose a letter sound','Choisir le son d’une lettre'],phonics:['拼读与语音规则','Sound rules','Règles phonétiques'],
- source:['材料来源','Source','Source'],general:['基础听力','General listening','Écoute générale'],
+ source:['材料来源','Source','Source'],general:['基础听力','General listening','Écoute générale'],vocabulary:['单词例句','Vocabulary examples','Exemples de vocabulaire'],
  bookNote:['按教材 40 章的考点编写的原创练习（57 个情境短文和 40 段对话）；不是教材原文或原版 CD 录音。','Original practice for the book’s 40 chapters (57 situations and 40 dialogues); not the original exercises or CD audio.','Exercices originaux alignés sur les 40 chapitres du manuel (57 situations et 40 dialogues) ; ni transcription des exercices ni audio du CD.'],
  catalog:['听力标签检索','Find listening exercises','Rechercher des exercices d’écoute'],
  search:['搜索内容或标签','Search content or tags','Rechercher un contenu ou une étiquette'],
@@ -14986,7 +14988,7 @@ function listeningMatches(q,f){
  return !f.query||norm([q.audio,q.q,q.cat,q.level,...(q.tags||[])].join(' ')).includes(norm(f.query.trim()));
 }
 function listeningMembers(key){const f=listeningFilter(key);return BANK.filter(q=>listeningMatches(q,f));}
-function listeningSourceLabel(id){return id==='phonetics'?listeningLabel('phonetics'):id==='communication-beginner'?'Communication progressive · Débutant':listeningLabel('general');}
+function listeningSourceLabel(id){return id==='phonetics'?listeningLabel('phonetics'):id==='communication-beginner'?'Communication progressive · Débutant':listeningLabel(id==='vocabulary'?'vocabulary':'general');}
 function listeningSetLabel(key){const f=listeningFilter(key);return [listeningLabel('catalog'),...f.kinds.map(listeningLabel),...f.sources.map(listeningSourceLabel),...f.modes.map(listeningLabel),...f.levels,...f.topics.map(x=>typeof phoneticLabel==='function'&&PHONETIC_LABELS[x]?phoneticLabel(x):tr(x)),...(f.acts||[]).map(n=>commActLabel(n)),...(f.grammar||[]).map(g=>commGrammarLabel(g)),f.query].filter(Boolean).join(' · ');}
 // Seeded ordering makes saved question positions reliable. Cycle formats and avoid adjacent
 // copies between groups when possible; sentence-order groups remain in spoken order.
@@ -18851,6 +18853,39 @@ const V_PICEX_EN = {
   "autonome": "This independent child packs his schoolbag all by himself before school.",
   "usé": "My worn-out slippers let my toes poke through large holes.",
 };
+// ---------- 例句两用：背单词的例句（和同一段角色录音）也是听力题 ----------
+// 每句例句出两道题：听录音选出句中的生词（关键词填空）、复原句子。来源标签“单词例句”，内容标签是单词主题。
+// 干扰项取同词性的其他生词在例句里的词形，固定种子，题目编号和选项每次打开都一样。
+function vocabListeningRows(){
+ const seen=new Set(),rows=[];
+ for(const w of V_WORDS)for(const [kind,e] of [['ex',w.example||V_EX[w.fr]],['pic',w.example||V_PICEX[w.fr]]]){
+  const m=e&&e[0].normalize('NFC').trim().match(/^(.*)\[([^\]]+)\](.*)$/);if(!m)continue;
+  const audio=m[1]+m[2]+m[3];if(seen.has(audio))continue;seen.add(audio);
+  rows.push({w,kind,audio,start:m[1].length,form:m[2]});
+ }
+ return rows;
+}
+function vocabListeningRegister(){
+ const rows=vocabListeningRows(),key=s=>s.toLocaleLowerCase('fr'),group=p=>p==='v'?'v':/^n/.test(p)?'n':p,pools=new Map();
+ for(const r of rows){const g=group(r.w.pos);if(!pools.has(g))pools.set(g,new Map());pools.get(g).set(key(r.form),r.form);}
+ const all=new Map(rows.map(r=>[key(r.form),r.form])),themes=new Map(VOCAB.map(t=>[t.id,t.t]));
+ for(const r of rows){
+  // 两处被缩写或省略号断开的句子、以及和已有听力材料同文的句子不重复出题
+  if(LISTENING_GAPS[r.audio]||listeningSentenceRanges(r.audio).length!==1)continue;
+  const rnd=qlRng('vocab-listening|'+r.w.id+'|'+r.kind),text=key(r.audio),own=key(r.form),upper=r.form[0]!==r.form[0].toLocaleLowerCase('fr');
+  const pick=pool=>[...pool.entries()].filter(([k])=>k!==own&&!text.includes(k)).map(([,v])=>[rnd(),v]).sort((a,b)=>a[0]-b[0]).map(x=>x[1]);
+  const wrong=[...new Set([...pick(pools.get(group(r.w.pos))),...pick(all)])].slice(0,3).map(v=>upper?v[0].toLocaleUpperCase('fr')+v.slice(1):v[0].toLocaleLowerCase('fr')+v.slice(1));
+  if(wrong.length<3)continue;
+  LISTENING_GAPS[r.audio]=[{start:r.start,end:r.start+r.form.length,options:[r.form,...wrong]}];
+  const functional=r.w.id.startsWith('fw-'),level=functional?'A1':'B1',topic=themes.get(r.w.th)||'单词例句';
+  const base={ch:0,r:0,cat:'听力 · 单词例句',level,tags:[level,topic,'单词例句'],audio:r.audio,a:0,hint:'',listeningKind:'sentence',listeningSource:'vocabulary',listeningTopic:topic,listeningSentence:0,vocabWord:r.w.id};
+  const id='fr-vx-'+r.w.id+'-'+r.kind,items=[{...base,id:id+'-cloze',sourceId:id,listeningMode:'cloze',q:LISTEN_LABELS.cloze[0],opts:[r.form,'—'],exp:r.audio}];
+  const sentence=listeningSentences(r.audio)[0];
+  if(sentence&&listeningWords(sentence).length>=4)items.push({...base,id:id+'-order',sourceId:id,listeningMode:'order',q:LISTEN_LABELS.order[0],opts:[sentence,'—'],exp:sentence});
+  for(const q of items){BANK.push(q);BY_ID.set(q.id,q);}
+ }
+}
+vocabListeningRegister();
 // 易混词名单：意思、用法容易弄混的词放一组（拼写不一定像）。困难模式下优先拿同组的词当干扰项，答完显示这组的辨析。
 // 一个词可以在几组里；组里的词都必须在词表（VOCAB）里。
 const V_CONFUSE = [
@@ -23414,7 +23449,7 @@ function petRecentLine() {
       const fr = e[0].replace(/\[([^\]]+)\]/g, '$1'), character = petConfig().character;
       // Only show a vocabulary example here when this character has its exact recording.
       if (petVoiceIndex?.characters?.[character]?.cues?.[fr] ||
-          (typeof studyAudioManifest !== 'undefined' && studyAudioManifest?.characters?.[character]?.some(x => x.text === fr)))
+          (typeof studyAudioManifest !== 'undefined' && (studyAudioManifest?.characters?.[character]?.some(x => x.text === fr) || studyAudioManifest?.examples?.some(x => x.text === fr && x.speaker === character))))
         return { word: w.fr, fr, zh: e[1], en };
     }
     if (seen.size >= 20) break;
@@ -23859,7 +23894,7 @@ function studyClipSegments(entry,text){
 async function studyAudioIndex(){
   if(studyAudioManifest)return studyAudioManifest;
   if(studyAudioLoad)return studyAudioLoad;
-  studyAudioLoad=(async()=>{const controller=new AbortController(),timer=setTimeout(()=>controller.abort(),8000);try{const r=await fetch(STUDY_AUDIO_BASE+'manifest.json?v=1.9.42',{signal:controller.signal});if(!r.ok)throw Error('manifest');const m=await r.json();if(m.version!==1||!m.characters)throw Error('manifest');studyAudioManifest=m;return m;}finally{clearTimeout(timer);studyAudioLoad=null;}})();
+  studyAudioLoad=(async()=>{const controller=new AbortController(),timer=setTimeout(()=>controller.abort(),8000);try{const r=await fetch(STUDY_AUDIO_BASE+'manifest.json?v=1.9.69',{signal:controller.signal});if(!r.ok)throw Error('manifest');const m=await r.json();if(m.version!==1||!m.characters)throw Error('manifest');studyAudioManifest=m;return m;}finally{clearTimeout(timer);studyAudioLoad=null;}})();
   return studyAudioLoad;
 }
 function studySystemPart(text,rate,btn,done,role){
@@ -23900,7 +23935,9 @@ function studySpeakSequence(parts,rate,btn,done,voiceOverride=null,recordedOnly=
     const part=parts[i++],text=String(part.text||'').normalize('NFC').trim(),spokenText=part.clipText||text;s.clipped=!!part.clipText;s.partIndex=partIndex;s.requestIndex=sentenceIndex;s.index=0;s.segments=null;s.mode='loading';s.resume=s.seek=s.arm=null;studyControlsSync(s);
     const fallback=()=>{if(!current())return;if(recordedOnly){studyAudioLabel(btn,petI18n(['Gemini 录音暂不可用，请稍后重试；不会使用系统语音。','Gemini recording unavailable. Try again later; system speech is disabled.','Enregistrement Gemini indisponible. Réessayez plus tard ; aucune voix système.']),true);finish();return;}studyAudioLabel(btn,petI18n(['系统朗读','System voice','Voix système'])+(voice!=='system'&&part.role!=='M'?' · '+petI18n(['本句暂无角色录音','No recording for this line','Cette phrase n’est pas enregistrée']):''),voice!=='system'&&part.role!=='M');if(row)studyControlledSystem(s,spokenText,rate,part.role,current,next,finish);else studySystemPart(spokenText,rate,btn,()=>{if(current())next();},part.role);};
     if(voice==='system'||part.role==='M'){fallback();return;}
-    let entry;try{const m=await studyAudioIndex();entry=m.characters[voice]?.find(x=>x.text===text);}catch{fallback();return;}
+    // Two-voice dialogue recordings are shared by every recorded narrator; an explicit character preview keeps its own voice.
+    // Vocabulary examples are recorded once each, by one of the three companions in turn.
+    let entry;try{const m=await studyAudioIndex();entry=(!voiceOverride&&m.dialogues?.find(x=>x.text===text))||m.characters[voice]?.find(x=>x.text===text)||m.examples?.find(x=>x.text===text&&(!voiceOverride||x.speaker===voiceOverride));}catch{fallback();return;}
     if(!current())return;
     if(!entry||!/^[-a-z0-9/]+\.m4a$/.test(entry.file)||entry.file.includes('..')){fallback();return;}
     const clipped=part.clipText?studyClipSegments(entry,part.clipText):null;if(part.clipText&&!clipped){fallback();return;}
@@ -23924,7 +23961,7 @@ function studySpeakSequence(parts,rate,btn,done,voiceOverride=null,recordedOnly=
     audio.onseeked=()=>{if(active())s.arm();};
     audio.onended=()=>{if(!active())return;if(s.loop&&s.segments){audio.currentTime=s.segments[s.loopIndex].start;play();s.arm();}else endPart();};
     audio.onerror=failure;
-    studyAudioLabel(btn,voice[0].toUpperCase()+voice.slice(1)+' · '+petI18n(['AI 合成配音','AI narration','Voix de synthèse IA']));
+    studyAudioLabel(btn,(Array.isArray(entry.cast)?entry.cast.map(c=>String(c.speaker)):[typeof entry.speaker==='string'?entry.speaker:voice]).map(n=>n[0].toUpperCase()+n.slice(1)).join(' & ')+' · '+petI18n(['AI 合成配音','AI narration','Voix de synthèse IA']));
     if(s.segments)s.seek(sentenceIndex<0?s.segments.length-1:Math.min(sentenceIndex,s.segments.length-1));else{studyControlsSync(s);play();}
   };
   s.move=step=>{if(!valid()||!s.segments?.length||!s.seek)return;const index=s.mode==='recorded'&&!s.loop?studySentenceAt(s.segments,studyAudio?.currentTime||0):s.index,target=index+step;if(target<0){if(s.partIndex>0)next(s.partIndex-1,-1);}else if(target>=s.segments.length){if(s.partIndex<parts.length-1)next(s.partIndex+1,0);}else s.seek(target);};
