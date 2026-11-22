@@ -18867,6 +18867,14 @@
       "audioSha256": "b34d5ff164eeeb2b3c2da5b4db4b395f15c69841d8e9b93b0c43f5cb06a38ae5"
     },
     {
+      "text": "Saurez-vous trouver le chat parmi tous ces hiboux ?",
+      "file": "examples/74a334f0144f1656dc4a.m4a",
+      "speaker": "ninon",
+      "durationSeconds": 2.83,
+      "bytes": 25723,
+      "audioSha256": "abe25cb730ec44c3c117d6b08f1475fddf38cbde612a2f9c58b8fc0342e5b0eb"
+    },
+    {
       "text": "Il fait beau, et pourtant Marc sort avec un énorme parapluie.",
       "file": "examples/95712b48487c029bf921.m4a",
       "speaker": "lison",
@@ -21419,6 +21427,14 @@
       "audioSha256": "f43f40aa5966d1f66daca983c20de79b27b3f7bdabbf1cd0e4d8afc94b8c1618"
     },
     {
+      "text": "Un robot aspirateur blanc nettoie le sol carrelé de la maison.",
+      "file": "examples/2b8fb7e0574f8a51a6ef.m4a",
+      "speaker": "lison",
+      "durationSeconds": 4.19,
+      "bytes": 37616,
+      "audioSha256": "0693a4e22b79c40671441d69ce0903a22c5b77dccbbdae0d2c6f58664a1369d5"
+    },
+    {
       "text": "Il faut économiser l'énergie.",
       "file": "examples/6639ad1fc1626ad76165.m4a",
       "speaker": "pia",
@@ -21659,6 +21675,14 @@
       "audioSha256": "5f7a084cf802142eb262f2d070d1391f7243ea4af0333e8ae387871ba859f768"
     },
     {
+      "text": "Il lui a donné un bisou sur la joue.",
+      "file": "examples/c48ee10ac1b96ba6cf91.m4a",
+      "speaker": "lison",
+      "durationSeconds": 2.11,
+      "bytes": 18255,
+      "audioSha256": "acfc9d2235108f7058a6152da8de95b8221ee6852d06901d8944bc52434ee4d3"
+    },
+    {
       "text": "La jeune femme pose doucement les doigts sur sa joue.",
       "file": "examples/e42a896541825f667373.m4a",
       "speaker": "lison",
@@ -21801,6 +21825,14 @@
       "durationSeconds": 1.85,
       "bytes": 16134,
       "audioSha256": "b42018c22519b08333ef906d6718077f38fe760e9fd039acce3fe3178827c060"
+    },
+    {
+      "text": "Cette bague en or porte une belle pierre rouge.",
+      "file": "examples/e4c8362df8cffb5999c2.m4a",
+      "speaker": "lison",
+      "durationSeconds": 2.27,
+      "bytes": 20030,
+      "audioSha256": "97e0dc9fdf3965a1ade1745797e23ba328d0b4ab1057ef51d9e599da79e707a6"
     },
     {
       "text": "Elle met peu de maquillage.",
@@ -21953,6 +21985,14 @@
       "durationSeconds": 3.185,
       "bytes": 28878,
       "audioSha256": "335698dc1c3bfaed94c4247eefbc31f116ffe44265ad2ff9799e692d891c72a9"
+    },
+    {
+      "text": "Il a oublié de mettre son pantalon avant la réunion en ligne.",
+      "file": "examples/3774370e7e53b3a09951.m4a",
+      "speaker": "pia",
+      "durationSeconds": 3.42,
+      "bytes": 30980,
+      "audioSha256": "47a23853525f8917140d25ecf4d89178a09bc0253fc32de0822466bc447108e0"
     },
     {
       "text": "Grand-père se souvient de son premier vélo comme si c'était hier.",
@@ -22185,6 +22225,14 @@
       "durationSeconds": 3.62,
       "bytes": 32213,
       "audioSha256": "94ec60a9fe70a3db51b829d65288a09047213000c3b13a03995252b923af5d8d"
+    },
+    {
+      "text": "Internet est très lent aujourd'hui.",
+      "file": "examples/dc17fa06afd895e2ca76.m4a",
+      "speaker": "pia",
+      "durationSeconds": 2.17,
+      "bytes": 19108,
+      "audioSha256": "cd42fe3a416e91ebae8b958c0e2db55ded7675a6b762af6dd3823faad0f81fdb"
     },
     {
       "text": "L'escargot avance sur la pierre ; c'est un animal très lent.",
@@ -23235,9 +23283,9 @@
       "audioSha256": "ec3de99ab8fa78cd13dce96e90ea7b78c14c5cdece76a019923bd6d7cb203b32"
     }
   ],
-  "exampleCount": 949,
-  "exampleBytes": 26611117,
-  "examplePending": 6,
+  "exampleCount": 955,
+  "exampleBytes": 26762829,
+  "examplePending": 0,
   "words": [
     {
       "text": "ranger",
@@ -24128,6 +24176,14 @@
       "audioSha256": "bacc3dd287522a0a1d1144330d3e1c3e6d4541384f2210f722abb15ed5b9ef00"
     },
     {
+      "text": "louer",
+      "file": "words/d76bfa97bd8fd8551967.m4a",
+      "speaker": "ninon",
+      "durationSeconds": 0.69,
+      "bytes": 7005,
+      "audioSha256": "f5c22a46a39a78b02ea7197e1b6edc7ddb91c1f878bf5a6e185e2d21e17d48b2"
+    },
+    {
       "text": "rater",
       "file": "words/a36d7c5312e4c8a85ca0.m4a",
       "speaker": "lison",
@@ -24888,6 +24944,14 @@
       "audioSha256": "f79380323a06cae09dc7c8f793f88c70f1b44f10a8a6c55159ddc31080e86a77"
     },
     {
+      "text": "têtu",
+      "file": "words/248f62b0db64c1ada4ae.m4a",
+      "speaker": "ninon",
+      "durationSeconds": 0.72,
+      "bytes": 6886,
+      "audioSha256": "46ba7672ad74c4802a3f4deffe682e1647710a953e18b4e2805eeb9e44dac13d"
+    },
+    {
       "text": "paresseux",
       "file": "words/fbc68c9a8f3e5e2183db.m4a",
       "speaker": "lison",
@@ -24968,6 +25032,14 @@
       "audioSha256": "1d47c1b7c7a6415e74d0c0c0625163dd02910fb1bf4a1cde0373a3032d95ed4c"
     },
     {
+      "text": "oser",
+      "file": "words/7d9d208e58fef65c0d88.m4a",
+      "speaker": "pia",
+      "durationSeconds": 0.71,
+      "bytes": 6853,
+      "audioSha256": "1966998fca8d4c754d11838e16dc7440c5690c869f752cd3ec0df7f69a799a38"
+    },
+    {
       "text": "hésiter",
       "file": "words/634003e6e0dc8a85e384.m4a",
       "speaker": "ninon",
@@ -24990,6 +25062,14 @@
       "durationSeconds": 1.11,
       "bytes": 9811,
       "audioSha256": "744cb2ae319ba82fbdca2192880b429d703a9177f65a0038f7d13aaad2df5df4"
+    },
+    {
+      "text": "déçu",
+      "file": "words/e747ea7e4f7e42171a37.m4a",
+      "speaker": "ninon",
+      "durationSeconds": 0.83,
+      "bytes": 8159,
+      "audioSha256": "a4413e6e317702ca269dcc6815138a01915375f6c041e9282d4cdc06b6623be2"
     },
     {
       "text": "enthousiaste",
@@ -25582,6 +25662,14 @@
       "durationSeconds": 1.0,
       "bytes": 9715,
       "audioSha256": "0be6d43758b9bb4a551d94e67252f1904ef3de9db5115eb4b4e2badf2543e406"
+    },
+    {
+      "text": "coûteux",
+      "file": "words/6d033975dd2a70ec015a.m4a",
+      "speaker": "ninon",
+      "durationSeconds": 0.69,
+      "bytes": 6799,
+      "audioSha256": "dc4422d28feed19ae1ba97b7f557f0970f6601b4767ea8d2db21602e08466393"
     },
     {
       "text": "l'entraînement",
@@ -26464,6 +26552,14 @@
       "audioSha256": "3fde305f6ed590e231d7380b839d4d4bb07ef7bc00288c0c104ea80211af7c6a"
     },
     {
+      "text": "voler",
+      "file": "words/34f4565392eb878565fa.m4a",
+      "speaker": "ninon",
+      "durationSeconds": 0.76,
+      "bytes": 7152,
+      "audioSha256": "f4dfcd9f16e6710de16259566014a8e48b65aa974289456fe9ce746be22ae59e"
+    },
+    {
       "text": "coupable",
       "file": "words/e17bf889f3c76d7f2404.m4a",
       "speaker": "lison",
@@ -26590,6 +26686,14 @@
       "durationSeconds": 1.02,
       "bytes": 9435,
       "audioSha256": "21c4d83c17088c0f5738b1ca0e74e26c408d2f5bf9943ec30d3be44ecab6d4d6"
+    },
+    {
+      "text": "l'outil",
+      "file": "words/f336d8200be6bf81b423.m4a",
+      "speaker": "pia",
+      "durationSeconds": 0.85,
+      "bytes": 7800,
+      "audioSha256": "de0814ad416bcf45c988512c52710d5d2fe1fa303c6561e575fa1e675bcfa125"
     },
     {
       "text": "la machine",
@@ -27040,6 +27144,14 @@
       "audioSha256": "e198fd1bc6d7c3037d93bd08ed00db6653c3bc5b8112ba7f27a8f2a14194f6db"
     },
     {
+      "text": "plein",
+      "file": "words/bc24715b4651963026b1.m4a",
+      "speaker": "pia",
+      "durationSeconds": 0.5,
+      "bytes": 5264,
+      "audioSha256": "f5e81df757d67b07ec0523dcd5c4a49f83cc893574d0a820cc9763ae1bb06ac5"
+    },
+    {
       "text": "lourd",
       "file": "words/a01cfb943d19f856d58c.m4a",
       "speaker": "ninon",
@@ -27054,6 +27166,14 @@
       "durationSeconds": 0.71,
       "bytes": 7140,
       "audioSha256": "3e814e9a582ab10e38f0cae6f939737ab1058cf4a909ba9b5ab9a7d2aff4ff33"
+    },
+    {
+      "text": "lent",
+      "file": "words/bbb7e4fdad15d6f05906.m4a",
+      "speaker": "pia",
+      "durationSeconds": 0.56,
+      "bytes": 5910,
+      "audioSha256": "a7cfe0cbfa1e283eb22ab333fae7882ab43ace2ad90110dc7c10e9eb4ccf4c06"
     },
     {
       "text": "rapide",
@@ -27256,6 +27376,14 @@
       "audioSha256": "ba16653b3712e066bc3a84464ed74177d2c537e076285e219af8b9454fed2a74"
     },
     {
+      "text": "on",
+      "file": "words/b8d31e852725afb1e26d.m4a",
+      "speaker": "lison",
+      "durationSeconds": 0.44,
+      "bytes": 4832,
+      "audioSha256": "94f4e13ded371b4712eb6de42133f6e1d01fae7fdd5141931ce51bf940fa7ee8"
+    },
+    {
       "text": "moi",
       "file": "words/a4f0e1d1b5eb23e3482a.m4a",
       "speaker": "pia",
@@ -27280,6 +27408,30 @@
       "audioSha256": "72a9e199f50c47755df5e089627bb2c25af05295bceef55088090156e1427008"
     },
     {
+      "text": "eux",
+      "file": "words/1f54ae63b1a34e69a682.m4a",
+      "speaker": "pia",
+      "durationSeconds": 0.44,
+      "bytes": 4892,
+      "audioSha256": "3ebbefe18a837f88579f6776d8f499e7e6ab16a2ea1e9957361d53cf30b0f442"
+    },
+    {
+      "text": "me",
+      "file": "words/2744ccd10c7533bd736a.m4a",
+      "speaker": "ninon",
+      "durationSeconds": 0.71,
+      "bytes": 6701,
+      "audioSha256": "53d3c63294d5a5951b8c042a7f5760e855d067cdbc595654b9345da80daf4e5d"
+    },
+    {
+      "text": "te",
+      "file": "words/2d6c9a90dd38f6852515.m4a",
+      "speaker": "lison",
+      "durationSeconds": 0.41,
+      "bytes": 4543,
+      "audioSha256": "2d759d947e602f6cb29d0e004283619d219825d07c36a471578e3d39110cd8e8"
+    },
+    {
       "text": "le",
       "file": "words/61098a4bf2a5e216533e.m4a",
       "speaker": "pia",
@@ -27294,6 +27446,22 @@
       "durationSeconds": 0.92,
       "bytes": 8434,
       "audioSha256": "1799feb3acb36b019a0d3149a38ebb8f2f02bdb15e3a9f8a485baa698b208e04"
+    },
+    {
+      "text": "se",
+      "file": "words/ad9a67fefa847de87753.m4a",
+      "speaker": "lison",
+      "durationSeconds": 0.54,
+      "bytes": 5470,
+      "audioSha256": "1d1ac0e13de4818d3543918def2a7e687e235ea3b22ce2e189efb390502defc6"
+    },
+    {
+      "text": "y",
+      "file": "words/a1fce4363854ff888cff.m4a",
+      "speaker": "pia",
+      "durationSeconds": 0.41,
+      "bytes": 4329,
+      "audioSha256": "e3d7943db2bee3bbd92f37a38a8e8b651e4688ad3fef4f62ddf93007c080d697"
     },
     {
       "text": "en",
@@ -27408,6 +27576,14 @@
       "audioSha256": "5d002005fa0786d91e2388740e52ec3e40c33df8b61014d4a8b66f57db61c2b7"
     },
     {
+      "text": "où",
+      "file": "words/e4e8fba40653212395e9.m4a",
+      "speaker": "pia",
+      "durationSeconds": 0.4,
+      "bytes": 4457,
+      "audioSha256": "af41cacb319de65e2f384e15292d5340889d181af39e1c82d08d3b0f93c4b503"
+    },
+    {
       "text": "dont",
       "file": "words/f9e0a37fc2800a6256ce.m4a",
       "speaker": "ninon",
@@ -27472,6 +27648,14 @@
       "audioSha256": "d84c41444f822f99046e26a34d335552cc649ccc46d97cfd8285ee1094833b39"
     },
     {
+      "text": "à",
+      "file": "words/b3fc9de526e253e7ac1b.m4a",
+      "speaker": "pia",
+      "durationSeconds": 0.51,
+      "bytes": 5281,
+      "audioSha256": "39367c3821fa72ff9d0d03943278a074e8133e301f08ff2f7907425ed74d3ec5"
+    },
+    {
       "text": "de",
       "file": "words/959a45d44e6fcf58361e.m4a",
       "speaker": "ninon",
@@ -27488,6 +27672,14 @@
       "audioSha256": "312b85936d18026592f074e18130ecd72c15f2a502cdc978fb67fb6a2d27b80c"
     },
     {
+      "text": "sans",
+      "file": "words/098e337b8d4e27708251.m4a",
+      "speaker": "ninon",
+      "durationSeconds": 0.71,
+      "bytes": 6799,
+      "audioSha256": "5fe545c7d38316e71d2ba39002c903ee24637791253fd515cbe67bdfb62ad500"
+    },
+    {
       "text": "pour",
       "file": "words/ed29bcecc78d7ffb6724.m4a",
       "speaker": "lison",
@@ -27502,6 +27694,14 @@
       "durationSeconds": 0.61,
       "bytes": 6226,
       "audioSha256": "bddf5d3276f76453b9073010c24ab4fc09dfe648415f48efa98a20119f5ff61f"
+    },
+    {
+      "text": "chez",
+      "file": "words/23e657e0e99d5453999a.m4a",
+      "speaker": "ninon",
+      "durationSeconds": 0.73,
+      "bytes": 6940,
+      "audioSha256": "e37f5f4e3f1561e595c5983caf8cfce1cf0bc05f04520beda72d7580f64c12fa"
     },
     {
       "text": "dans",
@@ -27672,6 +27872,14 @@
       "audioSha256": "29e75b0677936723200c2817c4a3a45be4f30cbeb1d91e1c9d12f869c4a901d9"
     },
     {
+      "text": "sauf",
+      "file": "words/0aba53cfec8ace0e04c4.m4a",
+      "speaker": "lison",
+      "durationSeconds": 0.8,
+      "bytes": 7393,
+      "audioSha256": "d95efbd3846eb1e2f5edd4a5680c623e7dc311138c089d318961123063c3143d"
+    },
+    {
       "text": "avant",
       "file": "words/74b83cd99a5df0d9b0c1.m4a",
       "speaker": "pia",
@@ -27712,6 +27920,14 @@
       "audioSha256": "a9a56ce1c4bf0a54804bc79d70abf4ead854e11b36ea6d24e1f69f4f2219a042"
     },
     {
+      "text": "ou",
+      "file": "words/fc74181ece96ac0d3a8d.m4a",
+      "speaker": "lison",
+      "durationSeconds": 0.45,
+      "bytes": 4831,
+      "audioSha256": "2aac813d5a72259cb77711d27d8cb97558436a2198cb111a782b1bedff006916"
+    },
+    {
       "text": "mais",
       "file": "words/ad6276b240df42d4f7c1.m4a",
       "speaker": "pia",
@@ -27750,6 +27966,14 @@
       "durationSeconds": 0.65,
       "bytes": 6422,
       "audioSha256": "86fb6a9fb06e1192e073b36483e2c4709fee41125d896311f40e5e6193fb8928"
+    },
+    {
+      "text": "quand",
+      "file": "words/c45f177e1672b216ba58.m4a",
+      "speaker": "lison",
+      "durationSeconds": 0.46,
+      "bytes": 4845,
+      "audioSha256": "7b1745a33bd9a8151c2288f53395b0aee6242294ba4a495551ef1c6cacf6c55b"
     },
     {
       "text": "comme",
@@ -27808,6 +28032,14 @@
       "audioSha256": "17fa2997e56284bcdbe49397f2b95232f325fd045d05091d1dec102461fd3e8c"
     },
     {
+      "text": "un",
+      "file": "words/68bca10eea2ba33f6f15.m4a",
+      "speaker": "pia",
+      "durationSeconds": 0.43,
+      "bytes": 4762,
+      "audioSha256": "4491afff10f7bd1601c579eb2a1ef642747a4e75e25bfafd535483f6a0a6b22b"
+    },
+    {
       "text": "des",
       "file": "words/7b24c1ad239d4a6b2c73.m4a",
       "speaker": "ninon",
@@ -27822,6 +28054,14 @@
       "durationSeconds": 0.7,
       "bytes": 6898,
       "audioSha256": "e6d956d88a1bd3ee551d222afa6562585454809bf1523c6c4a102602632143ac"
+    },
+    {
+      "text": "mon",
+      "file": "words/e6d3efc6abfd85ceaced.m4a",
+      "speaker": "ninon",
+      "durationSeconds": 0.59,
+      "bytes": 5852,
+      "audioSha256": "53daf115d9929d3aa4185b6470f150fd862e4c2cb6c99b1674b8c254a7a5c049"
     },
     {
       "text": "ton",
@@ -27862,6 +28102,14 @@
       "durationSeconds": 0.65,
       "bytes": 6494,
       "audioSha256": "ae9017f9670b7c22f14b4fac52165bc3e617f2f5e37b5a52dec73ebded03d004"
+    },
+    {
+      "text": "chaque",
+      "file": "words/8fb133198decdee2dd92.m4a",
+      "speaker": "lison",
+      "durationSeconds": 0.84,
+      "bytes": 8174,
+      "audioSha256": "f21268026c8ac4bd9dcd12fa91972b5bc970fad891dca7b301e18d4085507f08"
     },
     {
       "text": "quelques",
@@ -27912,7 +28160,180 @@
       "audioSha256": "bcc0e5eab4fccbe78aeaf43ec8ebccf757556d81ee239f9e5ac21aa8aba64a5f"
     }
   ],
-  "wordCount": 584,
-  "wordBytes": 5629702,
-  "wordPending": 25
+  "wordCount": 609,
+  "wordBytes": 5781631,
+  "wordPending": 0,
+  "male": [
+    {
+      "text": "Tu prends le train de 8 heures demain ?",
+      "file": "male/29e4465f037bb999c99a.m4a",
+      "speaker": "charon",
+      "durationSeconds": 1.34,
+      "bytes": 12464,
+      "audioSha256": "797c41ef834bd17b26530506ef56ec29b39b1324e11c1f63869c4f7bf683ccfb"
+    },
+    {
+      "text": "Voilà, madame. Ça fait trois euros dix.",
+      "file": "male/99f62deb7e906d282450.m4a",
+      "speaker": "charon",
+      "durationSeconds": 2.33,
+      "bytes": 21211,
+      "audioSha256": "289a94fa0ed6ba21407de6f0ea9f6de068ffc9f2e450d1a01de2e713b84a0d21"
+    },
+    {
+      "text": "Tu as vu le film hier soir ?",
+      "file": "male/a9d5db2820d6b113d8d7.m4a",
+      "speaker": "charon",
+      "durationSeconds": 1.26,
+      "bytes": 11039,
+      "audioSha256": "3857bfdb080a83792760c9e0f15fc2fb36e7f9aecf7442caed8c04ba1555b5e4"
+    },
+    {
+      "text": "Il te va bien, mais la couleur est un peu triste. Le rouge serait mieux.",
+      "file": "male/7f9dac4392389b728ca0.m4a",
+      "speaker": "charon",
+      "durationSeconds": 4.35,
+      "bytes": 38549,
+      "audioSha256": "31ccb008bd4b3a17cff4b7e147a376ab09c402a7f77e921e31e38d3d933ce5f5"
+    },
+    {
+      "text": "Excusez-moi, la poste est loin d'ici ?",
+      "file": "male/2fc88e54a73ab1b163d3.m4a",
+      "speaker": "charon",
+      "durationSeconds": 2.28,
+      "bytes": 21853,
+      "audioSha256": "b056abacbff39174725e563700209dc9636be78eac7773ef270820fb358df3fa"
+    },
+    {
+      "text": "Bonjour, je voudrais réserver une table pour samedi soir, s'il vous plaît.",
+      "file": "male/26956869315bd495a051.m4a",
+      "speaker": "charon",
+      "durationSeconds": 3.67,
+      "bytes": 33036,
+      "audioSha256": "76682cdaf2ca815f3f11a09b830b846104f44cfd8f6367d6369bdc37a6286620"
+    },
+    {
+      "text": "Pour six personnes. C'est l'anniversaire de ma mère.",
+      "file": "male/6df8d5e9624a74186d75.m4a",
+      "speaker": "charon",
+      "durationSeconds": 2.81,
+      "bytes": 25768,
+      "audioSha256": "a386e3eb0da381ab4117b1cac437495b620ee848b2260f59d71f8f129d80292d"
+    },
+    {
+      "text": "En terrasse ? S'il fait froid, ce sera difficile. Vous n'avez rien à l'intérieur ?",
+      "file": "male/c0fa7258416d6299b075.m4a",
+      "speaker": "charon",
+      "durationSeconds": 4.52,
+      "bytes": 39179,
+      "audioSha256": "42472a18ce8af91c7e6da87b7c58a64a94c8e3dd2e81b4040b97d483e2687530"
+    },
+    {
+      "text": "Bon, dix-neuf heures, ça ira. Au nom de Martin.",
+      "file": "male/f2b79087db7b9de3cea9.m4a",
+      "speaker": "charon",
+      "durationSeconds": 3.16,
+      "bytes": 29732,
+      "audioSha256": "3e47d7e2b0a88c1c739a3fbb70f23c78ee03ec61fd7d97f26da540189c32e0e5"
+    },
+    {
+      "text": "Alors Julie, qu'est-ce que tu fais cet été ?",
+      "file": "male/e67274dcd346a615e60b.m4a",
+      "speaker": "charon",
+      "durationSeconds": 2.11,
+      "bytes": 19929,
+      "audioSha256": "716fe4b12a543136ffd36d71e2681badb68ebb99de7b066dcdc3f16e82bfa7f6"
+    },
+    {
+      "text": "C'est super ! Tu parles anglais, ça va t'aider.",
+      "file": "male/e7ecbcbbb475661dcb50.m4a",
+      "speaker": "charon",
+      "durationSeconds": 2.5,
+      "bytes": 22789,
+      "audioSha256": "1b96b0d4c3167dcaa505c67b71fb509543b4f374b636bcd2b79add84c3614502"
+    },
+    {
+      "text": "Moi, je reste en ville. Je vais travailler dans le magasin de mon oncle, et le soir, je prendrai des cours de conduite.",
+      "file": "male/67c5525856b0b7e80d59.m4a",
+      "speaker": "charon",
+      "durationSeconds": 6.24,
+      "bytes": 58589,
+      "audioSha256": "16a2a3afc10b0639f8f0e7e5d452ca0f367b6e90955f70d57afa88e81f153cbb"
+    },
+    {
+      "text": "Bonjour madame, qu'est-ce qui ne va pas ?",
+      "file": "male/d5426a1330b0e9f8386e.m4a",
+      "speaker": "charon",
+      "durationSeconds": 1.89,
+      "bytes": 16803,
+      "audioSha256": "593f6fca588039791cc217dc11b52b28eb57bf7aa1ea4e48701e8b5f7ded8af2"
+    },
+    {
+      "text": "Vous avez de la fièvre ?",
+      "file": "male/74cc66db994667918bb9.m4a",
+      "speaker": "charon",
+      "durationSeconds": 1.02,
+      "bytes": 10251,
+      "audioSha256": "b09e60f642dcaabef835ad2a840bbfefadcf50235384e0b24d3102d6c3fa5e58"
+    },
+    {
+      "text": "Ouvrez la bouche. Bon, ce n'est pas grave. Je vais vous donner un sirop. Buvez beaucoup d'eau chaude et reposez-vous. Si ça ne va pas mieux dans une semaine, revenez me voir.",
+      "file": "male/57c73040649db4f7deec.m4a",
+      "speaker": "charon",
+      "durationSeconds": 10.79,
+      "bytes": 97069,
+      "audioSha256": "a82a9b77a84e6ef025e59aee6f3bfd5f496e6561c64d246345a1914558aa0e00"
+    },
+    {
+      "text": "Je vous conseille de rester chez vous pendant deux jours.",
+      "file": "male/f9ae6f603c7d3c01e921.m4a",
+      "speaker": "charon",
+      "durationSeconds": 2.15,
+      "bytes": 19970,
+      "audioSha256": "d462cd37e976ab126206bcddf5e4d0a9a8f6470f7e4e30c07298c482507f6823"
+    },
+    {
+      "text": "Aujourd'hui, nous recevons Claire Dubois, qui a ouvert un café-librairie dans notre quartier il y a deux ans. Claire, pourquoi avoir choisi ce projet ?",
+      "file": "male/385e8d7970c8a3c52c2b.m4a",
+      "speaker": "charon",
+      "durationSeconds": 7.1,
+      "bytes": 64529,
+      "audioSha256": "f526b89eb015e4166244a04fe7b4b258eacf1beeddfad4bd965caf8805f33359"
+    },
+    {
+      "text": "Ça n'a pas été trop difficile ?",
+      "file": "male/05aa5ffb68d26b7a77ae.m4a",
+      "speaker": "charon",
+      "durationSeconds": 1.58,
+      "bytes": 13647,
+      "audioSha256": "11fa008bdc1f96ed0ea4103918967e69934572d3da790ab1161a8fbbd6d5e9cf"
+    },
+    {
+      "text": "Et qui sont vos clients ?",
+      "file": "male/73151658c13ff84115d1.m4a",
+      "speaker": "charon",
+      "durationSeconds": 1.21,
+      "bytes": 11580,
+      "audioSha256": "70f3ad0fc180cfabb2bd798cc8148ccce296f92238881ccaba95547d8d1402ce"
+    },
+    {
+      "text": "Quels sont vos projets ?",
+      "file": "male/ac783733cb257755ecf1.m4a",
+      "speaker": "charon",
+      "durationSeconds": 1.07,
+      "bytes": 11261,
+      "audioSha256": "ef7f1864186a7c3c90d65c07eeac9b0318797348ce3fc6ef9bc86efea35758b7"
+    },
+    {
+      "text": "Bonjour à tous et bienvenue à Paris ! Je m'appelle Thomas et je serai votre guide pendant ces trois jours. Voici le programme. Aujourd'hui, lundi, nous allons d'abord déposer vos bagages à l'auberge de jeunesse, puis nous visiterons le quartier du Marais à pied. Demain matin, nous irons au musée d'Orsay ; la visite dure environ deux heures. L'après-midi est libre : vous pourrez faire du shopping ou vous promener au bord de la Seine. Mercredi, nous prendrons le train pour Versailles à huit heures et quart. Attention, le train ne nous attendra pas ! Et le soir, n'oubliez pas : vous devez être à l'auberge avant vingt-deux heures. Si vous avez un problème, appelez-moi ; mon numéro est sur la fiche que je vais vous donner. Bon séjour !",
+      "file": "male/6b4dd159d190d801b397.m4a",
+      "speaker": "charon",
+      "durationSeconds": 38.98,
+      "bytes": 351972,
+      "audioSha256": "0fd1efd0b07de73b0e49a67dd36e0d9066635d3ff958e76839f2de2783daae34"
+    }
+  ],
+  "maleCount": 21,
+  "maleBytes": 931220,
+  "malePending": 0
 }
