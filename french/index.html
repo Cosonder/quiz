@@ -1270,6 +1270,17 @@ html.qf #stage > section.q-card.listening-card > .listening-mode{margin:0}
 .listening-edit-actions{gap:8px;flex-wrap:nowrap}.listening-edit-actions>.btn{display:inline-flex;align-items:center;justify-content:center;flex:0 0 44px;width:44px;min-width:44px;height:44px;min-height:44px;padding:0;font-size:1.2rem;line-height:1}
 
 .survey-responses{margin-top:10px}.survey-responses>summary{font-weight:600;cursor:pointer;padding:8px 0}.survey-response{border-top:1px solid var(--line);padding:8px 0}.survey-response p{margin:2px 0;overflow-wrap:anywhere}.survey-response-head{font-weight:600}
+/* 拼写题的键盘输入框；听力“听写”的输入框和重音字母条 */
+.v-type, .listening-dictation input { font: inherit; font-size: 1.05rem; width: 100%; max-width: 26rem; padding: 8px 12px; border-radius: 10px; border: 1.5px solid var(--line); background: var(--card); color: var(--fg); }
+.v-type { margin-top: 10px; }
+.v-type:focus-visible, .listening-dictation input:focus-visible { outline: 2px solid var(--accent); outline-offset: 1px; border-color: var(--accent); }
+.listening-dictation { display: flex; flex-direction: column; gap: 10px; }
+.listening-dictation .listening-prompt { margin: 0; color: var(--muted); }
+.listening-dictation .listening-prompt b { color: var(--fg); font-weight: 600; }
+.listening-accents { display: flex; flex-wrap: wrap; gap: 6px; }
+.listening-accents button { font: inherit; min-width: 2.2rem; height: 2.2rem; border-radius: 8px; border: 1.5px solid var(--line); background: var(--card); color: var(--fg); cursor: pointer; }
+.listening-accents button:hover:not(:disabled) { border-color: var(--accent); }
+.listening-accents button:disabled { opacity: .4; cursor: default; }
 .picture-feedback{display:flex;align-items:center;flex-wrap:wrap;gap:6px 12px;padding:10px 0;font-size:.78rem;color:var(--muted);font-weight:400;line-height:1.5}
 .fb-target{display:flex;align-items:center;gap:8px;flex-basis:100%;color:var(--fg)}
 .fb-thumb{width:72px;height:48px;object-fit:contain;border-radius:6px}
@@ -1834,12 +1845,12 @@ html.qf #stage > section.q-card > .explain { flex: none !important; height: clam
   </div>
 </div>
 
-<script src="data-88603a968996.js"></script>
+<script src="data-61e4218fa126.js"></script>
 <script>
 (()=>{const key='fq-boot-retry-1.9.44';
  if(typeof ROUNDS!=='undefined'&&typeof BANK!=='undefined'&&typeof LANG_FILES!=='undefined'){
   try{sessionStorage.removeItem(key);}catch{}
-  document.write('<script src="app-ed950c92393d.js"><\/script>');return;
+  document.write('<script src="app-d83bc099912b.js"><\/script>');return;
  }
  const note=document.getElementById('saveNote');if(note)note.textContent='正在下载更新，请稍候… / Downloading update… / Téléchargement de la mise à jour…';
  const retry=document.createElement('button');retry.type='button';retry.className='btn';retry.textContent='重新加载 / Reload / Recharger';retry.onclick=()=>location.reload();document.getElementById('stage')?.append(retry);
