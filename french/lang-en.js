@@ -4767,6 +4767,7 @@ const LANG_DICT = {
 "重录了听力对话《Après un examen raté》里读得不够清楚的一句。": "Re-recorded one unclear sentence in the listening dialogue “Après un examen raté”.",
 "听力 · 单词例句": "Listening · Vocabulary examples",
 "单词例句": "Vocabulary examples",
+"网站首页（选择法语或随机分析的页面）下方新增“版本”和“Buy me some Tokens”：不用进入练习页就能看到当前版本和全部更新记录，内容与“设置 → 版本”相同。": "The site’s start page (where you choose French or Stochastic analysis) now has “Version” and “Buy me some Tokens” at the bottom: you can see the current version and the full update history without opening a practice page; the content is the same as Settings → Version.",
 "听力 · 语音基础": "Listening · Pronunciation",
 "环法之旅新增魁北克、比利时法语区与瑞士法语区三张分区地图，共 30 关、308 道原创题；各路线独立解锁，法国原有关卡、星数和收藏保留。": "The travel game adds Québec, French-speaking Belgium and French-speaking Switzerland: three administrative maps, 30 levels and 308 original questions. Routes unlock independently; existing French-route progress, stars and collections are preserved.",
 "魁北克按个人法语笔记中的 N/S 词干模型深化直陈式现在时，配合例外说明与复习题；完成一个目的地的全区挑战可收藏对应像素明信片，并获得一次性奖励。": "Québec develops the present indicative through the N/S stem model from personal French notes, with explicit limits, exceptions and review. Completing a destination unlocks its pixel-art postcard and a one-time reward.",
