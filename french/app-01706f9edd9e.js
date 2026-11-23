@@ -8116,7 +8116,7 @@ function feedbackThreadCard(row,uid,epoch,admin,publicMode=false,onLikeChange=nu
  const item=el('article','fb-message'),badge=el('p','fb-note');
  const current=()=>item.isConnected&&fbCurrent(uid,epoch);
  const drawBadge=()=>{badge.textContent=fbText(row.unread_count?'unread':row.reply_count?(admin||publicMode?'replied':'read'):'awaiting')+(row.reply_count?' · '+row.reply_count:'');};drawBadge();
- if(admin)item.append(el('p','fb-message-author',(row.nick||fbText('anonymous'))+' · '+row.user_id));
+ if(admin)item.append(el('p','fb-message-author',((typeof socShownNick==='function'&&row.user_id?socShownNick(row.nick,row.user_id):row.nick)||fbText('anonymous'))+' · '+row.user_id));
  item.append(userAvatar(row.author),el('time',null,new Date(row.created_at).toLocaleString(UI_LANG==='zh'?'zh-CN':UI_LANG)),el('p','fb-message-body',row.body),badge);
  const toggle=fbButton(fbText('thread')),panel=el('div','fb-thread'),list=el('div'),status=el('p','fb-note'),older=fbButton(fbText('older')),retry=fbButton(fbText('retry'));
  panel.hidden=true;older.hidden=true;retry.hidden=true;toggle.setAttribute('aria-expanded','false');status.setAttribute('role','status');
@@ -8618,6 +8618,8 @@ function setFold(wrap, key, title, initialOpen = false) {
 // 每次用户可见更新都新增记录：默认只递增第三位 1.x.y → 1.x.(y+1)，超过 9 继续到 10、11；第二位升级需用户明确要求。
 // 首位保持 1，只有用户明确要求才可修改；历史记录保留。完整发布规则见根目录 AGENTS.md。
 const CHANGELOG = [
+  {"v": "1.9.80", "p": "fr", "d": "2026-11-23", "items": ["没改过昵称的同学，默认昵称从“同学 ABCD”换成了“形容词 + 的 + 法国味的东西”，例如“优雅的埃菲尔铁塔”“酥脆的可颂”“香甜的马卡龙”。每个账号的名字固定不变；排行榜上别人的旧默认名也一起换了。自己取过的昵称不受影响，想换随时可以在“同学”页里改。"]},
+  {"v": "1.9.79", "p": "fr", "d": "2026-11-23", "items": ["环法之旅明信片背面的 26 段法语介绍有了角色录音，按城市由 Ninon、Lison、Pia 轮流朗读。（明信片相册在随机分析页也能打开，但角色录音只在法语页播放。）", "动词变位开始有角色录音，先录现在时、复合过去时、未完成过去时、简单将来时四个常用时态，同一个动词的所有形式由同一位伙伴读。答题后朗读的单个形式 3131 个里已有 2930 个，变位表里“读”按钮用的整表 384 张里已有 99 张；其余暂时仍用系统朗读，会继续补齐。", "这些录音都是 AI 合成配音，已用本地语音识别逐条核对，尚未人工听审。"]},
   {"v": "1.9.78", "p": "fr", "d": "2026-11-22", "items": ["单词拼写题可以用键盘输入了：字母块下面多了一个输入框，点它会弹出键盘（手机也可以），打出来的字母直接填进格子；点字母块和键盘输入可以随时混用，字母块里没有的字母也能打。电脑上不点输入框直接打字也行。", "听力新增题型“听写”：听录音，用键盘把听到的法语写出来，题目上方显示这句话的意思（中文界面显示中文，英文界面显示英文，法语界面不显示）。只给短材料出题：1093 句单句和 624 个单词，共 1717 道。大小写和标点不计，重音符号要写对；输入框下面有一排重音字母可以点。名词带不带冠词都算对。"]},
   {"v": "1.9.77", "p": "fr", "d": "2026-11-22", "items": ["听力新增题型“听句选译文”：听一句法语，从四个译文里选出正确的一个，三个干扰项都和原句很接近，只在否定、时间、数字、人物或关键词上有一处不同。中文界面选中文译文，英文界面选英文译文，法语界面不出这种题。共 1093 道，覆盖全部单词例句和基础听力里的单句。", "单词例句新增理解选择题：979 句例句每句配一道法语问题和四个选项。现在每句例句有四种练法：理解选择、听句选译文、关键词填空、复原句子，都用同一段角色录音。"]},
   {"v": "1.9.76", "p": "fr", "d": "2026-11-22", "items": ["背单词的录音补齐了：981 句例句和 624 个词现在全部有 Ninon、Lison、Pia 的录音。上一版因自动核对没通过而暂缓的 6 句例句和 25 个词，经人工试听确认后一并发布。", "B1 模拟卷听力里 21 句男性说话人的台词有了男声录音（Charon），女性台词仍由 Pia 朗读；整套模拟卷听力不再需要系统朗读。在“设置 → 学习配音”选择系统语音时照旧使用系统朗读。"]},
@@ -16001,13 +16003,28 @@ function socRemote() {
   gameRaw.forEach(g => { if (g.kind === "social" && (!best || String(g.at) > String(best.at))) best = g; });
   return best;
 }
+// 没改过名字的用户的默认昵称：“形容词 + 的 + 带法国味的东西”，由账号 id 固定算出（同一个账号永远是同一个名字）。
+// 以前的默认昵称是“同学 ABCD”：数据库里可能还存着这种旧名字，显示和上传时都按新规则换掉。昵称上限 16 个字。
+const SOC_ADJ = ["优雅", "浪漫", "香甜", "酥脆", "闪亮", "悠闲", "调皮", "勇敢", "温柔", "快乐", "好奇", "害羞", "贪吃", "爱笑", "迷人", "可爱", "机灵", "认真", "慵懒", "热情",
+  "梦幻", "清新", "活泼", "神秘", "骄傲", "淡定", "元气满满", "软糯", "香脆", "自由", "灿烂", "安静", "勤奋", "会飞", "爱旅行", "爱唱歌", "早起", "迷路", "发光", "刚出炉"];
+const SOC_NOUN = ["埃菲尔铁塔", "卢浮宫", "凯旋门", "可颂", "马卡龙", "法棍", "闪电泡芙", "可丽饼", "玛德琳", "舒芙蕾", "焦糖布丁", "千层酥", "可露丽", "费南雪", "布里欧修", "洋葱汤",
+  "卡门贝尔奶酪", "松露", "薰衣草", "鸢尾花", "塞纳河", "蒙马特", "圣米歇尔山", "凡尔赛宫", "巴黎圣母院", "香榭丽舍", "蔚蓝海岸", "普罗旺斯", "贝雷帽", "条纹衫", "手风琴", "小王子",
+  "高卢雄鸡", "旋转木马", "热气球", "歌剧院", "咖啡馆", "马赛皂", "蜗牛", "巧克力"];
+function socDefaultNick(uid) {
+  let h = 2166136261; for (const c of String(uid || "")) { h ^= c.charCodeAt(0); h = Math.imul(h, 16777619); }
+  h >>>= 0;
+  return SOC_ADJ[h % SOC_ADJ.length] + "的" + SOC_NOUN[Math.floor(h / SOC_ADJ.length) % SOC_NOUN.length];
+}
+const socIsOldDefault = nick => /^同学(\s+[0-9A-Fa-f]{0,4})?$/.test(String(nick || "").trim());
+// 显示用：别人还存着旧默认名（或空名字）时，按他的账号 id 换成新名字
+const socShownNick = (nick, uid) => !nick || socIsOldDefault(nick) ? socDefaultNick(uid) : nick;
 function socMe() {
   let x = null; try { x = JSON.parse(localStorage.getItem("fq-social") || "null"); } catch (e) {}
   x = x || {};
   const r = socRemote();
   if (r && (Date.parse(r.at) || 0) > (x.at || 0)) x = { nick: r.nick, hidden: !!r.hidden, showcase: Array.isArray(r.showcase) ? r.showcase.slice(0, SOC_SHOW) : [], at: Date.parse(r.at) || 0 };
   const a = typeof syncAuth === "function" ? syncAuth() : null;
-  if (!x.nick) x.nick = "同学 " + (a && a.uid ? a.uid.slice(0, 4).toUpperCase() : "");
+  if (!x.nick || socIsOldDefault(x.nick)) x.nick = socDefaultNick(a && a.uid);
   if (!Array.isArray(x.showcase)) x.showcase = [];
   return x;
 }
@@ -16223,7 +16240,7 @@ function socDrawBoard() {
     const row = el("button", "soc-r" + (r.user_id === me ? " me" : "") + (socOpen === r.user_id ? " open" : "")); row.type = "button";
     const rank = el("span", "soc-rank", i < 3 ? ["🥇", "🥈", "🥉"][i] : String(i + 1));
     // 昵称是用户自己起的，不翻译（“（我）”“已隐藏”放在单独的 span 里照常翻译）
-    const name = el("span", "soc-name"), nk = el("span", null, r.nick); nk.dataset.noi18n = "";
+    const name = el("span", "soc-name"), nk = el("span", null, socShownNick(r.nick, r.user_id)); nk.dataset.noi18n = "";
     name.append(userAvatar(r.author),nk); if (r.user_id === me) name.append(el("span", null, "（我）")); if (r.hidden) name.append(el("span", null, " · 已隐藏"));
     const nums = el("span", "soc-nums");
     nums.append(el("b", socSort === "xp" ? "hl" : null, `Lv ${r.level}`), el("span", socSort === "coins" ? "hl" : null, `${r.coins} 金币`), el("span", socSort === "cards" ? "hl" : null, `${r.cards} 张`));
@@ -25097,7 +25114,7 @@ function studyClipSegments(entry,text){
 async function studyAudioIndex(){
   if(studyAudioManifest)return studyAudioManifest;
   if(studyAudioLoad)return studyAudioLoad;
-  studyAudioLoad=(async()=>{const controller=new AbortController(),timer=setTimeout(()=>controller.abort(),8000);try{const r=await fetch(STUDY_AUDIO_BASE+'manifest.json?v=1.9.76',{signal:controller.signal});if(!r.ok)throw Error('manifest');const m=await r.json();if(m.version!==1||!m.characters)throw Error('manifest');studyAudioManifest=m;return m;}finally{clearTimeout(timer);studyAudioLoad=null;}})();
+  studyAudioLoad=(async()=>{const controller=new AbortController(),timer=setTimeout(()=>controller.abort(),8000);try{const r=await fetch(STUDY_AUDIO_BASE+'manifest.json?v=1.9.79',{signal:controller.signal});if(!r.ok)throw Error('manifest');const m=await r.json();if(m.version!==1||!m.characters)throw Error('manifest');studyAudioManifest=m;return m;}finally{clearTimeout(timer);studyAudioLoad=null;}})();
   return studyAudioLoad;
 }
 function studySystemPart(text,rate,btn,done,role){
