@@ -56,9 +56,19 @@
     } catch (e) {}
   });
 })();
-</script><style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}body{margin:0;padding:0}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style></head><body>
+</script><style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}body{margin:0;padding:0}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style><link rel="preload" as="script" href="data-e2da179de969.js"><link rel="preload" as="script" href="app-6332e87c02c5.js"></head><body>
 <title>法语语法小测验</title>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@600;900&family=Noto+Sans+SC:wght@400;500;700&display=swap">
+<script>
+// 网页字体不挡首屏：样式表有 150 KB、字体文件合计 1 MB 多，而且 fonts.googleapis.com 在有些网络下很慢甚至打不开。
+// 第一次来：等页面能用了再加载，先用系统字体显示；以前加载成功过（浏览器里有缓存）：马上加载，但不阻塞显示。
+(() => {
+  const add = () => { const l = document.createElement("link"); l.rel = "stylesheet"; l.href = "https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@600;900&family=Noto+Sans+SC:wght@400;500;700&display=swap";
+    l.onload = () => { try { localStorage.setItem("quiz-fonts", "1"); } catch (e) {} }; document.head.append(l); };
+  let seen = false; try { seen = localStorage.getItem("quiz-fonts") === "1"; } catch (e) {}
+  if (seen) add(); else addEventListener("load", () => setTimeout(add, 300));
+})();
+</script>
+<noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@600;900&family=Noto+Sans+SC:wght@400;500;700&display=swap"></noscript>
 <style>
 /* 左侧按教材章节排列的目录 + 右侧答题卡 / 错题本；窄屏时目录收进可展开的面板 */
 :root {
@@ -1284,6 +1294,10 @@ html.qf #stage > section.q-card.listening-card > .listening-mode{margin:0}
 
 /* “听不懂？/ 太简单？”：在上一题左边多一个按钮；有提交按钮的题型改成四格。 */
 .listening-card>.actions.listening-answer-actions.has-detour{grid-template-columns:repeat(2,minmax(0,1fr))}@media(min-width:520px){.listening-card>.actions.listening-answer-actions.has-detour{grid-template-columns:repeat(4,minmax(0,1fr))}}
+
+/* 脚本还没下载完时，题目区先显示“正在加载”；页面第一次渲染时整块被替换掉。 */
+.boot-loading{text-align:center}.boot-loading p{margin:0 0 8px}.boot-bar{height:6px;border-radius:3px;background:var(--line,#d9dce3);overflow:hidden;margin-top:14px}.boot-bar span{display:block;width:35%;height:100%;border-radius:3px;background:var(--accent,#2f5bd3);animation:boot-slide 1.4s ease-in-out infinite}
+@keyframes boot-slide{0%{transform:translateX(-100%)}100%{transform:translateX(290%)}}@media(prefers-reduced-motion:reduce){.boot-bar span{animation:none;width:100%;opacity:.5}}
 .picture-feedback{display:flex;align-items:center;flex-wrap:wrap;gap:6px 12px;padding:10px 0;font-size:.78rem;color:var(--muted);font-weight:400;line-height:1.5}
 .fb-target{display:flex;align-items:center;gap:8px;flex-basis:100%;color:var(--fg)}
 .fb-thumb{width:72px;height:48px;object-fit:contain;border-radius:6px}
@@ -1841,19 +1855,19 @@ html.qf #stage > section.q-card > .explain { flex: none !important; height: clam
     </details>
     <div class="main" id="main">
       <div class="progress" id="progress"><span class="set" id="pSet"></span><span id="pText"><label for="jumpInput">第</label> <input id="jumpInput" type="number" inputmode="numeric" min="1" step="1" aria-label="题号"> <span id="pTotal"></span> 题 <button type="button" id="jumpBtn" class="jump">跳转</button></span><label class="per" for="perSel">每组 <select id="perSel"><option value="5">5</option><option value="10">10</option><option value="15">15</option><option value="20">20</option><option value="30">30</option><option value="0">全部</option></select> 题</label><label class="study" for="studyChk"><input type="checkbox" id="studyChk"> 学习模式</label><div class="bar"><i id="pBar"></i></div><span id="pScore">得分 0</span></div>
-      <main id="stage"></main>
+      <main id="stage"><section class="card boot-loading" id="bootLoading" data-noi18n><p><b>正在加载题库…</b></p><p class="sub">第一次打开要下载约 1.6 MB，网络慢时需要十几秒；之后会存在浏览器里，再打开就快了。<br>Loading the question bank… · Chargement des exercices…</p><div class="boot-bar" role="progressbar" aria-label="Loading"><span></span></div></section></main>
       <p class="sub keys-note">键盘：↑ ↓ 移动光标 · 回车 选择 · ← 上一题 · → 下一题 · Shift 提示</p>
       <p class="sub" id="saveNote">正在读取答题记录…</p>
     </div>
   </div>
 </div>
 
-<script src="data-98f7c49a8dbe.js"></script>
+<script src="data-e2da179de969.js"></script>
 <script>
 (()=>{const key='fq-boot-retry-1.9.44';
  if(typeof ROUNDS!=='undefined'&&typeof BANK!=='undefined'&&typeof LANG_FILES!=='undefined'){
   try{sessionStorage.removeItem(key);}catch{}
-  document.write('<script src="app-45616f6631c3.js"><\/script>');return;
+  document.write('<script src="app-6332e87c02c5.js"><\/script>');return;
  }
  const note=document.getElementById('saveNote');if(note)note.textContent='正在下载更新，请稍候… / Downloading update… / Téléchargement de la mise à jour…';
  const retry=document.createElement('button');retry.type='button';retry.className='btn';retry.textContent='重新加载 / Reload / Recharger';retry.onclick=()=>location.reload();document.getElementById('stage')?.append(retry);

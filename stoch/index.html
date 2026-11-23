@@ -58,7 +58,17 @@
 })();
 </script><style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}body{margin:0;padding:0}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style></head><body>
 <title>随机分析练习</title>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@600;900&family=Noto+Sans+SC:wght@400;500;700&display=swap">
+<script>
+// 网页字体不挡首屏：样式表有 150 KB、字体文件合计 1 MB 多，而且 fonts.googleapis.com 在有些网络下很慢甚至打不开。
+// 第一次来：等页面能用了再加载，先用系统字体显示；以前加载成功过（浏览器里有缓存）：马上加载，但不阻塞显示。
+(() => {
+  const add = () => { const l = document.createElement("link"); l.rel = "stylesheet"; l.href = "https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@600;900&family=Noto+Sans+SC:wght@400;500;700&display=swap";
+    l.onload = () => { try { localStorage.setItem("quiz-fonts", "1"); } catch (e) {} }; document.head.append(l); };
+  let seen = false; try { seen = localStorage.getItem("quiz-fonts") === "1"; } catch (e) {}
+  if (seen) add(); else addEventListener("load", () => setTimeout(add, 300));
+})();
+</script>
+<noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@600;900&family=Noto+Sans+SC:wght@400;500;700&display=swap"></noscript>
 <script>
 window.MathJax = { tex: { inlineMath: [["$", "$"]], displayMath: [["$$", "$$"]] }, svg: { fontCache: "global" }, startup: { typeset: false } };
 </script>
@@ -3225,6 +3235,7 @@ function localDb(ns) {
   } catch (e) { saveNote.textContent = "暂时无法读取答题记录，答题不受影响。"; }
 })();
 function record(item, i, right) {
+  if (typeof funnelStep === "function") funnelStep("answer", item.audio ? "listening" : "grammar");
   if (!dbRef) return;
   const d = {
     round: roundOf(item.id), qid: item.id, ch: item.ch, cat: item.cat, question: item.title ? `（长文听力 · ${item.title}）${item.q}` : item.audio ? "（听力）" + item.audio : item.q,
@@ -3593,6 +3604,7 @@ function progReset(docs, voc) { ansRaw = docs; if (voc) vocRaw = voc; prog = nul
 
 // 做题时：记一条，弹出“+经验”提示
 function progLive(d, kind) {
+  if (typeof funnelStep === "function") funnelStep("answer", funnelSection(d, kind));
   if (typeof tourAnswer === "function") tourAnswer(d, kind);   // 环法之旅：答错扣心
   if (kind === "vocab") vocRaw.push(d); else if (ansRaw) ansRaw.push(d);
   if (!prog) return;
@@ -6118,6 +6130,7 @@ function setFold(wrap, key, title, initialOpen = false) {
 // 每次用户可见更新都新增记录：默认只递增第三位 1.x.y → 1.x.(y+1)，超过 9 继续到 10、11；第二位升级需用户明确要求。
 // 首位保持 1，只有用户明确要求才可修改；历史记录保留。完整发布规则见根目录 AGENTS.md。
 const CHANGELOG = [
+  {"v": "1.9.83", "d": "2026-11-23", "items": ["法语页第一次打开更快：网页字体不再挡住首屏（第一次来先用系统字体显示，页面能用了再换成网页字体），两个大脚本改成同时下载。在模拟的慢速手机网络（1.6 Mbps）下，从打开到能做题由约 15 秒降到约 10 秒，首次出现内容由约 2 秒降到 1 秒以内；谷歌字体打不开的网络下不再白屏等待。随机分析页的字体也同样处理。", "法语页还在下载时，题目区会显示“正在加载题库…”，不再是一个点不动的空页面。", "新增匿名访问统计，用来了解新访客在哪一步离开：网站给每个浏览器一个随机编号，每天最多记四件事——看过首页、打开法语页、答过题、做完一组，以及界面语言和第一题所在的板块。不含账号、网址和答题内容，未登录也会记录；浏览器开启“请勿跟踪”时不记录，也可以在“设置 → 使用统计”里关闭。"]},
   {"v": "1.9.82", "p": "fr", "d": "2026-11-23", "items": ["自己排到的听写题（不是从别的题点“太简单？”插进来的）也有“听不懂？”按钮：没作答时和答错后都可以点，先做一道同一句的句子排序题，再回来重做这道听写。单词听写没有排序题，所以没有这个按钮。"]},
   {"v": "1.9.81", "p": "fr", "d": "2026-11-23", "items": ["听力的理解选择题多了一个“听不懂？”按钮（在“上一题”左边，没作答时和答错后都有）：点一下会先插一道同一段材料的句子排序题，做完再回来重做这道理解题。", "句子排序题答对后有“太简单？”按钮：点一下跳到同一段材料的理解选择题（从“听不懂？”插进来的排序题不显示）。理解选择题答对后也有“太简单？”按钮：点一下加一道同一段材料的听写题（只有单句这类短材料有听写题，长对话没有这个按钮）。", "临时插进来的题只留在这一轮里，不占每组的题数，做题记录记在原题上。"]},
   {"v": "1.9.80", "p": "fr", "d": "2026-11-23", "items": ["没改过昵称的同学，默认昵称从“同学 ABCD”换成了“形容词 + 的 + 法国味的东西”，例如“优雅的埃菲尔铁塔”“酥脆的可颂”“香甜的马卡龙”。每个账号的名字固定不变；排行榜上别人的旧默认名也一起换了。自己取过的昵称不受影响，想换随时可以在“同学”页里改。"]},
