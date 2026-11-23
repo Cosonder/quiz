@@ -325,12 +325,19 @@ function homeOf(q) {
 function makeSet(key) { let qs = members(key); if (typeof qlApply === "function") qs = qlApply(qs, key); if (key.startsWith("listen:") && typeof listeningInterleave === "function") qs = listeningInterleave(qs, key); if(typeof studySortQuestions === "function")qs=studySortQuestions(qs,key); return { key, label: labelOf(key), qs }; }   // 法语页：按设置里的难度等级挑题
 // 记住每一组做到第几题（只存在这台设备的浏览器里）
 function loadPos() { try { const p = JSON.parse(localStorage.getItem("fq-pos") || "{}"); return p && typeof p === "object" && !Array.isArray(p) ? p : {}; } catch (e) { return {}; } }
-function savePos() { try { const m = loadPos(); m[set.key] = idx; localStorage.setItem("fq-pos", JSON.stringify(m)); } catch (e) {} }
+function savePos() { try { const m = loadPos(); m[set.key] = idx - set.qs.slice(0, idx).filter(q => q.inserted).length;   // 临时插进来的题不算位置
+  localStorage.setItem("fq-pos", JSON.stringify(m)); } catch (e) {} }
 // 每组做几题（0 = 整轮一次做完），默认 10 题，记在本机浏览器里
 const PER_OPTS = [5, 10, 15, 20, 30, 0];
 let per = (() => { try { const v = localStorage.getItem("fq-per"); return v !== null && PER_OPTS.includes(Number(v)) ? Number(v) : 10; } catch (e) { return 10; } })();
 let bStart = 0;   // 本组第一题在整轮里的下标
-const bEnd = () => per ? Math.min(bStart + per, set.qs.length) : set.qs.length;
+// 一组 per 道题；做题时临时插进来的题（inserted：'before' 跟着后一题，'after' 跟着前一题）不占名额
+const bEnd = () => {
+  if (!per) return set.qs.length;
+  let k = bStart, n = 0;
+  for (; k < set.qs.length; k++) { const ins = set.qs[k].inserted; if (!ins) { if (n >= per) break; n++; } else if (n >= per && ins !== "after") break; }
+  return k;
+};
 function calcScore() { let n = 0; for (let k = bStart; k < bEnd(); k++) if (answers[k] !== undefined && set.qs[k].a === answers[k]) n++; return n; }
 function startSet(key, fresh) {
   set = makeSet(key); score = 0; answers = {};
@@ -8618,6 +8625,8 @@ function setFold(wrap, key, title, initialOpen = false) {
 // 每次用户可见更新都新增记录：默认只递增第三位 1.x.y → 1.x.(y+1)，超过 9 继续到 10、11；第二位升级需用户明确要求。
 // 首位保持 1，只有用户明确要求才可修改；历史记录保留。完整发布规则见根目录 AGENTS.md。
 const CHANGELOG = [
+  {"v": "1.9.82", "p": "fr", "d": "2026-11-23", "items": ["自己排到的听写题（不是从别的题点“太简单？”插进来的）也有“听不懂？”按钮：没作答时和答错后都可以点，先做一道同一句的句子排序题，再回来重做这道听写。单词听写没有排序题，所以没有这个按钮。"]},
+  {"v": "1.9.81", "p": "fr", "d": "2026-11-23", "items": ["听力的理解选择题多了一个“听不懂？”按钮（在“上一题”左边，没作答时和答错后都有）：点一下会先插一道同一段材料的句子排序题，做完再回来重做这道理解题。", "句子排序题答对后有“太简单？”按钮：点一下跳到同一段材料的理解选择题（从“听不懂？”插进来的排序题不显示）。理解选择题答对后也有“太简单？”按钮：点一下加一道同一段材料的听写题（只有单句这类短材料有听写题，长对话没有这个按钮）。", "临时插进来的题只留在这一轮里，不占每组的题数，做题记录记在原题上。"]},
   {"v": "1.9.80", "p": "fr", "d": "2026-11-23", "items": ["没改过昵称的同学，默认昵称从“同学 ABCD”换成了“形容词 + 的 + 法国味的东西”，例如“优雅的埃菲尔铁塔”“酥脆的可颂”“香甜的马卡龙”。每个账号的名字固定不变；排行榜上别人的旧默认名也一起换了。自己取过的昵称不受影响，想换随时可以在“同学”页里改。"]},
   {"v": "1.9.79", "p": "fr", "d": "2026-11-23", "items": ["环法之旅明信片背面的 26 段法语介绍有了角色录音，按城市由 Ninon、Lison、Pia 轮流朗读。（明信片相册在随机分析页也能打开，但角色录音只在法语页播放。）", "动词变位开始有角色录音，先录现在时、复合过去时、未完成过去时、简单将来时四个常用时态，同一个动词的所有形式由同一位伙伴读。答题后朗读的单个形式 3131 个里已有 2930 个，变位表里“读”按钮用的整表 384 张里已有 99 张；其余暂时仍用系统朗读，会继续补齐。", "这些录音都是 AI 合成配音，已用本地语音识别逐条核对，尚未人工听审。"]},
   {"v": "1.9.78", "p": "fr", "d": "2026-11-22", "items": ["单词拼写题可以用键盘输入了：字母块下面多了一个输入框，点它会弹出键盘（手机也可以），打出来的字母直接填进格子；点字母块和键盘输入可以随时混用，字母块里没有的字母也能打。电脑上不点输入框直接打字也行。", "听力新增题型“听写”：听录音，用键盘把听到的法语写出来，题目上方显示这句话的意思（中文界面显示中文，英文界面显示英文，法语界面不显示）。只给短材料出题：1093 句单句和 624 个单词，共 1717 道。大小写和标点不计，重音符号要写对；输入框下面有一排重音字母可以点。名词带不带冠词都算对。"]},
@@ -10978,6 +10987,9 @@ const LISTENING_GAPS = {
 // Each listening format has a stable question ID and its own scored attempt.
 const listeningAttempts = new WeakMap();
 const LISTEN_LABELS = {
+ tooHard:['听不懂？','Too hard?','Trop difficile ?'],tooEasy:['太简单？','Too easy?','Trop facile ?'],
+ tooHardTitle:['先做一道同一段材料的排序题，再回来做这道题','Do a word-order question on the same audio first, then come back to this one','Faire d’abord une remise en ordre sur le même audio, puis revenir à cette question'],
+ tooEasyDictation:['加一道同一段材料的听写题','Add a dictation on the same audio','Ajouter une dictée sur le même audio'],tooEasyComprehension:['换成同一段材料的理解选择题','Go to the comprehension question on the same audio','Passer à la question de compréhension sur le même audio'],
  comprehension:['理解选择','Comprehension','Compréhension'],translate:['听句选译文','Choose the translation','Choisir la traduction'],dictation:['听写','Dictation','Dictée'],
  dictationHelp:['听录音，用键盘把听到的法语写出来。大小写和标点不计，重音符号要写对。','Listen and type the French you hear. Capitals and punctuation are ignored; accents must be right.','Écoutez et écrivez ce que vous entendez. Majuscules et ponctuation ne comptent pas ; les accents doivent être justes.'],
  meaning:['意思：','Meaning: ','Sens : '],typeHere:['在这里输入听到的法语','Type the French you hear','Écrivez ce que vous entendez'],accentBar:['插入重音字母','Insert an accented letter','Insérer une lettre accentuée'],accentOnly:['只差重音符号。','Only the accents differ.','Seuls les accents diffèrent.'],cloze:['关键词填空','Keyword gaps','Mots à compléter'],order:['复原句子','Rebuild the sentence','Reconstituer la phrase'],
@@ -11043,8 +11055,60 @@ function listeningSubmit(item,run,card){
  const complete=run.mode==='dictation'?!!listeningTypedKey(run.typed):run.mode==='cloze'?LISTENING_GAPS[item.audio].every((b,i)=>run.gaps[i]):run.chosen.length===run.words.length;if(!complete)return;
  const right=listeningIsCorrect(item,run),text=listeningRecordText(item,run);run.answered=true;run.right=right;run.result=text;
  answers[idx]=right?item.a:(item.a+1)%item.opts.length;score=calcScore();
- record({...item,cat:item.cat+' · '+LISTEN_LABELS[run.mode][0],opts:[text.correct,text.chosen],a:0},right?0:1,right);comboHit('quiz',right);
+ record({...item,id:item.recordId||item.id,cat:item.cat+' · '+LISTEN_LABELS[run.mode][0],opts:[text.correct,text.chosen],a:0},right?0:1,right);comboHit('quiz',right);
  paintAnswer(answers[idx],[],card,[]);
+}
+
+// ---------- “听不懂？/ 太简单？”：按同一段材料临时插一道更容易或更难的题 ----------
+// 插进去的题是题库里那道题的副本（id 带 ~ 序号，做题记录仍记在原题上），只留在这一轮里：inserted = 'before' 跟着后一题，'after' 跟着前一题。
+let listeningDetourIndex=null,listeningDetourSeq=0;
+function listeningDetourPool(audio){
+ if(!listeningDetourIndex||listeningDetourIndex.size!==BANK.length){
+  const map=new Map();
+  for(const q of BANK){if(!q.listeningMode||!q.audio||q.phonetic)continue;let e=map.get(q.audio);if(!e){e={order:[],comprehension:[],dictation:[]};map.set(q.audio,e);}if(e[q.listeningMode])e[q.listeningMode].push(q);}
+  listeningDetourIndex={size:BANK.length,map};
+ }
+ return listeningDetourIndex.map.get(audio)||{order:[],comprehension:[],dictation:[]};
+}
+// 这道题现在能给哪个按钮：{label, title, target（要插的原题）, side, redo}
+function listeningDetourOffer(item,answered,right){
+ if(!item.audio||!item.listeningMode||item.phonetic||typeof set==='undefined'||!set)return null;
+ const pool=listeningDetourPool(item.audio),near=(d,mode)=>{const q=set.qs[idx+d];return !!q&&q.audio===item.audio&&q.listeningMode===mode;};
+ if(item.listeningMode==='comprehension'){
+  if(!answered||!right){
+   if(!pool.order.length||near(-1,'order'))return null;   // 已经插过一次排序题就不再给
+   const quote=item.quote||'',target=pool.order.find(q=>quote&&(quote.includes(q.exp)||q.exp.includes(quote)))||pool.order[0];
+   return {label:'tooHard',title:'tooHardTitle',target,side:'before',redo:true};
+  }
+  if(!pool.dictation.length||near(1,'dictation'))return null;
+  return {label:'tooEasy',title:'tooEasyDictation',target:pool.dictation[0],side:'after'};
+ }
+ // 自己排到的听写题（不是从别的题插进来的）：没作答或答错时，也可以先做排序题再回来
+ if(item.listeningMode==='dictation'&&!item.inserted&&(!answered||!right)){
+  if(!pool.order.length||near(-1,'order'))return null;
+  return {label:'tooHard',title:'tooHardTitle',target:pool.order[0],side:'before',redo:true};
+ }
+ if(item.listeningMode==='order'&&answered&&right&&!item.detourFor){
+  if(!pool.comprehension.length||near(1,'comprehension'))return null;
+  return {label:'tooEasy',title:'tooEasyComprehension',target:pool.comprehension[0],side:'after'};
+ }
+ return null;
+}
+function listeningDetourInsert(item,offer){
+ const at=offer.side==='before'?idx:idx+1,source=offer.target,copy={...source,id:source.id+'~'+(++listeningDetourSeq),recordId:source.recordId||source.id,inserted:offer.side};
+ if(offer.redo)copy.detourFor=item.id;
+ const keys=Object.keys(answers).map(Number).filter(k=>k>=at).sort((a,b)=>b-a);for(const k of keys){answers[k+1]=answers[k];delete answers[k];}
+ set.qs.splice(at,0,copy);
+ if(offer.redo)delete answers[at+1];   // 做完插进来的题后，这道题重新做
+ idx=at;score=calcScore();renderQuestion();
+}
+function listeningDetourButton(item,card){
+ const actions=card.querySelector('#nextBtn')?.parentElement;if(!actions)return;   // 卡片最下面那一排（排序题里还有一排撤回/清空）
+ actions.querySelector('#listeningDetour')?.remove();actions.classList.remove('has-detour');
+ const answered=answers[idx]!==undefined,offer=listeningDetourOffer(item,answered,answered&&answers[idx]===item.a);if(!offer)return;
+ const b=el('button','btn ghost listening-detour',listeningLabel(offer.label));b.type='button';b.id='listeningDetour';b.dataset.detour=offer.label;b.title=listeningLabel(offer.title);b.dataset.noi18n='';
+ b.addEventListener('click',()=>listeningDetourInsert(item,offer));
+ actions.prepend(b);actions.classList.add('has-detour');
 }
 
 // Pointer events cover mouse, pen and touch without native HTML drag/scroll conflicts.
@@ -11143,7 +11207,7 @@ function listeningPaint(item,card){
  if(run.mode==='dictation'&&!right&&listeningDictationTargets(item).some(t=>listeningTypedBare(t)===listeningTypedBare(text.chosen)))exp.append(el('p','sub',listeningLabel('accentOnly')));
  if(run.mode==='cloze')exp.append(el('p','transcript',listeningLabel('original')+' '+item.audio));
  exp.append(el('p','sub',listeningLabel('locked')));const hb=card.querySelector('#hintBtn');if(hb)hb.disabled=true;
- const next=card.querySelector('#nextBtn');next.disabled=false;updateProgress(idx+1);next.focus({preventScroll:true});return true;
+ const next=card.querySelector('#nextBtn');next.disabled=false;updateProgress(idx+1);listeningDetourButton(item,card);next.focus({preventScroll:true});return true;
 }
 // Original listening companion to Claire Miquel’s beginner communication syllabus.
 const COMMUNICATION_BOOK = {
@@ -15274,6 +15338,7 @@ function renderQuestion(autoPlay = true) {
   actions.append(next);
   card.append(exp, actions);
   stage.append(card);
+  if (item.audio) listeningDetourButton(item, card);
   if (item.audio && (tts || typeof Audio !== "undefined") && userActivated && autoPlay && !item.hidePromptAudio) listeningPlay(item,listening,card.querySelector("#playBtn"));
   if (answers[idx] !== undefined) paintAnswer(answers[idx], buttons, card, order);
 }
@@ -15284,14 +15349,14 @@ function choose(i, buttons, card, order) {
   const right = i === item.a;
   answers[idx] = i;
   score = calcScore();
-  record(item, i, right);
+  record(item.recordId ? { ...item, id: item.recordId } : item, i, right);
   comboHit("quiz", right);
   paintAnswer(i, buttons, card, order);
 }
 // 标出对错、显示解析（回看做过的题时也用）
 function paintAnswer(i, buttons, card, order) {
   const item = set.qs[idx];
-  questionFeedback(card,item);
+  questionFeedback(card,item.recordId?{...item,id:item.recordId}:item);
   if(listeningPaint(item,card))return;
   card.querySelectorAll('.listening-mode select').forEach(s=>s.disabled=true);
   const reveal=card.querySelector("[data-phonetic-reveal]");if(reveal)reveal.hidden=false;
@@ -15325,6 +15390,7 @@ function paintAnswer(i, buttons, card, order) {
   const next = card.querySelector("#nextBtn");
   next.disabled = false;
   updateProgress(idx + 1);
+  if (item.audio) listeningDetourButton(item, card);
   next.focus({ preventScroll: true });
 }
 
