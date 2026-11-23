@@ -3299,12 +3299,19 @@ function homeOf(q) {
 function makeSet(key) { let qs = members(key); if (typeof qlApply === "function") qs = qlApply(qs, key); if (key.startsWith("listen:") && typeof listeningInterleave === "function") qs = listeningInterleave(qs, key); if(typeof studySortQuestions === "function")qs=studySortQuestions(qs,key); return { key, label: labelOf(key), qs }; }   // 法语页：按设置里的难度等级挑题
 // 记住每一组做到第几题（只存在这台设备的浏览器里）
 function loadPos() { try { const p = JSON.parse(localStorage.getItem("sq-pos") || "{}"); return p && typeof p === "object" && !Array.isArray(p) ? p : {}; } catch (e) { return {}; } }
-function savePos() { try { const m = loadPos(); m[set.key] = idx; localStorage.setItem("sq-pos", JSON.stringify(m)); } catch (e) {} }
+function savePos() { try { const m = loadPos(); m[set.key] = idx - set.qs.slice(0, idx).filter(q => q.inserted).length;   // 临时插进来的题不算位置
+  localStorage.setItem("sq-pos", JSON.stringify(m)); } catch (e) {} }
 // 每组做几题（0 = 整轮一次做完），默认 10 题，记在本机浏览器里
 const PER_OPTS = [5, 10, 15, 20, 30, 0];
 let per = (() => { try { const v = localStorage.getItem("sq-per"); return v !== null && PER_OPTS.includes(Number(v)) ? Number(v) : 10; } catch (e) { return 10; } })();
 let bStart = 0;   // 本组第一题在整轮里的下标
-const bEnd = () => per ? Math.min(bStart + per, set.qs.length) : set.qs.length;
+// 一组 per 道题；做题时临时插进来的题（inserted：'before' 跟着后一题，'after' 跟着前一题）不占名额
+const bEnd = () => {
+  if (!per) return set.qs.length;
+  let k = bStart, n = 0;
+  for (; k < set.qs.length; k++) { const ins = set.qs[k].inserted; if (!ins) { if (n >= per) break; n++; } else if (n >= per && ins !== "after") break; }
+  return k;
+};
 function calcScore() { let n = 0; for (let k = bStart; k < bEnd(); k++) if (answers[k] !== undefined && set.qs[k].a === answers[k]) n++; return n; }
 function startSet(key, fresh) {
   set = makeSet(key); score = 0; answers = {};
@@ -6111,6 +6118,7 @@ function setFold(wrap, key, title, initialOpen = false) {
 // 每次用户可见更新都新增记录：默认只递增第三位 1.x.y → 1.x.(y+1)，超过 9 继续到 10、11；第二位升级需用户明确要求。
 // 首位保持 1，只有用户明确要求才可修改；历史记录保留。完整发布规则见根目录 AGENTS.md。
 const CHANGELOG = [
+  {"v": "1.9.81", "p": "fr", "d": "2026-11-23", "items": ["听力的理解选择题多了一个“听不懂？”按钮（在“上一题”左边，没作答时和答错后都有）：点一下会先插一道同一段材料的句子排序题，做完再回来重做这道理解题。", "句子排序题答对后有“太简单？”按钮：点一下跳到同一段材料的理解选择题（从“听不懂？”插进来的排序题不显示）。理解选择题答对后也有“太简单？”按钮：点一下加一道同一段材料的听写题（只有单句这类短材料有听写题，长对话没有这个按钮）。", "临时插进来的题只留在这一轮里，不占每组的题数，做题记录记在原题上。"]},
   {"v": "1.9.80", "p": "fr", "d": "2026-11-23", "items": ["没改过昵称的同学，默认昵称从“同学 ABCD”换成了“形容词 + 的 + 法国味的东西”，例如“优雅的埃菲尔铁塔”“酥脆的可颂”“香甜的马卡龙”。每个账号的名字固定不变；排行榜上别人的旧默认名也一起换了。自己取过的昵称不受影响，想换随时可以在“同学”页里改。"]},
   {"v": "1.9.79", "p": "fr", "d": "2026-11-23", "items": ["环法之旅明信片背面的 26 段法语介绍有了角色录音，按城市由 Ninon、Lison、Pia 轮流朗读。（明信片相册在随机分析页也能打开，但角色录音只在法语页播放。）", "动词变位开始有角色录音，先录现在时、复合过去时、未完成过去时、简单将来时四个常用时态，同一个动词的所有形式由同一位伙伴读。答题后朗读的单个形式 3131 个里已有 2930 个，变位表里“读”按钮用的整表 384 张里已有 99 张；其余暂时仍用系统朗读，会继续补齐。", "这些录音都是 AI 合成配音，已用本地语音识别逐条核对，尚未人工听审。"]},
   {"v": "1.9.78", "p": "fr", "d": "2026-11-22", "items": ["单词拼写题可以用键盘输入了：字母块下面多了一个输入框，点它会弹出键盘（手机也可以），打出来的字母直接填进格子；点字母块和键盘输入可以随时混用，字母块里没有的字母也能打。电脑上不点输入框直接打字也行。", "听力新增题型“听写”：听录音，用键盘把听到的法语写出来，题目上方显示这句话的意思（中文界面显示中文，英文界面显示英文，法语界面不显示）。只给短材料出题：1093 句单句和 624 个单词，共 1717 道。大小写和标点不计，重音符号要写对；输入框下面有一排重音字母可以点。名词带不带冠词都算对。"]},
