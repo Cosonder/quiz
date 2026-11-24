@@ -56,7 +56,7 @@
     } catch (e) {}
   });
 })();
-</script><style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}body{margin:0;padding:0}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style><link rel="preload" as="script" href="data-34d3b543145b.js"><link rel="preload" as="script" href="app-2851fb4b9b33.js"></head><body>
+</script><style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}body{margin:0;padding:0}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style><link rel="preload" as="script" href="data-6fee84792f09.js"><link rel="preload" as="script" href="app-d276d874b58f.js"></head><body>
 <title>法语语法小测验</title>
 <script>
 // 网页字体不挡首屏：样式表有 150 KB、字体文件合计 1 MB 多，而且 fonts.googleapis.com 在有些网络下很慢甚至打不开。
@@ -1298,6 +1298,9 @@ html.qf #stage > section.q-card.listening-card > .listening-mode{margin:0}
 /* 脚本还没下载完时，题目区先显示“正在加载”；页面第一次渲染时整块被替换掉。 */
 .boot-loading{text-align:center}.boot-loading p{margin:0 0 8px}.boot-bar{height:6px;border-radius:3px;background:var(--line,#d9dce3);overflow:hidden;margin-top:14px}.boot-bar span{display:block;width:35%;height:100%;border-radius:3px;background:var(--accent,#2f5bd3);animation:boot-slide 1.4s ease-in-out infinite}
 @keyframes boot-slide{0%{transform:translateX(-100%)}100%{transform:translateX(290%)}}@media(prefers-reduced-motion:reduce){.boot-bar span{animation:none;width:100%;opacity:.5}}
+
+/* 闯关地图里的 DLC 栏 */
+.v-dlc-title{display:flex;align-items:center;gap:8px;margin-top:22px}.v-dlc-title .tag{background:var(--accent);color:var(--bg,#fff);font-weight:700;letter-spacing:.04em}
 .picture-feedback{display:flex;align-items:center;flex-wrap:wrap;gap:6px 12px;padding:10px 0;font-size:.78rem;color:var(--muted);font-weight:400;line-height:1.5}
 .fb-target{display:flex;align-items:center;gap:8px;flex-basis:100%;color:var(--fg)}
 .fb-thumb{width:72px;height:48px;object-fit:contain;border-radius:6px}
@@ -1862,12 +1865,12 @@ html.qf #stage > section.q-card > .explain { flex: none !important; height: clam
   </div>
 </div>
 
-<script src="data-34d3b543145b.js"></script>
+<script src="data-6fee84792f09.js"></script>
 <script>
 (()=>{const key='fq-boot-retry-1.9.44';
  if(typeof ROUNDS!=='undefined'&&typeof BANK!=='undefined'&&typeof LANG_FILES!=='undefined'){
   try{sessionStorage.removeItem(key);}catch{}
-  document.write('<script src="app-2851fb4b9b33.js"><\/script>');return;
+  document.write('<script src="app-d276d874b58f.js"><\/script>');return;
  }
  const note=document.getElementById('saveNote');if(note)note.textContent='正在下载更新，请稍候… / Downloading update… / Téléchargement de la mise à jour…';
  const retry=document.createElement('button');retry.type='button';retry.className='btn';retry.textContent='重新加载 / Reload / Recharger';retry.onclick=()=>location.reload();document.getElementById('stage')?.append(retry);

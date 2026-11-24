@@ -23285,7 +23285,7 @@
   ],
   "exampleCount": 955,
   "exampleBytes": 26762829,
-  "examplePending": 0,
+  "examplePending": 60,
   "words": [
     {
       "text": "ranger",
@@ -28162,7 +28162,7 @@
   ],
   "wordCount": 609,
   "wordBytes": 5781631,
-  "wordPending": 0,
+  "wordPending": 60,
   "male": [
     {
       "text": "Tu prends le train de 8 heures demain ?",

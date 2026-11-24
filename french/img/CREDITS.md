@@ -556,3 +556,71 @@
 | généreux | genereux.jpg |
 | autonome | autonome.jpg |
 | usé | use.jpg |
+
+
+## 《哈利·波特》第一章词汇（hp-ch1）
+
+这批图由 ChatGPT 按每个词的例句生成（三位学习伙伴装扮成书中人物；原图存档在 `originals/picgen/hp-ch1/`），裁成 3:2、缩到 720×480。例句是按第一章情节自己写的，不是原文。目前 60 / 240 张。
+
+| 单词 | 文件 |
+|---|---|
+| hibou | hp-hibou.jpg |
+| cicatrice | hp-cicatrice.jpg |
+| moustache | hp-moustache.jpg |
+| perceuse | hp-perceuse.jpg |
+| réverbère | hp-reverbere.jpg |
+| cape | hp-cape.jpg |
+| chignon | hp-chignon.jpg |
+| silhouette | hp-silhouette.jpg |
+| lueur | hp-lueur.jpg |
+| briquet | hp-briquet.jpg |
+| mouchoir | hp-mouchoir.jpg |
+| rumeur | hp-rumeur.jpg |
+| muret | hp-muret.jpg |
+| haie | hp-haie.jpg |
+| paupière | hp-paupiere.jpg |
+| beignet | hp-beignet.jpg |
+| grondement | hp-grondement.jpg |
+| hurlement | hp-hurlement.jpg |
+| obscurité | hp-obscurite.jpg |
+| cravate | hp-cravate.jpg |
+| rétroviseur | hp-retroviseur.jpg |
+| gorgée | hp-gorgee.jpg |
+| hurler | hp-hurler.jpg |
+| murmurer | hp-murmurer.jpg |
+| chuchoter | hp-chuchoter.jpg |
+| marmonner | hp-marmonner.jpg |
+| grommeler | hp-grommeler.jpg |
+| bredouiller | hp-bredouiller.jpg |
+| renifler | hp-renifler.jpg |
+| sangloter | hp-sangloter.jpg |
+| bâiller | hp-bailler.jpg |
+| hocher | hp-hocher.jpg |
+| cligner | hp-cligner.jpg |
+| fredonner | hp-fredonner.jpg |
+| apercevoir | hp-apercevoir.jpg |
+| s'efforcer | hp-s-efforcer.jpg |
+| se ressaisir | hp-se-ressaisir.jpg |
+| enjamber | hp-enjamber.jpg |
+| éteindre | hp-eteindre.jpg |
+| étinceler | hp-etinceler.jpg |
+| espionner | hp-espionner.jpg |
+| se réjouir | hp-se-rejouir.jpg |
+| essuyer | hp-essuyer.jpg |
+| avaler | hp-avaler.jpg |
+| sévère | hp-severe.jpg |
+| tigré | hp-tigre.jpg |
+| crochu | hp-crochu.jpg |
+| minuscule | hp-minuscule.jpg |
+| immobile | hp-immobile.jpg |
+| surexcité | hp-surexcite.jpg |
+| insolite | hp-insolite.jpg |
+| glacial | hp-glacial.jpg |
+| perçant | hp-percant.jpg |
+| raide | hp-raide.jpg |
+| stupéfiant | hp-stupefiant.jpg |
+| agacé | hp-agace.jpg |
+| brusquement | hp-brusquement.jpg |
+| sèchement | hp-sechement.jpg |
+| gravement | hp-gravement.jpg |
+| fixement | hp-fixement.jpg |
