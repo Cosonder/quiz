@@ -251,6 +251,7 @@ function localDb(ns) {
   } catch (e) { saveNote.textContent = "暂时无法读取答题记录，答题不受影响。"; }
 })();
 function record(item, i, right) {
+  if (typeof funnelStep === "function") funnelStep("answer", item.audio ? "listening" : "grammar");
   if (!dbRef) return;
   const d = {
     round: roundOf(item.id), qid: item.id, ch: item.ch, cat: item.cat, question: item.title ? `（长文听力 · ${item.title}）${item.q}` : item.audio ? "（听力）" + item.audio : item.q,
@@ -619,6 +620,7 @@ function progReset(docs, voc) { ansRaw = docs; if (voc) vocRaw = voc; prog = nul
 
 // 做题时：记一条，弹出“+经验”提示
 function progLive(d, kind) {
+  if (typeof funnelStep === "function") funnelStep("answer", funnelSection(d, kind));
   if (typeof tourAnswer === "function") tourAnswer(d, kind);   // 环法之旅：答错扣心
   if (kind === "vocab") vocRaw.push(d); else if (ansRaw) ansRaw.push(d);
   if (!prog) return;
@@ -783,11 +785,11 @@ function progressCard() {
   fold.append(key);
   return card;
 }
-// ---------- 今日计划：每天自动配一组题（到期复习 + 新题 + 最弱标签），每日经验目标、连续打卡和补签 ----------
+// ---------- 今日计划：每天自动配一组题（到期复习 + 新题 + 最弱标签 + 听力），每日经验目标、连续打卡和补签 ----------
 // 计划在当天第一次打开时生成并记在本机；只修复损坏或失效的部分，保留有效题目与当天作答进度。
 // 连续打卡：当天经验达到目标算打卡。某天没达标，第二天达到 2 倍目标就能补签那一天（不能连着两天都缺）。
-const PLAN_REVIEW_MAX = 30, PLAN_NEW = 10, PLAN_WEAK = 5, PLAN_CONJ = 10;
-const PLAN_LIMITS = { review: PLAN_REVIEW_MAX, fresh: PLAN_NEW, weak: PLAN_WEAK };
+const PLAN_REVIEW_MAX = 30, PLAN_NEW = 10, PLAN_WEAK = 5, PLAN_CONJ = 10, PLAN_LISTEN = 5;
+const PLAN_LIMITS = { review: PLAN_REVIEW_MAX, fresh: PLAN_NEW, weak: PLAN_WEAK, listen: PLAN_LISTEN };
 const GOAL_OPTS = [50, 100, 150, 250, 400];
 let xpGoal = (() => { try { const v = Number(localStorage.getItem("fq-goal")); return GOAL_OPTS.includes(v) ? v : 150; } catch (e) { return 150; } })();
 // 一条答题记录算哪一天（时光沙漏生效时算进昨天）
@@ -814,6 +816,22 @@ function weakestTag() {
 }
 function planScope() { return typeof practiceScopeKey === "function" ? practiceScopeKey() : ""; }
 function planAllows(q) { return typeof practiceAllows !== "function" || practiceAllows(q); }
+// 听力：理解、选译文、填空、排序、听写五种题型轮流各挑一道，没做过的在前，同一段材料只出一次。没有听力题的页面返回空。
+const PLAN_LISTEN_MODES = ["comprehension", "translate", "cloze", "order", "dictation"];
+function planListen(used, n) {
+  if (!n) return [];
+  const pools = new Map(PLAN_LISTEN_MODES.map(m => [m, []]));
+  const score = q => { const m = memOf(q.id); return m.last === 0 ? 0 : m.lv === 0 ? 1 : 2 + m.lv; };
+  BANK.forEach((q, k) => { if (q.listeningMode && pools.has(q.listeningMode) && !q.phonetic && !used.has(q.id) && planAllows(q)) pools.get(q.listeningMode).push([q, score(q), k]); });
+  pools.forEach(a => a.sort((x, y) => x[1] - y[1] || x[2] - y[2]));
+  const out = [], heard = new Set();
+  for (let idle = 0, turn = 0; out.length < n && idle < PLAN_LISTEN_MODES.length; turn++) {
+    const pool = pools.get(PLAN_LISTEN_MODES[turn % PLAN_LISTEN_MODES.length]), at = pool.findIndex(x => !heard.has(x[0].audio));
+    if (at < 0) { idle++; continue; }
+    const q = pool.splice(at, 1)[0][0]; idle = 0; out.push(q.id); heard.add(q.audio);
+  }
+  return out;
+}
 function planBuild(reserved = new Set(), weakTag = null, limits = PLAN_LIMITS) {
   const used = new Set(reserved);
   const review = progMembers("rev:").filter(q => planAllows(q) && !used.has(q.id)).slice(0, limits.review).map(q => q.id);
@@ -841,7 +859,9 @@ function planBuild(reserved = new Set(), weakTag = null, limits = PLAN_LIMITS) {
     weak = BANK.filter(q => planAllows(q) && q.tags.includes(wk.t) && !used.has(q.id)).map((q, k) => [q, score(q), k])
       .sort((a, b) => a[1] - b[1] || a[2] - b[2]).slice(0, limits.weak).map(x => x[0].id);
   }
-  return { day: dayKey(new Date()), review, fresh, weak, weakTag: wk ? wk.t : "", ...(typeof practiceScopeKey === "function" ? { scope: planScope() } : {}) };
+  weak.forEach(i => used.add(i));
+  const listen = planListen(used, limits.listen || 0);
+  return { day: dayKey(new Date()), review, fresh, weak, listen, weakTag: wk ? wk.t : "", ...(typeof practiceScopeKey === "function" ? { scope: planScope() } : {}) };
 }
 const planValidId = id => typeof id === "string" && BY_ID.has(id);
 // Reserve every surviving id before replacing any section, so repair cannot
@@ -849,7 +869,7 @@ const planValidId = id => typeof id === "string" && BY_ID.has(id);
 function planRepair(p, day) {
   if (!p || typeof p !== "object" || Array.isArray(p) || p.day !== day) return planBuild();
   const scope = planScope(), changed = (p.scope || "") !== scope, done = answeredToday();
-  const fixed = { day, review: [], fresh: [], weak: [], weakTag: typeof p.weakTag === "string" ? p.weakTag : "", ...(typeof practiceScopeKey === "function" ? { scope } : {}) };
+  const fixed = { day, review: [], fresh: [], weak: [], listen: [], weakTag: typeof p.weakTag === "string" ? p.weakTag : "", ...(typeof practiceScopeKey === "function" ? { scope } : {}) };
   if (changed && !Object.keys(PLAN_LIMITS).some(k => Array.isArray(p[k]) && p[k].length)) return planBuild();
   const used = new Set(), damaged = [];
   for (const [part, cap] of Object.entries(PLAN_LIMITS)) {
@@ -864,7 +884,7 @@ function planRepair(p, day) {
   if (damaged.length) {
     // Only reserve replacements actually needed; healthy sections must not
     // consume potential replacement questions before a damaged weak section.
-    const limits = { review: 0, fresh: 0, weak: 0 };
+    const limits = { review: 0, fresh: 0, weak: 0, listen: 0 };
     for (const [part, target] of damaged) limits[part] = target - fixed[part].length;
     const replacements = planBuild(used, fixed.weakTag || null, limits);
     for (const [part, target] of damaged) {
@@ -893,7 +913,7 @@ function planGet() {
   planMemory = { day, plan: p, raw: unsaved ? raw : next, unsaved };
   return p;
 }
-const PLAN_PARTS = [["review", "复习到期题"], ["fresh", "新题"], ["weak", "弱项"]];
+const PLAN_PARTS = [["review", "复习到期题"], ["fresh", "新题"], ["weak", "弱项"], ["listen", "听力"]];
 function planStatus(p) {
   const done = answeredToday();
   const parts = PLAN_PARTS.filter(([k]) => p[k].length).map(([k, name]) => ({
@@ -908,7 +928,7 @@ function planMembers(key) {
   const p = planGet();
   if (!p) return [];
   const part = key.slice(5), done = answeredToday();
-  const ids = part ? Object.hasOwn(PLAN_LIMITS, part) ? p[part] : [] : [...p.review, ...p.fresh, ...p.weak];
+  const ids = part ? Object.hasOwn(PLAN_LIMITS, part) ? p[part] : [] : [...p.review, ...p.fresh, ...p.weak, ...p.listen];
   return ids.filter(i => !done.has(i)).map(i => BY_ID.get(i)).filter(q => q && planAllows(q));
 }
 function planLabel(key) {
@@ -955,7 +975,7 @@ function streakInfo() {
 function planNotice(d, todayBefore) {
   const p = planGet();
   if (p) {
-    const ids = [...p.review, ...p.fresh, ...p.weak];
+    const ids = [...p.review, ...p.fresh, ...p.weak, ...p.listen];
     const s = planStatus(p);
     const hit = d.round === "cj" ? hasConj() && conjToday() === PLAN_CONJ : ids.includes(d.qid);
     if (hit && s.n && s.d === s.n) return "今日计划完成！";
@@ -1040,7 +1060,7 @@ function planCard() {
   if (st.patch) card.append(el("p", "plan-patch", `昨天没达到目标。今天拿到 ${2 * xpGoal} 经验（2 倍目标），或用商店里的时光沙漏回到昨天把题补上，就能保住之前连续的 ${st.patch} 天。`));
   const rule = el("details", "xp-rule");
   rule.append(el("summary", null, "今日计划怎么配"),
-    elParts("p", [`每天首次生成；改变难度时仅调整未完成部分：到期该复习的题（最多 ${PLAN_REVIEW_MAX} 道，最该复习的在前）、从最近做的那一轮接着往下的 ${PLAN_NEW} 道新题、最近 60 天答错比例最高的标签里 ${PLAN_WEAK} 道题`, hasConj() && !planScope() ? `，再加 ${PLAN_CONJ} 道动词变位。` : "。", "今天答过一次就算完成。"]),
+    elParts("p", [`每天首次生成；改变难度时仅调整未完成部分：到期该复习的题（最多 ${PLAN_REVIEW_MAX} 道，最该复习的在前）、从最近做的那一轮接着往下的 ${PLAN_NEW} 道新题、最近 60 天答错比例最高的标签里 ${PLAN_WEAK} 道题`, typeof LISTEN_MODES !== "undefined" ? `，${PLAN_LISTEN} 道听力题（理解、选译文、填空、排序、听写轮流出，没做过的在前）` : "", hasConj() && !planScope() ? `，再加 ${PLAN_CONJ} 道动词变位。` : "。", "今天答过一次就算完成。"]),
     el("p", null, "连续打卡：当天经验达到每日目标算打卡。某天没达标，第二天达到 2 倍目标就能补签那一天（不能连着两天都缺），也可以用商店里的时光沙漏回到昨天，把昨天的题补上。做完今日计划奖励 30 金币。"));
   card.append(rule);
   return card;
@@ -7935,6 +7955,42 @@ async function syncVerify(email, token) {
   syncSaveSession(j);
   await syncNow(true);
 }
+// ---------- 匿名访问漏斗：打开 → 答第一题 → 做完第一组 → 改天再来 ----------
+// 每个浏览器一个随机编号（存在本机），每天每一步最多上报一次；不带账号、网址、答题内容。说明见 quiz-site/supabase/FUNNEL.md。
+const FUNNEL_ID = "quiz-funnel-id", FUNNEL_SENT = "quiz-funnel-sent", FUNNEL_OFF = "quiz-funnel-off", FUNNEL_ADMIN = "quiz-funnel-admin";
+function funnelEnabled() { try { return localStorage.getItem(FUNNEL_OFF) !== "1"; } catch (e) { return false; } }
+function funnelSetEnabled(on) { try { on ? localStorage.removeItem(FUNNEL_OFF) : localStorage.setItem(FUNNEL_OFF, "1"); } catch (e) {} }
+function funnelBlocked() {
+  if (typeof SYNC_ON !== "undefined" && !SYNC_ON) return true;
+  if (!/^https?:$/.test(location.protocol) || /^(localhost|127\.|\[::1\])/.test(location.hostname)) return true;   // 本地预览不上报
+  if (navigator.doNotTrack === "1" || navigator.globalPrivacyControl === true) return true;
+  try { return localStorage.getItem(FUNNEL_OFF) === "1" || localStorage.getItem(FUNNEL_ADMIN) === "1"; } catch (e) { return true; }
+}
+function funnelDay(now = new Date()) { return now.getFullYear() + "-" + String(now.getMonth() + 1).padStart(2, "0") + "-" + String(now.getDate()).padStart(2, "0"); }
+function funnelSection(d, kind) {
+  if (kind === "exam") return "exam";
+  if (kind === "vocab") return "vocab";
+  if (!d) return "other";
+  if (d.round === "cj" || String(d.qid || "").startsWith("cj:")) return "conj";
+  return /^（(听力|长文听力)/.test(String(d.question || "")) ? "listening" : "grammar";
+}
+function funnelStep(step, section) {
+  try {
+    if (funnelBlocked()) return;
+    let id = localStorage.getItem(FUNNEL_ID);
+    if (!/^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/.test(id || "")) { id = crypto.randomUUID(); localStorage.setItem(FUNNEL_ID, id); }
+    const day = funnelDay();
+    let sent = {}; try { sent = JSON.parse(localStorage.getItem(FUNNEL_SENT) || "{}") || {}; } catch (e) {}
+    if (sent.day !== day || !sent.steps) sent = { day, steps: {} };
+    if (sent.steps[step]) return;
+    sent.steps[step] = 1; localStorage.setItem(FUNNEL_SENT, JSON.stringify(sent));
+    const lang = typeof UI_LANG === "string" && ["zh", "en", "fr"].includes(UI_LANG) ? UI_LANG : null;
+    fetch(SYNC_URL + "/rest/v1/rpc/record_funnel", { method: "POST", keepalive: true, headers: { apikey: SYNC_KEY, "Content-Type": "application/json" },
+      body: JSON.stringify({ p_device: id, p_day: day, p_step: step, p_lang: lang, p_section: section || null }) })
+      .then(r => { if (!r.ok) throw 0; })
+      .catch(() => { try { const s = JSON.parse(localStorage.getItem(FUNNEL_SENT) || "{}"); if (s.day === day && s.steps) { delete s.steps[step]; localStorage.setItem(FUNNEL_SENT, JSON.stringify(s)); } } catch (e) {} });   // 没发出去：下次再试
+  } catch (e) {}
+}
 // Picture feedback, private inboxes and answered public threads use the existing account.
 // No role, private count or message is cached in localStorage.
 const FB_COPY = {
@@ -8625,6 +8681,8 @@ function setFold(wrap, key, title, initialOpen = false) {
 // 每次用户可见更新都新增记录：默认只递增第三位 1.x.y → 1.x.(y+1)，超过 9 继续到 10、11；第二位升级需用户明确要求。
 // 首位保持 1，只有用户明确要求才可修改；历史记录保留。完整发布规则见根目录 AGENTS.md。
 const CHANGELOG = [
+  {"v": "1.9.84", "p": "fr", "d": "2026-11-24", "items": ["今日计划里加入了听力：每天 5 道听力题，理解选择、听句选译文、填空、排序、听写五种题型轮流各出一道，优先出没做过的，同一段材料只出一次。设了难度时只出对应等级的听力题。今天已经生成的计划会直接补上这 5 道。", "顺带一提，本网站短期内不考虑加入付费购买的服务，需要打磨完善各项功能。"]},
+  {"v": "1.9.83", "d": "2026-11-23", "items": ["法语页第一次打开更快：网页字体不再挡住首屏（第一次来先用系统字体显示，页面能用了再换成网页字体），两个大脚本改成同时下载。在模拟的慢速手机网络（1.6 Mbps）下，从打开到能做题由约 15 秒降到约 10 秒，首次出现内容由约 2 秒降到 1 秒以内；谷歌字体打不开的网络下不再白屏等待。随机分析页的字体也同样处理。", "法语页还在下载时，题目区会显示“正在加载题库…”，不再是一个点不动的空页面。", "新增匿名访问统计，用来了解新访客在哪一步离开：网站给每个浏览器一个随机编号，每天最多记四件事——看过首页、打开法语页、答过题、做完一组，以及界面语言和第一题所在的板块。不含账号、网址和答题内容，未登录也会记录；浏览器开启“请勿跟踪”时不记录，也可以在“设置 → 使用统计”里关闭。"]},
   {"v": "1.9.82", "p": "fr", "d": "2026-11-23", "items": ["自己排到的听写题（不是从别的题点“太简单？”插进来的）也有“听不懂？”按钮：没作答时和答错后都可以点，先做一道同一句的句子排序题，再回来重做这道听写。单词听写没有排序题，所以没有这个按钮。"]},
   {"v": "1.9.81", "p": "fr", "d": "2026-11-23", "items": ["听力的理解选择题多了一个“听不懂？”按钮（在“上一题”左边，没作答时和答错后都有）：点一下会先插一道同一段材料的句子排序题，做完再回来重做这道理解题。", "句子排序题答对后有“太简单？”按钮：点一下跳到同一段材料的理解选择题（从“听不懂？”插进来的排序题不显示）。理解选择题答对后也有“太简单？”按钮：点一下加一道同一段材料的听写题（只有单句这类短材料有听写题，长对话没有这个按钮）。", "临时插进来的题只留在这一轮里，不占每组的题数，做题记录记在原题上。"]},
   {"v": "1.9.80", "p": "fr", "d": "2026-11-23", "items": ["没改过昵称的同学，默认昵称从“同学 ABCD”换成了“形容词 + 的 + 法国味的东西”，例如“优雅的埃菲尔铁塔”“酥脆的可颂”“香甜的马卡龙”。每个账号的名字固定不变；排行榜上别人的旧默认名也一起换了。自己取过的昵称不受影响，想换随时可以在“同学”页里改。"]},
@@ -15397,6 +15455,7 @@ function paintAnswer(i, buttons, card, order) {
 function renderResult() {
   if (set && set.key.startsWith("tour:") && typeof tourHook === "function" && tourHook("quiz")) return;
   updateProgress(bEnd());
+  if (typeof funnelStep === "function") funnelStep("finish");
   savePos();   // 做完一组后，下次从第 1 题开始
   stage.innerHTML = "";
   const card = el("section", "card");
@@ -16945,6 +17004,7 @@ function exScore() {
   return s;
 }
 async function exSubmit() {
+  if (typeof funnelStep === "function") { funnelStep("answer", "exam"); funnelStep("finish"); }
   clearInterval(exTimer);
   exPause();
   exResult = { parts: exScore(), essay: "pending", at: new Date().toISOString(), secs: Math.round(exUsed()) };
@@ -21309,6 +21369,7 @@ function vSetLink() {
   return a;
 }
 function vResult() {
+  if (typeof funnelStep === "function") funnelStep("finish");
   vUnbindKeys();
   const S = vSess;
   if (S.tour && typeof tourHook === "function" && tourHook("vocab")) return;
@@ -23514,6 +23575,7 @@ function cjAnswer(input, card, fb) {
 }
 function cjGoNext() { if (cjSess?.answered) { cjToc(); cjQuestion(); } }
 function cjResult() {
+  if (typeof funnelStep === "function") funnelStep("finish");
   const card = el("section", "card");
   const n = cjSess.k, xp = prog ? prog.xp - cjSess.xp0 : 0;
   card.append(el("span", "tag", "本组完成"));
@@ -25778,6 +25840,7 @@ function usageInit(){
  addEventListener('storage',e=>{if(e.key==='fq-usage-enabled:'+usageUid){usagePreferences.delete(usageUid);usageVisibility();}});
 }
 queueMicrotask(usageInit);
+queueMicrotask(()=>{if(typeof funnelStep==='function')funnelStep('open');});
 
 const usageText=(zh,en,fr)=>typeof UI_LANG==='undefined'||UI_LANG==='zh'?zh:UI_LANG==='fr'?fr:en;
 function usageSettings(wrap){
@@ -25787,10 +25850,15 @@ function usageSettings(wrap){
  const row=setCheckRow('usageEnabled',usageText('统计页面可见时长','Measure visible-page time','Mesurer le temps de page visible'),usageEnabled(uid),value=>{if(fbCurrent(uid,epoch))usageSetEnabled(value);});
  row.querySelector('input').disabled=!uid;card.append(row);
  if(!uid)card.append(el('p','sub',usageText('登录后生效；未登录访问不上传时长。','Applies after sign-in; guest visits do not upload time.','Actif après connexion ; les visites anonymes n’envoient aucune durée.')));
+ if(typeof funnelEnabled==='function'){
+  card.append(el('p','sub',usageText('匿名访问统计：为了知道新访客在哪一步离开，网站会给这个浏览器一个随机编号，每天最多记四件事——看过首页、打开法语页、答过题、做完一组，以及界面语言和第一题所在的板块。不含账号、网址和答题内容，未登录也会记录。浏览器开启“请勿跟踪”时不记录，也可以在这里关闭。','Anonymous visit statistics: to see where new visitors leave, the site gives this browser a random id and records at most four things a day — saw the home page, opened the French page, answered a question, finished a set — plus the interface language and the section of the first answer. No account, URL or answer content; guests are included. Nothing is recorded when the browser sends Do Not Track, and you can switch it off here.','Statistiques de visite anonymes : pour savoir où les nouveaux visiteurs s’arrêtent, le site attribue à ce navigateur un identifiant aléatoire et note au plus quatre choses par jour — page d’accueil vue, page de français ouverte, une question répondue, une série terminée — ainsi que la langue de l’interface et la rubrique de la première réponse. Ni compte, ni adresse, ni contenu des réponses ; les visites sans connexion sont incluses. Rien n’est noté si le navigateur envoie « Ne pas me pister », et vous pouvez le désactiver ici.')));
+  card.append(setCheckRow('funnelEnabled',usageText('匿名访问统计','Anonymous visit statistics','Statistiques de visite anonymes'),funnelEnabled(),value=>funnelSetEnabled(value)));
+ }
 }
 function usageAdminEntry(wrap){
  const uid=usageAccount(),epoch=fbEpoch;if(!uid)return;
  fbRpc('feedback_status').then(result=>{
+  if(result.is_admin)try{localStorage.setItem('quiz-funnel-admin','1');}catch(e){} // 管理员自己的浏览器不计入访问漏斗
   if(!result.is_admin||!wrap.isConnected||!fbCurrent(uid,epoch))return;
   const card=setSection(wrap,usageText('管理员统计','Administrator statistics','Statistiques administrateur'));card.classList.add('fb-admin');
   const go=fbButton(usageText('查看使用统计','View usage statistics','Voir les statistiques'),'btn');go.addEventListener('click',()=>{if(fbCurrent(uid,epoch))renderUsageAdmin();});card.append(go);
@@ -25857,6 +25925,26 @@ function usageTrendCharts(daily,from,to){
  const select=()=>{const index=rows.findIndex(r=>r.day===picker.value);updates.forEach(update=>update(index));};picker.addEventListener('change',select);select();return section;
 }
 
+// 新访客漏斗：按“第一次打开法语页的那天”分组；隔天、7 天内的数字要等够天数才算数，没等够的标“…”。
+function usageFunnelTable(data){
+ const section=el('section','usage-funnel');section.append(el('h3',null,usageText('新访客漏斗（含未登录）','New-visitor funnel (guests included)','Entonnoir des nouveaux visiteurs (anonymes inclus)')));
+ section.append(el('p','sub',usageText('每个浏览器一个匿名编号，按访客自己的日期计。“新访客”是第一次打开法语页的浏览器；清过缓存或换设备会被算成新访客，所以回访率是下限。从 v1.9.83 上线那天起才有数据，上线头几天的“新访客”里包含老用户。','One anonymous id per browser, dated by the visitor’s own calendar. A new visitor is a browser opening the French page for the first time; cleared storage or a second device counts as new, so return rates are a lower bound. Data starts with v1.9.83, and the first days include existing users.','Un identifiant anonyme par navigateur, daté selon le calendrier du visiteur. Un nouveau visiteur est un navigateur qui ouvre la page de français pour la première fois ; un stockage effacé ou un second appareil compte comme nouveau, donc les taux de retour sont un minimum. Les données commencent avec la v1.9.83 et les premiers jours incluent les anciens utilisateurs.')));
+ const today=Date.parse(data.today),age=day=>Math.round((today-Date.parse(day))/86400000),pct=(n,d)=>d?n+' ('+Math.round(n/d*100)+'%)':'0';
+ const heads=[usageText('首次访问日','First visit','Première visite'),usageText('新访客','New visitors','Nouveaux'),usageText('当天答过题','Answered that day','Ont répondu ce jour'),usageText('当天做完一组','Finished a set that day','Série terminée ce jour'),usageText('7 天内答过题','Answered within 7 days','Ont répondu sous 7 j'),usageText('第二天回来','Back next day','Revenus le lendemain'),usageText('7 天内回来','Back within 7 days','Revenus sous 7 j'),usageText('第 7 天后还在','Still here after day 7','Encore là après 7 j')];
+ const row=(label,c,a)=>[label,c.devices,pct(c.answered,c.devices),pct(c.finished,c.devices),pct(c.answered_w1,c.devices)+(a<7?' …':''),a<1?'…':pct(c.back_d1,c.devices)+(a<2?' …':''),a<1?'…':pct(c.back_w1,c.devices)+(a<8?' …':''),a<7?'…':pct(c.back_d7,c.devices)+' …'];
+ const sum=(list,keys)=>list.reduce((t,c)=>{for(const k of keys)t[k]=(t[k]||0)+Number(c[k]);return t;},{});
+ const keys=['devices','answered','finished','answered_w1','back_d1','back_w1','back_d7'],all=sum(data.cohorts,keys),done=sum(data.cohorts.filter(c=>age(c.day)>=8),keys);
+ const wrap=el('div','usage-table-wrap'),t=el('table','usage-table'),head=el('thead'),hr=el('tr'),body=el('tbody');for(const h of heads){const th=el('th',null,h);th.scope='col';hr.append(th);}head.append(hr);t.append(head,body);wrap.append(t);
+ const add=cells=>{const tr=el('tr');for(const v of cells)tr.append(el('td',null,String(v)));body.append(tr);};
+ if(data.cohorts.length){add(row(usageText('合计','Total','Total'),{...Object.fromEntries(keys.map(k=>[k,0])),...all},0).map((v,i)=>i>3?'—':v));if(done.devices)add(row(usageText('已满 8 天的合计','Total, cohorts 8+ days old','Total, cohortes de 8 j et plus'),done,99).map((v,i)=>i===7?String(v).replace(' …',''):v));}
+ for(const c of [...data.cohorts].reverse())add(row(c.day,c,age(c.day)));
+ section.append(wrap);if(!data.cohorts.length)section.append(el('p','sub',usageText('此范围暂无访客数据。','No visitor data in this range.','Aucune donnée de visite sur cette période.')));
+ const home=sum(data.home,['devices','opened']),active=sum(data.active,['devices']),names={grammar:usageText('语法','Grammar','Grammaire'),listening:usageText('听力','Listening','Écoute'),vocab:usageText('词汇','Vocabulary','Vocabulaire'),conj:usageText('变位','Conjugation','Conjugaison'),exam:usageText('模拟卷','Exam','Examen'),other:usageText('其他','Other','Autre'),none:usageText('当天没答题','No answer that day','Aucune réponse ce jour'),zh:'中文',en:'English',fr:'Français'};
+ const list=o=>Object.entries(o).sort((a,b)=>b[1]-a[1]).map(([k,n])=>(names[k]||k)+' '+n).join(' · ')||'—';
+ section.append(el('p','usage-summary',usageText('首页：','Home page: ','Accueil : ')+(home.devices||0)+usageText(' 次访问（按浏览器·天），其中 ',' browser-days, of which ',' navigateurs-jours, dont ')+pct(home.opened||0,home.devices||0)+usageText(' 当天进了法语页',' opened the French page that day',' ont ouvert la page de français ce jour')+' · '+usageText('法语页活跃：','French page active: ','Page de français active : ')+(active.devices||0)+usageText('（浏览器·天）',' browser-days',' navigateurs-jours')));
+ section.append(el('p','sub',usageText('新访客第一题所在板块：','Section of new visitors’ first answer: ','Rubrique de la première réponse : ')+list(data.sections)),el('p','sub',usageText('新访客界面语言：','New visitors’ interface language: ','Langue de l’interface : ')+list(data.langs)));
+ return section;
+}
 function renderUsageAdmin(){
  const uid=usageAccount(),epoch=fbEpoch;if(!uid)return;
  stage.innerHTML='';const root=el('section','card fb-admin usage-admin');root.dataset.noi18n='';stage.append(root);
@@ -25892,6 +25980,7 @@ function renderUsageAdmin(){
    table(usageText('每日分布','Daily distribution','Répartition quotidienne'),[usageText('日期（UTC）','Date (UTC)','Date (UTC)'),usageText('活跃账号','Active accounts','Comptes actifs'),...headings],data.daily.map(r=>[r.day,r.active_users,...values(r)]));
    table(usageText('账号明细','Account details','Détail des comptes'),[usageText('账号','Account','Compte'),...headings,usageText('每日详情','Daily detail','Détail quotidien')],data.users.map(r=>{const b=fbButton(usageText('查看','View','Voir'));b.addEventListener('click',()=>{selected=r.user_id;page=0;void load();});return [(r.nick||usageText('用户','User','Utilisateur'))+' · '+r.user_id.slice(0,8),...values(r),b];}));
    if(!data.user_count)content.append(el('p','sub',usageText('此范围暂无统计数据。','No data in this range.','Aucune donnée sur cette période.')));
+   if(!selected){const slot=el('div');content.append(slot);fbRpc('admin_funnel',{p_from:from.value,p_to:to.value}).then(f=>{if(current()&&slot.isConnected)slot.append(usageFunnelTable(f));}).catch(()=>{if(current()&&slot.isConnected)slot.append(el('p','sub',usageText('新访客漏斗暂时读不到：请确认已在数据库里运行 funnel.sql。','The visitor funnel is unavailable: check that funnel.sql has been applied to the database.','Entonnoir indisponible : vérifiez que funnel.sql a été appliqué à la base.')));});}
    const nav=el('div','actions');for(const [delta,label]of [[-1,usageText('上一页','Previous','Précédent')],[1,usageText('下一页','Next','Suivant')]]){const b=fbButton(label);b.disabled=delta<0?page===0:(page+1)*50>=data.user_count;b.addEventListener('click',()=>{page+=delta;void load();});nav.append(b);}content.append(nav);
   }catch(e){if(current()&&e.code!=='account'){content.replaceChildren();status.textContent=usageText('无法读取统计，请确认管理员权限后重试。','Unable to load statistics. Check administrator access and retry.','Impossible de charger les statistiques. Vérifiez vos droits administrateur et réessayez.');}}
   finally{busy=false;if(current()){go.disabled=from.disabled=to.disabled=false;presets.forEach(([,b])=>b.disabled=false);}}
