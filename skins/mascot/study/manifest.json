@@ -35090,9 +35090,9 @@
       "text": "je lirai, tu liras, il lira, nous lirons, vous lirez, ils liront",
       "file": "tables/81cb845ca0f3c5e144fd.m4a",
       "speaker": "ninon",
-      "durationSeconds": 0.455,
-      "bytes": 818,
-      "audioSha256": "c56b2cd01b4111b6ec16a0c8b69b04b2789ee56842867881160f3c409fcb039b"
+      "durationSeconds": 8.75,
+      "bytes": 74094,
+      "audioSha256": "dc800e421d86123fdf9cdb7b88bb5f7318ad8972dd1a3f8145f0573294ac6413"
     },
     {
       "text": "je bois, tu bois, il boit, nous buvons, vous buvez, ils boivent",
@@ -35352,7 +35352,7 @@
     }
   ],
   "tableCount": 384,
-  "tableBytes": 26899492,
+  "tableBytes": 26972768,
   "tablePending": 0,
   "forms": [
     {
