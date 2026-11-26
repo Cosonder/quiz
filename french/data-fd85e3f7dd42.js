@@ -13176,6 +13176,6 @@ GPA2.forEach(u => {
     LEVEL_OF[id] = u.lv; TAGS_OF[id] = q.tags; KP_OF[id] = "gb" + u.unit;
   });
 });
-const LANG_FILES = {"en": "lang-en.js?v=bae19a845f", "fr": "lang-fr.js?v=1fecb51798"};
+const LANG_FILES = {"en": "lang-en.js?v=6ea29de7cc", "fr": "lang-fr.js?v=fa0b4c10de"};
 (() => { let l = null; try { l = localStorage.getItem("fq-lang"); } catch (e) {}
   if (Object.hasOwn(LANG_FILES, l)) document.write('<script src="' + LANG_FILES[l] + '"><\/script>'); })();
