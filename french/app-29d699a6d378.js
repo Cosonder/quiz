@@ -37,7 +37,7 @@ function afterPick() {
 // 首屏用不上的大块数据（爬塔 Boss 题库、地图、更新记录）在公开网站上单独成文件：页面能用之后在后台下载，
 // 用户提前点到时显示“正在加载”并等它下完。单文件版（本地预览、Claude 页面）里这些内容仍直接写在页面里，LAZY_FILES 为空。
 // 打包见 quiz-site/package-french.py（它把下面这个空对象换成 {名字: 文件名}）。
-const LAZY_FILES = /*__LAZY_FILES__*/{"tourparis": "lazy-tourparis-f9ce9b7155f9.js", "dlcmaps": "lazy-dlcmaps-27aa0b4d7033.js", "changelog": "lazy-changelog-49b1e666abd4.js", "bossbank": "lazy-bossbank-68a8c18b69bf.js"};
+const LAZY_FILES = /*__LAZY_FILES__*/{"tourparis": "lazy-tourparis-f9ce9b7155f9.js", "dlcmaps": "lazy-dlcmaps-27aa0b4d7033.js", "changelog": "lazy-changelog-6f884d352058.js", "bossbank": "lazy-bossbank-68a8c18b69bf.js"};
 const lazyDone = new Set(), lazyPending = new Map();
 const lazyReady = name => !Object.hasOwn(LAZY_FILES, name) || lazyDone.has(name);
 function lazyLoad(name) {
@@ -1279,6 +1279,10 @@ function gameLedger() {
       if (uid && g.scope === "user:" + uid && g.key === (g.kind === "share_reward" ? "share:first" : "feedback:first") && g.coins === 800 && !earned.has(g.key)) { earned.add(g.key); coins += 800; }
     }
     else if (g.kind === "survey_reward") { const uid=typeof syncAuth === "function"?syncAuth()?.uid:null;const amount=g.key==="survey:2026-11-v1"&&[200,500].includes(g.coins)?g.coins:g.key==="survey:2026-11-v1:experienced"&&g.coins===3000?3000:0;if(uid&&g.scope==="user:"+uid&&amount){const prior=surveyEarned.get(g.key)||0;if(amount>prior){coins+=amount-prior;surveyEarned.set(g.key,amount);earned.add(g.key);}} }
+    else if (g.kind === "oral_reward") {   // 跟读例句的每日排名奖励：由服务器结算后写进记录（见 oral-recordings.sql），每天一条
+      const uid = typeof syncAuth === "function" ? syncAuth()?.uid : null;
+      if (uid && g.scope === "user:" + uid && /^oral:\d{4}-\d{2}-\d{2}$/.test(g.key) && Number.isInteger(g.coins) && g.coins > 0 && g.coins <= 100000 && !earned.has(g.key)) { earned.add(g.key); coins += g.coins; }
+    }
     else if (g.kind === "earn") { if (earned.has(g.key)) return; earned.add(g.key); coins += g.coins || 0; }
     else if (g.kind === "buy") {
       if (inv[g.item] != null) { coins -= g.price || 0; inv[g.item]++; }
@@ -3067,6 +3071,8 @@ function oralOnAccountChange(){tourAudioClear();tourOral=null;if(view==='oral')r
 function oralMatches(c,level=oralLevel,status=oralStatus,states=oralAttempts) {return (!states.length||states.length===2||states.includes(tourOralLatest(c.id)?"已做过":"未做过"))&&(level==='all'||tourStop(c.id).lv===level)&&(status==='all'||(tourOralLatest(c.id)?.status||'new')===status);}
 function oralCount(level=oralLevel,status=oralStatus,states=oralAttempts) {return TOUR_ORAL_CASES.filter(c=>oralMatches(c,level,status,states)).length;}
 function renderOral(){
+ // 1.9.99 起口语页只显示“跟读例句”（oral/readaloud.js）；下面的情景任务目录保留但不再显示，环法之旅里照常使用这些任务
+ if(typeof raHome==='function'){tourOralLeave();raHome();return;}
  tourOralLeave();stage.replaceChildren();
  const card=el('section','card oral-catalogue');card.dataset.noi18n='';
  card.append(el('h2',null,tourText('口语练习','Speaking practice','Pratique orale')),el('p','sub',tourText('七个情景任务，与环法之旅共用练习进度。可直接练习，不要求解锁游戏；不会解锁环法关卡或额外发放章节奖励。','Seven scenarios share progress with the journey. Practise directly without unlocking games; this does not unlock journey stops or award chapter bonuses.','Sept situations partagent leur progression avec le voyage. Accès direct sans débloquer les jeux ; cet entraînement ne débloque ni étapes ni récompenses du voyage.')));
@@ -3083,7 +3089,6 @@ function renderOral(){
  }
  if(!count)list.append(el('p',null,tourText('这个筛选下暂无任务。','No tasks match these filters.','Aucune mission ne correspond à ces filtres.')));
  card.append(list);stage.append(card);
- if(typeof raEntry==='function')stage.prepend(raEntry());   // 跟读例句（oral/readaloud.js）
 }
 // Ordered grammar journey; landmark maps retain all legacy IDs and rewards.
 const TOUR_N=8, TOUR_HEARTS=3, TOUR_ALL=800;
@@ -15352,7 +15357,7 @@ const BOARDS = {
     { id: "vocab", t: "词汇", d: "B1–B2 主题词汇：看词选义、看图选词、例句填空等题型，答错的词进生词本。", n: () => `${V_WORDS.length} 个词` },
     { id: "conj", t: "变位", d: "动词 × 时态随机出题，可以选择或填空，按记忆等级安排复习。", n: () => `${CJ_VERBS.length} 个动词` },
     { id: "listen", t: "听力", d: "按标签检索，穿插练习理解选择、关键词填空与复原句子。", n: () => `${BANK.filter(isListen).length} 题` },
-    { id: "oral", t: "口语", d: "七个情景任务：分层提示、录音回听、确认意图与换条件重练，与环法之旅共用进度。", n: () => `${TOUR_ORAL_CASES.length} 个任务` },
+    { id: "oral", t: "口语", d: "跟读例句：听伙伴读一遍，录下自己的朗读，大家来打分、点赞和评论。", n: () => "跟读" },
     { id: "exam", t: "模拟卷", d: "B1 全国卷格式，自动判分，作文由 Claude 批改。", n: () => "整套试卷" },
   ],
   game: [
@@ -19457,6 +19462,73 @@ const LISTENING_EXTRA = {
 "fr-vx-hp1:apparemment-ex":["看来，街上没有人听见摩托车的声音。",["幸好，街上没有人听见摩托车的声音。","看来，街上每个人都听见了摩托车的声音。","看来，街上没有人看见那辆摩托车。"],"Apparently, nobody in the street heard the motorbike.",["Luckily, nobody in the street heard the motorbike.","Apparently, everybody in the street heard the motorbike.","Apparently, nobody in the street saw the motorbike."],"Qu'est-ce que personne n'a entendu ?",["La moto","Le chat","Le bébé","La voiture"]],
 "fr-vx-hp1:profondément-ex":["婴儿在毯子里睡得很沉。",["婴儿在毯子里睡得很浅。","婴儿在毯子里哭得很厉害。","婴儿在篮子里睡得很沉。"],"The baby is sleeping deeply in his blankets.",["The baby is sleeping lightly in his blankets.","The baby is crying loudly in his blankets.","The baby is sleeping deeply in his basket."],"Où dort le bébé ?",["Dans ses couvertures","Dans son lit","Dans un panier","Sur la moto"]],
 "fr-vx-hp1:soudain-ex":["突然，街上所有的灯都灭了。",["慢慢地，街上所有的灯都灭了。","突然，街上所有的灯都亮了。","突然，街上有几盏灯灭了。"],"Suddenly, all the lamps in the street go out.",["Slowly, all the lamps in the street go out.","Suddenly, all the lamps in the street light up.","Suddenly, some of the lamps in the street go out."],"Combien de lampes s'éteignent ?",["Toutes les lampes","Une seule lampe","Deux lampes","La moitié des lampes"]],
+"fr-vx-hp1:jugeote-ex":["照麦格教授的说法，有些巫师一点头脑都没有。",["照麦格教授的说法，有些巫师一点胆量都没有。","照邓布利多的说法，有些巫师一点头脑都没有。","照麦格教授的说法，有些麻瓜一点头脑都没有。"],"According to Professor McGonagall, some wizards have no common sense.",["According to Professor McGonagall, some wizards have no courage.","According to Dumbledore, some wizards have no common sense.","According to Professor McGonagall, some Muggles have no common sense."],"Qui parle des sorciers ?",["Le professeur McGonagall","Dumbledore","Hagrid","Harry"]],
+"fr-vx-hp1:frémir-ex":["麦格教授听到伏地魔的名字，打了个寒战。",["麦格教授听到伏地魔的名字，吓了一跳。","麦格教授说出伏地魔的名字时，打了个寒战。","邓布利多听到伏地魔的名字，打了个寒战。"],"Professor McGonagall shudders when she hears Voldemort's name.",["Professor McGonagall frowns when she hears Voldemort's name.","Professor McGonagall shudders when she says Voldemort's name.","Dumbledore shudders when he hears Voldemort's name."],"Quel nom entend le professeur McGonagall ?",["Le nom de Voldemort","Le nom de Dumbledore","Le nom de Harry","Le nom de Hagrid"]],
+"fr-vx-hp1:incliner-ex":["邓布利多向麦格教授点头致意。",["邓布利多向麦格教授挥手致意。","麦格教授向邓布利多点头致意。","邓布利多向海格点头致意。"],"Dumbledore bows his head to greet Professor McGonagall.",["Dumbledore waves his hand to greet Professor McGonagall.","Professor McGonagall bows her head to greet Dumbledore.","Dumbledore bows his head to greet Hagrid."],"Qui Dumbledore salue-t-il ?",["Le professeur McGonagall","Hagrid","Harry","Dudley"]],
+"fr-vx-hp1:consulter-ex":["邓布利多看了看表，说海格迟到了。",["邓布利多调了调表，说海格迟到了。","邓布利多看了看表，说海格来早了。","邓布利多看了看表，说麦格教授迟到了。"],"Dumbledore looks at his watch and says that Hagrid is late.",["Dumbledore winds his watch and says that Hagrid is late.","Dumbledore looks at his watch and says that Hagrid is early.","Dumbledore looks at his watch and says that Professor McGonagall is late."],"Qui est en retard ?",["Hagrid","Dumbledore","Le professeur McGonagall","Harry"]],
+"fr-vx-hp1:admiratif-ex":["麦格教授向邓布利多投去钦佩的目光。",["麦格教授向邓布利多投去惊讶的目光。","邓布利多向麦格教授投去钦佩的目光。","麦格教授向海格投去钦佩的目光。"],"Professor McGonagall gives Dumbledore an admiring look.",["Professor McGonagall gives Dumbledore a surprised look.","Dumbledore gives Professor McGonagall an admiring look.","Professor McGonagall gives Hagrid an admiring look."],"Qui le professeur McGonagall regarde-t-elle ?",["Dumbledore","Hagrid","Harry","Voldemort"]],
+"fr-vx-hp1:exaspéré-ex":["麦格教授恼火地叹了口气。",["麦格教授疲惫地叹了口气。","麦格教授恼火地哼了一声。","邓布利多恼火地叹了口气。"],"Professor McGonagall gives an exasperated sigh.",["Professor McGonagall gives a weary sigh.","Professor McGonagall gives an exasperated snort.","Dumbledore gives an exasperated sigh."],"Qui pousse un soupir ?",["Le professeur McGonagall","Dumbledore","Hagrid","L'oncle Vernon"]],
+"fr-vx-hp1:décidément-ex":["真是的，这一天越来越古怪了。",["也许，这一天会越来越古怪。","真是的，这一天越来越无聊了。","真是的，这一周越来越古怪了。"],"Really, this day is getting stranger and stranger.",["Perhaps this day will get stranger and stranger.","Really, this day is getting more and more boring.","Really, this week is getting stranger and stranger."],"Comment est cette journée ?",["De plus en plus bizarre","De plus en plus calme","De plus en plus longue","De plus en plus triste"]],
+"fr-vx-hpx:placard-ex":["哈利睡在楼梯下面的壁橱里。",["哈利睡在楼梯下面的地下室里。","哈利睡在楼梯上面的壁橱里。","达力睡在楼梯下面的壁橱里。"],"Harry sleeps in a cupboard under the stairs.",["Harry sleeps in the cellar under the stairs.","Harry sleeps in a cupboard at the top of the stairs.","Dudley sleeps in a cupboard under the stairs."],"Où dort Harry ?",["Dans un placard","Dans une chambre","Dans le salon","Dans la cuisine"]],
+"fr-vx-hpx:araignée-ex":["哈利和几只蜘蛛一起住在壁橱里。",["哈利和几只蚂蚁一起住在壁橱里。","哈利和几只蜘蛛一起住在阁楼里。","哈利把几只蜘蛛关在壁橱里。"],"Harry shares his cupboard with spiders.",["Harry shares his cupboard with beetles.","Harry shares his bedroom with spiders.","Harry keeps spiders shut in his cupboard."],"Avec quoi Harry partage-t-il son placard ?",["Avec des araignées","Avec des souris","Avec des mouches","Avec des chats"]],
+"fr-vx-hpx:tambouriner-ex":["每天早上，佩妮姨妈都会咚咚地敲壁橱的门。",["每天早上，佩妮姨妈都会轻轻地敲壁橱的门。","每天晚上，佩妮姨妈都会咚咚地敲壁橱的门。","每天早上，弗农姨父都会咚咚地敲壁橱的门。"],"Every morning, Aunt Petunia hammers on the cupboard door.",["Every morning, Aunt Petunia knocks softly on the cupboard door.","Every evening, Aunt Petunia hammers on the cupboard door.","Every morning, Aunt Petunia hammers on the kitchen door."],"Quand la tante Pétunia frappe-t-elle à la porte ?",["Chaque matin","Chaque soir","Chaque dimanche","Chaque midi"]],
+"fr-vx-hpx:vivarium-ex":["午饭后，德思礼一家带哈利去了动物园的爬行动物馆。",["午饭后，德思礼一家带哈利去了动物园的水族馆。","午饭前，德思礼一家带哈利去了动物园的爬行动物馆。","午饭后，德思礼一家带达力去了动物园的爬行动物馆。"],"After lunch, the Dursleys take Harry to the reptile house at the zoo.",["After lunch, the Dursleys take Harry to the aquarium at the zoo.","Before lunch, the Dursleys take Harry to the reptile house at the zoo.","After lunch, the Dursleys take Dudley to the reptile house at the zoo."],"Quand les Dursley vont-ils au vivarium ?",["Après le déjeuner","Avant le déjeuner","Après le dîner","Avant le dîner"]],
+"fr-vx-hpx:vitre-ex":["达力敲打玻璃，想把蛇吵醒。",["达力敲打笼子，想把蛇吵醒。","达力敲打玻璃，想把蛇吓跑。","哈利敲打玻璃，想把蛇吵醒。"],"Dudley bangs on the glass to wake the snake up.",["Dudley bangs on the cage to wake the snake up.","Dudley bangs on the glass to scare the snake away.","Harry bangs on the glass to wake the snake up."],"Pourquoi Dudley frappe-t-il sur la vitre ?",["Pour réveiller le serpent","Pour appeler sa mère","Pour faire peur à Harry","Pour nourrir le serpent"]],
+"fr-vx-hpx:reptile-ex":["哈利看着那只睡在大石头上的爬行动物。",["哈利看着那只睡在大石头上的两栖动物。","哈利看着那只睡在大树枝上的爬行动物。","哈利看着那只睡在小石头上的爬行动物。"],"Harry watches the reptile sleeping on a big stone.",["Harry watches the amphibian sleeping on a big stone.","Harry watches the reptile sleeping on a big branch.","Harry wakes the reptile sleeping on a big stone."],"Où dort le reptile ?",["Sur une grosse pierre","Sur une petite pierre","Sur une grosse branche","Sous une grosse pierre"]],
+"fr-vx-hpx:venin-ex":["达力想看毒液致命的眼镜蛇。",["达力想看毒牙锋利的眼镜蛇。","哈利想看毒液致命的眼镜蛇。","达力想看毒液致命的蝰蛇。"],"Dudley wants to see cobras with deadly venom.",["Dudley wants to see cobras with deadly fangs.","Harry wants to see cobras with deadly venom.","Dudley wants to see vipers with deadly venom."],"Quels serpents Dudley veut-il voir ?",["Des cobras","Des boas","Des pythons","Des vipères"]],
+"fr-vx-hpx:ramper-ex":["一只小蜥蜴在树枝上慢慢地爬。",["一只小蜥蜴在树枝上一动不动地趴着。","一只小蜥蜴在树枝上飞快地爬。","一只大蜥蜴在树枝上慢慢地爬。"],"A little lizard crawls slowly along a branch.",["A little lizard lies motionless on a branch.","A little lizard crawls quickly along a branch.","A little lizard crawls slowly across a stone."],"Comment le lézard avance-t-il ?",["Lentement","Rapidement","Bruyamment","Joyeusement"]],
+"fr-vx-hpx:s'enrouler-ex":["那条蟒蛇慢慢地盘在一根树枝上。",["那条蟒蛇慢慢地从一根树枝上滑下来。","那条蟒蛇飞快地盘在一根树枝上。","那条眼镜蛇慢慢地盘在一根树枝上。"],"The boa slowly coils around a branch.",["The boa slowly slides down a branch.","The boa quickly coils around a branch.","The cobra slowly coils around a branch."],"Autour de quoi le boa s'enroule-t-il ?",["Autour d'une branche","Autour d'une pierre","Autour d'une corde","Autour d'une cage"]],
+"fr-vx-hpx:clin d'œil-ex":["那条蛇冲哈利眨了眨眼。",["那条蛇冲哈利吐了吐舌头。","那条蛇冲达力眨了眨眼。","哈利冲那条蛇眨了眨眼。"],"The snake winks at Harry.",["The snake sticks its tongue out at Harry.","The snake winks at Dudley.","Harry winks at the snake."],"À qui le serpent fait-il un clin d'œil ?",["À Harry","À Dudley","À l'oncle Vernon","À la tante Pétunia"]],
+"fr-vx-hpx:parchemin-ex":["给哈利的信写在一张厚厚的发黄的羊皮纸上。",["给哈利的信写在一张厚厚的发黄的牛皮纸上。","给哈利的信写在一张薄薄的发黄的羊皮纸上。","给达力的信写在一张厚厚的发黄的羊皮纸上。"],"Harry's letter is written on thick yellowish parchment.",["Harry's letter is written on thick yellowish cardboard.","Harry's letter is written on thin yellowish parchment.","Harry's letter is written on thick greenish parchment."],"Comment est le parchemin ?",["Épais et jaunâtre","Fin et blanc","Épais et vert","Fin et jaunâtre"]],
+"fr-vx-hpx:encre-ex":["地址是用绿墨水写的。",["地址是用绿铅笔写的。","地址是用红墨水写的。","名字是用绿墨水写的。"],"The address is written in green ink.",["The address is written in green pencil.","The address is written in purple ink.","The name is written in green ink."],"De quelle couleur est l'encre ?",["Verte","Violette","Rouge","Noire"]],
+"fr-vx-hpx:sceau-ex":["一枚紫色的火漆封印封住了信封。",["一条紫色的丝带封住了信封。","一枚红色的火漆封印封住了信封。","一枚紫色的火漆封印封住了包裹。"],"A purple wax seal closes the envelope.",["A purple sticker closes the envelope.","A red wax seal closes the envelope.","A purple wax seal closes the parcel."],"De quelle couleur est la cire ?",["Violette","Rouge","Verte","Jaune"]],
+"fr-vx-hpx:déchirer-ex":["弗农姨父没等哈利看就把信撕了。",["弗农姨父没等哈利看就把信烧了。","弗农姨父等哈利看完才把信撕了。","佩妮姨妈没等哈利看就把信撕了。"],"Uncle Vernon tears up the letter before Harry can read it.",["Uncle Vernon burns the letter before Harry can read it.","Uncle Vernon tears up the letter after Harry has read it.","Uncle Vernon tears up the letter before Dudley can read it."],"Qui déchire la lettre ?",["L'oncle Vernon","La tante Pétunia","Dudley","Harry"]],
+"fr-vx-hpx:clouer-ex":["弗农姨父把信箱口钉死了。",["弗农姨父把信箱口粘死了。","弗农姨父把后门钉死了。","佩妮姨妈把信箱口钉死了。"],"Uncle Vernon nails the letter box shut.",["Uncle Vernon tapes the letter box shut.","Uncle Vernon nails the back door shut.","Aunt Petunia nails the letter box shut."],"Qu'est-ce que l'oncle Vernon cloue ?",["La fente de la boîte aux lettres","La porte du placard","La fenêtre du salon","La porte d'entrée"]],
+"fr-vx-hpx:marteau-ex":["弗农姨父手里拿着锤子在屋里转来转去。",["弗农姨父手里拿着钳子在屋里转来转去。","弗农姨父手里拿着锤子坐在客厅里。","达力手里拿着锤子在屋里转来转去。"],"Hammer in hand, Uncle Vernon goes round the house.",["Screwdriver in hand, Uncle Vernon goes round the house.","Hammer in hand, Uncle Vernon waits by the door.","Hammer in hand, Dudley goes round the house."],"Qu'est-ce que l'oncle Vernon a à la main ?",["Un marteau","Une lettre","Un fusil","Un journal"]],
+"fr-vx-hpx:planche-ex":["屋里所有的窗户都被木板封住了。",["屋里所有的窗户都被窗帘遮住了。","屋里有几扇窗户被木板封住了。","屋里所有的门都被木板封住了。"],"Boards block every window in the house.",["Curtains cover every window in the house.","Boards block some of the windows in the house.","Boards block every door in the house."],"Qu'est-ce que les planches bloquent ?",["Les fenêtres","Les portes","La cheminée","L'escalier"]],
+"fr-vx-hpx:cheminée-ex":["几十封信从客厅的壁炉里喷涌而出。",["几十封信从客厅的通风口里喷涌而出。","几封信从客厅的壁炉里掉了出来。","几十封信从厨房的壁炉里喷涌而出。"],"Dozens of letters shoot out of the living-room fireplace.",["Dozens of letters shoot out of the living-room air vent.","A few letters fall out of the living-room fireplace.","Dozens of letters shoot out of the kitchen fireplace."],"D'où sortent les lettres ?",["De la cheminée","De la fenêtre","De la porte","Du placard"]],
+"fr-vx-hpx:cabane-ex":["为了躲开那些信，一家人住进了一间破旧的小木屋。",["为了躲开那些信，一家人住进了一顶破旧的帐篷。","为了躲开那些信，一家人住进了一间崭新的小木屋。","为了躲开那些信，哈利一个人住进了一间破旧的小木屋。"],"To escape the letters, the family settles in an old hut.",["To escape the letters, the family settles in an old tent.","To escape the letters, the family settles in a new hut.","To escape the letters, the family settles in an old hotel."],"Pourquoi la famille s'installe-t-elle dans la cabane ?",["Pour fuir les lettres","Pour fêter un anniversaire","Pour partir en vacances","Pour voir la mer"]],
+"fr-vx-hpx:rocher-ex":["那间小木屋建在海中央的一块礁石上。",["那间小木屋建在海中央的一座小岛上。","那间小木屋建在海边的一块礁石上。","那间小木屋建在湖中央的一块礁石上。"],"The hut stands on a rock in the middle of the sea.",["The hut stands on an island in the middle of the sea.","The hut stands on a rock by the sea.","The hut stands on a rock in the middle of the lake."],"Où se trouve la cabane ?",["Sur un rocher","Sur une plage","Dans une forêt","Sur une colline"]],
+"fr-vx-hpx:fracas-ex":["午夜时分，门轰的一声被撞开了。",["午夜时分，门吱呀一声被推开了。","中午时分，门轰的一声被撞开了。","午夜时分，窗户轰的一声被撞开了。"],"At midnight, the door bursts open with a loud crash.",["At midnight, the door creaks open slowly.","At noon, the door bursts open with a loud crash.","At midnight, the window bursts open with a loud crash."],"À quelle heure la porte s'ouvre-t-elle ?",["À minuit","À midi","À une heure","À onze heures"]],
+"fr-vx-hpx:gond-ex":["门被从铰链上扯了下来，倒在地上。",["门被从门框上扯了下来，倒在地上。","门被从铰链上扯了下来，倒在沙发上。","门被从铰链上扯了下来，靠在墙上。"],"Torn off its hinges, the door falls to the floor.",["Torn out of its frame, the door falls to the floor.","Torn off its hinges, the door falls onto the sofa.","Torn off its hinges, the window falls to the floor."],"Où tombe la porte ?",["Sur le sol","Sur le canapé","Sur la table","Sur le lit"]],
+"fr-vx-hpx:ronfler-ex":["达力在沙发上打呼噜，哈利则在等午夜到来。",["达力在沙发上说梦话，哈利则在等午夜到来。","达力在地板上打呼噜，哈利则在等午夜到来。","哈利在沙发上打呼噜，达力则在等午夜到来。"],"Dudley snores on the sofa while Harry waits for midnight.",["Dudley talks in his sleep on the sofa while Harry waits for midnight.","Dudley snores on the floor while Harry waits for midnight.","Dudley snores on the sofa while Harry waits for dawn."],"Où dort Dudley ?",["Sur le canapé","Sur le sol","Dans le lit","Dans le placard"]],
+"fr-vx-hpx:broussailleux-ex":["海格留着一把又黑又乱的大胡子。",["海格留着一把又黑又长的大胡子。","海格留着一把又灰又乱的大胡子。","邓布利多留着一把又黑又乱的大胡子。"],"Hagrid has a bushy black beard.",["Hagrid has a long black beard.","Hagrid has a bushy grey beard.","Hagrid has bushy black hair."],"De quelle couleur est la barbe de Hagrid ?",["Noire","Grise","Rousse","Blanche"]],
+"fr-vx-hpx:fusil-ex":["弗农姨父把枪对准了那扇不停晃动的门。",["弗农姨父把手电筒对准了那扇不停晃动的门。","弗农姨父把枪对准了那扇不停晃动的窗户。","弗农姨父把枪对准了那扇紧紧关着的门。"],"Uncle Vernon points his gun at the shaking door.",["Uncle Vernon points his torch at the shaking door.","Uncle Vernon points his gun at the shaking window.","Uncle Vernon points his gun at the locked door."],"Qu'est-ce que l'oncle Vernon pointe vers la porte ?",["Son fusil","Son marteau","Sa lampe","Son parapluie"]],
+"fr-vx-hpx:nœud-ex":["海格把枪管一拧，打成了一个结。",["海格把枪管一拧，弯成了一个圈。","海格把枪管一拧，掰成了两段。","海格把伞柄一拧，打成了一个结。"],"Hagrid bends the barrel of the gun and ties it in a knot.",["Hagrid bends the barrel of the gun into a ring.","Hagrid bends the barrel of the gun and breaks it in two.","Hagrid bends the handle of his umbrella and ties it in a knot."],"Qu'est-ce que Hagrid tord ?",["Le canon du fusil","La poignée de la porte","Le manche du marteau","Le pied de la table"]],
+"fr-vx-hpx:écraser-ex":["海格送给哈利一个有点压扁了的蛋糕。",["海格送给哈利一个有点烤焦了的蛋糕。","海格送给达力一个有点压扁了的蛋糕。","海格送给哈利一个完全压扁了的蛋糕。"],"Hagrid gives Harry a slightly squashed cake.",["Hagrid gives Harry a slightly burnt cake.","Hagrid gives Harry a badly squashed cake.","Hagrid gives Dudley a slightly squashed cake."],"Qu'est-ce que Hagrid offre à Harry ?",["Un gâteau","Une lettre","Un hibou","Une baguette"]],
+"fr-vx-hpx:bouilloire-ex":["海格把水壶放在火上烧水泡茶。",["海格把锅放在火上烧水泡茶。","海格把水壶从火上拿下来泡茶。","海格把水壶放在火上烧水煮咖啡。"],"Hagrid puts a kettle on the fire to make tea.",["Hagrid puts a saucepan on the fire to make tea.","Hagrid takes a kettle off the fire to make tea.","Hagrid puts a kettle on the fire to make soup."],"Que veut faire Hagrid ?",["Du thé","Du café","Du chocolat","De la soupe"]],
+"fr-vx-hpx:queue-ex":["海格的伞一挥，达力就长出了一条猪尾巴。",["海格的伞一挥，达力就长出了一对猪耳朵。","海格的伞一挥，达力就长出了一条狗尾巴。","海格的魔杖一挥，达力就长出了一条猪尾巴。"],"With a flick of his umbrella, Hagrid gives Dudley a pig's tail.",["With a flick of his umbrella, Hagrid gives Dudley a pig's snout.","With a flick of his umbrella, Hagrid gives Dudley a dog's tail.","With a flick of his umbrella, Hagrid gives Vernon a pig's tail."],"Avec quoi Hagrid donne-t-il une queue à Dudley ?",["Avec un parapluie","Avec une baguette","Avec une clé","Avec un bâton"]],
+"fr-vx-hpx:terrifié-ex":["达力吓坏了，躲到了妈妈身后。",["达力很惊讶，躲到了妈妈身后。","达力吓坏了，躲到了爸爸身后。","达力吓坏了，躲到了门后面。"],"Terrified, Dudley hides behind his mother.",["Surprised, Dudley hides behind his mother.","Terrified, Dudley hides behind his father.","Terrified, Dudley runs away from his mother."],"Derrière qui Dudley se cache-t-il ?",["Derrière sa mère","Derrière son père","Derrière Hagrid","Derrière Harry"]],
+"fr-vx-hpx:gobelin-ex":["在古灵阁，一个手指细长的妖精仔细查看海格的钥匙。",["在古灵阁，一个手指细长的小精灵仔细查看海格的钥匙。","在古灵阁，一个手指细长的妖精仔细查看哈利的钥匙。","在古灵阁，一个手指短粗的妖精仔细查看海格的钥匙。"],"At Gringotts, a long-fingered goblin examines Hagrid's key.",["At Gringotts, a long-fingered elf examines Hagrid's key.","At Gringotts, a long-fingered goblin examines Hagrid's letter.","At Gringotts, a long-nosed goblin examines Hagrid's key."],"Qu'est-ce que le gobelin examine ?",["La clé de Hagrid","La lettre de Hagrid","La clé de Harry","Le livre de Hagrid"]],
+"fr-vx-hpx:comptoir-ex":["一个职员坐在高高的柜台后面，在一本大账簿上写字。",["一个职员坐在高高的书桌后面，在一本大账簿上写字。","一个职员坐在矮矮的柜台后面，在一本大账簿上写字。","一个职员坐在高高的柜台前面，在一本大账簿上写字。"],"Behind a high counter, a clerk writes in a big ledger.",["Behind a high desk, a clerk writes in a big ledger.","Behind a low counter, a clerk writes in a big ledger.","Behind a high counter, a clerk reads a big ledger."],"Où l'employé écrit-il ?",["Dans un grand livre","Dans un petit cahier","Dans un vieux carnet","Dans un journal"]],
+"fr-vx-hpx:wagonnet-ex":["一辆小推车在地道里飞驰。",["一辆小火车在地道里飞驰。","一辆小推车在地道里慢慢地走。","一辆大推车在地道里飞驰。"],"A little cart races through the tunnels at full speed.",["A little train races through the tunnels at full speed.","A little cart rolls slowly through the tunnels.","A big cart races through the tunnels at full speed."],"Où le wagonnet file-t-il ?",["Dans les tunnels","Dans les rues","Dans la gare","Dans la forêt"]],
+"fr-vx-hpx:coffre-ex":["哈利的金库里堆满了金币。",["哈利的钱包里装满了金币。","哈利的金库里堆满了银币。","哈利的金库里只有几枚金币。"],"Harry's vault is full of gold coins.",["Harry's purse is full of gold coins.","Harry's vault is full of silver coins.","Harry's vault holds only a few gold coins."],"Qu'est-ce qu'il y a dans le coffre de Harry ?",["Des pièces d'or","Des pièces d'argent","Des billets","Des livres"]],
+"fr-vx-hpx:chaudron-ex":["哈利的清单上有一口锡制坩埚。",["哈利的清单上有一口锡制平底锅。","哈利的清单上有一口铜制坩埚。","哈利的清单上没有锡制坩埚。"],"Harry's list includes a pewter cauldron.",["Harry's list includes a pewter frying pan.","Harry's list includes a copper cauldron.","Ron's list includes a pewter cauldron."],"En quoi est le chaudron ?",["En étain","En cuivre","En or","En fer"]],
+"fr-vx-hpx:plume-ex":["哈利买了几支写字用的鹅毛笔。",["哈利买了几支写字用的铅笔。","哈利借了几支写字用的鹅毛笔。","哈利买了几支画画用的鹅毛笔。"],"Harry buys goose quills for writing.",["Harry buys pencils for writing.","Harry borrows goose quills for writing.","Harry buys goose quills for drawing."],"Pourquoi Harry achète-t-il des plumes ?",["Pour écrire","Pour dessiner","Pour lire","Pour jouer"]],
+"fr-vx-hpx:enseigne-ex":["门上方一块旧招牌在风中吱吱作响。",["门上方一扇旧百叶窗在风中吱吱作响。","窗户上方一块旧招牌在风中吱吱作响。","门上方一块新招牌在风中吱吱作响。"],"Above the door, an old sign creaks in the wind.",["Above the door, an old shutter creaks in the wind.","Above the window, an old sign creaks in the wind.","Above the door, a new sign creaks in the wind."],"Où est l'enseigne ?",["Au-dessus de la porte","Au-dessus de la fenêtre","Derrière la porte","Sous la fenêtre"]],
+"fr-vx-hpx:ruban-ex":["一根长长的带刻度的卷尺自己给哈利量起了胳膊。",["一根长长的带刻度的尺子自己给哈利量起了胳膊。","一根长长的带刻度的卷尺自己给哈利量起了腿。","一根短短的带刻度的卷尺自己给哈利量起了胳膊。"],"A long measuring tape measures Harry's arm by itself.",["A long wooden ruler measures Harry's arm by itself.","A long measuring tape measures Harry's leg by itself.","A long measuring tape measures Ron's arm by itself."],"Qu'est-ce que le ruban mesure ?",["Le bras de Harry","La jambe de Harry","La tête de Harry","Le bras de Ron"]],
+"fr-vx-hpx:houx-ex":["哈利的魔杖是冬青木做的。",["哈利的魔杖是橡木做的。","罗恩的魔杖是冬青木做的。","哈利的扫帚是冬青木做的。"],"Harry's wand is made of holly wood.",["Harry's wand is made of oak wood.","Ron's wand is made of holly wood.","Harry's broom is made of holly wood."],"Qu'est-ce qui est en bois de houx ?",["La baguette de Harry","La baguette de Ron","Le balai de Harry","La table de Harry"]],
+"fr-vx-hpx:baguette-ex":["哈利一挥魔杖，火花就迸了出来。",["哈利一挥棍子，火花就迸了出来。","哈利一挥魔杖，烟雾就冒了出来。","哈利一放下魔杖，火花就迸了出来。"],"When Harry waves the wand, sparks shoot out.",["When Harry waves the stick, sparks shoot out.","When Harry waves the wand, smoke pours out.","When Harry drops the wand, sparks shoot out."],"Qu'est-ce qui jaillit de la baguette ?",["Des étincelles","De l'eau","De la fumée","Des fleurs"]],
+"fr-vx-hpx:barrière-ex":["韦斯莱夫人告诉哈利怎样穿过那道隔墙。",["韦斯莱夫人告诉哈利怎样穿过那道门。","韦斯莱夫人告诉罗恩怎样穿过那道隔墙。","韦斯莱夫人告诉哈利为什么要穿过那道隔墙。"],"Mrs Weasley explains to Harry how to go through the barrier.",["Mrs Weasley explains to Harry how to go through the door.","Mrs Weasley explains to Ron how to go through the barrier.","Mrs Weasley explains to Harry why he must go through the barrier."],"Qui explique à Harry comment traverser ?",["Mrs Weasley","Ron","Hagrid","Ginny"]],
+"fr-vx-hpx:locomotive-ex":["一辆红色的蒸汽火车头停在站台边，周围雾气腾腾。",["一节红色的车厢停在站台边，周围雾气腾腾。","一辆黑色的蒸汽火车头停在站台边，周围雾气腾腾。","一辆红色的蒸汽火车头驶离站台，周围雾气腾腾。"],"A red steam engine waits at the platform, wrapped in steam.",["A red carriage waits at the platform, wrapped in steam.","A black steam engine waits at the platform, wrapped in steam.","A red steam engine leaves the platform, wrapped in steam."],"De quelle couleur est la locomotive ?",["Rouge","Noire","Verte","Bleue"]],
+"fr-vx-hpx:sifflet-ex":["汽笛一响，金妮在站台上挥手告别。",["钟声一响，金妮在站台上挥手告别。","汽笛一响，金妮在火车上挥手告别。","汽笛一响，韦斯莱夫人在站台上挥手告别。"],"At the blast of the whistle, Ginny waves from the platform.",["At the ring of the bell, Ginny waves from the platform.","At the blast of the whistle, Ginny waves from the train.","At the blast of the whistle, Ginny cries on the platform."],"Où est Ginny ?",["Sur le quai","Dans le train","Dans la voiture","Sur la voie"]],
+"fr-vx-hpx:compartiment-ex":["哈利和罗恩坐在同一个空包厢里。",["哈利和罗恩坐在同一张空长椅上。","哈利和罗恩坐在同一个挤满人的包厢里。","哈利和赫敏坐在同一个空包厢里。"],"Harry and Ron share an empty compartment.",["Harry and Ron share an empty bench.","Harry and Ron share a crowded compartment.","Harry and Neville share an empty compartment."],"Qui partage le compartiment avec Harry ?",["Ron","Hermione","Neville","Hagrid"]],
+"fr-vx-hpx:tache-ex":["罗恩的鼻子上有一块黑印。",["罗恩的鼻子上有一道黑色的伤疤。","罗恩的下巴上有一块黑印。","罗恩的鼻子上有一块红印。"],"Ron has a black smudge on his nose.",["Ron has a black scar on his nose.","Ron has a black smudge on his chin.","Ron has a red smudge on his nose."],"Où Ron a-t-il une tache ?",["Sur le nez","Sur la joue","Sur le front","Sur le menton"]],
+"fr-vx-hpx:dragée-ex":["哈利尝了一颗沙丁鱼味的糖豆。",["哈利尝了一块沙丁鱼味的饼干。","哈利尝了一颗草莓味的糖豆。","罗恩尝了一颗沙丁鱼味的糖豆。"],"Harry tastes a jelly bean that tastes of sardine.",["Harry tastes a biscuit that tastes of sardine.","Harry tastes a jelly bean that tastes of strawberry.","Harry spits out a jelly bean that tastes of sardine."],"Quel goût a la dragée ?",["Le goût de sardine","Le goût de fraise","Le goût de chocolat","Le goût de citron"]],
+"fr-vx-hpx:parfum-ex":["这种糖什么口味都有，连最古怪的都有。",["这种糖什么颜色都有，连最古怪的都有。","这种糖什么口味都有，就是没有古怪的。","这种糖只有几种口味，都很古怪。"],"These sweets come in every flavour, even the strangest.",["These sweets come in every colour, even the strangest.","These sweets come in every flavour, but none are strange.","These cakes come in every flavour, even the strangest."],"Qu'est-ce qui existe dans tous les parfums ?",["Ces bonbons","Ces gâteaux","Ces chocolats","Ces glaces"]],
+"fr-vx-hpx:réglisse-ex":["罗恩咬了一口甘草魔杖糖。",["罗恩咬了一口巧克力魔杖糖。","罗恩舔了一口甘草魔杖糖。","哈利咬了一口甘草魔杖糖。"],"Ron bites into a liquorice wand.",["Ron bites into a caramel wand.","Ron licks a liquorice wand.","Harry bites into a liquorice wand."],"Qui mord dans la baguette de réglisse ?",["Ron","Harry","Hermione","Neville"]],
+"fr-vx-hpx:grenouille-ex":["巧克力蛙从火车窗口跳了出去。",["巧克力蟾蜍从火车窗口跳了出去。","巧克力蛙从火车门口跳了出去。","巧克力蛙从火车窗口跳了进来。"],"The chocolate frog jumps out of the train window.",["The chocolate toad jumps out of the train window.","The chocolate frog jumps out of the train door.","The chocolate frog jumps in through the train window."],"Par où la grenouille saute-t-elle ?",["Par la fenêtre","Par la porte","Par le toit","Par le couloir"]],
+"fr-vx-hpx:crapaud-ex":["赫敏帮纳威在火车上找他的蟾蜍。",["赫敏帮纳威在火车上找他的青蛙。","赫敏帮纳威在站台上找他的蟾蜍。","纳威帮赫敏在火车上找她的蟾蜍。"],"Hermione helps Neville look for his toad on the train.",["Hermione helps Neville look for his frog on the train.","Hermione helps Neville look for his toad on the platform.","Hermione helps Ron look for his rat on the train."],"Qui aide Neville ?",["Hermione","Ron","Harry","Ginny"]],
+"fr-vx-hpx:tabouret-ex":["麦格教授在新生面前放了一张凳子。",["麦格教授在新生面前放了一把扶手椅。","麦格教授在新生后面放了一张凳子。","麦格教授在新生面前搬走了一张凳子。"],"Professor McGonagall puts a stool in front of the new students.",["Professor McGonagall puts an armchair in front of the new students.","Professor McGonagall puts a stool behind the new students.","Professor McGonagall puts a stool in front of the teachers."],"Qui pose le tabouret ?",["Le professeur McGonagall","Le professeur Dumbledore","Le professeur Rogue","Le professeur Flitwick"]],
+"fr-vx-hpx:pointu-ex":["凳子上放着一顶旧尖顶帽。",["凳子上放着一顶旧圆顶帽。","凳子上放着一顶新尖顶帽。","凳子下放着一顶旧尖顶帽。"],"On the stool there is an old pointed hat.",["On the stool there is an old round hat.","On the stool there is a new pointed hat.","Under the stool there is an old pointed hat."],"Qu'est-ce qu'il y a sur le tabouret ?",["Un vieux chapeau","Une vieille baguette","Un vieux livre","Une vieille robe"]],
+"fr-vx-hpx:rapiécé-ex":["那顶旧帽子好几处都打着补丁。",["那顶旧帽子好几处都破了洞。","那顶旧帽子只有一处打着补丁。","那顶新帽子好几处都打着补丁。"],"The old hat is patched in several places.",["The old hat is torn in several places.","The old hat is patched in only one place.","The old cloak is patched in several places."],"Qu'est-ce qui est rapiécé ?",["Le vieux chapeau","La vieille robe","Le vieux tabouret","La vieille cape"]],
+"fr-vx-hpx:déchirure-ex":["帽子通过一道当作嘴巴的裂口唱起歌来。",["帽子通过一道当作嘴巴的皱褶唱起歌来。","帽子通过一道当作嘴巴的裂口说起话来。","帽子通过两道当作嘴巴的裂口唱起歌来。"],"The hat sings through a rip that serves as its mouth.",["The hat sings through a fold that serves as its mouth.","The hat speaks through a rip that serves as its mouth.","The hat sings through a rip near its brim."],"Que fait le chapeau ?",["Il chante","Il dort","Il crie","Il pleure"]],
+"fr-vx-hpx:chandelle-ex":["成千上万支蜡烛照亮了四张长桌。",["成千上万盏灯笼照亮了四张长桌。","成千上万支蜡烛照亮了两张长桌。","成千上万支蜡烛照亮了四张圆桌。"],"Thousands of candles light the four long tables.",["Thousands of lanterns light the four long tables.","Thousands of candles light the three long tables.","Hundreds of candles light the four long tables."],"Combien de longues tables y a-t-il ?",["Quatre","Trois","Cinq","Deux"]],
+"fr-vx-hpx:flotter-ex":["蜡烛悬浮在半空中，一根也不掉下来。",["蜡烛在半空中摇晃，一根也不掉下来。","蜡烛悬浮在半空中，一根接一根地掉下来。","灯笼悬浮在半空中，一个也不掉下来。"],"The candles float in the air without falling.",["The candles swing in the air without falling.","The candles float in the air and slowly fall.","The plates float in the air without falling."],"Où sont les bougies ?",["Dans l'air","Sur les tables","Par terre","Sur les murs"]],
+"fr-vx-hpx:parsemé-ex":["魔法天花板上到处点缀着星星。",["魔法天花板上到处画着星星。","魔法天花板上到处点缀着云朵。","魔法墙壁上到处点缀着星星。"],"Stars are scattered all over the magic ceiling.",["Stars are painted all over the magic ceiling.","Clouds are scattered all over the magic ceiling.","Stars are gathered in one corner of the magic ceiling."],"Qu'est-ce qu'il y a sur le plafond ?",["Des étoiles","Des nuages","Des bougies","Des fantômes"]],
+"fr-vx-hpx:brume-ex":["幽灵们像一团银色的薄雾一样穿过墙壁。",["幽灵们像一缕银色的烟一样穿过墙壁。","幽灵们像一团金色的薄雾一样穿过墙壁。","幽灵们像一团银色的薄雾一样穿过窗户。"],"The ghosts drift through the walls like a silvery mist.",["The ghosts drift through the walls like silvery smoke.","The ghosts drift through the walls like a golden mist.","The ghosts drift through the doors like a silvery mist."],"À travers quoi passent les fantômes ?",["À travers les murs","À travers les portes","À travers les fenêtres","À travers les tables"]],
+"fr-vx-hpx:répartition-ex":["分院仪式上，每个学生都要把帽子戴在头上。",["开学宴会上，每个学生都要把帽子戴在头上。","分院仪式上，只有几个学生要把帽子戴在头上。","分院仪式上，每个学生都要把帽子拿在手上。"],"During the sorting, each student puts the hat on their head.",["During the feast, each student puts the hat on their head.","During the sorting, only a few students put the hat on.","During the sorting, each student holds the hat in their hands."],"Où chaque élève met-il le chapeau ?",["Sur sa tête","Sur la table","Sur le tabouret","Sur ses genoux"]],
+"fr-vx-hpx:estomac-ex":["哈利等着轮到自己，紧张得胃都揪紧了。",["哈利等着轮到自己，紧张得喉咙都发紧了。","哈利等着轮到自己，饿得胃都痛了。","罗恩等着轮到自己，紧张得胃都揪紧了。"],"Harry's stomach is in knots as he waits his turn.",["Harry's throat is tight as he waits his turn.","Harry's stomach is in knots as he waits for Ron.","Harry's stomach is rumbling as he waits his turn."],"Qu'est-ce que Harry attend ?",["Son tour","Son repas","Son ami","Son chapeau"]],
 "fr-r7-1":["这部电影我还没看过。",["这部电影我已经看过了。","这部电影我不想再看了。","这本小说我还没看过。"],"I haven't seen that film yet.",["I have already seen that film.","I never want to see that film again.","I haven't seen that show yet."]],
 "fr-r7-2":["他刚走。",["他刚到。","他正要走。","他早就走了。"],"He has just left.",["He has just arrived.","He is about to leave.","He left a long time ago."]],
 "fr-r7-3":["我已经不饿了，谢谢。",["我现在还不饿，谢谢。","我已经不渴了，谢谢。","我还有点儿饿，谢谢。"],"I'm not hungry any more, thanks.",["I'm not hungry yet, thanks.","I'm not thirsty any more, thanks.","I'm still a bit hungry, thanks."]],
@@ -24710,7 +24782,7 @@ function studyClipSegments(entry,text){
 async function studyAudioIndex(){
   if(studyAudioManifest)return studyAudioManifest;
   if(studyAudioLoad)return studyAudioLoad;
-  studyAudioLoad=(async()=>{const controller=new AbortController(),timer=setTimeout(()=>controller.abort(),8000);try{const r=await fetch(STUDY_AUDIO_BASE+'manifest.json?v=1.9.95',{signal:controller.signal});if(!r.ok)throw Error('manifest');const m=await r.json();if(m.version!==1||!m.characters)throw Error('manifest');studyAudioManifest=m;return m;}finally{clearTimeout(timer);studyAudioLoad=null;}})();
+  studyAudioLoad=(async()=>{const controller=new AbortController(),timer=setTimeout(()=>controller.abort(),8000);try{const r=await fetch(STUDY_AUDIO_BASE+'manifest.json?v=1.9.98',{signal:controller.signal});if(!r.ok)throw Error('manifest');const m=await r.json();if(m.version!==1||!m.characters)throw Error('manifest');studyAudioManifest=m;return m;}finally{clearTimeout(timer);studyAudioLoad=null;}})();
   return studyAudioLoad;
 }
 function studySystemPart(text,rate,btn,done,role){
@@ -24799,22 +24871,176 @@ addEventListener('pagehide',studyAudioStop);document.addEventListener('visibilit
 // Stop a clip when its question/preview is removed, including vocabulary and game cards.
 let studyAudioOwner=null;
 new MutationObserver(()=>{if(studyAudioBusy&&studyAudioOwner&&!studyAudioOwner.isConnected)studyAudioStop();}).observe(stage,{childList:true,subtree:true});
+// ---------- 跟读例句的语音提示：找出句子里的省音、联诵、连音、元音相遇、嘘音 h / 哑音 h、不发音的字母和有几种读法的词 ----------
+// 规则只挑把握大的情况：联诵只标必须联诵的（限定词、主语代词、en / chez / quand 等后面），连音只标词尾辅音肯定发音的词，
+// 不确定的宁可不标。每条结果：{type, words, note:[中, 英, 法]}。跟读页的“💡 提示”和筛选标签“语音现象”都用它。
+const PH_TYPES = {
+  elision: ["省音（élision）", "Elision", "Élision"],
+  liaison: ["联诵（liaison）", "Liaison", "Liaison"],
+  enchainement: ["连音（enchaînement）", "Enchaînement", "Enchaînement"],
+  hiatus: ["元音相遇（hiatus）", "Hiatus", "Hiatus"],
+  haspire: ["嘘音 h（h aspiré）", "Aspirated h", "h aspiré"],
+  hmuet: ["哑音 h（h muet）", "Mute h", "h muet"],
+  silent: ["不发音的字母", "Silent letters", "Lettres muettes"],
+  special: ["特殊读音", "Special pronunciation", "Prononciation particulière"],
+};
+const PH_LANG = () => typeof UI_LANG === "undefined" || UI_LANG === "zh" ? 0 : UI_LANG === "fr" ? 2 : 1;
+// 嘘音 h：前面不省音、不联诵（人名 Harry、Hagrid 在法文版里也按嘘音处理：de Harry、de Hagrid）
+const PH_HASPIRE = new Set(["haie", "haies", "hibou", "hiboux", "hurlement", "hurlements", "hurler", "hurle", "hurlent", "hurla", "houx", "harpe", "harpes", "haut", "haute", "hauts", "hautes", "hauteur",
+  "honte", "hasard", "héros", "hâte", "hache", "hall", "hamac", "hamster", "hanche", "hangar", "haricot", "haricots", "hérisson", "hockey", "homard", "hors", "housse", "hutte", "haïr", "halte", "hameau",
+  "hanté", "hantée", "hausser", "hisser", "hocher", "hoche", "hochent", "hocha", "hublot", "huer", "hurla", "hamburger", "hargneux", "hardi", "harry", "hagrid", "huit", "onze", "oui"]);
+const PH_VOWEL = /^[aàâäeéèêëiîïoôöuùûüyœæ]/i;
+const phNorm = w => w.toLocaleLowerCase("fr").replace(/’/g, "'");
+const phStartsVowel = w => { const x = phNorm(w); if (PH_HASPIRE.has(x)) return false; if (x[0] === "h") return PH_VOWEL.test(x.slice(1)); return PH_VOWEL.test(x) && !/^(y[aeiou]|ou[aeiéè]|ouistiti)/.test(x); };
+// 省音：l' d' j' m' t' s' c' n' qu' jusqu' lorsqu' puisqu'
+const PH_ELIDE = { "l'": ["le / la"], "d'": ["de"], "j'": ["je"], "m'": ["me"], "t'": ["te"], "s'": ["se / si"], "c'": ["ce"], "n'": ["ne"], "qu'": ["que"], "jusqu'": ["jusque"], "lorsqu'": ["lorsque"], "puisqu'": ["puisque"] };
+// 必须联诵的前一个词（后面接元音开头的词时），以及联诵发出的音
+const PH_LIAISON_DET = new Set(["les", "des", "ces", "mes", "tes", "ses", "nos", "vos", "leurs", "aux", "un", "deux", "trois", "six", "dix", "quels", "quelles", "quelques", "plusieurs", "certains", "certaines", "mon", "ton", "son", "aucun", "petit", "petits", "petites", "grand", "grands", "gros", "bon", "bons", "vieux", "beaux", "nouveaux", "premiers"]);
+const PH_LIAISON_PRON = new Set(["nous", "vous", "ils", "elles", "on"]);
+const PH_LIAISON_PREP = new Set(["en", "chez", "dans", "sans", "sous", "quand", "tout"]);
+const PH_NOT_AFTER_DET = new Set(["et", "ou", "à", "a", "est", "en", "avec", "au", "aussi", "il", "elle", "on", "y", "où"]);
+const phLiaisonSound = w => { const c = phNorm(w).slice(-1); return c === "s" || c === "x" || c === "z" ? "z" : c === "t" || c === "d" ? "t" : c === "n" ? "n" : c === "r" ? "ʁ" : c === "f" ? "v" : ""; };
+// 词尾辅音肯定发音的词（连音用）；-er 结尾的大多不发 r，只认这些
+const PH_FINAL_ER = new Set(["mer", "fer", "hier", "hiver", "cher", "chère", "enfer", "amer", "super", "fier", "ver", "vers", "cuiller"]);
+const PH_FINAL_SILENT = new Set(["blanc", "tabac", "estomac", "croc", "crocs", "escroc", "clef", "gentil", "outil", "fusil", "persil", "sourcil", "nœud", "pied", "nez", "et", "porc", "franc", "banc", "flanc", "jonc", "almanach"]);
+function phFinalConsonant(word) {
+  const x = phNorm(word);
+  if (PH_FINAL_SILENT.has(x) || x.length < 2) return false;
+  if (x === "hagrid") return true;
+  if (/[^aeiouyéèêàâîôûœ]e$/.test(x) && !/(qu|gu)e$/.test(x)) return true;       // une, elle, porte, quatre, cette …
+  if (/er$/.test(x)) return PH_FINAL_ER.has(x);
+  return /(c|f|l|r|q|k|ct|bus)$/.test(x) && !/(ier|ger|cer)$/.test(x);            // avec, neuf, il, sur, pour, leur, cinq …
+}
+const phFinalVowel = w => /([aàâéiîoôuùûy]|eau|au|ou|eu)$/.test(phNorm(w)) && !/[^aeiou]e$/.test(phNorm(w));
+// 有几种读法、或者字母不全发音的常见词
+const PH_SPECIAL = {
+  "fils": ["fils 读 /fis/：l 不发音，s 要发音", "fils is /fis/: silent l, sounded s", "fils se dit /fis/ : l muet, s prononcé"],
+  "os": ["os 单数读 /ɔs/，复数 des os 读 /o/", "os is /ɔs/ in the singular, /o/ in the plural", "os : /ɔs/ au singulier, /o/ au pluriel"],
+  "œuf": ["œuf 单数读 /œf/，复数 œufs 读 /ø/", "œuf is /œf/, but œufs is /ø/", "œuf /œf/, mais œufs /ø/"],
+  "œufs": ["œufs 读 /ø/：f 和 s 都不发音（单数 œuf 读 /œf/）", "œufs is /ø/: f and s are silent (singular œuf is /œf/)", "œufs se dit /ø/ : f et s muets (œuf /œf/)"],
+  "second": ["second 里的 c 读 /g/：/s(ə)gɔ̃/", "the c in second sounds /g/", "le c de second se dit /g/"],
+  "seconde": ["seconde 里的 c 读 /g/：/s(ə)gɔ̃d/", "the c in seconde sounds /g/", "le c de seconde se dit /g/"],
+  "femme": ["femme 读 /fam/，e 读成 a", "femme is /fam/", "femme se dit /fam/"],
+  "monsieur": ["monsieur 读 /məsjø/，不读 mon-", "monsieur is /məsjø/", "monsieur se dit /məsjø/"],
+  "oignon": ["oignon 读 /ɔɲɔ̃/，i 不发音", "oignon is /ɔɲɔ̃/", "oignon se dit /ɔɲɔ̃/"],
+  "ville": ["ville 的 ill 读 /il/，不读 /ij/", "ill in ville is /il/, not /ij/", "ill dans ville se dit /il/"],
+  "mille": ["mille 的 ill 读 /il/", "ill in mille is /il/", "ill dans mille se dit /il/"],
+  "tranquille": ["tranquille 的 ill 读 /il/", "ill in tranquille is /il/", "ill dans tranquille se dit /il/"],
+  "estomac": ["estomac 读 /ɛstɔma/，词尾 c 不发音", "estomac ends in a silent c: /ɛstɔma/", "estomac : c final muet /ɛstɔma/"],
+  "croc": ["croc 读 /kʁo/，词尾 c 不发音", "croc ends in a silent c: /kʁo/", "croc : c final muet /kʁo/"],
+  "crocs": ["crocs 读 /kʁo/，c 和 s 都不发音", "crocs is /kʁo/: c and s are silent", "crocs se dit /kʁo/ : c et s muets"],
+  "gond": ["gond 读 /gɔ̃/，d 不发音", "gond is /gɔ̃/: silent d", "gond se dit /gɔ̃/ : d muet"],
+  "gonds": ["gonds 读 /gɔ̃/，d 和 s 都不发音", "gonds is /gɔ̃/: d and s are silent", "gonds se dit /gɔ̃/ : d et s muets"],
+  "nœud": ["nœud 读 /nø/，d 不发音", "nœud is /nø/: silent d", "nœud se dit /nø/ : d muet"],
+  "fusil": ["fusil 读 /fyzi/，l 不发音", "fusil is /fyzi/: silent l", "fusil se dit /fyzi/ : l muet"],
+  "outil": ["outil 读 /uti/，l 不发音", "outil is /uti/: silent l", "outil se dit /uti/ : l muet"],
+  "gentil": ["gentil 读 /ʒɑ̃ti/，l 不发音", "gentil is /ʒɑ̃ti/: silent l", "gentil se dit /ʒɑ̃ti/ : l muet"],
+  "doigt": ["doigt 读 /dwa/，g 和 t 都不发音", "doigt is /dwa/: g and t are silent", "doigt se dit /dwa/ : g et t muets"],
+  "doigts": ["doigts 读 /dwa/，g、t、s 都不发音", "doigts is /dwa/: g, t and s are silent", "doigts se dit /dwa/ : g, t, s muets"],
+  "pied": ["pied 读 /pje/，d 不发音", "pied is /pje/: silent d", "pied se dit /pje/ : d muet"],
+  "sept": ["sept 读 /sɛt/，p 不发音", "sept is /sɛt/: silent p", "sept se dit /sɛt/ : p muet"],
+  "temps": ["temps 读 /tɑ̃/，p 和 s 都不发音", "temps is /tɑ̃/: p and s are silent", "temps se dit /tɑ̃/ : p et s muets"],
+  "corps": ["corps 读 /kɔʁ/，p 和 s 都不发音", "corps is /kɔʁ/: p and s are silent", "corps se dit /kɔʁ/ : p et s muets"],
+  "automne": ["automne 读 /otɔn/，m 不发音", "automne is /otɔn/: silent m", "automne se dit /otɔn/ : m muet"],
+  "clef": ["clef 读 /kle/，f 不发音", "clef is /kle/: silent f", "clef se dit /kle/ : f muet"],
+  "août": ["août 读 /u/ 或 /ut/", "août is /u/ or /ut/", "août se dit /u/ ou /ut/"],
+  "eu": ["eu（avoir 的过去分词）读 /y/", "eu (past participle of avoir) is /y/", "eu (participe d’avoir) se dit /y/"],
+  "mr": ["Mr 读作 monsieur /məsjø/", "Mr is read as monsieur /məsjø/", "Mr se lit monsieur /məsjø/"],
+};
+function phPlus(words, i) {
+  const before = words.slice(Math.max(0, i - 6), i).map(phNorm), next = phNorm(words[i + 1] || "");
+  if (before.some(w => w === "ne" || w === "n'" || w.startsWith("n'"))) return ["ne … plus 里的 plus 读 /ply/，s 不发音", "plus in ne … plus is /ply/: silent s", "plus dans ne … plus se dit /ply/ : s muet"];
+  if (next === "de" || next === "d'" || next.startsWith("d'") || next === "que" || next === "qu'" || !next || (phNorm(words[i - 1] || "") === "en")) return ["表示“更多、加上”的 plus 读 /plys/，s 要发音", "plus meaning “more / in addition” is /plys/: sounded s", "plus au sens de « davantage » se dit /plys/ : s prononcé"];
+  if (phStartsVowel(next)) return ["比较级的 plus 在元音前联诵，读 /plyz/", "comparative plus links before a vowel: /plyz/", "plus comparatif se lie devant voyelle : /plyz/"];
+  return ["比较级的 plus 读 /ply/，s 不发音", "comparative plus is /ply/: silent s", "plus comparatif se dit /ply/ : s muet"];
+}
+function phTous(words, i) {
+  const next = phNorm(words[i + 1] || "");
+  if (["les", "ces", "mes", "tes", "ses", "nos", "vos", "leurs", "deux", "trois"].includes(next)) return ["tous + 限定词（tous les …）读 /tu/，s 不发音", "tous before a determiner (tous les …) is /tu/", "tous devant un déterminant (tous les …) se dit /tu/"];
+  return ["代词 tous（“大家、全部”）读 /tus/，s 要发音", "pronoun tous (“all of them”) is /tus/: sounded s", "tous pronom se dit /tus/ : s prononcé"];
+}
+function phNumber(w, next) {
+  const n = phNorm(w), v = next && phStartsVowel(next), c = next && !v;
+  const base = { six: ["si", "siz", "sis"], dix: ["di", "diz", "dis"], huit: ["ɥi", "ɥit", "ɥit"] }[n]; if (!base) return null;
+  const say = c ? base[0] : v ? base[1] : base[2];
+  return [`${n} 在${c ? "辅音" : v ? "元音" : "停顿"}前读 /${say}/`, `${n} before a ${c ? "consonant" : v ? "vowel" : "pause"} is /${say}/`, `${n} devant ${c ? "consonne" : v ? "voyelle" : "une pause"} se dit /${say}/`];
+}
+// 主函数：一句话 → 去重后的语音现象列表（最多 8 条）
+function phAnalyse(text) {
+  const out = [], seen = new Set();
+  const add = (type, words, note) => { const k = type + "|" + words; if (seen.has(k)) return; seen.add(k); out.push({ type, words, note }); };
+  // 切词：保留撇号连写；记下词与词之间有没有标点（有停顿就不联诵、不连音）
+  const parts = text.normalize("NFC").replace(/’/g, "'").match(/[\p{L}\p{N}'-]+|[.,;:!?…«»"()—–]/gu) || [];
+  const words = [], pause = [];
+  for (const p of parts) { if (/^[\p{L}\p{N}]/u.test(p)) { words.push(p); pause.push(false); } else if (words.length) pause[words.length - 1] = true; }
+  for (let i = 0; i < words.length; i++) {
+    const w = words[i], x = phNorm(w), next = words[i + 1], nx = next && phNorm(next), joined = !pause[i] && next;
+    // 省音（含撇号的词）
+    const m = x.match(/^(jusqu'|lorsqu'|puisqu'|qu'|[ldjmtsnc]')(.+)$/);
+    if (m && PH_ELIDE[m[1]]) {
+      const rest = w.slice(m[1].length);
+      add("elision", w, [`${w} = ${PH_ELIDE[m[1]][0]} + ${rest}：元音前省去 e / a`, `${w} = ${PH_ELIDE[m[1]][0]} + ${rest}: the vowel drops before a vowel`, `${w} = ${PH_ELIDE[m[1]][0]} + ${rest} : la voyelle tombe devant voyelle`]);
+      if (/^h/i.test(rest)) add("hmuet", w, [`${rest} 的 h 不发音（哑音 h），所以照样省音`, `the h of ${rest} is mute, so elision still happens`, `le h de ${rest} est muet : on élide quand même`]);
+    }
+    // 嘘音 h：前一个词本来会省音或联诵，但这里不省音、不联诵
+    if (next && PH_HASPIRE.has(nx) && /^h/.test(nx) && /^(le|la|de|ne|que|les|des|ces|mes|ses|un|une|du|au|aux|en|des|ce|cette|son|sa|deux|trois)$/.test(x))
+      add("haspire", w + " " + next, [`${next} 是嘘音 h：${w} ${next} 不省音、不联诵`, `${next} has an aspirated h: no elision or liaison in ${w} ${next}`, `${next} a un h aspiré : ni élision ni liaison dans ${w} ${next}`]);
+    if (!joined) continue;
+    const nextVowel = phStartsVowel(next);
+    if (nextVowel && /^h/i.test(next) && !m) {
+      if (PH_LIAISON_DET.has(x) || PH_LIAISON_PRON.has(x)) add("hmuet", w + " " + next, [`${next} 的 h 不发音（哑音 h），所以照样联诵`, `the h of ${next} is mute, so the liaison still happens`, `le h de ${next} est muet : la liaison se fait`]);
+    }
+    // 联诵：必须联诵的环境
+    const snd = phLiaisonSound(w);
+    if (nextVowel && snd && (
+      (PH_LIAISON_DET.has(x) && !PH_NOT_AFTER_DET.has(nx) && !(x === "deux" && /^(les|tous|nous|vous)$/.test(phNorm(words[i - 1] || "")))) ||
+      (PH_LIAISON_PRON.has(x) && !/^(et|ou|à|a|au|aux|avec|après|alors|aussi|il|elle|ils|elles|on|ici)$/.test(nx)) ||
+      (PH_LIAISON_PREP.has(x) && (x !== "quand" || /^(il|ils|elle|elles|on)$/.test(nx)) && !/^(et|ou)$/.test(nx))))
+    { add("liaison", w + "‿" + next, [`${w}‿${next}：词尾 ${w.slice(-1)} 和后面的元音连读，读 /${snd}/`, `${w}‿${next}: the final ${w.slice(-1)} links to the next vowel as /${snd}/`, `${w}‿${next} : le ${w.slice(-1)} final se lie et se dit /${snd}/`]); continue; }
+    // et 后面永远不联诵
+    if (x === "et" && nextVowel) { add("hiatus", w + " " + next, [`et 的 t 永远不发音，也不联诵：${w} ${next}`, `the t of et is never sounded, not even before a vowel`, `le t de et ne se prononce jamais, même devant voyelle`]); continue; }
+    // 连音：词尾辅音本来就发音，和后面的元音连成一个音节
+    if (nextVowel && !m && phFinalConsonant(w)) { add("enchainement", w + "‿" + next, [`${w}‿${next}：词尾发音的辅音直接连到下一个词`, `${w}‿${next}: the sounded final consonant runs into the next word`, `${w}‿${next} : la consonne finale s’enchaîne sur le mot suivant`]); continue; }
+    // 元音相遇：前一个词以元音结尾，后一个词以元音（或嘘音 h）开头，中间不省音也不联诵
+    if ((nextVowel || (PH_HASPIRE.has(nx) && /^h/.test(nx))) && !m && phFinalVowel(w) && !/^(le|la|de|ne|que|je|me|te|se|ce|si|y)$/.test(x))
+      add("hiatus", w + " " + next, [`${w} ${next}：两个元音相连，分开读，中间不加音`, `${w} ${next}: two vowels meet; keep them apart, add no sound`, `${w} ${next} : deux voyelles se suivent ; on les prononce séparément`]);
+  }
+  // 不发音的字母和有几种读法的词
+  words.forEach((w, i) => {
+    const x = phNorm(w), next = words[i + 1];
+    if (x === "plus") add("special", w, phPlus(words, i));
+    else if (x === "tous") add("special", w, phTous(words, i));
+    else if (["six", "dix", "huit"].includes(x)) { const n = phNumber(w, pause[i] ? null : next); if (n) add("special", w, n); }
+    else if (PH_SPECIAL[x]) add(["estomac", "croc", "crocs", "gond", "gonds", "nœud", "fusil", "outil", "gentil", "doigt", "doigts", "pied", "sept", "temps", "corps", "automne", "clef"].includes(x) ? "silent" : "special", w, PH_SPECIAL[x]);
+    else if (i > 0 && /^(ils|elles)$/.test(phNorm(words[i - 1])) && /[^aeiouyé]ent$/.test(x) && x.length > 4)
+      add("silent", w, [`${words[i - 1]} ${w}：动词词尾 -ent 不发音`, `${words[i - 1]} ${w}: the verb ending -ent is silent`, `${words[i - 1]} ${w} : la terminaison verbale -ent est muette`]);
+  });
+  return out.slice(0, 8);
+}
+const phTypeName = t => PH_TYPES[t][PH_LANG()];
+const phNote = r => r.note[PH_LANG()];
 // ---------- 口语 · 跟读例句：照着有角色录音的单词例句读一遍，录音公开给所有人听，登录用户可以打星、点赞、评论 ----------
 // 数据库和存储桶见 quiz-site/supabase/oral-recordings.sql（ORAL.md）。每人每句只保留最新一条；重录会替换旧的（旧的打分、点赞、评论一起删掉）。
 // 录音只在用户按“上传”之后才离开这台设备；之前的试录只在本页内存里。
+// 1.9.99：口语页只显示这一栏；标签筛选（主题、语音现象、录音情况）和排序；评分合并成一项；播放次数；每句评分前三每天得金币；💡 语音提示。
 const RA_BUCKET = "oral", RA_MAX_SECONDS = 15, RA_PAGE = 20;
 const raT = (zh, en, fr) => typeof UI_LANG === "undefined" || UI_LANG === "zh" ? zh : UI_LANG === "fr" ? fr : en;
-let raState = { theme: "", page: 0, query: "" }, raRec = null, raEpoch = 0;
+let raState = { themes: [], types: [], status: [], query: "", sort: "", page: 0 }, raRec = null, raEpoch = 0, raStats = null;
+const raPlayed = new Set();   // 这次打开页面里已经记过一次播放的录音
 // 能练的句子：单词例句里已经有角色录音的（编号和听力题一致：fr-vx-<词>-ex / -pic）
+let raItemsCache = null;
 async function raItems() {
+  if (raItemsCache) return raItemsCache;
   const m = await studyAudioIndex();
   const have = new Set([...(m.examples || []), ...((m.characters && m.characters.pia) || [])].map(e => e.text));
   const lang = typeof UI_LANG === "undefined" || UI_LANG === "zh" ? 0 : UI_LANG === "fr" ? 2 : 1;
-  return vocabListeningRows().filter(r => have.has(r.audio)).map(r => {
+  raItemsCache = vocabListeningRows().filter(r => have.has(r.audio)).map(r => {
     const id = "fr-vx-" + r.w.id + "-" + r.kind, x = typeof LISTENING_EXTRA !== "undefined" && LISTENING_EXTRA[id];   // 译文和听力的“听句选译文”用同一份
     const zh = x ? x[0] : r.w.example ? r.w.example[1] : "", en = x ? x[2] : r.w.example ? r.w.sen || "" : "";
-    return { id, text: r.audio, word: r.w, theme: r.w.th, tr: lang === 2 ? "" : lang === 1 ? en : zh || en };
+    const ph = phAnalyse(r.audio);
+    return { id, text: r.audio, word: r.w, theme: r.w.th, tr: lang === 2 ? "" : lang === 1 ? en : zh || en, ph, types: [...new Set(ph.map(p => p.type))] };
   });
+  return raItemsCache;
 }
 const raUid = () => (SYNC_ON && syncAuth()?.uid) || "";
 const raUrl = t => SYNC_URL + "/storage/v1/object/public/" + RA_BUCKET + "/" + t.path.split("/").map(encodeURIComponent).join("/");
@@ -24827,71 +25053,92 @@ const raError = e => raMissing(e) ? raT("跟读功能还在准备中（服务器
   : e && e.code === "rate" || /Too many/.test(e && e.message || "") ? raT("今天操作太多了，明天再来吧。", "Too many actions today; please try again tomorrow.", "Trop d’actions aujourd’hui ; réessayez demain.")
   : raT("暂时连不上服务器，请稍后重试。", "Cannot reach the server right now. Please try again later.", "Serveur injoignable pour le moment. Réessayez plus tard.");
 function raButton(text, cls = "btn ghost") { const b = el("button", cls, text); b.type = "button"; return b; }
+const RA_SORTS = [["", raT("默认顺序", "Default order", "Ordre par défaut")], ["top", raT("评分最高", "Highest rated", "Mieux notées")], ["plays", raT("播放最多", "Most played", "Plus écoutées")], ["comments", raT("评论最多", "Most comments", "Plus commentées")], ["takes", raT("读的人最多", "Most recordings", "Plus enregistrées")]];
+const RA_STATUS = [["done", raT("有人读过", "Recorded", "Déjà enregistrées")], ["none", raT("还没人读过", "Not recorded yet", "Pas encore enregistrées")], ["mine", raT("我读过", "Read by me", "Lues par moi")]];
 
-// 口语板块首页上的入口卡片
-function raEntry() {
-  const card = el("section", "card ra-entry"); card.dataset.noi18n = "";
-  card.append(el("h3", null, raT("跟读例句", "Read aloud", "Lecture à voix haute")),
-    el("p", "sub", raT("先听学习伙伴读一遍单词例句，再录下自己的朗读。录音公开给所有人听，大家可以给发音和流利度打星、点赞和评论；每句只保留你最新的一条。",
-      "Listen to a companion read a vocabulary example, then record yourself. Recordings are public: anyone can listen, and signed-in learners can rate pronunciation and fluency, like and comment. Only your latest take of each sentence is kept.",
-      "Écoutez une compagne lire une phrase d’exemple, puis enregistrez-vous. Les enregistrements sont publics : tout le monde peut les écouter, et les personnes connectées peuvent noter la prononciation et la fluidité, aimer et commenter. Seule votre dernière prise de chaque phrase est conservée.")));
-  const go = raButton(raT("开始跟读", "Start reading aloud", "Commencer"), "btn"); go.id = "raStart";
-  go.addEventListener("click", () => raHome());
-  card.append(go); return card;
-}
-
-// 选句子：按主题筛选、搜索，列表上显示几人读过
+// 选句子：和听力一样用标签筛选（主题、语音现象、录音情况）和搜索；结果可以按评分、播放、评论、录音数排序
 async function raHome() {
   raStop(); const epoch = ++raEpoch;
   stage.replaceChildren(); const card = el("section", "card ra-home"); card.dataset.noi18n = ""; stage.append(card);
-  const back = raButton(raT("← 口语练习", "← Speaking practice", "← Pratique orale")); back.addEventListener("click", () => renderOral());
-  card.append(back, el("h2", null, raT("跟读例句", "Read aloud", "Lecture à voix haute")), el("p", "sub", raT("正在读取句子…", "Loading sentences…", "Chargement des phrases…")));
+  card.append(el("h2", null, raT("口语 · 跟读例句", "Speaking · Read aloud", "Oral · Lecture à voix haute")),
+    el("p", "sub", raT("先听学习伙伴读一遍单词例句，再录下自己的朗读。录音公开给所有人听，大家可以打分、点赞和评论；每句只保留你最新的一条。每句评分前三名的录音，作者每天分别得到 10、5、3 金币。",
+      "Listen to a companion read a vocabulary example, then record yourself. Recordings are public: anyone can listen, and signed-in learners can rate, like and comment. Only your latest take of each sentence is kept. The top three recordings of each sentence earn their authors 10, 5 and 3 coins every day.",
+      "Écoutez une compagne lire une phrase d’exemple, puis enregistrez-vous. Les enregistrements sont publics : tout le monde peut écouter, et les personnes connectées peuvent noter, aimer et commenter. Seule votre dernière prise de chaque phrase est conservée. Les trois meilleurs enregistrements de chaque phrase rapportent chaque jour 10, 5 et 3 pièces à leurs auteurs.")),
+    el("p", "sub", raT("正在读取句子…", "Loading sentences…", "Chargement des phrases…")));
+  raClaimDaily();
   let items;
   try { items = await raItems(); } catch (e) { if (epoch === raEpoch) card.lastChild.textContent = raT("句子列表读不到，请检查网络后重试。", "Could not load the sentences. Check your connection and retry.", "Impossible de charger les phrases. Vérifiez votre connexion et réessayez."); return; }
   if (epoch !== raEpoch) return;
   card.lastChild.remove();
-  const themes = [...new Map(items.map(x => [x.theme, (VOCAB.find(t => t.id === x.theme) || {}).t || x.theme])).entries()];
-  const row = el("div", "ra-filters"), sel = el("select"), search = el("input");
-  sel.setAttribute("aria-label", raT("主题", "Theme", "Thème"));
-  sel.append(new Option(raT("全部主题", "All themes", "Tous les thèmes") + " · " + items.length, ""));
-  for (const [id, t] of themes) sel.append(new Option(t + " · " + items.filter(x => x.theme === id).length, id));
-  sel.value = raState.theme; search.type = "search"; search.placeholder = raT("搜索单词或句子", "Search a word or sentence", "Chercher un mot ou une phrase"); search.value = raState.query;
-  search.setAttribute("aria-label", search.placeholder);
+  const filters = el("div", "ra-filters"), list = el("div", "ra-list"), nav = el("div", "actions ra-pages"), summary = el("p", "sub ra-summary");
+  card.append(filters, summary, list, nav);
+  try { raStats = await raRpc("oral_item_stats", {}, true); } catch (e) { raStats = raStats || {}; if (raMissing(e)) summary.textContent = raError(e); }
+  if (epoch !== raEpoch) return;
+  const stat = it => (raStats && raStats[it.id]) || null;
+  const statusOf = it => { const s = stat(it); return s ? (s.mine ? ["done", "mine"] : ["done"]) : ["none"]; };
+  const themeName = id => (VOCAB.find(t => t.id === id) || {}).t || id;
+  const match = (it, skip) => (skip === "themes" || !raState.themes.length || raState.themes.includes(it.theme)) &&
+    (skip === "types" || !raState.types.length || raState.types.some(t => it.types.includes(t))) &&
+    (skip === "status" || !raState.status.length || raState.status.some(s => statusOf(it).includes(s))) &&
+    (!raState.query.trim() || [it.text, it.word.fr, it.tr].some(x => String(x || "").toLocaleLowerCase("fr").includes(raState.query.trim().toLocaleLowerCase("fr"))));
+  // 一组标签：同组之间“或”，不同组之间“且”；标签上的数字是选上它之后会有几句
+  function chips(key, legend, values) {
+    const set = el("fieldset", "listening-filter ra-chips"); set.append(el("legend", null, legend));
+    for (const [v, label, test] of values) {
+      const b = el("button", "listening-filter-chip"); b.type = "button"; b.dataset.value = v;
+      const on = raState[key].includes(v); b.setAttribute("aria-pressed", String(on));
+      const n = items.filter(it => match(it, key) && test(it)).length;
+      b.textContent = label + " · " + n; b.disabled = !n && !on;
+      b.addEventListener("click", () => { raState[key] = on ? raState[key].filter(x => x !== v) : [...raState[key], v]; raState.page = 0; drawAll(); });
+      set.append(b);
+    }
+    return set;
+  }
+  const search = el("input"); search.type = "search"; search.placeholder = raT("搜索单词、句子或译文", "Search a word, sentence or translation", "Chercher un mot, une phrase ou une traduction");
+  search.setAttribute("aria-label", search.placeholder); search.value = raState.query; search.className = "ra-search";
+  search.addEventListener("input", () => { raState.query = search.value; raState.page = 0; drawAll(); search.focus(); });
+  const sort = el("select"); sort.setAttribute("aria-label", raT("排序", "Sort", "Trier"));
+  for (const [v, t] of RA_SORTS) sort.append(new Option(t, v)); sort.value = raState.sort;
+  sort.addEventListener("change", () => { raState.sort = sort.value; raState.page = 0; drawList(); });
   const random = raButton(raT("随机一句", "Random sentence", "Phrase au hasard")); random.id = "raRandom";
-  row.append(sel, search, random); card.append(row);
-  const list = el("div", "ra-list"), nav = el("div", "actions"); card.append(list, nav);
-  const filtered = () => { const q = raState.query.trim().toLocaleLowerCase("fr"); return items.filter(x => (!raState.theme || x.theme === raState.theme) && (!q || x.text.toLocaleLowerCase("fr").includes(q) || x.word.fr.toLocaleLowerCase("fr").includes(q))); };
-  async function draw() {
+  const clear = raButton(raT("清除筛选", "Clear filters", "Effacer les filtres"));
+  clear.addEventListener("click", () => { raState = { ...raState, themes: [], types: [], status: [], query: "", page: 0 }; search.value = ""; drawAll(); });
+  const bar = el("div", "ra-bar"); bar.append(search, sort, random, clear);
+  function drawChips() {
+    const themes = [...new Set(items.map(x => x.theme))];
+    filters.replaceChildren(bar,
+      chips("types", raT("语音现象", "Sound features", "Phénomènes"), Object.keys(PH_TYPES).map(t => [t, phTypeName(t), it => it.types.includes(t)])),
+      chips("status", raT("录音情况", "Recordings", "Enregistrements"), RA_STATUS.map(([v, t]) => [v, t, it => statusOf(it).includes(v)]).filter(([v]) => v !== "mine" || raUid())),
+      chips("themes", raT("主题", "Themes", "Thèmes"), themes.map(id => [id, themeName(id), it => it.theme === id])));
+  }
+  const key = (it, k) => { const s = stat(it); if (!s) return -1; return k === "top" ? Number(s.best || 0) * 1000 + Number(s.ratings || 0) : k === "plays" ? Number(s.plays || 0) : k === "comments" ? Number(s.comments || 0) : Number(s.takes || 0); };
+  const filtered = () => { const all = items.filter(it => match(it)); if (raState.sort) all.sort((a, b) => key(b, raState.sort) - key(a, raState.sort)); return all; };
+  function drawList() {
     const all = filtered(), pages = Math.max(1, Math.ceil(all.length / RA_PAGE)); raState.page = Math.min(raState.page, pages - 1);
     const shown = all.slice(raState.page * RA_PAGE, (raState.page + 1) * RA_PAGE);
+    summary.textContent = raT(`共 ${all.length} 句`, `${all.length} sentences`, `${all.length} phrases`);
     list.replaceChildren(); nav.replaceChildren();
     if (!shown.length) list.append(el("p", "sub", raT("没有符合条件的句子。", "No sentences match.", "Aucune phrase ne correspond.")));
-    const counts = new Map();
     for (const it of shown) {
       const b = el("button", "ra-row"); b.type = "button"; b.dataset.item = it.id;
-      const n = el("span", "ra-count"); counts.set(it.id, n);
-      b.append(el("span", "ra-text", it.text), it.tr ? el("span", "sub", it.tr) : "", n);
-      b.addEventListener("click", () => raSentence(it, items)); list.append(b);
+      const s = stat(it), info = el("span", "ra-count");
+      if (s) info.textContent = [raT(`${s.takes} 人读过`, `${s.takes} recorded`, `${s.takes} enregistrement${s.takes > 1 ? "s" : ""}`), s.best != null ? "★ " + Number(s.best).toFixed(1) : "", raT(`播放 ${s.plays}`, `${s.plays} plays`, `${s.plays} écoutes`), raT(`评论 ${s.comments}`, `${s.comments} comments`, `${s.comments} commentaires`)].filter(Boolean).join(" · ");
+      b.append(el("span", "ra-text", it.text), it.tr ? el("span", "sub", it.tr) : "", info);
+      b.addEventListener("click", () => raSentence(it, all)); list.append(b);
     }
     if (pages > 1) {
       const prev = raButton(raT("上一页", "Previous", "Précédent")), next = raButton(raT("下一页", "Next", "Suivant"));
       prev.disabled = raState.page === 0; next.disabled = raState.page >= pages - 1;
-      prev.addEventListener("click", () => { raState.page--; draw(); }); next.addEventListener("click", () => { raState.page++; draw(); });
+      prev.addEventListener("click", () => { raState.page--; drawList(); }); next.addEventListener("click", () => { raState.page++; drawList(); });
       nav.append(prev, el("span", "sub", `${raState.page + 1} / ${pages}`), next);
     }
-    try {
-      const c = await raRpc("oral_counts", { p_items: shown.map(x => x.id) }, true);
-      if (epoch !== raEpoch) return;
-      for (const [id, span] of counts) { const k = Number(c && c[id] || 0); span.textContent = k ? raT(`${k} 人读过`, `${k} recorded`, `${k} enregistrement${k > 1 ? "s" : ""}`) : ""; }
-    } catch (e) {}
+    random.onclick = () => { if (all.length) raSentence(all[Math.floor(Math.random() * all.length)], all); };
   }
-  sel.addEventListener("change", () => { raState.theme = sel.value; raState.page = 0; draw(); });
-  search.addEventListener("input", () => { raState.query = search.value; raState.page = 0; draw(); });
-  random.addEventListener("click", () => { const all = filtered(); if (all.length) raSentence(all[Math.floor(Math.random() * all.length)], items); });
-  draw();
+  function drawAll() { drawChips(); drawList(); }
+  drawAll();
 }
 
-// 一句话：听伙伴读、自己录、上传；下面是大家的录音
+// 一句话：听伙伴读、💡 语音提示、自己录、上传；下面是大家的录音
 async function raSentence(it, items) {
   raStop(); const epoch = ++raEpoch;
   stage.replaceChildren(); const card = el("section", "card ra-sentence"); card.dataset.noi18n = ""; card.dataset.item = it.id; stage.append(card);
@@ -24899,9 +25146,26 @@ async function raSentence(it, items) {
   const tags = el("div", "tagrow"); tags.append(el("span", "tag", raT("口语 · 跟读例句", "Speaking · Read aloud", "Oral · Lecture à voix haute")), el("span", "tag plain", (VOCAB.find(t => t.id === it.theme) || {}).t || ""));
   const listen = studyAudioButton("play"); listen.id = "raListen";
   listen.addEventListener("click", () => studySpeakSequence([{ text: it.text }], studyAudioRate(), listen));
-  const line = el("div", "ra-line"); line.append(listen, el("p", "ra-big", it.text));
+  const line = el("div", "ra-line"), voice = el("p", "sub ra-voice");
+  line.append(listen, el("p", "ra-big", it.text));
+  // 伙伴录音的说明（“Lison · AI 合成配音”）不放在播放键旁边，挪到译文下面单独一行
+  new MutationObserver(() => { const n = line.querySelector(".study-audio-status"); if (n) voice.replaceChildren(n); }).observe(line, { childList: true });
   card.append(back, tags, line);
-  if (it.tr) card.append(el("p", "sub", it.tr));
+  if (it.tr) card.append(el("p", "sub ra-tr", it.tr));
+  card.append(voice);
+  // 💡 提示：这句的语音现象
+  const hintBtn = raButton("💡 " + raT("提示", "Hint", "Indice")); hintBtn.id = "raHint";
+  const hint = el("div", "explain ra-hint"); hint.hidden = true;
+  hintBtn.addEventListener("click", () => {
+    hint.hidden = !hint.hidden; if (hint.hidden || hint.childElementCount) return;
+    hint.append(el("b", "hint-h", "💡 " + raT("这句的语音现象", "Sound features in this sentence", "Phénomènes de cette phrase")));
+    if (!it.ph.length) hint.append(el("p", null, raT("这句没有需要特别注意的连读、省音或特殊读音，照着伙伴的节奏读就好。", "Nothing special to watch here: no linking, elision or unusual pronunciation. Just follow the companion’s rhythm.", "Rien de particulier ici : ni liaison, ni élision, ni prononciation inhabituelle. Suivez le rythme de la compagne.")));
+    const ul = el("ul", "ra-hint-list");
+    for (const r of it.ph) { const li = el("li"); li.append(el("span", "tag plain", phTypeName(r.type)), document.createTextNode(" " + phNote(r))); ul.append(li); }
+    if (it.ph.length) hint.append(ul);
+  });
+  const hintRow = el("div", "actions ra-hint-row"); hintRow.append(hintBtn);
+  card.append(hintRow, hint);
   const rec = el("div", "ra-recorder"); card.append(rec);
   const list = el("div", "ra-takes"); card.append(el("h3", null, raT("大家的朗读", "Everyone’s recordings", "Les enregistrements")), list);
   const nav = el("div", "actions");
@@ -24995,6 +25259,7 @@ async function raUpload(it, blob, type, seconds) {
   try { r = await raRpc("oral_submit", { p_item: it.id, p_path: path, p_mime: type, p_duration: Math.round(seconds * 10) / 10 }); }
   catch (e) { raRemoveFiles([path], uid); throw e; }   // 登记失败：把刚上传的文件删掉
   if (r && r.old_path) raRemoveFiles([r.old_path], uid);   // 重录：删掉旧文件
+  raStats = null;
   return r;
 }
 function raRemoveFiles(paths, uid) {
@@ -25005,8 +25270,25 @@ function raRemoveFiles(paths, uid) {
 async function raDeleteAccount(uid) {
   try { const paths = await syncFetch("/rest/v1/rpc/oral_my_paths", { method: "POST", body: "{}" }, true, uid); if (paths && paths.length) await raRemoveFiles(paths, uid); } catch (e) {}
 }
+// 每日排名奖励：每个账号每天领一次（服务器按当时的评分榜结算，写进记录），领到就计入金币
+async function raClaimDaily() {
+  const uid = raUid(); if (!uid || typeof syncLocal !== "function") return;
+  const today = new Date().toISOString().slice(0, 10), key = "fq-oral-claim:" + uid;
+  try { if (localStorage.getItem(key) === today) return; } catch (e) {}
+  try {
+    const r = await raRpc("oral_claim_reward", {});
+    try { localStorage.setItem(key, today); } catch (e) {}
+    if (!r || !(r.coins > 0) || raUid() !== uid) return;
+    const list = syncLocal("game").filter(g => g.key !== r.key); list.push(r); syncStore("game", list);
+    if (typeof gameRaw !== "undefined") gameRaw = [...gameRaw.filter(g => !(g.kind === "oral_reward" && g.key === r.key)), r];
+    if (typeof planRefresh === "function") planRefresh();
+    if (typeof xpToast === "function") xpToast(raT(`跟读评分榜奖励 +${r.coins} 金币`, `Read-aloud ranking reward: +${r.coins} coins`, `Récompense du classement : +${r.coins} pièces`));
+  } catch (e) {}
+}
+if (typeof SYNC_ON !== "undefined" && SYNC_ON) addEventListener("load", () => setTimeout(raClaimDaily, 6000));
 
-// 大家的录音：播放、星级（发音、流利）、点赞、评论、举报；自己的可以删除；管理员可以隐藏
+// 大家的录音：播放（记次数）、评分、点赞、评论、举报；评分前三有名次；自己的可以删除；管理员可以隐藏
+const RA_TAKE_SORTS = [["top", raT("评分最高", "Highest rated", "Mieux notés")], ["plays", raT("播放最多", "Most played", "Plus écoutés")], ["comments", raT("评论最多", "Most comments", "Plus commentés")], ["likes", raT("点赞最多", "Most liked", "Plus aimés")], ["new", raT("最新", "Newest", "Plus récents")]];
 async function raTakes(it, list, epoch, sort = "top") {
   list.replaceChildren(el("p", "sub", raT("正在读取…", "Loading…", "Chargement…")));
   let data;
@@ -25014,19 +25296,16 @@ async function raTakes(it, list, epoch, sort = "top") {
   catch (e) { if (epoch === raEpoch) list.replaceChildren(el("p", "sub", raError(e))); return; }
   if (epoch !== raEpoch) return;
   list.replaceChildren();
-  const tabs = el("div", "chips");
-  for (const [k, t] of [["top", raT("最受欢迎", "Most popular", "Les plus appréciés")], ["new", raT("最新", "Newest", "Les plus récents")]]) {
-    const b = raButton(t, "chip"); b.setAttribute("aria-pressed", String(sort === k)); b.addEventListener("click", () => raTakes(it, list, epoch, k)); tabs.append(b);
-  }
+  const tabs = el("div", "chips ra-sort");
+  for (const [k, t] of RA_TAKE_SORTS) { const b = raButton(t, "chip"); b.setAttribute("aria-pressed", String(sort === k)); b.addEventListener("click", () => raTakes(it, list, epoch, k)); tabs.append(b); }
   list.append(tabs);
   if (!data.items.length) list.append(el("p", "sub", raT("还没有人读过这一句，来当第一个吧。", "Nobody has read this sentence yet. Be the first!", "Personne n’a encore lu cette phrase. Soyez la première personne !")));
   const uid = raUid();
   for (const t of data.items) list.append(raTake(it, t, uid, data.admin, () => raTakes(it, list, epoch, sort)));
 }
-// 一行五颗星：自己打的亮起来；后面是大家的平均分
-function raStars(label, average, mine, disabled, onPick) {
-  const row = el("div", "ra-stars"); row.setAttribute("role", "group"); row.setAttribute("aria-label", label);
-  row.append(el("span", "ra-stars-label", label));
+// 一行五颗星：自己打的亮起来；后面是平均分和打分人数
+function raStars(average, count, mine, disabled, onPick) {
+  const label = raT("评分", "Rating", "Note"), row = el("div", "ra-stars"); row.setAttribute("role", "group"); row.setAttribute("aria-label", label);
   const stars = [];
   const paint = v => stars.forEach((b, i) => { b.classList.toggle("on", i < v); b.setAttribute("aria-pressed", String(i + 1 === v)); });
   for (let i = 1; i <= 5; i++) {
@@ -25034,40 +25313,34 @@ function raStars(label, average, mine, disabled, onPick) {
     b.addEventListener("click", () => { paint(i); onPick(i); }); stars.push(b); row.append(b);
   }
   paint(mine || 0);
-  row.append(el("span", "sub ra-avg", average != null ? Number(average).toFixed(1) : "—"));
+  row.append(el("span", "sub ra-avg", (average != null ? Number(average).toFixed(1) : "—") + " · " + raT(`${count} 人打分`, `${count} rating${count == 1 ? "" : "s"}`, `${count} note${count > 1 ? "s" : ""}`)));
   return row;
 }
 function raTake(it, t, uid, admin, reload) {
   const box = el("article", "ra-take" + (t.mine ? " mine" : "") + (t.hidden ? " hidden-take" : "")); box.dataset.take = t.id;
   const head = el("div", "ra-take-head");
-  head.append(el("b", null, t.mine ? raT("我的朗读", "My reading", "Ma lecture") : raName(t)), el("span", "sub", new Date(t.created_at).toLocaleDateString() + " · " + Number(t.duration).toFixed(1) + " s"));
+  if (t.rank) { const medal = el("span", "ra-medal", ["🥇", "🥈", "🥉"][t.rank - 1]); medal.title = raT(`这句评分第 ${t.rank} 名：作者每天得 ${[10, 5, 3][t.rank - 1]} 金币`, `Rated #${t.rank} for this sentence: the author earns ${[10, 5, 3][t.rank - 1]} coins a day`, `${t.rank}ᵉ note de cette phrase : ${[10, 5, 3][t.rank - 1]} pièces par jour pour l’auteur`); head.append(medal); }
+  head.append(el("b", null, t.mine ? raT("我的朗读", "My reading", "Ma lecture") : raName(t)), el("span", "sub", new Date(t.created_at).toLocaleDateString() + " · " + Number(t.duration).toFixed(1) + " s · " + raT(`播放 ${t.plays}`, `${t.plays} plays`, `${t.plays} écoutes`)));
   if (t.hidden) head.append(el("span", "tag", raT("已隐藏", "Hidden", "Masqué")));
   const audio = el("audio"); audio.controls = true; audio.preload = "none"; audio.src = raUrl(t);
+  audio.addEventListener("play", () => { if (raPlayed.has(t.id)) return; raPlayed.add(t.id); raRpc("oral_play", { p_take: t.id }, true).catch(() => {}); });
   box.append(head, audio);
   const note = el("p", "sub ra-note"); note.setAttribute("aria-live", "polite");
   const fail = e => { note.textContent = raError(e); };
   const canAct = !!uid && !t.mine && !t.hidden;
-  // 打星：两项都选了才提交；只改一项时另一项沿用自己之前打的
-  let pron = t.my_pron || 0, flu = t.my_flu || 0;
-  const send = async () => { if (!pron || !flu) { note.textContent = raT("发音和流利两项都选好星数就会提交。", "Pick stars for both pronunciation and fluency to submit.", "Choisissez des étoiles pour la prononciation et la fluidité."); return; }
-    try { await raRpc("oral_rate", { p_take: t.id, p_pron: pron, p_flu: flu }); reload(); } catch (e) { fail(e); } };
-  const ratings = el("div", "ra-ratings");
-  ratings.append(raStars(raT("发音", "Pronunciation", "Prononciation"), t.pron, pron, !canAct, v => { pron = v; send(); }),
-    raStars(raT("流利", "Fluency", "Fluidité"), t.flu, flu, !canAct, v => { flu = v; send(); }),
-    el("span", "sub", raT(`${t.ratings} 人打分`, `${t.ratings} rating${t.ratings == 1 ? "" : "s"}`, `${t.ratings} note${t.ratings > 1 ? "s" : ""}`)));
-  box.append(ratings);
+  box.append(raStars(t.stars, t.ratings, t.my_stars, !canAct, async v => { try { await raRpc("oral_rate", { p_take: t.id, p_stars: v }); raStats = null; reload(); } catch (e) { fail(e); } }));
   const actions = el("div", "actions ra-take-actions");
   const like = raButton("👍 " + t.likes, "btn ghost ra-like" + (t.liked ? " on" : "")); like.setAttribute("aria-pressed", String(!!t.liked)); like.disabled = !canAct;
   like.setAttribute("aria-label", raT("点赞", "Like", "J’aime") + " · " + t.likes);
   like.addEventListener("click", async () => { like.disabled = true; try { const n = await raRpc("oral_like", { p_take: t.id, p_on: !t.liked }); t.liked = !t.liked; t.likes = Number(n); like.textContent = "👍 " + t.likes; like.classList.toggle("on", t.liked); like.setAttribute("aria-pressed", String(t.liked)); } catch (e) { fail(e); } like.disabled = false; });
-  const talk = raButton(raT(`评论 ${t.comments}`, `Comments ${t.comments}`, `Commentaires ${t.comments}`));
+  const talk = raButton(raT(`评论 ${t.comments}`, `Comments ${t.comments}`, `Commentaires ${t.comments}`)); talk.classList.add("ra-talk");
   const thread = el("div", "ra-thread"); thread.hidden = true;
   talk.addEventListener("click", () => { thread.hidden = !thread.hidden; if (!thread.hidden) raThread(t, thread, uid, admin, n => { talk.textContent = raT(`评论 ${n}`, `Comments ${n}`, `Commentaires ${n}`); }); });
   actions.append(like, talk);
   if (t.mine) {
     const del = raButton(raT("删除我的录音", "Delete my recording", "Supprimer mon enregistrement"));
-    del.addEventListener("click", async () => { if (!confirm(raT("确定删除这条录音吗？它的打分、点赞和评论也会一起删除。", "Delete this recording? Its ratings, likes and comments will be deleted too.", "Supprimer cet enregistrement ? Ses notes, mentions et commentaires seront aussi supprimés."))) return;
-      try { const p = await raRpc("oral_delete", { p_item: it.id }); if (p) await raRemoveFiles([p], uid); reload(); } catch (e) { fail(e); } });
+    del.addEventListener("click", async () => { if (!confirm(raT("确定删除这条录音吗？它的评分、点赞和评论也会一起删除。", "Delete this recording? Its ratings, likes and comments will be deleted too.", "Supprimer cet enregistrement ? Ses notes, mentions et commentaires seront aussi supprimés."))) return;
+      try { const p = await raRpc("oral_delete", { p_item: it.id }); if (p) await raRemoveFiles([p], uid); raStats = null; reload(); } catch (e) { fail(e); } });
     actions.append(del);
   } else if (uid) {
     const report = raButton(raT("举报", "Report", "Signaler"));

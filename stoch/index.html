@@ -4224,6 +4224,10 @@ function gameLedger() {
       if (uid && g.scope === "user:" + uid && g.key === (g.kind === "share_reward" ? "share:first" : "feedback:first") && g.coins === 800 && !earned.has(g.key)) { earned.add(g.key); coins += 800; }
     }
     else if (g.kind === "survey_reward") { const uid=typeof syncAuth === "function"?syncAuth()?.uid:null;const amount=g.key==="survey:2026-11-v1"&&[200,500].includes(g.coins)?g.coins:g.key==="survey:2026-11-v1:experienced"&&g.coins===3000?3000:0;if(uid&&g.scope==="user:"+uid&&amount){const prior=surveyEarned.get(g.key)||0;if(amount>prior){coins+=amount-prior;surveyEarned.set(g.key,amount);earned.add(g.key);}} }
+    else if (g.kind === "oral_reward") {   // 跟读例句的每日排名奖励：由服务器结算后写进记录（见 oral-recordings.sql），每天一条
+      const uid = typeof syncAuth === "function" ? syncAuth()?.uid : null;
+      if (uid && g.scope === "user:" + uid && /^oral:\d{4}-\d{2}-\d{2}$/.test(g.key) && Number.isInteger(g.coins) && g.coins > 0 && g.coins <= 100000 && !earned.has(g.key)) { earned.add(g.key); coins += g.coins; }
+    }
     else if (g.kind === "earn") { if (earned.has(g.key)) return; earned.add(g.key); coins += g.coins || 0; }
     else if (g.kind === "buy") {
       if (inv[g.item] != null) { coins -= g.price || 0; inv[g.item]++; }
@@ -6149,6 +6153,7 @@ function setFold(wrap, key, title, initialOpen = false) {
 // 每次用户可见更新都新增记录：默认只递增第三位 1.x.y → 1.x.(y+1)，超过 9 继续到 10、11；第二位升级需用户明确要求。
 // 首位保持 1，只有用户明确要求才可修改；历史记录保留。完整发布规则见根目录 AGENTS.md。
 const CHANGELOG = [
+  {"v": "1.9.99", "p": "fr", "d": "2026-11-26", "items": ["口语页只保留“跟读例句”：原来的情景口语任务先在页面上隐藏（进度没有删除）。", "选句子改成和听力一样用标签筛选：主题、语音现象（省音、连诵、连音、元音相连、嘘音 h、哑音 h、不发音的字母、特殊读音）、录音情况（有人读过 / 还没人读过 / 我读过），还能搜索；结果可以按评分最高、播放最多、评论最多、读的人最多排序。", "大家的录音可以按评分、播放次数、评论数、点赞数或时间排序，每条录音显示播放次数。", "发音和流利度合并成一个总评分（1–5 星），以前打过的两项分数自动换算成一项。", "每句评分前三名的录音会带上 🥇🥈🥉，作者每天分别得到 10、5、3 金币（打开跟读页或登录后自动领取当天的）。", "每句跟读加了“💡 提示”，点开能看到这句里的语音现象，例如省音、连诵、连音、元音相连、嘘音 h，以及 plus、tous、six 这类有不同读法的词。", "伙伴配音的说明（如“Lison · AI 合成配音”）不再挤在播放键旁边，改到译文下方单独一行。"]},
   {"v": "1.9.98", "p": "fr", "d": "2026-11-26", "items": ["哈利·波特“经典场景”前 6 关的 60 个词和第一章最后补上的 7 个词，连同它们的例句都有了角色录音，由 Ninon、Lison、Pia 轮流读：67 句例句全部、单词 65 个（ramper 和 s'enrouler 暂用系统朗读，等人工听过再决定）。", "这 67 句例句也补上了“听句选译文”和“理解选择”两种听力题，各 67 道。"]},
   {"v": "1.9.97", "p": "fr", "d": "2026-11-26", "items": ["口语板块新增“跟读例句”：先听学习伙伴读一遍单词例句，再录下自己的朗读（最长 15 秒），满意后上传。录音和昵称公开，所有人都能听；登录后可以给别人的朗读按“发音”“流利”两项打 1–5 星、点赞、评论，也可以举报。每句只保留你最新的一条，重录会替换旧的；自己的录音随时可以删除。可以按主题筛选或搜索单词，列表上会显示每句有几人读过。", "录音只在你按“上传”之后才离开这台设备，第一次上传前需要勾选同意公开。删除账号时，你的录音会一起删除。"]},
   {"v": "1.9.96", "p": "fr", "d": "2026-11-26", "items": ["单词闯关的「哈利·波特」DLC 新增“经典场景”一组：从《哈利·波特与魔法石》里挑了 12 个经典场景，每关一个场景、10 个词，配图连起来就是这一幕。先上线前 6 关：楼梯下的壁橱和动物园、雪片般飞来的信、海格破门而入、对角巷和古灵阁、九又四分之三站台、分院帽。这一批伙伴按原著发色戴了假发。", "闯关地图里的各组现在各自编号、各自解锁：主题词汇、基础虚词、哈利·波特第一章、经典场景互不影响；通关后的“下一关”按钮会带你去同一组的下一关。", "哈利·波特第一章补齐了最后 7 个词（jugeote、frémir、incliner、consulter、admiratif、exaspéré、décidément），成为第一章的第 25 关，第一章的 240 个词全部上线。", "这些新词也进了背单词（主题「哈利·波特 · 经典场景」）和听力（例句的填空、排序题和单词听写），目前用系统朗读。"]},
