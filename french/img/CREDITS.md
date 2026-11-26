@@ -560,7 +560,7 @@
 
 ## 《哈利·波特》第一章词汇（hp-ch1）
 
-这批图由 ChatGPT 按每个词的例句生成（三位学习伙伴装扮成书中人物；原图存档在 `originals/picgen/hp-ch1/`），裁成 3:2、缩到 720×480。例句是按第一章情节自己写的，不是原文。目前 233 / 240 张。
+这批图由 ChatGPT 按每个词的例句生成（三位学习伙伴装扮成书中人物；原图存档在 `originals/picgen/hp-ch1/`），裁成 3:2、缩到 720×480。例句是按第一章情节自己写的，不是原文。目前 240 / 240 张。
 
 | 单词 | 文件 |
 |---|---|
@@ -797,3 +797,78 @@
 | apparemment | hp-apparemment.jpg |
 | profondément | hp-profondement.jpg |
 | soudain | hp-soudain.jpg |
+| jugeote | hp-jugeote.jpg |
+| frémir | hp-fremir.jpg |
+| incliner | hp-incliner.jpg |
+| consulter | hp-consulter.jpg |
+| admiratif | hp-admiratif.jpg |
+| exaspéré | hp-exaspere.jpg |
+| décidément | hp-decidement.jpg |
+
+
+## 《哈利·波特》经典场景词汇（hp-scenes）
+
+这批图由 ChatGPT 按每个词的例句生成（三位学习伙伴扮成书中人物，按原著发色戴假发；原图存档在 `originals/picgen/hp-scenes/`），裁成 3:2、缩到 720×480。例句是按情节自己写的，不是原文。目前 60 / 120 张。
+
+| 单词 | 文件 |
+|---|---|
+| placard | hpx-placard.jpg |
+| araignée | hpx-araignee.jpg |
+| tambouriner | hpx-tambouriner.jpg |
+| vivarium | hpx-vivarium.jpg |
+| vitre | hpx-vitre.jpg |
+| reptile | hpx-reptile.jpg |
+| venin | hpx-venin.jpg |
+| ramper | hpx-ramper.jpg |
+| s'enrouler | hpx-s-enrouler.jpg |
+| clin d'œil | hpx-clin-d-oeil.jpg |
+| parchemin | hpx-parchemin.jpg |
+| encre | hpx-encre.jpg |
+| sceau | hpx-sceau.jpg |
+| déchirer | hpx-dechirer.jpg |
+| clouer | hpx-clouer.jpg |
+| marteau | hpx-marteau.jpg |
+| planche | hpx-planche.jpg |
+| cheminée | hpx-cheminee.jpg |
+| cabane | hpx-cabane.jpg |
+| rocher | hpx-rocher.jpg |
+| fracas | hpx-fracas.jpg |
+| gond | hpx-gond.jpg |
+| ronfler | hpx-ronfler.jpg |
+| broussailleux | hpx-broussailleux.jpg |
+| fusil | hpx-fusil.jpg |
+| nœud | hpx-noeud.jpg |
+| écraser | hpx-ecraser.jpg |
+| bouilloire | hpx-bouilloire.jpg |
+| queue | hpx-queue.jpg |
+| terrifié | hpx-terrifie.jpg |
+| gobelin | hpx-gobelin.jpg |
+| comptoir | hpx-comptoir.jpg |
+| wagonnet | hpx-wagonnet.jpg |
+| coffre | hpx-coffre.jpg |
+| chaudron | hpx-chaudron.jpg |
+| plume | hpx-plume.jpg |
+| enseigne | hpx-enseigne.jpg |
+| ruban | hpx-ruban.jpg |
+| houx | hpx-houx.jpg |
+| baguette | hpx-baguette.jpg |
+| barrière | hpx-barriere.jpg |
+| locomotive | hpx-locomotive.jpg |
+| sifflet | hpx-sifflet.jpg |
+| compartiment | hpx-compartiment.jpg |
+| tache | hpx-tache.jpg |
+| dragée | hpx-dragee.jpg |
+| parfum | hpx-parfum.jpg |
+| réglisse | hpx-reglisse.jpg |
+| grenouille | hpx-grenouille.jpg |
+| crapaud | hpx-crapaud.jpg |
+| tabouret | hpx-tabouret.jpg |
+| pointu | hpx-pointu.jpg |
+| rapiécé | hpx-rapiece.jpg |
+| déchirure | hpx-dechirure.jpg |
+| chandelle | hpx-chandelle.jpg |
+| flotter | hpx-flotter.jpg |
+| parsemé | hpx-parseme.jpg |
+| brume | hpx-brume.jpg |
+| répartition | hpx-repartition.jpg |
+| estomac | hpx-estomac.jpg |

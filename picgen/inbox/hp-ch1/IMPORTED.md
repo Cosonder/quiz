@@ -6,5 +6,6 @@
 - 这 60 张不需要重画，目录里看不到它们是正常的。
 - 第 2 轮的 59 张（n = 61–120，缺 113 jugeote）已于 2026-11-26 导入（v1.9.90，DLC 第 7–12 关），原图同样存档后删除；逐字节的原始 PNG 在提交 `ffe0d37cec0162eda4a5cabe665b40fb9248e391`。
 - 第 3、4 轮的 114 张（n = 121–240）已于 2026-11-26 导入（v1.9.91，DLC 第 13–24 关），原图同样存档后删除；逐字节的原始 PNG 在提交 `fd40a16bbf9a4901efa73e23f664ab9700f5ca35`。
-- **还缺 7 张**：113 jugeote、168 frémir、170 incliner、172 consulter、221 admiratif、222 exaspéré、233 décidément。补画好照旧传到这个目录，文件名用 words.json 里的 `f`，导入时会接在 DLC 最后。
+- 补画的 7 张（113 jugeote、168 frémir、170 incliner、172 consulter、221 admiratif、222 exaspéré、233 décidément）已于 2026-11-26 导入（v1.9.96，第一章第 25 关），原图同样存档后删除；原始 PNG 在提交 `585eb55031599bc892933e5721f0b5c052b16efb`。
+- **第一章 240 张已全部导入**，这个目录以后只剩 words.json 和本说明。
 - 逐字节的原始 PNG 在本仓库历史里：提交 `2febc5ed9e050ad4fdc57cf6839c5cb02edec462`。
