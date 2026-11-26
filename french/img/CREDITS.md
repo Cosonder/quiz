@@ -560,7 +560,7 @@
 
 ## 《哈利·波特》第一章词汇（hp-ch1）
 
-这批图由 ChatGPT 按每个词的例句生成（三位学习伙伴装扮成书中人物；原图存档在 `originals/picgen/hp-ch1/`），裁成 3:2、缩到 720×480。例句是按第一章情节自己写的，不是原文。目前 119 / 240 张。
+这批图由 ChatGPT 按每个词的例句生成（三位学习伙伴装扮成书中人物；原图存档在 `originals/picgen/hp-ch1/`），裁成 3:2、缩到 720×480。例句是按第一章情节自己写的，不是原文。目前 233 / 240 张。
 
 | 单词 | 文件 |
 |---|---|
@@ -683,3 +683,117 @@
 | parvenir | hp-parvenir.jpg |
 | admettre | hp-admettre.jpg |
 | prévoir | hp-prevoir.jpg |
+| survivre | hp-survivre.jpg |
+| prononcer | hp-prononcer.jpg |
+| douter | hp-douter.jpg |
+| briser | hp-briser.jpg |
+| embrasser | hp-embrasser.jpg |
+| fêter | hp-feter.jpg |
+| révéler | hp-reveler.jpg |
+| célébrer | hp-celebrer.jpg |
+| s'inquiéter | hp-s-inquieter.jpg |
+| affirmer | hp-affirmer.jpg |
+| chasser | hp-chasser.jpg |
+| signaler | hp-signaler.jpg |
+| repérer | hp-reperer.jpg |
+| posséder | hp-posseder.jpg |
+| se comporter | hp-se-comporter.jpg |
+| déranger | hp-deranger.jpg |
+| féliciter | hp-feliciter.jpg |
+| envahir | hp-envahir.jpg |
+| parier | hp-parier.jpg |
+| fréquenter | hp-frequenter.jpg |
+| saisir | hp-saisir.jpg |
+| pointer | hp-pointer.jpg |
+| ignorer | hp-ignorer.jpg |
+| fixer | hp-fixer.jpg |
+| contempler | hp-contempler.jpg |
+| interroger | hp-interroger.jpg |
+| fabriquer | hp-fabriquer.jpg |
+| ordonner | hp-ordonner.jpg |
+| s'apprêter | hp-s-appreter.jpg |
+| étouffer | hp-etouffer.jpg |
+| craindre | hp-craindre.jpg |
+| bousculer | hp-bousculer.jpg |
+| dénicher | hp-denicher.jpg |
+| survoler | hp-survoler.jpg |
+| attirer | hp-attirer.jpg |
+| tendre | hp-tendre.jpg |
+| trembler | hp-trembler.jpg |
+| s'écrier | hp-s-ecrier.jpg |
+| se contenter | hp-se-contenter.jpg |
+| distinguer | hp-distinguer.jpg |
+| répliquer | hp-repliquer.jpg |
+| reculer | hp-reculer.jpg |
+| se dégourdir | hp-se-degourdir.jpg |
+| jaillir | hp-jaillir.jpg |
+| songer | hp-songer.jpg |
+| heurter | hp-heurter.jpg |
+| agiter | hp-agiter.jpg |
+| caresser | hp-caresser.jpg |
+| nouer | hp-nouer.jpg |
+| tapoter | hp-tapoter.jpg |
+| enfouir | hp-enfouir.jpg |
+| claquer | hp-claquer.jpg |
+| se figer | hp-se-figer.jpg |
+| siffler | hp-siffler.jpg |
+| se raviser | hp-se-raviser.jpg |
+| consoler | hp-consoler.jpg |
+| glousser | hp-glousser.jpg |
+| brailler | hp-brailler.jpg |
+| se moucher | hp-se-moucher.jpg |
+| réprimander | hp-reprimander.jpg |
+| enfourcher | hp-enfourcher.jpg |
+| pianoter | hp-pianoter.jpg |
+| voleter | hp-voleter.jpg |
+| rétrécir | hp-retrecir.jpg |
+| scruter | hp-scruter.jpg |
+| échapper | hp-echapper.jpg |
+| retrousser | hp-retrousser.jpg |
+| ordinaire | hp-ordinaire.jpg |
+| quelconque | hp-quelconque.jpg |
+| massif | hp-massif.jpg |
+| incapable | hp-incapable.jpg |
+| raisonnable | hp-raisonnable.jpg |
+| nerveux | hp-nerveux.jpg |
+| mystérieux | hp-mysterieux.jpg |
+| humide | hp-humide.jpg |
+| inévitable | hp-inevitable.jpg |
+| étrange | hp-etrange.jpg |
+| désagréable | hp-desagreable.jpg |
+| sinistre | hp-sinistre.jpg |
+| sourd | hp-sourd.jpg |
+| extraordinaire | hp-extraordinaire.jpg |
+| immense | hp-immense.jpg |
+| silencieux | hp-silencieux.jpg |
+| anormal | hp-anormal.jpg |
+| nocturne | hp-nocturne.jpg |
+| préoccupé | hp-preoccupe.jpg |
+| agité | hp-agite.jpg |
+| lumineux | hp-lumineux.jpg |
+| furieux | hp-furieux.jpg |
+| nuageux | hp-nuageux.jpg |
+| navré | hp-navre.jpg |
+| indésirable | hp-indesirable.jpg |
+| négligent | hp-negligent.jpg |
+| argenté | hp-argente.jpg |
+| extravagant | hp-extravagant.jpg |
+| tremblant | hp-tremblant.jpg |
+| hirsute | hp-hirsute.jpg |
+| ravissant | hp-ravissant.jpg |
+| courroucé | hp-courrouce.jpg |
+| musculeux | hp-musculeux.jpg |
+| râpeux | hp-rapeux.jpg |
+| prudent | hp-prudent.jpg |
+| étonnant | hp-etonnant.jpg |
+| sauvage | hp-sauvage.jpg |
+| pratiquement | hp-pratiquement.jpg |
+| doucement | hp-doucement.jpg |
+| habituellement | hp-habituellement.jpg |
+| longuement | hp-longuement.jpg |
+| froidement | hp-froidement.jpg |
+| singulièrement | hp-singulierement.jpg |
+| passablement | hp-passablement.jpg |
+| apparemment | hp-apparemment.jpg |
+| profondément | hp-profondement.jpg |
+| soudain | hp-soudain.jpg |
