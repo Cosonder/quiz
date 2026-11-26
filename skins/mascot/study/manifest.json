@@ -23595,6 +23595,14 @@
       "audioSha256": "bc75457fc444293eef7897ff26930d05a0abb1dd87f31cdef24069ed2295e2ee"
     },
     {
+      "text": "Les yeux bleus de Dumbledore étincellent derrière ses lunettes en demi-lune.",
+      "file": "examples/b93b6f01bcae9b2b889f.m4a",
+      "speaker": "ninon",
+      "durationSeconds": 4.23,
+      "bytes": 38220,
+      "audioSha256": "0665380b3074fee64b3b77d31f152a1865bffd6c3a393a5a22c434e4a54cd27a"
+    },
+    {
       "text": "Mrs Dursley passe son temps à espionner les voisins.",
       "file": "examples/c3db7125f9f58f43a952.m4a",
       "speaker": "lison",
@@ -24483,6 +24491,14 @@
       "audioSha256": "20c7976efd477e383838058d1f7e3dc9924e64a55e6f5863c450c53357912d62"
     },
     {
+      "text": "Hagrid a déniché une moto volante pour transporter le bébé.",
+      "file": "examples/e4d1c52d139940ca34ce.m4a",
+      "speaker": "lison",
+      "durationSeconds": 3.99,
+      "bytes": 37504,
+      "audioSha256": "93be9096e9b2d78ce924f0c4f4ec7b395461dc5bdf137d2b8371e272ff34e180"
+    },
+    {
       "text": "Harry s'est endormi pendant qu'ils survolaient la ville.",
       "file": "examples/59265b9e61354662f61f.m4a",
       "speaker": "pia",
@@ -24569,6 +24585,14 @@
       "durationSeconds": 4.23,
       "bytes": 39001,
       "audioSha256": "9c47fc1f2088fd5b1069a2ff1f3fe0705668b267692ca1df62f7562e49d923db"
+    },
+    {
+      "text": "Mr Dursley songe un instant à téléphoner à sa femme.",
+      "file": "examples/ad22bec5e58210360994.m4a",
+      "speaker": "lison",
+      "durationSeconds": 4.22,
+      "bytes": 35847,
+      "audioSha256": "fe5465377d2e673a999d5a2e868d94a08bb66cb47b423ebaa9ec1545ccd00b80"
     },
     {
       "text": "Dans la rue, Mr Dursley heurte quelqu'un sans le faire exprès.",
@@ -24793,6 +24817,14 @@
       "durationSeconds": 2.68,
       "bytes": 24336,
       "audioSha256": "2779cf24538685b687d0d5eb481001bf5ef591f55d7a51faff67c23074210dda"
+    },
+    {
+      "text": "Des choses mystérieuses se passent dans tout le pays.",
+      "file": "examples/bbfafed14d5646b08009.m4a",
+      "speaker": "ninon",
+      "durationSeconds": 3.64,
+      "bytes": 31264,
+      "audioSha256": "7f7fe25f2526a0ebcbc8994c8b03913d2414b92a5b69682b0e7436fffd19f5fd"
     },
     {
       "text": "Les yeux du professeur McGonagall sont humides.",
@@ -25105,11 +25137,19 @@
       "durationSeconds": 3.14,
       "bytes": 28377,
       "audioSha256": "ce619450208728b719377d7e9eda5f40cb04c574d24077f3a7327158b1b6d4b8"
+    },
+    {
+      "text": "Soudain, toutes les lampes de la rue s'éteignent.",
+      "file": "examples/99cd19ebd82311b935f6.m4a",
+      "speaker": "lison",
+      "durationSeconds": 2.79,
+      "bytes": 24864,
+      "audioSha256": "9cdeb25f3460a31773dce8c368fb6a88a9bc8fafde455b5bd35b1198cc557df2"
     }
   ],
-  "exampleCount": 1183,
-  "exampleBytes": 33908829,
-  "examplePending": 5,
+  "exampleCount": 1188,
+  "exampleBytes": 34076528,
+  "examplePending": 0,
   "words": [
     {
       "text": "ranger",
@@ -30032,6 +30072,14 @@
       "audioSha256": "166bda67dafa3817bd5f6a20ce53ae4e8a5d83e4e3a7903e5d25b79f0b9613c4"
     },
     {
+      "text": "le chignon",
+      "file": "words/b9f02bc0c5f06364f048.m4a",
+      "speaker": "ninon",
+      "durationSeconds": 0.88,
+      "bytes": 8074,
+      "audioSha256": "45fa58f2c2ad3dfc21d31702286d88dca2b24504438e469fa901e1d4f098f5a4"
+    },
+    {
       "text": "la silhouette",
       "file": "words/933089714a7af7c386c5.m4a",
       "speaker": "lison",
@@ -30214,6 +30262,22 @@
       "durationSeconds": 1.04,
       "bytes": 9553,
       "audioSha256": "9058276d49375ab7be9e1aa58e7c9fe9f19c658e35bcdea3f0443d12af106bd1"
+    },
+    {
+      "text": "bâiller",
+      "file": "words/53db7a8d6d550ce086c6.m4a",
+      "speaker": "ninon",
+      "durationSeconds": 0.79,
+      "bytes": 7454,
+      "audioSha256": "966f5582777b97bbeb05def7cf148206918c84fdaedbb451d414d4672f215478"
+    },
+    {
+      "text": "hocher",
+      "file": "words/dfd74cd45acec73ce386.m4a",
+      "speaker": "lison",
+      "durationSeconds": 0.68,
+      "bytes": 6625,
+      "audioSha256": "6fdb6335c42f29cf30d13a121675285297f03362573b285ee099d99b4609730c"
     },
     {
       "text": "cligner",
@@ -30648,6 +30712,14 @@
       "audioSha256": "d9bedfe8fd8d4f78c09928efbb9dfc530595f01face4a64fa56d2a0694a79638"
     },
     {
+      "text": "le potin",
+      "file": "words/ab09f9ff30573c597c51.m4a",
+      "speaker": "pia",
+      "durationSeconds": 1.08,
+      "bytes": 10391,
+      "audioSha256": "c66187132bf443c470e35bd221b6823f0a44b9afa7fc4f42bf28ca3e250982c8"
+    },
+    {
       "text": "le banquet",
       "file": "words/8ed74ad86f3987e061dd.m4a",
       "speaker": "ninon",
@@ -30928,12 +31000,36 @@
       "audioSha256": "693873476770af678e448692799a83d13387efc74772c2eff5af0ab59d3aa112"
     },
     {
+      "text": "briser",
+      "file": "words/2698c116dcb13e9b53a6.m4a",
+      "speaker": "pia",
+      "durationSeconds": 0.85,
+      "bytes": 7799,
+      "audioSha256": "14165dc4843c70c632a3300ea6e6ebc9e51bbd3d4dc85c3bd2557246e3097d9c"
+    },
+    {
       "text": "embrasser",
       "file": "words/a4a03c05bae58642b880.m4a",
       "speaker": "ninon",
       "durationSeconds": 0.96,
       "bytes": 9571,
       "audioSha256": "cec96b9c6753d875301a13e87577a78bb941ccff4461425419b0a5a18420cafc"
+    },
+    {
+      "text": "fêter",
+      "file": "words/373efce2cf7d2193b72f.m4a",
+      "speaker": "lison",
+      "durationSeconds": 0.81,
+      "bytes": 7470,
+      "audioSha256": "cd7b3e3a11cfb048f44eb4aa21a3b90b34a7fc8a5102addba130c90704b3df93"
+    },
+    {
+      "text": "révéler",
+      "file": "words/39f8237430500122477a.m4a",
+      "speaker": "pia",
+      "durationSeconds": 0.86,
+      "bytes": 8121,
+      "audioSha256": "c52dc5d8b08b8dae0cb28725904f4f3dddffae7ff2bfd2149cc70ea5c1a2b51b"
     },
     {
       "text": "célébrer",
@@ -31118,6 +31214,14 @@
       "durationSeconds": 0.87,
       "bytes": 8160,
       "audioSha256": "04259ebe6e72b559c0a75c319587787a170ad3501a3e9a96fbd22d4e3cccbcaa"
+    },
+    {
+      "text": "craindre",
+      "file": "words/f73a67a7cde8004e8031.m4a",
+      "speaker": "pia",
+      "durationSeconds": 0.83,
+      "bytes": 7852,
+      "audioSha256": "56afaa2700fa9851aa477a60ba72df64ab4ae012b449e683ab1ceacbffb5cc9f"
     },
     {
       "text": "bousculer",
@@ -31320,6 +31424,14 @@
       "audioSha256": "ea7095fa94dad120d1e02c3c626dc1a473b5e7c3db63d60a4286683d22d7b2f9"
     },
     {
+      "text": "glousser",
+      "file": "words/79784d565b8d308fbcf1.m4a",
+      "speaker": "lison",
+      "durationSeconds": 0.9,
+      "bytes": 8665,
+      "audioSha256": "fbce707307981e5b230a7e54a5190159dbf333c40e48d9e0a492c5f265995c5d"
+    },
+    {
       "text": "brailler",
       "file": "words/593eb17a72156e5902af.m4a",
       "speaker": "pia",
@@ -31350,6 +31462,22 @@
       "durationSeconds": 0.83,
       "bytes": 7816,
       "audioSha256": "165f533283c090c6c3f745ec860ca1edfa5d19e0a7a12e8dd8c61d2db58b4137"
+    },
+    {
+      "text": "pianoter",
+      "file": "words/54287053ce9b265d6cfb.m4a",
+      "speaker": "ninon",
+      "durationSeconds": 0.83,
+      "bytes": 7745,
+      "audioSha256": "861e790c2b34cbd529a6c0a70a72d495a4bf3333ec300223fe6794d914573f6f"
+    },
+    {
+      "text": "voleter",
+      "file": "words/86bb17e33fecedef4aa4.m4a",
+      "speaker": "lison",
+      "durationSeconds": 0.88,
+      "bytes": 8044,
+      "audioSha256": "7d12a1584ac5048e171fbb855dc65d976cca3593bf9f62c1e388ee91abeb6a31"
     },
     {
       "text": "rétrécir",
@@ -31544,12 +31672,28 @@
       "audioSha256": "99454141e93d35f6c86e04d5af46280a9e699d1609be47d60a213f424b793652"
     },
     {
+      "text": "lumineux",
+      "file": "words/2a685cd5a593c7498ad1.m4a",
+      "speaker": "pia",
+      "durationSeconds": 0.88,
+      "bytes": 8443,
+      "audioSha256": "33deee51591ee09ebbef84ac09f24c93703d97323e0b6c2dd3979361bb0060ed"
+    },
+    {
       "text": "furieux",
       "file": "words/8e630b19b87cf77616cb.m4a",
       "speaker": "ninon",
       "durationSeconds": 0.86,
       "bytes": 8077,
       "audioSha256": "41538c48d06f60270e2f2d6449c348a4c3fd9d7730b0a64f9df560263147ec4b"
+    },
+    {
+      "text": "nuageux",
+      "file": "words/5b97cc03e090dcc1814e.m4a",
+      "speaker": "lison",
+      "durationSeconds": 0.87,
+      "bytes": 8149,
+      "audioSha256": "5b249fabc981b8e0873dc06384a9946e4754e312a016b09f9b409830f7e5ba2c"
     },
     {
       "text": "navré",
@@ -31630,6 +31774,14 @@
       "durationSeconds": 0.92,
       "bytes": 8488,
       "audioSha256": "4ad619b59d042161a228b118c9b9de8fc97d42a6d764ec816cb3296aa09b8c01"
+    },
+    {
+      "text": "râpeux",
+      "file": "words/2cfa8ee0d7167c87855b.m4a",
+      "speaker": "ninon",
+      "durationSeconds": 0.78,
+      "bytes": 9111,
+      "audioSha256": "c2bb55afe6f919a65926c8a2a775de53dada4d20cf165496b5b09c4ec2f4b6f8"
     },
     {
       "text": "prudent",
@@ -31736,9 +31888,9 @@
       "audioSha256": "56933473ad0121bc4d1dd2c9f1529ad83850abcbfa603e1b1b35de633665f81c"
     }
   ],
-  "wordCount": 828,
-  "wordBytes": 7927667,
-  "wordPending": 14,
+  "wordCount": 842,
+  "wordBytes": 8041610,
+  "wordPending": 0,
   "male": [
     {
       "text": "Tu prends le train de 8 heures demain ?",
