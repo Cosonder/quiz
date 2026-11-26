@@ -23753,11 +23753,1363 @@
       "durationSeconds": 3.97,
       "bytes": 34750,
       "audioSha256": "de2c16fb13229e0c0d5772d4df8336a2ef21a5fb124f5d8cb66de4c728066a25"
+    },
+    {
+      "text": "Le matin, Mr Dursley sort sa voiture de l'allée en marche arrière.",
+      "file": "examples/dee0f97ae7147c8c9306.m4a",
+      "speaker": "ninon",
+      "durationSeconds": 4.39,
+      "bytes": 38212,
+      "audioSha256": "a9f610330ca9e6df0837e467fa1a5ff2c1100e294618532d49b6be1ca4d77bd1"
+    },
+    {
+      "text": "Hagrid pose le bébé dans les bras de Dumbledore avec précaution.",
+      "file": "examples/c234b7ea9f5bcb39dcae.m4a",
+      "speaker": "lison",
+      "durationSeconds": 4.04,
+      "bytes": 36559,
+      "audioSha256": "3fc7dc387dd88c8968c1f326c13a9816ff18bdf929a89c665956a202654d9713"
+    },
+    {
+      "text": "Mr Dursley retient sa respiration en écoutant les nouvelles.",
+      "file": "examples/43b66de05c4b772ff0a0.m4a",
+      "speaker": "pia",
+      "durationSeconds": 3.4,
+      "bytes": 29779,
+      "audioSha256": "1cdc87d947fbc89e899190d43cd873b9c34b760d7f82167003361a21cc90148d"
+    },
+    {
+      "text": "Mr Dursley voit le reflet du chat dans la vitre de sa voiture.",
+      "file": "examples/e34f1688a10e5e0926b4.m4a",
+      "speaker": "ninon",
+      "durationSeconds": 3.9,
+      "bytes": 34708,
+      "audioSha256": "4320f19e88385100ecb8fc2458a78f4b6ed37fc4ff703c3cc9f55ca57def286d"
+    },
+    {
+      "text": "Le chat est assis sur un petit mur de briques devant la maison.",
+      "file": "examples/46e3383bcb048411e8e6.m4a",
+      "speaker": "lison",
+      "durationSeconds": 3.7,
+      "bytes": 33753,
+      "audioSha256": "bf434906ff06e78b6d5d3f9451b09f93d67f210300a4d8d0b3fed84d4862c620"
+    },
+    {
+      "text": "Les bottes de Dumbledore ont de grosses boucles brillantes.",
+      "file": "examples/dbb97b0541cadd4dee77.m4a",
+      "speaker": "pia",
+      "durationSeconds": 3.46,
+      "bytes": 32048,
+      "audioSha256": "4a674610dbce7b2f87ac70ea8e4d8d8152464cffe106eb64255257fa78a296b4"
+    },
+    {
+      "text": "Mr Dursley se glisse sous les draps et s'endort tout de suite.",
+      "file": "examples/3de6914c27af5fc775d7.m4a",
+      "speaker": "ninon",
+      "durationSeconds": 3.17,
+      "bytes": 28237,
+      "audioSha256": "e1b2fa6f1ac74212b3acd3c9de359648c9fe4ecadea168497ddcf6c7186352f2"
+    },
+    {
+      "text": "La cicatrice de Harry ressemble à une petite coupure sur son front.",
+      "file": "examples/624254447ad344224880.m4a",
+      "speaker": "lison",
+      "durationSeconds": 3.88,
+      "bytes": 35392,
+      "audioSha256": "1b8767e3e148714136b04eaf33423949b2e806fa190ae81b93f652c8f37ee739"
+    },
+    {
+      "text": "La montre de Dumbledore a douze aiguilles et aucun chiffre.",
+      "file": "examples/b725cef9a42184262342.m4a",
+      "speaker": "pia",
+      "durationSeconds": 3.97,
+      "bytes": 37415,
+      "audioSha256": "d6f23be2bf30394e55997b3ceec83f4c4a2eee56ccacf1967a836e8fde1a33d2"
+    },
+    {
+      "text": "Les passants en cape ne remarquent même pas Mr Dursley.",
+      "file": "examples/b648a7ec5d5c730cb34c.m4a",
+      "speaker": "ninon",
+      "durationSeconds": 3.02,
+      "bytes": 27303,
+      "audioSha256": "970b155a63fcdaefb919a05f7a3a496e1482606ba133895bc2f448dc8a89befc"
+    },
+    {
+      "text": "Le mouchoir du professeur McGonagall est bordé de dentelle.",
+      "file": "examples/2917b0f159a98dbdff94.m4a",
+      "speaker": "lison",
+      "durationSeconds": 3.6,
+      "bytes": 33633,
+      "audioSha256": "c99377975de8c0c7d0e1d5fa7e71146c8757021a91dcf80fb707561debb71a5e"
+    },
+    {
+      "text": "Le présentateur du journal sourit en parlant des hiboux.",
+      "file": "examples/9e47206338305bb767e4.m4a",
+      "speaker": "pia",
+      "durationSeconds": 3.02,
+      "bytes": 26599,
+      "audioSha256": "a51c7030d46e79fbccd8b169e00389313d605bb6558c798ce7287dd523310b01"
+    },
+    {
+      "text": "Dumbledore ouvre le couvercle de sa montre en or.",
+      "file": "examples/885730b4fc7c1a542a4f.m4a",
+      "speaker": "ninon",
+      "durationSeconds": 3.25,
+      "bytes": 28657,
+      "audioSha256": "4b2e4820eb5b512d0d11d4adb9723ae7ad459d09193b93cf5a595c072f0941b7"
+    },
+    {
+      "text": "Sur le cadran de cette montre, de petites planètes tournent.",
+      "file": "examples/1c9f55ceb33266524a85.m4a",
+      "speaker": "lison",
+      "durationSeconds": 3.63,
+      "bytes": 33262,
+      "audioSha256": "cb31f12edcaf716f360d4b882bc780bc1ccdd2cc7e5518f3aac58b368cf9deeb"
+    },
+    {
+      "text": "Mr Dursley claque la portière de sa voiture et court vers la maison.",
+      "file": "examples/b7dc5ed28a6071c15568.m4a",
+      "speaker": "pia",
+      "durationSeconds": 3.82,
+      "bytes": 34604,
+      "audioSha256": "ecbf536c2eac77c71b5f844bfa58d3848e500454b954826d183a3079feef21dc"
+    },
+    {
+      "text": "Le professeur McGonagall fait une grimace en entendant le mot bonbon.",
+      "file": "examples/a6832ccf3406db635002.m4a",
+      "speaker": "ninon",
+      "durationSeconds": 4.17,
+      "bytes": 38030,
+      "audioSha256": "00559ba13c24411bcea5d7ee002fe18eae7ce7547fc0be9fa932d7f22a6bc64d"
+    },
+    {
+      "text": "Le professeur McGonagall porte une cape vert émeraude.",
+      "file": "examples/52177922332def2d218b.m4a",
+      "speaker": "lison",
+      "durationSeconds": 2.95,
+      "bytes": 26441,
+      "audioSha256": "bf620dcbb10053e49bf954af5a08c8e4abbbed33c8e29aeb2bdac4fb7e9abb70"
+    },
+    {
+      "text": "Mrs Dursley tend le cou pour regarder par-dessus la clôture.",
+      "file": "examples/61095936462d7f807c65.m4a",
+      "speaker": "pia",
+      "durationSeconds": 3.49,
+      "bytes": 32399,
+      "audioSha256": "c2347f03afd01cf7b9bbb41cf870156ea20a044bf83c96c4fa904a121973cab1"
+    },
+    {
+      "text": "Avec un petit claquement, la lumière la plus proche s'éteint.",
+      "file": "examples/ae935a5afc5a486a6ea9.m4a",
+      "speaker": "ninon",
+      "durationSeconds": 3.33,
+      "bytes": 29772,
+      "audioSha256": "ee322adb25662132bd3864ae20472b7cc0448e6aa789fd196a2d5c337dd5b517"
+    },
+    {
+      "text": "Mr Dursley ne remarque pas le hibou au plumage brun qui passe.",
+      "file": "examples/bdb6b35b1364bdd163d3.m4a",
+      "speaker": "lison",
+      "durationSeconds": 3.345,
+      "bytes": 30507,
+      "audioSha256": "c3279482d80df20ccd597e27e5656ba0e7b5f5ab0563f82149e72995647b4819"
+    },
+    {
+      "text": "Le chat a un pelage rayé et des marques autour des yeux.",
+      "file": "examples/b216423a361213227803.m4a",
+      "speaker": "pia",
+      "durationSeconds": 3.265,
+      "bytes": 30211,
+      "audioSha256": "2e14defab0f26d70808190ad77864a9ceb4f61201432334428534f03197d0166"
+    },
+    {
+      "text": "À la télévision, on annonce une averse d'étoiles filantes.",
+      "file": "examples/a7f96dcac6f58cc54bba.m4a",
+      "speaker": "ninon",
+      "durationSeconds": 3.32,
+      "bytes": 29220,
+      "audioSha256": "b78ba25bef23b63d082ba70cf0bdf48776ef55d9a2c951df6716a908e97a3f76"
+    },
+    {
+      "text": "Une touffe de cheveux noirs cache le front du bébé.",
+      "file": "examples/165653ecf09c4d09e4b8.m4a",
+      "speaker": "lison",
+      "durationSeconds": 2.62,
+      "bytes": 23330,
+      "audioSha256": "67a9eb1573a806265343a2f77bfb9b943340ebc2e8de5372c8d260b11f19f0e9"
+    },
+    {
+      "text": "Dumbledore relève le capuchon de son briquet en argent.",
+      "file": "examples/cf48e87b7611353818f8.m4a",
+      "speaker": "pia",
+      "durationSeconds": 2.94,
+      "bytes": 28827,
+      "audioSha256": "f4a0d858f6b28d3427c1c4dec7d5f9af9d5f1e72bc93a0d05fec98526ccd1bec"
+    },
+    {
+      "text": "On entend des murmures excités parmi les gens en cape.",
+      "file": "examples/b79c59817afea80956e6.m4a",
+      "speaker": "ninon",
+      "durationSeconds": 4.22,
+      "bytes": 37854,
+      "audioSha256": "44e84496583d1a677fedc31200ea7a6b0c3418ef6006083f542c33ddfb0f4579"
+    },
+    {
+      "text": "Les hiboux sont des rapaces qui chassent normalement la nuit.",
+      "file": "examples/99aa0396a4a9acbdf897.m4a",
+      "speaker": "lison",
+      "durationSeconds": 3.32,
+      "bytes": 29418,
+      "audioSha256": "2a172919dfcd09c6b2961b1690d65d7da578429a23df4f1320f413237e900490"
+    },
+    {
+      "text": "Mrs Dursley raconte à son mari les potins du quartier.",
+      "file": "examples/cdedc766908741478df2.m4a",
+      "speaker": "pia",
+      "durationSeconds": 3.91,
+      "bytes": 35932,
+      "audioSha256": "73c8a0082900f35473d61ee777f2128edbb665a35966d6ea79348c6c5151f9b3"
+    },
+    {
+      "text": "Ce soir, les sorciers organisent des banquets dans tout le pays.",
+      "file": "examples/cd44f9c7cb9b1077e785.m4a",
+      "speaker": "ninon",
+      "durationSeconds": 4.35,
+      "bytes": 40703,
+      "audioSha256": "c533cd018c7640cc615caf4a04c674997226f399a1dcdf1f14f2d1633abe1959"
+    },
+    {
+      "text": "Des étoiles filantes traversent le ciel au-dessus de la ville.",
+      "file": "examples/db3570a1bcff891b2ee2.m4a",
+      "speaker": "lison",
+      "durationSeconds": 3.63,
+      "bytes": 33527,
+      "audioSha256": "9bf2671e6dcd6a4df774fa27191c1b164ebb7e668ed2445d6c5052d2e56cc51f"
+    },
+    {
+      "text": "Dumbledore offre une friandise au citron au professeur McGonagall.",
+      "file": "examples/7c6a0c8b6040e55bb19d.m4a",
+      "speaker": "pia",
+      "durationSeconds": 4.08,
+      "bytes": 37091,
+      "audioSha256": "69ad0a153d68ddbaadb154062929947715e1604ae27857fb381eacee12afb19a"
+    },
+    {
+      "text": "Le bambin dort dans ses couvertures sans se réveiller.",
+      "file": "examples/509bc18cf882fee1f7cb.m4a",
+      "speaker": "ninon",
+      "durationSeconds": 3.62,
+      "bytes": 31755,
+      "audioSha256": "d815df8a5ffdc225999dad3ac83eec52a3352b6f9635f51705aecd279908ea29"
+    },
+    {
+      "text": "On entend seulement le bruissement de la cape de Dumbledore.",
+      "file": "examples/a50762cbe7a59130b09a.m4a",
+      "speaker": "lison",
+      "durationSeconds": 3.62,
+      "bytes": 32271,
+      "audioSha256": "324eab07d167a4d7e29c889edee2d53621e2e540063f623463cd9cfd37174d54"
+    },
+    {
+      "text": "Le vrombissement de la moto devient de plus en plus fort.",
+      "file": "examples/8af0f05d84421278a316.m4a",
+      "speaker": "pia",
+      "durationSeconds": 3.36,
+      "bytes": 30023,
+      "audioSha256": "ca30ff845501e3bcc35778e0cde92514646efa337d730cc8a9ab90a5fa254636"
+    },
+    {
+      "text": "Le chat semble lire l'écriteau au coin de la rue.",
+      "file": "examples/440194e04cbdc97c1fb9.m4a",
+      "speaker": "ninon",
+      "durationSeconds": 2.74,
+      "bytes": 24644,
+      "audioSha256": "da6305ef99f16a2dc0356dfc9907f38051f25995822f6568128aecb27615688c"
+    },
+    {
+      "text": "Dumbledore porte des bottes à hauts talons.",
+      "file": "examples/aef7bc5e51c624fd5c2e.m4a",
+      "speaker": "lison",
+      "durationSeconds": 2.73,
+      "bytes": 26025,
+      "audioSha256": "18217495a9295d0b5be69ede3ed6e3aa5ec62fb13e6e31b97efd5fcd3b67347f"
+    },
+    {
+      "text": "Les bottes de Hagrid sont aussi grandes que des bébés dauphins.",
+      "file": "examples/6dacc2961a2a9c10409d.m4a",
+      "speaker": "pia",
+      "durationSeconds": 3.53,
+      "bytes": 32193,
+      "audioSha256": "1400d44830539938c3b9058fa600a58101bb460eed41e1be216c9d5a650d4fe7"
+    },
+    {
+      "text": "Le phare de la moto éclaire soudain toute la rue.",
+      "file": "examples/ffa431eb30aab02932a9.m4a",
+      "speaker": "ninon",
+      "durationSeconds": 2.79,
+      "bytes": 25574,
+      "audioSha256": "f4bfa632c55741eaafbc7ac44bea0abb22aca6a9f1b19ca998aba7362639ec43"
+    },
+    {
+      "text": "Le chat observe la maison comme s'il guettait une proie.",
+      "file": "examples/b1f4706f9b6c160aec9d.m4a",
+      "speaker": "lison",
+      "durationSeconds": 3.36,
+      "bytes": 30570,
+      "audioSha256": "e0feeb1e5097f8e960517111f127d209a1398ef38d32b6ec4ebe6436a058c70d"
+    },
+    {
+      "text": "Le professeur McGonagall fait un bond en entendant la moto.",
+      "file": "examples/112de24030d1792f4aa2.m4a",
+      "speaker": "pia",
+      "durationSeconds": 3.57,
+      "bytes": 31942,
+      "audioSha256": "23f7101dc0d56e900f55d8aa746d283214cb611bfdece28f19c424b664d02138"
+    },
+    {
+      "text": "Harry est le seul survivant de cette terrible nuit.",
+      "file": "examples/eafe9a65a45fa3259d4f.m4a",
+      "speaker": "ninon",
+      "durationSeconds": 2.93,
+      "bytes": 25941,
+      "audioSha256": "e078fb0a6c4e7d4512b331e3b36424b971977b38a3c7854bf4617f33ee8bd085"
+    },
+    {
+      "text": "Des centaines de témoignages parlent de hiboux en plein jour.",
+      "file": "examples/0dac2c0050b6612b9b36.m4a",
+      "speaker": "lison",
+      "durationSeconds": 3.34,
+      "bytes": 31496,
+      "audioSha256": "7d636b37b1ac0f2048e507e4af7deff53f8dbd6e3303121284b6ff4288b2dfbe"
+    },
+    {
+      "text": "Un géant descend de la moto avec un bébé dans les bras.",
+      "file": "examples/c6801ca0c605106a89ef.m4a",
+      "speaker": "pia",
+      "durationSeconds": 3.06,
+      "bytes": 28204,
+      "audioSha256": "79f994ce27a4f0903fdd64db8092d0473c162f4dd35a12b2e61ab096febbc5b3"
+    },
+    {
+      "text": "Ce matin, Mr Dursley est d'excellente humeur.",
+      "file": "examples/7a4f793c799c0d4b3962.m4a",
+      "speaker": "ninon",
+      "durationSeconds": 3.22,
+      "bytes": 29297,
+      "audioSha256": "3f2b37fee768b287d27e21c8329dfdb52e58c7bb0ab8fa1742a77f7d650e0361"
+    },
+    {
+      "text": "Une grosse larme coule sur la joue de Hagrid.",
+      "file": "examples/6f8df47f7725a5b5d672.m4a",
+      "speaker": "lison",
+      "durationSeconds": 2.82,
+      "bytes": 24682,
+      "audioSha256": "d5d2b38a740dce7c292af7135408262917734c23dad3489c8ce3957615fc0103"
+    },
+    {
+      "text": "Le professeur McGonagall pince les lèvres sans rien dire.",
+      "file": "examples/af76700cdf5e94450b76.m4a",
+      "speaker": "pia",
+      "durationSeconds": 3.31,
+      "bytes": 29137,
+      "audioSha256": "71a73789b3ed639a5877e447415a6e1dfa5087460a060e9056d89f0160023017"
+    },
+    {
+      "text": "Un jour, Harry deviendra une légende pour tous les sorciers.",
+      "file": "examples/30385b3786c2e6883be0.m4a",
+      "speaker": "ninon",
+      "durationSeconds": 3.73,
+      "bytes": 34049,
+      "audioSha256": "51b92d7591ce43ef70fb760d5ef63accde588447f486f55246fc6307058e8776"
+    },
+    {
+      "text": "Le comportement des hiboux étonne tous les spécialistes.",
+      "file": "examples/c5a257307c7e0086d183.m4a",
+      "speaker": "lison",
+      "durationSeconds": 3.25,
+      "bytes": 31957,
+      "audioSha256": "40fe977048d0ced450f0d8f50c4e6b5143b47526f89520cb0614e409b13871c0"
+    },
+    {
+      "text": "Hagrid s'essuie les yeux avec la manche de son manteau.",
+      "file": "examples/a0853e68da215c9b003a.m4a",
+      "speaker": "pia",
+      "durationSeconds": 2.89,
+      "bytes": 25740,
+      "audioSha256": "c108304cff76972b41d66bb3a69e1fd0dace843e91dc4f09f22f4def2fecd7f8"
+    },
+    {
+      "text": "Le lendemain matin, il n'y a plus aucune trace du chat.",
+      "file": "examples/bbb33d768ba1bf3eb26a.m4a",
+      "speaker": "ninon",
+      "durationSeconds": 3.01,
+      "bytes": 27283,
+      "audioSha256": "e1b767c49566459c63eae7fbfac8ab0a474ff2854aec3eea77bfadf273aafda5"
+    },
+    {
+      "text": "Des téléspectateurs ont vu des étoiles filantes partout dans le pays.",
+      "file": "examples/e08a8e3bb6e8d8fdb238.m4a",
+      "speaker": "lison",
+      "durationSeconds": 3.49,
+      "bytes": 32869,
+      "audioSha256": "094137a5137c9922041e798dd6ff88c314744f010739e8a83be0216830183668"
+    },
+    {
+      "text": "Mrs Dursley regarde son mari avec épouvante quand il parle des Potter.",
+      "file": "examples/ac072ccb532463122da5.m4a",
+      "speaker": "pia",
+      "durationSeconds": 3.95,
+      "bytes": 34988,
+      "audioSha256": "6b8d20596071df21d9571ecc3a50069a8d875b9677431f10a9583a0afb3ac334"
+    },
+    {
+      "text": "Pour le professeur McGonagall, fêter cela dans la rue est une imprudence.",
+      "file": "examples/115e54e16dbbe7708f78.m4a",
+      "speaker": "ninon",
+      "durationSeconds": 4.06,
+      "bytes": 36614,
+      "audioSha256": "ca0d90390227e15458ab0790644fc4cd7940627d1c22e865da5efb2dc7c996b4"
+    },
+    {
+      "text": "Pour Mr Dursley, la magie n'est qu'un tas de sornettes.",
+      "file": "examples/adb48f8b0ad0f6737c6a.m4a",
+      "speaker": "lison",
+      "durationSeconds": 2.92,
+      "bytes": 27040,
+      "audioSha256": "d61ef8640592baf9b38e7e9ef94df6f0a3881beb5862aceb22fb5d107a822f5b"
+    },
+    {
+      "text": "Mr Dursley déteste l'accoutrement de ces gens en cape.",
+      "file": "examples/8aea60e2f7995bff7fe1.m4a",
+      "speaker": "pia",
+      "durationSeconds": 3.64,
+      "bytes": 34119,
+      "audioSha256": "f82dbf11de23609fe3efac864c1f6c6c1444edaf25d9a60326bb53124e94c695"
+    },
+    {
+      "text": "Mr Dursley sombre dans la somnolence devant la télévision.",
+      "file": "examples/200713ad98626860f87f.m4a",
+      "speaker": "ninon",
+      "durationSeconds": 3.96,
+      "bytes": 35002,
+      "audioSha256": "a312d51b036a087599a37e9c21f720039099d6ebd6f0e7e2e1b3176ae5027999"
+    },
+    {
+      "text": "Assis sur le muret, le chat observe la maison des Dursley.",
+      "file": "examples/782e45aef70d50381d20.m4a",
+      "speaker": "lison",
+      "durationSeconds": 4.06,
+      "bytes": 34658,
+      "audioSha256": "29bda9246138e99401d73131eb1031312fc5c5e6e34469ca7308501684c9804a"
+    },
+    {
+      "text": "Mr Dursley ne parvient pas à oublier ce qu'il a entendu.",
+      "file": "examples/9bacc60a2b8ac9d0f329.m4a",
+      "speaker": "pia",
+      "durationSeconds": 3.33,
+      "bytes": 30164,
+      "audioSha256": "e6ece3ad769c12998f0b5d5e11f3c0005b60cec49f59e62ea625bc62c321f388"
+    },
+    {
+      "text": "Le professeur McGonagall admet que Dumbledore a peut-être raison.",
+      "file": "examples/b086406f6e7e8ca3fa02.m4a",
+      "speaker": "ninon",
+      "durationSeconds": 3.77,
+      "bytes": 34064,
+      "audioSha256": "c35faf5af01bcbfdedfe3e28a778de84655aca1e3481ad744e014a3d66175109"
+    },
+    {
+      "text": "La météo n'avait pas prévu d'étoiles filantes ce soir.",
+      "file": "examples/930bc850d85979459d89.m4a",
+      "speaker": "lison",
+      "durationSeconds": 2.83,
+      "bytes": 26853,
+      "audioSha256": "b0218c4f038c8060f68cdde68deeabb26160dd89e7aa9ddb5da8d1097cdab6ef"
+    },
+    {
+      "text": "Personne ne comprend comment le petit Harry a pu survivre.",
+      "file": "examples/8d1882dff70cb5aad3dc.m4a",
+      "speaker": "pia",
+      "durationSeconds": 3.16,
+      "bytes": 27546,
+      "audioSha256": "7c24b2262766a3799fca0deb33b0ac157f0dbd885be1d6ca28d9615d27849100"
+    },
+    {
+      "text": "Le professeur McGonagall n'ose pas prononcer ce nom.",
+      "file": "examples/c173e7e752de3dfdb406.m4a",
+      "speaker": "ninon",
+      "durationSeconds": 3.51,
+      "bytes": 31746,
+      "audioSha256": "8086f96a399e27b7706eb1fded21e63c48fd034f5a086e1af96b8c2be22aa651"
+    },
+    {
+      "text": "Le professeur McGonagall doute que ce soit une bonne idée.",
+      "file": "examples/aa5bfafebf102f46b12f.m4a",
+      "speaker": "lison",
+      "durationSeconds": 3.28,
+      "bytes": 30509,
+      "audioSha256": "0435cd320b2512342f96fd6a7acb8cb0d01abcfb51f51141ceb1a35f3f381591"
+    },
+    {
+      "text": "Le bruit de la moto brise le silence de Privet Drive.",
+      "file": "examples/4af41af29cea240f157f.m4a",
+      "speaker": "pia",
+      "durationSeconds": 3.04,
+      "bytes": 27806,
+      "audioSha256": "f11c7055c44a4c418673aa17c671dcae2ac7ea86dcd1886ad42e6b2c07ed676e"
+    },
+    {
+      "text": "Hagrid embrasse le bébé avec sa grande barbe qui pique.",
+      "file": "examples/6b1059832710760da477.m4a",
+      "speaker": "ninon",
+      "durationSeconds": 3.07,
+      "bytes": 29725,
+      "audioSha256": "955b70c923aef6f1499a5db9aa1ee0b9ee11218c76390576eddc257f58108a80"
+    },
+    {
+      "text": "Toute la journée, les sorciers ont fêté la bonne nouvelle.",
+      "file": "examples/a7a1370b4d3ecc46c4b6.m4a",
+      "speaker": "lison",
+      "durationSeconds": 3.41,
+      "bytes": 30001,
+      "audioSha256": "2708212f7631df3e495719014f79039ddb47c7307b8671618720378f8ef3a661"
+    },
+    {
+      "text": "Dumbledore ne veut pas révéler tous ses secrets.",
+      "file": "examples/dad82dd58b7ef46b713c.m4a",
+      "speaker": "pia",
+      "durationSeconds": 2.48,
+      "bytes": 22938,
+      "audioSha256": "ecbbaefc6edba78a73483d3c2a4951a858aaca684882360e9e7082d7587c1a43"
+    },
+    {
+      "text": "Les sorciers célèbrent ce grand jour avec des feux d'artifice.",
+      "file": "examples/e9cdd591b64939aa1f55.m4a",
+      "speaker": "ninon",
+      "durationSeconds": 3.87,
+      "bytes": 33706,
+      "audioSha256": "9102d608e94a743ddf8bb7903d193cb8d44ed71a8cd6aa410a4db9d2c417f6eb"
+    },
+    {
+      "text": "Mr Dursley s'inquiète de ce que vont penser les voisins.",
+      "file": "examples/868c0d8de5a3c2115591.m4a",
+      "speaker": "lison",
+      "durationSeconds": 3.04,
+      "bytes": 26177,
+      "audioSha256": "15615c23c39c8b95e8da797cb63cdb84524a2d5e94ca265ac220b39b973cf227"
+    },
+    {
+      "text": "Les spécialistes affirment que les hiboux ne sortent jamais le jour.",
+      "file": "examples/5ef02a8dbd1be75e75d5.m4a",
+      "speaker": "pia",
+      "durationSeconds": 3.24,
+      "bytes": 30064,
+      "audioSha256": "fa0e57021e2121923f7f80150cef96d9f7cb72d78ccd6dee2d47363fb5acf8b0"
+    },
+    {
+      "text": "Mr Dursley essaie de chasser le chat, mais il ne bouge pas.",
+      "file": "examples/d811b646e223a68e1f49.m4a",
+      "speaker": "ninon",
+      "durationSeconds": 3.72,
+      "bytes": 34018,
+      "audioSha256": "d9896d352aa9c71eaa531405238af1bf4b8607e1e6a81262b6f8cba67bcb9f95"
+    },
+    {
+      "text": "Des habitants ont signalé des hiboux dans tout le pays.",
+      "file": "examples/5169204106ce4e744532.m4a",
+      "speaker": "lison",
+      "durationSeconds": 2.83,
+      "bytes": 26223,
+      "audioSha256": "65b31d8d7aac596afad6648be1c01e000ee1eb37c8d232f5a560b816281d86fd"
+    },
+    {
+      "text": "Dumbledore repère tout de suite le chat sur le muret.",
+      "file": "examples/dcd2fd1b1665717b4156.m4a",
+      "speaker": "pia",
+      "durationSeconds": 2.53,
+      "bytes": 24306,
+      "audioSha256": "6ec19be438825eab306ee064359ee1b1acd5a82d358390567886c5f894a497e2"
+    },
+    {
+      "text": "Les Dursley possèdent tout ce qu'ils veulent, mais ils cachent un secret.",
+      "file": "examples/57a9cffc05bef2773aab.m4a",
+      "speaker": "ninon",
+      "durationSeconds": 4.55,
+      "bytes": 42639,
+      "audioSha256": "4e2b8745c2887f48c554ac56b83c935d4be7b77d232dac810a97ee61c8c39153"
+    },
+    {
+      "text": "Ce matin, tout le monde se comporte de façon bizarre.",
+      "file": "examples/90517cf5ea89d3313b9f.m4a",
+      "speaker": "lison",
+      "durationSeconds": 3.43,
+      "bytes": 31487,
+      "audioSha256": "aaef6f36dfd8564bbe2fcb5342a9a5e42281a79605e6838b2b85d298508e80d5"
+    },
+    {
+      "text": "Mr Dursley demande à sa secrétaire de ne pas le déranger.",
+      "file": "examples/9db44bbba5360aa3948d.m4a",
+      "speaker": "pia",
+      "durationSeconds": 3.26,
+      "bytes": 29533,
+      "audioSha256": "c4f72e324d3440738eac123ac5389f4f6fa404e22a70a951c1b1115bc7edfb13"
+    },
+    {
+      "text": "Le petit homme en cape félicite Mr Dursley sans raison.",
+      "file": "examples/a63a0f805c6724e6f061.m4a",
+      "speaker": "ninon",
+      "durationSeconds": 3.91,
+      "bytes": 35175,
+      "audioSha256": "9473c37ef19394aa95c843baa973682a74cc78192740b9d2dd66073f198b4a23"
+    },
+    {
+      "text": "Ce jour-là, des gens en cape ont envahi les rues de la ville.",
+      "file": "examples/96634196c70a3da334ec.m4a",
+      "speaker": "lison",
+      "durationSeconds": 3.63,
+      "bytes": 31429,
+      "audioSha256": "c3b36a1c664f31d83b93cb40976e83aa59c023f68a6e7c2374e0949adf03c0d6"
+    },
+    {
+      "text": "Le professeur McGonagall parie que c'est encore une idée de Dedalus Diggle.",
+      "file": "examples/e09db0e69b1f2a05d75a.m4a",
+      "speaker": "pia",
+      "durationSeconds": 4.0,
+      "bytes": 36679,
+      "audioSha256": "b5ef6c985fd444b1070f9d6b9795809ddc3c23359f26d2d5c6f5837e4d696ee0"
+    },
+    {
+      "text": "Les Dursley ne veulent pas que leur fils fréquente un enfant comme Harry.",
+      "file": "examples/d9b2b81624f9054e55d3.m4a",
+      "speaker": "ninon",
+      "durationSeconds": 3.46,
+      "bytes": 31687,
+      "audioSha256": "3f6df1bb54928e99bb3e45675a0051e469c242f8c293a6359c7072d44e65c94b"
+    },
+    {
+      "text": "Mr Dursley saisit le téléphone, puis il change d'avis.",
+      "file": "examples/f6786f61247c0c9aa4c3.m4a",
+      "speaker": "lison",
+      "durationSeconds": 3.28,
+      "bytes": 29607,
+      "audioSha256": "c36705438bf3db846852df444129b165c0cf7bb69e3e2adef7f9d9121787c1de"
+    },
+    {
+      "text": "Dumbledore pointe son briquet vers la lampe la plus proche.",
+      "file": "examples/69a052854cdf6054e25c.m4a",
+      "speaker": "pia",
+      "durationSeconds": 2.94,
+      "bytes": 26726,
+      "audioSha256": "27125590b36655b1a1a40963e7e2495be3dd540b2c45cb09411f255d65bfbd5e"
+    },
+    {
+      "text": "Le bébé ignore qu'il est déjà célèbre.",
+      "file": "examples/713a82b0a7b32a9f4389.m4a",
+      "speaker": "ninon",
+      "durationSeconds": 2.88,
+      "bytes": 26676,
+      "audioSha256": "41d919af981338e508d0f427b9337a774e5256a5fbd7b54fefaacdaaac2d47a3"
+    },
+    {
+      "text": "Le chat fixe la porte du numéro quatre depuis des heures.",
+      "file": "examples/f627ad85edc82e034732.m4a",
+      "speaker": "lison",
+      "durationSeconds": 3.15,
+      "bytes": 28997,
+      "audioSha256": "1f4a24ee4c46669060b75fc85b5da6d864984e476fa9f445140e91145cd47093"
+    },
+    {
+      "text": "Dumbledore contemple le bébé endormi pendant un long moment.",
+      "file": "examples/cc6e8bdb202ce0a2b700.m4a",
+      "speaker": "pia",
+      "durationSeconds": 3.46,
+      "bytes": 30862,
+      "audioSha256": "86cb926528fc632a2845df4be6f9cca22206475a4318d2c619cea86fb28f1efb"
+    },
+    {
+      "text": "Le professeur McGonagall interroge Dumbledore sur ce qui s'est passé.",
+      "file": "examples/8aa71e8f835a759641ba.m4a",
+      "speaker": "ninon",
+      "durationSeconds": 4.26,
+      "bytes": 38851,
+      "audioSha256": "1a028af66deb2d79be30904c438d2514971e050218001cec5f5f7e1fa3e9bb2b"
+    },
+    {
+      "text": "L'usine où travaille Mr Dursley fabrique des perceuses.",
+      "file": "examples/54043a632759bf8eab8d.m4a",
+      "speaker": "lison",
+      "durationSeconds": 4.09,
+      "bytes": 35700,
+      "audioSha256": "884679593f4f4a6916d6da1460cc82a558acb5689f41d0b3108d9d93c529c3c7"
+    },
+    {
+      "text": "Mr Dursley ordonne à sa secrétaire de ne passer aucun appel.",
+      "file": "examples/39d378b9e279b547f764.m4a",
+      "speaker": "pia",
+      "durationSeconds": 3.91,
+      "bytes": 35302,
+      "audioSha256": "495b8fde4ba345b65631f6618d01a0524437800a38bc424fa2c197087e7708d2"
+    },
+    {
+      "text": "Mr Dursley s'apprête à partir quand il voit le chat.",
+      "file": "examples/45bce71c86ed042104a1.m4a",
+      "speaker": "ninon",
+      "durationSeconds": 3.21,
+      "bytes": 30852,
+      "audioSha256": "ab1931eb9c583d123693c9a62b811fbf49883c62e8576abc969f828eba37406a"
+    },
+    {
+      "text": "Hagrid essaie d'étouffer ses sanglots pour ne pas réveiller les voisins.",
+      "file": "examples/e077ee873ea145065ade.m4a",
+      "speaker": "lison",
+      "durationSeconds": 4.53,
+      "bytes": 39687,
+      "audioSha256": "5a9e51c92a8077d2fc8ed11914a93930a898ec343881a006734c20c98781ab69"
+    },
+    {
+      "text": "Le professeur McGonagall craint que les Dursley soient de mauvais parents.",
+      "file": "examples/85bf0aed9125b3799c6a.m4a",
+      "speaker": "pia",
+      "durationSeconds": 3.49,
+      "bytes": 31222,
+      "audioSha256": "658e0801a31a2bead5276804cb835126437293709c5f50062d0dad206fa51140"
+    },
+    {
+      "text": "En sortant du bureau, Mr Dursley bouscule un petit homme.",
+      "file": "examples/791ab8589d0ee81a939a.m4a",
+      "speaker": "ninon",
+      "durationSeconds": 4.01,
+      "bytes": 35485,
+      "audioSha256": "20c7976efd477e383838058d1f7e3dc9924e64a55e6f5863c450c53357912d62"
+    },
+    {
+      "text": "Harry s'est endormi pendant qu'ils survolaient la ville.",
+      "file": "examples/59265b9e61354662f61f.m4a",
+      "speaker": "pia",
+      "durationSeconds": 2.76,
+      "bytes": 24664,
+      "audioSha256": "02f0c6492b426578536c96dcb7ddb4a5fcc9e92edf92cdc9722692243f66ce25"
+    },
+    {
+      "text": "Avec sa cape violette, Dumbledore attire forcément les regards.",
+      "file": "examples/55f5f14cfdf46ff71b92.m4a",
+      "speaker": "ninon",
+      "durationSeconds": 3.76,
+      "bytes": 33505,
+      "audioSha256": "730b4528007b1c13d4fead8c2cfc9dbe543c7240dd954a13306122bd3c0e90be"
+    },
+    {
+      "text": "Dumbledore tend les bras pour prendre le bébé.",
+      "file": "examples/596c0b95028bf2cdbd75.m4a",
+      "speaker": "lison",
+      "durationSeconds": 3.07,
+      "bytes": 28433,
+      "audioSha256": "82bc9aced41bc3e7dcc0c62a37fcb5f7a94818fa269e7d4de3f493d9cbb95d03"
+    },
+    {
+      "text": "La voix du professeur McGonagall tremble quand elle parle des Potter.",
+      "file": "examples/102102120ea927118cf1.m4a",
+      "speaker": "pia",
+      "durationSeconds": 3.75,
+      "bytes": 33217,
+      "audioSha256": "e907400bd981854081d07d4a5a78a71ca3b5459b84690dc582a1804a4f92951b"
+    },
+    {
+      "text": "Le professeur McGonagall s'écrie que ce n'est pas possible.",
+      "file": "examples/fecb61c5c962701f6572.m4a",
+      "speaker": "ninon",
+      "durationSeconds": 3.23,
+      "bytes": 30292,
+      "audioSha256": "9796440059d9805c5cda6c5a111d5ba173b8548c4bf1610b78ea8e271bd4c141"
+    },
+    {
+      "text": "Dumbledore se contente de sourire sans répondre.",
+      "file": "examples/6915f8f870bcddc4acc5.m4a",
+      "speaker": "lison",
+      "durationSeconds": 3.25,
+      "bytes": 29559,
+      "audioSha256": "12f55be842f7d199be18dbfddb52be0a05560e5b4bb0779149b982e6df857381"
+    },
+    {
+      "text": "Dans le noir, on distingue à peine deux yeux qui brillent.",
+      "file": "examples/d425638c2dce512b995a.m4a",
+      "speaker": "pia",
+      "durationSeconds": 3.28,
+      "bytes": 29382,
+      "audioSha256": "ebe59b566e53f9b7d4a455c434929e23c78b210b4a94599e1aa1db9fe96479bf"
+    },
+    {
+      "text": "Le professeur McGonagall réplique que ce n'est pas une raison.",
+      "file": "examples/fef20ff14c896fc6b0b9.m4a",
+      "speaker": "ninon",
+      "durationSeconds": 2.86,
+      "bytes": 27167,
+      "audioSha256": "74c673955195551cef0103a73eb5bc27217df1f57e0f074e914bfb91a98ea9cd"
+    },
+    {
+      "text": "Mr Dursley recule quand le petit homme veut l'embrasser.",
+      "file": "examples/df2e60662df8ff6b5cc6.m4a",
+      "speaker": "lison",
+      "durationSeconds": 3.56,
+      "bytes": 31108,
+      "audioSha256": "82c133739d42806938647dae1913962f4cdc15c1e8e932267f74c8c2e8cf7a6d"
+    },
+    {
+      "text": "À midi, Mr Dursley sort pour se dégourdir les jambes.",
+      "file": "examples/02fa799c60c29c4caed7.m4a",
+      "speaker": "pia",
+      "durationSeconds": 3.38,
+      "bytes": 30228,
+      "audioSha256": "75494b789297b5b03aa08488b25c2e7f429a38eac83fbf7a04f8a52a54653bbc"
+    },
+    {
+      "text": "Une petite boule de lumière jaillit du briquet de Dumbledore.",
+      "file": "examples/d3ae2a25e01612f02be7.m4a",
+      "speaker": "ninon",
+      "durationSeconds": 4.23,
+      "bytes": 39001,
+      "audioSha256": "9c47fc1f2088fd5b1069a2ff1f3fe0705668b267692ca1df62f7562e49d923db"
+    },
+    {
+      "text": "Dans la rue, Mr Dursley heurte quelqu'un sans le faire exprès.",
+      "file": "examples/0109d573a411d92a8e54.m4a",
+      "speaker": "pia",
+      "durationSeconds": 3.75,
+      "bytes": 32825,
+      "audioSha256": "7ab3d82abfa19c089f9ac2389aa5be74cafbcfb35c0ad4f6fdf957015baf20fb"
+    },
+    {
+      "text": "Le petit Dudley agite sa cuillère dans tous les sens.",
+      "file": "examples/2c2e4ef3a7a0d8486e08.m4a",
+      "speaker": "ninon",
+      "durationSeconds": 3.27,
+      "bytes": 29425,
+      "audioSha256": "2b8a450749fb70b23ae2c23244477bc0afbe8f71aa7cc1108882dde2f297eaef"
+    },
+    {
+      "text": "Hagrid caresse doucement la tête du bébé avec un doigt.",
+      "file": "examples/f9f89573d7f43f1c0cc3.m4a",
+      "speaker": "lison",
+      "durationSeconds": 4.04,
+      "bytes": 37638,
+      "audioSha256": "c44f75e22ed813140a5dffeb5483c5398b45d43588b73616527fb63bbd60c1bf"
+    },
+    {
+      "text": "Chaque matin, Mr Dursley noue sa cravate devant le miroir.",
+      "file": "examples/d4ed92c7d011828c6eb8.m4a",
+      "speaker": "pia",
+      "durationSeconds": 3.88,
+      "bytes": 34103,
+      "audioSha256": "48708cc55495d7f1f11c76973d1c7e616fd4e9e5ba47250cb9458e0c40b8d09b"
+    },
+    {
+      "text": "Le professeur McGonagall tapote le bras de Hagrid pour le calmer.",
+      "file": "examples/137c65f0a8e1a0301417.m4a",
+      "speaker": "ninon",
+      "durationSeconds": 4.15,
+      "bytes": 39502,
+      "audioSha256": "d29080c1f344d5e922caf7603ccf6a745812523e56cd65c723cae55cf2873cfb"
+    },
+    {
+      "text": "Hagrid enfouit son visage dans son grand mouchoir.",
+      "file": "examples/5be9954504edc3702308.m4a",
+      "speaker": "lison",
+      "durationSeconds": 3.28,
+      "bytes": 30647,
+      "audioSha256": "293934a17a4634ee69120d0e0bd25d1732c5d26f11832d3568150d833020ccfc"
+    },
+    {
+      "text": "Mr Dursley claque la porte de son bureau.",
+      "file": "examples/1ca63708dd3ba08a6add.m4a",
+      "speaker": "pia",
+      "durationSeconds": 2.19,
+      "bytes": 20602,
+      "audioSha256": "7f90481268146ae34a1453910141fe743ff584e006f0f10fb957c873743f0b1a"
+    },
+    {
+      "text": "Mr Dursley se fige en plein milieu du trottoir.",
+      "file": "examples/28ffad52fef53682eea3.m4a",
+      "speaker": "ninon",
+      "durationSeconds": 3.42,
+      "bytes": 30256,
+      "audioSha256": "b4e8e2b9fdacb3af7c4845c8cea509055b187816ed5ac1c232610a9e1130c952"
+    },
+    {
+      "text": "Le professeur McGonagall siffle à Hagrid de faire moins de bruit.",
+      "file": "examples/e4a2d355fc52c93feed1.m4a",
+      "speaker": "lison",
+      "durationSeconds": 3.83,
+      "bytes": 35307,
+      "audioSha256": "f4bee62e9b9dace8d7779e5ebe1a9744df2d63dc3c19dcb42e5e03867a66a727"
+    },
+    {
+      "text": "Mr Dursley veut poser une question, puis il se ravise.",
+      "file": "examples/2d3bf9ed59d11674d4d2.m4a",
+      "speaker": "pia",
+      "durationSeconds": 4.03,
+      "bytes": 36052,
+      "audioSha256": "faade8dfe44796410878645bbe0a78336752b13e37fd49c23b74e88a527864b2"
+    },
+    {
+      "text": "Le professeur McGonagall essaie de consoler Hagrid.",
+      "file": "examples/8af1197b7c67f84e6d07.m4a",
+      "speaker": "ninon",
+      "durationSeconds": 3.47,
+      "bytes": 32286,
+      "audioSha256": "cf304e4e01e55fea4e32ca2ef2b911446e13e1be5498bb7ce1ad5ed94d3d8f8b"
+    },
+    {
+      "text": "Dumbledore glousse en regardant sa drôle de montre.",
+      "file": "examples/7a61984ac0be2ec5e329.m4a",
+      "speaker": "lison",
+      "durationSeconds": 3.01,
+      "bytes": 27865,
+      "audioSha256": "08854ac979b0415af99d47f2cdca1b188ed02ed718616e5f62a1ba33cbee4304"
+    },
+    {
+      "text": "Le petit Dudley braille parce qu'il veut encore des bonbons.",
+      "file": "examples/0e1556cf1b44fdf4248f.m4a",
+      "speaker": "pia",
+      "durationSeconds": 3.55,
+      "bytes": 31347,
+      "audioSha256": "c567d992b853e4d4f7cb9cf0a251e6dbfd110d6ecd0b33a8ef63e9c45a3b6998"
+    },
+    {
+      "text": "Hagrid se mouche très fort dans son mouchoir.",
+      "file": "examples/e8889b9565e789928018.m4a",
+      "speaker": "ninon",
+      "durationSeconds": 2.48,
+      "bytes": 22119,
+      "audioSha256": "261d8121fd372d1bfa635c55b1bf6c056083880a13bb1258d592558016238be1"
+    },
+    {
+      "text": "Le professeur McGonagall réprimande Hagrid parce qu'il fait trop de bruit.",
+      "file": "examples/911e6894a635fbf3de40.m4a",
+      "speaker": "lison",
+      "durationSeconds": 4.03,
+      "bytes": 37315,
+      "audioSha256": "6c5a7a259ed0e5fc1fe07202660241b4fce25041a0dd2c6632888d3b29fb46ed"
+    },
+    {
+      "text": "Hagrid enfourche sa moto et s'envole dans la nuit.",
+      "file": "examples/1db448e114c892bdc000.m4a",
+      "speaker": "pia",
+      "durationSeconds": 3.11,
+      "bytes": 28399,
+      "audioSha256": "91a534578891b8a20b860636f53458e7379640e22448ba2637d3be1084fba46d"
+    },
+    {
+      "text": "Mr Dursley pianote nerveusement sur son volant.",
+      "file": "examples/452cee3d419fdf9a0764.m4a",
+      "speaker": "ninon",
+      "durationSeconds": 2.93,
+      "bytes": 25283,
+      "audioSha256": "81bf0dd83520610ebb45273452fe94f8731f32722efb6f5545503d216aa53dc7"
+    },
+    {
+      "text": "Un hibou volette devant la fenêtre du salon.",
+      "file": "examples/2c4b3853e2443fc5870c.m4a",
+      "speaker": "lison",
+      "durationSeconds": 2.73,
+      "bytes": 23945,
+      "audioSha256": "e75db26877ef1efb2c17ee1ece88ea9e7adcf91843e663d62c1dccb9255d61d4"
+    },
+    {
+      "text": "Les yeux du chat rétrécissent quand Dumbledore s'approche.",
+      "file": "examples/dbaeb7572a136a940631.m4a",
+      "speaker": "pia",
+      "durationSeconds": 4.07,
+      "bytes": 36197,
+      "audioSha256": "7db609a10d6a3985b6933c7176c89c960a461b62791126dfc7658e250b7516d3"
+    },
+    {
+      "text": "Dumbledore scrute le ciel en attendant Hagrid.",
+      "file": "examples/5aed3444ed75b6bc612e.m4a",
+      "speaker": "ninon",
+      "durationSeconds": 2.72,
+      "bytes": 25046,
+      "audioSha256": "a90b718cc7d04df9fac65e8fbe739cdf64b3bb895553a4420dd9fdb1d8c29571"
+    },
+    {
+      "text": "Rien n'échappe aux yeux du chat tigré.",
+      "file": "examples/424374c6fa2ec7ad9c98.m4a",
+      "speaker": "lison",
+      "durationSeconds": 3.01,
+      "bytes": 26894,
+      "audioSha256": "f430063842dc8109e97d40dcf9bcf089da9a6d3d0c83c32b356297cecbd025bc"
+    },
+    {
+      "text": "Le petit homme retrousse sa moustache en souriant.",
+      "file": "examples/23a2175e0ec13ab7c1fd.m4a",
+      "speaker": "pia",
+      "durationSeconds": 2.57,
+      "bytes": 24413,
+      "audioSha256": "c5c0deaabf2646d1fff9db0da6632b5abefa1d9ca0dc19b65b9a64cd880aa515"
+    },
+    {
+      "text": "Les Dursley veulent être une famille parfaitement ordinaire.",
+      "file": "examples/e8f7b9a0e775af0b9562.m4a",
+      "speaker": "ninon",
+      "durationSeconds": 3.11,
+      "bytes": 28033,
+      "audioSha256": "9328c08b1f86f786bf685d0c2c9416d2fac259e1bb8b4205d7eddbc02a5994c9"
+    },
+    {
+      "text": "Ce mardi-là commence comme un jour quelconque.",
+      "file": "examples/bb2a832dc1117ff340b3.m4a",
+      "speaker": "lison",
+      "durationSeconds": 2.99,
+      "bytes": 26698,
+      "audioSha256": "b6879dfe59d5a3a22ee7c50fd2b747e77fb9556e468b730f23b51d8cad12834f"
+    },
+    {
+      "text": "Mr Dursley est un homme grand et massif.",
+      "file": "examples/00710c30f60977b9be35.m4a",
+      "speaker": "pia",
+      "durationSeconds": 4.1,
+      "bytes": 37086,
+      "audioSha256": "a4e990235ac1cb6c1ab491b6d9daba294bf9a45cc2ef99f4e2b2c4f14d684513"
+    },
+    {
+      "text": "Mr Dursley est incapable de se concentrer sur son travail.",
+      "file": "examples/c0dc2de04e8e541b70b1.m4a",
+      "speaker": "ninon",
+      "durationSeconds": 3.08,
+      "bytes": 27781,
+      "audioSha256": "864c453cfc0e37cb78997c2a4184455372d172ef0307b1875857a7b47d20f41f"
+    },
+    {
+      "text": "Le professeur McGonagall pense que Dumbledore n'est pas très raisonnable.",
+      "file": "examples/9e516ffdbc43da5f3c61.m4a",
+      "speaker": "lison",
+      "durationSeconds": 4.1,
+      "bytes": 38336,
+      "audioSha256": "e9a5e87386d1e2b512cdc591fde6a123d4099a4b17493b1b59fc6064d2bd1e94"
+    },
+    {
+      "text": "Mr Dursley devient nerveux quand il pense aux Potter.",
+      "file": "examples/9448ce09a638724fe40a.m4a",
+      "speaker": "pia",
+      "durationSeconds": 2.68,
+      "bytes": 24336,
+      "audioSha256": "2779cf24538685b687d0d5eb481001bf5ef591f55d7a51faff67c23074210dda"
+    },
+    {
+      "text": "Les yeux du professeur McGonagall sont humides.",
+      "file": "examples/1114205e7ddddab1056f.m4a",
+      "speaker": "lison",
+      "durationSeconds": 3.32,
+      "bytes": 29812,
+      "audioSha256": "5be628bdabc870676fb45b085a661b119daad11a82eec04509cd0f71d3ce4b3d"
+    },
+    {
+      "text": "Pour Dumbledore, cette séparation est triste mais inévitable.",
+      "file": "examples/fd654a0c5a3f6719a508.m4a",
+      "speaker": "pia",
+      "durationSeconds": 4.77,
+      "bytes": 42428,
+      "audioSha256": "0ca0388435c0e6c00b0d553741a85d7d72b9e461578906586e38d90a2861f2a2"
+    },
+    {
+      "text": "Mr Dursley remarque des gens habillés de façon étrange.",
+      "file": "examples/53255a460a04c47a6354.m4a",
+      "speaker": "ninon",
+      "durationSeconds": 3.76,
+      "bytes": 33780,
+      "audioSha256": "d3e48958023a8e32a47b6813a688965bdb6ce74c6678857c3b3783d159b5e739"
+    },
+    {
+      "text": "Mr Dursley a la désagréable impression que le chat le surveille.",
+      "file": "examples/8da9e0ca2cc7f7c82032.m4a",
+      "speaker": "lison",
+      "durationSeconds": 4.27,
+      "bytes": 38392,
+      "audioSha256": "956a54df31011442a42c7de20d3ef9e61cd9fa40c6f3e38f4db35846f066699f"
+    },
+    {
+      "text": "Sans lumière, la rue devient soudain sinistre.",
+      "file": "examples/46dac20240da49eedd36.m4a",
+      "speaker": "pia",
+      "durationSeconds": 3.43,
+      "bytes": 30033,
+      "audioSha256": "bc4e9a90b88e4bfa2988ae7946e221ddf93e7c4b824914edfa1b2d5509fae332"
+    },
+    {
+      "text": "On entend un bruit sourd qui vient du ciel.",
+      "file": "examples/88814e460439250d9b15.m4a",
+      "speaker": "ninon",
+      "durationSeconds": 2.93,
+      "bytes": 26763,
+      "audioSha256": "1210e74ecdf1830a5c2cc3c3b9e5b1344173f13ba6c2c4d76eacd7cce2757b29"
+    },
+    {
+      "text": "Les Dursley détestent tout ce qui est extraordinaire.",
+      "file": "examples/7d4aa491877322f0f216.m4a",
+      "speaker": "lison",
+      "durationSeconds": 2.84,
+      "bytes": 26158,
+      "audioSha256": "e8c9504a50b4c604f5c58e1e4bb5b42a3cf9340c3c6ff1155e201237e6b1b526"
+    },
+    {
+      "text": "Hagrid est immense à côté des deux professeurs.",
+      "file": "examples/0b445c083b20dbf04586.m4a",
+      "speaker": "pia",
+      "durationSeconds": 3.14,
+      "bytes": 29656,
+      "audioSha256": "3445aec05e8f498c9ed61181665a76219a446f6b4af7a3075e66827f553fde52"
+    },
+    {
+      "text": "À minuit, Privet Drive est une rue parfaitement silencieuse.",
+      "file": "examples/c787bc7bc935df5b1355.m4a",
+      "speaker": "ninon",
+      "durationSeconds": 4.18,
+      "bytes": 36872,
+      "audioSha256": "f880a504fdd8cc9501e0758dee5f2f2b88a6069c0913f2659743dbc816a9e62e"
+    },
+    {
+      "text": "Pour les Dursley, tout ce qui est différent est anormal.",
+      "file": "examples/59a5f3140b55e89920ac.m4a",
+      "speaker": "lison",
+      "durationSeconds": 3.19,
+      "bytes": 29227,
+      "audioSha256": "0492714f7807d6c25441fdd4a6c477f245ec2327527f13a712705b599f1cb834"
+    },
+    {
+      "text": "Le hibou est un oiseau nocturne.",
+      "file": "examples/9efacad1ab2959f6881f.m4a",
+      "speaker": "pia",
+      "durationSeconds": 2.29,
+      "bytes": 20973,
+      "audioSha256": "39dba43be354cb2401bf8b81c55b835f4fee8509876212031310b9146d269ec3"
+    },
+    {
+      "text": "Mr Dursley rentre chez lui d'un air préoccupé.",
+      "file": "examples/97f78f2da087daf11603.m4a",
+      "speaker": "ninon",
+      "durationSeconds": 3.53,
+      "bytes": 31545,
+      "audioSha256": "95472e199b53a39500d5056bcb2c926495ba35bcc13e8bb1a06d5f3463128ff9"
+    },
+    {
+      "text": "Le professeur McGonagall est très agitée ce soir.",
+      "file": "examples/3f2d25a37693130acd4d.m4a",
+      "speaker": "lison",
+      "durationSeconds": 3.17,
+      "bytes": 28435,
+      "audioSha256": "4928a337f9a1c2c2aac64d67bcba49359c98e96bd44645f6c7544016d3ff3507"
+    },
+    {
+      "text": "De petites boules lumineuses retournent dans chaque lampe.",
+      "file": "examples/6525ad396b840d646351.m4a",
+      "speaker": "pia",
+      "durationSeconds": 3.16,
+      "bytes": 27288,
+      "audioSha256": "6a96c7f115d7a17b8708b1665ee23a7b1bd963918fb11b7444c7ff0d7c597984"
+    },
+    {
+      "text": "Le petit Dudley est furieux et donne des coups de pied à sa mère.",
+      "file": "examples/0e6974b8a4f7608b6647.m4a",
+      "speaker": "ninon",
+      "durationSeconds": 4.08,
+      "bytes": 37316,
+      "audioSha256": "ec4d7b6609e183d254465540c586e4b8c665dcb0cabf95a6294c4f43f6afccb2"
+    },
+    {
+      "text": "Le ciel est gris et nuageux quand Mr Dursley part au travail.",
+      "file": "examples/98534880941db7a5e567.m4a",
+      "speaker": "lison",
+      "durationSeconds": 3.37,
+      "bytes": 29229,
+      "audioSha256": "004a40f3ded1d465d8d35b8e16e3a3af725185e55e171d1ce981ba83883cb94c"
+    },
+    {
+      "text": "Mr Dursley se dit navré d'avoir bousculé le petit homme.",
+      "file": "examples/116869f9ddf90df9ac8a.m4a",
+      "speaker": "pia",
+      "durationSeconds": 3.31,
+      "bytes": 29992,
+      "audioSha256": "898213861df2f096437cf069ba4ea0c4464fae4feef6757379a4dd9b02df65c5"
+    },
+    {
+      "text": "Chez les Dursley, la magie est tout à fait indésirable.",
+      "file": "examples/feaa3b426a1912849a0c.m4a",
+      "speaker": "ninon",
+      "durationSeconds": 4.09,
+      "bytes": 36713,
+      "audioSha256": "daa4263cfede5cb3ce1b94c7c4175547d8e248cccd30227b08eb0c45e60f60de"
+    },
+    {
+      "text": "Le professeur McGonagall trouve les sorciers bien négligents aujourd'hui.",
+      "file": "examples/9884ed27922b25e810c8.m4a",
+      "speaker": "lison",
+      "durationSeconds": 3.68,
+      "bytes": 32636,
+      "audioSha256": "85839efa555cf4578d5416e5c3fb0f07501f5efa416e9403fb8cd8e1a7f5823a"
+    },
+    {
+      "text": "Dumbledore a une longue barbe argentée.",
+      "file": "examples/21410d61980032daa42a.m4a",
+      "speaker": "pia",
+      "durationSeconds": 2.53,
+      "bytes": 22953,
+      "audioSha256": "5a469703488c6a9828bd624bc14ad40fd1f14116780a0a0a21e819f0f222ac93"
+    },
+    {
+      "text": "Mr Dursley n'aime pas les gens qui portent des vêtements extravagants.",
+      "file": "examples/8d2a03dc3a058eee0e16.m4a",
+      "speaker": "ninon",
+      "durationSeconds": 3.97,
+      "bytes": 38708,
+      "audioSha256": "179303fb8aebb7f9ff83a846aeb4697d12b4cc5d61186439d08892103f785bcd"
+    },
+    {
+      "text": "Hagrid dit au revoir au bébé d'une voix tremblante.",
+      "file": "examples/6709023756cfd6aa69fd.m4a",
+      "speaker": "lison",
+      "durationSeconds": 2.78,
+      "bytes": 26725,
+      "audioSha256": "77d970e499973eb290e1ddb42695ce722eb36a0f201396783e4f86e216cad4f6"
+    },
+    {
+      "text": "Hagrid a une barbe hirsute qui cache presque tout son visage.",
+      "file": "examples/35967f85b29bfcee7db6.m4a",
+      "speaker": "pia",
+      "durationSeconds": 3.66,
+      "bytes": 36160,
+      "audioSha256": "d92a0c566c1ebb71365a40ab99bead3ee8edfb198d340150ce761124517a979f"
+    },
+    {
+      "text": "Mrs Dursley trouve son fils absolument ravissant.",
+      "file": "examples/44000d7692fec92c0c2d.m4a",
+      "speaker": "ninon",
+      "durationSeconds": 3.25,
+      "bytes": 29138,
+      "audioSha256": "4fd52a465189249473a707652eb3cab979844710b79e650dc1d775321dd36163"
+    },
+    {
+      "text": "Mr Dursley lance un regard courroucé aux gens en cape.",
+      "file": "examples/96205e558fb7fd35edcb.m4a",
+      "speaker": "lison",
+      "durationSeconds": 3.44,
+      "bytes": 31258,
+      "audioSha256": "640b695c0f11661e932b6c36dd52a6ff05db34a471f090f65cc756434ce6a555"
+    },
+    {
+      "text": "Hagrid tient le bébé dans ses bras musculeux.",
+      "file": "examples/9e66997801a998580649.m4a",
+      "speaker": "pia",
+      "durationSeconds": 2.27,
+      "bytes": 22915,
+      "audioSha256": "52d2e7a2e5f047e374272cba0be7cd0a5f097bc4fb4e95c9a4346cfb3b90d810"
+    },
+    {
+      "text": "Hagrid donne au bébé un baiser râpeux à cause de sa barbe.",
+      "file": "examples/0988d0eae61b71ae9e26.m4a",
+      "speaker": "ninon",
+      "durationSeconds": 3.44,
+      "bytes": 31096,
+      "audioSha256": "f49e2f9989c3be913f9e1210e54d3882df73d1bb761f8d729714df9da39856cd"
+    },
+    {
+      "text": "Le professeur McGonagall demande aux sorciers d'être plus prudents.",
+      "file": "examples/90e147251a03c327be6c.m4a",
+      "speaker": "lison",
+      "durationSeconds": 2.83,
+      "bytes": 26705,
+      "audioSha256": "8f6f8b5e0f052caf24c90a65c9426938bd51859c68b49e92609acec9f229b5c3"
+    },
+    {
+      "text": "Il est étonnant que les voisins n'aient rien remarqué.",
+      "file": "examples/f91b6303318c798f7619.m4a",
+      "speaker": "pia",
+      "durationSeconds": 2.32,
+      "bytes": 20688,
+      "audioSha256": "a04daf8641baeaad59c68c7a076ae575fc1a74293b48d437c7026d193c1ef3b6"
+    },
+    {
+      "text": "Hagrid a l'air sauvage, mais il est très doux avec le bébé.",
+      "file": "examples/7eddd6898da975c71369.m4a",
+      "speaker": "ninon",
+      "durationSeconds": 3.68,
+      "bytes": 33120,
+      "audioSha256": "967a630208860414d2ae7474d404a8c48672da9a55d80b9664ce226af584fb78"
+    },
+    {
+      "text": "Mr Dursley n'a pratiquement pas de cou.",
+      "file": "examples/1c745ee1faf28f04a32a.m4a",
+      "speaker": "lison",
+      "durationSeconds": 3.05,
+      "bytes": 27895,
+      "audioSha256": "9648f4a9f45a84b0cb683537e2d23d72f8afc101bd3ea8f4a59bd6889969c9ae"
+    },
+    {
+      "text": "Dumbledore pose doucement le bébé devant la porte.",
+      "file": "examples/2513fcc93e71f089a787.m4a",
+      "speaker": "pia",
+      "durationSeconds": 2.93,
+      "bytes": 28153,
+      "audioSha256": "1a1c3320330bb5c5d40e66ce4f156dd8c52aa9ae9b4dfbc40a021a84d68a4b91"
+    },
+    {
+      "text": "Habituellement, les hiboux dorment pendant la journée.",
+      "file": "examples/7b85169f3590e7315f17.m4a",
+      "speaker": "ninon",
+      "durationSeconds": 3.06,
+      "bytes": 26711,
+      "audioSha256": "ae84120c39eed491870006c09098a59297ff02af9e8e507ddc83906285b94113"
+    },
+    {
+      "text": "Le professeur McGonagall regarde longuement Dumbledore sans parler.",
+      "file": "examples/e07617447621936a4e97.m4a",
+      "speaker": "lison",
+      "durationSeconds": 4.54,
+      "bytes": 40459,
+      "audioSha256": "60d441f665c57432157e55957f970915f59dc0a7f7d40d0add33206a48682356"
+    },
+    {
+      "text": "Mrs Dursley répond froidement qu'elle n'a pas de nouvelles de sa sœur.",
+      "file": "examples/8130dd00981798120d02.m4a",
+      "speaker": "pia",
+      "durationSeconds": 3.3,
+      "bytes": 30035,
+      "audioSha256": "8a3c7c635d2c226bc0b343154dbe2c87fa53563fb6394d515e821be591e546a3"
+    },
+    {
+      "text": "Ce soir, le ciel est singulièrement rempli d'étoiles filantes.",
+      "file": "examples/db93ed0b757e2704e0fa.m4a",
+      "speaker": "ninon",
+      "durationSeconds": 4.045,
+      "bytes": 36367,
+      "audioSha256": "c9d39a4b2b3da56f31442e803e0ea6005c78a0c47584b720ff85174136e99e2f"
+    },
+    {
+      "text": "Mr Dursley est passablement inquiet en rentrant du travail.",
+      "file": "examples/3099e3b41174115367e9.m4a",
+      "speaker": "lison",
+      "durationSeconds": 3.2,
+      "bytes": 28891,
+      "audioSha256": "19b444365390295dab6636739f7a5cb10d1114867c960f496f5e8cc143b466dc"
+    },
+    {
+      "text": "Apparemment, personne dans la rue n'a entendu la moto.",
+      "file": "examples/380e65b54a43b5bd7964.m4a",
+      "speaker": "pia",
+      "durationSeconds": 2.73,
+      "bytes": 24670,
+      "audioSha256": "7cec898ca843493f255a7245c050bdb8f08c2ff423bc5da5d095bb4fef4faccd"
+    },
+    {
+      "text": "Le bébé dort profondément dans ses couvertures.",
+      "file": "examples/80299c0a116c19b238a5.m4a",
+      "speaker": "ninon",
+      "durationSeconds": 3.14,
+      "bytes": 28377,
+      "audioSha256": "ce619450208728b719377d7e9eda5f40cb04c574d24077f3a7327158b1b6d4b8"
     }
   ],
-  "exampleCount": 1014,
-  "exampleBytes": 28678327,
-  "examplePending": 174,
+  "exampleCount": 1183,
+  "exampleBytes": 33908829,
+  "examplePending": 5,
   "words": [
     {
       "text": "ranger",
@@ -29086,11 +30438,1307 @@
       "durationSeconds": 1.02,
       "bytes": 9084,
       "audioSha256": "f3b08722a00977dd0bec31fef4c29dc53ce83b936183baa5f54540022cf2a76b"
+    },
+    {
+      "text": "l'allée",
+      "file": "words/79a2613173e155b7bf11.m4a",
+      "speaker": "ninon",
+      "durationSeconds": 0.66,
+      "bytes": 6514,
+      "audioSha256": "702b5bfc3b7ca6c5e67290c9763d1424c16e7d3ffc1f0cb1f76cae6b42316816"
+    },
+    {
+      "text": "la précaution",
+      "file": "words/999827e300258de17a6b.m4a",
+      "speaker": "lison",
+      "durationSeconds": 1.83,
+      "bytes": 15826,
+      "audioSha256": "d160e348537a61861312604b8f64a3a1053b37bb08bee685a0febce0e6a38986"
+    },
+    {
+      "text": "la respiration",
+      "file": "words/67dfb47537c93e52491b.m4a",
+      "speaker": "pia",
+      "durationSeconds": 1.28,
+      "bytes": 10999,
+      "audioSha256": "b3628b5aad7ae0e47f1dbb9a97849a6a7436f44bbeee0693a4efce72ed37f5f6"
+    },
+    {
+      "text": "le reflet",
+      "file": "words/9fe943a473953da0c9d1.m4a",
+      "speaker": "ninon",
+      "durationSeconds": 0.96,
+      "bytes": 8841,
+      "audioSha256": "89da043bfe075f9699c610065179b91e4016b109510060a9aacd2ee8f3b9950a"
+    },
+    {
+      "text": "la brique",
+      "file": "words/5e5043a1d4f235de5f35.m4a",
+      "speaker": "lison",
+      "durationSeconds": 1.22,
+      "bytes": 11603,
+      "audioSha256": "e33f1ac1f124eb0fbdf16fd21c6ba4674264804f334491dcf6ff24f5f1ba70a6"
+    },
+    {
+      "text": "la boucle",
+      "file": "words/3cf5787b872733ecd0e7.m4a",
+      "speaker": "pia",
+      "durationSeconds": 1.04,
+      "bytes": 10152,
+      "audioSha256": "aac57f0054a83f0c5b2c4195414563f12148e6e3a55bb240ee2b25992ce8640b"
+    },
+    {
+      "text": "le drap",
+      "file": "words/904c2dad2d202038f728.m4a",
+      "speaker": "ninon",
+      "durationSeconds": 0.81,
+      "bytes": 8033,
+      "audioSha256": "2d70fc59889fb2510084ae0c7de745ee6e7b0a4e55d0f4459b203335fa5c4dce"
+    },
+    {
+      "text": "la coupure",
+      "file": "words/195e1521ad9b377fe8a7.m4a",
+      "speaker": "lison",
+      "durationSeconds": 1.53,
+      "bytes": 13182,
+      "audioSha256": "c6728eca125420aa52d5cd3fdb520b65bf5a39fbde0d6393a3d47f447f4e810d"
+    },
+    {
+      "text": "l'aiguille",
+      "file": "words/a9dbbbc913430f20ab05.m4a",
+      "speaker": "pia",
+      "durationSeconds": 0.99,
+      "bytes": 9297,
+      "audioSha256": "aac7bc8d56ef317779d2ec22bf27a1d42c118c9271ebe64af1541610159621d9"
+    },
+    {
+      "text": "le passant",
+      "file": "words/8d609a80def186302e50.m4a",
+      "speaker": "ninon",
+      "durationSeconds": 0.9,
+      "bytes": 8385,
+      "audioSha256": "ac485aa284abe965e8971ba1069f8928dcd64ebee0b265deb71f74ef1d5200cd"
+    },
+    {
+      "text": "la dentelle",
+      "file": "words/c5b0388aca995519aac0.m4a",
+      "speaker": "lison",
+      "durationSeconds": 1.5,
+      "bytes": 13709,
+      "audioSha256": "fb63d011a1d80fd98402d69e49ff6d303e7a2224d5e19ca6e9a5d5e506759392"
+    },
+    {
+      "text": "le présentateur",
+      "file": "words/23c9c4df1d9e1beba775.m4a",
+      "speaker": "pia",
+      "durationSeconds": 1.43,
+      "bytes": 13861,
+      "audioSha256": "c6e7cc97e88cfbbaed4857e4119b54236f3c9fc4180b80061247d8f9bad9e0a7"
+    },
+    {
+      "text": "le couvercle",
+      "file": "words/3d0d1912510d4ebe0da2.m4a",
+      "speaker": "ninon",
+      "durationSeconds": 1.2,
+      "bytes": 11794,
+      "audioSha256": "0db8cb8afde11171a6fa3646a794517985f3b9d72cb6e1bd8465fd64dad69aa6"
+    },
+    {
+      "text": "le cadran",
+      "file": "words/0f6784d41c352f32adba.m4a",
+      "speaker": "lison",
+      "durationSeconds": 0.94,
+      "bytes": 8637,
+      "audioSha256": "93f3f3555c03019f91859b6c6b34df3c470c27dd5c624491191f830fbb06b991"
+    },
+    {
+      "text": "la portière",
+      "file": "words/4a952ca9aa13578501c7.m4a",
+      "speaker": "pia",
+      "durationSeconds": 1.28,
+      "bytes": 12177,
+      "audioSha256": "8fbcb4a1cddd60e4dac4b1e331c33f0823602c2efb3d0b0d9415ed23755e4690"
+    },
+    {
+      "text": "la grimace",
+      "file": "words/70d6eab0d7491c91a050.m4a",
+      "speaker": "ninon",
+      "durationSeconds": 1.15,
+      "bytes": 10477,
+      "audioSha256": "0b53d30c35006fabbb395f05e6e6f6cd95f655b7f8395f2ca5a71dc10f62b85e"
+    },
+    {
+      "text": "l'émeraude",
+      "file": "words/833bfdd25dd90ecdaf7a.m4a",
+      "speaker": "lison",
+      "durationSeconds": 0.98,
+      "bytes": 9276,
+      "audioSha256": "168548fa5257634cbeb783248fc7c2a60948c63ca314acaf1a1690b11f217cdf"
+    },
+    {
+      "text": "la clôture",
+      "file": "words/c34e48077792cbd1c798.m4a",
+      "speaker": "pia",
+      "durationSeconds": 1.06,
+      "bytes": 9900,
+      "audioSha256": "e28eac97908426d6554560b5f878813e7e5233b187cbebed855d64f792eee3fa"
+    },
+    {
+      "text": "le claquement",
+      "file": "words/45037f937a723fe32d4c.m4a",
+      "speaker": "ninon",
+      "durationSeconds": 1.03,
+      "bytes": 10258,
+      "audioSha256": "4dda34565f7be3af86fb01432ba909e8c01dc6052f1d03aab1dc42d860db8926"
+    },
+    {
+      "text": "le plumage",
+      "file": "words/5dc16ef0c0e53467bc13.m4a",
+      "speaker": "lison",
+      "durationSeconds": 1.12,
+      "bytes": 10274,
+      "audioSha256": "cd9daac1b8fe18484a30d9674d018d59d144b4c8e2eaa544200257465beba71e"
+    },
+    {
+      "text": "le pelage",
+      "file": "words/370e1a04b57acbb3b4f3.m4a",
+      "speaker": "pia",
+      "durationSeconds": 1.05,
+      "bytes": 9833,
+      "audioSha256": "17aff88b406a86f282662817acf90bd4400b40c68c7c27f7b29e62ba65ba87f5"
+    },
+    {
+      "text": "l'averse",
+      "file": "words/6a03a359cb691d4e5ccb.m4a",
+      "speaker": "ninon",
+      "durationSeconds": 0.91,
+      "bytes": 8616,
+      "audioSha256": "710140749ee04629d0d22bc79effd4ad2e78b2e4cff92ec4ff5330f8d6983525"
+    },
+    {
+      "text": "la touffe",
+      "file": "words/97671c46826f05517286.m4a",
+      "speaker": "lison",
+      "durationSeconds": 1.0,
+      "bytes": 9862,
+      "audioSha256": "15512166d2cfebec16720004b5c2f46578d2e88f75e7c6b2e4a5e5ee92835c67"
+    },
+    {
+      "text": "le capuchon",
+      "file": "words/8c8e38dd287f78cdeccf.m4a",
+      "speaker": "pia",
+      "durationSeconds": 1.01,
+      "bytes": 9623,
+      "audioSha256": "71c0d85e97142397178e6b114d3cfe1be2bb918dbdc63461c9c1bf0c16b26439"
+    },
+    {
+      "text": "le murmure",
+      "file": "words/6980bc2913a1a25d39cb.m4a",
+      "speaker": "ninon",
+      "durationSeconds": 1.36,
+      "bytes": 12374,
+      "audioSha256": "3babbd3c5bcef2ece3b868707189a49b63497456c79e95552aa1ac5bb2ca9c05"
+    },
+    {
+      "text": "le rapace",
+      "file": "words/430dbfce7bcf59090f61.m4a",
+      "speaker": "lison",
+      "durationSeconds": 1.45,
+      "bytes": 12960,
+      "audioSha256": "d9bedfe8fd8d4f78c09928efbb9dfc530595f01face4a64fa56d2a0694a79638"
+    },
+    {
+      "text": "le banquet",
+      "file": "words/8ed74ad86f3987e061dd.m4a",
+      "speaker": "ninon",
+      "durationSeconds": 1.07,
+      "bytes": 10311,
+      "audioSha256": "ae104fb855ed078d1f926fc2cfb98914af2ca3e716e77b6bdc662ce435b3b7e9"
+    },
+    {
+      "text": "l'étoile filante",
+      "file": "words/f76f4e2b74e825d86a4b.m4a",
+      "speaker": "lison",
+      "durationSeconds": 1.58,
+      "bytes": 14088,
+      "audioSha256": "0045e6df354d09c066e4a05f663881313992393188aefd9c4bee92a6822d0a38"
+    },
+    {
+      "text": "la friandise",
+      "file": "words/1b3c0add89081bf104f3.m4a",
+      "speaker": "pia",
+      "durationSeconds": 1.33,
+      "bytes": 11653,
+      "audioSha256": "7d2a10cf728092a4c109033dc9ce915f0ba167c98b764b935d0613ee5cf350f7"
+    },
+    {
+      "text": "le bambin",
+      "file": "words/a3f7f2e8fe5be0a6cdc4.m4a",
+      "speaker": "ninon",
+      "durationSeconds": 0.99,
+      "bytes": 9461,
+      "audioSha256": "8c3132888eb0ce252e2214e120037bc3342618efe1924f9ce2d22a73cf8f080a"
+    },
+    {
+      "text": "le bruissement",
+      "file": "words/7d02821a87d6ccde78d4.m4a",
+      "speaker": "lison",
+      "durationSeconds": 1.16,
+      "bytes": 10691,
+      "audioSha256": "a6dda0bd7c00e4f5b6f57ce545f55150abf64cb74f7fa376e7042243633b9bfc"
+    },
+    {
+      "text": "le vrombissement",
+      "file": "words/47baa4579a132a55caba.m4a",
+      "speaker": "pia",
+      "durationSeconds": 1.25,
+      "bytes": 11026,
+      "audioSha256": "d9f282b1a3604e84ef7f58361e92b66958cc5940016fcbc88306bef325d0492a"
+    },
+    {
+      "text": "l'écriteau",
+      "file": "words/404f11772c6e66d54456.m4a",
+      "speaker": "ninon",
+      "durationSeconds": 0.95,
+      "bytes": 10015,
+      "audioSha256": "b06b871b33f1bdd6a47658518d0579c37622d8ee7fc4a11fe58d2556ae050587"
+    },
+    {
+      "text": "le talon",
+      "file": "words/b8983e210d836b78c892.m4a",
+      "speaker": "lison",
+      "durationSeconds": 0.94,
+      "bytes": 9131,
+      "audioSha256": "ceb776f6f10a1339fa945d6d4c34983fdc745002df1458f5359e84804b7dc249"
+    },
+    {
+      "text": "la botte",
+      "file": "words/e7aaf0199901d22b7693.m4a",
+      "speaker": "pia",
+      "durationSeconds": 0.94,
+      "bytes": 8894,
+      "audioSha256": "ff45198e62fb3bd6038c2833df7b6e58ff83db750cac893ea31e57ca33d74e3d"
+    },
+    {
+      "text": "le phare",
+      "file": "words/9e1972f14b0237920d35.m4a",
+      "speaker": "ninon",
+      "durationSeconds": 1.14,
+      "bytes": 10095,
+      "audioSha256": "475c1787bf7d5f3ac9236e0b286efe6dab8a3c74a74186d4ccbfd88783390392"
+    },
+    {
+      "text": "la proie",
+      "file": "words/fa8e48f3c106423aaff3.m4a",
+      "speaker": "lison",
+      "durationSeconds": 0.86,
+      "bytes": 8389,
+      "audioSha256": "6dba2d879e36ce3a989a380bc940dd13a216c4228be6923f6900b85767595056"
+    },
+    {
+      "text": "le bond",
+      "file": "words/c73d62991569456e147d.m4a",
+      "speaker": "pia",
+      "durationSeconds": 0.89,
+      "bytes": 8279,
+      "audioSha256": "a99ef30b035f438c14265a147eaa7c050d278fd2cbfeeaa0334c9da1d8522175"
+    },
+    {
+      "text": "le survivant",
+      "file": "words/ecd70f39360b5732a933.m4a",
+      "speaker": "ninon",
+      "durationSeconds": 1.21,
+      "bytes": 10848,
+      "audioSha256": "d893c97f71f5bd45361c2681339eae338724a8600917582fcc7475c753b6582b"
+    },
+    {
+      "text": "le témoignage",
+      "file": "words/46cf104933855f6a50ef.m4a",
+      "speaker": "lison",
+      "durationSeconds": 1.45,
+      "bytes": 12854,
+      "audioSha256": "7e0988f1c5d37fa4058dbe3a079fc4faf829a21503c5f3c6b9be743f78649a7f"
+    },
+    {
+      "text": "le géant",
+      "file": "words/875fb6a709e9fc5f6f83.m4a",
+      "speaker": "pia",
+      "durationSeconds": 1.06,
+      "bytes": 9445,
+      "audioSha256": "345c812be5581df6b9985f82203259db1674df8533bb9c89ce9fd12f2f6b0f04"
+    },
+    {
+      "text": "l'humeur",
+      "file": "words/b43a51913a2d2256b702.m4a",
+      "speaker": "ninon",
+      "durationSeconds": 0.96,
+      "bytes": 9048,
+      "audioSha256": "07d4ccf05ee158748a62afad828cfaa87f5daeb1f43dda7ad20b0354ae2301e3"
+    },
+    {
+      "text": "la larme",
+      "file": "words/9edbb8fd5b77f7d116eb.m4a",
+      "speaker": "lison",
+      "durationSeconds": 0.98,
+      "bytes": 8967,
+      "audioSha256": "e41c30df5e28c97c161d5d253400400eabd9c0dc2860c32efe1c786d5f397031"
+    },
+    {
+      "text": "la lèvre",
+      "file": "words/79daec1166d6bfbee61f.m4a",
+      "speaker": "pia",
+      "durationSeconds": 1.13,
+      "bytes": 10147,
+      "audioSha256": "dedd323c736a1c2371453272adc508e20f07be6fb400302a5c585c1746261d70"
+    },
+    {
+      "text": "la légende",
+      "file": "words/765c3075e93dd1c2a4d7.m4a",
+      "speaker": "ninon",
+      "durationSeconds": 1.08,
+      "bytes": 10362,
+      "audioSha256": "02b45b22e69307050b4a174324bf16bd02cccd1dd07019efb9ceadef516edcaf"
+    },
+    {
+      "text": "le comportement",
+      "file": "words/e1e297661ea127564859.m4a",
+      "speaker": "lison",
+      "durationSeconds": 1.2,
+      "bytes": 11887,
+      "audioSha256": "7b00778ef30a5a71bac46770d660a4255367bed0f9c66ef64c159388555717ac"
+    },
+    {
+      "text": "la manche",
+      "file": "words/d6f68b38ddb5bcb43515.m4a",
+      "speaker": "pia",
+      "durationSeconds": 1.02,
+      "bytes": 9023,
+      "audioSha256": "841936dc19a28de67bf21b656416b0fa468364c5d1ffe3871e54e885f541b18d"
+    },
+    {
+      "text": "la trace",
+      "file": "words/60638e7118f6c1e3d517.m4a",
+      "speaker": "ninon",
+      "durationSeconds": 1.16,
+      "bytes": 11053,
+      "audioSha256": "97f2986a2ed35436f721f0cdee3f42d26809e3ad76d39150f974320debf1a186"
+    },
+    {
+      "text": "le téléspectateur",
+      "file": "words/6576b83f09331bb8b48c.m4a",
+      "speaker": "lison",
+      "durationSeconds": 2.28,
+      "bytes": 21861,
+      "audioSha256": "b34248ec615a1b3b034a33793dc264e9bf046336b522e9fc4f5333a17cb23dbc"
+    },
+    {
+      "text": "l'épouvante",
+      "file": "words/ea94fc3cb94b99958859.m4a",
+      "speaker": "pia",
+      "durationSeconds": 1.17,
+      "bytes": 11596,
+      "audioSha256": "3ab2b4002357d949ab54e0ae64e1d33c8c49849ec1408d7cc2906ad42496ee22"
+    },
+    {
+      "text": "l'imprudence",
+      "file": "words/27d98b4549d2ce548a3e.m4a",
+      "speaker": "ninon",
+      "durationSeconds": 1.26,
+      "bytes": 12077,
+      "audioSha256": "72dc5db5a204e2f5264194a87a994ba42b18ae72ed12f8e7027a21884873fc84"
+    },
+    {
+      "text": "les sornettes",
+      "file": "words/42c2b1f61423cf202b84.m4a",
+      "speaker": "lison",
+      "durationSeconds": 1.41,
+      "bytes": 12714,
+      "audioSha256": "f14596d9660f93dc84d5e6c88a71a15449e345c3dca32c5020bc2c8817ea1faa"
+    },
+    {
+      "text": "l'accoutrement",
+      "file": "words/5db2b7b43a830bceaf9a.m4a",
+      "speaker": "pia",
+      "durationSeconds": 1.08,
+      "bytes": 9833,
+      "audioSha256": "5edbbe449f7612429817526fa0a0102f09041b51dc5feea16fa5f0e95d27a0ab"
+    },
+    {
+      "text": "la somnolence",
+      "file": "words/f7e505e0738d2e4b3c75.m4a",
+      "speaker": "ninon",
+      "durationSeconds": 1.68,
+      "bytes": 15542,
+      "audioSha256": "4bf4fb8c38c7e84beba739f8859f8dece62ae06aad8a21a016e7185aa0d04183"
+    },
+    {
+      "text": "observer",
+      "file": "words/e41f1d834710df8c7bc2.m4a",
+      "speaker": "lison",
+      "durationSeconds": 0.94,
+      "bytes": 8569,
+      "audioSha256": "af7b1773f3be8fafadcfea846b1e706c9dd0cef57522094e921d55d9bee965f4"
+    },
+    {
+      "text": "parvenir",
+      "file": "words/2fee8bb811f8e14f11ee.m4a",
+      "speaker": "pia",
+      "durationSeconds": 1.01,
+      "bytes": 9329,
+      "audioSha256": "1329daa6f3ee23ea28bd9543198f5119f8f0d3db28d971394df1fa4c4c7533a5"
+    },
+    {
+      "text": "admettre",
+      "file": "words/359f56c7a9c4ef4d3986.m4a",
+      "speaker": "ninon",
+      "durationSeconds": 0.99,
+      "bytes": 9657,
+      "audioSha256": "7334a7e02e01af2094c20922203416fdfe107aca1cd51d4870b445c07b79d8f7"
+    },
+    {
+      "text": "prévoir",
+      "file": "words/f0a02946d0ae34540b4b.m4a",
+      "speaker": "lison",
+      "durationSeconds": 0.98,
+      "bytes": 8917,
+      "audioSha256": "47f2bdc2d56fd9a84db0ac1c1881338f9e7857ef2e2327118ea68b779fd1d8a7"
+    },
+    {
+      "text": "survivre",
+      "file": "words/6bfc9f55bf52117af536.m4a",
+      "speaker": "pia",
+      "durationSeconds": 0.92,
+      "bytes": 8539,
+      "audioSha256": "95fe7b72cff7769c0e085c590634ef9427c30c0a159b0be0bdfe1e8b945cd01d"
+    },
+    {
+      "text": "prononcer",
+      "file": "words/2826624caa444492aa71.m4a",
+      "speaker": "ninon",
+      "durationSeconds": 1.15,
+      "bytes": 10866,
+      "audioSha256": "47f1ba31ef36c734284ae2cc03f80ab880f43e29f91369872429b77ccdbc8325"
+    },
+    {
+      "text": "douter",
+      "file": "words/0f3963623558c82dafe4.m4a",
+      "speaker": "lison",
+      "durationSeconds": 0.73,
+      "bytes": 6987,
+      "audioSha256": "693873476770af678e448692799a83d13387efc74772c2eff5af0ab59d3aa112"
+    },
+    {
+      "text": "embrasser",
+      "file": "words/a4a03c05bae58642b880.m4a",
+      "speaker": "ninon",
+      "durationSeconds": 0.96,
+      "bytes": 9571,
+      "audioSha256": "cec96b9c6753d875301a13e87577a78bb941ccff4461425419b0a5a18420cafc"
+    },
+    {
+      "text": "célébrer",
+      "file": "words/b2e81756140c4f8f7c5f.m4a",
+      "speaker": "ninon",
+      "durationSeconds": 1.13,
+      "bytes": 10692,
+      "audioSha256": "f4b07affe90282538316b851117c72ba27eac0e49434c13962912e4e788cbca8"
+    },
+    {
+      "text": "s'inquiéter",
+      "file": "words/89a849ad9341a88a2f22.m4a",
+      "speaker": "lison",
+      "durationSeconds": 1.01,
+      "bytes": 9558,
+      "audioSha256": "738eb855577965f79c6592f5b8c1337a35ebe7b3006bd2f23fd9cd12cd756696"
+    },
+    {
+      "text": "affirmer",
+      "file": "words/e15d3990860a36c69106.m4a",
+      "speaker": "pia",
+      "durationSeconds": 0.89,
+      "bytes": 8298,
+      "audioSha256": "bf86e0b09ad0df9c39a0a3d75bafc1878de7adeb6b12249256a0b41207778f93"
+    },
+    {
+      "text": "chasser",
+      "file": "words/514957465e45dd3d1ec3.m4a",
+      "speaker": "ninon",
+      "durationSeconds": 0.87,
+      "bytes": 8316,
+      "audioSha256": "37a05f18618aa3441d35e81215c714352397bac4b00b2186ac944ae7ff724b84"
+    },
+    {
+      "text": "signaler",
+      "file": "words/6e0facd7a44462b2e39f.m4a",
+      "speaker": "lison",
+      "durationSeconds": 0.84,
+      "bytes": 7649,
+      "audioSha256": "e7dcff887c937c618baf5e4473a8ab235c49d32fe8247db8b5a35e1d773d02f4"
+    },
+    {
+      "text": "repérer",
+      "file": "words/920566249607a19ea85d.m4a",
+      "speaker": "pia",
+      "durationSeconds": 0.85,
+      "bytes": 7937,
+      "audioSha256": "43d598b26a46e80bc57616a6a1c26d3e8e679e0ea147c6ba294a3af4ba649f58"
+    },
+    {
+      "text": "posséder",
+      "file": "words/cc80c46c3727b72cbf31.m4a",
+      "speaker": "ninon",
+      "durationSeconds": 0.89,
+      "bytes": 8234,
+      "audioSha256": "311a1a282a24b62aeabad8aad69e052a72199d422cd0edfd94ea8ebf9fb4374b"
+    },
+    {
+      "text": "se comporter",
+      "file": "words/41c555a61b84b2945231.m4a",
+      "speaker": "lison",
+      "durationSeconds": 1.44,
+      "bytes": 12973,
+      "audioSha256": "58c3b5bcf0ee537907df5ec91d1747733fb31aa716ba971fefe9c46294a70fe9"
+    },
+    {
+      "text": "déranger",
+      "file": "words/203ea0d9efb2724b88ab.m4a",
+      "speaker": "pia",
+      "durationSeconds": 1.0,
+      "bytes": 9077,
+      "audioSha256": "0a4a1b1b5a8bf07e6a9e1874d9459fcd3b0b14b8af7b79d88169cc5126dce844"
+    },
+    {
+      "text": "féliciter",
+      "file": "words/220ffaed6662f5fb8761.m4a",
+      "speaker": "ninon",
+      "durationSeconds": 1.26,
+      "bytes": 12052,
+      "audioSha256": "b57f97f6deeefa1804882047283edc046f7bcfe71a5a83275de6bb78d3d52b16"
+    },
+    {
+      "text": "envahir",
+      "file": "words/598d602732cba9ee8b62.m4a",
+      "speaker": "lison",
+      "durationSeconds": 1.14,
+      "bytes": 10378,
+      "audioSha256": "1e4eae3745585c2209f152921aae96fea502ea05f98eac92892c384d3d4df6d8"
+    },
+    {
+      "text": "parier",
+      "file": "words/c2c1c8e396c3f5bab26d.m4a",
+      "speaker": "pia",
+      "durationSeconds": 0.7,
+      "bytes": 6807,
+      "audioSha256": "8e78a2fa65ea4f3b4913fe02c8ee7e02f42042e40882f859540e453d8e7c8121"
+    },
+    {
+      "text": "fréquenter",
+      "file": "words/fbe5df9b074676f46645.m4a",
+      "speaker": "ninon",
+      "durationSeconds": 1.05,
+      "bytes": 10348,
+      "audioSha256": "d8ea41b7a652638a5f2ea1fd68feecebc5b21a1aa88334e2e65aceb93c8c2bc9"
+    },
+    {
+      "text": "saisir",
+      "file": "words/ce48bf33905794d86e84.m4a",
+      "speaker": "lison",
+      "durationSeconds": 0.99,
+      "bytes": 9215,
+      "audioSha256": "bff70f21a5f6b2067880decf6478707bdb423a4dc105e637de6f359e51b60b96"
+    },
+    {
+      "text": "pointer",
+      "file": "words/1cdf95bd12e993d5aaf2.m4a",
+      "speaker": "pia",
+      "durationSeconds": 0.77,
+      "bytes": 7170,
+      "audioSha256": "2ebeaa56c4adf489849db46d98eb1a4b4deb0eddf719d794e3a40710269aaef5"
+    },
+    {
+      "text": "ignorer",
+      "file": "words/5270b54863a45b4c7652.m4a",
+      "speaker": "ninon",
+      "durationSeconds": 0.86,
+      "bytes": 8229,
+      "audioSha256": "7205d1ca3a2213eeb19e87ddbcb490157d8b19b098b722b416b9fd79ff9ea422"
+    },
+    {
+      "text": "fixer",
+      "file": "words/508e7896192355de0aeb.m4a",
+      "speaker": "lison",
+      "durationSeconds": 0.8,
+      "bytes": 7355,
+      "audioSha256": "d174b2762645a7c70478ab25849000c5d3f96bf473c451bdeaa2c6bd2f79c608"
+    },
+    {
+      "text": "contempler",
+      "file": "words/caee4a6e1d68259cb4f4.m4a",
+      "speaker": "pia",
+      "durationSeconds": 0.84,
+      "bytes": 8044,
+      "audioSha256": "8ade8703b34bf869820db03eed29ace9d54f787752953def7e68d75546ff7238"
+    },
+    {
+      "text": "interroger",
+      "file": "words/2580f988a479c48af841.m4a",
+      "speaker": "ninon",
+      "durationSeconds": 1.0,
+      "bytes": 9431,
+      "audioSha256": "193ebd9eabcd619c02d93321116a063617fd2ac21ff204c916e4e1804bec45db"
+    },
+    {
+      "text": "fabriquer",
+      "file": "words/73f1054f1bbc2874ac62.m4a",
+      "speaker": "lison",
+      "durationSeconds": 1.12,
+      "bytes": 10810,
+      "audioSha256": "6f42f5b4151b249b1105bcd72afa7a88a3ea2dc6138052b6ebdfee52ea25355c"
+    },
+    {
+      "text": "ordonner",
+      "file": "words/9da4319b8f70ddd55a92.m4a",
+      "speaker": "pia",
+      "durationSeconds": 0.82,
+      "bytes": 7792,
+      "audioSha256": "181787bdee9b45ed6eaf2fc6bd9f3692b26c55518dcb8df4eb4d7f1a7a54458d"
+    },
+    {
+      "text": "s'apprêter",
+      "file": "words/fa20df4e3014e7be7227.m4a",
+      "speaker": "ninon",
+      "durationSeconds": 1.02,
+      "bytes": 9555,
+      "audioSha256": "06e52b0e7732fc5bd7472c46569597a21eecc2ff146d939b16e9150820eccfa2"
+    },
+    {
+      "text": "étouffer",
+      "file": "words/1e5976f2448f7ea1e1d9.m4a",
+      "speaker": "lison",
+      "durationSeconds": 0.87,
+      "bytes": 8160,
+      "audioSha256": "04259ebe6e72b559c0a75c319587787a170ad3501a3e9a96fbd22d4e3cccbcaa"
+    },
+    {
+      "text": "bousculer",
+      "file": "words/2f032b44b4d672e0cdf3.m4a",
+      "speaker": "ninon",
+      "durationSeconds": 1.14,
+      "bytes": 10025,
+      "audioSha256": "f17322f09813463a3dbfdfc0acd44444992efca16360381c1a6da73687d41fc0"
+    },
+    {
+      "text": "dénicher",
+      "file": "words/5e7e1eb2257b9c18db7f.m4a",
+      "speaker": "lison",
+      "durationSeconds": 1.13,
+      "bytes": 10872,
+      "audioSha256": "b408d393c98788d5caff4aa0f93cdd3e0b10785065d05a0599f53acee5f5530f"
+    },
+    {
+      "text": "survoler",
+      "file": "words/49fb9cb21dec8040974f.m4a",
+      "speaker": "pia",
+      "durationSeconds": 1.17,
+      "bytes": 10427,
+      "audioSha256": "2043e7330e0b606bb12cdb8ac2ca8c39c3cb6254fb7650038b342b3f52f4bf04"
+    },
+    {
+      "text": "attirer",
+      "file": "words/c433792a4666681cb7f5.m4a",
+      "speaker": "ninon",
+      "durationSeconds": 0.89,
+      "bytes": 8214,
+      "audioSha256": "11e0abb39e55c2d9448b3bfd2b42aa862e5ee88f4f74c607e6a0e82aad1e16b7"
+    },
+    {
+      "text": "tendre",
+      "file": "words/d0435a0f47b5c8771917.m4a",
+      "speaker": "lison",
+      "durationSeconds": 0.85,
+      "bytes": 7902,
+      "audioSha256": "11b9a1b65ce6d0c3c1f982e0274f25ed36994678bccea786a2a0084f02f7d0fb"
+    },
+    {
+      "text": "trembler",
+      "file": "words/1af2bbb2cf48f5dea565.m4a",
+      "speaker": "pia",
+      "durationSeconds": 0.92,
+      "bytes": 9062,
+      "audioSha256": "9f755df3bb9a2f9bab64e395fd9b676f4eee2f6e9400e486a03c9e4ae76a54c1"
+    },
+    {
+      "text": "s'écrier",
+      "file": "words/c9db3a65ff23f0328605.m4a",
+      "speaker": "ninon",
+      "durationSeconds": 1.06,
+      "bytes": 9570,
+      "audioSha256": "c6976fd2c45a0e46ee761613f427660bb8959a47c221ea0d1668a8641b7325d7"
+    },
+    {
+      "text": "se contenter",
+      "file": "words/470a6a097a995e9e8731.m4a",
+      "speaker": "lison",
+      "durationSeconds": 1.38,
+      "bytes": 12207,
+      "audioSha256": "f744494d87edeab413c5a39c6ccd2a23ffd16035ee74f6830dbf0df1c1c99b99"
+    },
+    {
+      "text": "distinguer",
+      "file": "words/809811cf0ad10510c8c7.m4a",
+      "speaker": "pia",
+      "durationSeconds": 1.12,
+      "bytes": 10016,
+      "audioSha256": "7c2e6ff480e39ed9e0c75f734d5416a4cdb4160d564d4bb3bcfba1d2b626b277"
+    },
+    {
+      "text": "répliquer",
+      "file": "words/09afd1ae318e3a28cd98.m4a",
+      "speaker": "ninon",
+      "durationSeconds": 1.03,
+      "bytes": 10923,
+      "audioSha256": "3247e174c4899f9e5d0dc7f67f81de1bd3b54c06899846459e90f9b99323cc9e"
+    },
+    {
+      "text": "reculer",
+      "file": "words/cd605f87af9ae3ad73b9.m4a",
+      "speaker": "lison",
+      "durationSeconds": 0.95,
+      "bytes": 9294,
+      "audioSha256": "c96a88ed06977ba1317304da7ea6c127809aeeecbc2bf6f9eda729fda219a9d0"
+    },
+    {
+      "text": "se dégourdir",
+      "file": "words/bb18920527537c510cd4.m4a",
+      "speaker": "pia",
+      "durationSeconds": 1.46,
+      "bytes": 13833,
+      "audioSha256": "347a437de2fd5d350ebd2e7d0937404f31564238853c68cb9aa1ed65356ad9f3"
+    },
+    {
+      "text": "jaillir",
+      "file": "words/869d1bfa60962ce59cd4.m4a",
+      "speaker": "ninon",
+      "durationSeconds": 1.09,
+      "bytes": 9677,
+      "audioSha256": "c66680cf2b0aa0a49053cbe07e99f365002bbdbee7533d8f84049c90c1f90341"
+    },
+    {
+      "text": "songer",
+      "file": "words/145f2de79641df42af22.m4a",
+      "speaker": "lison",
+      "durationSeconds": 0.8,
+      "bytes": 7347,
+      "audioSha256": "ee2e56a2d82959670b802b67fe81bb4feed47fdb8808020780cf9315c4f3d5ca"
+    },
+    {
+      "text": "heurter",
+      "file": "words/ed08691c451754d74253.m4a",
+      "speaker": "pia",
+      "durationSeconds": 0.75,
+      "bytes": 7145,
+      "audioSha256": "404e457809464e043a10b795453fcb8c59df270d5b81c91cff6d4a14a4346533"
+    },
+    {
+      "text": "agiter",
+      "file": "words/e5df4541f53d589e13bc.m4a",
+      "speaker": "ninon",
+      "durationSeconds": 0.92,
+      "bytes": 9315,
+      "audioSha256": "b03f457fd11e8dbfc9e2abb09ef90d62a7e51ca85035eed375a0aef07c8cd625"
+    },
+    {
+      "text": "caresser",
+      "file": "words/03bf122b53707edc592d.m4a",
+      "speaker": "lison",
+      "durationSeconds": 0.8,
+      "bytes": 7451,
+      "audioSha256": "1ad75e4508820ddef4c03ffa96d7f86e4a6f65754dc7ca19774f6135184e8d64"
+    },
+    {
+      "text": "nouer",
+      "file": "words/5aaa95951c52d69f5bbc.m4a",
+      "speaker": "pia",
+      "durationSeconds": 0.87,
+      "bytes": 8106,
+      "audioSha256": "fd9a318b0cf5a5d4c727a7dce8d6571c93409e42eaeebcb889e2e8566f143142"
+    },
+    {
+      "text": "tapoter",
+      "file": "words/ed6420895cb1a88fa699.m4a",
+      "speaker": "ninon",
+      "durationSeconds": 0.87,
+      "bytes": 8933,
+      "audioSha256": "4404bef5a3554a9b3ea4ecfd956df53a4e6d2518faee375a006d541757f81c39"
+    },
+    {
+      "text": "enfouir",
+      "file": "words/82d42e072728e397f962.m4a",
+      "speaker": "lison",
+      "durationSeconds": 0.89,
+      "bytes": 8668,
+      "audioSha256": "ad9edd307b4697eff1c1ac50492a1ab680a803a2a07c7647ced857d12bc96688"
+    },
+    {
+      "text": "claquer",
+      "file": "words/f3cddf87c6f0a7c700ee.m4a",
+      "speaker": "pia",
+      "durationSeconds": 0.72,
+      "bytes": 6742,
+      "audioSha256": "d7f2571455a8005a78644b891acd99a34868d62bcde68cb0e4c008898765073c"
+    },
+    {
+      "text": "se figer",
+      "file": "words/0b85b542ac36282bad75.m4a",
+      "speaker": "ninon",
+      "durationSeconds": 1.08,
+      "bytes": 9756,
+      "audioSha256": "348280ae0acb0bd75005d320fcb3530f86f4d35e08fbf756cb6048b1c621c073"
+    },
+    {
+      "text": "siffler",
+      "file": "words/276eb9dd9a30cba5600c.m4a",
+      "speaker": "lison",
+      "durationSeconds": 0.81,
+      "bytes": 7360,
+      "audioSha256": "44c97c56bccc68ff6b78f6a92eacfbda1926b33019ff62363058af75f6dcb1d8"
+    },
+    {
+      "text": "se raviser",
+      "file": "words/f98b60d0cf010d943e9d.m4a",
+      "speaker": "pia",
+      "durationSeconds": 0.96,
+      "bytes": 8811,
+      "audioSha256": "746affa688d53ff97a3fe82c29e1f9f37771e0ec282244795d2ca0dbab322a9a"
+    },
+    {
+      "text": "consoler",
+      "file": "words/d4e5e5b483c6afdae467.m4a",
+      "speaker": "ninon",
+      "durationSeconds": 0.8,
+      "bytes": 7440,
+      "audioSha256": "ea7095fa94dad120d1e02c3c626dc1a473b5e7c3db63d60a4286683d22d7b2f9"
+    },
+    {
+      "text": "brailler",
+      "file": "words/593eb17a72156e5902af.m4a",
+      "speaker": "pia",
+      "durationSeconds": 0.8,
+      "bytes": 7565,
+      "audioSha256": "55da7464534c1b284687b358c01df4b097fbc634f26424f808f6bc918b71eefd"
+    },
+    {
+      "text": "se moucher",
+      "file": "words/140b54f4c15606f48be8.m4a",
+      "speaker": "ninon",
+      "durationSeconds": 0.95,
+      "bytes": 8792,
+      "audioSha256": "19ea9f45bfdf1af16f131802f53d6bcddac86502d16fc721b8011f5d32154855"
+    },
+    {
+      "text": "réprimander",
+      "file": "words/ba2e8006ae1806384919.m4a",
+      "speaker": "lison",
+      "durationSeconds": 1.09,
+      "bytes": 10809,
+      "audioSha256": "ad03d03313657c4ebe836ac1b8dfc174a17dc3450e1de07593ee386c825cfe05"
+    },
+    {
+      "text": "enfourcher",
+      "file": "words/8d2a02c2f9d54e877d27.m4a",
+      "speaker": "pia",
+      "durationSeconds": 0.83,
+      "bytes": 7816,
+      "audioSha256": "165f533283c090c6c3f745ec860ca1edfa5d19e0a7a12e8dd8c61d2db58b4137"
+    },
+    {
+      "text": "rétrécir",
+      "file": "words/a5ae8d0ba7fdc7ef5f3e.m4a",
+      "speaker": "pia",
+      "durationSeconds": 1.01,
+      "bytes": 9155,
+      "audioSha256": "02515c8956eb953df69757f9b4039200b46ed0cbdb5f6b76605380f0f7f63a07"
+    },
+    {
+      "text": "scruter",
+      "file": "words/28670d7ab6e20e184de6.m4a",
+      "speaker": "ninon",
+      "durationSeconds": 0.86,
+      "bytes": 8116,
+      "audioSha256": "4a921b0d0b55dc0f8106d902e07490aae0c4ddd6c3eeba643fff28879ffc790e"
+    },
+    {
+      "text": "échapper",
+      "file": "words/50047a1cdf4a1c0183d4.m4a",
+      "speaker": "lison",
+      "durationSeconds": 0.86,
+      "bytes": 8075,
+      "audioSha256": "71905b38b7b0a1a03f435e5e2aa2cc7069307681eecccb1aa8cc0b62a10998a8"
+    },
+    {
+      "text": "retrousser",
+      "file": "words/0e18e1a60ddbd89e76ce.m4a",
+      "speaker": "pia",
+      "durationSeconds": 0.87,
+      "bytes": 8197,
+      "audioSha256": "b001a3214591d1c1d4dde874b0cb079e37a599721ae002e5bc68a1dcc5b6e59c"
+    },
+    {
+      "text": "ordinaire",
+      "file": "words/5274e35915747d0f3c87.m4a",
+      "speaker": "ninon",
+      "durationSeconds": 1.07,
+      "bytes": 9991,
+      "audioSha256": "c9b61329a89b7cad715308c820c984b0760ab72e9e02d842bd62d3d1912f75e8"
+    },
+    {
+      "text": "quelconque",
+      "file": "words/abdad7e4a3f0d4a78777.m4a",
+      "speaker": "lison",
+      "durationSeconds": 1.31,
+      "bytes": 11952,
+      "audioSha256": "6e5aec2b24582da24a5ba914e585fecd5744813513a944a83dbce98edbb7a3ba"
+    },
+    {
+      "text": "massif",
+      "file": "words/41fd1136eac6cd65c1d9.m4a",
+      "speaker": "pia",
+      "durationSeconds": 1.11,
+      "bytes": 10037,
+      "audioSha256": "02903274d8f5e3f63279a63490f6b0f3b86fc69c1667fafbf9ad7a2adf09b8fc"
+    },
+    {
+      "text": "incapable",
+      "file": "words/24fdadbf19765c82ac3b.m4a",
+      "speaker": "ninon",
+      "durationSeconds": 1.1,
+      "bytes": 10950,
+      "audioSha256": "124100d89c484e46b273427fb085da1f2ff5bf48ed7d36c9b612c6c626682ac3"
+    },
+    {
+      "text": "raisonnable",
+      "file": "words/d96bea161dba42239bba.m4a",
+      "speaker": "lison",
+      "durationSeconds": 1.35,
+      "bytes": 12493,
+      "audioSha256": "36a9a60d94a4ae8e5c4658a474291601b95cb11b9d509ec11a6ee0a6318f5283"
+    },
+    {
+      "text": "nerveux",
+      "file": "words/706d7651f5824e9a3fb7.m4a",
+      "speaker": "pia",
+      "durationSeconds": 0.87,
+      "bytes": 8042,
+      "audioSha256": "f27f25d25017923b7df71791eed045540aef281e96060f9c7d8d9288857184fb"
+    },
+    {
+      "text": "mystérieux",
+      "file": "words/4ea9fddaa82bf6571d7e.m4a",
+      "speaker": "ninon",
+      "durationSeconds": 1.22,
+      "bytes": 10831,
+      "audioSha256": "2fc9273d8f5c2881641e686c0091aa11c923cfe51f9828b936193ad9763b0933"
+    },
+    {
+      "text": "humide",
+      "file": "words/c248d1aafd7daccc3d5d.m4a",
+      "speaker": "lison",
+      "durationSeconds": 0.85,
+      "bytes": 8285,
+      "audioSha256": "b27a19bb1731bcbac0062b073774d2825ffb8f08616a4124af467c8faeed0e87"
+    },
+    {
+      "text": "inévitable",
+      "file": "words/d2a484d539e850c2e2e5.m4a",
+      "speaker": "pia",
+      "durationSeconds": 1.27,
+      "bytes": 11154,
+      "audioSha256": "e3bdbed35b1c74cae417abca846d12673de1061e26db3233a95391de3b77b84f"
+    },
+    {
+      "text": "étrange",
+      "file": "words/2c540378f0b9d4262d7b.m4a",
+      "speaker": "ninon",
+      "durationSeconds": 0.98,
+      "bytes": 8653,
+      "audioSha256": "6e17a8751e4305da050bb0f11b278f4fd62c267d44a9e17f5cbfd4cd5761600c"
+    },
+    {
+      "text": "désagréable",
+      "file": "words/bbd3c0a07eaa706164f1.m4a",
+      "speaker": "lison",
+      "durationSeconds": 1.26,
+      "bytes": 11967,
+      "audioSha256": "965e1c18db514cc2a4b397208711fa6d6ae835329af2b003a8984765f2c8b2d9"
+    },
+    {
+      "text": "sinistre",
+      "file": "words/a289c15db1133235b546.m4a",
+      "speaker": "pia",
+      "durationSeconds": 1.12,
+      "bytes": 10093,
+      "audioSha256": "215138359eb4c13359d99bfa77ed126ab85cc8d61ddebc7759e1ea1a70d348f7"
+    },
+    {
+      "text": "sourd",
+      "file": "words/99f7ca583a8eaa2dba0a.m4a",
+      "speaker": "ninon",
+      "durationSeconds": 0.9,
+      "bytes": 8409,
+      "audioSha256": "826d63bc30b27e2df0617f085c8c226e1bfbde60d38bf5ce354b9ca3a7807b82"
+    },
+    {
+      "text": "extraordinaire",
+      "file": "words/a0d1931e56e38c50ee02.m4a",
+      "speaker": "lison",
+      "durationSeconds": 1.48,
+      "bytes": 13693,
+      "audioSha256": "b4a6fb946ddd5228cf9dd37ca4bf1aa4820a9dadebb3ca4582cdee10919fcc15"
+    },
+    {
+      "text": "immense",
+      "file": "words/07f33781121e176596b3.m4a",
+      "speaker": "pia",
+      "durationSeconds": 1.07,
+      "bytes": 10026,
+      "audioSha256": "67e88abd7aba3a6fafc14ae750371212501704bc281a2fd8d96248fba2018040"
+    },
+    {
+      "text": "silencieux",
+      "file": "words/3d785f76e7b8db0659e7.m4a",
+      "speaker": "ninon",
+      "durationSeconds": 1.11,
+      "bytes": 9640,
+      "audioSha256": "40cd5cd6cbd62fa485a17ca8c7794228978b7ada1f09297c3550a4a2feede94b"
+    },
+    {
+      "text": "anormal",
+      "file": "words/490e193f0c70fe21de9b.m4a",
+      "speaker": "lison",
+      "durationSeconds": 0.95,
+      "bytes": 8752,
+      "audioSha256": "8ccc5624252559adc767bae8b179dd35c18d4831a3f63f98c3722e2fe8cfcd40"
+    },
+    {
+      "text": "nocturne",
+      "file": "words/fcb1f6100676208c94f1.m4a",
+      "speaker": "pia",
+      "durationSeconds": 1.05,
+      "bytes": 9852,
+      "audioSha256": "b03304a7ee5991693907a0ef15264228d71323a3ee47d9621e9d87ed433ac02e"
+    },
+    {
+      "text": "préoccupé",
+      "file": "words/4dbe35cbe37d4db50aaa.m4a",
+      "speaker": "ninon",
+      "durationSeconds": 1.06,
+      "bytes": 9685,
+      "audioSha256": "d4b10bee328e413aeebf84b084cabe0ae8ad8ef7cb6fd398a1bfb8bcde64a3be"
+    },
+    {
+      "text": "agité",
+      "file": "words/e8602ab13d9ebdba35ab.m4a",
+      "speaker": "lison",
+      "durationSeconds": 0.9,
+      "bytes": 9317,
+      "audioSha256": "99454141e93d35f6c86e04d5af46280a9e699d1609be47d60a213f424b793652"
+    },
+    {
+      "text": "furieux",
+      "file": "words/8e630b19b87cf77616cb.m4a",
+      "speaker": "ninon",
+      "durationSeconds": 0.86,
+      "bytes": 8077,
+      "audioSha256": "41538c48d06f60270e2f2d6449c348a4c3fd9d7730b0a64f9df560263147ec4b"
+    },
+    {
+      "text": "navré",
+      "file": "words/d663d5ecc8ae9ef05c9a.m4a",
+      "speaker": "pia",
+      "durationSeconds": 0.72,
+      "bytes": 6842,
+      "audioSha256": "ea0305b069a689b964e61a4eaab53c416c782335bfbafd0ec359c49e854c67c1"
+    },
+    {
+      "text": "indésirable",
+      "file": "words/b89c219f6153ad3505bf.m4a",
+      "speaker": "ninon",
+      "durationSeconds": 1.25,
+      "bytes": 11384,
+      "audioSha256": "c53cf97e4c9cd292d831aa5976eb0be7920ef020eb44925a62e010c45fdba5c0"
+    },
+    {
+      "text": "négligent",
+      "file": "words/206c5afdf0e552ecb568.m4a",
+      "speaker": "lison",
+      "durationSeconds": 1.08,
+      "bytes": 10134,
+      "audioSha256": "ba6468fd4686cc6207ea1fe81c7139063e0886011b3f152d659346112b7c2d89"
+    },
+    {
+      "text": "argenté",
+      "file": "words/c66678c4cc894f94109b.m4a",
+      "speaker": "pia",
+      "durationSeconds": 0.89,
+      "bytes": 8197,
+      "audioSha256": "3b4764bd129276e4897be1f519623788ebe8a094c748328dff576c7794f60618"
+    },
+    {
+      "text": "extravagant",
+      "file": "words/516a70ea25b989ce98a1.m4a",
+      "speaker": "ninon",
+      "durationSeconds": 0.99,
+      "bytes": 9204,
+      "audioSha256": "1d1d06cae537c3481d5dcb695df70d9904724bc0b29d6637a5437ba7920ceb3b"
+    },
+    {
+      "text": "tremblant",
+      "file": "words/30f4806db6cfa9ee3966.m4a",
+      "speaker": "lison",
+      "durationSeconds": 0.9,
+      "bytes": 8293,
+      "audioSha256": "c8f4f16c4a00ca53b1cda8cf04c96ceb2a89377bc7b49a8ddc0f07110c5274ae"
+    },
+    {
+      "text": "hirsute",
+      "file": "words/7e5927b86ad48ea4b5c5.m4a",
+      "speaker": "pia",
+      "durationSeconds": 0.88,
+      "bytes": 8762,
+      "audioSha256": "6bd6718242b8b6087ee9272d3f654d1d61c3b7df3d3097009e58c35389d79b30"
+    },
+    {
+      "text": "ravissant",
+      "file": "words/e19f7a16d18eb08d6310.m4a",
+      "speaker": "ninon",
+      "durationSeconds": 0.9,
+      "bytes": 8413,
+      "audioSha256": "9ff36626a220f474489a3b86eecefafd812561bf3a5109920dc4bf6e24bc6dba"
+    },
+    {
+      "text": "courroucé",
+      "file": "words/599262f0c1ee0c033d93.m4a",
+      "speaker": "lison",
+      "durationSeconds": 0.83,
+      "bytes": 7728,
+      "audioSha256": "df231aa948c9fba427fc4f4b2af8430d331a07f1aa5664e84d3d0ec549efef28"
+    },
+    {
+      "text": "musculeux",
+      "file": "words/3968f7d4878b9dcd5b15.m4a",
+      "speaker": "pia",
+      "durationSeconds": 0.92,
+      "bytes": 8488,
+      "audioSha256": "4ad619b59d042161a228b118c9b9de8fc97d42a6d764ec816cb3296aa09b8c01"
+    },
+    {
+      "text": "prudent",
+      "file": "words/a5e2f2d4d0c23b8d5cc3.m4a",
+      "speaker": "lison",
+      "durationSeconds": 0.65,
+      "bytes": 6517,
+      "audioSha256": "09439adbdd36006f394adc26610767cb74db56fd089eb2eec5f94d864b7b0a0a"
+    },
+    {
+      "text": "étonnant",
+      "file": "words/e2beb76e5b16fc9a8128.m4a",
+      "speaker": "pia",
+      "durationSeconds": 0.73,
+      "bytes": 7069,
+      "audioSha256": "ab17416b6df41e46b528d6827fa18bb7addc0440b8c0eb0fedf51deec0b8fbcf"
+    },
+    {
+      "text": "sauvage",
+      "file": "words/c95c505a7d28ee7c9d5b.m4a",
+      "speaker": "ninon",
+      "durationSeconds": 1.33,
+      "bytes": 11666,
+      "audioSha256": "85f151d68ae4b56c882e8c7253dab1489b3ef474a05805c087c5c5e9c8ca7ecd"
+    },
+    {
+      "text": "pratiquement",
+      "file": "words/873acd769f38274e9678.m4a",
+      "speaker": "lison",
+      "durationSeconds": 0.93,
+      "bytes": 8605,
+      "audioSha256": "810fade242f22af7af666f54b991dcfa9405f250a0bb531b5dd91f908dc94987"
+    },
+    {
+      "text": "doucement",
+      "file": "words/fd54b2953cfb21c015be.m4a",
+      "speaker": "pia",
+      "durationSeconds": 1.05,
+      "bytes": 10068,
+      "audioSha256": "77aa0dd8bf71ff66c284b4eae27904177b2ddf70c4d56bb7ec13a114b65f7cfa"
+    },
+    {
+      "text": "habituellement",
+      "file": "words/b56f9d7a60336f7e8c65.m4a",
+      "speaker": "ninon",
+      "durationSeconds": 1.18,
+      "bytes": 11080,
+      "audioSha256": "c41bd63e48c8126e908e5529b99210998d0ae367763562280f89e792b765554c"
+    },
+    {
+      "text": "longuement",
+      "file": "words/5ccd3645879dfa564606.m4a",
+      "speaker": "lison",
+      "durationSeconds": 0.92,
+      "bytes": 8998,
+      "audioSha256": "a11adaa2227516a495124ea512db57556d27ead0b09a91342d6867b9c07ed5e2"
+    },
+    {
+      "text": "froidement",
+      "file": "words/54dd683b3186bcbf3453.m4a",
+      "speaker": "pia",
+      "durationSeconds": 1.1,
+      "bytes": 10101,
+      "audioSha256": "8192ef6772d7d88cbc8a23f97075e28dc3ba89d702a30aacb451f31ebf4bcf68"
+    },
+    {
+      "text": "singulièrement",
+      "file": "words/094338992b2590949872.m4a",
+      "speaker": "ninon",
+      "durationSeconds": 1.28,
+      "bytes": 11853,
+      "audioSha256": "7b50d44d821afec9d553626fb08bd77f719f4bbd1d6f4fb9a2ea84143581bf9e"
+    },
+    {
+      "text": "passablement",
+      "file": "words/8d3f1d7e784f81865d58.m4a",
+      "speaker": "lison",
+      "durationSeconds": 1.01,
+      "bytes": 9611,
+      "audioSha256": "4ea1a95892720eb349ded4e8226be4e6be5a125a9180a01f314883b0419f9bde"
+    },
+    {
+      "text": "apparemment",
+      "file": "words/2c09076635a660c0a8b2.m4a",
+      "speaker": "pia",
+      "durationSeconds": 0.92,
+      "bytes": 8452,
+      "audioSha256": "b655c07b922ebfbc2802904bfabb03e5a89677f9be3627d3304a81eb2fb7014e"
+    },
+    {
+      "text": "profondément",
+      "file": "words/4b3a844d228cbfb1f73b.m4a",
+      "speaker": "ninon",
+      "durationSeconds": 1.03,
+      "bytes": 9323,
+      "audioSha256": "a54917ac3b0e4c5ab1b4453e2ee2cce49c28609b9fe42f3d5c58fd088b552235"
+    },
+    {
+      "text": "soudain",
+      "file": "words/ec93ba2b8253b84e2965.m4a",
+      "speaker": "lison",
+      "durationSeconds": 0.73,
+      "bytes": 7165,
+      "audioSha256": "56933473ad0121bc4d1dd2c9f1529ad83850abcbfa603e1b1b35de633665f81c"
     }
   ],
-  "wordCount": 666,
-  "wordBytes": 6343926,
-  "wordPending": 176,
+  "wordCount": 828,
+  "wordBytes": 7927667,
+  "wordPending": 14,
   "male": [
     {
       "text": "Tu prends le train de 8 heures demain ?",
