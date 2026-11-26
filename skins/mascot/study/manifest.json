@@ -32807,6 +32807,14 @@
       "audioSha256": "62f970caf5bea5de6beb8e41069f4d951b54384d427dc36bc0e9ef692c4e1e9b"
     },
     {
+      "text": "je demandais, tu demandais, il demandait, nous demandions, vous demandiez, ils demandaient",
+      "file": "tables/70aa99eb75f9101b006c.m4a",
+      "speaker": "lison",
+      "durationSeconds": 8.47,
+      "bytes": 74216,
+      "audioSha256": "a524761afe472c0aadc0b90409bc4060a4f3c25ab58233afb31c798f94b2bae9"
+    },
+    {
       "text": "je demanderai, tu demanderas, il demandera, nous demanderons, vous demanderez, ils demanderont",
       "file": "tables/4c4047912dd03b4c74d0.m4a",
       "speaker": "lison",
@@ -33039,6 +33047,14 @@
       "audioSha256": "6e46e091c6c137434598ca5ebf4e2388fa600d2fa8bbd8b2e6d29716fee5fa6a"
     },
     {
+      "text": "j'appelle, tu appelles, il appelle, nous appelons, vous appelez, ils appellent",
+      "file": "tables/fef3646150cce88d33f0.m4a",
+      "speaker": "ninon",
+      "durationSeconds": 7.91,
+      "bytes": 70642,
+      "audioSha256": "d8ddd15718b06510a31ec62a9855762ffb4211dcb9fa8fa0395ffec9070e175e"
+    },
+    {
       "text": "j'ai appelé, tu as appelé, il a appelé, nous avons appelé, vous avez appelé, ils ont appelé",
       "file": "tables/d6bd922be91523ea6b71.m4a",
       "speaker": "ninon",
@@ -33125,6 +33141,14 @@
       "durationSeconds": 8.69,
       "bytes": 73601,
       "audioSha256": "4085ff5835b37c32761909c9c718daf29691606239aebcff7fc84b35a05fcafd"
+    },
+    {
+      "text": "j'espère, tu espères, il espère, nous espérons, vous espérez, ils espèrent",
+      "file": "tables/6cf5a0c4a821eeb306f7.m4a",
+      "speaker": "ninon",
+      "durationSeconds": 7.55,
+      "bytes": 65057,
+      "audioSha256": "05ec5abf679683eb8cc079a4533b8f3e6935f2729459b8f79c2ee11491db3068"
     },
     {
       "text": "j'ai espéré, tu as espéré, il a espéré, nous avons espéré, vous avez espéré, ils ont espéré",
@@ -33295,6 +33319,14 @@
       "audioSha256": "be00f4b50330798b18b3cff18273a7c4ea2fd8a4128a245c40f610f7ecddb059"
     },
     {
+      "text": "je voyageais, tu voyageais, il voyageait, nous voyagions, vous voyagiez, ils voyageaient",
+      "file": "tables/07865c8c150a7a7d7932.m4a",
+      "speaker": "pia",
+      "durationSeconds": 9.09,
+      "bytes": 76111,
+      "audioSha256": "9c94c91872e5c1dd91496a6f03e2dee4d38c36e97fa29882a9a0ed584f59d5a8"
+    },
+    {
       "text": "je voyagerai, tu voyageras, il voyagera, nous voyagerons, vous voyagerez, ils voyageront",
       "file": "tables/e989e251490ad91f5c6c.m4a",
       "speaker": "pia",
@@ -33381,6 +33413,14 @@
       "durationSeconds": 8.27,
       "bytes": 71604,
       "audioSha256": "87a3d8978eb2ac294b1c5b54bcecf47f510d00a6cdbd58e1a9479a0b9bface51"
+    },
+    {
+      "text": "je choisissais, tu choisissais, il choisissait, nous choisissions, vous choisissiez, ils choisissaient",
+      "file": "tables/fe9da38b9134f8a16692.m4a",
+      "speaker": "pia",
+      "durationSeconds": 9.27,
+      "bytes": 76961,
+      "audioSha256": "45d7713a4bf701060b2534be1e800dfaac90db283d4824580acecdd7f236d0a8"
     },
     {
       "text": "je choisirai, tu choisiras, il choisira, nous choisirons, vous choisirez, ils choisiront",
@@ -33589,6 +33629,14 @@
       "durationSeconds": 7.55,
       "bytes": 69666,
       "audioSha256": "9fdf590d8342dd5bffb965b244cef8ba268cd9ed81abfcc5ec610b1ce92aa5f4"
+    },
+    {
+      "text": "j'ai attendu, tu as attendu, il a attendu, nous avons attendu, vous avez attendu, ils ont attendu",
+      "file": "tables/077563c355b7b73cb035.m4a",
+      "speaker": "ninon",
+      "durationSeconds": 8.45,
+      "bytes": 74624,
+      "audioSha256": "fedbd10edc9555d40ec29d8390b489e8fffdbc0750d06b6eb0a3731633768469"
     },
     {
       "text": "j'attendais, tu attendais, il attendait, nous attendions, vous attendiez, ils attendaient",
@@ -33919,6 +33967,14 @@
       "audioSha256": "e98958ee9f6bbf2da2571cfd52cfd8b27af235f782dba4593ccc2a26394f5523"
     },
     {
+      "text": "je ferai, tu feras, il fera, nous ferons, vous ferez, ils feront",
+      "file": "tables/01fccc942630c8115c38.m4a",
+      "speaker": "lison",
+      "durationSeconds": 8.26,
+      "bytes": 70668,
+      "audioSha256": "09e3979a3324de76157620c0b5661a9a5ee991718482688998d04b82f1224554"
+    },
+    {
       "text": "je dis, tu dis, il dit, nous disons, vous dites, ils disent",
       "file": "tables/734efb115b62717e15a5.m4a",
       "speaker": "pia",
@@ -33981,6 +34037,14 @@
       "durationSeconds": 6.82,
       "bytes": 61475,
       "audioSha256": "cd546af1eceb3399f2146b3971898060324731df9f657e1e794ee19aa24cfe85"
+    },
+    {
+      "text": "je veux, tu veux, il veut, nous voulons, vous voulez, ils veulent",
+      "file": "tables/ecc7217e558521f1eab2.m4a",
+      "speaker": "lison",
+      "durationSeconds": 7.9,
+      "bytes": 68051,
+      "audioSha256": "d015bdd0ace2fc11328cb0a35e6e8bc6d846ac3d790689766d7b8c85179a4db0"
     },
     {
       "text": "j'ai voulu, tu as voulu, il a voulu, nous avons voulu, vous avez voulu, ils ont voulu",
@@ -34055,6 +34119,14 @@
       "audioSha256": "cd7053c3470a7ee474e9ca2d921597259b5a2c72fd3a5085c462916af5f347a0"
     },
     {
+      "text": "je voyais, tu voyais, il voyait, nous voyions, vous voyiez, ils voyaient",
+      "file": "tables/1cfaefc14623ac07e351.m4a",
+      "speaker": "ninon",
+      "durationSeconds": 7.28,
+      "bytes": 61067,
+      "audioSha256": "18718eb47c3510742ed71530610d8b2ab217e78bba0728d927629be38e445c51"
+    },
+    {
       "text": "je verrai, tu verras, il verra, nous verrons, vous verrez, ils verront",
       "file": "tables/40cbe6ef04ee72d49289.m4a",
       "speaker": "ninon",
@@ -34101,6 +34173,14 @@
       "durationSeconds": 5.45,
       "bytes": 47561,
       "audioSha256": "f3edb8e34b7e997d8c8f95b034c196bede05ae3e7faf572c2d9cfb3228673526"
+    },
+    {
+      "text": "je suis devenu, tu es devenu, il est devenu, nous sommes devenus, vous êtes devenus, ils sont devenus",
+      "file": "tables/62dc8eafd6efb4c48004.m4a",
+      "speaker": "pia",
+      "durationSeconds": 6.62,
+      "bytes": 56898,
+      "audioSha256": "2b34cc1f6e78c4f1956a1c30c602633a0d6c03597f275558dd4c51261582e440"
     },
     {
       "text": "je devenais, tu devenais, il devenait, nous devenions, vous deveniez, ils devenaient",
@@ -34239,6 +34319,14 @@
       "audioSha256": "7a9301b08a8f3c55e1936ecbdb03303ea3ec58e0c3ceb59f186faf0eb1ea63cf"
     },
     {
+      "text": "je devrai, tu devras, il devra, nous devrons, vous devrez, ils devront",
+      "file": "tables/ead96e51a0d4a57a01bf.m4a",
+      "speaker": "ninon",
+      "durationSeconds": 8.55,
+      "bytes": 73544,
+      "audioSha256": "fe38bae29dae79a8a1ebe1359782905faf1a40cd04b0491295ee9184e7f3a8ae"
+    },
+    {
       "text": "je prends, tu prends, il prend, nous prenons, vous prenez, ils prennent",
       "file": "tables/b7ea59272b15080a82f8.m4a",
       "speaker": "lison",
@@ -34295,12 +34383,28 @@
       "audioSha256": "385eff300b62059d4d1b69bc6097fa65c029591d65cabc4537b4474e3a4fca6c"
     },
     {
+      "text": "j'apprendrai, tu apprendras, il apprendra, nous apprendrons, vous apprendrez, ils apprendront",
+      "file": "tables/bee17cdde770a7402069.m4a",
+      "speaker": "pia",
+      "durationSeconds": 8.295,
+      "bytes": 72343,
+      "audioSha256": "c5f07249bb5077a996276245f248a8e9278cc28bcd9e787d4a65d0e4e0e3375c"
+    },
+    {
       "text": "je comprends, tu comprends, il comprend, nous comprenons, vous comprenez, ils comprennent",
       "file": "tables/a70df36ef379faff28fa.m4a",
       "speaker": "ninon",
       "durationSeconds": 8.53,
       "bytes": 74734,
       "audioSha256": "ef75699deba2746973d742b2ecf5ea07fa440a882c9838362484fe68a8a62fc4"
+    },
+    {
+      "text": "j'ai compris, tu as compris, il a compris, nous avons compris, vous avez compris, ils ont compris",
+      "file": "tables/e874d505a487a0f9656f.m4a",
+      "speaker": "ninon",
+      "durationSeconds": 8.49,
+      "bytes": 74374,
+      "audioSha256": "030de61d823504d8827c0a0fb5a49c04a2c0c829d23d42a9e06fc37e2fc75b00"
     },
     {
       "text": "je comprenais, tu comprenais, il comprenait, nous comprenions, vous compreniez, ils comprenaient",
@@ -34319,6 +34423,14 @@
       "audioSha256": "8ae990513491520fcb3fc8272e8e5133e242b8e755627349c95d2531921f7495"
     },
     {
+      "text": "je mets, tu mets, il met, nous mettons, vous mettez, ils mettent",
+      "file": "tables/61b14cd4732fb99a8085.m4a",
+      "speaker": "lison",
+      "durationSeconds": 6.45,
+      "bytes": 56630,
+      "audioSha256": "e85a29495a1824eb78e7b804e191154466b22ba665356f6587b82ee18b1983fa"
+    },
+    {
       "text": "j'ai mis, tu as mis, il a mis, nous avons mis, vous avez mis, ils ont mis",
       "file": "tables/fdbf195f2da4adfae02d.m4a",
       "speaker": "lison",
@@ -34333,6 +34445,14 @@
       "durationSeconds": 8.62,
       "bytes": 74653,
       "audioSha256": "62f3c8a276d0f00a3a937827171e48f93c34e437cb7cdbfbf232d440f804e505"
+    },
+    {
+      "text": "je mettrai, tu mettras, il mettra, nous mettrons, vous mettrez, ils mettront",
+      "file": "tables/24ef423fa7b652783b2a.m4a",
+      "speaker": "lison",
+      "durationSeconds": 8.3,
+      "bytes": 72086,
+      "audioSha256": "fd87f1a31e12c83273a4498bed2279f974aa41507bf305257515ad476c7dbaf8"
     },
     {
       "text": "je permets, tu permets, il permet, nous permettons, vous permettez, ils permettent",
@@ -34391,6 +34511,14 @@
       "audioSha256": "defe06e43ce62941c406289b1e093e55f2695b47657588e5eefc152dbef08602"
     },
     {
+      "text": "je promettrai, tu promettras, il promettra, nous promettrons, vous promettrez, ils promettront",
+      "file": "tables/aa10c21ad0120a0b6891.m4a",
+      "speaker": "ninon",
+      "durationSeconds": 8.06,
+      "bytes": 72699,
+      "audioSha256": "e3b683bc7e24e0e8bb105b4387fb89f5be850104bf6ae2e10e81c7b99bbebf34"
+    },
+    {
       "text": "je crois, tu crois, il croit, nous croyons, vous croyez, ils croient",
       "file": "tables/5a6df304a45603094e54.m4a",
       "speaker": "lison",
@@ -34447,6 +34575,14 @@
       "audioSha256": "1282a507e387dc19356b2ada22063f96d6a6cdc230d5c2d985398552d637138b"
     },
     {
+      "text": "je connaîtrai, tu connaîtras, il connaîtra, nous connaîtrons, vous connaîtrez, ils connaîtront",
+      "file": "tables/14c7c51191264d6abd33.m4a",
+      "speaker": "pia",
+      "durationSeconds": 7.51,
+      "bytes": 64479,
+      "audioSha256": "d2e04ad546b07eee202118ad454887c7ec2bfc6495c783d8a8ebbb0d7577feff"
+    },
+    {
       "text": "je parais, tu parais, il paraît, nous paraissons, vous paraissez, ils paraissent",
       "file": "tables/096431d94b981e785306.m4a",
       "speaker": "ninon",
@@ -34469,6 +34605,14 @@
       "durationSeconds": 7.27,
       "bytes": 63010,
       "audioSha256": "65f25215f04aad7f474ba619bccb43609aa1ff055adf5cc788fb5b0d12c01b00"
+    },
+    {
+      "text": "je paraîtrai, tu paraîtras, il paraîtra, nous paraîtrons, vous paraîtrez, ils paraîtront",
+      "file": "tables/12a979fa39c4a4dd9d6f.m4a",
+      "speaker": "ninon",
+      "durationSeconds": 8.51,
+      "bytes": 74589,
+      "audioSha256": "bd7eaa12d2822f953346712cb9751d1323b8d98674e1603e76e2a2331e5b2557"
     },
     {
       "text": "je nais, tu nais, il naît, nous naissons, vous naissez, ils naissent",
@@ -34589,6 +34733,14 @@
       "durationSeconds": 7.25,
       "bytes": 63032,
       "audioSha256": "1f4045b17b1f24a37fe246dff2e6d5e0eccd44c5f5413922a85a24564247299f"
+    },
+    {
+      "text": "je dormirai, tu dormiras, il dormira, nous dormirons, vous dormirez, ils dormiront",
+      "file": "tables/ce9ab6b09bf3d48b0e27.m4a",
+      "speaker": "lison",
+      "durationSeconds": 7.32,
+      "bytes": 63654,
+      "audioSha256": "788860435ab6f95926f0e63395ceb7979481e11e7f3062be27e1598c62b66164"
     },
     {
       "text": "je sers, tu sers, il sert, nous servons, vous servez, ils servent",
@@ -34719,6 +34871,14 @@
       "audioSha256": "27f3a32cb32c9aea94351af9a931bd75586865bfbe6c133d99aa79edf892d7b0"
     },
     {
+      "text": "je découvre, tu découvres, il découvre, nous découvrons, vous découvrez, ils découvrent",
+      "file": "tables/2446f7721f2bbcc8bbbc.m4a",
+      "speaker": "ninon",
+      "durationSeconds": 8.12,
+      "bytes": 72268,
+      "audioSha256": "5bd5e97ed974392cecb53f9767be5c6f69a82f1ab478442c1f523d2338ce624e"
+    },
+    {
       "text": "j'ai découvert, tu as découvert, il a découvert, nous avons découvert, vous avez découvert, ils ont découvert",
       "file": "tables/1d6ebfcf6c6e559151cd.m4a",
       "speaker": "ninon",
@@ -34733,6 +34893,14 @@
       "durationSeconds": 8.66,
       "bytes": 76126,
       "audioSha256": "6773dc4590ed6fa570e2b35782e8e4d179e0289b62c8ae45df7691530104af7f"
+    },
+    {
+      "text": "je découvrirai, tu découvriras, il découvrira, nous découvrirons, vous découvrirez, ils découvriront",
+      "file": "tables/f3812076d971cdecc841.m4a",
+      "speaker": "ninon",
+      "durationSeconds": 9.39,
+      "bytes": 82031,
+      "audioSha256": "7aacdf0dc2d7dc1de293640b0c7447f6f923d57377da15c186aa5f5ba796f3c2"
     },
     {
       "text": "je cours, tu cours, il court, nous courons, vous courez, ils courent",
@@ -34911,6 +35079,22 @@
       "audioSha256": "31aa93681e6b4e7941263c59c7d7475b091c71fdabe51eef8dfe7348372a7789"
     },
     {
+      "text": "je lisais, tu lisais, il lisait, nous lisions, vous lisiez, ils lisaient",
+      "file": "tables/851d494914d649a10816.m4a",
+      "speaker": "ninon",
+      "durationSeconds": 15.475,
+      "bytes": 133978,
+      "audioSha256": "f1c21afcbb84204d2e2a9d7634b7fc0b0cccd5024b8fe1a4578755ef59128128"
+    },
+    {
+      "text": "je lirai, tu liras, il lira, nous lirons, vous lirez, ils liront",
+      "file": "tables/81cb845ca0f3c5e144fd.m4a",
+      "speaker": "ninon",
+      "durationSeconds": 0.455,
+      "bytes": 818,
+      "audioSha256": "c56b2cd01b4111b6ec16a0c8b69b04b2789ee56842867881160f3c409fcb039b"
+    },
+    {
       "text": "je bois, tu bois, il boit, nous buvons, vous buvez, ils boivent",
       "file": "tables/d9be49d0b979ade6a91d.m4a",
       "speaker": "lison",
@@ -35079,6 +35263,14 @@
       "audioSha256": "86d9042229ffdb234760409ed9d6fa9113a66e44a4be8af9d2be4935b3d89ca3"
     },
     {
+      "text": "j'ai ri, tu as ri, il a ri, nous avons ri, vous avez ri, ils ont ri",
+      "file": "tables/9121ae5c981f3b8742a0.m4a",
+      "speaker": "ninon",
+      "durationSeconds": 6.89,
+      "bytes": 58835,
+      "audioSha256": "955ddd33f1043825630e52a27cc67b8e2b63add274f47d584d75495a3e5e6d24"
+    },
+    {
       "text": "je riais, tu riais, il riait, nous riions, vous riiez, ils riaient",
       "file": "tables/581e73bc740290821b5c.m4a",
       "speaker": "ninon",
@@ -35101,6 +35293,14 @@
       "durationSeconds": 7.15,
       "bytes": 63117,
       "audioSha256": "4939b88f31861b016ce85c162bfc38e81d5a81f3beb357bffdf49fb3f2363907"
+    },
+    {
+      "text": "j'ai plu, tu as plu, il a plu, nous avons plu, vous avez plu, ils ont plu",
+      "file": "tables/40f4783c9a71c2593116.m4a",
+      "speaker": "lison",
+      "durationSeconds": 7.185,
+      "bytes": 63419,
+      "audioSha256": "f27eb70ce512902e98d1ac5f0c0b9a37d8f66a1584922a04070ec796b4840975"
     },
     {
       "text": "je plaisais, tu plaisais, il plaisait, nous plaisions, vous plaisiez, ils plaisaient",
@@ -35151,9 +35351,9 @@
       "audioSha256": "5a338b23ab8d8f25d3c5bd4a6b27c9f392fb3f377ea3de849c4763c1f6ad795b"
     }
   ],
-  "tableCount": 359,
-  "tableBytes": 25169450,
-  "tablePending": 25,
+  "tableCount": 384,
+  "tableBytes": 26899492,
+  "tablePending": 0,
   "forms": [
     {
       "text": "je parle",
@@ -35588,6 +35788,22 @@
       "audioSha256": "520b951afca57b08d6f88fe6c043f1f56f24b82ca617ea9ccd25c85015d0b105"
     },
     {
+      "text": "elle aimait",
+      "file": "forms/35b1460a4817e47df442.m4a",
+      "speaker": "lison",
+      "durationSeconds": 0.8,
+      "bytes": 7503,
+      "audioSha256": "e20d4ecc67bd6b061d46a498248f85b7d92c5d0b4d4abf23bfaeb5b8c6e5b15b"
+    },
+    {
+      "text": "elles aimaient",
+      "file": "forms/6021bd257e4854928302.m4a",
+      "speaker": "lison",
+      "durationSeconds": 1.12,
+      "bytes": 10086,
+      "audioSha256": "938c2b879fc3af0838a08d473c40ced63948c2aa06e6a8ba2240cb11e0cf1522"
+    },
+    {
       "text": "j'aimerai",
       "file": "forms/13b1912c0ae6440aabb4.m4a",
       "speaker": "lison",
@@ -35634,6 +35850,14 @@
       "durationSeconds": 0.98,
       "bytes": 9116,
       "audioSha256": "ad13418ccb2f0006aafb4663b4be24bea3dcd6c9792d49c57b3231252fec4594"
+    },
+    {
+      "text": "elle aimera",
+      "file": "forms/e913eee45a1481047b5e.m4a",
+      "speaker": "lison",
+      "durationSeconds": 0.92,
+      "bytes": 8582,
+      "audioSha256": "ce299cd51ed1e33c4224a13efc64bdf2a41bdf949e1709de8d10714be7396a1f"
     },
     {
       "text": "elles aimeront",
@@ -39116,6 +39340,14 @@
       "audioSha256": "9e300bf1c9b7136a0dbe80865fa60d7b87eb7dcef621398382f8e02b47457b89"
     },
     {
+      "text": "il oublie",
+      "file": "forms/1893f30534486ee29308.m4a",
+      "speaker": "ninon",
+      "durationSeconds": 1.05,
+      "bytes": 9778,
+      "audioSha256": "fd57c81412b8a948995b72947ec8e2ae0c7e2c06fdf18d0ea4b7581e236dc2a6"
+    },
+    {
       "text": "nous oublions",
       "file": "forms/6bcd13dcded935dc9b5a.m4a",
       "speaker": "ninon",
@@ -40980,6 +41212,14 @@
       "audioSha256": "c2a4707a6630830c5c1d1027fbd1643ee566ef4b956bad65d432cb4f796f4a1b"
     },
     {
+      "text": "vous achetez",
+      "file": "forms/a9b3f162eae804220253.m4a",
+      "speaker": "lison",
+      "durationSeconds": 1.11,
+      "bytes": 10194,
+      "audioSha256": "90c701af29b786d949ba43a92d57b2d7c14f7b91a3076a0acc042d621f9c1e12"
+    },
+    {
       "text": "ils achètent",
       "file": "forms/e5e3d7ecc1a2255bac2f.m4a",
       "speaker": "lison",
@@ -41250,6 +41490,14 @@
       "durationSeconds": 1.15,
       "bytes": 10955,
       "audioSha256": "d7bcffbbdc7e59700582d58a52bce71752aa67e3b0798ea9af72f8bf99088409"
+    },
+    {
+      "text": "elles lèvent",
+      "file": "forms/e36480308834fc58be52.m4a",
+      "speaker": "pia",
+      "durationSeconds": 1.05,
+      "bytes": 9449,
+      "audioSha256": "3194d352fbd9da22d00a933cf7aa67801f1a2fa9f1f5fbda75247e2f61cb4b35"
     },
     {
       "text": "j'ai levé",
@@ -41698,6 +41946,14 @@
       "durationSeconds": 1.04,
       "bytes": 9500,
       "audioSha256": "9a595d1fdd196e95572961f4f0d4798e520ae00463fc170d5e7265dff67ba128"
+    },
+    {
+      "text": "je jette",
+      "file": "forms/231cb6efd57c7e81cc61.m4a",
+      "speaker": "lison",
+      "durationSeconds": 0.88,
+      "bytes": 8246,
+      "audioSha256": "3a61f9227de185ffd6b9c73fb8efa2a05279cd4c75f51c8c483f1ca4915cd124"
     },
     {
       "text": "tu jettes",
@@ -42508,6 +42764,14 @@
       "audioSha256": "a072dc7f1634fbec4a8cd7787bccfcabe482a7de0a617c046d70383654d73902"
     },
     {
+      "text": "elle paie",
+      "file": "forms/fb6ebf0e9febc6db712a.m4a",
+      "speaker": "lison",
+      "durationSeconds": 0.77,
+      "bytes": 7295,
+      "audioSha256": "23da5567668dad0276f61575948c794ea3b2fe1f4c8a48f6755e66d48cc9cced"
+    },
+    {
       "text": "elles paient",
       "file": "forms/961724c0be5df419ce73.m4a",
       "speaker": "lison",
@@ -42636,6 +42900,14 @@
       "audioSha256": "1de277c366860873b30e1ce5280513e00443a8c4c08e6808bd1eca6638c91625"
     },
     {
+      "text": "elles payaient",
+      "file": "forms/1d80c047beb179b8fce2.m4a",
+      "speaker": "lison",
+      "durationSeconds": 1.13,
+      "bytes": 11225,
+      "audioSha256": "dff0057a5ec3ad38fb8dcc6c432dc9889810d6557348bfb9e1876e2a6ad39942"
+    },
+    {
       "text": "je paierai",
       "file": "forms/e23c3861fb1db0b638a6.m4a",
       "speaker": "lison",
@@ -42716,6 +42988,14 @@
       "audioSha256": "a216293cd043c541ca752f420ba2e214688bf8ac9c55a30ff9668038c90341c9"
     },
     {
+      "text": "il essaie",
+      "file": "forms/0aa012400db322a00923.m4a",
+      "speaker": "pia",
+      "durationSeconds": 0.98,
+      "bytes": 8684,
+      "audioSha256": "4050a822ccf9c0d75b633f1a6b69b3e65f2d20e0801c9d243541d3256531cd48"
+    },
+    {
       "text": "nous essayons",
       "file": "forms/620760f06affeb4e4bef.m4a",
       "speaker": "pia",
@@ -42738,6 +43018,14 @@
       "durationSeconds": 0.9,
       "bytes": 8497,
       "audioSha256": "facd8cc05363bb31e0d7da67d66c8da1910740850e56845b5afea299c8f4bac0"
+    },
+    {
+      "text": "elle essaie",
+      "file": "forms/a3098980dc5b09238d22.m4a",
+      "speaker": "pia",
+      "durationSeconds": 0.91,
+      "bytes": 8304,
+      "audioSha256": "dbf17fcb7ddd1f8bde7052c6aba06477ff1cdd1dea748d7b17f68645f0994557"
     },
     {
       "text": "elles essaient",
@@ -42828,6 +43116,14 @@
       "audioSha256": "9e3c3712ccb697258cb38c453c59f34c7c088612409de260173634d566895282"
     },
     {
+      "text": "il essayait",
+      "file": "forms/79837e7873f3b0253ae5.m4a",
+      "speaker": "pia",
+      "durationSeconds": 1.1,
+      "bytes": 9783,
+      "audioSha256": "d96a71046a90bdf63ca73ded5ceab1234692972ac593d9ad32b534276975ef48"
+    },
+    {
       "text": "nous essayions",
       "file": "forms/190fbf04037666fd68a5.m4a",
       "speaker": "pia",
@@ -42850,6 +43146,14 @@
       "durationSeconds": 1.11,
       "bytes": 10027,
       "audioSha256": "28020cd80d496ecde491fd8d13574a2aab18f8358b12212a48fefe81780de444"
+    },
+    {
+      "text": "elle essayait",
+      "file": "forms/109b09ffce581fc16cd6.m4a",
+      "speaker": "pia",
+      "durationSeconds": 1.05,
+      "bytes": 9501,
+      "audioSha256": "830d19cfed63647ac98ba6e96120583adeafeb5ef920fb3edfad7802a4b9c986"
     },
     {
       "text": "elles essayaient",
@@ -45484,6 +45788,14 @@
       "audioSha256": "2856fdef8ad4be54452a8edd516d743b9e1e70ecbc4f3e15f43de35d790d7300"
     },
     {
+      "text": "j'obéis",
+      "file": "forms/8e38e0c88f4d1a396f46.m4a",
+      "speaker": "lison",
+      "durationSeconds": 1.07,
+      "bytes": 9538,
+      "audioSha256": "c269d2f7a6b0973fa56fe021917f90de533d2e83347e5366006128878ce53733"
+    },
+    {
       "text": "tu obéis",
       "file": "forms/c25588944ca2447e16e8.m4a",
       "speaker": "lison",
@@ -47988,6 +48300,22 @@
       "audioSha256": "8038aa9c90f835bb14e47e98dc943456a8c64a5f03be8d20d13276ae2251722d"
     },
     {
+      "text": "elle était",
+      "file": "forms/dfd6846a56bc6c568ce6.m4a",
+      "speaker": "lison",
+      "durationSeconds": 0.77,
+      "bytes": 7644,
+      "audioSha256": "cc7542b7dc98a9933f59cd7f2f5b19d3ec4962ff60ff7da88ff4bc8b737d485c"
+    },
+    {
+      "text": "elles étaient",
+      "file": "forms/92e640dc71536ae50ded.m4a",
+      "speaker": "lison",
+      "durationSeconds": 1.0,
+      "bytes": 9224,
+      "audioSha256": "581d1cb7b401e80516b35c5dfacb913f1a66c189669fd55dcec9aa33c7cc917b"
+    },
+    {
       "text": "je serai",
       "file": "forms/e5ea39e938784cb41aa1.m4a",
       "speaker": "lison",
@@ -48900,6 +49228,14 @@
       "audioSha256": "4e124885b51ef91c6ef9c82e5b9f70f23b4de43552aeafc4ac3def06e26a8bb4"
     },
     {
+      "text": "elle dit",
+      "file": "forms/cfdb678f230e4790dbfe.m4a",
+      "speaker": "pia",
+      "durationSeconds": 0.78,
+      "bytes": 8152,
+      "audioSha256": "d20326c88e8c7acd44c4fb3cae8b8302781011151e3bed397b7d83834a864544"
+    },
+    {
       "text": "elles disent",
       "file": "forms/67a5dd55024196e1b2b6.m4a",
       "speaker": "pia",
@@ -49660,6 +49996,14 @@
       "audioSha256": "0ff1774a5dc1939ee182a67101660ec7f3c65f176da567cdb53fc3b0b9b5f2fa"
     },
     {
+      "text": "elle sait",
+      "file": "forms/01c0944988c60b1f99f7.m4a",
+      "speaker": "pia",
+      "durationSeconds": 0.79,
+      "bytes": 7509,
+      "audioSha256": "2000934c8bacad7c671e4ff822b4d6e4f64147a952e03af1932a9b3bb1fa0bd3"
+    },
+    {
       "text": "elles savent",
       "file": "forms/f55aa0308765ea577108.m4a",
       "speaker": "pia",
@@ -50138,6 +50482,14 @@
       "durationSeconds": 0.82,
       "bytes": 7755,
       "audioSha256": "8d70ebd329e7cf2fff0dded5c08a0c7b1a233a649209f87148770468f33e8a85"
+    },
+    {
+      "text": "nous venons",
+      "file": "forms/3d7837f500f1b43233d6.m4a",
+      "speaker": "lison",
+      "durationSeconds": 1.08,
+      "bytes": 9740,
+      "audioSha256": "5e845bb3ac7c562926dbb57049514d5f971bf9f2339f0013faa1c86718e503d3"
     },
     {
       "text": "vous venez",
@@ -52556,6 +52908,14 @@
       "audioSha256": "bbb35baf5d1d75bfae00865e67b54e21e9b502b1ef557e9f0857aa217b6fa281"
     },
     {
+      "text": "elle met",
+      "file": "forms/3396139684bcfa02fe20.m4a",
+      "speaker": "lison",
+      "durationSeconds": 0.84,
+      "bytes": 7736,
+      "audioSha256": "f535aa53a457acb2b97393d39bc842c36f38824279cba64a9fa9ba2205effcac"
+    },
+    {
       "text": "elles mettent",
       "file": "forms/120cd405d38cf4a63ff2.m4a",
       "speaker": "lison",
@@ -52674,6 +53034,14 @@
       "durationSeconds": 1.06,
       "bytes": 10107,
       "audioSha256": "f12c4f15ba975a47af566a82c7d998c7403d689068697c1f4f09c90363be493f"
+    },
+    {
+      "text": "elle mettait",
+      "file": "forms/371612126e15dad7b171.m4a",
+      "speaker": "lison",
+      "durationSeconds": 1.08,
+      "bytes": 9778,
+      "audioSha256": "128d780e97eac36ef1ca0d251af12083292c67b364daa04cbe2c37c9e5c5666d"
     },
     {
       "text": "elles mettaient",
@@ -54068,6 +54436,30 @@
       "audioSha256": "d345e5790424c483b9a8bf2546d49672ba09368b5e6ebdc4e29014e285f2437e"
     },
     {
+      "text": "ils naissent",
+      "file": "forms/7489a9733728cb43dcd6.m4a",
+      "speaker": "lison",
+      "durationSeconds": 1.47,
+      "bytes": 12728,
+      "audioSha256": "cc5879794baaab27a076741fcb8f4842bd18fc1c50bfa4602e4adee8b95d12b2"
+    },
+    {
+      "text": "elle naît",
+      "file": "forms/55bb8baddbd609892df6.m4a",
+      "speaker": "lison",
+      "durationSeconds": 1.32,
+      "bytes": 11323,
+      "audioSha256": "00d9b298d244ab0e77dddbb97e0715a015a5a1c70330da7360d3e24866526e71"
+    },
+    {
+      "text": "elles naissent",
+      "file": "forms/8b098ba700e2255967a4.m4a",
+      "speaker": "lison",
+      "durationSeconds": 1.23,
+      "bytes": 10945,
+      "audioSha256": "12aad395a338a2a9d0de3b4aaea827904848f2ad00c1151edb5f15a2d3a104af"
+    },
+    {
       "text": "je suis né",
       "file": "forms/51bac826b221c486ad1e.m4a",
       "speaker": "lison",
@@ -54132,6 +54524,14 @@
       "audioSha256": "c9ecc1d0575116c6b9e860caa8ee6c45a2871cd2f2b42cdd59d87bcda1064b2b"
     },
     {
+      "text": "elle est née",
+      "file": "forms/09b92a6ba852d8273cae.m4a",
+      "speaker": "lison",
+      "durationSeconds": 0.83,
+      "bytes": 8002,
+      "audioSha256": "544cf7184666936cb1fb6cab92a6e3571b1e75f21ca4d88d33a09d5bf1b2ba37"
+    },
+    {
       "text": "nous sommes nées",
       "file": "forms/b8d7e7e0d3ef90ebafb4.m4a",
       "speaker": "lison",
@@ -54194,6 +54594,14 @@
       "durationSeconds": 1.45,
       "bytes": 12554,
       "audioSha256": "830f4ccd56b19f8676c9e9f28f6980c3b18a0816d95c962f0748b26dc728309a"
+    },
+    {
+      "text": "ils naissaient",
+      "file": "forms/9dde32db979303661c91.m4a",
+      "speaker": "lison",
+      "durationSeconds": 1.22,
+      "bytes": 10709,
+      "audioSha256": "e2f88bbc7359d78b5672fde1e9e054bba55809e9f91f3738177824dd30d2bbdc"
     },
     {
       "text": "elle naissait",
@@ -54330,6 +54738,14 @@
       "durationSeconds": 1.08,
       "bytes": 10017,
       "audioSha256": "c4abce622e19906cb8ebfa1bc5f457c609a32f836c7c08b9c6f3d76067271e5b"
+    },
+    {
+      "text": "elles partent",
+      "file": "forms/d4c2c07d6ab18b4e474f.m4a",
+      "speaker": "pia",
+      "durationSeconds": 1.25,
+      "bytes": 11965,
+      "audioSha256": "3c8f8ec58b608c0bdd95330283c86fc5c35e0079cb3270e6efb9ac180e9c3731"
     },
     {
       "text": "je suis parti",
@@ -55402,6 +55818,14 @@
       "durationSeconds": 1.29,
       "bytes": 12223,
       "audioSha256": "35e3dd6bcf05a478620a386338d19d3df22197fc7336931585ef21bda97df147"
+    },
+    {
+      "text": "elle sent",
+      "file": "forms/46e000ea0ce8164547e1.m4a",
+      "speaker": "ninon",
+      "durationSeconds": 0.89,
+      "bytes": 8213,
+      "audioSha256": "3e16240833ab91a7af1419069f19f1d117df4a450f9e0c684664e292d782a911"
     },
     {
       "text": "elles sentent",
@@ -57692,6 +58116,14 @@
       "audioSha256": "c1e33daa1b8cac7ddd73cd1333b677de9c2fa9b959626091fbc4b65abc5642db"
     },
     {
+      "text": "il lit",
+      "file": "forms/70e7b9ee0e47b6274ebe.m4a",
+      "speaker": "ninon",
+      "durationSeconds": 0.83,
+      "bytes": 7790,
+      "audioSha256": "daf6b4d6f99e6779bfd5d4b365e5bc4dca7e7492f053cec6752b3d602532837c"
+    },
+    {
       "text": "nous lisons",
       "file": "forms/eac2e02fab4a0e94d5bd.m4a",
       "speaker": "ninon",
@@ -57714,6 +58146,14 @@
       "durationSeconds": 1.13,
       "bytes": 10257,
       "audioSha256": "015c1b1b6c266a31ce715bf1ca9e053fe334404e4ac895913ad5a204b920e77e"
+    },
+    {
+      "text": "elle lit",
+      "file": "forms/4a7ae0dca0f3c235655a.m4a",
+      "speaker": "ninon",
+      "durationSeconds": 1.17,
+      "bytes": 11000,
+      "audioSha256": "2e77385f60000fa70a9f5319054d113d8e82fa49707d3bff25e236d0321a7d14"
     },
     {
       "text": "elles lisent",
@@ -59116,6 +59556,22 @@
       "audioSha256": "8eef25432b08c37b1cf6edc588057b34c4d06904e70d4782940eb27fd4eb1d1a"
     },
     {
+      "text": "elle peignait",
+      "file": "forms/c81c4273ab1b528116f7.m4a",
+      "speaker": "pia",
+      "durationSeconds": 1.08,
+      "bytes": 9878,
+      "audioSha256": "a42d07d4a909e7dc5b7e64204bd14f03d66db4cdfe6c7da8b6375c0bf3236859"
+    },
+    {
+      "text": "elles peignaient",
+      "file": "forms/0054c67dd6de5d7ced1c.m4a",
+      "speaker": "pia",
+      "durationSeconds": 1.04,
+      "bytes": 9777,
+      "audioSha256": "fbf285cf069370dd505a0600da21140408786dfa9789036b2569fe8f9f4b66fb"
+    },
+    {
       "text": "je peindrai",
       "file": "forms/2ba6131ea56f7bd669c4.m4a",
       "speaker": "pia",
@@ -59234,6 +59690,14 @@
       "durationSeconds": 0.84,
       "bytes": 7781,
       "audioSha256": "c42eb9ea7eda47e1c181135fa3a7a73fa95b124c4a36a6fd6c277cb74371d1ff"
+    },
+    {
+      "text": "elles rient",
+      "file": "forms/78913016e3681ac6fd1b.m4a",
+      "speaker": "ninon",
+      "durationSeconds": 0.7,
+      "bytes": 6718,
+      "audioSha256": "18ff80a3b967dc39078771af1ca51dffe4ebcb23a63082790f0d45362b10a0b8"
     },
     {
       "text": "j'ai ri",
@@ -59732,6 +60196,14 @@
       "audioSha256": "0620abc8d23610a10a14d3d38a654fa2b3419e1a2c6e48b3abd616afe5819583"
     },
     {
+      "text": "elle bat",
+      "file": "forms/9caa5eb64aef18d69bc6.m4a",
+      "speaker": "pia",
+      "durationSeconds": 0.75,
+      "bytes": 7173,
+      "audioSha256": "e793f5238280d7290b2e07e7b8e0849812b98e3680da2baf6ef2ce0eb83a832f"
+    },
+    {
       "text": "elles battent",
       "file": "forms/992b4792846885f47e61.m4a",
       "speaker": "pia",
@@ -59932,7 +60404,7 @@
       "audioSha256": "ebfd0705f943e056104b255863accbba8434a9f3d41e9b69a790a75383b5c395"
     }
   ],
-  "formCount": 3097,
-  "formBytes": 32856404,
-  "formPending": 34
+  "formCount": 3131,
+  "formBytes": 33170576,
+  "formPending": 0
 }
