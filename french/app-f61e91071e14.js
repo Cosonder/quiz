@@ -37,7 +37,7 @@ function afterPick() {
 // 首屏用不上的大块数据（爬塔 Boss 题库、地图、更新记录）在公开网站上单独成文件：页面能用之后在后台下载，
 // 用户提前点到时显示“正在加载”并等它下完。单文件版（本地预览、Claude 页面）里这些内容仍直接写在页面里，LAZY_FILES 为空。
 // 打包见 quiz-site/package-french.py（它把下面这个空对象换成 {名字: 文件名}）。
-const LAZY_FILES = /*__LAZY_FILES__*/{"tourparis": "lazy-tourparis-f9ce9b7155f9.js", "dlcmaps": "lazy-dlcmaps-27aa0b4d7033.js", "changelog": "lazy-changelog-ec8f17e531a7.js", "bossbank": "lazy-bossbank-68a8c18b69bf.js"};
+const LAZY_FILES = /*__LAZY_FILES__*/{"tourparis": "lazy-tourparis-f9ce9b7155f9.js", "dlcmaps": "lazy-dlcmaps-27aa0b4d7033.js", "changelog": "lazy-changelog-83caab6a965f.js", "bossbank": "lazy-bossbank-68a8c18b69bf.js"};
 const lazyDone = new Set(), lazyPending = new Map();
 const lazyReady = name => !Object.hasOwn(LAZY_FILES, name) || lazyDone.has(name);
 function lazyLoad(name) {
@@ -24690,7 +24690,7 @@ function studyClipSegments(entry,text){
 async function studyAudioIndex(){
   if(studyAudioManifest)return studyAudioManifest;
   if(studyAudioLoad)return studyAudioLoad;
-  studyAudioLoad=(async()=>{const controller=new AbortController(),timer=setTimeout(()=>controller.abort(),8000);try{const r=await fetch(STUDY_AUDIO_BASE+'manifest.json?v=1.9.92',{signal:controller.signal});if(!r.ok)throw Error('manifest');const m=await r.json();if(m.version!==1||!m.characters)throw Error('manifest');studyAudioManifest=m;return m;}finally{clearTimeout(timer);studyAudioLoad=null;}})();
+  studyAudioLoad=(async()=>{const controller=new AbortController(),timer=setTimeout(()=>controller.abort(),8000);try{const r=await fetch(STUDY_AUDIO_BASE+'manifest.json?v=1.9.93',{signal:controller.signal});if(!r.ok)throw Error('manifest');const m=await r.json();if(m.version!==1||!m.characters)throw Error('manifest');studyAudioManifest=m;return m;}finally{clearTimeout(timer);studyAudioLoad=null;}})();
   return studyAudioLoad;
 }
 function studySystemPart(text,rate,btn,done,role){

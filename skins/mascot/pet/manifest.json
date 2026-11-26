@@ -70,5 +70,38 @@
       "pet-cape"
     ]
   },
-  "runtimeBytes": 1732830
+  "runtimeBytes": 1978330,
+  "peek": {
+    "frame": [
+      384,
+      480
+    ],
+    "size": [
+      768,
+      480
+    ],
+    "columns": [
+      "peek",
+      "expand"
+    ],
+    "edge": "right",
+    "maxFileBytes": 150000,
+    "characters": {
+      "ninon": {
+        "file": "peek-ninon.webp",
+        "bytes": 91210,
+        "quality": 90
+      },
+      "pia": {
+        "file": "peek-pia.webp",
+        "bytes": 66006,
+        "quality": 90
+      },
+      "lison": {
+        "file": "peek-lison.webp",
+        "bytes": 88284,
+        "quality": 90
+      }
+    }
+  }
 }
