@@ -560,7 +560,7 @@
 
 ## 《哈利·波特》第一章词汇（hp-ch1）
 
-这批图由 ChatGPT 按每个词的例句生成（三位学习伙伴装扮成书中人物；原图存档在 `originals/picgen/hp-ch1/`），裁成 3:2、缩到 720×480。例句是按第一章情节自己写的，不是原文。目前 60 / 240 张。
+这批图由 ChatGPT 按每个词的例句生成（三位学习伙伴装扮成书中人物；原图存档在 `originals/picgen/hp-ch1/`），裁成 3:2、缩到 720×480。例句是按第一章情节自己写的，不是原文。目前 119 / 240 张。
 
 | 单词 | 文件 |
 |---|---|
@@ -624,3 +624,62 @@
 | sèchement | hp-sechement.jpg |
 | gravement | hp-gravement.jpg |
 | fixement | hp-fixement.jpg |
+| allée | hp-allee.jpg |
+| précaution | hp-precaution.jpg |
+| respiration | hp-respiration.jpg |
+| reflet | hp-reflet.jpg |
+| brique | hp-brique.jpg |
+| boucle | hp-boucle.jpg |
+| drap | hp-drap.jpg |
+| coupure | hp-coupure.jpg |
+| aiguille | hp-aiguille.jpg |
+| passant | hp-passant.jpg |
+| dentelle | hp-dentelle.jpg |
+| présentateur | hp-presentateur.jpg |
+| couvercle | hp-couvercle.jpg |
+| cadran | hp-cadran.jpg |
+| portière | hp-portiere.jpg |
+| grimace | hp-grimace.jpg |
+| émeraude | hp-emeraude.jpg |
+| clôture | hp-cloture.jpg |
+| claquement | hp-claquement.jpg |
+| plumage | hp-plumage.jpg |
+| pelage | hp-pelage.jpg |
+| averse | hp-averse.jpg |
+| touffe | hp-touffe.jpg |
+| capuchon | hp-capuchon.jpg |
+| murmure | hp-murmure.jpg |
+| rapace | hp-rapace.jpg |
+| potin | hp-potin.jpg |
+| banquet | hp-banquet.jpg |
+| étoile filante | hp-etoile-filante.jpg |
+| friandise | hp-friandise.jpg |
+| bambin | hp-bambin.jpg |
+| bruissement | hp-bruissement.jpg |
+| vrombissement | hp-vrombissement.jpg |
+| écriteau | hp-ecriteau.jpg |
+| talon | hp-talon.jpg |
+| botte | hp-botte.jpg |
+| phare | hp-phare.jpg |
+| proie | hp-proie.jpg |
+| bond | hp-bond.jpg |
+| survivant | hp-survivant.jpg |
+| témoignage | hp-temoignage.jpg |
+| géant | hp-geant.jpg |
+| humeur | hp-humeur.jpg |
+| larme | hp-larme.jpg |
+| lèvre | hp-levre.jpg |
+| légende | hp-legende.jpg |
+| comportement | hp-comportement.jpg |
+| manche | hp-manche.jpg |
+| trace | hp-trace.jpg |
+| téléspectateur | hp-telespectateur.jpg |
+| épouvante | hp-epouvante.jpg |
+| imprudence | hp-imprudence.jpg |
+| sornettes | hp-sornettes.jpg |
+| accoutrement | hp-accoutrement.jpg |
+| somnolence | hp-somnolence.jpg |
+| observer | hp-observer.jpg |
+| parvenir | hp-parvenir.jpg |
+| admettre | hp-admettre.jpg |
+| prévoir | hp-prevoir.jpg |
