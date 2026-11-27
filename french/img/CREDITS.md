@@ -808,7 +808,7 @@
 
 ## 《哈利·波特》经典场景词汇（hp-scenes）
 
-这批图由 ChatGPT 按每个词的例句生成（三位学习伙伴扮成书中人物，按原著发色戴假发；原图存档在 `originals/picgen/hp-scenes/`），裁成 3:2、缩到 720×480。例句是按情节自己写的，不是原文。目前 60 / 120 张。
+这批图由 ChatGPT 按每个词的例句生成（三位学习伙伴扮成书中人物，按原著发色戴假发；原图存档在 `originals/picgen/hp-scenes/`），裁成 3:2、缩到 720×480。例句是按情节自己写的，不是原文。目前 90 / 120 张。
 
 | 单词 | 文件 |
 |---|---|
@@ -872,3 +872,33 @@
 | brume | hpx-brume.jpg |
 | répartition | hpx-repartition.jpg |
 | estomac | hpx-estomac.jpg |
+| balai | hpx-balai.jpg |
+| pelouse | hpx-pelouse.jpg |
+| chute | hpx-chute.jpg |
+| poignet | hpx-poignet.jpg |
+| boule | hpx-boule.jpg |
+| rougeoyer | hpx-rougeoyer.jpg |
+| se vanter | hpx-se-vanter.jpg |
+| se ridiculiser | hpx-se-ridiculiser.jpg |
+| piqué | hpx-pique.jpg |
+| vertigineux | hpx-vertigineux.jpg |
+| gradins | hpx-gradins.jpg |
+| bannière | hpx-banniere.jpg |
+| jumelles | hpx-jumelles.jpg |
+| acclamation | hpx-acclamation.jpg |
+| batteur | hpx-batteur.jpg |
+| zigzaguer | hpx-zigzaguer.jpg |
+| désarçonner | hpx-desarconner.jpg |
+| s'accrocher | hpx-s-accrocher.jpg |
+| souffle | hpx-souffle.jpg |
+| flamme | hpx-flamme.jpg |
+| éclore | hpx-eclore.jpg |
+| craquement | hpx-craquement.jpg |
+| coquille | hpx-coquille.jpg |
+| fripé | hpx-fripe.jpg |
+| crête | hpx-crete.jpg |
+| naseau | hpx-naseau.jpg |
+| étincelle | hpx-etincelle.jpg |
+| croc | hpx-croc.jpg |
+| mordre | hpx-mordre.jpg |
+| brûlure | hpx-brulure.jpg |
