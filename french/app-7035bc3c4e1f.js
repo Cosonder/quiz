@@ -37,7 +37,7 @@ function afterPick() {
 // 首屏用不上的大块数据（爬塔 Boss 题库、地图、更新记录）在公开网站上单独成文件：页面能用之后在后台下载，
 // 用户提前点到时显示“正在加载”并等它下完。单文件版（本地预览、Claude 页面）里这些内容仍直接写在页面里，LAZY_FILES 为空。
 // 打包见 quiz-site/package-french.py（它把下面这个空对象换成 {名字: 文件名}）。
-const LAZY_FILES = /*__LAZY_FILES__*/{"tourparis": "lazy-tourparis-f9ce9b7155f9.js", "dlcmaps": "lazy-dlcmaps-27aa0b4d7033.js", "changelog": "lazy-changelog-49da3d65b832.js", "bossbank": "lazy-bossbank-68a8c18b69bf.js"};
+const LAZY_FILES = /*__LAZY_FILES__*/{"tourparis": "lazy-tourparis-f9ce9b7155f9.js", "dlcmaps": "lazy-dlcmaps-27aa0b4d7033.js", "changelog": "lazy-changelog-fb06410a45c4.js", "bossbank": "lazy-bossbank-68a8c18b69bf.js"};
 const lazyDone = new Set(), lazyPending = new Map();
 const lazyReady = name => !Object.hasOwn(LAZY_FILES, name) || lazyDone.has(name);
 function lazyLoad(name) {
@@ -908,7 +908,7 @@ const planValidId = id => typeof id === "string" && BY_ID.has(id);
 function planRepair(p, day) {
   if (!p || typeof p !== "object" || Array.isArray(p) || p.day !== day) return planBuild();
   const scope = planScope(), changed = (p.scope || "") !== scope, done = answeredToday();
-  const fixed = { day, review: [], fresh: [], weak: [], listen: [], weakTag: typeof p.weakTag === "string" ? p.weakTag : "", ...(typeof practiceScopeKey === "function" ? { scope } : {}) };
+  const fixed = { day, review: [], fresh: [], weak: [], listen: [], weakTag: typeof p.weakTag === "string" ? p.weakTag : "", ...(typeof practiceScopeKey === "function" ? { scope } : {}), ...(typeof p.from === "string" ? { from: p.from } : {}) };
   if (changed && !Object.keys(PLAN_LIMITS).some(k => Array.isArray(p[k]) && p[k].length)) return planBuild();
   const used = new Set(), damaged = [];
   for (const [part, cap] of Object.entries(PLAN_LIMITS)) {
@@ -939,6 +939,20 @@ function planRepair(p, day) {
 // A failed local-storage write must not regenerate a different plan on every
 // render. This fallback only lives in memory; learning records are never edited.
 let planMemory = null;
+// 今日计划跟着账号同步：每天第一台抽好计划的设备把题目清单记成一条 game 记录（kind "plan"），
+// 其他设备读到以后改用这一份（同一天有好几份时用最早的一份），这样换设备打开时题目和完成进度都一样。
+function planShared(day) {
+  if (typeof gameRaw === "undefined" || typeof gameLoaded === "undefined" || !gameLoaded) return null;
+  let best = null;
+  for (const g of gameRaw) if (g && g.kind === "plan" && g.day === day && typeof g.at === "string" && Array.isArray(g.review) && (!best || g.at < best.at)) best = g;
+  return best;
+}
+function planShare(p) {
+  if (typeof gameAdd !== "function" || typeof gameLoaded === "undefined" || !gameLoaded || typeof dbRef === "undefined" || !dbRef) return p;
+  const at = new Date().toISOString();
+  gameAdd({ kind: "plan", day: p.day, review: p.review, fresh: p.fresh, weak: p.weak, listen: p.listen, weakTag: p.weakTag || "", scope: p.scope || "", at });
+  return { ...p, from: at };
+}
 function planGet() {
   if (!progEnsure()) return null;
   const day = dayKey(new Date());
@@ -946,7 +960,11 @@ function planGet() {
   try { raw = localStorage.getItem("fq-plan"); } catch (e) { readable = false; }
   if (planMemory?.day === day && (!readable || (planMemory.unsaved && planMemory.raw === raw))) p = planMemory.plan;
   else { try { p = JSON.parse(raw || "null"); } catch (e) {} }
+  const shared = planShared(day);
+  if (shared && !(p && p.day === day && p.from === shared.at))
+    p = { day, review: shared.review, fresh: shared.fresh || [], weak: shared.weak || [], listen: shared.listen || [], weakTag: shared.weakTag || "", scope: shared.scope || "", from: shared.at };
   p = planRepair(p, day);
+  if (!shared && !p.from) p = planShare(p);
   const next = JSON.stringify(p); let unsaved = false;
   if (!readable || raw !== next) { try { localStorage.setItem("fq-plan", next); } catch (e) { unsaved = true; } }
   planMemory = { day, plan: p, raw: unsaved ? raw : next, unsaved };
@@ -7805,16 +7823,24 @@ const syncLocal = c => { try { return JSON.parse(localStorage.getItem(SYNC_NS + 
 const syncStore = (c, arr) => { try { localStorage.setItem(SYNC_NS + "db-" + c, JSON.stringify(arr)); } catch (e) {} };
 const syncRow = (c, d) => ({ app: REC_APP, coll: c, key: syncKeyOf(d), data: d });
 // 伙伴配置和留言奖励按账号隔离；既有答案/金币沿用原站的本机合并规则。
-const syncPetAllowed = (c, d, uid) => c !== "game" || !["pet", "pet-study", "pet-affinity-migration", "pet-unlock", "feedback_reward", "share_reward", "survey_reward"].includes(d?.kind) || !!uid && d.scope === "user:" + uid;
+const syncPetAllowed = (c, d, uid) => c !== "game" || !["pet", "pet-study", "pet-affinity-migration", "pet-unlock", "feedback_reward", "share_reward", "survey_reward", "oral_reward"].includes(d?.kind) || !!uid && d.scope === "user:" + uid;
 // Reward records are issued by the server only; never upload them from any device.
-const syncServerRecord = (c, d) => c === "game" && ["feedback_reward", "share_reward", "survey_reward"].includes(d?.kind);
+const syncServerRecord = (c, d) => c === "game" && ["feedback_reward", "share_reward", "survey_reward", "oral_reward"].includes(d?.kind);
 async function syncUpload(rows, uid = syncAuth()?.uid || "") {
   const own = rows.filter(r => syncPetAllowed(r.coll, r.data, uid) && !syncServerRecord(r.coll, r.data));
+  const post = rows => syncFetch("/rest/v1/records?on_conflict=user_id,app,coll,key", {
+    method: "POST", headers: { Prefer: "resolution=ignore-duplicates,return=minimal" }, body: JSON.stringify(rows),
+  }, true, uid);
   for (let i = 0; i < own.length; i += 500) {
     syncAssertAccount(uid);
-    await syncFetch("/rest/v1/records?on_conflict=user_id,app,coll,key", {
-      method: "POST", headers: { Prefer: "resolution=ignore-duplicates,return=minimal" }, body: JSON.stringify(own.slice(i, i + 500)),
-    }, true, uid);
+    const batch = own.slice(i, i + 500);
+    try { await post(batch); }
+    catch (e) {
+      // 服务器拒收了这一批里的某条（400/403/409 等，不是断网或登录过期）：逐条重传，只跳过被拒的那条，
+      // 不然一条坏记录会让这一批、以及以后每次同步都传不上去。
+      if (!(e.status >= 400 && e.status < 500) || e.status === 401 || e.status === 429 || batch.length === 1) throw e;
+      for (const row of batch) { syncAssertAccount(uid); try { await post([row]); } catch (e2) { if (!(e2.status >= 400 && e2.status < 500) || e2.status === 401 || e2.status === 429) throw e2; } }
+    }
   }
 }
 // 完整同步：拉取云端全部记录合并进本机，再把本机有、云端没有的传上去
@@ -7848,11 +7874,13 @@ async function syncNow(force) {
       if (n) { syncStore(c, loc); added += n; }
       loc.forEach(d => { if (!syncPetAllowed(c, d, uid) || syncServerRecord(c, d)) return; const k = syncKeyOf(d); if (!rk.has(k)) { up.push({ app: REC_APP, coll: c, key: k, data: d }); rk.add(k); } });
     }
+    // 先把拉下来的记录用上（今日计划、进度、金币马上更新），再上传；上传失败也不影响这台设备看到别的设备的进度
+    if (added || prepared) await syncReload();
+    syncAssertAccount(uid);
     await syncUpload(up, uid);
     syncAssertAccount(uid);
     syncState.last = Date.now(); syncState.err = "";
     syncState.lastUp = up.length; syncState.lastDown = added;
-    if (added || prepared) await syncReload();
     if (typeof socPushSoon === "function") socPushSoon();   // 好友排行榜上的资料跟着更新（只有法语页有）
   } catch (e) {
     if (e.code !== "account" && (syncAuth()?.uid || "") === uid) {
@@ -24846,7 +24874,7 @@ function studyClipSegments(entry,text){
 async function studyAudioIndex(){
   if(studyAudioManifest)return studyAudioManifest;
   if(studyAudioLoad)return studyAudioLoad;
-  studyAudioLoad=(async()=>{const controller=new AbortController(),timer=setTimeout(()=>controller.abort(),8000);try{const r=await fetch(STUDY_AUDIO_BASE+'manifest.json?v=1.9.105',{signal:controller.signal});if(!r.ok)throw Error('manifest');const m=await r.json();if(m.version!==1||!m.characters)throw Error('manifest');studyAudioManifest=m;return m;}finally{clearTimeout(timer);studyAudioLoad=null;}})();
+  studyAudioLoad=(async()=>{const controller=new AbortController(),timer=setTimeout(()=>controller.abort(),8000);try{const r=await fetch(STUDY_AUDIO_BASE+'manifest.json?v=1.9.106',{signal:controller.signal});if(!r.ok)throw Error('manifest');const m=await r.json();if(m.version!==1||!m.characters)throw Error('manifest');studyAudioManifest=m;return m;}finally{clearTimeout(timer);studyAudioLoad=null;}})();
   return studyAudioLoad;
 }
 function studySystemPart(text,rate,btn,done,role){

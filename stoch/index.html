@@ -3853,7 +3853,7 @@ const planValidId = id => typeof id === "string" && BY_ID.has(id);
 function planRepair(p, day) {
   if (!p || typeof p !== "object" || Array.isArray(p) || p.day !== day) return planBuild();
   const scope = planScope(), changed = (p.scope || "") !== scope, done = answeredToday();
-  const fixed = { day, review: [], fresh: [], weak: [], listen: [], weakTag: typeof p.weakTag === "string" ? p.weakTag : "", ...(typeof practiceScopeKey === "function" ? { scope } : {}) };
+  const fixed = { day, review: [], fresh: [], weak: [], listen: [], weakTag: typeof p.weakTag === "string" ? p.weakTag : "", ...(typeof practiceScopeKey === "function" ? { scope } : {}), ...(typeof p.from === "string" ? { from: p.from } : {}) };
   if (changed && !Object.keys(PLAN_LIMITS).some(k => Array.isArray(p[k]) && p[k].length)) return planBuild();
   const used = new Set(), damaged = [];
   for (const [part, cap] of Object.entries(PLAN_LIMITS)) {
@@ -3884,6 +3884,20 @@ function planRepair(p, day) {
 // A failed local-storage write must not regenerate a different plan on every
 // render. This fallback only lives in memory; learning records are never edited.
 let planMemory = null;
+// 今日计划跟着账号同步：每天第一台抽好计划的设备把题目清单记成一条 game 记录（kind "plan"），
+// 其他设备读到以后改用这一份（同一天有好几份时用最早的一份），这样换设备打开时题目和完成进度都一样。
+function planShared(day) {
+  if (typeof gameRaw === "undefined" || typeof gameLoaded === "undefined" || !gameLoaded) return null;
+  let best = null;
+  for (const g of gameRaw) if (g && g.kind === "plan" && g.day === day && typeof g.at === "string" && Array.isArray(g.review) && (!best || g.at < best.at)) best = g;
+  return best;
+}
+function planShare(p) {
+  if (typeof gameAdd !== "function" || typeof gameLoaded === "undefined" || !gameLoaded || typeof dbRef === "undefined" || !dbRef) return p;
+  const at = new Date().toISOString();
+  gameAdd({ kind: "plan", day: p.day, review: p.review, fresh: p.fresh, weak: p.weak, listen: p.listen, weakTag: p.weakTag || "", scope: p.scope || "", at });
+  return { ...p, from: at };
+}
 function planGet() {
   if (!progEnsure()) return null;
   const day = dayKey(new Date());
@@ -3891,7 +3905,11 @@ function planGet() {
   try { raw = localStorage.getItem("sq-plan"); } catch (e) { readable = false; }
   if (planMemory?.day === day && (!readable || (planMemory.unsaved && planMemory.raw === raw))) p = planMemory.plan;
   else { try { p = JSON.parse(raw || "null"); } catch (e) {} }
+  const shared = planShared(day);
+  if (shared && !(p && p.day === day && p.from === shared.at))
+    p = { day, review: shared.review, fresh: shared.fresh || [], weak: shared.weak || [], listen: shared.listen || [], weakTag: shared.weakTag || "", scope: shared.scope || "", from: shared.at };
   p = planRepair(p, day);
+  if (!shared && !p.from) p = planShare(p);
   const next = JSON.stringify(p); let unsaved = false;
   if (!readable || raw !== next) { try { localStorage.setItem("sq-plan", next); } catch (e) { unsaved = true; } }
   planMemory = { day, plan: p, raw: unsaved ? raw : next, unsaved };
@@ -5890,16 +5908,24 @@ const syncLocal = c => { try { return JSON.parse(localStorage.getItem(SYNC_NS + 
 const syncStore = (c, arr) => { try { localStorage.setItem(SYNC_NS + "db-" + c, JSON.stringify(arr)); } catch (e) {} };
 const syncRow = (c, d) => ({ app: REC_APP, coll: c, key: syncKeyOf(d), data: d });
 // 伙伴配置和留言奖励按账号隔离；既有答案/金币沿用原站的本机合并规则。
-const syncPetAllowed = (c, d, uid) => c !== "game" || !["pet", "pet-study", "pet-affinity-migration", "pet-unlock", "feedback_reward", "share_reward", "survey_reward"].includes(d?.kind) || !!uid && d.scope === "user:" + uid;
+const syncPetAllowed = (c, d, uid) => c !== "game" || !["pet", "pet-study", "pet-affinity-migration", "pet-unlock", "feedback_reward", "share_reward", "survey_reward", "oral_reward"].includes(d?.kind) || !!uid && d.scope === "user:" + uid;
 // Reward records are issued by the server only; never upload them from any device.
-const syncServerRecord = (c, d) => c === "game" && ["feedback_reward", "share_reward", "survey_reward"].includes(d?.kind);
+const syncServerRecord = (c, d) => c === "game" && ["feedback_reward", "share_reward", "survey_reward", "oral_reward"].includes(d?.kind);
 async function syncUpload(rows, uid = syncAuth()?.uid || "") {
   const own = rows.filter(r => syncPetAllowed(r.coll, r.data, uid) && !syncServerRecord(r.coll, r.data));
+  const post = rows => syncFetch("/rest/v1/records?on_conflict=user_id,app,coll,key", {
+    method: "POST", headers: { Prefer: "resolution=ignore-duplicates,return=minimal" }, body: JSON.stringify(rows),
+  }, true, uid);
   for (let i = 0; i < own.length; i += 500) {
     syncAssertAccount(uid);
-    await syncFetch("/rest/v1/records?on_conflict=user_id,app,coll,key", {
-      method: "POST", headers: { Prefer: "resolution=ignore-duplicates,return=minimal" }, body: JSON.stringify(own.slice(i, i + 500)),
-    }, true, uid);
+    const batch = own.slice(i, i + 500);
+    try { await post(batch); }
+    catch (e) {
+      // 服务器拒收了这一批里的某条（400/403/409 等，不是断网或登录过期）：逐条重传，只跳过被拒的那条，
+      // 不然一条坏记录会让这一批、以及以后每次同步都传不上去。
+      if (!(e.status >= 400 && e.status < 500) || e.status === 401 || e.status === 429 || batch.length === 1) throw e;
+      for (const row of batch) { syncAssertAccount(uid); try { await post([row]); } catch (e2) { if (!(e2.status >= 400 && e2.status < 500) || e2.status === 401 || e2.status === 429) throw e2; } }
+    }
   }
 }
 // 完整同步：拉取云端全部记录合并进本机，再把本机有、云端没有的传上去
@@ -5933,11 +5959,13 @@ async function syncNow(force) {
       if (n) { syncStore(c, loc); added += n; }
       loc.forEach(d => { if (!syncPetAllowed(c, d, uid) || syncServerRecord(c, d)) return; const k = syncKeyOf(d); if (!rk.has(k)) { up.push({ app: REC_APP, coll: c, key: k, data: d }); rk.add(k); } });
     }
+    // 先把拉下来的记录用上（今日计划、进度、金币马上更新），再上传；上传失败也不影响这台设备看到别的设备的进度
+    if (added || prepared) await syncReload();
+    syncAssertAccount(uid);
     await syncUpload(up, uid);
     syncAssertAccount(uid);
     syncState.last = Date.now(); syncState.err = "";
     syncState.lastUp = up.length; syncState.lastDown = added;
-    if (added || prepared) await syncReload();
     if (typeof socPushSoon === "function") socPushSoon();   // 好友排行榜上的资料跟着更新（只有法语页有）
   } catch (e) {
     if (e.code !== "account" && (syncAuth()?.uid || "") === uid) {
@@ -6153,6 +6181,7 @@ function setFold(wrap, key, title, initialOpen = false) {
 // 每次用户可见更新都新增记录：默认只递增第三位 1.x.y → 1.x.(y+1)，超过 9 继续到 10、11；第二位升级需用户明确要求。
 // 首位保持 1，只有用户明确要求才可修改；历史记录保留。完整发布规则见根目录 AGENTS.md。
 const CHANGELOG = [
+  {"v": "1.9.107", "p": "fr", "d": "2026-11-27", "items": ["修正多设备同步：今日计划的题目清单以前是每台设备各自抽的，换设备后题目不同，进度就显示为 0。现在每天的计划跟着账号同步，所有设备用同一份题目（同一天有好几份时用最早抽的那份），在一台设备上做完，另一台也显示完成。", "修正同步：云端拒收某一条记录时，以前整批记录都传不上去，之后每次同步都会卡在这里；现在只跳过那一条。另外从云端拉下来的新记录会马上用上，不再因为上传失败而要等刷新页面才显示。"]},
   {"v": "1.9.106", "p": "fr", "d": "2026-11-27", "items": ["放行了之前扣下的 3 个单词录音：ramper、s'enrouler、assommer，现在也由学习伙伴朗读。"]},
   {"v": "1.9.105", "p": "fr", "d": "2026-11-27", "items": ["哈利·波特“经典场景”第 10–12 关（巨怪、魔镜、活板门）的 30 句例句和 29 个词有了角色录音，由 Ninon、Lison、Pia 轮流读（assommer 暂用系统朗读）。", "这 30 句也补上了“听句选译文”和“理解选择”两种听力题，各 30 道。"]},
   {"v": "1.9.104", "p": "fr", "d": "2026-11-27", "items": ["哈利·波特“经典场景”补齐最后 3 关、30 个词：万圣节的巨怪（massue、narine、assommer…）、厄里斯魔镜（cadre、fasciné、invisibilité…）、活板门下的关卡（harpe、tentacule、échiquier…）。经典场景 12 关全部开放。"]},
