@@ -33016,6 +33016,22 @@
       "audioSha256": "5bcbabcef5aff35ab1a132a8b4e33541448e46deb56c730cd24458b44008fd16"
     },
     {
+      "text": "ramper",
+      "file": "words/ad682cf59dd5a2f40453.m4a",
+      "speaker": "lison",
+      "durationSeconds": 0.96,
+      "bytes": 9191,
+      "audioSha256": "3a2e4c60e9595e05c101bfbb9df9becd8076e76109f4330f151b72fe442fbc59"
+    },
+    {
+      "text": "s'enrouler",
+      "file": "words/9d748092640579bd9241.m4a",
+      "speaker": "pia",
+      "durationSeconds": 0.96,
+      "bytes": 9184,
+      "audioSha256": "b10b8a681b1db32e961d21318b96c5a9abfe45dc1d52fbd58bb0d9b4724911bf"
+    },
+    {
       "text": "le clin d'œil",
       "file": "words/d0e5118f5bd5a357ebe7.m4a",
       "speaker": "ninon",
@@ -33728,6 +33744,14 @@
       "audioSha256": "6248181bd83b898c92b9fe6490061dbe1ba6254cb49ae5ea132c9266483757a2"
     },
     {
+      "text": "assommer",
+      "file": "words/d5aa776a4d707e07310b.m4a",
+      "speaker": "pia",
+      "durationSeconds": 0.77,
+      "bytes": 7359,
+      "audioSha256": "b5edf8e473ae361b4f6675bd35a7125866c42429891d0850d3912c28a51b5d1e"
+    },
+    {
       "text": "s'effondrer",
       "file": "words/320ac999e63a1f3f0788.m4a",
       "speaker": "ninon",
@@ -33896,9 +33920,9 @@
       "audioSha256": "cf40dacc61aa1c51dfebbec5438a913948d5f46ade715b00e6071ef0d57ca7ff"
     }
   ],
-  "wordCount": 966,
-  "wordBytes": 9286484,
-  "wordPending": 3,
+  "wordCount": 969,
+  "wordBytes": 9312218,
+  "wordPending": 0,
   "male": [
     {
       "text": "Tu prends le train de 8 heures demain ?",
