@@ -37,7 +37,7 @@ function afterPick() {
 // 首屏用不上的大块数据（爬塔 Boss 题库、地图、更新记录）在公开网站上单独成文件：页面能用之后在后台下载，
 // 用户提前点到时显示“正在加载”并等它下完。单文件版（本地预览、Claude 页面）里这些内容仍直接写在页面里，LAZY_FILES 为空。
 // 打包见 quiz-site/package-french.py（它把下面这个空对象换成 {名字: 文件名}）。
-const LAZY_FILES = /*__LAZY_FILES__*/{"tourparis": "lazy-tourparis-f9ce9b7155f9.js", "dlcmaps": "lazy-dlcmaps-27aa0b4d7033.js", "changelog": "lazy-changelog-60180000e678.js", "bossbank": "lazy-bossbank-68a8c18b69bf.js"};
+const LAZY_FILES = /*__LAZY_FILES__*/{"tourparis": "lazy-tourparis-f9ce9b7155f9.js", "dlcmaps": "lazy-dlcmaps-27aa0b4d7033.js", "changelog": "lazy-changelog-28366173282a.js", "bossbank": "lazy-bossbank-68a8c18b69bf.js"};
 const lazyDone = new Set(), lazyPending = new Map();
 const lazyReady = name => !Object.hasOwn(LAZY_FILES, name) || lazyDone.has(name);
 function lazyLoad(name) {
@@ -908,7 +908,7 @@ const planValidId = id => typeof id === "string" && BY_ID.has(id);
 function planRepair(p, day) {
   if (!p || typeof p !== "object" || Array.isArray(p) || p.day !== day) return planBuild();
   const scope = planScope(), changed = (p.scope || "") !== scope, done = answeredToday();
-  const fixed = { day, review: [], fresh: [], weak: [], listen: [], weakTag: typeof p.weakTag === "string" ? p.weakTag : "", ...(typeof practiceScopeKey === "function" ? { scope } : {}) };
+  const fixed = { day, review: [], fresh: [], weak: [], listen: [], weakTag: typeof p.weakTag === "string" ? p.weakTag : "", ...(typeof practiceScopeKey === "function" ? { scope } : {}), ...(typeof p.from === "string" ? { from: p.from } : {}) };
   if (changed && !Object.keys(PLAN_LIMITS).some(k => Array.isArray(p[k]) && p[k].length)) return planBuild();
   const used = new Set(), damaged = [];
   for (const [part, cap] of Object.entries(PLAN_LIMITS)) {
@@ -939,6 +939,20 @@ function planRepair(p, day) {
 // A failed local-storage write must not regenerate a different plan on every
 // render. This fallback only lives in memory; learning records are never edited.
 let planMemory = null;
+// 今日计划跟着账号同步：每天第一台抽好计划的设备把题目清单记成一条 game 记录（kind "plan"），
+// 其他设备读到以后改用这一份（同一天有好几份时用最早的一份），这样换设备打开时题目和完成进度都一样。
+function planShared(day) {
+  if (typeof gameRaw === "undefined" || typeof gameLoaded === "undefined" || !gameLoaded) return null;
+  let best = null;
+  for (const g of gameRaw) if (g && g.kind === "plan" && g.day === day && typeof g.at === "string" && Array.isArray(g.review) && (!best || g.at < best.at)) best = g;
+  return best;
+}
+function planShare(p) {
+  if (typeof gameAdd !== "function" || typeof gameLoaded === "undefined" || !gameLoaded || typeof dbRef === "undefined" || !dbRef) return p;
+  const at = new Date().toISOString();
+  gameAdd({ kind: "plan", day: p.day, review: p.review, fresh: p.fresh, weak: p.weak, listen: p.listen, weakTag: p.weakTag || "", scope: p.scope || "", at });
+  return { ...p, from: at };
+}
 function planGet() {
   if (!progEnsure()) return null;
   const day = dayKey(new Date());
@@ -946,7 +960,11 @@ function planGet() {
   try { raw = localStorage.getItem("fq-plan"); } catch (e) { readable = false; }
   if (planMemory?.day === day && (!readable || (planMemory.unsaved && planMemory.raw === raw))) p = planMemory.plan;
   else { try { p = JSON.parse(raw || "null"); } catch (e) {} }
+  const shared = planShared(day);
+  if (shared && !(p && p.day === day && p.from === shared.at))
+    p = { day, review: shared.review, fresh: shared.fresh || [], weak: shared.weak || [], listen: shared.listen || [], weakTag: shared.weakTag || "", scope: shared.scope || "", from: shared.at };
   p = planRepair(p, day);
+  if (!shared && !p.from) p = planShare(p);
   const next = JSON.stringify(p); let unsaved = false;
   if (!readable || raw !== next) { try { localStorage.setItem("fq-plan", next); } catch (e) { unsaved = true; } }
   planMemory = { day, plan: p, raw: unsaved ? raw : next, unsaved };
@@ -1092,7 +1110,7 @@ function planCard() {
   const lab = el("label", null, "每日目标 ");
   const sel = el("select"); sel.id = "goalSel";
   GOAL_OPTS.forEach(v => { const o = el("option", null, `${v} 经验`); o.value = String(v); if (v === xpGoal) o.selected = true; sel.append(o); });
-  sel.addEventListener("change", () => { xpGoal = Number(sel.value); try { localStorage.setItem("fq-goal", String(xpGoal)); } catch (e) {} drawBook(); });
+  sel.addEventListener("change", () => { if (typeof settingSave === "function") settingSave("goal", Number(sel.value)); else xpGoal = Number(sel.value); drawBook(); });
   lab.append(sel);
   goal.append(el("span", null, `今日经验 ${st.today} / ${xpGoal}` + (st.met ? " · 已打卡" : "")), gb, lab);
   card.append(goal);
@@ -1204,7 +1222,7 @@ const QUESTS = [
 let gameRaw = [];   // game 集合的全部记录
 let gameLoaded = false;   // 已经读到过 game 记录
 let potionCache = null, modeCache = null, rewindCache = null;
-function gameReset(docs) { gameRaw = docs || []; gameLoaded = true; potionCache = null; rewindCache = null; coinPotCache = null; modeCache = null; shieldCache = null; prog = null; gameApplyMode(); if (typeof spOnGameLoad === "function") spOnGameLoad(); if (typeof setGate === "function") setGate(); if (typeof navSync === "function") navSync(); }
+function gameReset(docs) { gameRaw = docs || []; gameLoaded = true; potionCache = null; rewindCache = null; coinPotCache = null; modeCache = null; shieldCache = null; prog = null; settingsApply(); gameApplyMode(); if (typeof spOnGameLoad === "function") spOnGameLoad(); if (typeof setGate === "function") setGate(); if (typeof navSync === "function") navSync(); }
 
 // ---------- 游戏模式（设置里开关）：金币、combo、每日任务、商店和道具，以及以后新加的游戏玩法，都只在打开时出现 ----------
 // 开关记成 game 记录（kind: "mode"），跟着账号同步；关掉期间答对不得金币。没有记录时默认打开。
@@ -1299,6 +1317,51 @@ function gameLedger() {
   return { coins, inv, earned, patched, owned, cards, unlocked, chests: got.filter(k => !opened.has(k)) };
 }
 const patchedDays = () => gameLedger().patched;
+// ---------- 跟着账号同步的设置：每日经验目标（goal）、难度等级（qlevel） ----------
+// 每次修改追加一条 game 记录（kind "setting"），所有设备用最新的一条；本机记着自己用的是哪一刻的设置（fq-setting-at:<名字>）。
+// 升级前只存在本机的设置：云端还没有记录、本机又不是默认值时，补记一条（时间记成 2000 年，真正的修改总比它新），别的设备读到后跟着用。
+const SETTINGS = {
+  goal: { key: "fq-goal", def: 150, ok: v => typeof GOAL_OPTS !== "undefined" && GOAL_OPTS.includes(v), get: () => xpGoal, set: v => { xpGoal = v; } },
+  qlevel: { key: "fq-qlevel", def: "off", ok: v => typeof QL_MIX !== "undefined" && Object.prototype.hasOwnProperty.call(QL_MIX, v), get: () => qLevel, set: v => { qLevel = v; } },
+};
+const SETTING_OLD = "2000-01-01T00:00:00.000Z";
+const settingAt = name => { try { return localStorage.getItem("fq-setting-at:" + name) || ""; } catch (e) { return ""; } };
+function settingLatest(name) {
+  let best = null;
+  for (const g of gameRaw) if (g && g.kind === "setting" && g.name === name && typeof g.at === "string" && (!best || g.at > best.at || g.at === best.at && String(g.value) > String(best.value))) best = g;
+  return best;
+}
+function settingSave(name, value) {
+  const st = SETTINGS[name]; if (!st || !st.ok(value)) return;
+  const at = new Date().toISOString();
+  st.set(value);
+  try { localStorage.setItem(st.key, String(value)); localStorage.setItem("fq-setting-at:" + name, at); } catch (e) {}
+  if (gameLoaded) gameAdd({ kind: "setting", name, value, at });
+}
+function settingsApply() {
+  let changed = false;
+  for (const [name, st] of Object.entries(SETTINGS)) {
+    try { if (!st.ok(st.get())) continue; } catch (e) { continue; }   // 这一页没有这项设置（比如随机分析页没有难度等级）
+    const last = settingLatest(name);
+    if (last && st.ok(last.value)) {
+      if (last.at > settingAt(name)) {
+        if (st.get() !== last.value) { st.set(last.value); changed = true; }
+        try { localStorage.setItem(st.key, String(last.value)); localStorage.setItem("fq-setting-at:" + name, last.at); } catch (e) {}
+      }
+    } else if (st.get() !== st.def && typeof dbRef !== "undefined" && dbRef) {
+      // 补记的旧设置用一个很早的时间：任何一台设备上真正改过的设置都比它新；几台设备都只有旧设置时，各台按同一规则选出同一条
+      const at = settingAt(name) || SETTING_OLD;
+      gameRaw.push({ kind: "setting", name, value: st.get(), at });
+      dbRef.collection("game").add({ kind: "setting", name, value: st.get(), at }).catch(() => {});
+      try { localStorage.setItem("fq-setting-at:" + name, at); } catch (e) {}
+    }
+  }
+  if (changed) {
+    if (typeof planRefresh === "function") setTimeout(planRefresh, 0);
+    if (typeof view !== "undefined" && view === "settings" && typeof renderSettings === "function") setTimeout(renderSettings, 0);
+  }
+}
+
 function gameAdd(doc) {
   if (doc.kind === "tour-oral" && typeof petRecordStudy === "function") petRecordStudy(doc, "oral");
   gameRaw.push(doc); potionCache = null; rewindCache = null; coinPotCache = null; shieldCache = null;
@@ -7805,16 +7868,24 @@ const syncLocal = c => { try { return JSON.parse(localStorage.getItem(SYNC_NS + 
 const syncStore = (c, arr) => { try { localStorage.setItem(SYNC_NS + "db-" + c, JSON.stringify(arr)); } catch (e) {} };
 const syncRow = (c, d) => ({ app: REC_APP, coll: c, key: syncKeyOf(d), data: d });
 // 伙伴配置和留言奖励按账号隔离；既有答案/金币沿用原站的本机合并规则。
-const syncPetAllowed = (c, d, uid) => c !== "game" || !["pet", "pet-study", "pet-affinity-migration", "pet-unlock", "feedback_reward", "share_reward", "survey_reward"].includes(d?.kind) || !!uid && d.scope === "user:" + uid;
+const syncPetAllowed = (c, d, uid) => c !== "game" || !["pet", "pet-study", "pet-affinity-migration", "pet-unlock", "feedback_reward", "share_reward", "survey_reward", "oral_reward"].includes(d?.kind) || !!uid && d.scope === "user:" + uid;
 // Reward records are issued by the server only; never upload them from any device.
-const syncServerRecord = (c, d) => c === "game" && ["feedback_reward", "share_reward", "survey_reward"].includes(d?.kind);
+const syncServerRecord = (c, d) => c === "game" && ["feedback_reward", "share_reward", "survey_reward", "oral_reward"].includes(d?.kind);
 async function syncUpload(rows, uid = syncAuth()?.uid || "") {
   const own = rows.filter(r => syncPetAllowed(r.coll, r.data, uid) && !syncServerRecord(r.coll, r.data));
+  const post = rows => syncFetch("/rest/v1/records?on_conflict=user_id,app,coll,key", {
+    method: "POST", headers: { Prefer: "resolution=ignore-duplicates,return=minimal" }, body: JSON.stringify(rows),
+  }, true, uid);
   for (let i = 0; i < own.length; i += 500) {
     syncAssertAccount(uid);
-    await syncFetch("/rest/v1/records?on_conflict=user_id,app,coll,key", {
-      method: "POST", headers: { Prefer: "resolution=ignore-duplicates,return=minimal" }, body: JSON.stringify(own.slice(i, i + 500)),
-    }, true, uid);
+    const batch = own.slice(i, i + 500);
+    try { await post(batch); }
+    catch (e) {
+      // 服务器拒收了这一批里的某条（400/403/409 等，不是断网或登录过期）：逐条重传，只跳过被拒的那条，
+      // 不然一条坏记录会让这一批、以及以后每次同步都传不上去。
+      if (!(e.status >= 400 && e.status < 500) || e.status === 401 || e.status === 429 || batch.length === 1) throw e;
+      for (const row of batch) { syncAssertAccount(uid); try { await post([row]); } catch (e2) { if (!(e2.status >= 400 && e2.status < 500) || e2.status === 401 || e2.status === 429) throw e2; } }
+    }
   }
 }
 // 完整同步：拉取云端全部记录合并进本机，再把本机有、云端没有的传上去
@@ -7848,11 +7919,13 @@ async function syncNow(force) {
       if (n) { syncStore(c, loc); added += n; }
       loc.forEach(d => { if (!syncPetAllowed(c, d, uid) || syncServerRecord(c, d)) return; const k = syncKeyOf(d); if (!rk.has(k)) { up.push({ app: REC_APP, coll: c, key: k, data: d }); rk.add(k); } });
     }
+    // 先把拉下来的记录用上（今日计划、进度、金币马上更新），再上传；上传失败也不影响这台设备看到别的设备的进度
+    if (added || prepared) await syncReload();
+    syncAssertAccount(uid);
     await syncUpload(up, uid);
     syncAssertAccount(uid);
     syncState.last = Date.now(); syncState.err = "";
     syncState.lastUp = up.length; syncState.lastDown = added;
-    if (added || prepared) await syncReload();
     if (typeof socPushSoon === "function") socPushSoon();   // 好友排行榜上的资料跟着更新（只有法语页有）
   } catch (e) {
     if (e.code !== "account" && (syncAuth()?.uid || "") === uid) {
@@ -8702,7 +8775,7 @@ function setGameSection(wrap) {
 function setGoalSection(wrap) {
   const g = setSection(wrap, "学习进度", "当天经验达到目标算打卡；连续打卡和补签都按这个目标算。");
   g.append(setSelectRow("setGoal", "每日经验目标", GOAL_OPTS.map(n => [n, `${n} 经验`]), xpGoal, val => {
-    xpGoal = Number(val); try { localStorage.setItem("fq-goal", String(xpGoal)); } catch (e) {} planRefresh();
+    settingSave("goal", Number(val)); planRefresh();
   }));
 }
 
@@ -9195,7 +9268,7 @@ function qlSection(wrap) {
   const sec = setSection(wrap, "难度等级", "普通语法题组按所设比例出题；计划与复习严格使用目录所选难度，未选择时使用此处难度。零基础入口、听力目录与游戏保留各自规则。");
   const note = el("p", "sub");
   sec.append(setSelectRow("setQLevel", "难度等级", QL_OPTS, qLevel, val => {
-    qLevel = val; try { localStorage.setItem("fq-qlevel", val); } catch (e) {}
+    settingSave("qlevel", val);
     note.textContent = qlMixText(val);
     if (typeof planRefresh === "function") planRefresh();
     if (typeof set !== "undefined" && set && set.key !== "fr-r0" && !/^(tour|listen):/.test(set.key)) { set = makeSet(set.key); idx = 0; bStart = 0; answers = {}; score = 0; }   // 回到答题页时按新难度重新排题
