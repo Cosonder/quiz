@@ -25921,10 +25921,250 @@
       "durationSeconds": 3.05,
       "bytes": 28213,
       "audioSha256": "71eef9bec429f8cc8d5173fc459097403aad8018f1a6824e3f4c0fec4538ba78"
+    },
+    {
+      "text": "Un troll de quatre mètres entre dans les toilettes des filles.",
+      "file": "examples/46e2455280a249da7fca.m4a",
+      "speaker": "ninon",
+      "durationSeconds": 4.1,
+      "bytes": 38319,
+      "audioSha256": "3f551eb2f33a683a70a11c518bc449a3673cedc49da022910994c851db977e97"
+    },
+    {
+      "text": "Le troll traîne une énorme massue derrière lui.",
+      "file": "examples/094b52fab3fe51d3a0f3.m4a",
+      "speaker": "lison",
+      "durationSeconds": 3.15,
+      "bytes": 26990,
+      "audioSha256": "2f2aeec197c4aa7730ccfc46393257473c7926820cd17c561ac1e80f595e17ce"
+    },
+    {
+      "text": "D'un coup de massue, le troll brise une rangée de lavabos.",
+      "file": "examples/64a3d0a25a51a3ab7da6.m4a",
+      "speaker": "pia",
+      "durationSeconds": 3.24,
+      "bytes": 28418,
+      "audioSha256": "6f7821511d06c1504bdf259ec53eac262e22dee5800a5a43b71ff9ea989514bf"
+    },
+    {
+      "text": "La baguette de Harry s'enfonce dans la narine du troll.",
+      "file": "examples/4fcedd104044c401c1f7.m4a",
+      "speaker": "ninon",
+      "durationSeconds": 3.91,
+      "bytes": 36770,
+      "audioSha256": "feadf285c459d877d8bbaed9b989dd716aeedbbcfc836b121acc6dd3876f7dee"
+    },
+    {
+      "text": "Harry essuie sa baguette pleine de morve.",
+      "file": "examples/303bc5cfb1127efd0230.m4a",
+      "speaker": "lison",
+      "durationSeconds": 2.68,
+      "bytes": 23516,
+      "audioSha256": "8ad364b2ccf28382c94119aba5534d131870d681330106efc92e4142bf8172c6"
+    },
+    {
+      "text": "Le troll brandit sa massue au-dessus de sa tête.",
+      "file": "examples/d0bde621b452cddf6cad.m4a",
+      "speaker": "pia",
+      "durationSeconds": 3.0,
+      "bytes": 27676,
+      "audioSha256": "03a03efefc379c8bd7a1fea2346ee8e7f9f91d9377b1b819f2d5f6e8356eb232"
+    },
+    {
+      "text": "Un rugissement terrible résonne dans le couloir.",
+      "file": "examples/0752597fe625334530a8.m4a",
+      "speaker": "ninon",
+      "durationSeconds": 3.08,
+      "bytes": 27840,
+      "audioSha256": "1c95a2fff9a47ab44c4fc0d102ef61403377891584d15ac52e38e609c22ff2b3"
+    },
+    {
+      "text": "Harry et Ron verrouillent la porte derrière le troll.",
+      "file": "examples/cfc710e3d9c532025734.m4a",
+      "speaker": "lison",
+      "durationSeconds": 2.87,
+      "bytes": 25982,
+      "audioSha256": "7d765731c5c31061ea8b40203cd6b33d069483c9695d9393517603d2306e7c09"
+    },
+    {
+      "text": "La massue tombe sur la tête du troll et l'assomme.",
+      "file": "examples/4f763c7980f8a3ac32b2.m4a",
+      "speaker": "pia",
+      "durationSeconds": 2.85,
+      "bytes": 26073,
+      "audioSha256": "7fc7d0ce7be5a0d5a7472d16d5078339d87bdc361380281ea3a84171e14a742d"
+    },
+    {
+      "text": "Le troll s'effondre sur le sol dans un bruit sourd.",
+      "file": "examples/a1cc380021abd74d2b6e.m4a",
+      "speaker": "ninon",
+      "durationSeconds": 3.55,
+      "bytes": 31793,
+      "audioSha256": "0a16d7d041c6ee9ef97529925b70ba04bbb29a72ad2a5a4715b053dbdbfa59d1"
+    },
+    {
+      "text": "Dans une salle vide, Harry découvre un grand miroir ancien.",
+      "file": "examples/f56ab2bcfb2098616ab6.m4a",
+      "speaker": "lison",
+      "durationSeconds": 3.61,
+      "bytes": 30397,
+      "audioSha256": "0c61c529daf090c3a6dfd4acba5b9b53e4ffcb519dd67715b64ed36c4fd7ac07"
+    },
+    {
+      "text": "Le miroir a un cadre richement sculpté.",
+      "file": "examples/d64375e48a7aa7d92e22.m4a",
+      "speaker": "pia",
+      "durationSeconds": 2.31,
+      "bytes": 20707,
+      "audioSha256": "97fd23bfd66d360113140a5ad279e63c54a60323ce2e406b404cd608ddabbf8e"
+    },
+    {
+      "text": "Des mots étranges sont gravés en haut du miroir.",
+      "file": "examples/f8c4985777d21e39bcdb.m4a",
+      "speaker": "ninon",
+      "durationSeconds": 3.22,
+      "bytes": 29159,
+      "audioSha256": "bb38e683828bb47fe62504065efc1c684951ba70acd44751ceab36712d0b0a5e"
+    },
+    {
+      "text": "Le miroir montre le désir le plus profond de notre cœur.",
+      "file": "examples/5ade090fef75f6b82957.m4a",
+      "speaker": "lison",
+      "durationSeconds": 4.13,
+      "bytes": 37524,
+      "audioSha256": "a5a5d4340a4f68387f755a7641e266393e3dfafa41816892464261b97d01fe28"
+    },
+    {
+      "text": "Fasciné, Harry revient chaque nuit devant le miroir.",
+      "file": "examples/0c5005f8e31f61282b80.m4a",
+      "speaker": "pia",
+      "durationSeconds": 3.65,
+      "bytes": 31730,
+      "audioSha256": "7a120c64c0d2aa01294aff7af191b88efe5af5670ef23f92a382f5331e0f3e59"
+    },
+    {
+      "text": "L'étoffe argentée glisse entre les doigts de Harry.",
+      "file": "examples/b75f43679c1613a11db3.m4a",
+      "speaker": "ninon",
+      "durationSeconds": 4.32,
+      "bytes": 39910,
+      "audioSha256": "b310252ca18dbf9430aa0f593ae74048a20ecbccfebfed5d7ae7e0a94b0eeb0a"
+    },
+    {
+      "text": "Grâce à la cape d'invisibilité, Harry se promène la nuit sans être vu.",
+      "file": "examples/f9b849f0f347a3d3b7c5.m4a",
+      "speaker": "lison",
+      "durationSeconds": 5.04,
+      "bytes": 44460,
+      "audioSha256": "405c38e71c53f9f3d87ca67cfd504f217ed8163da5a7c2e20e82ec5b838d8a68"
+    },
+    {
+      "text": "Mrs Weasley a tricoté un pull vert pour Harry.",
+      "file": "examples/0a06dd5e8fdfd8c21ecf.m4a",
+      "speaker": "pia",
+      "durationSeconds": 2.81,
+      "bytes": 25536,
+      "audioSha256": "d9e8f5655780bf5e27ee8b9df25b9757f0cf878b01b7732a29201680fbf12cce"
+    },
+    {
+      "text": "Quand Harry tire sur le pétard, il explose comme un canon.",
+      "file": "examples/ac95e276b0cb6d80b858.m4a",
+      "speaker": "ninon",
+      "durationSeconds": 3.91,
+      "bytes": 36377,
+      "audioSha256": "24bd25e7983c0da4f9a6f0a4ada6257304704c24952ba9c354fd35a1ff397aee"
+    },
+    {
+      "text": "Harry se cache derrière une armure dans le couloir.",
+      "file": "examples/24d782d60841364582b2.m4a",
+      "speaker": "lison",
+      "durationSeconds": 2.97,
+      "bytes": 26307,
+      "audioSha256": "3205b77b32b15d01c4e148258ebfcf308dc5bcffc17a592df6f789a1938b0cde"
+    },
+    {
+      "text": "Une harpe enchantée joue toute seule pour endormir le chien.",
+      "file": "examples/ced116bd0bc0fc4fe760.m4a",
+      "speaker": "pia",
+      "durationSeconds": 3.18,
+      "bytes": 28680,
+      "audioSha256": "d4d2d1706163ea88fae457cdd00d35bc9acd15979bb6981ebbafa0370ae16744"
+    },
+    {
+      "text": "Harry joue de la flûte pour que Touffu reste endormi.",
+      "file": "examples/4c2ed146d78dae01e2cc.m4a",
+      "speaker": "ninon",
+      "durationSeconds": 3.09,
+      "bytes": 28611,
+      "audioSha256": "08b029e97efa050364adab5a1facfd4b8f73c3f4a5a75bba70e5c4a127d854bd"
+    },
+    {
+      "text": "Sous les pattes du chien se trouve une trappe.",
+      "file": "examples/98e081b3d4ddec65f0e0.m4a",
+      "speaker": "lison",
+      "durationSeconds": 3.01,
+      "bytes": 27180,
+      "audioSha256": "246c01756e63b1ee7ab179c21167349b463601823621dcdc9d6d4ac5776d5400"
+    },
+    {
+      "text": "Le filet du Diable est une plante qui attrape les intrus.",
+      "file": "examples/47d09af88217439f28f0.m4a",
+      "speaker": "pia",
+      "durationSeconds": 2.98,
+      "bytes": 27849,
+      "audioSha256": "a7f2af780f4b2ca1814ba16c6094966d31be826ab6c9ae6dd7b70951f72186e5"
+    },
+    {
+      "text": "Des tentacules verts serrent les jambes de Ron.",
+      "file": "examples/805fe1956319fc5cafbc.m4a",
+      "speaker": "ninon",
+      "durationSeconds": 3.16,
+      "bytes": 28946,
+      "audioSha256": "a40ae71839eaede53b96ba8ab6f2caee2c45ed52108e6b76cc6eebc825d1614d"
+    },
+    {
+      "text": "La plante ligote Harry et Ron comme des saucissons.",
+      "file": "examples/34ee100d11f921a8ddf4.m4a",
+      "speaker": "lison",
+      "durationSeconds": 3.79,
+      "bytes": 33942,
+      "audioSha256": "4bbc25edc07a03da124d864ad5b3491eddf8562174b3ef0e4f0c8cb3e19afc2c"
+    },
+    {
+      "text": "Les trois amis traversent un échiquier géant.",
+      "file": "examples/5ddb71a672e32838c71c.m4a",
+      "speaker": "pia",
+      "durationSeconds": 2.97,
+      "bytes": 26637,
+      "audioSha256": "dccc01ab2c62f28446e814a422b3aa33ca50fe2cafc73ef1967a75208d3dd268"
+    },
+    {
+      "text": "Ron prend la place d'un cavalier noir.",
+      "file": "examples/0c2e8471b07c9fb540af.m4a",
+      "speaker": "ninon",
+      "durationSeconds": 3.07,
+      "bytes": 27279,
+      "audioSha256": "83da5a9f8979efecaea820686254a3b2f616c21af903191ece84a50884b53068"
+    },
+    {
+      "text": "Un pion blanc avance d'une case.",
+      "file": "examples/dbe222589b3896d0abc5.m4a",
+      "speaker": "lison",
+      "durationSeconds": 2.06,
+      "bytes": 18456,
+      "audioSha256": "8a9dfd58c42b785d803688e3ad8ea4ad0b1fe823131f2126525bc0fe6c3a9032"
+    },
+    {
+      "text": "Hermione résout l'énigme des flacons de potion.",
+      "file": "examples/d53e3e4ced136b34d6d6.m4a",
+      "speaker": "pia",
+      "durationSeconds": 3.05,
+      "bytes": 27294,
+      "audioSha256": "24d9405b7961bb30f4f283aae716661ca571f67f80636c65ead981cf8b4fee0f"
     }
   ],
-  "exampleCount": 1285,
-  "exampleBytes": 36993914,
+  "exampleCount": 1315,
+  "exampleBytes": 37884272,
   "examplePending": 0,
   "words": [
     {
@@ -33422,11 +33662,243 @@
       "durationSeconds": 1.1,
       "bytes": 9854,
       "audioSha256": "0504cfa63dec6a1d7d2755e7943afb49cc89e2028700ce070b5ca2dcb28bc992"
+    },
+    {
+      "text": "le troll",
+      "file": "words/a61051d443c7075b29e6.m4a",
+      "speaker": "ninon",
+      "durationSeconds": 1.13,
+      "bytes": 11384,
+      "audioSha256": "60e92eaf79f712ccf3dc18aafa9541cc89a17c2edeedc43b3adc66025f5a61ce"
+    },
+    {
+      "text": "la massue",
+      "file": "words/56622f934908df5ff502.m4a",
+      "speaker": "lison",
+      "durationSeconds": 0.91,
+      "bytes": 8450,
+      "audioSha256": "3746ef2c84ef100c1fe29d5ad1692218d2a23ee106317400e5cba23d5e39627e"
+    },
+    {
+      "text": "le lavabo",
+      "file": "words/dc548ef6b4073733dcbd.m4a",
+      "speaker": "pia",
+      "durationSeconds": 1.16,
+      "bytes": 10477,
+      "audioSha256": "6d5d733d55720db17b995b3003e5986b5c269406b2273392c51b218cdd632536"
+    },
+    {
+      "text": "la narine",
+      "file": "words/a697d019b92fb950f463.m4a",
+      "speaker": "ninon",
+      "durationSeconds": 1.33,
+      "bytes": 12432,
+      "audioSha256": "beac6ae66b2ef93ecdb4d1dd5d286c2f8f994d2ddf8e2b741be728c3f4e5d41f"
+    },
+    {
+      "text": "la morve",
+      "file": "words/1e8d75202c0656a326f7.m4a",
+      "speaker": "lison",
+      "durationSeconds": 1.04,
+      "bytes": 9341,
+      "audioSha256": "fa5a113e329469c24ea5602b9dbc275ba3f290dfd25fa7bce27e8d2fdcbafc1e"
+    },
+    {
+      "text": "brandir",
+      "file": "words/e6dbf139362f2d03680f.m4a",
+      "speaker": "pia",
+      "durationSeconds": 1.12,
+      "bytes": 10133,
+      "audioSha256": "4734b2b21c40829bc159f57ec93c34a1e854c29faba0892890c08f234078a35d"
+    },
+    {
+      "text": "le rugissement",
+      "file": "words/df7181d2f86c0f155957.m4a",
+      "speaker": "ninon",
+      "durationSeconds": 1.52,
+      "bytes": 13414,
+      "audioSha256": "7d6f0e03567a757466100b5a6bb0eccee5e2d0f351b0338fcd2658d91ada055b"
+    },
+    {
+      "text": "verrouiller",
+      "file": "words/4a837c58f99ddf707e08.m4a",
+      "speaker": "lison",
+      "durationSeconds": 0.79,
+      "bytes": 7701,
+      "audioSha256": "6248181bd83b898c92b9fe6490061dbe1ba6254cb49ae5ea132c9266483757a2"
+    },
+    {
+      "text": "s'effondrer",
+      "file": "words/320ac999e63a1f3f0788.m4a",
+      "speaker": "ninon",
+      "durationSeconds": 1.21,
+      "bytes": 11435,
+      "audioSha256": "4584ecd8f3fc3a675b3dd2a46e89bde3ee588a7179d9a4e45d0730745a19bd67"
+    },
+    {
+      "text": "le miroir",
+      "file": "words/4569bc2337c669efc63f.m4a",
+      "speaker": "lison",
+      "durationSeconds": 0.98,
+      "bytes": 9004,
+      "audioSha256": "3edd6563574a2a2b95b31b8378deb6fd52e8dc4dfd68007e7fd6c9ebd0fd9153"
+    },
+    {
+      "text": "le cadre",
+      "file": "words/443b613d15aa755b1f0e.m4a",
+      "speaker": "pia",
+      "durationSeconds": 1.06,
+      "bytes": 10257,
+      "audioSha256": "03f1e0a652009db2959dce8e8471f1d65e0e8a798997d930cd81857de8d4700e"
+    },
+    {
+      "text": "graver",
+      "file": "words/64edd11e45de8d088c5d.m4a",
+      "speaker": "ninon",
+      "durationSeconds": 0.86,
+      "bytes": 8186,
+      "audioSha256": "e7ea12942ea440d0fbdc4d0fd9f52d549e57267088e35e4bb7123ef065689544"
+    },
+    {
+      "text": "le désir",
+      "file": "words/b72812682e8907bd4c93.m4a",
+      "speaker": "lison",
+      "durationSeconds": 1.18,
+      "bytes": 10531,
+      "audioSha256": "8291927fc044158513724003ca76036fecfa54cfbfa5ed0467875dbd58b3a3e2"
+    },
+    {
+      "text": "fasciné",
+      "file": "words/b3cd331e8e121a1da5ca.m4a",
+      "speaker": "pia",
+      "durationSeconds": 1.05,
+      "bytes": 9724,
+      "audioSha256": "4938b49a0ff1f1e238b43bdf2d6770b8af391a0c237d65accc0281c842fcd75f"
+    },
+    {
+      "text": "l'étoffe",
+      "file": "words/661c5509a84cc61cad10.m4a",
+      "speaker": "ninon",
+      "durationSeconds": 0.98,
+      "bytes": 9721,
+      "audioSha256": "fe177b3b5a54a324a25b7b67b2be3b03ab61608c44f5289bdbb55aa09b526204"
+    },
+    {
+      "text": "l'invisibilité",
+      "file": "words/239c552a56d5e1519608.m4a",
+      "speaker": "lison",
+      "durationSeconds": 1.47,
+      "bytes": 13603,
+      "audioSha256": "6d6ef0c045ae04d0ea1b0d429a2db782a69bb5d2db2617677344e442cff8c43d"
+    },
+    {
+      "text": "tricoter",
+      "file": "words/07230b5a9577b1d9e59b.m4a",
+      "speaker": "pia",
+      "durationSeconds": 0.95,
+      "bytes": 9103,
+      "audioSha256": "9566cb4a4b826f8b8a934b92adad92d9f4a130d02af6cac862da68cddae6b8fb"
+    },
+    {
+      "text": "le pétard",
+      "file": "words/f017588ef00d26c629f7.m4a",
+      "speaker": "ninon",
+      "durationSeconds": 1.21,
+      "bytes": 11151,
+      "audioSha256": "3df07fe61099b60074c6d3ec9d19944457e824b79163b07d2c0cb728169a797a"
+    },
+    {
+      "text": "l'armure",
+      "file": "words/d7b1a22abdb13e72e321.m4a",
+      "speaker": "lison",
+      "durationSeconds": 1.14,
+      "bytes": 10323,
+      "audioSha256": "f47025999c0f754d7a2ce75fa7d00a192f6461d2347892761dcc16f0f314b4eb"
+    },
+    {
+      "text": "la harpe",
+      "file": "words/dc73ddd052a5c33a2dde.m4a",
+      "speaker": "pia",
+      "durationSeconds": 1.13,
+      "bytes": 10184,
+      "audioSha256": "3125bf716aac1ccb1e57e62f1036a7bd8c1b717c79d9d30dcf95007826d02bec"
+    },
+    {
+      "text": "la flûte",
+      "file": "words/3ab8610b158bada80374.m4a",
+      "speaker": "ninon",
+      "durationSeconds": 0.97,
+      "bytes": 9166,
+      "audioSha256": "0e90ae7dbece1dd48f0d1917876d3d211154d059bf200615b879899794c683a0"
+    },
+    {
+      "text": "la trappe",
+      "file": "words/e5561f804a9bc063ff43.m4a",
+      "speaker": "lison",
+      "durationSeconds": 0.96,
+      "bytes": 9093,
+      "audioSha256": "97a1782854119f0c42fef275e9e468faed77e603c7e0438378a08ee03081289d"
+    },
+    {
+      "text": "le filet",
+      "file": "words/5b11c10552afe8c4d8de.m4a",
+      "speaker": "pia",
+      "durationSeconds": 0.92,
+      "bytes": 8518,
+      "audioSha256": "6f2c6161c720036d9d2c4134df2d67c2a266f0be10257bc4170bcf88f1731287"
+    },
+    {
+      "text": "le tentacule",
+      "file": "words/d9e39bfc669d7f0ff9ed.m4a",
+      "speaker": "ninon",
+      "durationSeconds": 1.95,
+      "bytes": 18285,
+      "audioSha256": "04517e0cd84cc330ff21cd5d68e49796c12fecc8ba601f1fafaef05011c63260"
+    },
+    {
+      "text": "ligoter",
+      "file": "words/bb9e836e6dec0891c547.m4a",
+      "speaker": "lison",
+      "durationSeconds": 1.13,
+      "bytes": 10185,
+      "audioSha256": "7ab7c529add5319be6b8a8e832d680a9f99ab81163af9f09788b5f8f93c42ef3"
+    },
+    {
+      "text": "l'échiquier",
+      "file": "words/c2e973b64132be4cf77b.m4a",
+      "speaker": "pia",
+      "durationSeconds": 0.99,
+      "bytes": 9683,
+      "audioSha256": "08e007a83dffbe1c0f342dd25205d5129135face506d7e2194fb661b6d6b370b"
+    },
+    {
+      "text": "le cavalier",
+      "file": "words/734ec92d972676417176.m4a",
+      "speaker": "ninon",
+      "durationSeconds": 1.42,
+      "bytes": 13377,
+      "audioSha256": "8b23622dc238582f214c239292f741187fbbcb62b747baf11b9901bbc3179db6"
+    },
+    {
+      "text": "le pion",
+      "file": "words/a565085c9309770c7ca1.m4a",
+      "speaker": "lison",
+      "durationSeconds": 0.92,
+      "bytes": 9163,
+      "audioSha256": "aeafd6672d39f253a4c4de87bcf569449b8579140e82dc0d471cccc32bdb1145"
+    },
+    {
+      "text": "l'énigme",
+      "file": "words/328c02d005f0938ff535.m4a",
+      "speaker": "pia",
+      "durationSeconds": 1.0,
+      "bytes": 9317,
+      "audioSha256": "cf40dacc61aa1c51dfebbec5438a913948d5f46ade715b00e6071ef0d57ca7ff"
     }
   ],
-  "wordCount": 937,
-  "wordBytes": 8983143,
-  "wordPending": 2,
+  "wordCount": 966,
+  "wordBytes": 9286484,
+  "wordPending": 3,
   "male": [
     {
       "text": "Tu prends le train de 8 heures demain ?",
