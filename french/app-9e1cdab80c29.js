@@ -37,7 +37,7 @@ function afterPick() {
 // 首屏用不上的大块数据（爬塔 Boss 题库、地图、更新记录）在公开网站上单独成文件：页面能用之后在后台下载，
 // 用户提前点到时显示“正在加载”并等它下完。单文件版（本地预览、Claude 页面）里这些内容仍直接写在页面里，LAZY_FILES 为空。
 // 打包见 quiz-site/package-french.py（它把下面这个空对象换成 {名字: 文件名}）。
-const LAZY_FILES = /*__LAZY_FILES__*/{"tourparis": "lazy-tourparis-f9ce9b7155f9.js", "dlcmaps": "lazy-dlcmaps-27aa0b4d7033.js", "changelog": "lazy-changelog-fb06410a45c4.js", "bossbank": "lazy-bossbank-68a8c18b69bf.js"};
+const LAZY_FILES = /*__LAZY_FILES__*/{"tourparis": "lazy-tourparis-f9ce9b7155f9.js", "dlcmaps": "lazy-dlcmaps-27aa0b4d7033.js", "changelog": "lazy-changelog-31b25b8aebb1.js", "bossbank": "lazy-bossbank-68a8c18b69bf.js"};
 const lazyDone = new Set(), lazyPending = new Map();
 const lazyReady = name => !Object.hasOwn(LAZY_FILES, name) || lazyDone.has(name);
 function lazyLoad(name) {
@@ -260,20 +260,72 @@ function setShop(note) {
 // ---------- 答题记录存储（错题本、学习进度、经验值都从这里算） ----------
 let dbRef = null;
 const LOCAL = typeof claude === "undefined";   // 在 GitHub Pages 等普通网页里打开
-// 记录存在这台设备的浏览器里，每种记录一个键
-function localDb(ns) {
+// 记录存在这台设备的浏览器里，每种记录一份。2026-11 起存进 IndexedDB（容量大得多）：
+// 以前存在 localStorage，老用户记录多了会超过浏览器 5 MB 的上限，新记录（做的题、买的东西）存不进去，一刷新就“回退”。
+// 内存里留一份，读写都是同步的；写入时和 IndexedDB 里的那份合并（按记录内容去重），同时开着的几个标签页不会互相覆盖。
+const LDB = { mem: {}, db: null, timers: {}, failed: false };
+const ldbReq = r => new Promise((ok, no) => { r.onsuccess = () => ok(r.result); r.onerror = () => no(r.error); });
+function ldbOpenDb() {
+  return new Promise((ok, no) => {
+    if (typeof indexedDB === "undefined") return no(new Error("no indexedDB"));
+    const r = indexedDB.open("quiz-records", 1);
+    r.onupgradeneeded = () => r.result.createObjectStore("colls");
+    r.onsuccess = () => ok(r.result); r.onerror = () => no(r.error); r.onblocked = () => no(new Error("blocked"));
+  });
+}
+const ldbId = d => { try { return recKey(d); } catch (e) { return JSON.stringify(d); } };
+function ldbUnion(a, b) { const seen = new Set(a.map(ldbId)), out = a.slice(); for (const d of b) { const k = ldbId(d); if (!seen.has(k)) { seen.add(k); out.push(d); } } return out; }
+const ldbLsRead = k => { try { return JSON.parse(localStorage.getItem(k) || "[]"); } catch (e) { return []; } };
+// 打开时：IndexedDB 里的和 localStorage 里遗留的合并，存进 IndexedDB 成功后再删掉 localStorage 里那份，腾出空间
+async function ldbLoad(keys) {
+  try {
+    LDB.db = await ldbOpenDb();
+    for (const k of keys) {
+      const tx = LDB.db.transaction("colls", "readwrite"), st = tx.objectStore("colls");
+      const have = (await ldbReq(st.get(k))) || [], ls = ldbLsRead(k), all = ldbUnion(have, ls);
+      if (all.length !== have.length) st.put(all, k);
+      await new Promise((ok, no) => { tx.oncomplete = ok; tx.onerror = () => no(tx.error); tx.onabort = () => no(tx.error); });
+      LDB.mem[k] = all;
+      if (ls.length) try { localStorage.removeItem(k); } catch (e) {}
+    }
+  } catch (e) { LDB.db = null; for (const k of keys) LDB.mem[k] = ldbLsRead(k); }   // 没有 IndexedDB（少数隐私模式）：照旧用 localStorage
+}
+function ldbGet(k) { return LDB.mem[k] ? LDB.mem[k].slice() : ldbLsRead(k); }
+function ldbSet(k, arr) {
+  LDB.mem[k] = arr.slice();
+  if (!LDB.db) { try { localStorage.setItem(k, JSON.stringify(arr)); LDB.failed = false; } catch (e) { ldbFail(); } return; }
+  clearTimeout(LDB.timers[k]);
+  LDB.timers[k] = setTimeout(() => ldbFlush(k), 200);
+}
+async function ldbFlush(k) {
+  try {
+    const tx = LDB.db.transaction("colls", "readwrite"), st = tx.objectStore("colls");
+    const cur = (await ldbReq(st.get(k))) || [], all = ldbUnion(cur, LDB.mem[k] || []);
+    st.put(all, k);
+    await new Promise((ok, no) => { tx.oncomplete = ok; tx.onerror = () => no(tx.error); tx.onabort = () => no(tx.error); });
+    if (all.length !== (LDB.mem[k] || []).length) LDB.mem[k] = all;   // 别的标签页刚写进来的记录
+    LDB.failed = false;
+  } catch (e) { ldbFail(); }
+}
+function ldbFail() {
+  if (LDB.failed) return; LDB.failed = true;
+  try { saveNote.textContent = "这台设备的存储空间满了，新的记录没能保存。请清理一下浏览器存储空间。"; } catch (e) {}
+  if (typeof xpToast === "function") xpToast("记录没能保存到这台设备：浏览器存储空间不足");
+}
+addEventListener("pagehide", () => { for (const k of Object.keys(LDB.timers)) { clearTimeout(LDB.timers[k]); if (LDB.db) ldbFlush(k); } });
+async function localDb(ns) {
   const key = c => `${ns}-db-${c}`;
-  const load = c => { try { return JSON.parse(localStorage.getItem(key(c)) || "[]"); } catch (e) { return []; } };
+  await ldbLoad(["answers", "exams", "vocab", "game"].map(key));
   const snap = arr => ({ size: arr.length, docs: arr.map(d => ({ data: () => d })) });
   return { collection: c => ({
-    add: async d => { const a = load(c); a.push(d); localStorage.setItem(key(c), JSON.stringify(a)); if (typeof syncPush === "function") syncPush(c, d); },
-    get: async () => snap(load(c)),
-    where: (f, op, v) => ({ get: async () => snap(load(c).filter(d => d[f] === v)) }),
+    add: async d => { const a = ldbGet(key(c)); a.push(d); ldbSet(key(c), a); if (typeof syncPush === "function") syncPush(c, d); },
+    get: async () => snap(ldbGet(key(c))),
+    where: (f, op, v) => ({ get: async () => snap(ldbGet(key(c)).filter(d => d[f] === v)) }),
   }) };
 }
 (async () => {
   try {
-    dbRef = LOCAL ? localDb("fq") : await claude.use("db");
+    dbRef = LOCAL ? await localDb("fq") : await claude.use("db");
     if (!dbRef) { saveNote.textContent = "当前视图无法保存记录，答题不受影响。"; return; }
     const docs = (await dbRef.collection("answers").get()).docs.map(d => d.data());
     let voc = [];
@@ -940,11 +992,16 @@ function planRepair(p, day) {
 // render. This fallback only lives in memory; learning records are never edited.
 let planMemory = null;
 // 今日计划跟着账号同步：每天第一台抽好计划的设备把题目清单记成一条 game 记录（kind "plan"），
-// 其他设备读到以后改用这一份（同一天有好几份时用最早的一份），这样换设备打开时题目和完成进度都一样。
+// 其他设备读到以后改用这一份（同一天有好几份时用做得最多的一份，一样多时用最早的），这样换设备打开时题目和完成进度都一样。
 function planShared(day) {
   if (typeof gameRaw === "undefined" || typeof gameLoaded === "undefined" || !gameLoaded) return null;
-  let best = null;
-  for (const g of gameRaw) if (g && g.kind === "plan" && g.day === day && typeof g.at === "string" && Array.isArray(g.review) && (!best || g.at < best.at)) best = g;
+  // 同一天有好几份时：用已经做得最多的那份（换计划不会让做过的题“消失”），一样多时用最早的
+  const done = answeredToday(), score = g => ["review", "fresh", "weak", "listen"].reduce((n, k) => n + (Array.isArray(g[k]) ? g[k].filter(i => done.has(i)).length : 0), 0);
+  let best = null, bestScore = -1;
+  for (const g of gameRaw) if (g && g.kind === "plan" && g.day === day && typeof g.at === "string" && Array.isArray(g.review)) {
+    const sc = score(g);
+    if (!best || sc > bestScore || sc === bestScore && g.at < best.at) { best = g; bestScore = sc; }
+  }
   return best;
 }
 function planShare(p) {
@@ -1110,7 +1167,7 @@ function planCard() {
   const lab = el("label", null, "每日目标 ");
   const sel = el("select"); sel.id = "goalSel";
   GOAL_OPTS.forEach(v => { const o = el("option", null, `${v} 经验`); o.value = String(v); if (v === xpGoal) o.selected = true; sel.append(o); });
-  sel.addEventListener("change", () => { xpGoal = Number(sel.value); try { localStorage.setItem("fq-goal", String(xpGoal)); } catch (e) {} drawBook(); });
+  sel.addEventListener("change", () => { if (typeof settingSave === "function") settingSave("goal", Number(sel.value)); else xpGoal = Number(sel.value); drawBook(); });
   lab.append(sel);
   goal.append(el("span", null, `今日经验 ${st.today} / ${xpGoal}` + (st.met ? " · 已打卡" : "")), gb, lab);
   card.append(goal);
@@ -1222,7 +1279,7 @@ const QUESTS = [
 let gameRaw = [];   // game 集合的全部记录
 let gameLoaded = false;   // 已经读到过 game 记录
 let potionCache = null, modeCache = null, rewindCache = null;
-function gameReset(docs) { gameRaw = docs || []; gameLoaded = true; potionCache = null; rewindCache = null; coinPotCache = null; modeCache = null; shieldCache = null; prog = null; gameApplyMode(); if (typeof spOnGameLoad === "function") spOnGameLoad(); if (typeof setGate === "function") setGate(); if (typeof navSync === "function") navSync(); }
+function gameReset(docs) { gameRaw = docs || []; gameLoaded = true; potionCache = null; rewindCache = null; coinPotCache = null; modeCache = null; shieldCache = null; prog = null; settingsApply(); gameApplyMode(); if (typeof spOnGameLoad === "function") spOnGameLoad(); if (typeof setGate === "function") setGate(); if (typeof navSync === "function") navSync(); }
 
 // ---------- 游戏模式（设置里开关）：金币、combo、每日任务、商店和道具，以及以后新加的游戏玩法，都只在打开时出现 ----------
 // 开关记成 game 记录（kind: "mode"），跟着账号同步；关掉期间答对不得金币。没有记录时默认打开。
@@ -1317,6 +1374,51 @@ function gameLedger() {
   return { coins, inv, earned, patched, owned, cards, unlocked, chests: got.filter(k => !opened.has(k)) };
 }
 const patchedDays = () => gameLedger().patched;
+// ---------- 跟着账号同步的设置：每日经验目标（goal）、难度等级（qlevel） ----------
+// 每次修改追加一条 game 记录（kind "setting"），所有设备用最新的一条；本机记着自己用的是哪一刻的设置（fq-setting-at:<名字>）。
+// 升级前只存在本机的设置：云端还没有记录、本机又不是默认值时，补记一条（时间记成 2000 年，真正的修改总比它新），别的设备读到后跟着用。
+const SETTINGS = {
+  goal: { key: "fq-goal", def: 150, ok: v => typeof GOAL_OPTS !== "undefined" && GOAL_OPTS.includes(v), get: () => xpGoal, set: v => { xpGoal = v; } },
+  qlevel: { key: "fq-qlevel", def: "off", ok: v => typeof QL_MIX !== "undefined" && Object.prototype.hasOwnProperty.call(QL_MIX, v), get: () => qLevel, set: v => { qLevel = v; } },
+};
+const SETTING_OLD = "2000-01-01T00:00:00.000Z";
+const settingAt = name => { try { return localStorage.getItem("fq-setting-at:" + name) || ""; } catch (e) { return ""; } };
+function settingLatest(name) {
+  let best = null;
+  for (const g of gameRaw) if (g && g.kind === "setting" && g.name === name && typeof g.at === "string" && (!best || g.at > best.at || g.at === best.at && String(g.value) > String(best.value))) best = g;
+  return best;
+}
+function settingSave(name, value) {
+  const st = SETTINGS[name]; if (!st || !st.ok(value)) return;
+  const at = new Date().toISOString();
+  st.set(value);
+  try { localStorage.setItem(st.key, String(value)); localStorage.setItem("fq-setting-at:" + name, at); } catch (e) {}
+  if (gameLoaded) gameAdd({ kind: "setting", name, value, at });
+}
+function settingsApply() {
+  let changed = false;
+  for (const [name, st] of Object.entries(SETTINGS)) {
+    try { if (!st.ok(st.get())) continue; } catch (e) { continue; }   // 这一页没有这项设置（比如随机分析页没有难度等级）
+    const last = settingLatest(name);
+    if (last && st.ok(last.value)) {
+      if (last.at > settingAt(name)) {
+        if (st.get() !== last.value) { st.set(last.value); changed = true; }
+        try { localStorage.setItem(st.key, String(last.value)); localStorage.setItem("fq-setting-at:" + name, last.at); } catch (e) {}
+      }
+    } else if (st.get() !== st.def && typeof dbRef !== "undefined" && dbRef) {
+      // 补记的旧设置用一个很早的时间：任何一台设备上真正改过的设置都比它新；几台设备都只有旧设置时，各台按同一规则选出同一条
+      const at = settingAt(name) || SETTING_OLD;
+      gameRaw.push({ kind: "setting", name, value: st.get(), at });
+      dbRef.collection("game").add({ kind: "setting", name, value: st.get(), at }).catch(() => {});
+      try { localStorage.setItem("fq-setting-at:" + name, at); } catch (e) {}
+    }
+  }
+  if (changed) {
+    if (typeof planRefresh === "function") setTimeout(planRefresh, 0);
+    if (typeof view !== "undefined" && view === "settings" && typeof renderSettings === "function") setTimeout(renderSettings, 0);
+  }
+}
+
 function gameAdd(doc) {
   if (doc.kind === "tour-oral" && typeof petRecordStudy === "function") petRecordStudy(doc, "oral");
   gameRaw.push(doc); potionCache = null; rewindCache = null; coinPotCache = null; shieldCache = null;
@@ -7819,8 +7921,9 @@ async function syncFetch(path, opt = {}, auth = true, uid = null) {
 }
 
 // 本机的记录（和公开网站的本地数据库同一份）
-const syncLocal = c => { try { return JSON.parse(localStorage.getItem(SYNC_NS + "db-" + c) || "[]"); } catch (e) { return []; } };
-const syncStore = (c, arr) => { try { localStorage.setItem(SYNC_NS + "db-" + c, JSON.stringify(arr)); } catch (e) {} };
+// 公开网站上记录存在 IndexedDB（build.py 的 ldbGet / ldbSet，内存里有一份，同步读写）；没有时照旧用 localStorage
+const syncLocal = c => { if (typeof ldbGet === "function") return ldbGet(SYNC_NS + "db-" + c); try { return JSON.parse(localStorage.getItem(SYNC_NS + "db-" + c) || "[]"); } catch (e) { return []; } };
+const syncStore = (c, arr) => { if (typeof ldbSet === "function") return ldbSet(SYNC_NS + "db-" + c, arr); try { localStorage.setItem(SYNC_NS + "db-" + c, JSON.stringify(arr)); } catch (e) {} };
 const syncRow = (c, d) => ({ app: REC_APP, coll: c, key: syncKeyOf(d), data: d });
 // 伙伴配置和留言奖励按账号隔离；既有答案/金币沿用原站的本机合并规则。
 const syncPetAllowed = (c, d, uid) => c !== "game" || !["pet", "pet-study", "pet-affinity-migration", "pet-unlock", "feedback_reward", "share_reward", "survey_reward", "oral_reward"].includes(d?.kind) || !!uid && d.scope === "user:" + uid;
@@ -8730,7 +8833,7 @@ function setGameSection(wrap) {
 function setGoalSection(wrap) {
   const g = setSection(wrap, "学习进度", "当天经验达到目标算打卡；连续打卡和补签都按这个目标算。");
   g.append(setSelectRow("setGoal", "每日经验目标", GOAL_OPTS.map(n => [n, `${n} 经验`]), xpGoal, val => {
-    xpGoal = Number(val); try { localStorage.setItem("fq-goal", String(xpGoal)); } catch (e) {} planRefresh();
+    settingSave("goal", Number(val)); planRefresh();
   }));
 }
 
@@ -9223,7 +9326,7 @@ function qlSection(wrap) {
   const sec = setSection(wrap, "难度等级", "普通语法题组按所设比例出题；计划与复习严格使用目录所选难度，未选择时使用此处难度。零基础入口、听力目录与游戏保留各自规则。");
   const note = el("p", "sub");
   sec.append(setSelectRow("setQLevel", "难度等级", QL_OPTS, qLevel, val => {
-    qLevel = val; try { localStorage.setItem("fq-qlevel", val); } catch (e) {}
+    settingSave("qlevel", val);
     note.textContent = qlMixText(val);
     if (typeof planRefresh === "function") planRefresh();
     if (typeof set !== "undefined" && set && set.key !== "fr-r0" && !/^(tour|listen):/.test(set.key)) { set = makeSet(set.key); idx = 0; bStart = 0; answers = {}; score = 0; }   // 回到答题页时按新难度重新排题

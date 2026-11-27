@@ -3205,20 +3205,72 @@ function afterPick() {
 // ---------- 答题记录存储（错题本、学习进度、经验值都从这里算） ----------
 let dbRef = null;
 const LOCAL = typeof claude === "undefined";   // 在 GitHub Pages 等普通网页里打开
-// 记录存在这台设备的浏览器里，每种记录一个键
-function localDb(ns) {
+// 记录存在这台设备的浏览器里，每种记录一份。2026-11 起存进 IndexedDB（容量大得多）：
+// 以前存在 localStorage，老用户记录多了会超过浏览器 5 MB 的上限，新记录（做的题、买的东西）存不进去，一刷新就“回退”。
+// 内存里留一份，读写都是同步的；写入时和 IndexedDB 里的那份合并（按记录内容去重），同时开着的几个标签页不会互相覆盖。
+const LDB = { mem: {}, db: null, timers: {}, failed: false };
+const ldbReq = r => new Promise((ok, no) => { r.onsuccess = () => ok(r.result); r.onerror = () => no(r.error); });
+function ldbOpenDb() {
+  return new Promise((ok, no) => {
+    if (typeof indexedDB === "undefined") return no(new Error("no indexedDB"));
+    const r = indexedDB.open("quiz-records", 1);
+    r.onupgradeneeded = () => r.result.createObjectStore("colls");
+    r.onsuccess = () => ok(r.result); r.onerror = () => no(r.error); r.onblocked = () => no(new Error("blocked"));
+  });
+}
+const ldbId = d => { try { return recKey(d); } catch (e) { return JSON.stringify(d); } };
+function ldbUnion(a, b) { const seen = new Set(a.map(ldbId)), out = a.slice(); for (const d of b) { const k = ldbId(d); if (!seen.has(k)) { seen.add(k); out.push(d); } } return out; }
+const ldbLsRead = k => { try { return JSON.parse(localStorage.getItem(k) || "[]"); } catch (e) { return []; } };
+// 打开时：IndexedDB 里的和 localStorage 里遗留的合并，存进 IndexedDB 成功后再删掉 localStorage 里那份，腾出空间
+async function ldbLoad(keys) {
+  try {
+    LDB.db = await ldbOpenDb();
+    for (const k of keys) {
+      const tx = LDB.db.transaction("colls", "readwrite"), st = tx.objectStore("colls");
+      const have = (await ldbReq(st.get(k))) || [], ls = ldbLsRead(k), all = ldbUnion(have, ls);
+      if (all.length !== have.length) st.put(all, k);
+      await new Promise((ok, no) => { tx.oncomplete = ok; tx.onerror = () => no(tx.error); tx.onabort = () => no(tx.error); });
+      LDB.mem[k] = all;
+      if (ls.length) try { localStorage.removeItem(k); } catch (e) {}
+    }
+  } catch (e) { LDB.db = null; for (const k of keys) LDB.mem[k] = ldbLsRead(k); }   // 没有 IndexedDB（少数隐私模式）：照旧用 localStorage
+}
+function ldbGet(k) { return LDB.mem[k] ? LDB.mem[k].slice() : ldbLsRead(k); }
+function ldbSet(k, arr) {
+  LDB.mem[k] = arr.slice();
+  if (!LDB.db) { try { localStorage.setItem(k, JSON.stringify(arr)); LDB.failed = false; } catch (e) { ldbFail(); } return; }
+  clearTimeout(LDB.timers[k]);
+  LDB.timers[k] = setTimeout(() => ldbFlush(k), 200);
+}
+async function ldbFlush(k) {
+  try {
+    const tx = LDB.db.transaction("colls", "readwrite"), st = tx.objectStore("colls");
+    const cur = (await ldbReq(st.get(k))) || [], all = ldbUnion(cur, LDB.mem[k] || []);
+    st.put(all, k);
+    await new Promise((ok, no) => { tx.oncomplete = ok; tx.onerror = () => no(tx.error); tx.onabort = () => no(tx.error); });
+    if (all.length !== (LDB.mem[k] || []).length) LDB.mem[k] = all;   // 别的标签页刚写进来的记录
+    LDB.failed = false;
+  } catch (e) { ldbFail(); }
+}
+function ldbFail() {
+  if (LDB.failed) return; LDB.failed = true;
+  try { saveNote.textContent = "这台设备的存储空间满了，新的记录没能保存。请清理一下浏览器存储空间。"; } catch (e) {}
+  if (typeof xpToast === "function") xpToast("记录没能保存到这台设备：浏览器存储空间不足");
+}
+addEventListener("pagehide", () => { for (const k of Object.keys(LDB.timers)) { clearTimeout(LDB.timers[k]); if (LDB.db) ldbFlush(k); } });
+async function localDb(ns) {
   const key = c => `${ns}-db-${c}`;
-  const load = c => { try { return JSON.parse(localStorage.getItem(key(c)) || "[]"); } catch (e) { return []; } };
+  await ldbLoad(["answers", "exams", "vocab", "game"].map(key));
   const snap = arr => ({ size: arr.length, docs: arr.map(d => ({ data: () => d })) });
   return { collection: c => ({
-    add: async d => { const a = load(c); a.push(d); localStorage.setItem(key(c), JSON.stringify(a)); if (typeof syncPush === "function") syncPush(c, d); },
-    get: async () => snap(load(c)),
-    where: (f, op, v) => ({ get: async () => snap(load(c).filter(d => d[f] === v)) }),
+    add: async d => { const a = ldbGet(key(c)); a.push(d); ldbSet(key(c), a); if (typeof syncPush === "function") syncPush(c, d); },
+    get: async () => snap(ldbGet(key(c))),
+    where: (f, op, v) => ({ get: async () => snap(ldbGet(key(c)).filter(d => d[f] === v)) }),
   }) };
 }
 (async () => {
   try {
-    dbRef = LOCAL ? localDb("sq") : await claude.use("db");
+    dbRef = LOCAL ? await localDb("sq") : await claude.use("db");
     if (!dbRef) { saveNote.textContent = "当前视图无法保存记录，答题不受影响。"; return; }
     const docs = (await dbRef.collection("answers").get()).docs.map(d => d.data());
     let voc = [];
@@ -3885,11 +3937,16 @@ function planRepair(p, day) {
 // render. This fallback only lives in memory; learning records are never edited.
 let planMemory = null;
 // 今日计划跟着账号同步：每天第一台抽好计划的设备把题目清单记成一条 game 记录（kind "plan"），
-// 其他设备读到以后改用这一份（同一天有好几份时用最早的一份），这样换设备打开时题目和完成进度都一样。
+// 其他设备读到以后改用这一份（同一天有好几份时用做得最多的一份，一样多时用最早的），这样换设备打开时题目和完成进度都一样。
 function planShared(day) {
   if (typeof gameRaw === "undefined" || typeof gameLoaded === "undefined" || !gameLoaded) return null;
-  let best = null;
-  for (const g of gameRaw) if (g && g.kind === "plan" && g.day === day && typeof g.at === "string" && Array.isArray(g.review) && (!best || g.at < best.at)) best = g;
+  // 同一天有好几份时：用已经做得最多的那份（换计划不会让做过的题“消失”），一样多时用最早的
+  const done = answeredToday(), score = g => ["review", "fresh", "weak", "listen"].reduce((n, k) => n + (Array.isArray(g[k]) ? g[k].filter(i => done.has(i)).length : 0), 0);
+  let best = null, bestScore = -1;
+  for (const g of gameRaw) if (g && g.kind === "plan" && g.day === day && typeof g.at === "string" && Array.isArray(g.review)) {
+    const sc = score(g);
+    if (!best || sc > bestScore || sc === bestScore && g.at < best.at) { best = g; bestScore = sc; }
+  }
   return best;
 }
 function planShare(p) {
@@ -5949,8 +6006,9 @@ async function syncFetch(path, opt = {}, auth = true, uid = null) {
 }
 
 // 本机的记录（和公开网站的本地数据库同一份）
-const syncLocal = c => { try { return JSON.parse(localStorage.getItem(SYNC_NS + "db-" + c) || "[]"); } catch (e) { return []; } };
-const syncStore = (c, arr) => { try { localStorage.setItem(SYNC_NS + "db-" + c, JSON.stringify(arr)); } catch (e) {} };
+// 公开网站上记录存在 IndexedDB（build.py 的 ldbGet / ldbSet，内存里有一份，同步读写）；没有时照旧用 localStorage
+const syncLocal = c => { if (typeof ldbGet === "function") return ldbGet(SYNC_NS + "db-" + c); try { return JSON.parse(localStorage.getItem(SYNC_NS + "db-" + c) || "[]"); } catch (e) { return []; } };
+const syncStore = (c, arr) => { if (typeof ldbSet === "function") return ldbSet(SYNC_NS + "db-" + c, arr); try { localStorage.setItem(SYNC_NS + "db-" + c, JSON.stringify(arr)); } catch (e) {} };
 const syncRow = (c, d) => ({ app: REC_APP, coll: c, key: syncKeyOf(d), data: d });
 // 伙伴配置和留言奖励按账号隔离；既有答案/金币沿用原站的本机合并规则。
 const syncPetAllowed = (c, d, uid) => c !== "game" || !["pet", "pet-study", "pet-affinity-migration", "pet-unlock", "feedback_reward", "share_reward", "survey_reward", "oral_reward"].includes(d?.kind) || !!uid && d.scope === "user:" + uid;
@@ -6226,6 +6284,7 @@ function setFold(wrap, key, title, initialOpen = false) {
 // 每次用户可见更新都新增记录：默认只递增第三位 1.x.y → 1.x.(y+1)，超过 9 继续到 10、11；第二位升级需用户明确要求。
 // 首位保持 1，只有用户明确要求才可修改；历史记录保留。完整发布规则见根目录 AGENTS.md。
 const CHANGELOG = [
+  {"v": "1.9.109", "p": "fr", "d": "2026-11-27", "items": ["修正“刷新后回退”：做题、买东西等记录以前存在浏览器的 localStorage 里，记录多了会超过浏览器约 5 MB 的上限，新记录存不进去也不提示，一刷新金币、今日计划就回到原样。现在记录改存到 IndexedDB（空间大得多），打开网站时自动把旧记录搬过去；万一还是存不进去，会提示存储空间不足。", "今日计划多设备同步时，同一天有好几份计划就用已经做得最多的那份，换计划不会让做过的题看起来“没做”。"]},
   {"v": "1.9.108", "p": "fr", "d": "2026-11-27", "items": ["“每日经验目标”和“难度等级”两项设置改成跟着账号同步：在一台设备上改了，其他登录同一账号的设备也跟着改；以前只在某台设备上设过的，升级后会自动同步到其他设备（任何一台设备上之后真正改过的设置优先）。"]},
   {"v": "1.9.107", "p": "fr", "d": "2026-11-27", "items": ["修正多设备同步：今日计划的题目清单以前是每台设备各自抽的，换设备后题目不同，进度就显示为 0。现在每天的计划跟着账号同步，所有设备用同一份题目（同一天有好几份时用最早抽的那份），在一台设备上做完，另一台也显示完成。", "修正同步：云端拒收某一条记录时，以前整批记录都传不上去，之后每次同步都会卡在这里；现在只跳过那一条。另外从云端拉下来的新记录会马上用上，不再因为上传失败而要等刷新页面才显示。"]},
   {"v": "1.9.106", "p": "fr", "d": "2026-11-27", "items": ["放行了之前扣下的 3 个单词录音：ramper、s'enrouler、assommer，现在也由学习伙伴朗读。"]},
