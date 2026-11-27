@@ -808,7 +808,7 @@
 
 ## 《哈利·波特》经典场景词汇（hp-scenes）
 
-这批图由 ChatGPT 按每个词的例句生成（三位学习伙伴扮成书中人物，按原著发色戴假发；原图存档在 `originals/picgen/hp-scenes/`），裁成 3:2、缩到 720×480。例句是按情节自己写的，不是原文。目前 90 / 120 张。
+这批图由 ChatGPT 按每个词的例句生成（三位学习伙伴扮成书中人物，按原著发色戴假发；原图存档在 `originals/picgen/hp-scenes/`），裁成 3:2、缩到 720×480。例句是按情节自己写的，不是原文。目前 120 / 120 张。
 
 | 单词 | 文件 |
 |---|---|
@@ -902,3 +902,33 @@
 | croc | hpx-croc.jpg |
 | mordre | hpx-mordre.jpg |
 | brûlure | hpx-brulure.jpg |
+| troll | hpx-troll.jpg |
+| massue | hpx-massue.jpg |
+| lavabo | hpx-lavabo.jpg |
+| narine | hpx-narine.jpg |
+| morve | hpx-morve.jpg |
+| brandir | hpx-brandir.jpg |
+| rugissement | hpx-rugissement.jpg |
+| verrouiller | hpx-verrouiller.jpg |
+| assommer | hpx-assommer.jpg |
+| s'effondrer | hpx-s-effondrer.jpg |
+| miroir | hpx-miroir.jpg |
+| cadre | hpx-cadre.jpg |
+| graver | hpx-graver.jpg |
+| désir | hpx-desir.jpg |
+| fasciné | hpx-fascine.jpg |
+| étoffe | hpx-etoffe.jpg |
+| invisibilité | hpx-invisibilite.jpg |
+| tricoter | hpx-tricoter.jpg |
+| pétard | hpx-petard.jpg |
+| armure | hpx-armure.jpg |
+| harpe | hpx-harpe.jpg |
+| flûte | hpx-flute.jpg |
+| trappe | hpx-trappe.jpg |
+| filet | hpx-filet.jpg |
+| tentacule | hpx-tentacule.jpg |
+| ligoter | hpx-ligoter.jpg |
+| échiquier | hpx-echiquier.jpg |
+| cavalier | hpx-cavalier.jpg |
+| pion | hpx-pion.jpg |
+| énigme | hpx-enigme.jpg |
