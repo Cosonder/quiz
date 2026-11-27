@@ -25681,10 +25681,250 @@
       "durationSeconds": 2.76,
       "bytes": 24823,
       "audioSha256": "2daa3b013dc68df4e1c2e3c88a55f4d64aedbc42371c7754fed8242f3277ac62"
+    },
+    {
+      "text": "Chaque élève se tient à côté d'un vieux balai posé dans l'herbe.",
+      "file": "examples/1c4ce9f3ffd58a5a957f.m4a",
+      "speaker": "ninon",
+      "durationSeconds": 3.99,
+      "bytes": 35782,
+      "audioSha256": "3f849482d4b165cb6e93e4edd22e736127d35f9e4ab95c3fcdeee8f4963c92ef"
+    },
+    {
+      "text": "La leçon de vol a lieu sur la pelouse devant le château.",
+      "file": "examples/d4b442fabdfa12712b3a.m4a",
+      "speaker": "lison",
+      "durationSeconds": 3.38,
+      "bytes": 29890,
+      "audioSha256": "5b1f8e34122a3a42d2bbba37b26c8aa8781910e322da8d2cb7feb4f687ab2d9d"
+    },
+    {
+      "text": "Neville fait une chute de plusieurs mètres.",
+      "file": "examples/85386c260a5bc294e2b7.m4a",
+      "speaker": "pia",
+      "durationSeconds": 2.7,
+      "bytes": 23786,
+      "audioSha256": "2c691e3159a9b571b1ac26b5dc644bbc8ff9eed0c5fc3bfc0a0aa4791496fdce"
+    },
+    {
+      "text": "Neville s'est cassé le poignet en tombant.",
+      "file": "examples/e616eb8fc1b6ceee97e6.m4a",
+      "speaker": "ninon",
+      "durationSeconds": 2.61,
+      "bytes": 23337,
+      "audioSha256": "fca51b5bccda20973d93cc2b01d3d2ff0e2bb5162d1b4230b03cec96c40bcd4b"
+    },
+    {
+      "text": "Le Rapeltout est une boule de verre qui change de couleur quand on oublie quelque chose.",
+      "file": "examples/8f5880dc54a58b69d5f5.m4a",
+      "speaker": "lison",
+      "durationSeconds": 4.1,
+      "bytes": 38534,
+      "audioSha256": "21e09dd8e207751f77914a9d7e3a00b9e873776fe32e7869edccb9217e045d26"
+    },
+    {
+      "text": "La fumée à l'intérieur de la boule se met à rougeoyer.",
+      "file": "examples/7a517dd3ff59f65eddfe.m4a",
+      "speaker": "pia",
+      "durationSeconds": 3.34,
+      "bytes": 28428,
+      "audioSha256": "dddac9fce3620ebc6bb5366fccde641a26fbbbd93e0c4f635a4b2530c7639a35"
+    },
+    {
+      "text": "Malefoy se vante d'être le meilleur au balai.",
+      "file": "examples/e169a73a024370b28edc.m4a",
+      "speaker": "ninon",
+      "durationSeconds": 2.99,
+      "bytes": 26206,
+      "audioSha256": "e4b39f9094268afa22fd217613cc02b7415445146c9697ef489e777b61a1ae9f"
+    },
+    {
+      "text": "Harry a peur de se ridiculiser devant toute la classe.",
+      "file": "examples/e563458ac7c11755644e.m4a",
+      "speaker": "lison",
+      "durationSeconds": 2.98,
+      "bytes": 26924,
+      "audioSha256": "8ff1e3ad4220962e42c842265e261ceedb82c928c71b062260ce2bf7ca512c2c"
+    },
+    {
+      "text": "Harry descend en piqué pour attraper la boule.",
+      "file": "examples/fb689bd70748bf08cb45.m4a",
+      "speaker": "pia",
+      "durationSeconds": 2.38,
+      "bytes": 21301,
+      "audioSha256": "8cc1781696d2f78c521962f02f36208e15582384359bf17d95a22a7b642ec5b4"
+    },
+    {
+      "text": "Harry vole à une hauteur vertigineuse.",
+      "file": "examples/29feb5b2897e6d2720af.m4a",
+      "speaker": "ninon",
+      "durationSeconds": 2.86,
+      "bytes": 25551,
+      "audioSha256": "71fdca3dd552f316b8b9753a5776d69e60ef29a640f8d94822c21b81adbfeb0b"
+    },
+    {
+      "text": "Toute l'école est assise dans les gradins autour du terrain.",
+      "file": "examples/2689d34654238bbb793e.m4a",
+      "speaker": "lison",
+      "durationSeconds": 2.51,
+      "bytes": 23807,
+      "audioSha256": "d2c38f1a535ae4d186b847ed73b1952e51d3119cc4bdcbf886c991f88cce72f5"
+    },
+    {
+      "text": "Ron et Hermione agitent une grande bannière pour Harry.",
+      "file": "examples/2be38fa317bb4941aa96.m4a",
+      "speaker": "pia",
+      "durationSeconds": 3.3,
+      "bytes": 29662,
+      "audioSha256": "3cb9f2df06d24a4afdac10e1ba5840fff25e2d04c9a1dd309c805c4db805740b"
+    },
+    {
+      "text": "Hermione observe le match avec des jumelles.",
+      "file": "examples/e6d85def5898f26913d8.m4a",
+      "speaker": "ninon",
+      "durationSeconds": 2.76,
+      "bytes": 24266,
+      "audioSha256": "1ce3fff809135d274ff74482b899230e1e1274359106963a085324de391c80c1"
+    },
+    {
+      "text": "Les acclamations éclatent quand les joueurs entrent sur le terrain.",
+      "file": "examples/fc32d46df4cc9f2506f2.m4a",
+      "speaker": "lison",
+      "durationSeconds": 2.99,
+      "bytes": 27658,
+      "audioSha256": "839d3e251b6885088ef5b582def493362536086e331fe069e909aefa0bec7031"
+    },
+    {
+      "text": "Un batteur frappe une balle noire avec sa batte.",
+      "file": "examples/5aab98f28e8b3c53acf1.m4a",
+      "speaker": "pia",
+      "durationSeconds": 2.77,
+      "bytes": 25620,
+      "audioSha256": "35ddf3dca6c420315a568de4da1b77a9e1b6a38a535c63ad24ddf8dbad53b837"
+    },
+    {
+      "text": "Le balai de Harry se met à zigzaguer dans le ciel.",
+      "file": "examples/2ccde2532d4f2a1607a4.m4a",
+      "speaker": "ninon",
+      "durationSeconds": 2.77,
+      "bytes": 25668,
+      "audioSha256": "3ec58503231ba976dc71e0c349f489ef2feb93ebd8ff87e23049b0e4ad32a801"
+    },
+    {
+      "text": "Le balai essaie de désarçonner Harry.",
+      "file": "examples/6b63ee4f0b6c87a3210b.m4a",
+      "speaker": "lison",
+      "durationSeconds": 2.15,
+      "bytes": 19314,
+      "audioSha256": "7f5d373d82dbf402597ff8f0ec09ee4ac8e24b230a310c44bd267ba80106c976"
+    },
+    {
+      "text": "Harry s'accroche à son balai d'une seule main.",
+      "file": "examples/4f902f174def8d7313a3.m4a",
+      "speaker": "pia",
+      "durationSeconds": 2.37,
+      "bytes": 20707,
+      "audioSha256": "bcd991c9351f73de64f43331b67451f3d2795e12e3fbca73cda88b54820bf98d"
+    },
+    {
+      "text": "La foule retient son souffle quand Harry glisse de son balai.",
+      "file": "examples/18aba7b9de25b405e4e1.m4a",
+      "speaker": "ninon",
+      "durationSeconds": 3.75,
+      "bytes": 34005,
+      "audioSha256": "27ddc565999cb1b594be7848368a213dc0036583bf3600fce66829ddb80bf20c"
+    },
+    {
+      "text": "Hermione met le feu à la robe de Rogue avec des flammes bleues.",
+      "file": "examples/6714e5e7743662ba5f42.m4a",
+      "speaker": "lison",
+      "durationSeconds": 2.79,
+      "bytes": 24815,
+      "audioSha256": "df640d089e120cd73f367e285cf4b4666bdfd30ee4ca6fc677fc745faef81d60"
+    },
+    {
+      "text": "L'œuf de dragon est sur le point d'éclore.",
+      "file": "examples/96571636e6b94b73622e.m4a",
+      "speaker": "pia",
+      "durationSeconds": 2.53,
+      "bytes": 24165,
+      "audioSha256": "c35fd57e26d1df0cd7718109a8df3cd65bbf3114a0a22c74bde86391f00d2eec"
+    },
+    {
+      "text": "On entend un craquement, puis l'œuf bouge sur la table.",
+      "file": "examples/0053067b520aae28b300.m4a",
+      "speaker": "ninon",
+      "durationSeconds": 3.54,
+      "bytes": 30661,
+      "audioSha256": "13e1d7b27b4b62caef4357361b9a56bea0226a112627b82ec8a8a5a29e3fd2f4"
+    },
+    {
+      "text": "La coquille se fend et un bébé dragon en sort.",
+      "file": "examples/df4a8a41460b821641a3.m4a",
+      "speaker": "lison",
+      "durationSeconds": 2.54,
+      "bytes": 24023,
+      "audioSha256": "147b944ead9b99b7e68b2ee13f306d19a2c1724b5900ef7b29432624a0055da9"
+    },
+    {
+      "text": "Le petit dragon a la peau toute fripée.",
+      "file": "examples/af7b83c33bf9c14e0748.m4a",
+      "speaker": "pia",
+      "durationSeconds": 2.48,
+      "bytes": 23168,
+      "audioSha256": "da4a44dfb9abdd2e9dec04ebb034127c7109937715044a2f77c3752e88e61730"
+    },
+    {
+      "text": "Le dragon a une crête tout le long du dos.",
+      "file": "examples/4cf3db61ae80bee63a85.m4a",
+      "speaker": "ninon",
+      "durationSeconds": 3.19,
+      "bytes": 30042,
+      "audioSha256": "52e27a31050e4e991f4099285c21c0ea26c4d4a9ccc7d5a3a9a1e4f6c90fc974"
+    },
+    {
+      "text": "De la fumée sort des naseaux du dragon.",
+      "file": "examples/6c431ffc1b52101dc5bf.m4a",
+      "speaker": "lison",
+      "durationSeconds": 2.86,
+      "bytes": 25046,
+      "audioSha256": "3be8b23ec32b204ce81e270cb44a466e31aedafd380f50b2ebc7724e85882db5"
+    },
+    {
+      "text": "Norbert crache des étincelles sur la barbe de Hagrid.",
+      "file": "examples/8a95110c5a6cba59a296.m4a",
+      "speaker": "pia",
+      "durationSeconds": 3.83,
+      "bytes": 34704,
+      "audioSha256": "f5a00b64043d3da9b95b986f3e571f68bf70a41f9abc15fc90c8648ba354f2d5"
+    },
+    {
+      "text": "Malgré sa petite taille, Norbert a déjà des crocs pointus.",
+      "file": "examples/9b756f45d9c9679a4d33.m4a",
+      "speaker": "ninon",
+      "durationSeconds": 4.35,
+      "bytes": 38947,
+      "audioSha256": "5eb444f2975299da0550d5ba04ef30586801b96aa15e69669ea83aea4031a109"
+    },
+    {
+      "text": "Norbert mord la main de Ron.",
+      "file": "examples/faefd5b011ec2f8ea1dc.m4a",
+      "speaker": "lison",
+      "durationSeconds": 2.32,
+      "bytes": 20714,
+      "audioSha256": "0ca939fb98baf6717f25cd3b63b7d2492cc09962c659ee12a0e2b43a99215770"
+    },
+    {
+      "text": "Hagrid a des brûlures sur les bras à cause du dragon.",
+      "file": "examples/75f43c7581caf77943d0.m4a",
+      "speaker": "pia",
+      "durationSeconds": 3.05,
+      "bytes": 28213,
+      "audioSha256": "71eef9bec429f8cc8d5173fc459097403aad8018f1a6824e3f4c0fec4538ba78"
     }
   ],
-  "exampleCount": 1255,
-  "exampleBytes": 36178970,
+  "exampleCount": 1285,
+  "exampleBytes": 36993914,
   "examplePending": 0,
   "words": [
     {
@@ -27224,12 +27464,12 @@
       "audioSha256": "c609f7b2ec11b4155f2f607ef0f0480ffac677093cde1f07fcbc1e308a4ad87c"
     },
     {
-      "text": "l'écouteurs",
-      "file": "words/5d985699ffb5d4dfc378.m4a",
+      "text": "les écouteurs",
+      "file": "words/6cf1ab546f58f1ca62ca.m4a",
       "speaker": "ninon",
-      "durationSeconds": 1.22,
-      "bytes": 11604,
-      "audioSha256": "0f39d2beff2a0e59f20bc0fdd26c65b603a33daf3140a5e772a610c909a7bd5b"
+      "durationSeconds": 1.45,
+      "bytes": 12994,
+      "audioSha256": "9bc91b44d2b1b85ca93a728ed757d04b8a976dc2c0e10e07d4b0b7d938b214fe"
     },
     {
       "text": "brancher",
@@ -28040,12 +28280,12 @@
       "audioSha256": "00981748727d18fbd1b7d0730c9fbf1a5bd2cf135f9ff88c7e48687749545cde"
     },
     {
-      "text": "la soldes",
-      "file": "words/a803e8a842fbce73f1cc.m4a",
+      "text": "les soldes",
+      "file": "words/30568f8e0c7871b06565.m4a",
       "speaker": "ninon",
-      "durationSeconds": 1.21,
-      "bytes": 11299,
-      "audioSha256": "048076f5c6539cde1b523551c7c49dc16fdc9a4c48bdbf03e2b38eedbbfe71ad"
+      "durationSeconds": 1.1,
+      "bytes": 10051,
+      "audioSha256": "61ba3aca8e4928dea56080ec50482c634148ca5ef83b25a56621e4d7cb7a07a1"
     },
     {
       "text": "l'étiquette",
@@ -32942,10 +33182,250 @@
       "durationSeconds": 0.91,
       "bytes": 8636,
       "audioSha256": "1292fedd8f4a5701eaf6dc13b2a611d5cea96828bdc6a821f814cc3e1ad518b3"
+    },
+    {
+      "text": "le balai",
+      "file": "words/32d7c62571bdb50cb8a4.m4a",
+      "speaker": "ninon",
+      "durationSeconds": 0.96,
+      "bytes": 8739,
+      "audioSha256": "dc055a2f73e1c88fbd26f8ff7eb26d94146923637908ac2ba976945aae646628"
+    },
+    {
+      "text": "la pelouse",
+      "file": "words/50760cd65bfbe2f68d6e.m4a",
+      "speaker": "lison",
+      "durationSeconds": 1.56,
+      "bytes": 13722,
+      "audioSha256": "75d8b2302bc74f9a3607dea92289506c49ec829774233f2964b48824317abdb8"
+    },
+    {
+      "text": "la chute",
+      "file": "words/4909106f74b6006664fa.m4a",
+      "speaker": "pia",
+      "durationSeconds": 1.06,
+      "bytes": 9419,
+      "audioSha256": "d0f855daed94230d30669bde409e64db7b08a1fdbf6c555a4a7f728a55c384bd"
+    },
+    {
+      "text": "le poignet",
+      "file": "words/6c52feb51568fcfa9fb1.m4a",
+      "speaker": "ninon",
+      "durationSeconds": 1.2,
+      "bytes": 11089,
+      "audioSha256": "bbca42693b62e64c1987cf167d52f484bfe9bf3e283505ff68554a49e9df2ecf"
+    },
+    {
+      "text": "la boule",
+      "file": "words/e4dab0ffcb5ea5a2677b.m4a",
+      "speaker": "lison",
+      "durationSeconds": 1.03,
+      "bytes": 10460,
+      "audioSha256": "48ff28bb7c7a0e7c51505a213c1b0886f9129fd16ab7dba7cc3ad34c710cd3c4"
+    },
+    {
+      "text": "rougeoyer",
+      "file": "words/d9d9b814303ca653ef29.m4a",
+      "speaker": "pia",
+      "durationSeconds": 1.12,
+      "bytes": 10186,
+      "audioSha256": "9573ce02b83cf89cfc7881da1a41de549cba65a61b870c07c4405b79225099c2"
+    },
+    {
+      "text": "se vanter",
+      "file": "words/8c460bfe74a790805e1e.m4a",
+      "speaker": "ninon",
+      "durationSeconds": 1.16,
+      "bytes": 10503,
+      "audioSha256": "3aa725792088231df02d1456592afefd0c8ed126ec0ce5142bc3c48b05f50e62"
+    },
+    {
+      "text": "se ridiculiser",
+      "file": "words/82a5919598bd6c576faa.m4a",
+      "speaker": "lison",
+      "durationSeconds": 1.56,
+      "bytes": 13847,
+      "audioSha256": "f8d145f96ab168ab5bb607ecb4953cacfc087cbc036efc6a10a0c853e239a39a"
+    },
+    {
+      "text": "le piqué",
+      "file": "words/29ce6d56ded247263e36.m4a",
+      "speaker": "pia",
+      "durationSeconds": 1.01,
+      "bytes": 9074,
+      "audioSha256": "51ef689d2d87944a779f7bb67dbaa7221bc8384d2ef02697c8e61a1433218b30"
+    },
+    {
+      "text": "vertigineux",
+      "file": "words/4af7f5a18272a2965064.m4a",
+      "speaker": "ninon",
+      "durationSeconds": 1.28,
+      "bytes": 11208,
+      "audioSha256": "fcfaca75e814604a00539ae96aeadce732eaa10179af74b102b7deb5a9435943"
+    },
+    {
+      "text": "les gradins",
+      "file": "words/84a2369d818581bbb2a7.m4a",
+      "speaker": "lison",
+      "durationSeconds": 1.62,
+      "bytes": 15364,
+      "audioSha256": "8bef3f636c4ea323556728d05baca3c374f01fbdabc3c7fd0a783fa7992898c8"
+    },
+    {
+      "text": "la bannière",
+      "file": "words/bc6412cf0676396d89ac.m4a",
+      "speaker": "pia",
+      "durationSeconds": 1.24,
+      "bytes": 11855,
+      "audioSha256": "1146bb92d5ab2fe4861f19b7b644d6c6df86866c28ee84c3c1162794ee70eefb"
+    },
+    {
+      "text": "les jumelles",
+      "file": "words/d4f0ef306f343806001d.m4a",
+      "speaker": "ninon",
+      "durationSeconds": 1.25,
+      "bytes": 11469,
+      "audioSha256": "d3b78dc2e46c3636ca5d9cb5baf6d573126b44544895fbb33d0420b9a20addd1"
+    },
+    {
+      "text": "l'acclamation",
+      "file": "words/712092444a7fb1e7c278.m4a",
+      "speaker": "lison",
+      "durationSeconds": 1.44,
+      "bytes": 13167,
+      "audioSha256": "0b7d199b6974b4e718a3aa14f7fe7e5ecc7fd87d8e6cc6b409ef65d3fd2dcf0b"
+    },
+    {
+      "text": "le batteur",
+      "file": "words/77888161e36cbb28a1ef.m4a",
+      "speaker": "pia",
+      "durationSeconds": 1.1,
+      "bytes": 11368,
+      "audioSha256": "8d696153927172c05b30641934d581b8b6d51b259e24313fe68e3aa0a090fe87"
+    },
+    {
+      "text": "zigzaguer",
+      "file": "words/9504c4952742c42cf8bf.m4a",
+      "speaker": "ninon",
+      "durationSeconds": 1.07,
+      "bytes": 10736,
+      "audioSha256": "920db84b58b30b879ef2eff2cd380769eec49b2db868207d6b194b85cd07b61f"
+    },
+    {
+      "text": "désarçonner",
+      "file": "words/fbf8158d20a1c3fa9810.m4a",
+      "speaker": "lison",
+      "durationSeconds": 1.26,
+      "bytes": 11070,
+      "audioSha256": "62ecb645f1cd54a85e504f4a2a4cd5767cfa863a8274b647b9f28ec7ee939697"
+    },
+    {
+      "text": "s'accrocher",
+      "file": "words/2c9722d67f169efcfd66.m4a",
+      "speaker": "pia",
+      "durationSeconds": 0.91,
+      "bytes": 8712,
+      "audioSha256": "3a71f04d3152d19ac43968e60d70b0c3ac0d0335b43f339d4c2d4c53c3d176b7"
+    },
+    {
+      "text": "le souffle",
+      "file": "words/95817b67ae53a0b35595.m4a",
+      "speaker": "ninon",
+      "durationSeconds": 1.12,
+      "bytes": 9981,
+      "audioSha256": "3baf57c27c316b423878c0bc5ba1797660e2aed518e9f4e4d30d63ca05ddb6bc"
+    },
+    {
+      "text": "la flamme",
+      "file": "words/4d05312a6128db9fec87.m4a",
+      "speaker": "lison",
+      "durationSeconds": 1.1,
+      "bytes": 9703,
+      "audioSha256": "6ae6a97a1bf9bf3bc8a378cf405df1c74dd5c631ff83348f5075368e74b424fc"
+    },
+    {
+      "text": "éclore",
+      "file": "words/d60c13fa240d4b1949e0.m4a",
+      "speaker": "pia",
+      "durationSeconds": 0.84,
+      "bytes": 8496,
+      "audioSha256": "e3de17149f6ca80c2ca335662e37d90be23a5942a0d389741cf5a723d6f35450"
+    },
+    {
+      "text": "le craquement",
+      "file": "words/158d1df5931e045549bd.m4a",
+      "speaker": "ninon",
+      "durationSeconds": 1.09,
+      "bytes": 10351,
+      "audioSha256": "46578a7657878ccd5e52a965e8f02961f9b74eadb7e977758e82f9d790da8d36"
+    },
+    {
+      "text": "la coquille",
+      "file": "words/d768aac259855d1b35c8.m4a",
+      "speaker": "lison",
+      "durationSeconds": 1.33,
+      "bytes": 12003,
+      "audioSha256": "b55ac8dc9351cda7db3317de4191b6fcc032bb40d4f68c76893380522fb918d2"
+    },
+    {
+      "text": "fripé",
+      "file": "words/2ddb0abeac874dd344e3.m4a",
+      "speaker": "pia",
+      "durationSeconds": 0.74,
+      "bytes": 7444,
+      "audioSha256": "e0f029130a75d80c55eea24ff3c23078b60329b46795805a0e42710da30869d1"
+    },
+    {
+      "text": "la crête",
+      "file": "words/e1f4ba8493089450238d.m4a",
+      "speaker": "ninon",
+      "durationSeconds": 1.21,
+      "bytes": 11678,
+      "audioSha256": "d18f4e3613ef40e525599b3676e90fb9900c089e246222e7aa736ee59ace90b4"
+    },
+    {
+      "text": "le naseau",
+      "file": "words/8949075efe9098708a7a.m4a",
+      "speaker": "lison",
+      "durationSeconds": 1.09,
+      "bytes": 10196,
+      "audioSha256": "fb3d5f9551ccb01b5a3e521d3fe1bd3bf48d2201df43807ebd2f4a12864b0dce"
+    },
+    {
+      "text": "l'étincelle",
+      "file": "words/9110a03e3d4836baf84b.m4a",
+      "speaker": "pia",
+      "durationSeconds": 1.08,
+      "bytes": 9750,
+      "audioSha256": "fda500204baf5b5ab471120625a9cc6001c53866a48d6184666c686a1ea49ccc"
+    },
+    {
+      "text": "le croc",
+      "file": "words/69e04cd0822f3be1f787.m4a",
+      "speaker": "ninon",
+      "durationSeconds": 1.0,
+      "bytes": 9159,
+      "audioSha256": "5ce573e7c0106591142cb15cbf2057992eb4490c3777c0fb2e7b65cecb948f44"
+    },
+    {
+      "text": "mordre",
+      "file": "words/fb7ecdef8146405d9ba7.m4a",
+      "speaker": "lison",
+      "durationSeconds": 0.87,
+      "bytes": 8067,
+      "audioSha256": "b7a948146c2e575413ede7fc9a623d64ff001a29ef22f6972a4f9e01b6dbe4f1"
+    },
+    {
+      "text": "la brûlure",
+      "file": "words/6c9017cde78adf9c052f.m4a",
+      "speaker": "pia",
+      "durationSeconds": 1.1,
+      "bytes": 9854,
+      "audioSha256": "0504cfa63dec6a1d7d2755e7943afb49cc89e2028700ce070b5ca2dcb28bc992"
     }
   ],
-  "wordCount": 907,
-  "wordBytes": 8664331,
+  "wordCount": 937,
+  "wordBytes": 8983143,
   "wordPending": 2,
   "male": [
     {
