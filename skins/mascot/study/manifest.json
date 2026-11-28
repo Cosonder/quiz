@@ -26161,10 +26161,970 @@
       "durationSeconds": 3.05,
       "bytes": 27294,
       "audioSha256": "24d9405b7961bb30f4f283aae716661ca571f67f80636c65ead981cf8b4fee0f"
+    },
+    {
+      "text": "Un matin, Meursault reçoit un télégramme de l'asile de sa mère.",
+      "file": "examples/71c7959e7ccb5559c03a.m4a",
+      "speaker": "ninon",
+      "durationSeconds": 4.64,
+      "bytes": 41554,
+      "audioSha256": "bcc79e82ade3dda8d9af3ab711e1eee0f5c2f35ed03c062c61b7f674f4995184"
+    },
+    {
+      "text": "Au restaurant, tout le monde présente ses condoléances à Meursault.",
+      "file": "examples/7663fadc0faadfcc5ac5.m4a",
+      "speaker": "lison",
+      "durationSeconds": 3.44,
+      "bytes": 29679,
+      "audioSha256": "a752ef40a0774b41aeb8e2d16879c0fd79fff068c4ac394c5d71bc904b6d6801"
+    },
+    {
+      "text": "Meursault emprunte une cravate et un brassard noirs à un ami.",
+      "file": "examples/56da82e56f35b94e25f1.m4a",
+      "speaker": "pia",
+      "durationSeconds": 3.9,
+      "bytes": 35304,
+      "audioSha256": "10a1db05d21ed08d7c97843a116f9b697095e7a64d77657e464cabd4eefb706d"
+    },
+    {
+      "text": "À cause de la chaleur, Meursault s'assoupit dans l'autobus.",
+      "file": "examples/4176b715c67a90bdb5f0.m4a",
+      "speaker": "ninon",
+      "durationSeconds": 3.81,
+      "bytes": 33566,
+      "audioSha256": "50396208a3e3c5d14fb33da78076fa7fa890be80bde111561ba530a1e7cbd071"
+    },
+    {
+      "text": "L'asile se trouve à deux kilomètres du village.",
+      "file": "examples/15baa0e3ae58a01a50ae.m4a",
+      "speaker": "lison",
+      "durationSeconds": 3.5,
+      "bytes": 30886,
+      "audioSha256": "9a512fe8f4a1864d2471323dcaee6901671a014a20f9c5bb1c5c066eda1af2e6"
+    },
+    {
+      "text": "Au milieu de la salle blanche, il y a une bière fermée.",
+      "file": "examples/e39155e4b839b8704b98.m4a",
+      "speaker": "pia",
+      "durationSeconds": 3.3,
+      "bytes": 29241,
+      "audioSha256": "e7f41c3897be032d142d26682b3468dcd1ab628df01d9c80cbf83e40cab5c6c6"
+    },
+    {
+      "text": "Le concierge propose de dévisser le couvercle, mais Meursault refuse.",
+      "file": "examples/d943815ee7f320602451.m4a",
+      "speaker": "ninon",
+      "durationSeconds": 4.61,
+      "bytes": 42127,
+      "audioSha256": "2ce16a11b481e95d2ed2f8fbe187e531bed7f5d67046ecf1d51e6c977ba3348b"
+    },
+    {
+      "text": "La lumière tombe d'une grande verrière au plafond.",
+      "file": "examples/16c9d46545d37444e1c7.m4a",
+      "speaker": "lison",
+      "durationSeconds": 3.47,
+      "bytes": 30725,
+      "audioSha256": "c8ad0b9ce412967cb93d635aebda12f55a89e0b01af1e8b9025302ef52fc0d54"
+    },
+    {
+      "text": "Deux frelons bourdonnent contre la vitre.",
+      "file": "examples/97e8472b4f1af1e477be.m4a",
+      "speaker": "pia",
+      "durationSeconds": 2.2,
+      "bytes": 19900,
+      "audioSha256": "d166adf1b29e33b2c841be6cc97a6a1039597ad652832f729f21674e4517a3c3"
+    },
+    {
+      "text": "Pendant la nuit, on entend les sanglots d'une vieille femme.",
+      "file": "examples/5715f1f2e92211178f9c.m4a",
+      "speaker": "ninon",
+      "durationSeconds": 3.34,
+      "bytes": 29367,
+      "audioSha256": "542f64421e52f5532ccc2c9e14a4e0b7b37db12fa16d4f18edef50ea4e49b48e"
+    },
+    {
+      "text": "Le corbillard avance lentement sur la route de campagne.",
+      "file": "examples/c05de58c46a02ebb8de3.m4a",
+      "speaker": "lison",
+      "durationSeconds": 3.02,
+      "bytes": 27473,
+      "audioSha256": "e5365d1e57ff6ed3b4db8e46c9d15c56e2680ae0f408790ac745d96852ef888f"
+    },
+    {
+      "text": "Le cocher porte un chapeau de cuir sous le soleil.",
+      "file": "examples/3b5961fcdeed5793912e.m4a",
+      "speaker": "pia",
+      "durationSeconds": 2.48,
+      "bytes": 22483,
+      "audioSha256": "0863543959f2124a4d25f57f83e3b81cc20e6e8ee3d958eb5dabe52509d41903"
+    },
+    {
+      "text": "Thomas Pérez porte un vieux feutre aux larges bords.",
+      "file": "examples/c90538bcca75cdac846f.m4a",
+      "speaker": "ninon",
+      "durationSeconds": 3.09,
+      "bytes": 28449,
+      "audioSha256": "638ad5d92e2d8e6c31cdc1ec3f17b83da4eee6d1136d2b64eb0b3003b7bccc52"
+    },
+    {
+      "text": "Un enfant de chœur tient un encensoir près du prêtre.",
+      "file": "examples/3878d7b86e76e11c062e.m4a",
+      "speaker": "lison",
+      "durationSeconds": 3.35,
+      "bytes": 30691,
+      "audioSha256": "adb9f856e4a4a05249d2eaf6bc4debafb66337f2609c1064ee6d87efce60d2a7"
+    },
+    {
+      "text": "Des lignes de cyprès montent vers les collines.",
+      "file": "examples/fe2a825d6452acdd2cc6.m4a",
+      "speaker": "pia",
+      "durationSeconds": 3.18,
+      "bytes": 27746,
+      "audioSha256": "d694b1818672e149d370c03b2b8158950183112ef316660ef314dd33984a570c"
+    },
+    {
+      "text": "Le soleil est si fort que le goudron de la route fond.",
+      "file": "examples/5561eb2cab8e2ea60a58.m4a",
+      "speaker": "ninon",
+      "durationSeconds": 3.29,
+      "bytes": 29668,
+      "audioSha256": "870c3e5a72a1cff22ba1ab5eebf8c39ba22bc7d19fc73e6828ec1f6c0671fcec"
+    },
+    {
+      "text": "Si on marche trop doucement, on risque une insolation.",
+      "file": "examples/905801d051029e5e9430.m4a",
+      "speaker": "lison",
+      "durationSeconds": 2.82,
+      "bytes": 25141,
+      "audioSha256": "5bbcb283f35ce74a2f5d1145ff3c753b9527627a54c2b7c48b94b482ca86352e"
+    },
+    {
+      "text": "Meursault essuie la transpiration sur son front.",
+      "file": "examples/65e6a16884237eecc2c9.m4a",
+      "speaker": "pia",
+      "durationSeconds": 2.87,
+      "bytes": 24923,
+      "audioSha256": "9874c29a9b979952e668c384eea393f02f778e8e04b91d386042473cd315232b"
+    },
+    {
+      "text": "Le cortège arrive enfin au cimetière du village.",
+      "file": "examples/76f15891e17a5cca0dc4.m4a",
+      "speaker": "ninon",
+      "durationSeconds": 2.87,
+      "bytes": 26414,
+      "audioSha256": "819a9a343992996dadf8796064dea8009cee18fd54aab635181664ef630568a1"
+    },
+    {
+      "text": "Des géraniums rouges fleurissent sur les tombes.",
+      "file": "examples/6401c707c15584465aa5.m4a",
+      "speaker": "lison",
+      "durationSeconds": 2.4,
+      "bytes": 21006,
+      "audioSha256": "60c611cd60eaf99c269d5258281cec9da40e7cadd0f5f97582337ff0bcdcb531"
+    },
+    {
+      "text": "Au port, Meursault retrouve Marie, une ancienne dactylo de son bureau.",
+      "file": "examples/5d0975b5c0cb8fbfc930.m4a",
+      "speaker": "pia",
+      "durationSeconds": 4.45,
+      "bytes": 39598,
+      "audioSha256": "ad4d515867379dbe0ef9a587bdc86620a31e3daa9f00ea85597a162ba16127f5"
+    },
+    {
+      "text": "Marie et Meursault se reposent sur une bouée au soleil.",
+      "file": "examples/1f6cd6237e2f3771d7a4.m4a",
+      "speaker": "ninon",
+      "durationSeconds": 3.24,
+      "bytes": 27818,
+      "audioSha256": "b80b272568d4d9587f6ef8c7c90ce007249a614b3a0630a40487e19f4ecefd2a"
+    },
+    {
+      "text": "Le traversin garde l'odeur de sel des cheveux de Marie.",
+      "file": "examples/25929d072c862f671666.m4a",
+      "speaker": "lison",
+      "durationSeconds": 3.23,
+      "bytes": 29006,
+      "audioSha256": "1195cd67479c74a4150a4fe30877d8860cf52233a9eb1efe96ec917593aeaf6a"
+    },
+    {
+      "text": "La chambre de Meursault donne sur la rue principale du faubourg.",
+      "file": "examples/b026d23a69ccc537721a.m4a",
+      "speaker": "pia",
+      "durationSeconds": 3.34,
+      "bytes": 29713,
+      "audioSha256": "f0b66c4f29edb5f717177fd114d49e8433946a6f3c557cc697cb33e2c82d8569"
+    },
+    {
+      "text": "Un monsieur passe avec un canotier et une canne.",
+      "file": "examples/d9c7c989e83556aed913.m4a",
+      "speaker": "ninon",
+      "durationSeconds": 3.42,
+      "bytes": 31359,
+      "audioSha256": "03c3330f03a2de6128945dc093156cc678052294bc17882d8b4edee226bf7714"
+    },
+    {
+      "text": "Les jeunes gens portent des vestons très cintrés.",
+      "file": "examples/c8f57a4fd97d3b224f8d.m4a",
+      "speaker": "lison",
+      "durationSeconds": 3.28,
+      "bytes": 29269,
+      "audioSha256": "95e6aceb1064009abea44a79280a29066fa01754644596a2a00f9c3553055904"
+    },
+    {
+      "text": "Le soir, les promeneurs remplissent peu à peu la rue.",
+      "file": "examples/4547e2eba8e5c3ad9e3e.m4a",
+      "speaker": "pia",
+      "durationSeconds": 2.95,
+      "bytes": 25695,
+      "audioSha256": "359e1c7c0d948bddf3d6f605d65f6ea6844faf5beac20c01e53ccabe44465293"
+    },
+    {
+      "text": "Dans la rue vide, il ne reste que les boutiquiers et les chats.",
+      "file": "examples/1b20cc660d7b3974f8ac.m4a",
+      "speaker": "ninon",
+      "durationSeconds": 3.72,
+      "bytes": 33245,
+      "audioSha256": "ec70377c1255493481ccf5c58ee72369eb0bff9a92c35c5eb06aeb68547c2763"
+    },
+    {
+      "text": "Un tramway plein de spectateurs revient du stade.",
+      "file": "examples/11bc4f0b382dd3497eef.m4a",
+      "speaker": "lison",
+      "durationSeconds": 3.41,
+      "bytes": 30368,
+      "audioSha256": "935458b36e92bc947baf0aefdc9d5cc086e6d9cabe931c1d721479356723e159"
+    },
+    {
+      "text": "Des garçons voyagent debout sur le marchepied du tram.",
+      "file": "examples/d02e3ce42dd2c426febe.m4a",
+      "speaker": "pia",
+      "durationSeconds": 3.03,
+      "bytes": 26846,
+      "audioSha256": "2f21bda7af386b13bca0b7683ab9d9519238f64df280ffcd78c5eeaf2ca86afa"
+    },
+    {
+      "text": "Au bureau, Meursault doit dépouiller un tas de documents.",
+      "file": "examples/4d0b1f244e41034bb59c.m4a",
+      "speaker": "ninon",
+      "durationSeconds": 3.82,
+      "bytes": 35635,
+      "audioSha256": "f255d207228118134f46a3c29c758aac127bb4681661919ec45ca43be4ec0ac6"
+    },
+    {
+      "text": "Le soir, la serviette du bureau est toute mouillée.",
+      "file": "examples/2de937d3e699c189c064.m4a",
+      "speaker": "lison",
+      "durationSeconds": 3.23,
+      "bytes": 28933,
+      "audioSha256": "6003a8244ae1801d1dece452c94d4159b9d819c2259ce40bfd5f9235978a64f0"
+    },
+    {
+      "text": "Meursault et Emmanuel regardent les cargos dans le port.",
+      "file": "examples/a5d94b737a7cdf1e3f4b.m4a",
+      "speaker": "pia",
+      "durationSeconds": 3.01,
+      "bytes": 27988,
+      "audioSha256": "285dcc4748919f4c677c8e9c75da0575400896a6ace26f9932e15dd06ecebddf"
+    },
+    {
+      "text": "Un camion passe dans un bruit de chaînes.",
+      "file": "examples/8e52cca6e2f0e87206e0.m4a",
+      "speaker": "ninon",
+      "durationSeconds": 2.46,
+      "bytes": 23374,
+      "audioSha256": "6afc57c40b207192ad3abdfe170d6c1f6adfc8cf991671f8b66ac60eace4eea7"
+    },
+    {
+      "text": "Les deux amis se lancent à la poursuite du camion.",
+      "file": "examples/516774d9b2334c6fbf84.m4a",
+      "speaker": "lison",
+      "durationSeconds": 2.82,
+      "bytes": 25951,
+      "audioSha256": "89bd7472d690b9339a4482cea478bc59b165bdfd2a6e2f9186303aaeb2a8f5db"
+    },
+    {
+      "text": "Ils courent au milieu des treuils et des machines du quai.",
+      "file": "examples/6c7f8abcf118d3857307.m4a",
+      "speaker": "pia",
+      "durationSeconds": 2.63,
+      "bytes": 24200,
+      "audioSha256": "3c33b8a7a94f02303bf8e210f396139883a56fbba11720bd554384b5b020633e"
+    },
+    {
+      "text": "Les mâts des bateaux dansent sur l'horizon.",
+      "file": "examples/cebb4582bdf9d93c666f.m4a",
+      "speaker": "ninon",
+      "durationSeconds": 2.56,
+      "bytes": 22743,
+      "audioSha256": "0d364ad9609d1457342249573bba3ab250efaa2df7f60b087b5a45e69d59935f"
+    },
+    {
+      "text": "Après la course, ils arrivent en nage chez Céleste.",
+      "file": "examples/b6db3dd0d3e4a453010d.m4a",
+      "speaker": "lison",
+      "durationSeconds": 3.14,
+      "bytes": 27649,
+      "audioSha256": "3347d5e85a498950b82c4d523237529e1964f54213c211759518c9c48eb8d1e2"
+    },
+    {
+      "text": "Le vieux Salamano promène son épagneul depuis huit ans.",
+      "file": "examples/fa16e848969d62c3e727.m4a",
+      "speaker": "pia",
+      "durationSeconds": 2.96,
+      "bytes": 27802,
+      "audioSha256": "dd0e02a6ff9a55b2496b820ea947f4435c316fa37ab000ec96aa16965d601e7e"
+    },
+    {
+      "text": "Le chien a perdu ses poils et il est couvert de croûtes.",
+      "file": "examples/bc8277eb865a9549ed30.m4a",
+      "speaker": "ninon",
+      "durationSeconds": 3.42,
+      "bytes": 30151,
+      "audioSha256": "d195dd71b299f2c3d9fc80af6928de33ce488fe58807009508f38a08d63e5b29"
+    },
+    {
+      "text": "Raymond habite sur le même palier que Meursault.",
+      "file": "examples/2fb59d55e28a216aab44.m4a",
+      "speaker": "lison",
+      "durationSeconds": 2.26,
+      "bytes": 19861,
+      "audioSha256": "66ee5eac6ebb341bd96545beb1bd94cc14962d19bc117583c5a2d8c5b28977f4"
+    },
+    {
+      "text": "Raymond est petit, avec un nez de boxeur.",
+      "file": "examples/cc07642a606d8c304f8c.m4a",
+      "speaker": "pia",
+      "durationSeconds": 2.22,
+      "bytes": 21453,
+      "audioSha256": "0f3e5135e86d2b843e55d4d9e11ede25a38e8129dbf4109f50b3e019ad8deb09"
+    },
+    {
+      "text": "Quand on lui demande son métier, Raymond dit qu'il est magasinier.",
+      "file": "examples/802b6601af557280940f.m4a",
+      "speaker": "ninon",
+      "durationSeconds": 3.89,
+      "bytes": 34840,
+      "audioSha256": "965dc9075cc9f7e2386699a6478ecf580e2473af206e976dbc36b05813aa197f"
+    },
+    {
+      "text": "Raymond raconte qu'il a eu une bagarre avec un type.",
+      "file": "examples/0ced948aecf61cdbf34b.m4a",
+      "speaker": "lison",
+      "durationSeconds": 3.18,
+      "bytes": 29391,
+      "audioSha256": "07bda14c7889fbcd28a96db311ce4bc70e1cdbbc8b670c20e5b26ad44ecade55"
+    },
+    {
+      "text": "Raymond invite Meursault à manger du boudin chez lui.",
+      "file": "examples/6d784bd0cdf69d6fb3e0.m4a",
+      "speaker": "pia",
+      "durationSeconds": 3.22,
+      "bytes": 29495,
+      "audioSha256": "e525448ca6de6a946dc0ae5bc1eefe72abd33a6f0025c61507c236ff6ed92d82"
+    },
+    {
+      "text": "Raymond allume une lampe à pétrole dans sa chambre.",
+      "file": "examples/d803ef9d7776cb68baa3.m4a",
+      "speaker": "ninon",
+      "durationSeconds": 2.94,
+      "bytes": 25436,
+      "audioSha256": "934616b46a89bdab5cb8bf0c8dff4063b22d979d0f7153e40f97a7870b018712"
+    },
+    {
+      "text": "Il sort une feuille de papier quadrillé du tiroir.",
+      "file": "examples/4b4ff7b3cf08cd0db47c.m4a",
+      "speaker": "lison",
+      "durationSeconds": 2.41,
+      "bytes": 22830,
+      "audioSha256": "2bc0f8864dff71482634a9629f383bdb6d615b1e579a3df431c584209a959a68"
+    },
+    {
+      "text": "Sur la table, il y a un encrier d'encre violette.",
+      "file": "examples/4c9f1049005f03fd7dff.m4a",
+      "speaker": "pia",
+      "durationSeconds": 3.15,
+      "bytes": 28886,
+      "audioSha256": "7af5cf55c9e8a515b5a435ed07103bdc95439319b3b1d154942668eec705d128"
+    },
+    {
+      "text": "Meursault écrit l'adresse sur une enveloppe jaune.",
+      "file": "examples/6717ac0ca47362fb1810.m4a",
+      "speaker": "ninon",
+      "durationSeconds": 2.675,
+      "bytes": 23877,
+      "audioSha256": "075ef758477781caafbd1547746c29f7d18d343f65072525095b1c088d2113dc"
+    },
+    {
+      "text": "Raymond cachette la lettre et ils finissent le vin.",
+      "file": "examples/3cd1bb23066fe907aa11.m4a",
+      "speaker": "lison",
+      "durationSeconds": 2.95,
+      "bytes": 26986,
+      "audioSha256": "a94df34f816ecd542d5e99f0cf1981892c96ffdf161f27ab2537a8aa1278d129"
+    },
+    {
+      "text": "Marie demande à Meursault s'il veut l'épouser.",
+      "file": "examples/7ccc595b08cfdc51ef1e.m4a",
+      "speaker": "pia",
+      "durationSeconds": 2.48,
+      "bytes": 22052,
+      "audioSha256": "5242895a64d3fb39d8fe12a2940698d361a20b974ce6dcfb45738a49e134f6ab"
+    },
+    {
+      "text": "Au restaurant, une petite femme enlève sa jaquette et s'assoit.",
+      "file": "examples/cd2904a375f3e2e05542.m4a",
+      "speaker": "ninon",
+      "durationSeconds": 4.0,
+      "bytes": 36552,
+      "audioSha256": "adb58944679692cd173b2a33a2fcb367a4c304e3efeba1985be6ddcd3ce136c3"
+    },
+    {
+      "text": "Avant même de manger, elle calcule l'addition.",
+      "file": "examples/bd678f2b4d9b63899f15.m4a",
+      "speaker": "lison",
+      "durationSeconds": 2.405,
+      "bytes": 20908,
+      "audioSha256": "bf755fc3a5ec58a4eb34548cf4872601b026759b2bdc748266c6d8a360135406"
+    },
+    {
+      "text": "Elle pose sur la table la somme exacte, pourboire compris.",
+      "file": "examples/905e803032979f2e6b06.m4a",
+      "speaker": "pia",
+      "durationSeconds": 3.28,
+      "bytes": 29166,
+      "audioSha256": "ea6b19290b4f6e0d87f15e01e38af8195e80a7c51c7e8b0d5699b03a99addbec"
+    },
+    {
+      "text": "Elle sort ses pièces d'un petit gousset.",
+      "file": "examples/dbc205dfcc277a87aeed.m4a",
+      "speaker": "ninon",
+      "durationSeconds": 2.58,
+      "bytes": 24075,
+      "audioSha256": "5a58bd912e151c2b222edd4e5923de3400e73d994a60b601c8c01574c106e5c4"
+    },
+    {
+      "text": "Avec un crayon bleu, elle coche les émissions de radio.",
+      "file": "examples/98950731ae65636b3e8d.m4a",
+      "speaker": "lison",
+      "durationSeconds": 3.47,
+      "bytes": 31980,
+      "audioSha256": "68bf7ac251ce9d761e0161c2dedd770401e75307d055a8472af7668d3b4dacd0"
+    },
+    {
+      "text": "Elle lit un magazine de programmes radio pendant le repas.",
+      "file": "examples/c0444cd5331338cab6be.m4a",
+      "speaker": "pia",
+      "durationSeconds": 3.07,
+      "bytes": 26520,
+      "audioSha256": "10b6a83cfd3e90e288ffdc444fccdeeb6d60b3c0112dd35a03aa1058e02bda81"
+    },
+    {
+      "text": "Elle marche dans la rue avec des gestes d'automate.",
+      "file": "examples/21f3db7986f512004737.m4a",
+      "speaker": "ninon",
+      "durationSeconds": 3.27,
+      "bytes": 28622,
+      "audioSha256": "026521811ebd914256510cfd561b6c1033f0ccd37a6d24e261f23d8a3052336f"
+    },
+    {
+      "text": "Le chien de Salamano n'est pas à la fourrière.",
+      "file": "examples/3bd02140415359cc9256.m4a",
+      "speaker": "lison",
+      "durationSeconds": 3.06,
+      "bytes": 27123,
+      "audioSha256": "634bc2964bf33249ee189bc86a33edcee8de66ae55d0588f3b475d2812aea11c"
+    },
+    {
+      "text": "Quand le chien était petit, Salamano le nourrissait au biberon.",
+      "file": "examples/d94d1ef3dd66c8a2b9e5.m4a",
+      "speaker": "pia",
+      "durationSeconds": 3.43,
+      "bytes": 31142,
+      "audioSha256": "d7effcbe9d4fd21a0a37deeeeda0bbf915eb662dd2386ca512302317929541b2"
+    },
+    {
+      "text": "Ils marchent entre de petites villas aux barrières vertes.",
+      "file": "examples/837670abb5265cc9afd0.m4a",
+      "speaker": "ninon",
+      "durationSeconds": 3.65,
+      "bytes": 33950,
+      "audioSha256": "9776ecca185f9d97ad057b703d1e63e1e2f34a9ccda4326dc0e056e805ae845a"
+    },
+    {
+      "text": "Les maisons cachent leurs vérandas sous les arbres.",
+      "file": "examples/e99d0bfbf94f21f496dd.m4a",
+      "speaker": "lison",
+      "durationSeconds": 2.53,
+      "bytes": 22267,
+      "audioSha256": "da9aacf8f455d5c469d6b3b88341abaafa81c1f04420a6f821ff37318bae6b5d"
+    },
+    {
+      "text": "Des tamaris poussent devant les maisons de la plage.",
+      "file": "examples/321e60525fcbf58fc16a.m4a",
+      "speaker": "pia",
+      "durationSeconds": 2.75,
+      "bytes": 24647,
+      "audioSha256": "b4a003860ec75b8d2468c7ccc72c268f566ae3eb5a0f69e8db10674337183702"
+    },
+    {
+      "text": "Masson habite un petit cabanon de bois au bout de la plage.",
+      "file": "examples/79e971b3d2c20151110d.m4a",
+      "speaker": "ninon",
+      "durationSeconds": 3.4,
+      "bytes": 32551,
+      "audioSha256": "ab4d64dab6a2be250f67d3c11feec01c336708df485878e007585ae2e4b3a16a"
+    },
+    {
+      "text": "Le cabanon repose sur des pilotis qui baignent dans l'eau.",
+      "file": "examples/0f36b9f22dc08a2a2008.m4a",
+      "speaker": "lison",
+      "durationSeconds": 2.84,
+      "bytes": 25806,
+      "audioSha256": "1fee84b68b53ffea020b66d5be6eb1a86e2ac406b3300789c907b86afdad163e"
+    },
+    {
+      "text": "Marie a mis leurs deux maillots dans un sac de toile.",
+      "file": "examples/e0258eb814e251c990f6.m4a",
+      "speaker": "pia",
+      "durationSeconds": 2.96,
+      "bytes": 26093,
+      "audioSha256": "aa0dd0e37582f87ce681e47430499d0e1fffb952bee5d90ca6bc7874489824ba"
+    },
+    {
+      "text": "Masson nage la brasse, assez lentement.",
+      "file": "examples/9cd6a8fbfe60eba3b10f.m4a",
+      "speaker": "ninon",
+      "durationSeconds": 2.31,
+      "bytes": 20425,
+      "audioSha256": "2e6ec5bdb5eccc9af5eda33f8639670a71c1ec2d29b1bb52f733697aa9f80d1c"
+    },
+    {
+      "text": "Au déjeuner, Masson sert une friture de poissons.",
+      "file": "examples/80450747e3b9bdde5fe1.m4a",
+      "speaker": "lison",
+      "durationSeconds": 2.87,
+      "bytes": 26803,
+      "audioSha256": "4c39e241bc66e6f0caca1d574555808815ab485686a97a03dba08cb2ef004bb9"
+    },
+    {
+      "text": "Après le repas, Madame Masson fait la sieste.",
+      "file": "examples/e86aa3d7b282c269db1d.m4a",
+      "speaker": "pia",
+      "durationSeconds": 2.82,
+      "bytes": 25352,
+      "audioSha256": "61afed5e5e8ee3ada938f121dd2afc72852cd54ce8c1ece56da7ca14be36eead"
+    },
+    {
+      "text": "Très loin, un petit chalutier avance sur la mer.",
+      "file": "examples/34115c4b948a33010f20.m4a",
+      "speaker": "ninon",
+      "durationSeconds": 3.34,
+      "bytes": 30022,
+      "audioSha256": "067f3a4e0899bf22709d79027e79105d10b95f917bea57d64091b80823063a9f"
+    },
+    {
+      "text": "Vers deux heures, le soleil devient écrasant.",
+      "file": "examples/109cf2beff49ff946f5c.m4a",
+      "speaker": "lison",
+      "durationSeconds": 2.6,
+      "bytes": 22406,
+      "audioSha256": "f2c2a2cba16d5aef2b6fefa55c527509a05a876f50f3139da64884a1f9e44a20"
+    },
+    {
+      "text": "La lumière aveuglante tombe du ciel comme une pluie.",
+      "file": "examples/24147bcf2925c38adfe1.m4a",
+      "speaker": "pia",
+      "durationSeconds": 2.94,
+      "bytes": 26895,
+      "audioSha256": "bdccd42f34f7159730fc391ad947259baede4a269ca94acef9e7cf31d7d482b5"
+    },
+    {
+      "text": "Des gouttes de sueur coulent sur le visage de Meursault.",
+      "file": "examples/8e3e5b972fd37abc700b.m4a",
+      "speaker": "ninon",
+      "durationSeconds": 3.26,
+      "bytes": 29508,
+      "audioSha256": "63466bff90e8bc14a0c55c1714706ecedefd6db4c6d1d0dc8523f050728135a7"
+    },
+    {
+      "text": "La sueur s'amasse dans ses sourcils.",
+      "file": "examples/1ca04c6e53f63f28cc19.m4a",
+      "speaker": "lison",
+      "durationSeconds": 2.12,
+      "bytes": 18490,
+      "audioSha256": "d371d8381a2dd72104e93d00fd4b45caf85644f344d4f8c2a8d547a125d7d3b6"
+    },
+    {
+      "text": "Sous le soleil, Meursault serre les mâchoires.",
+      "file": "examples/eefc04dd699de893449b.m4a",
+      "speaker": "pia",
+      "durationSeconds": 2.98,
+      "bytes": 24901,
+      "audioSha256": "823818d7192b9dabaab61e93f75b018ecc3326a7221cf4ab7cb1dc40ce787fd1"
+    },
+    {
+      "text": "Il sent le soleil frapper son front comme des cymbales.",
+      "file": "examples/4d166c0b925f2f6d2e59.m4a",
+      "speaker": "ninon",
+      "durationSeconds": 3.15,
+      "bytes": 27891,
+      "audioSha256": "64bfc6c479052f38a5cb203a5536253c8d3ef8adaee285ff02fe9601dd2ec29b"
+    },
+    {
+      "text": "Un coquillage blanc brille sur le sable.",
+      "file": "examples/265a095bcbaf95cc15d5.m4a",
+      "speaker": "lison",
+      "durationSeconds": 2.46,
+      "bytes": 22301,
+      "audioSha256": "d4c28c5a167246ab9b5edae18f5c431ed63604ca1116aa20b0eb45b668842be5"
+    },
+    {
+      "text": "Derrière un rocher coule une petite source fraîche.",
+      "file": "examples/5ad3303b246925008aac.m4a",
+      "speaker": "pia",
+      "durationSeconds": 3.14,
+      "bytes": 27320,
+      "audioSha256": "ff1b1af5237694a0a0ab55fccc8d17c6da174ce9029d0cf91fb24c9ca649e448"
+    },
+    {
+      "text": "À l'horizon, un petit vapeur passe lentement.",
+      "file": "examples/cfc9560ae762e3ad01ca.m4a",
+      "speaker": "ninon",
+      "durationSeconds": 3.0,
+      "bytes": 28208,
+      "audioSha256": "437dc3cdb564382a92fdcbfdb2ab6866d1ce82cb9740c27155688d2caa49c8bc"
+    },
+    {
+      "text": "Raymond revient avec du sparadrap au coin de la bouche.",
+      "file": "examples/de8083cf5eecf2e742a7.m4a",
+      "speaker": "lison",
+      "durationSeconds": 2.53,
+      "bytes": 22493,
+      "audioSha256": "d40bbf4b3dcfec9db8ded3bab26476d106d464b2d585eacd6cd4e8c6b1f8c7e6"
+    },
+    {
+      "text": "Après son arrestation, Meursault est interrogé plusieurs fois.",
+      "file": "examples/ed1db46d34543900b75e.m4a",
+      "speaker": "pia",
+      "durationSeconds": 3.51,
+      "bytes": 30384,
+      "audioSha256": "e7939e03deaab06d1fcfca1b58f0de36fa06eda9e49163b71671fd95177daa1c"
+    },
+    {
+      "text": "Les premiers interrogatoires ne durent pas longtemps.",
+      "file": "examples/45f937c673d4f02a03b4.m4a",
+      "speaker": "ninon",
+      "durationSeconds": 2.685,
+      "bytes": 25636,
+      "audioSha256": "49a46134009e87d2b793a1ce5ed83acfe66505be02fca4cdcec2361ff041b2fb"
+    },
+    {
+      "text": "Le magistrat reçoit Meursault dans un bureau aux rideaux tirés.",
+      "file": "examples/64080752f2847047256b.m4a",
+      "speaker": "lison",
+      "durationSeconds": 3.33,
+      "bytes": 28426,
+      "audioSha256": "755ccc7d798d9b39435704bfb49dfd6b9271f0a59c5324e688a421194c70f061"
+    },
+    {
+      "text": "Un jeune greffier s'installe derrière Meursault pour écrire.",
+      "file": "examples/8d5c274a6f33cfb07e1b.m4a",
+      "speaker": "pia",
+      "durationSeconds": 2.78,
+      "bytes": 24668,
+      "audioSha256": "ebe266400411090a7bf0463a3611316f715e333ec9d2728326108a02a5b26c47"
+    },
+    {
+      "text": "L'avocat dit qu'il a étudié le dossier avec soin.",
+      "file": "examples/444d0ce0e742b2ddd075.m4a",
+      "speaker": "ninon",
+      "durationSeconds": 3.31,
+      "bytes": 30736,
+      "audioSha256": "c60939db4e7c40f1d70df5f324dd85c14a4d151d86bea7a707c9313854721889"
+    },
+    {
+      "text": "Le juge ouvre un tiroir de son classeur.",
+      "file": "examples/1f43e59201a06319c092.m4a",
+      "speaker": "lison",
+      "durationSeconds": 2.62,
+      "bytes": 22903,
+      "audioSha256": "bf1cb3fbdbb2a939b14d85fcdc245d6be942e850b6f678cf6508fb4565bcd131"
+    },
+    {
+      "text": "Il en sort un crucifix d'argent et le montre à Meursault.",
+      "file": "examples/98691d7b0fcf9dbbb562.m4a",
+      "speaker": "pia",
+      "durationSeconds": 4.29,
+      "bytes": 38001,
+      "audioSha256": "b89bacbc462dce942732e56e50ad82ba3372e933823680235ca5af4a84681b81"
+    },
+    {
+      "text": "On dit que Meursault est un homme taciturne.",
+      "file": "examples/5cdd8059698d9e034451.m4a",
+      "speaker": "ninon",
+      "durationSeconds": 2.91,
+      "bytes": 26640,
+      "audioSha256": "ce9c5b450027653c7dabe505bd7b22ec6b77d35a7d7ffb309b13e12877721855"
+    },
+    {
+      "text": "Le juge le trouve renfermé et lui pose beaucoup de questions.",
+      "file": "examples/a8202b758ec1f65563e4.m4a",
+      "speaker": "lison",
+      "durationSeconds": 3.67,
+      "bytes": 33033,
+      "audioSha256": "13a83234d0e2ee1e1d571e3b75bd77cc64b30641cd6f11962273eefb0b7f6c31"
+    },
+    {
+      "text": "Le juge parle longuement de Dieu et du repentir.",
+      "file": "examples/28f0921cb37eecf5d380.m4a",
+      "speaker": "pia",
+      "durationSeconds": 3.82,
+      "bytes": 33481,
+      "audioSha256": "f13f8c9147150b7241853b4f93ba377bc8086dce544e99bbce7c8e5e0a170c33"
+    },
+    {
+      "text": "Au début, Meursault partage une salle avec d'autres détenus.",
+      "file": "examples/80cac559aed4fa28bc39.m4a",
+      "speaker": "ninon",
+      "durationSeconds": 3.76,
+      "bytes": 33980,
+      "audioSha256": "c898a37934412fd4a27312abfecb51cd202965016ff029a42c4ab3dd3310623c"
+    },
+    {
+      "text": "Ensuite, on l'enferme seul dans une cellule.",
+      "file": "examples/0d997bf7c00d1085ff78.m4a",
+      "speaker": "lison",
+      "durationSeconds": 3.07,
+      "bytes": 27655,
+      "audioSha256": "67c8cd514cf28a347b98f1b102174e67f7401ef64af98e4ef694c30aac7e0216"
+    },
+    {
+      "text": "Il dort sur un bat-flanc de bois.",
+      "file": "examples/f838450d895a48c366af.m4a",
+      "speaker": "pia",
+      "durationSeconds": 1.79,
+      "bytes": 16254,
+      "audioSha256": "287bf2db00688ec021deb67d4847783af132122ae9878bce5dba395f48527785"
+    },
+    {
+      "text": "Entre sa paillasse et la planche, il trouve un vieux journal.",
+      "file": "examples/bb5e6d8919fcee35c46e.m4a",
+      "speaker": "ninon",
+      "durationSeconds": 3.61,
+      "bytes": 32735,
+      "audioSha256": "192d61b97495e195443af83b903d11af2bc48bc382955975e45e7aa7561b4fe4"
+    },
+    {
+      "text": "La première nuit, des punaises courent sur son visage.",
+      "file": "examples/99cc4742c717bcb20985.m4a",
+      "speaker": "lison",
+      "durationSeconds": 3.42,
+      "bytes": 30201,
+      "audioSha256": "1c8bb65859542b7f807f212e9800420833577820778e87e21c22e8202fc5ddc0"
+    },
+    {
+      "text": "Dans la cellule, il y a une cuvette de fer.",
+      "file": "examples/58dfefae1105c0a8b13d.m4a",
+      "speaker": "pia",
+      "durationSeconds": 2.9,
+      "bytes": 25457,
+      "audioSha256": "d5fb24e92f3311d2ea1e8c33450ac7e03da7aa2fb68d5a4cc4df2a58e8227a8f"
+    },
+    {
+      "text": "Meursault regarde son reflet dans sa gamelle.",
+      "file": "examples/e6b5397c94dc1f3067c7.m4a",
+      "speaker": "ninon",
+      "durationSeconds": 2.42,
+      "bytes": 20951,
+      "audioSha256": "e38b113df1bd9198dea2ca431089269bd2750187832f613498311676855866c0"
+    },
+    {
+      "text": "Par la lucarne, il ne voit qu'un morceau de ciel.",
+      "file": "examples/d0a62c2ff7369f1afe3c.m4a",
+      "speaker": "lison",
+      "durationSeconds": 3.07,
+      "bytes": 26871,
+      "audioSha256": "075c13fd0e73883a155a8debdfc86b937daac3b27ae9a80419846e429c3e3f6b"
+    },
+    {
+      "text": "Marie vient le voir au parloir.",
+      "file": "examples/ab89b851983aa3b1c5a4.m4a",
+      "speaker": "pia",
+      "durationSeconds": 1.76,
+      "bytes": 15622,
+      "audioSha256": "e73332ca4c85a567f4e4b767b0de4ac57c6d5d3d828a168db3a17cbb5b8ee7b2"
+    },
+    {
+      "text": "Deux grilles séparent les prisonniers des visiteurs.",
+      "file": "examples/15fb44f318a45bd302a3.m4a",
+      "speaker": "ninon",
+      "durationSeconds": 2.64,
+      "bytes": 24258,
+      "audioSha256": "6905acc1a185441c551f8a2e266ec2805448f3ef159551c25ca27e0f7dbf4fb0"
+    },
+    {
+      "text": "Deux gendarmes conduisent Meursault au Palais de justice.",
+      "file": "examples/58927d95090c87b4398d.m4a",
+      "speaker": "lison",
+      "durationSeconds": 3.07,
+      "bytes": 27228,
+      "audioSha256": "74440143546f2ff4167b9317eabbccc289939fa7846319ef2d758b0a8738cd08"
+    },
+    {
+      "text": "Meursault s'assoit dans le box des accusés.",
+      "file": "examples/794f011105ba3958bbfb.m4a",
+      "speaker": "pia",
+      "durationSeconds": 2.15,
+      "bytes": 19241,
+      "audioSha256": "16f03143781175c66ad1229f5251c3136d75008a0b9dd5b9f25318a818b51457"
+    },
+    {
+      "text": "Les jurés le regardent comme des voyageurs dans un tramway.",
+      "file": "examples/59b003a751a29d1965ee.m4a",
+      "speaker": "ninon",
+      "durationSeconds": 3.29,
+      "bytes": 29227,
+      "audioSha256": "bb43b06e726cf43818a45ce055fa3029a227b9f98f65d69ebca89265f8e65f99"
+    },
+    {
+      "text": "Le procureur est un grand homme mince vêtu de rouge.",
+      "file": "examples/9475e9639c9e00543cbc.m4a",
+      "speaker": "lison",
+      "durationSeconds": 3.5,
+      "bytes": 31566,
+      "audioSha256": "3a75ef15aa69b8e053acbc23a1c7f55cfab319e08a0ec0895b4c90d42bd1abc4"
+    },
+    {
+      "text": "Le procureur porte un lorgnon sur le nez.",
+      "file": "examples/1d8f38f80af6d69ae1c5.m4a",
+      "speaker": "pia",
+      "durationSeconds": 2.66,
+      "bytes": 23958,
+      "audioSha256": "ff8add0ced0ae03c47eafe095645556388f98a32eea78de67807113faf27210a"
+    },
+    {
+      "text": "Un huissier annonce l'arrivée de la cour.",
+      "file": "examples/8bdbe35abf808aafd2d0.m4a",
+      "speaker": "ninon",
+      "durationSeconds": 2.43,
+      "bytes": 21832,
+      "audioSha256": "f350772eba0335d7984cce5428fff5bc5eb39e71e6bf0812a897adf045946f71"
+    },
+    {
+      "text": "Deux gros ventilateurs tournent au plafond.",
+      "file": "examples/79bba440c646677e1e75.m4a",
+      "speaker": "lison",
+      "durationSeconds": 2.04,
+      "bytes": 18058,
+      "audioSha256": "4f7bad08c8bb9a582f66a45b8ceea8d70cbb29fcc43bab486cb54467af8ca322"
+    },
+    {
+      "text": "Dans la chaleur, les juges s'éventent avec des éventails de paille.",
+      "file": "examples/b149d6aaca4980fda48a.m4a",
+      "speaker": "pia",
+      "durationSeconds": 4.13,
+      "bytes": 36704,
+      "audioSha256": "35cb0f865fc170ab405456dc89494e23d7983a1427908294b917850f4ecd2b74"
+    },
+    {
+      "text": "Les journalistes prennent des notes au premier rang.",
+      "file": "examples/20cc6ffd2b3a9158babc.m4a",
+      "speaker": "ninon",
+      "durationSeconds": 2.37,
+      "bytes": 22717,
+      "audioSha256": "082c30f0cb197599a76829fac590669e4ea73001ea30a7a2d3410e609196c24e"
+    },
+    {
+      "text": "Céleste tourne son panama entre ses mains.",
+      "file": "examples/1b8b655f4366274953d4.m4a",
+      "speaker": "lison",
+      "durationSeconds": 2.33,
+      "bytes": 22104,
+      "audioSha256": "6da503ee10d7ddf730a581fb7356a8a46d3735808e0d0268bb2b0871d63308f6"
+    },
+    {
+      "text": "Meursault attend la réponse à son pourvoi.",
+      "file": "examples/a00417c18ac25e7d6d81.m4a",
+      "speaker": "pia",
+      "durationSeconds": 2.27,
+      "bytes": 20554,
+      "audioSha256": "7915eb67e466562bba3a5d132dca0200a7cdf84a97e1dc0dbfc11ff2748dceb2"
+    },
+    {
+      "text": "Chaque nuit, il guette l'aube et les bruits de pas.",
+      "file": "examples/b7a169578b98e523f041.m4a",
+      "speaker": "ninon",
+      "durationSeconds": 3.08,
+      "bytes": 28604,
+      "audioSha256": "5cc61b2489c2e31e96a3a797c9e142935b5cc700d3af00b097a309786ce90145"
+    },
+    {
+      "text": "Il imagine parfois qu'il pourrait être gracié.",
+      "file": "examples/66ddc1f86344c55bae8b.m4a",
+      "speaker": "lison",
+      "durationSeconds": 2.06,
+      "bytes": 19225,
+      "audioSha256": "ab559019d180e156004bfbc1c47c3174997224b78d62487f2fb21a9b518448f0"
+    },
+    {
+      "text": "Depuis des mois, il regarde les murailles de la prison.",
+      "file": "examples/d9a25bced596f831c80e.m4a",
+      "speaker": "pia",
+      "durationSeconds": 3.14,
+      "bytes": 27250,
+      "audioSha256": "0746f962861b177c598f6f52dc32509b71a8b68b8c95af95326e9b71537a7374"
+    },
+    {
+      "text": "L'aumônier entre dans la cellule sans prévenir.",
+      "file": "examples/33b9afb071964b47f975.m4a",
+      "speaker": "ninon",
+      "durationSeconds": 2.99,
+      "bytes": 26877,
+      "audioSha256": "ec64a660557cb88dba31529a528db6717f0a5d054012eaa561fc8ef8fd99adce"
+    },
+    {
+      "text": "L'aumônier porte une longue soutane noire.",
+      "file": "examples/6ab081e63d53cc147a9c.m4a",
+      "speaker": "lison",
+      "durationSeconds": 2.97,
+      "bytes": 27363,
+      "audioSha256": "086426c5138ffdee3c647463cfb443e14d3750a38bac47292a4adadddd2997d4"
+    },
+    {
+      "text": "Il s'assoit sur la couchette de Meursault.",
+      "file": "examples/a8a35f44150a9a6b113d.m4a",
+      "speaker": "pia",
+      "durationSeconds": 2.68,
+      "bytes": 24198,
+      "audioSha256": "0189f875f67b0f8c09f81377d9e4bd4858c9105c7c8b3adcaf05ec550e62b460"
+    },
+    {
+      "text": "Avant de partir, l'aumônier redresse le collet de sa soutane.",
+      "file": "examples/3d4c1e29aa3b90dacbae.m4a",
+      "speaker": "ninon",
+      "durationSeconds": 4.45,
+      "bytes": 38670,
+      "audioSha256": "e8a6de975293be1e09762b842c575f0063e69710640ce847cb4a2db1c4b3e21a"
+    },
+    {
+      "text": "La nuit, des sirènes de bateaux annoncent des départs.",
+      "file": "examples/9d463b83b4f6bb965ed6.m4a",
+      "speaker": "lison",
+      "durationSeconds": 3.46,
+      "bytes": 31700,
+      "audioSha256": "653d130cceda3a280198a7de48ab556afed85eb44fbe0de2b8f411737c1cd6c4"
+    },
+    {
+      "text": "Le soir, le ciel prend une douce blondeur.",
+      "file": "examples/4a68a4106004015df518.m4a",
+      "speaker": "pia",
+      "durationSeconds": 3.64,
+      "bytes": 31787,
+      "audioSha256": "e80b1b2aacfbf7b7a672b260455442f2081e33423ebab02fcad03c13140566a0"
     }
   ],
-  "exampleCount": 1315,
-  "exampleBytes": 37884272,
+  "exampleCount": 1435,
+  "exampleBytes": 41184237,
   "examplePending": 0,
   "words": [
     {
@@ -33918,11 +34878,955 @@
       "durationSeconds": 1.0,
       "bytes": 9317,
       "audioSha256": "cf40dacc61aa1c51dfebbec5438a913948d5f46ade715b00e6071ef0d57ca7ff"
+    },
+    {
+      "text": "le télégramme",
+      "file": "words/c3533f0816cfa99407bc.m4a",
+      "speaker": "ninon",
+      "durationSeconds": 1.23,
+      "bytes": 11365,
+      "audioSha256": "f44ed8c6f94d33e1354fee3eb7d1c5e9e126e71ebd799f7902c4fd3aa07e6624"
+    },
+    {
+      "text": "les condoléances",
+      "file": "words/edf2c532e8b0711ea05c.m4a",
+      "speaker": "lison",
+      "durationSeconds": 1.71,
+      "bytes": 15075,
+      "audioSha256": "d4fcaf2efae26f9e6c22920a15f7ea06a36e77189c0567326d51e3c609ae8a5f"
+    },
+    {
+      "text": "le brassard",
+      "file": "words/aa6f507c8f2f64edcf06.m4a",
+      "speaker": "pia",
+      "durationSeconds": 1.23,
+      "bytes": 11818,
+      "audioSha256": "5da1289b91f4581eb563f145012b779e4f5abdb237d0fac849b87d819729b39a"
+    },
+    {
+      "text": "s'assoupir",
+      "file": "words/6071ff352e14349cba97.m4a",
+      "speaker": "ninon",
+      "durationSeconds": 1.2,
+      "bytes": 10621,
+      "audioSha256": "a17f5e2bfc9748c1d1a08b7a4fa751e7e956fedcaba5b50d9edd3c2992e60b4f"
+    },
+    {
+      "text": "l'asile",
+      "file": "words/61fb0d3dba5f0fefdc33.m4a",
+      "speaker": "lison",
+      "durationSeconds": 0.94,
+      "bytes": 8380,
+      "audioSha256": "fa73b197949b131b0348b82303534f7f4c4b0d69422d5f4d0ebe75ded3c7a347"
+    },
+    {
+      "text": "la bière",
+      "file": "words/45df35f6a625e70393d1.m4a",
+      "speaker": "pia",
+      "durationSeconds": 1.18,
+      "bytes": 10368,
+      "audioSha256": "0ec8e4c7deda1e7d63e2f65c806b4590f6cd9130ca269ae17e73a545da1401c9"
+    },
+    {
+      "text": "dévisser",
+      "file": "words/cc41c3e5cc8118af75ec.m4a",
+      "speaker": "ninon",
+      "durationSeconds": 1.04,
+      "bytes": 9462,
+      "audioSha256": "b3e0138df229916787e0fca6906ee0428161829784736302415f706b356cf275"
+    },
+    {
+      "text": "la verrière",
+      "file": "words/c7da966f867290c1195e.m4a",
+      "speaker": "lison",
+      "durationSeconds": 1.38,
+      "bytes": 12706,
+      "audioSha256": "845fe496e662a286f6189d8bff91a7f364d10da53d705db8ff6c710093b17fc7"
+    },
+    {
+      "text": "le frelon",
+      "file": "words/f85c44759d5e2c911b02.m4a",
+      "speaker": "pia",
+      "durationSeconds": 1.01,
+      "bytes": 9022,
+      "audioSha256": "eab75dc2242f9c5d2e8c9d0c1ccf107d65ce74828cc92539a5b96121e3c65b88"
+    },
+    {
+      "text": "le sanglot",
+      "file": "words/c2813a55e0d31837c810.m4a",
+      "speaker": "ninon",
+      "durationSeconds": 1.0,
+      "bytes": 9046,
+      "audioSha256": "76ecb941d01f385dd96e1e6dee7a2f816f7942ee400f1999c7aad603390c37af"
+    },
+    {
+      "text": "le corbillard",
+      "file": "words/8301c965e884da1639b2.m4a",
+      "speaker": "lison",
+      "durationSeconds": 1.52,
+      "bytes": 14740,
+      "audioSha256": "068ac72b6a029a710da3531c792ae081446f79ca8c032add36ae29538c9aeceb"
+    },
+    {
+      "text": "le cocher",
+      "file": "words/950e3def10ec20d2d3dd.m4a",
+      "speaker": "pia",
+      "durationSeconds": 1.0,
+      "bytes": 9108,
+      "audioSha256": "bc41fc1028113ee095ea914c002c011ee4a97dae6ef8f89fbc7161d73f51c56e"
+    },
+    {
+      "text": "le feutre",
+      "file": "words/8c2f87393eeba0680a10.m4a",
+      "speaker": "ninon",
+      "durationSeconds": 1.33,
+      "bytes": 11605,
+      "audioSha256": "fb500ea75cb3d01927fea79bcf73ce14cf9c7875bfc981998a3372e886b301a6"
+    },
+    {
+      "text": "l'encensoir",
+      "file": "words/df5048f375296d84c8e1.m4a",
+      "speaker": "lison",
+      "durationSeconds": 1.38,
+      "bytes": 12481,
+      "audioSha256": "c75ae048144c31b680f4b07a24384b94aaa634d2370f6c6b73356dd8a103aa64"
+    },
+    {
+      "text": "le cyprès",
+      "file": "words/754a93893d03fb60403f.m4a",
+      "speaker": "pia",
+      "durationSeconds": 1.23,
+      "bytes": 10774,
+      "audioSha256": "da2e6e4369beaf99ec32ddef5cd21f0b0a90e879fdd3926f5d253a3e2e125877"
+    },
+    {
+      "text": "le goudron",
+      "file": "words/556ed4e1ac1a07f1c7f2.m4a",
+      "speaker": "ninon",
+      "durationSeconds": 1.16,
+      "bytes": 10785,
+      "audioSha256": "30b44db274616fbd5b8ad65e4df4e74807bc0ca8300681b80fe7d2f73bc1f81a"
+    },
+    {
+      "text": "l'insolation",
+      "file": "words/8645c733f5810aafd0dc.m4a",
+      "speaker": "lison",
+      "durationSeconds": 1.34,
+      "bytes": 11808,
+      "audioSha256": "7fffacdc6483b88f7b9c82c805fdd00186015b30c023138fee947bc72dd2921b"
+    },
+    {
+      "text": "la transpiration",
+      "file": "words/76b95ae56ab8890f9ef3.m4a",
+      "speaker": "pia",
+      "durationSeconds": 1.48,
+      "bytes": 12832,
+      "audioSha256": "fbe58f2cc97653bed2ffa38b761628a24efeb947392c6ad511452cee7e077699"
+    },
+    {
+      "text": "le cimetière",
+      "file": "words/d528b8562fff6b688e61.m4a",
+      "speaker": "ninon",
+      "durationSeconds": 1.65,
+      "bytes": 14056,
+      "audioSha256": "2468cac647da1174ffa3c6baca18339e725209b882d32bf70c869cfa5b707d8b"
+    },
+    {
+      "text": "le géranium",
+      "file": "words/da58c51b75d28c27fa68.m4a",
+      "speaker": "lison",
+      "durationSeconds": 1.33,
+      "bytes": 12155,
+      "audioSha256": "bdd3c801767761aedb5e5fd09ccc7af9de68a215656b2026320e759d39840f80"
+    },
+    {
+      "text": "la dactylo",
+      "file": "words/59c3859b31102fe7a439.m4a",
+      "speaker": "pia",
+      "durationSeconds": 1.2,
+      "bytes": 11249,
+      "audioSha256": "503abb96a7b54189e2e11493a777197e49d6505b3751d7fbbdbb79f89a629198"
+    },
+    {
+      "text": "la bouée",
+      "file": "words/ec5b7a9381d538ff11cb.m4a",
+      "speaker": "ninon",
+      "durationSeconds": 1.13,
+      "bytes": 10097,
+      "audioSha256": "8ae0fe0ed8705ffaa2e1fe37ff7bc2555b2b90440dce3dbf1b83a9273eafdf9c"
+    },
+    {
+      "text": "le traversin",
+      "file": "words/65965591fff77a0aa966.m4a",
+      "speaker": "lison",
+      "durationSeconds": 1.16,
+      "bytes": 10841,
+      "audioSha256": "067e1b42a8b241303895f9b0bcfaadd729d7adb8f87f387126642641642d2b20"
+    },
+    {
+      "text": "le faubourg",
+      "file": "words/8203477004f6e60513c6.m4a",
+      "speaker": "pia",
+      "durationSeconds": 1.24,
+      "bytes": 11251,
+      "audioSha256": "861015c3a40ea210673c7389661e095eb323c2ee48905e092d7fd277c54b206a"
+    },
+    {
+      "text": "le canotier",
+      "file": "words/e21d0e0745f99ad19f7e.m4a",
+      "speaker": "ninon",
+      "durationSeconds": 1.24,
+      "bytes": 11227,
+      "audioSha256": "dbd71748ecb102256fa7423726dae4d6dd5d1b0a52fb7cf449136b57470914b3"
+    },
+    {
+      "text": "cintré",
+      "file": "words/39634240ac6e05117f93.m4a",
+      "speaker": "lison",
+      "durationSeconds": 0.77,
+      "bytes": 7230,
+      "audioSha256": "21d9b01542a348d6e6bd83797398a58c44b7ef21aa705b5333a5f3d03636647d"
+    },
+    {
+      "text": "le promeneur",
+      "file": "words/c1645d2e7020b9f97287.m4a",
+      "speaker": "pia",
+      "durationSeconds": 1.34,
+      "bytes": 11849,
+      "audioSha256": "60955b9d8e22c22f9d6febac026a3f77af952600e2929262f4248b902c120887"
+    },
+    {
+      "text": "le boutiquier",
+      "file": "words/827894e2aeb59e2b6d5e.m4a",
+      "speaker": "ninon",
+      "durationSeconds": 1.13,
+      "bytes": 12355,
+      "audioSha256": "0a4837390f6edd9526a01eabb3d81e5f119ce07cbdcf88b54460d4e81a482675"
+    },
+    {
+      "text": "le tramway",
+      "file": "words/f493b56903fa1d8059e7.m4a",
+      "speaker": "lison",
+      "durationSeconds": 1.1,
+      "bytes": 10274,
+      "audioSha256": "2ab4b22a797d3c2a0a7ec9c946f357dcc6f67b66a019eab8873c858bdd8d66ce"
+    },
+    {
+      "text": "le marchepied",
+      "file": "words/66fd0a2ab904d8a58c87.m4a",
+      "speaker": "pia",
+      "durationSeconds": 1.14,
+      "bytes": 11613,
+      "audioSha256": "09ce3faa27c149ed92f0ecbe6d4186286a24bb13667d6f283f6155e3fa488c28"
+    },
+    {
+      "text": "dépouiller",
+      "file": "words/8e3ae05fa0100cb16d5a.m4a",
+      "speaker": "ninon",
+      "durationSeconds": 0.94,
+      "bytes": 8450,
+      "audioSha256": "a16e049ba6e8dba75321c78a4e4848e1ac3c35a16b6e6400173f753aa796cdfc"
+    },
+    {
+      "text": "la serviette",
+      "file": "words/1b30857d8f2a274fc6e5.m4a",
+      "speaker": "lison",
+      "durationSeconds": 1.18,
+      "bytes": 10973,
+      "audioSha256": "048271ea42518a24da2f1f9a704faecb4fa2327f99bcef1ff20053187fa27dde"
+    },
+    {
+      "text": "le cargo",
+      "file": "words/ab0cdbd3d013b835a615.m4a",
+      "speaker": "pia",
+      "durationSeconds": 0.92,
+      "bytes": 9090,
+      "audioSha256": "b40af420951fda101b3673fe1a2fc8a8762373fd9ae17315222d6344c85212e1"
+    },
+    {
+      "text": "le camion",
+      "file": "words/3b689bbbdab73a330cf9.m4a",
+      "speaker": "ninon",
+      "durationSeconds": 0.91,
+      "bytes": 8909,
+      "audioSha256": "e0209dcf7fb9088edcc4e307d079a70a17b7431a90f12e54c651a5f1d1d2446c"
+    },
+    {
+      "text": "la poursuite",
+      "file": "words/fa7a41b10cee046c6e9d.m4a",
+      "speaker": "lison",
+      "durationSeconds": 1.14,
+      "bytes": 10045,
+      "audioSha256": "fc4ca5cf10a27bd7afb378e4176241dddfd44dfb32717918aeb20b1dea5bafe6"
+    },
+    {
+      "text": "le treuil",
+      "file": "words/ffc0aa4684b784f133fc.m4a",
+      "speaker": "pia",
+      "durationSeconds": 0.9,
+      "bytes": 8351,
+      "audioSha256": "d292b233c5a8491d1fcc3130f0a6902c03ba91a979ca5bbf9ecf2fb3897022ef"
+    },
+    {
+      "text": "le mât",
+      "file": "words/3133f783d4e9edbdd18a.m4a",
+      "speaker": "ninon",
+      "durationSeconds": 0.9,
+      "bytes": 8068,
+      "audioSha256": "c59954aee0f9af863527149fcc57aa5a45ade4ce9ce7ca07a0c97d537b1fc0d7"
+    },
+    {
+      "text": "la nage",
+      "file": "words/3f458fb04cd4f4dc0594.m4a",
+      "speaker": "lison",
+      "durationSeconds": 1.11,
+      "bytes": 9757,
+      "audioSha256": "9ee8a5739b7c6bd1c035fa666bfdb85f282e48b1e1274b244660c046ea535003"
+    },
+    {
+      "text": "la croûte",
+      "file": "words/938c1cefc672e7f7df2a.m4a",
+      "speaker": "ninon",
+      "durationSeconds": 1.12,
+      "bytes": 10604,
+      "audioSha256": "7dbcc0a2820a0a25a3f574893636a3950083f1a6ee5d84a1bcf7c40964a35a07"
+    },
+    {
+      "text": "le palier",
+      "file": "words/00ba05b34356b6e1570e.m4a",
+      "speaker": "lison",
+      "durationSeconds": 0.96,
+      "bytes": 9386,
+      "audioSha256": "4513b656062ce0e7da6033ba198cd9e69a3cb7d95149080288ac9d9d10cfd84f"
+    },
+    {
+      "text": "le boxeur",
+      "file": "words/c4649898a9e3f4ad1ffe.m4a",
+      "speaker": "pia",
+      "durationSeconds": 1.14,
+      "bytes": 10989,
+      "audioSha256": "eb704675295f13dfe63bd8986faca6e13faedf87adefad2b7041e28daec05586"
+    },
+    {
+      "text": "le magasinier",
+      "file": "words/f5ef2acef7132a90a230.m4a",
+      "speaker": "ninon",
+      "durationSeconds": 1.23,
+      "bytes": 10762,
+      "audioSha256": "5820936cf74337c74a81856032e9ae5178b08bb5b6751c1d55be0010e850cf8f"
+    },
+    {
+      "text": "la bagarre",
+      "file": "words/054cb076cefb84e9432c.m4a",
+      "speaker": "lison",
+      "durationSeconds": 1.09,
+      "bytes": 10386,
+      "audioSha256": "2cee133203998c011f702b4fee979848a9b721bf83f9e69d292a83f3c11510a6"
+    },
+    {
+      "text": "le boudin",
+      "file": "words/36f8834151f45a15f284.m4a",
+      "speaker": "pia",
+      "durationSeconds": 0.95,
+      "bytes": 9022,
+      "audioSha256": "b959f4ccd5bc7694af3d5338a93deaf59d813f8554dadd6a3f20a3c0443dbd75"
+    },
+    {
+      "text": "le pétrole",
+      "file": "words/ce8c0534a4af3c9ff611.m4a",
+      "speaker": "ninon",
+      "durationSeconds": 1.17,
+      "bytes": 10613,
+      "audioSha256": "7c14a1b56b6ed9c06620f8a85ed8e9541cf6a415d68cde271b0519e589faf37e"
+    },
+    {
+      "text": "quadrillé",
+      "file": "words/c4b2522abba328058822.m4a",
+      "speaker": "lison",
+      "durationSeconds": 0.79,
+      "bytes": 7660,
+      "audioSha256": "491175998f32576fd3d51c5d89ea9732c2b4badea6e5005e3cf552ee3c75d04e"
+    },
+    {
+      "text": "l'encrier",
+      "file": "words/f95cd8a4db9c90df2ae8.m4a",
+      "speaker": "pia",
+      "durationSeconds": 0.96,
+      "bytes": 9334,
+      "audioSha256": "b5057b606db3e0febc963a273fefebf23a371488ec189154e013646eca8e3340"
+    },
+    {
+      "text": "l'enveloppe",
+      "file": "words/4c4e40e19721720d08b1.m4a",
+      "speaker": "ninon",
+      "durationSeconds": 1.08,
+      "bytes": 9922,
+      "audioSha256": "308be39ab9c198dae3a4cbf1aafc8b10230f16120f65b6f4d3336b0de6ac6c98"
+    },
+    {
+      "text": "épouser",
+      "file": "words/57e3d3aff3ed9d13aebf.m4a",
+      "speaker": "pia",
+      "durationSeconds": 0.87,
+      "bytes": 8604,
+      "audioSha256": "220e453f4abdeeb0fe65cb64564b24c0205c90b7240a8e5843328abd40dea968"
+    },
+    {
+      "text": "la jaquette",
+      "file": "words/c19a61c7f25f853bb44c.m4a",
+      "speaker": "ninon",
+      "durationSeconds": 1.23,
+      "bytes": 10692,
+      "audioSha256": "c64c8480da67e07313389c4621ebec41bd96470bcb3f2c3f83d700f9ee4a98c9"
+    },
+    {
+      "text": "l'addition",
+      "file": "words/8b64682e0084922a6586.m4a",
+      "speaker": "lison",
+      "durationSeconds": 1.06,
+      "bytes": 9908,
+      "audioSha256": "6df99c89721ec6d0476b6c866c78fda04b6ebe8c27ee6cd03ecea6db034e7498"
+    },
+    {
+      "text": "le pourboire",
+      "file": "words/1b0847ee6fcc5cc77900.m4a",
+      "speaker": "pia",
+      "durationSeconds": 1.13,
+      "bytes": 10235,
+      "audioSha256": "c60cdd35c69ea17cba966f35a2a31b66c31a8cb752e65902f9f5f1804eb874c9"
+    },
+    {
+      "text": "le gousset",
+      "file": "words/255dd2ee6abf3ea6056f.m4a",
+      "speaker": "ninon",
+      "durationSeconds": 0.98,
+      "bytes": 9067,
+      "audioSha256": "fab69e6e15bcba6a21f20e02e37035b8c694d6f2e6adbea5bd802e1f0d8f3be5"
+    },
+    {
+      "text": "le crayon",
+      "file": "words/a60b34992c05562c5a48.m4a",
+      "speaker": "lison",
+      "durationSeconds": 1.0,
+      "bytes": 9162,
+      "audioSha256": "cdb4454ecfda9a891f6ef07c8880557b7dbd56909dacb400a92a3170fcee4ed2"
+    },
+    {
+      "text": "le magazine",
+      "file": "words/205609635435654b1c4e.m4a",
+      "speaker": "pia",
+      "durationSeconds": 1.13,
+      "bytes": 10655,
+      "audioSha256": "a007207b6e6bac875aac46bba2e8d2bb2755933eae78d7e8c56bd9ede2f91d9a"
+    },
+    {
+      "text": "l'automate",
+      "file": "words/5d3d4901b36025f66620.m4a",
+      "speaker": "ninon",
+      "durationSeconds": 1.05,
+      "bytes": 10243,
+      "audioSha256": "3bc11cf933193183ced82ed7ba0326ac1a9ba92cc6f4d4fa1819b5ee974282d1"
+    },
+    {
+      "text": "la fourrière",
+      "file": "words/c13c6c5ca13ace62b246.m4a",
+      "speaker": "lison",
+      "durationSeconds": 1.37,
+      "bytes": 11866,
+      "audioSha256": "e5980bcacb756cf9c748a8926c1b762c4803185b85751bdcaa935ee40afd52f5"
+    },
+    {
+      "text": "le biberon",
+      "file": "words/9ef47e96e6a7af54aefa.m4a",
+      "speaker": "pia",
+      "durationSeconds": 0.93,
+      "bytes": 8501,
+      "audioSha256": "065b91c935b1e513df06ccf4075bcc9884aa63341b1a8a7858a903079b1b4ce3"
+    },
+    {
+      "text": "la villa",
+      "file": "words/89ce137b2e22fad3584f.m4a",
+      "speaker": "ninon",
+      "durationSeconds": 1.06,
+      "bytes": 9378,
+      "audioSha256": "428286713ad652ec59e22ac499aeb37e4719f3d96421ce648f709688f415ee27"
+    },
+    {
+      "text": "la véranda",
+      "file": "words/d85069819dcabb689357.m4a",
+      "speaker": "lison",
+      "durationSeconds": 1.37,
+      "bytes": 12699,
+      "audioSha256": "42aeadebbd29d2d6682c915080dab5dcd23958f8eb9447bf8d938f61d8850550"
+    },
+    {
+      "text": "le tamaris",
+      "file": "words/75e6c94fe05cc85cde3f.m4a",
+      "speaker": "pia",
+      "durationSeconds": 1.25,
+      "bytes": 11259,
+      "audioSha256": "3937dfa2d77311c5a09b0a8f7ba23f2538302a10af9a8d3c0e045d3494eceee3"
+    },
+    {
+      "text": "le cabanon",
+      "file": "words/5d906d4cad94c3730d55.m4a",
+      "speaker": "ninon",
+      "durationSeconds": 1.12,
+      "bytes": 11683,
+      "audioSha256": "2213afe37173f4b45fb6a0a650e2dd2e2858689ff05e22b620994793798063c0"
+    },
+    {
+      "text": "le pilotis",
+      "file": "words/845ffc1808c860b3b7f1.m4a",
+      "speaker": "lison",
+      "durationSeconds": 1.28,
+      "bytes": 12990,
+      "audioSha256": "2f0796e02c7d1a7c6df91a08e2f5d1d78b51ae33d84b5527d929004f1efea18a"
+    },
+    {
+      "text": "le maillot",
+      "file": "words/ecf8812770f3f86a6100.m4a",
+      "speaker": "pia",
+      "durationSeconds": 1.04,
+      "bytes": 9825,
+      "audioSha256": "5fb239cfa3748f0ce4a120858367e1b3fe163ed1ddf7ca370bd9df3267ad91c2"
+    },
+    {
+      "text": "la brasse",
+      "file": "words/2c72f4c47de1e29685dd.m4a",
+      "speaker": "ninon",
+      "durationSeconds": 1.1,
+      "bytes": 10441,
+      "audioSha256": "fb70d4a5e8653b76835763424d18c7d60bdacaaa9dce78611ccfd1608e5f690a"
+    },
+    {
+      "text": "la friture",
+      "file": "words/14c86d09dee7fb1b6892.m4a",
+      "speaker": "lison",
+      "durationSeconds": 1.38,
+      "bytes": 12002,
+      "audioSha256": "803270f62bfb12ddb036c8a125d495824834479c09156fd748d75190b06bd231"
+    },
+    {
+      "text": "la sieste",
+      "file": "words/d11c5eb10cc40a70495d.m4a",
+      "speaker": "pia",
+      "durationSeconds": 1.23,
+      "bytes": 10833,
+      "audioSha256": "79d6258a04bae38497d0d56e15b8a5084054128f0218f0671323b47ade6bf9fe"
+    },
+    {
+      "text": "le chalutier",
+      "file": "words/b1e0e8a0f98997b680e0.m4a",
+      "speaker": "ninon",
+      "durationSeconds": 1.25,
+      "bytes": 12021,
+      "audioSha256": "79cfdeb5d979fbbea5906aa8c1420812e73638314f09fc8384c6d35fe0115d71"
+    },
+    {
+      "text": "écrasant",
+      "file": "words/87f605a70a67962c27fe.m4a",
+      "speaker": "lison",
+      "durationSeconds": 0.97,
+      "bytes": 9362,
+      "audioSha256": "7bcc0089abcb3719761f899d2eba8fce0e1f5ce0142759b4ef8f0ea1f1002228"
+    },
+    {
+      "text": "aveuglant",
+      "file": "words/84c4b0319e467065cc6c.m4a",
+      "speaker": "pia",
+      "durationSeconds": 0.91,
+      "bytes": 8512,
+      "audioSha256": "59dd78bc5d4f079e9125269f44ff310abfc75b2c4207713ee5badca4a81d9a87"
+    },
+    {
+      "text": "la sueur",
+      "file": "words/1906a810d70f5230896e.m4a",
+      "speaker": "ninon",
+      "durationSeconds": 1.33,
+      "bytes": 12281,
+      "audioSha256": "fe8437340f7c8137b6f5c3c0a606c03c509ae95cdfb117a3be7bb751a3d724da"
+    },
+    {
+      "text": "le sourcil",
+      "file": "words/0a5749b40396daea6369.m4a",
+      "speaker": "lison",
+      "durationSeconds": 1.28,
+      "bytes": 11080,
+      "audioSha256": "b757447cbbe8e2d16afb9e92f11c5c80c38cda089b8406e525927ea85d58b7f1"
+    },
+    {
+      "text": "la mâchoire",
+      "file": "words/01846dd13e4e98788df5.m4a",
+      "speaker": "pia",
+      "durationSeconds": 1.1,
+      "bytes": 10306,
+      "audioSha256": "674b49918b28c6264a43f2444e592dde6afc80ffb044695ed0750ca1a83d72d1"
+    },
+    {
+      "text": "la cymbale",
+      "file": "words/0efb61f6380631baec30.m4a",
+      "speaker": "ninon",
+      "durationSeconds": 1.12,
+      "bytes": 10033,
+      "audioSha256": "5e70b4cc86ba162fd67b106979d06208041e3acd411bc4a82f3470374b4a23e9"
+    },
+    {
+      "text": "le coquillage",
+      "file": "words/f07f1c137bb28cf9b9cb.m4a",
+      "speaker": "lison",
+      "durationSeconds": 1.5,
+      "bytes": 13521,
+      "audioSha256": "5cb934cc5ff6d01c1d6257af8badd6cd4799d3ab8b3a522865390e3d2a220afe"
+    },
+    {
+      "text": "la source",
+      "file": "words/9cc6d001fedaeb6e6b43.m4a",
+      "speaker": "pia",
+      "durationSeconds": 0.97,
+      "bytes": 8790,
+      "audioSha256": "2fb5714703b9e993257239855f6440e49a4b99ee42657af4d775f44f348b7b45"
+    },
+    {
+      "text": "le vapeur",
+      "file": "words/98274d1ba7718e8c0c8d.m4a",
+      "speaker": "ninon",
+      "durationSeconds": 1.25,
+      "bytes": 11498,
+      "audioSha256": "e721d3977eb42a2d3cdd4b24ef31a618a18c9e5a298beea5a4488036f9d53afd"
+    },
+    {
+      "text": "le sparadrap",
+      "file": "words/fd9300b33525a653ef73.m4a",
+      "speaker": "lison",
+      "durationSeconds": 1.19,
+      "bytes": 10805,
+      "audioSha256": "5a88871b8378cecc3b98bfccd37b35c151d5903095fbd922ca50f3d20dc43559"
+    },
+    {
+      "text": "l'arrestation",
+      "file": "words/73f7546ae80939cb6a6f.m4a",
+      "speaker": "pia",
+      "durationSeconds": 0.96,
+      "bytes": 8882,
+      "audioSha256": "88904a70f6cbddba3d86e86ec4932cec07f525aea6dac04730f27c8521db4eec"
+    },
+    {
+      "text": "l'interrogatoire",
+      "file": "words/cbc77d46794d60f9378a.m4a",
+      "speaker": "ninon",
+      "durationSeconds": 1.41,
+      "bytes": 13456,
+      "audioSha256": "e82accbf1ff59d7bb9f2bd2476e0ded9b29719780964596d57df4c9c484d3e97"
+    },
+    {
+      "text": "le magistrat",
+      "file": "words/4110ff45d55682f42069.m4a",
+      "speaker": "lison",
+      "durationSeconds": 1.35,
+      "bytes": 12241,
+      "audioSha256": "764f632a54b82df8c5dac0372d1a1f55ca4a8fde1d0bc1028fba9233c74d511f"
+    },
+    {
+      "text": "le greffier",
+      "file": "words/574232cd86e5682b7de3.m4a",
+      "speaker": "pia",
+      "durationSeconds": 0.89,
+      "bytes": 8140,
+      "audioSha256": "14d3f61e9c37881d80c7c81919637b96a2d3bb2e463ffbc4d18b7582e62f5818"
+    },
+    {
+      "text": "le dossier",
+      "file": "words/b00abfab0f248176bf8d.m4a",
+      "speaker": "ninon",
+      "durationSeconds": 1.15,
+      "bytes": 9966,
+      "audioSha256": "08c93e2e31feff5bc521c51c5f7decbe704e35626a271a684d2c93d64e1bbecc"
+    },
+    {
+      "text": "le classeur",
+      "file": "words/5321667f933fc93e4d73.m4a",
+      "speaker": "lison",
+      "durationSeconds": 1.41,
+      "bytes": 13222,
+      "audioSha256": "86d13dcf2148aa53a359b41b9556632cc436a9283656b79e3db65d2aa9836a6c"
+    },
+    {
+      "text": "le crucifix",
+      "file": "words/3d9a46387022c79ad39e.m4a",
+      "speaker": "pia",
+      "durationSeconds": 1.31,
+      "bytes": 11454,
+      "audioSha256": "575118e6cc90d582298b8ecf041353c986a1a2e8048de876f4d6dd2c58195e70"
+    },
+    {
+      "text": "taciturne",
+      "file": "words/52425e88fa7a0772c2c5.m4a",
+      "speaker": "ninon",
+      "durationSeconds": 1.22,
+      "bytes": 10732,
+      "audioSha256": "e338ae7ea36eeef3eb7bafa185372d70c77ae7a2c7dfb2bbdc3e6d4bed4e6e32"
+    },
+    {
+      "text": "renfermé",
+      "file": "words/4d8fdd5719dd34622a45.m4a",
+      "speaker": "lison",
+      "durationSeconds": 1.02,
+      "bytes": 9145,
+      "audioSha256": "597ae1d054957cf5e5b84a40849157b6f6ff053ed03226dcd68b9b0876d4b8b4"
+    },
+    {
+      "text": "le repentir",
+      "file": "words/f06eaaf205602651bf43.m4a",
+      "speaker": "pia",
+      "durationSeconds": 1.45,
+      "bytes": 12614,
+      "audioSha256": "c4c091452586b192acd27e0b62ab4f11b376e05b9bde95c3180681e28b67b2ff"
+    },
+    {
+      "text": "le détenu",
+      "file": "words/18b443648668c8c86794.m4a",
+      "speaker": "ninon",
+      "durationSeconds": 1.27,
+      "bytes": 11466,
+      "audioSha256": "9e1ab2449a7eb967c49ee2d626e444141a72e8ca033276a1ba2a40cb6deef08c"
+    },
+    {
+      "text": "la cellule",
+      "file": "words/22a3560cebdd1448b8d0.m4a",
+      "speaker": "lison",
+      "durationSeconds": 1.12,
+      "bytes": 10106,
+      "audioSha256": "8598aa7e1390dd8bf8f5c76580fb8b83c49e328008f8160fde8756166acc38a5"
+    },
+    {
+      "text": "le bat-flanc",
+      "file": "words/819bf55b0c07d46bc334.m4a",
+      "speaker": "pia",
+      "durationSeconds": 0.95,
+      "bytes": 8937,
+      "audioSha256": "4baefc5d8fc72cf5dccd63e5e9d9f54f298ce6bb69e348789c7a75bac4820153"
+    },
+    {
+      "text": "la paillasse",
+      "file": "words/896f48bcefafd511d746.m4a",
+      "speaker": "ninon",
+      "durationSeconds": 1.36,
+      "bytes": 12790,
+      "audioSha256": "25a16757a31cbc0ae224c56e3bdc1a4f1bb22c0ec7fb06d4e8106326c141c1d0"
+    },
+    {
+      "text": "la punaise",
+      "file": "words/5d3b669ead864af91193.m4a",
+      "speaker": "lison",
+      "durationSeconds": 1.21,
+      "bytes": 11767,
+      "audioSha256": "c890227b9354207afef4bdd68e5ca5e880f31b874156865a8e560046884837ca"
+    },
+    {
+      "text": "la cuvette",
+      "file": "words/2ba8821a02e3a5a4d7dc.m4a",
+      "speaker": "pia",
+      "durationSeconds": 1.0,
+      "bytes": 9068,
+      "audioSha256": "a89a53698a59228d53de9a6692c52c0d729f8b5a4fbfb828160825a7b08eb49d"
+    },
+    {
+      "text": "la gamelle",
+      "file": "words/8463a9bb72b15df4d876.m4a",
+      "speaker": "ninon",
+      "durationSeconds": 1.22,
+      "bytes": 10923,
+      "audioSha256": "a535411230be538a20ce38802d2b4ce5ae499908cd289705f0ffe004f2bb3bbf"
+    },
+    {
+      "text": "la lucarne",
+      "file": "words/b8396b102aae4edec615.m4a",
+      "speaker": "lison",
+      "durationSeconds": 1.11,
+      "bytes": 10294,
+      "audioSha256": "ecb58136a46ad2ea3a93d0f143b85ca90af7a903cfabfc0a2d706b7cfd91f00b"
+    },
+    {
+      "text": "le parloir",
+      "file": "words/f1a3be23eb5092785589.m4a",
+      "speaker": "pia",
+      "durationSeconds": 1.09,
+      "bytes": 10799,
+      "audioSha256": "f7886b6bdc832fa5786a0c8f2fec143c187175dc2c3f8674765fe056ec5d3829"
+    },
+    {
+      "text": "la grille",
+      "file": "words/73db52cd49d93682ce19.m4a",
+      "speaker": "ninon",
+      "durationSeconds": 1.29,
+      "bytes": 11439,
+      "audioSha256": "0039835dfdcfa63d22531b4ad8ae18fb83f91fd164e17b91dbad691b95373df4"
+    },
+    {
+      "text": "le gendarme",
+      "file": "words/70450ecae21c55747d20.m4a",
+      "speaker": "lison",
+      "durationSeconds": 1.1,
+      "bytes": 10491,
+      "audioSha256": "3db7a7a45d4e148a57de6436ae2cafca2c1c5ff479dcccdfca686a8822bec973"
+    },
+    {
+      "text": "l'accusé",
+      "file": "words/14d258d620a5bf6c0152.m4a",
+      "speaker": "pia",
+      "durationSeconds": 0.86,
+      "bytes": 9062,
+      "audioSha256": "cf46f67096edb8da33fece999fc14505cd329b317883da6522e785c1f1e9541f"
+    },
+    {
+      "text": "le juré",
+      "file": "words/e9f39b24e5d3ee19fa10.m4a",
+      "speaker": "ninon",
+      "durationSeconds": 0.99,
+      "bytes": 9103,
+      "audioSha256": "67c092cc0c08d988d0e7ad652de484b5f9e4c78c72e63cdc718e0fd926b45a9d"
+    },
+    {
+      "text": "le procureur",
+      "file": "words/473cf272aa56b4357880.m4a",
+      "speaker": "lison",
+      "durationSeconds": 1.61,
+      "bytes": 15064,
+      "audioSha256": "2f331ac9adfefae67ef2b80e576db4699142295d54d84b0ddb5f8156df26d330"
+    },
+    {
+      "text": "le lorgnon",
+      "file": "words/6b9f3415927ad4d398ca.m4a",
+      "speaker": "pia",
+      "durationSeconds": 1.24,
+      "bytes": 10779,
+      "audioSha256": "e9c969b9b2c3ca823b09db3199686c2688f87eae5c708673bbe04ebb629551c1"
+    },
+    {
+      "text": "l'huissier",
+      "file": "words/ec177a2e60d3dcc4da40.m4a",
+      "speaker": "ninon",
+      "durationSeconds": 0.88,
+      "bytes": 8102,
+      "audioSha256": "ca4653dd5b99592cd6de4cd13aa271f246266a61dca502abf368b592960bd255"
+    },
+    {
+      "text": "le ventilateur",
+      "file": "words/4c7d93deeed2f60b9f77.m4a",
+      "speaker": "lison",
+      "durationSeconds": 1.71,
+      "bytes": 15985,
+      "audioSha256": "2142d2f56712fc7586ddb0a8c103dcaf9f94671c712c4c1cb87f6b3505e50edc"
+    },
+    {
+      "text": "l'éventail",
+      "file": "words/b27cb29dc376fce6dfc5.m4a",
+      "speaker": "pia",
+      "durationSeconds": 1.32,
+      "bytes": 11851,
+      "audioSha256": "3e4e3584d13811db682ad1126c617b26257866a195548be0583eaf29baca0e29"
+    },
+    {
+      "text": "le journaliste",
+      "file": "words/e6e6bec0d63cc7c87fbe.m4a",
+      "speaker": "ninon",
+      "durationSeconds": 1.18,
+      "bytes": 11338,
+      "audioSha256": "c8571edfea02454a9882c41813b7471945938e58fa7cfbea8411375ed7c17285"
+    },
+    {
+      "text": "le panama",
+      "file": "words/25661c217df9407711c3.m4a",
+      "speaker": "lison",
+      "durationSeconds": 1.24,
+      "bytes": 11791,
+      "audioSha256": "c77a82a1ec3293e5625fca66147665c703ff729927c20030dfe691ace467ffe9"
+    },
+    {
+      "text": "le pourvoi",
+      "file": "words/d63073795cba9d1f790f.m4a",
+      "speaker": "pia",
+      "durationSeconds": 1.29,
+      "bytes": 11344,
+      "audioSha256": "637cfca7517c25a8f190971bed5557729bdc8157984dad2185c43b82f1e41a99"
+    },
+    {
+      "text": "l'aube",
+      "file": "words/b9739057f3bc8dd5457a.m4a",
+      "speaker": "ninon",
+      "durationSeconds": 0.83,
+      "bytes": 7755,
+      "audioSha256": "f0c2614c10b260e4612de2ec3e8efe242b2fb4986822ec329be96e88cd1fcec5"
+    },
+    {
+      "text": "gracier",
+      "file": "words/7214679ecda57dd4252f.m4a",
+      "speaker": "lison",
+      "durationSeconds": 0.95,
+      "bytes": 9249,
+      "audioSha256": "6f54d1df7518fdee2dc351b60760d21da53fb1186a5e122887541f476695a5a0"
+    },
+    {
+      "text": "la muraille",
+      "file": "words/fd9d1b57e3cd181b835e.m4a",
+      "speaker": "pia",
+      "durationSeconds": 1.27,
+      "bytes": 11111,
+      "audioSha256": "ce0206341b5204198fd813d906e1fbf3e967aa673d5b139b9e18e2036fe1d2cf"
+    },
+    {
+      "text": "l'aumônier",
+      "file": "words/721c90dc0659e34a51d4.m4a",
+      "speaker": "ninon",
+      "durationSeconds": 1.27,
+      "bytes": 12007,
+      "audioSha256": "9bb1c7340a8352bd1360a7a8edbaa14e7329cc6da80d299dab5071bfa8af42d8"
+    },
+    {
+      "text": "la soutane",
+      "file": "words/0cdb71f42ef9c775e585.m4a",
+      "speaker": "lison",
+      "durationSeconds": 2.01,
+      "bytes": 18505,
+      "audioSha256": "d36153ad3b561da6f995c540cb36207281b37e933117691e2fef3a7e1862106b"
+    },
+    {
+      "text": "la couchette",
+      "file": "words/51036e71aa89402da101.m4a",
+      "speaker": "pia",
+      "durationSeconds": 1.49,
+      "bytes": 13713,
+      "audioSha256": "b14629a05e9cca52d547c95950c944ae0b552eb767b69120186f52935bf62f4c"
+    },
+    {
+      "text": "le collet",
+      "file": "words/2dfd0ed09f26a8091682.m4a",
+      "speaker": "ninon",
+      "durationSeconds": 1.03,
+      "bytes": 10316,
+      "audioSha256": "d66545b3c904b546e18c0638256044bb03b7f56481ab1aa196baca269cbb5c98"
+    },
+    {
+      "text": "la sirène",
+      "file": "words/deae5602bc78793c8d7a.m4a",
+      "speaker": "lison",
+      "durationSeconds": 1.92,
+      "bytes": 16137,
+      "audioSha256": "0163e3e031cf33c971ad2fa2cd26f84b465cdd84d4aa611a414de73d11a86917"
+    },
+    {
+      "text": "la blondeur",
+      "file": "words/2f31730b6ceaf5931c84.m4a",
+      "speaker": "pia",
+      "durationSeconds": 1.5,
+      "bytes": 13627,
+      "audioSha256": "f6fb61f6f161b55377402ac583687c5dcaf9cd383c0535455d06d56fa6002a14"
     }
   ],
-  "wordCount": 969,
-  "wordBytes": 9312218,
-  "wordPending": 0,
+  "wordCount": 1087,
+  "wordBytes": 10593755,
+  "wordPending": 2,
   "male": [
     {
       "text": "Tu prends le train de 8 heures demain ?",
